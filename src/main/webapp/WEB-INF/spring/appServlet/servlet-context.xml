@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -21,8 +23,22 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<beans:bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- max upload size in bytes -->
+        <beans:property name="maxUploadSize" value="20971520" /> <!-- 20MB -->
+        <!-- max size of file in memory (in bytes) -->
+        <beans:property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
+    </beans:bean>
+	
 	<context:component-scan base-package="com.cooing.www" />
 	
+	<websocket:handlers>
+        <websocket:mapping path="chat/echo.do" handler="chatHandler"/>
+    </websocket:handlers>
+ 
+    <beans:bean id="chatHandler" class="com.cooing.www.hindoong.controller.ChatHandler"/>
+
 	
 	
 </beans:beans>

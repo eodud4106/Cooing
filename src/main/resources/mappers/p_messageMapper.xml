@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- p_message 처리 SQL -->
+<mapper namespace="com.cooing.www.hindoong.dao.P_messageMapper">
+
+	<!-- p_message 정보 저장 -->
+	<insert id="insertP_message" parameterType="p_message">
+	INSERT INTO p_message (
+		
+	)
+	VALUES (
+		
+	)
+	</insert>
+	
+	<update id="updateP_message" parameterType="p_message">
+	UPDATE p_message
+	SET
+		p_message_read = p_message_read-1
+	WHERE p_message_num = #{p_message_num}
+	</update>
+	
+	<select id="selectP_message" resultType="card">
+	SELECT
+		cardnum
+		, menunum
+	FROM card
+	WHERE cookdate = #{cookdate}
+	</select>
+
+</mapper>
