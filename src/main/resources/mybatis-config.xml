@@ -4,7 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+		<typeAlias type="com.cooing.www.hindoong.vo.P_messageVO" alias="p_message"/>
 	</typeAliases>
-	<mappers>
+ 	<mappers>
+		<mapper resource="mappers/p_messageMapper.xml"/>
 	</mappers>
 </configuration>

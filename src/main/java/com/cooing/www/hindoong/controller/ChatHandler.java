@@ -17,12 +17,10 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.cooing.www.hindoong.dao.ChatDAO;
+import com.cooing.www.hindoong.dao.P_messageDAO;
 import com.cooing.www.hindoong.vo.P_messageVO;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.google.gson.JsonObject;
 
 @Repository
 public class ChatHandler extends TextWebSocketHandler implements InitializingBean {
@@ -30,7 +28,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	@Autowired
 	SqlSession session;
 	@Autowired
-	ChatDAO chatDAO;
+	P_messageDAO pmDAO;
 
 	private final Logger logger = LogManager.getLogger(getClass());
 
@@ -89,22 +87,31 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 		this.logger.info("add session!");
 	}
 	
-	//사용자가 메세지를 보냈을 때 처리하는 핸들러.
+	//사용자가 보낸 메시지 처리
 	@Override
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 		super.handleMessage(session, message);
 		
 		P_messageVO pm = new P_messageVO();
-		
-		ObjectMapper mapper = new ObjectMapper();
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		map = mapper.readValue(message.toString(), new TypeReference<HashMap<String, String>>(){});
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			//사용자가 보낸 메세지는 message.getPayload에 담겨 있다.
+			map = mapper.readValue(message.getPayload().toString(), 
+					new TypeReference<HashMap<String, String>>(){});
+			pm.setP_message_from(map.get("from").toString());
+			pm.setP_message_to(map.get("to").toString());
+			pm.setP_message_message(map.get("message").toString());
+			
+			int result = pmDAO.insertP_message(pm);
+			
+			this.logger.info("result = " + result);
 		
-		this.logger.info(map.toString());
-
-		//사용자가 보낸 메세지는 message.getPayload에 담겨 있다.
-		this.logger.info("receive message:" + message.getPayload().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	//에러 처리하는 핸들러

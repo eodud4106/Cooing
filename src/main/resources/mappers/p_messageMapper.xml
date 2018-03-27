@@ -9,10 +9,18 @@
 	<!-- p_message 정보 저장 -->
 	<insert id="insertP_message" parameterType="p_message">
 	INSERT INTO p_message (
-		
+		p_message_num,
+		p_message_from,
+		p_message_to,
+		p_message_message,
+		p_message_date
 	)
 	VALUES (
-		
+		p_message_seq.nextval,
+		#{p_message_from},
+		#{p_message_to},
+		#{p_message_message},
+		sysdate
 	)
 	</insert>
 	
@@ -23,12 +31,11 @@
 	WHERE p_message_num = #{p_message_num}
 	</update>
 	
-	<select id="selectP_message" resultType="card">
+	<select id="selectP_message" resultType="p_message">
 	SELECT
-		cardnum
-		, menunum
-	FROM card
-	WHERE cookdate = #{cookdate}
+		*
+	FROM p_message
+	WHERE p_message_to = #{p_message_to}
 	</select>
 
 </mapper>
