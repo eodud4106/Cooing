@@ -1,5 +1,6 @@
 package com.cooing.www.hindoong.controller;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +17,12 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.cooing.www.hindoong.dao.ChatDAO;
+import com.cooing.www.hindoong.vo.P_messageVO;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.JsonObject;
 
 @Repository
 public class ChatHandler extends TextWebSocketHandler implements InitializingBean {
@@ -86,6 +93,15 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	@Override
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 		super.handleMessage(session, message);
+		
+		P_messageVO pm = new P_messageVO();
+		
+		ObjectMapper mapper = new ObjectMapper();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map = mapper.readValue(message.toString(), new TypeReference<HashMap<String, String>>(){});
+		
+		this.logger.info(map.toString());
 
 		//사용자가 보낸 메세지는 message.getPayload에 담겨 있다.
 		this.logger.info("receive message:" + message.getPayload().toString());

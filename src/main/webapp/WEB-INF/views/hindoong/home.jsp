@@ -49,7 +49,17 @@
 		//메세지 보낼 시 호출.
 		function doSend(message) {
 			writeToScreen("Message Sent: " + message);
-			websocket.send(message);
+			
+			var send = {
+				from: "test",
+				to: "test1",
+				message: message
+			}
+			
+			websocket.send(JSON.stringify(send));
+			
+			textID.value='';
+			
 			//websocket.close();
 		}
 		
@@ -62,6 +72,7 @@
 			output.appendChild(pre);
 		}
 		window.addEventListener("load", init, false);
+		
 	</script>
 	<h1 style="text-align: center;">Hello World WebSocket Client</h1>
 	<br>
