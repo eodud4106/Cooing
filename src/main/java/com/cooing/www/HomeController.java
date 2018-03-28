@@ -23,17 +23,27 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
+	public String home(Model model) {
 		
 		return "home";
+	}
+	
+	/**
+	 * 메인페이지로 이동.
+	 */
+	@RequestMapping(value = "/albumList", method = RequestMethod.GET)
+	public String mainPage(Model model) {
+		
+		return "albumList";
+	}
+	
+	/**
+	 * 앨범뷰...?? 뭐지???
+	 */
+	@RequestMapping(value = "/albumView", method = RequestMethod.GET)
+	public String albumPage(Model model) {
+		
+		return "albumView";
 	}
 	
 }
