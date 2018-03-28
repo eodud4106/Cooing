@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cooing.www.jinsu.dao.MemberDAO;
+import com.cooing.www.jinsu.object.Category;
 import com.cooing.www.jinsu.object.FileLimit;
 import com.cooing.www.jinsu.object.Member;
 
@@ -33,16 +34,20 @@ public class MemberController {
 		return strpath + "/member";
 	}
 	@RequestMapping(value="/member_post" , method = RequestMethod.POST)
-	public String member_post(Member member , @RequestParam("hobby") String[] hobby
-			,MultipartFile upload){
+	public String member_post(Member member , @RequestParam(value="hobby" , required =false) String[] hobby
+			,MultipartFile upload){	
 		
 		if(upload != null && !upload.isEmpty()){
 			String savefile = FileLimit.FileSave(upload, strFilePath);
 			member.setMember_picture(savefile);
 		}
-		//밑에 코드는 나중에 sql에서 default 값 설정 하면 지울 에정
-		member.setMember_manager(0);
-		memberDAO.insertMember(member);
+		if(memberDAO.insertMember(member)){
+			if(hobby != null && hobby.length != 0){
+				for(int i = 0; i < hobby.length; i++){
+					memberDAO.insertCategory(new Category(0 , member.getMember_id() , Integer.parseInt(hobby[i])));
+				}				
+			}
+		}
 		
 		return "redirect:/";
 	}
@@ -72,6 +77,16 @@ public class MemberController {
 		}		
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/id_check" , method = RequestMethod.POST)
+	public String id_check(String id){
+		Member member_check= memberDAO.selectMember(id);
+		if(member_check != null){
+			return "fail";
+		}
+		return "success";
+	}
+	
 	@RequestMapping(value="/login_get" , method = RequestMethod.GET)
 	public String login_get(){		
 		return strpath + "/login";
@@ -80,13 +95,9 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value="/login_post" , method = RequestMethod.POST)
 	public String login_post(Member member,HttpSession session){
-		logger.info(member.toString()+"__1");
 		Member member_check= memberDAO.selectMember(member.getMember_id());
-		logger.info(member.toString()+"__2");
 		if(member_check != null){
-			logger.info(member_check.toString()+"__3");
 			if(member_check.getMember_pw().equals(member.getMember_pw())){
-				logger.info(member_check.toString()+"__4");
 				session.setAttribute("Login", true);
 				session.setAttribute("Member", member_check);
 				return "success";

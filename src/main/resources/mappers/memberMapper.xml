@@ -7,11 +7,18 @@
 
 	<insert id="insertMember" parameterType="member">
 	insert into member (
-		member_id,member_pw,member_manager,member_picture,member_recentlogin)
-	values (#{member_id},#{member_pw},#{member_manager},#{member_picture},sysdate)
+		member_id,member_pw,member_picture,member_recentlogin)
+	values (#{member_id},#{member_pw},#{member_picture},sysdate)
 	</insert>
 	
 	<select id="selectMember" resultType="member" parameterType="String">
 	select * from member where member_id = #{id}
 	</select>
+	
+	<insert id="insertCategory" parameterType="category">
+	insert into category (
+		category_num,category_memberid,category_kind)
+	values (category_seq.nextval , #{category_memberid} , #{category_kind})
+	</insert>
+	
 </mapper>

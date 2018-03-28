@@ -34,10 +34,34 @@ function readURL(input){
 	}
 }
 function initialize(){
-	$('#join').on('click' , joinmember);
+	$('#idcheck').on('click' , idcheck);
 	$('#upload').on('change',function(){
 		readURL(this);
 	});
+}
+
+function idcheck(){
+	if($('#id').val().legnth == 0){
+		alert('ID를 입력해 주세요.');
+		return false;
+	}
+	
+	$.ajax({
+		url:'id_check',
+		type:'POST',		
+		data:{id:$('#id').val()},
+		dataType:"text",
+		success: function(a){
+			if(a == 'success'){
+				$('#join').on('click' , joinmember);
+				alert('사용 가능한 ID입니다.');
+			}
+			else{
+				alert('이미 사용중인 ID입니다.');
+			}		
+		},
+		error:function(e){alert(JSON.stringify(e));}		
+	});	
 }
 
 function joinmember(){

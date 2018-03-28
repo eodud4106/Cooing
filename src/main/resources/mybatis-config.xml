@@ -6,6 +6,7 @@
 	<typeAliases>
 		<typeAlias type="com.cooing.www.hindoong.vo.P_messageVO" alias="p_message"/>
 		<typeAlias type="com.cooing.www.jinsu.object.Member" alias="member"/>
+		<typeAlias type="com.cooing.www.jinsu.object.Category" alias="category"/>
 	</typeAliases>
  	<mappers>
 		<mapper resource="mappers/p_messageMapper.xml"/>

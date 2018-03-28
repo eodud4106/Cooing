@@ -1,5 +1,6 @@
 package com.cooing.www.jinsu.dao;
 
+import com.cooing.www.jinsu.object.Category;
 import com.cooing.www.jinsu.object.Member;
 
 public interface MemberMapper {
@@ -11,4 +12,5 @@ public interface MemberMapper {
 	public int deleteoneBoard(int num);
 	public int countBoard(String search);
 	public int updateoneBoard(Web5Board board);*/
+	public int insertCategory(Category category);
 }

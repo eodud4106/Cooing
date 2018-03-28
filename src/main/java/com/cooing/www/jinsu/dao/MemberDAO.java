@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cooing.www.jinsu.object.Category;
 import com.cooing.www.jinsu.object.Member;
 
 @Repository
@@ -22,6 +23,14 @@ public class MemberDAO {
 	public Member selectMember(String id){
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		return mapper.selectMember(id);
+	}
+	
+	public boolean insertCategory(Category category){
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		if(mapper.insertCategory(category) > 0)
+			return true;
+		else 
+			return false;
 	}
 	
 	/*public ArrayList<Web5Board> selectBoard(String search ,int startp , int endp){
