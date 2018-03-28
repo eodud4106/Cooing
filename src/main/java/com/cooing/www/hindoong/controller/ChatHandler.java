@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
@@ -16,7 +15,6 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.cooing.www.hindoong.dao.ChatDAO;
 import com.cooing.www.hindoong.dao.P_messageDAO;
 import com.cooing.www.hindoong.vo.P_messageVO;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -101,10 +99,6 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 			pm.setP_message_from(map.get("from").toString());
 			pm.setP_message_to(map.get("to").toString());
 			pm.setP_message_message(map.get("message").toString());
-			
-			int result = pmDAO.insertP_message(pm);
-			
-			this.logger.info("result = " + result);
 
 			sendMessage(session.getId() +" : "+ pm.getP_message_message());
 			

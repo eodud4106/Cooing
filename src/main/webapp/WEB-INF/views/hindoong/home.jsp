@@ -68,11 +68,15 @@
 </script>
 </head>
 <body>
-	현재 시각 -> ${serverTime }
+	
 	
 	<h1 style="text-align: center;">흰둥이 채팅방</h1>
 	<br>
 	<div style="text-align: center;">
+	
+		<a href="/www">홈으로 돌아가기...</a>
+	
+		<p>입장 시각 -> ${serverTime }</p>	
 
 		<input type="text" id="message" />
 
