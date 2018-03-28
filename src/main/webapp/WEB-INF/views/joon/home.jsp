@@ -37,7 +37,7 @@
 </td></tr></table>  
 
 <div id="image" class="ui-widget-content" style="width:200px;height:160px;	border: 0px solid #c5c5c5;">
-	<img src="<c:url value="/resources/image/cooing5.jpg" />" style="width:100%;height:100%">
+	<img src="<c:url value="/resources/joon_image/cooing5.jpg" />" style="width:100%;height:100%">
 </div>
 
 
