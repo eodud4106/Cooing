@@ -54,8 +54,15 @@
     function onMessage(evt) {
 
         var data = evt.data;
-        $("#data").append(data + "<br/>");
-
+        
+        var chatData = JSON.parse(data);
+        
+        var from = chatData.from;
+        var message = chatData.message;
+       	
+        $("#data").append(from + " : " + message + "<br/>");
+        $("#data").scrollTop($("#data")[0].scrollHeight);
+       
     }
 
 
@@ -77,12 +84,14 @@
 		<a href="/www">홈으로 돌아가기...</a>
 	
 		<p>입장 시각 -> ${serverTime }</p>	
-
-		<input type="text" id="message" />
-
-	    <input type="button" id="sendBtn" value="전송" />
 	
-	    <div id="data"></div>
+	    <div id="data" style="height: 300px; width: 50%; overflow-y: scroll; margin: auto"></div>
+	    
+	    <div id="div_send">
+			<input type="text" id="message" />
+			<input type="button" id="sendBtn" value="전송" />
+	    </div>
+	    
 	</div>
 	<div id="output"></div>
 </body>

@@ -2,6 +2,7 @@ package com.cooing.www.hindoong.controller;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.log4j.LogManager;
@@ -19,6 +20,9 @@ import com.cooing.www.hindoong.dao.P_messageDAO;
 import com.cooing.www.hindoong.vo.P_messageVO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 @Repository
 public class ChatHandler extends TextWebSocketHandler implements InitializingBean {
@@ -99,8 +103,15 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 			pm.setP_message_from(map.get("from").toString());
 			pm.setP_message_to(map.get("to").toString());
 			pm.setP_message_message(map.get("message").toString());
-
-			sendMessage(session.getId() +" : "+ pm.getP_message_message());
+		
+			
+			Gson gson = new Gson();
+			
+			sendMessage(gson.toJson(map));
+			//sendMessage(pm.getP_message_from() +" : "+ pm.getP_message_message());
+			
+			//db에 넣는 작업에서 딜레이가 발생하기 때문에... 우선 메시지를 뿌리고 나서 db에 넣는다...
+			pmDAO.insertP_message(pm);
 			
 //	        for(WebSocketSession sess : sessionSet){
 //
@@ -133,7 +144,6 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 			if (session.isOpen()) {
 				try {
 					session.sendMessage(new TextMessage(message));
-					System.out.println(message);
 				} catch (Exception ignored) {
 					this.logger.error("fail to send message!", ignored);
 				}
