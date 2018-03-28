@@ -7,80 +7,78 @@
 <title>테스트 페이지</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="text/javascript" src="resources/js_js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        $("#sendBtn").click(function() {
+            sendMessage();
+        });
+        
+        var wsUri = "ws://localhost:8080/www/chat/echo.do";
+        websocket = new WebSocket(wsUri);
+	   	websocket.onmessage = function(evt) {
+	   		onMessage(evt)
+	   	};
+	   	websocket.onopen = function(evt) {
+	   		onOpen(evt)
+	   	};
+	   	websocket.onerror = function(evt) {
+	   		onError(evt)
+	   	};
+
+    });
+    
+    /* 메시지 발신 */
+    function sendMessage() {
+    	
+    	//TODO 수신자, 발신자를 잘....
+        var sendMessage = {
+				from: "test",
+				to: "test1",
+				message: $('#message').val()
+			}
+
+        websocket.send(JSON.stringify(sendMessage));
+        $('#message').val('');
+
+    }
+    
+	function onOpen(evt) {
+		//TODO 채팅창 열렸을 때 모든 메시지를 핸들러가 보낸다. 여기서는 그 메시지를 차곡차곡 잘 보여주자...
+	}
+    
+	//서버로부터 메시지를 받으면 호출됨.
+    function onMessage(evt) {
+
+        var data = evt.data;
+        $("#data").append(data + "<br/>");
+
+    }
+
+
+    function onClose(evt) {
+
+        $("#data").append("연결 끊김");
+
+    }
+
+</script>
 </head>
 <body>
 	현재 시각 -> ${serverTime }
-	<script type="text/javascript">
-		var wsUri = "ws://localhost:8080/www/chat/echo.do";
-
-		function init() {
-			output = document.getElementById("output");
-		}
-		function send_message() {
-			websocket = new WebSocket(wsUri);
-			websocket.onopen = function(evt) {
-				onOpen(evt)
-			};
-			websocket.onmessage = function(evt) {
-				onMessage(evt)
-			};
-			websocket.onerror = function(evt) {
-				onError(evt)
-			};
-		}
-
-		function onOpen(evt) {
-			writeToScreen("Connected to Endpoint!");
-			doSend(textID.value);
-		}
-		
-		//서버로부터 메세지를 받고 출력하는 함수.
-		function onMessage(evt) {
-			writeToScreen("Message Received: " + evt.data);
-		}
-		
-		//에러 발생 시 출력
-		function onError(evt) {
-			writeToScreen('ERROR: ' + evt.data);
-		}
-		
-		//메세지 보낼 시 호출.
-		function doSend(message) {
-			writeToScreen("Message Sent: " + message);
-			
-			var send = {
-				from: "test",
-				to: "test1",
-				message: message
-			}
-			
-			websocket.send(JSON.stringify(send));
-			
-			textID.value='';
-			
-			//websocket.close();
-		}
-		
-		// 뷰에 innerHTML로 텍스트 출력.
-		function writeToScreen(message) {
-			var pre = document.createElement("p");
-			pre.style.wordWrap = "break-word";
-			pre.innerHTML = message;
-
-			output.appendChild(pre);
-		}
-		window.addEventListener("load", init, false);
-		
-	</script>
-	<h1 style="text-align: center;">Hello World WebSocket Client</h1>
+	
+	<h1 style="text-align: center;">흰둥이 채팅방</h1>
 	<br>
 	<div style="text-align: center;">
-		<form action="">
-			<input onclick="send_message()" value="Send" type="button">
-			<input id="textID" name="message" value="Hello WebSocket!" type="text"><br>
-		</form>
+
+		<input type="text" id="message" />
+
+	    <input type="button" id="sendBtn" value="전송" />
+	
+	    <div id="data"></div>
 	</div>
 	<div id="output"></div>
 </body>

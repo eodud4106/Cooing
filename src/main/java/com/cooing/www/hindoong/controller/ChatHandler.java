@@ -26,8 +26,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ChatHandler extends TextWebSocketHandler implements InitializingBean {
 
 	@Autowired
-	SqlSession session;
-	@Autowired
 	P_messageDAO pmDAO;
 
 	private final Logger logger = LogManager.getLogger(getClass());
@@ -107,6 +105,14 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 			int result = pmDAO.insertP_message(pm);
 			
 			this.logger.info("result = " + result);
+
+			sendMessage(session.getId() +" : "+ pm.getP_message_message());
+			
+//	        for(WebSocketSession sess : sessionSet){
+//
+//	            sess.sendMessage(new TextMessage(session.getId() +" : "+ message.getPayload()));
+//
+//	        }
 		
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -133,6 +139,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 			if (session.isOpen()) {
 				try {
 					session.sendMessage(new TextMessage(message));
+					System.out.println(message);
 				} catch (Exception ignored) {
 					this.logger.error("fail to send message!", ignored);
 				}
@@ -143,27 +150,27 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	@Override
 	public void afterPropertiesSet() throws Exception {
 
-		Thread thread = new Thread() {
-
-			int i = 0;
-
-			@Override
-			public void run() {
-				while (true) {
-
-					try {
-						sendMessage("send message index " + i++);
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-						break;
-					}
-				}
-			}
-
-		};
-
-		thread.start();
+//		Thread thread = new Thread() {
+//
+//			int i = 0;
+//
+//			@Override
+//			public void run() {
+//				while (true) {
+//
+//					try {
+//						sendMessage("send message index " + i++);
+//						Thread.sleep(1000);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//						break;
+//					}
+//				}
+//			}
+//
+//		};
+//
+//		thread.start();
 	}
 
 }

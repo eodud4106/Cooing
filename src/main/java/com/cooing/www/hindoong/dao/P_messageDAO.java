@@ -38,8 +38,16 @@ public class P_messageDAO implements P_messageMapper {
 
 	@Override
 	public ArrayList<P_messageVO> selectP_message(HashMap<String, String> map) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ArrayList<P_messageVO> pmlist = new ArrayList<P_messageVO>();
+		
+		try {
+			pmlist = session.getMapper(P_messageMapper.class).selectP_message(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return pmlist;
 	}
 
 }
