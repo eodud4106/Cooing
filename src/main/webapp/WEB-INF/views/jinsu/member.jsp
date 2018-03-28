@@ -16,12 +16,22 @@ $(document).ready(function () {
 });
 function readURL(input){ 
 	if(input.files[0]){
-		var reader = new FileReader();
-		reader.onload = function(e){			
-			$('#preview').attr('src' , e.target.result);
+		if(input.files[0].size < 3000000){
+			if ((/png|jpe?g|gif/i).test(input.files[0].name)) {
+				var reader = new FileReader();
+				reader.onload = function(e){			
+					$('#preview').attr('src' , e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+			else{
+				alert('png,jpg,gif만 가능합니다.');
+			}
+		}	
+		else{
+			alert('이미지의 용량은 3MB를 초과할 수 없습니다.');
 		}
-		reader.readAsDataURL(input.files[0]);
-	}	
+	}
 }
 function initialize(){
 	$('#join').on('click' , joinmember);
@@ -39,14 +49,19 @@ function joinmember(){
 	      checkArr.push($(this).val());
 	  });
 	
-	alert(checkArr.length);
-	alert(checkArr[0]);
-	
 	$.ajax({
-		url:'member_post',
+		url:'member_check',
 		type:'POST',		
-		data:{member_id:$('#id').val() , member_pw:$('#password').val() , list:checkArr , upload:$('#upload').val()},
-		success: function(){alert('저장되었습니다.');},
+		data:{member_id:$('#id').val() , member_pw:$('#password').val()},
+		dataType:"text",
+		success: function(a){
+			if(a == 'success'){
+				$('#member_form').submit();
+			}
+			else{
+				alert('형식을 다시 한번 입력해 주세요.');
+			}		
+		},
 		error:function(e){alert(JSON.stringify(e));}		
 	});
 	
@@ -90,13 +105,13 @@ function member_check(){
 
 <fieldset>
 	<legend><strong>회 원 가 입</strong></legend>	
-	<form>
+	<form action="member_post" method="POST" id="member_form" enctype="multipart/form-data">
 		<table>
-			<tr><th>IMAGE : </th><td><img src="" height="200" alt="main image.." id="preview"></td></tr>
-			<tr><th>ID : </th>	<td><input type="text" id="id" maxlength="10" required autofocus></td>
+			<tr><th>IMAGE : </th><td><img src="" height="200" width="200" alt="main image.." id="preview"></td></tr>
+			<tr><th>ID : </th>	<td><input type="text" id="id" name="member_id" maxlength="10" required autofocus></td>
 								<td><input type="button" id="idcheck" value="id중복체크"></td></tr>
 			<tr></tr>
-			<tr><th rowspan="3"> 비밀번호 : </th>	<td><input type="password" id="password" maxlength="12" required></td></tr>
+			<tr><th rowspan="3"> 비밀번호 : </th>	<td><input type="password" id="password" name="member_pw" maxlength="12" required></td></tr>
 											<tr><td><input type="password" id="password2" maxlength="12" required></td></tr>
 			<tr><td height="5" colspan="2"><font size="1px"><span style="color:red;">※</span>비밀번호는 6~12글자  /, &, \<, >, | 를 제외한 문자 사용 가능합니다.  </font></td></tr>
 			<tr></tr>
@@ -126,7 +141,7 @@ function member_check(){
 					건강<input type="checkbox" name="hobby" value="19">	
 				</td></tr>
 			<tr><td height="5" colspan="2"><font size="1px"><span style="color:red;">※</span>최대 3개까지만 선택</font></td></tr>
-			<tr><th>FILE</th><td><input type="file" id="upload" accept="image/*" onchange="previewImage(this , 'preview');"></td></tr>
+			<tr><th>FILE</th><td><input type="file" id="upload" name="upload" accept="image/*"></td></tr>
 			<tr align="right"><td colspan="3"><input type="button" id="join" value="가입">
 							<input type="button" onclick="javascript:location.href='<c:url value="/"/>';" value="취소"></td></tr>
 		</table> 
