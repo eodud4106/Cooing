@@ -59,8 +59,28 @@
         
         var from = chatData.from;
         var message = chatData.message;
+        
+        var span_from = 
+		$('<span />', {
+			 value : from
+        });
+        
+        var span_message = 
+    		$('<span />', {
+    			value : message
+		});
+        
+        if (from == "${sessionScope.loginid }") {
+			//자기가 보낸 메시지
+			$("#data").append(message + " < ");
+			$("#data").append(from + "<br>");
+		} else {
+			//다른 사람이 보낸 메시지
+			$("#data").append(from + " > ");
+			$("#data").append(message + "<br>");
+		}
        	
-        $("#data").append(from + " : " + message + "<br/>");
+        //$("#data").append(from + " : " + message + "<br/>");
         $("#data").scrollTop($("#data")[0].scrollHeight);
        
     }
