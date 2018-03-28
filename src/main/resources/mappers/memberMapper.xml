@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cooing.www.jinsu.dao.MemberMapper">
+
+	<insert id="insertMember" parameterType="member">
+	insert into member (
+		member_id,member_pw,member_manager,member_picture,member_recentlogin)
+	values (#{member_id},#{member_pw},#{member_manager},#{member_picture},sysdate)
+	</insert>
+	
+	<select id="selectMember" resultType="member" parameterType="String">
+	select * from member where member_id = #{id}
+	</select>
+</mapper>
