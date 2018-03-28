@@ -15,5 +15,6 @@
 <a href="<c:url value ="/albumList"/>">MainPage</a><br>
 <a href="<c:url value ="/albumView"/>">albumView</a><br>
 <a href="<c:url value ="/chat"/>">흰둥이 채팅방 입장</a><br>
+<a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a><br>
 </body>
 </html>
