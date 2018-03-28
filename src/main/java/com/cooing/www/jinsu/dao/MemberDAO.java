@@ -25,6 +25,14 @@ public class MemberDAO {
 		return mapper.selectMember(id);
 	}
 	
+	public boolean updateTimeMember(String id){
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		if(mapper.updateTimeMember(id) > 0)
+			return true;
+		else 
+			return false;
+	}
+	
 	public boolean insertCategory(Category category){
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		if(mapper.insertCategory(category) > 0)

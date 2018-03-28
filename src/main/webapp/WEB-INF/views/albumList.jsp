@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	   pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -126,7 +129,12 @@ img {
 
 	<!-- 왼쪽 사이드바 -->
 	<div id="sidebar_a">
-		<p><img src = "./resources/image_mj/suji.jpg">ID</p>
+		<c:if test="${Member ne null}">
+			<p><img src="<c:url value="/jinsu/img" />">${Member.getMember_id()} </p>
+		</c:if>		
+		<c:if test="${Member eq null}">
+			<p><img src="http://1.bp.blogspot.com/-t9dmAueNbW0/VQYvJX7kVrI/AAAAAAAAGYY/Ou05G2Vi2kw/s1600/1%2B(3).jpg">ID </p>
+		</c:if>
 		<p>MYPAGE</p>
 		<p>오늘의 랭킹</p>
 		<p></p>

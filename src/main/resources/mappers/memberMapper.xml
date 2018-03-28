@@ -15,6 +15,10 @@
 	select * from member where member_id = #{id}
 	</select>
 	
+	<update id="updateTimeMember" parameterType="String">
+	update member set member_recentlogin=sysdate where member_id=#{id}
+	</update>
+	
 	<insert id="insertCategory" parameterType="category">
 	insert into category (
 		category_num,category_memberid,category_kind)
