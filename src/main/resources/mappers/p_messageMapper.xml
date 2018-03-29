@@ -35,7 +35,12 @@
 	SELECT
 		*
 	FROM p_message
-	WHERE p_message_to = #{p_message_to}
+	WHERE
+		(p_message_from = #{id1} and p_message_to = #{id2})
+		OR
+		(p_message_from = #{id2} and p_message_to = #{id1})
+	ORDER BY
+		p_message_date
 	</select>
 
 </mapper>

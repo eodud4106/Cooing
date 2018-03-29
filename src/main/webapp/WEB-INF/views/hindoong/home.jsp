@@ -29,7 +29,7 @@
         var sendMessage = {
     				type: "message",
 				from: sessionStorage.getItem('loginId'),
-				to: $('#select_friend').val(),
+				to: sessionStorage.getItem('to'),
 				message: $('#message').val()
 			}
 
@@ -44,6 +44,7 @@
 		var sendMessage = {
 			type: "loginId",
 			id: sessionStorage.getItem('loginId'),
+			to: sessionStorage.getItem('to'),
 		}
 
    		websocket.send(JSON.stringify(sendMessage));
@@ -56,18 +57,19 @@
         
         var chatData = JSON.parse(data);
         
-        var from = chatData.from;
-        var message = chatData.message;
+        var from = chatData.p_message_from;
+        var message = chatData.p_message_message;
+        var m_date = chatData.p_message_date.substring(0,16);
         
-        var div_message = document.createElement('div');sss
+        var div_message = document.createElement('div');
         
         if (from == sessionStorage.getItem('loginId')) {
 			//자기가 보낸 메시지
-			$(div_message).css('text-align', 'right').html(message + " < " + from + "<br>");
+			$(div_message).css('text-align', 'right').html(m_date + "/" + message + " < <br>");
 			
 		} else {
 			//다른 사람이 보낸 메시지
-			$(div_message).css('text-align', 'left').html(from + " > " + message + "<br>");
+			$(div_message).css('text-align', 'left').html(from + " > " + message + "/" + m_date + "<br>");
 			
 		}
         
@@ -87,6 +89,7 @@
     function setLoginId() {
     		var id = $('#loginId').val();
     		sessionStorage.setItem('loginId', id);
+    		sessionStorage.setItem('to', $('#select_friend').val());
     		$('#span_loginId').text(id);
     	
         websocket = new WebSocket(wsUri);
@@ -115,7 +118,7 @@
 		<a href="/www">홈으로 돌아가기...</a>
 	
 		<p>입장 시각 -> ${serverTime }</p>	
-		<p>로그인 아이디 -> <span id="span_loginId"></span> </p>	
+		<p>로그인 아이디 -> <span id="span_loginId"></span></p>	
 		<select id="select_friend">
 			<option>보낼 친구 선택</option>
 			<option value="test1">test1</option>
@@ -125,7 +128,7 @@
 		<input type="text" id="loginId" placeholder="아이디 입력...">
 		<input type="button" value="확인" onclick="setLoginId()">
 	
-	    <div id="data" style="height: 300px; width: 50%; overflow-y: scroll; margin: auto"></div>
+	    <div id="data" style="height: 300px; width: 80%; overflow-y: scroll; margin: auto"></div>
 	    
 	    <div id="div_send">
 			<input type="text" id="message" autocomplete="off"/>

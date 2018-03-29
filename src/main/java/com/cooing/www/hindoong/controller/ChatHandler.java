@@ -1,5 +1,6 @@
 package com.cooing.www.hindoong.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
@@ -109,22 +110,24 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 			if(map.get("type").equals("loginId")) {
 				hashmap_id.put(map.get("id"), session.getId());
 				
-			} else {
-				pm.setP_message_from(map.get("from").toString());
-				pm.setP_message_to(map.get("to").toString());
-				pm.setP_message_message(map.get("message").toString());
+				//TODO 나와 상대와의 대화목록을 불러와서 클라이언트에게 보내줘야 함.
+				HashMap<String, String> search = new HashMap<>();
+				search.put("id1", map.get("id"));
+				search.put("id2", map.get("to"));
+				ArrayList<P_messageVO> messageList = pmDAO.selectP_message(search);
+				for (int i = 0; i < messageList.size(); i++) {
+					sendMessage(messageList.get(i));
+				}
 				
-				sendMessage(map);
+			} else {
+				pm.setP_message_from(map.get("from"));
+				pm.setP_message_to(map.get("to"));
+				pm.setP_message_message(map.get("message"));
+				
+				sendMessage(pm);
 				//db에 넣는 작업에서 딜레이가 발생하기 때문에... 우선 메시지를 뿌리고 나서 db에 넣는다...
 				pmDAO.insertP_message(pm);
 			}
-			
-			
-//	        for(WebSocketSession sess : sessionSet){
-//
-//	            sess.sendMessage(new TextMessage(session.getId() +" : "+ message.getPayload()));
-//
-//	        }
 		
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -146,15 +149,19 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 		return super.supportsPartialMessages();
 	}
 
-	public void sendMessage(HashMap<String, String> map_message) {
+	//public void sendMessage(HashMap<String, String> map_message) {
+	public void sendMessage(P_messageVO pm) {
 		for (WebSocketSession session : this.sessionSet) {
 			if (session.isOpen()) {
 				try {
-					if (hashmap_id.get(map_message.get("to")).equals(session.getId())) {
-							session.sendMessage(new TextMessage(gson.toJson(map_message)));
-						} 
-				} catch (Exception ignored) {
-					this.logger.error("fail to send message!", ignored);
+					System.out.println(pm);
+					if (hashmap_id.get(pm.getP_message_from()).equals(session.getId()) ||
+							hashmap_id.get(pm.getP_message_to()).equals(session.getId())) {
+						session.sendMessage(new TextMessage(gson.toJson(pm)));
+					} 
+				} catch (Exception e) {
+					e.printStackTrace();
+					//this.logger.error("fail to send message!");
 				}
 			}
 		}
