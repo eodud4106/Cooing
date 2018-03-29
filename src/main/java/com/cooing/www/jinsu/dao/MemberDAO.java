@@ -1,5 +1,7 @@
 package com.cooing.www.jinsu.dao;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,6 +27,11 @@ public class MemberDAO {
 		return mapper.selectMember(id);
 	}
 	
+	public ArrayList<String> searchId(String text){
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		return mapper.searchId(text);
+	}
+	
 	public boolean updateTimeMember(String id){
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		if(mapper.updateTimeMember(id) > 0)
@@ -40,44 +47,4 @@ public class MemberDAO {
 		else 
 			return false;
 	}
-	
-	/*public ArrayList<Web5Board> selectBoard(String search ,int startp , int endp){
-		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);							
-		RowBounds rb = new RowBounds(startp , endp);
-		return mapper.selectBoard(rb , search);
-	}
-	
-	public Web5Board selectoneBoard(int num){
-		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		return mapper.selectoneBoard(num);
-	}
-	
-	public boolean hitsupBoard(int num){
-		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		if(mapper.hitsupBoard(num) > 0)
-			return true;
-		else 
-			return false;
-	}
-	
-	public boolean deleteoneBoard(int num){
-		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		if(mapper.deleteoneBoard(num) > 0)
-			return true;
-		else 
-			return false;
-	}
-	
-	public int countBoard(String search){
-		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		return mapper.countBoard(search.toUpperCase());		
-	}
-	
-	public boolean updateoneBoard(Web5Board board){
-		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		if(mapper.updateoneBoard(board) > 0)
-			return true;
-		else 
-			return false;
-	}*/
 }

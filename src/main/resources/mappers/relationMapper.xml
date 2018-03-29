@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cooing.www.jinsu.dao.RelationMapper">
+
+	<insert id="insertFriend" parameterType="map">
+	insert into friend (friend_num,friend_id1,friend_id2)
+		values (friend_seq.nextval,#{person},#{friend})
+	</insert>	
+	
+	<select id="selectFriend" resultType="String" parameterType="String">
+	select friend_id2 from friend where friend_id1 = #{id}
+	</select>
+	
+	<delete id="deleteFriend" parameterType="map">
+	delete from friend where friend_id1 = #{person} and friend_id2 = #{friend}
+	</delete>
+</mapper>

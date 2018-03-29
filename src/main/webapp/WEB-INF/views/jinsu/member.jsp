@@ -50,7 +50,7 @@ function idcheck(){
 		url:'id_check',
 		type:'POST',		
 		data:{id:$('#id').val()},
-		dataType:"text",
+		dataType:'text',
 		success: function(a){
 			if(a == 'success'){
 				$('#join').on('click' , joinmember);

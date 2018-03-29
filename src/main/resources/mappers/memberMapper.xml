@@ -15,6 +15,10 @@
 	select * from member where member_id = #{id}
 	</select>
 	
+	<select id="searchId" resultType="String" parameterType="String">
+	select member_id from member where member_id like '%'||#{id}||'%' 
+	</select>
+	
 	<update id="updateTimeMember" parameterType="String">
 	update member set member_recentlogin=sysdate where member_id=#{id}
 	</update>

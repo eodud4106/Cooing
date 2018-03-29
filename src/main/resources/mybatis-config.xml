@@ -11,5 +11,6 @@
  	<mappers>
 		<mapper resource="mappers/p_messageMapper.xml"/>
 		<mapper resource="mappers/memberMapper.xml"/>
+		<mapper resource="mappers/relationMapper.xml"/>
 	</mappers>
 </configuration>

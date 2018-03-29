@@ -7,6 +7,53 @@
 <html>
 <head>
 <title>Layouts</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>" ></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$(document).ready(function () {
+	initialize();
+});
+function initialize(){
+	$('#searchbt').on('click' ,searchfriend);
+	$('#searchtx').keyup(searchword);
+}
+function searchfriend(){
+	var text = $('#searchtx').val();
+	$.ajax({
+		url:'jinsu/friend_check',
+		type:'POST',		
+		data:{id:text},
+		dataType:'text',
+		success: function(a){
+			if(a=='success'){
+				location.href='./jinsu/friend_get?id='+text;
+			}
+			else{
+				alert('찾으시는 친구 ID가 없습니다.');
+			}
+		},
+		error:function(e){alert(JSON.stringify(e));}		
+	});
+}
+function searchword(){
+	var text = $('#searchtx').val();
+	if(text.length >= 2){
+		$.ajax({
+			url:'jinsu/search_id',
+			type:'POST',		
+			data:{text:text},
+			dataType:'json',
+			success: function(array){
+				$('#searchtx').autocomplete({
+					source:array 
+				});
+			},
+			error:function(e){alert(JSON.stringify(e));}		
+		});
+	}
+}
+</script>
 <meta charset="utf-8" />
 <style>
 body {
@@ -120,7 +167,6 @@ img {
 }
 </style>
 
-
 </head>
 <body>
 	<div id="header">
@@ -147,22 +193,20 @@ img {
 	
 	<!-- 앨범리스트 -->
 	<div id="content">
-		<form id ="" method="" action="">
-		<div class = "search">
-		<input type ="text" placeholder = "검색어를 입력해주세요"  name="" value = "" >
-		<button>search</button>
-		
-		테스트<br />
-<button id="myBtn">모달 열기</button>
-
-<div id="myModal" class="modal">
-                <span class="close">&times;</span>
-                <iframe src="albumView" allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
-        </div>
-		</div>		
-
-		
-		</form>					
+		<form>
+			<div class = "search">
+			<input type="text" id="searchtx" placeholder = "검색어를 입력해주세요">
+			<input type="button" value="검색" id="searchbt">
+			테스트<br />
+			<button id="myBtn">모달 열기</button>
+	
+			<div id="myModal" class="modal">
+	                <span class="close">&times;</span>
+	                <iframe src="albumView" allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
+	        </div>
+        </div>		
+        </form>
+							
 		<div id = "albumList">				
 				<table>
 				<tr>	
@@ -210,13 +254,20 @@ img {
 		<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search1">
 		<button>s</button>
 		</form>		
-				
-		<div>				
-			<p>친구1</p>
-			<p>친구2</p>
-			<p>친구3</p>
-			<p>친구4</p>				
-		</div>
+		<c:if test="${Member ne null}">
+			<c:if test="${fn:length(friend) ne 0}">
+				<c:forEach var="arrf" items="${friend }">
+					<div name="friend">
+						<p>${arrf}</p>
+					</div>
+				</c:forEach>
+			</c:if>
+			<c:if test="${fn:length(friend) eq 0}">
+				<div>
+					<p>친구가 없습니다 친구를 추가해주세요.</p>
+				</div>
+			</c:if>
+		</c:if>
 	</div>
 			<script>
             var modal = document.getElementById("myModal");

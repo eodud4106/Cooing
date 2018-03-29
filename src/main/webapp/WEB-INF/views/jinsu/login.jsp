@@ -27,6 +27,7 @@ function joinmember(){
 		dataType:"text",
 		success: function(a){
 			if(a == 'success'){
+				//상대 주소로 되어있기에 나중에 절대주소로 바뀌어야 할 듯 하다.
 				location.href="../";		
 			}
 			else{
