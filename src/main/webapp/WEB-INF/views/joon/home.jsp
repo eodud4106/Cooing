@@ -9,9 +9,9 @@
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <title> new document </title>
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 //<![CDATA[
   $(function(){
@@ -75,12 +75,12 @@
        return false;
     })
   });
+
+//]]>
   $( function() {
 	    $( "#textarea" ).draggable();
 	
 	  } );
-//]]>
-
 </script>
 <style type="text/css">
   *{margin:0;padding:0;}
@@ -130,23 +130,23 @@
 
 <!--유틸메뉴 추가-->
 <dl id="util_menu">
- <dd>
+<%--  <dd>
     <ul id="zoom">
        <li><img src="images/util_zoom_1.gif" alt="" /></li>
        <li>
-        <a href="#" class="zoom_in"><img src="images/util_zoom_2.gif" alt="" /></a>
+        <a href="#" class="zoom_in"><img src="<c:url value="/resources/joon_image/cooing5.jpg" />"width="200" height="150"></a>
        </li>
        <li>
-        <a href="#" class="zoom_return"><img src="images/util_zoom_3.gif" alt="" /></a>
+        <a href="#" class="zoom_return"><img src="<c:url value="/resources/joon_image/cooing5.jpg" />"width="200" height="150"></a>
        </li>
        <li>
-        <a href="#" class="zoom_out"><img src="images/util_zoom_4.gif" alt="" /></a>
+        <a href="#" class="zoom_out"><img src="<c:url value="/resources/joon_image/cooing5.jpg" />"width="200" height="150"></a>
        </li>
     </ul>
- </dd>
+ </dd> --%>
   <dd>
       <a href="#" class="print_btn">
-        <img src="images/util_print.gif" alt="" />
+        <img src="<c:url value="/resources/joon_image/cooing5.jpg" />"width="200" height="150">
       </a>
   </dd>
 </dl>
