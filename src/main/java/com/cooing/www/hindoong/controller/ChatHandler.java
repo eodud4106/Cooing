@@ -33,6 +33,10 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	private final Logger logger = LogManager.getLogger(getClass());
 
 	private Set<WebSocketSession> sessionSet = new HashSet<WebSocketSession>();
+	
+	private HashMap<String, String> hashmap_id = new HashMap<>();
+	
+	private Gson gson = new Gson();
 
 	// @Override
 	// public void afterConnectionClosed(WebSocketSession session, CloseStatus
@@ -82,8 +86,9 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		super.afterConnectionEstablished(session);
-
+		
 		sessionSet.add(session);
+		
 		this.logger.info("add session!");
 	}
 	
@@ -93,25 +98,27 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 		super.handleMessage(session, message);
 		
 		P_messageVO pm = new P_messageVO();
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		HashMap<String, String> map = new HashMap<String, String>();
 		
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			//사용자가 보낸 메세지는 message.getPayload에 담겨 있다.
 			map = mapper.readValue(message.getPayload().toString(), 
 					new TypeReference<HashMap<String, String>>(){});
-			pm.setP_message_from(map.get("from").toString());
-			pm.setP_message_to(map.get("to").toString());
-			pm.setP_message_message(map.get("message").toString());
-		
 			
-			Gson gson = new Gson();
+			if(map.get("type").equals("loginId")) {
+				hashmap_id.put(map.get("id"), session.getId());
+				
+			} else {
+				pm.setP_message_from(map.get("from").toString());
+				pm.setP_message_to(map.get("to").toString());
+				pm.setP_message_message(map.get("message").toString());
+				
+				sendMessage(map);
+				//db에 넣는 작업에서 딜레이가 발생하기 때문에... 우선 메시지를 뿌리고 나서 db에 넣는다...
+				pmDAO.insertP_message(pm);
+			}
 			
-			sendMessage(gson.toJson(map));
-			//sendMessage(pm.getP_message_from() +" : "+ pm.getP_message_message());
-			
-			//db에 넣는 작업에서 딜레이가 발생하기 때문에... 우선 메시지를 뿌리고 나서 db에 넣는다...
-			pmDAO.insertP_message(pm);
 			
 //	        for(WebSocketSession sess : sessionSet){
 //
@@ -139,11 +146,13 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 		return super.supportsPartialMessages();
 	}
 
-	public void sendMessage(String message) {
+	public void sendMessage(HashMap<String, String> map_message) {
 		for (WebSocketSession session : this.sessionSet) {
 			if (session.isOpen()) {
 				try {
-					session.sendMessage(new TextMessage(message));
+					if (hashmap_id.get(map_message.get("to")).equals(session.getId())) {
+							session.sendMessage(new TextMessage(gson.toJson(map_message)));
+						} 
 				} catch (Exception ignored) {
 					this.logger.error("fail to send message!", ignored);
 				}

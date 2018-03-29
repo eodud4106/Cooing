@@ -11,23 +11,14 @@
 
 <script type="text/javascript">
 
+	var wsUri = "ws://localhost:8080/www/chat/echo.do";
+	var websocket;
+
     $(document).ready(function() {
 
         $("#sendBtn").click(function() {
             sendMessage();
         });
-        
-        var wsUri = "ws://localhost:8080/www/chat/echo.do";
-        websocket = new WebSocket(wsUri);
-	   	websocket.onmessage = function(evt) {
-	   		onMessage(evt)
-	   	};
-	   	websocket.onopen = function(evt) {
-	   		onOpen(evt)
-	   	};
-	   	websocket.onerror = function(evt) {
-	   		onError(evt)
-	   	};
 
     });
     
@@ -36,18 +27,26 @@
     	
     	//TODO 수신자, 발신자를 잘....
         var sendMessage = {
-				from: "test",
-				to: "test1",
+    				type: "message",
+				from: sessionStorage.getItem('loginId'),
+				to: $('#select_friend').val(),
 				message: $('#message').val()
 			}
 
         websocket.send(JSON.stringify(sendMessage));
-        $('#message').val('');
+        $('#message').val('').focus();
 
     }
     
 	function onOpen(evt) {
 		//TODO 채팅창 열렸을 때 모든 메시지를 핸들러가 보낸다. 여기서는 그 메시지를 차곡차곡 잘 보여주자...
+		//open할 때... 현재 유저의 아이디를 서버로 보내자...
+		var sendMessage = {
+			type: "loginId",
+			id: sessionStorage.getItem('loginId'),
+		}
+
+   		websocket.send(JSON.stringify(sendMessage));
 	}
     
 	//서버로부터 메시지를 받으면 호출됨.
@@ -60,27 +59,20 @@
         var from = chatData.from;
         var message = chatData.message;
         
-        var span_from = 
-		$('<span />', {
-			 value : from
-        });
+        var div_message = document.createElement('div');sss
         
-        var span_message = 
-    		$('<span />', {
-    			value : message
-		});
-        
-        if (from == "${sessionScope.loginid }") {
+        if (from == sessionStorage.getItem('loginId')) {
 			//자기가 보낸 메시지
-			$("#data").append(message + " < ");
-			$("#data").append(from + "<br>");
+			$(div_message).css('text-align', 'right').html(message + " < " + from + "<br>");
+			
 		} else {
 			//다른 사람이 보낸 메시지
-			$("#data").append(from + " > ");
-			$("#data").append(message + "<br>");
+			$(div_message).css('text-align', 'left').html(from + " > " + message + "<br>");
+			
 		}
-       	
-        //$("#data").append(from + " : " + message + "<br/>");
+        
+        $("#data").append(div_message);
+        
         $("#data").scrollTop($("#data")[0].scrollHeight);
        
     }
@@ -91,11 +83,30 @@
         $("#data").append("연결 끊김");
 
     }
+    
+    function setLoginId() {
+    		var id = $('#loginId').val();
+    		sessionStorage.setItem('loginId', id);
+    		$('#span_loginId').text(id);
+    	
+        websocket = new WebSocket(wsUri);
+        
+    	   	websocket.onmessage = function(evt) {
+    	   		onMessage(evt)
+    	   	};
+    	   	websocket.onopen = function(evt) {
+    	   		onOpen(evt)
+    	   	};
+    	   	websocket.onerror = function(evt) {
+    	   		onError(evt)
+    	   	};
+    }
+    
+    //TODO 페이지 로딩 시 친구 목록 가져오는 ajax... 를 여기 작성할 예정임...
 
 </script>
 </head>
 <body>
-	
 	
 	<h1 style="text-align: center;">흰둥이 채팅방</h1>
 	<br>
@@ -104,11 +115,20 @@
 		<a href="/www">홈으로 돌아가기...</a>
 	
 		<p>입장 시각 -> ${serverTime }</p>	
+		<p>로그인 아이디 -> <span id="span_loginId"></span> </p>	
+		<select id="select_friend">
+			<option>보낼 친구 선택</option>
+			<option value="test1">test1</option>
+			<option value="test2">test2</option>
+			<option value="test3">test3</option>
+		</select>
+		<input type="text" id="loginId" placeholder="아이디 입력...">
+		<input type="button" value="확인" onclick="setLoginId()">
 	
 	    <div id="data" style="height: 300px; width: 50%; overflow-y: scroll; margin: auto"></div>
 	    
 	    <div id="div_send">
-			<input type="text" id="message" />
+			<input type="text" id="message" autocomplete="off"/>
 			<input type="button" id="sendBtn" value="전송" />
 	    </div>
 	    
