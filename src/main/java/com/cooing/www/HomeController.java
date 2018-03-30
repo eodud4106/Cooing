@@ -40,10 +40,11 @@ public class HomeController {
 	@RequestMapping(value = "/albumList", method = RequestMethod.GET)
 	public String mainPage(Model model,HttpSession session) {
 		Member personal = (Member)session.getAttribute("Member");
-		logger.info(personal.getMember_id());
-		ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
-		model.addAttribute("friend", arr_friend);
-		logger.info(arr_friend.toString());
+		if(personal != null){
+			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
+			model.addAttribute("friend", arr_friend);
+		}
+		
 		return "albumList";
 	}
 	
