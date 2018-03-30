@@ -17,4 +17,13 @@
 	<delete id="deleteFriend" parameterType="map">
 	delete from friend where friend_id1 = #{person} and friend_id2 = #{friend}
 	</delete>
+	
+	<insert id="insertParty" parameterType="party">
+	insert into party (party_num,party_name,party_leader)
+		values (party_seq.nextval,#{party_name},#{party_leader})
+	</insert>
+	<insert id="insertPartyMember" parameterType="partymember">
+	insert into partymember (g_member_num,g_member_partynum,g_member_memberid)
+		values (partymember_seq.nextval,#{g_member_partynum},#{g_member_memberid})
+	</insert>
 </mapper>

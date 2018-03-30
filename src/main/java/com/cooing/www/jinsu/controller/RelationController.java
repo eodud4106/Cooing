@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cooing.www.jinsu.dao.MemberDAO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.Member;
+import com.cooing.www.jinsu.object.Party;
+import com.cooing.www.jinsu.object.PartyMember;
 
 @Controller
 @RequestMapping("/jinsu")
@@ -32,6 +34,7 @@ public class RelationController {
 	
 	@RequestMapping(value="/friend_get" , method = RequestMethod.GET)
 	public String friend_get(String id , Model model , HttpSession session){
+		logger.info("friend_get__jinsu");
 		Member personally = (Member)session.getAttribute("Member");
 		Member friend= memberDAO.selectMember(id);
 		model.addAttribute("friend", friend);
@@ -49,6 +52,7 @@ public class RelationController {
 	@ResponseBody
 	@RequestMapping(value="/friend_check" , method = RequestMethod.POST)
 	public String friend_check(String id){
+		logger.info("friend_check__jinsu");
 		Member friend= memberDAO.selectMember(id);
 		if(friend != null){
 			return "success";
@@ -59,6 +63,7 @@ public class RelationController {
 	@ResponseBody
 	@RequestMapping(value="/friend_plus" , method = RequestMethod.POST)
 	public String friend_plus(String friendid , HttpSession session){
+		logger.info("friend_plus__jinsu");
 		Member personally = (Member)session.getAttribute("Member");
 		Member friend= memberDAO.selectMember(friendid);
 		Map<String,String> map = new HashMap<String,String>();
@@ -72,6 +77,7 @@ public class RelationController {
 	@ResponseBody
 	@RequestMapping(value="/friend_delete" , method = RequestMethod.POST)
 	public String friend_delete(String friendid , HttpSession session){
+		logger.info("friend_delete__jinsu");
 		Member personally = (Member)session.getAttribute("Member");
 		Member friend= memberDAO.selectMember(friendid);
 		Map<String,String> map = new HashMap<String,String>();
@@ -81,5 +87,34 @@ public class RelationController {
 			return "success";
 		}
 		return "fail";
+	}
+	
+	@RequestMapping(value="/groupcreate_get" , method = RequestMethod.GET)
+	public String group_get(){
+		logger.info("group_get__jinsu");
+		return strpath + "/groupcreate";
+	}
+	@ResponseBody
+	@RequestMapping(value="/party_create" , method = RequestMethod.POST)
+	public String party_create(HttpSession session , String groupname){
+		logger.info("party_create__jinsu");
+		Member personally = (Member)session.getAttribute("Member");
+		if(relationDAO.insertParty(new Party(0,groupname , personally.getMember_id()))){
+			return "success";
+		}
+		return "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/party_member_create" , method = RequestMethod.POST)
+	public String party_member_create(HttpSession session , int partynum , String groupmember){
+		logger.info("party_member_create__jinsu");	
+		String[] arr_str_member = groupmember.split("<br>");
+		for(String s : arr_str_member){
+			if(!relationDAO.insertPartyMember(new PartyMember(0 , partynum , s)) == true)
+				return "fail";
+		}
+		
+		return "success";		
 	}
 }

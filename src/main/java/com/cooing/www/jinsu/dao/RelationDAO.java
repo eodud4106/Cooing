@@ -7,6 +7,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cooing.www.jinsu.object.Party;
+import com.cooing.www.jinsu.object.PartyMember;
+
 @Repository
 public class RelationDAO {
 	@Autowired
@@ -28,6 +31,22 @@ public class RelationDAO {
 	public boolean deleteFriend(Map<String , String> map){
 		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
 		if(mapper.deleteFriend(map) > 0)
+			return true;
+		else 
+			return false;
+	}
+	
+	public boolean insertParty(Party group){
+		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
+		if(mapper.insertParty(group) > 0)
+			return true;
+		else 
+			return false;
+	}
+	
+	public boolean insertPartyMember(PartyMember pm){
+		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
+		if(mapper.insertPartyMember(pm) > 0)
 			return true;
 		else 
 			return false;

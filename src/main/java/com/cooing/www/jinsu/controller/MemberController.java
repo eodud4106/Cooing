@@ -38,12 +38,13 @@ public class MemberController {
 	
 	@RequestMapping(value="/member_get" , method = RequestMethod.GET)
 	public String member_get(){		
+		logger.info("member_get__jinsu");
 		return strpath + "/member";
 	}
 	@RequestMapping(value="/member_post" , method = RequestMethod.POST)
 	public String member_post(Member member , @RequestParam(value="hobby" , required =false) String[] hobby
 			,MultipartFile upload , HttpSession session){	
-		
+		logger.info("member_post__jinsu");		
 		if(upload != null && !upload.isEmpty()){
 			String savefile = FileLimit.FileSave(upload, strFilePath);
 			member.setMember_picture(savefile);
@@ -65,6 +66,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value="/member_check" , method = RequestMethod.POST)
 	public String member_check(Member member){
+		logger.info("member_check__jinsu");
 		char[] cban ={ '/' , '&' , '<' , '>' , '|'};
 		//검사
 		if(member.getMember_id() != null){
@@ -90,6 +92,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value="/search_id" , method = RequestMethod.POST)
 	public ArrayList<String> search_id(String text){
+		logger.info("search_id__jinsu");
 		ArrayList<String> arr_memberid = memberDAO.searchId(text);	
 		return arr_memberid;				
 	}
@@ -97,6 +100,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value="/id_check" , method = RequestMethod.POST)
 	public String id_check(String id){
+		logger.info("id_check__jinsu");
 		Member member_check= memberDAO.selectMember(id);
 		if(member_check != null){
 			return "fail";
@@ -106,11 +110,13 @@ public class MemberController {
 	
 	@RequestMapping(value="/login_get" , method = RequestMethod.GET)
 	public String login_get(){		
+		logger.info("login_get__jinsu");
 		return strpath + "/login";
 	}
 	
 	@RequestMapping(value="/logout_get" , method = RequestMethod.GET)
 	public String logout_get(HttpSession session){
+		logger.info("logout_get__jinsu");
 		Member member = (Member)session.getAttribute("Member");
 		session.removeAttribute("Login");
 		session.removeAttribute("Member");
@@ -121,6 +127,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value="/login_post" , method = RequestMethod.POST)
 	public String login_post(Member member,HttpSession session){
+		logger.info("login_post__jinsu");
 		Member member_check= memberDAO.selectMember(member.getMember_id());
 		if(member_check != null){
 			if(member_check.getMember_pw().equals(member.getMember_pw())){
@@ -140,6 +147,7 @@ public class MemberController {
 	
 	@RequestMapping(value = "img", method = RequestMethod.GET)
 	public String img(HttpServletResponse response , HttpSession session ) {
+		logger.info("img__jinsu");
 		Member member = (Member)session.getAttribute("Member");
 		String fullpath = strFilePath + "/" + member.getMember_picture();
 		FileInputStream filein = null;
