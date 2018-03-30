@@ -118,7 +118,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 					sendMessage(messageList.get(i), session.getId());
 				}
 				
-			} else {
+			} else if (map.get("type").equals("message")) {
 				pm.setP_message_from(map.get("from"));
 				pm.setP_message_to(map.get("to"));
 				pm.setP_message_message(map.get("message"));
@@ -134,6 +134,8 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 				sendMessage(pm);
 				//db에 넣는 작업에서 딜레이가 발생하기 때문에... 우선 메시지를 뿌리고 나서 db에 넣는다...
 				pmDAO.insertP_message(pm);
+			} else if (map.get("type").equals("read")) {
+				//TODO 읽음 처리 구현해야 함.. 
 			}
 		
 		} catch (Exception e) {
