@@ -19,7 +19,7 @@ public class ChatController {
 	
 	// chat 홈으로 이동
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model, String friend_id) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
@@ -27,7 +27,8 @@ public class ChatController {
 		
 		String formattedDate = dateFormat.format(date);
 		
-		model.addAttribute("serverTime", formattedDate );
+		model.addAttribute("serverTime", formattedDate);
+		model.addAttribute("friend_id", friend_id);
 		
 		return "hindoong/home";
 	}

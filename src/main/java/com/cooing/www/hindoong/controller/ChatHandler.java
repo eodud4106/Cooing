@@ -1,9 +1,10 @@
 package com.cooing.www.hindoong.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.log4j.LogManager;
@@ -21,9 +22,7 @@ import com.cooing.www.hindoong.dao.P_messageDAO;
 import com.cooing.www.hindoong.vo.P_messageVO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 @Repository
 public class ChatHandler extends TextWebSocketHandler implements InitializingBean {
@@ -116,13 +115,21 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 				search.put("id2", map.get("to"));
 				ArrayList<P_messageVO> messageList = pmDAO.selectP_message(search);
 				for (int i = 0; i < messageList.size(); i++) {
-					sendMessage(messageList.get(i));
+					sendMessage(messageList.get(i), session.getId());
 				}
 				
 			} else {
 				pm.setP_message_from(map.get("from"));
 				pm.setP_message_to(map.get("to"));
 				pm.setP_message_message(map.get("message"));
+
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+				String str = sdf.format(new Date());
+				
+				pm.setP_message_date(str);
+				
+				this.logger.info(pm);
 				
 				sendMessage(pm);
 				//db에 넣는 작업에서 딜레이가 발생하기 때문에... 우선 메시지를 뿌리고 나서 db에 넣는다...
@@ -149,19 +156,35 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 		return super.supportsPartialMessages();
 	}
 
-	//public void sendMessage(HashMap<String, String> map_message) {
+	// 대화 푸시
 	public void sendMessage(P_messageVO pm) {
 		for (WebSocketSession session : this.sessionSet) {
 			if (session.isOpen()) {
 				try {
-					System.out.println(pm);
 					if (hashmap_id.get(pm.getP_message_from()).equals(session.getId()) ||
 							hashmap_id.get(pm.getP_message_to()).equals(session.getId())) {
 						session.sendMessage(new TextMessage(gson.toJson(pm)));
+						this.logger.error(pm);
 					} 
 				} catch (Exception e) {
 					e.printStackTrace();
 					//this.logger.error("fail to send message!");
+				}
+			}
+		}
+	}
+	
+	//대화방 입장 시 이전 채팅 내역 보내기
+	public void sendMessage(P_messageVO pm, String id) {
+		for (WebSocketSession session : this.sessionSet) {
+			if (session.isOpen()) {
+				try {
+					if (id.equals(session.getId())) {
+						session.sendMessage(new TextMessage(gson.toJson(pm)));
+						break;
+					} 
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		}

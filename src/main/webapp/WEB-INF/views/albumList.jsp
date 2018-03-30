@@ -8,8 +8,9 @@
 <head>
 <title>Layouts</title>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>" ></script>
+<script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="resources/js/chat.js"></script>
 <script>
 $(document).ready(function () {
 	initialize();
@@ -258,7 +259,7 @@ img {
 			<c:if test="${fn:length(friend) ne 0}">
 				<c:forEach var="arrf" items="${friend }">
 					<div name="friend">
-						<p>${arrf}</p>
+						<p onclick="openPChat('${arrf}', '')">${arrf}</p>
 					</div>
 				</c:forEach>
 			</c:if>
