@@ -11,6 +11,28 @@
 <script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>" ></script>
 </head>
 <body>
+<h1>LeaderList</h1>
+<c:if test="${Member ne null}">
+	<c:if test="${fn:length(leaderlist) ne 0}">
+		<c:forEach var="arrll" items="${leaderlist}">
+			<div name="leaderlist">
+				<p>${arrll}</p>
+			</div>
+		</c:forEach>
+	</c:if>
+</c:if>
+
+<h1>MemberList</h1>
+<c:if test="${Member ne null}">
+	<c:if test="${fn:length(memberlist) ne 0}">
+		<c:forEach var="arrml" items="${memberlist}">
+			<div name="memberlist">
+				<p>${arrml}</p>
+			</div>
+		</c:forEach>
+	</c:if>
+</c:if>
+
 
 </body>
 </html>

@@ -22,22 +22,21 @@ function initialize(){
 }
 //여기서 부터 제작해야 함 일반 멤버 부분에 partynum 구해와서 넣어줘야 됨 partyname이 unique니까 그걸로 찾아서 넣어주면 될듯 거의 다함.
 function creategroup(){
-	if($('#groupname').val().length > 0){
-		alert('groupcreate');
+	var name = $('#groupname').val();
+	if(name.length > 0){
 		$.ajax({
 			url:'party_create',
 			type:'POST',		
-			data:{groupname:$('#groupname').val()},
+			data:{groupname:name},
 			dataType:'text',
 			success: function(a){
-				if(a=='success'){
-					var num = 0;
-					if($('#idlist').val().length > 0){
-						var idlist = $('#idlist').val();
+				if(a != -1){
+					var idlist = $('#idlist').html();
+					if(idlist.length > 0){
 						$.ajax({
 							url:'party_member_create',
 							type:'POST',		
-							data:{groupmember:idlist,partynum:num},
+							data:{groupmember:idlist,partynum:a},
 							dataType:'text',
 							success: function(a){
 								if(a=='success'){

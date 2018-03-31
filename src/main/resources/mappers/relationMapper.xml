@@ -22,8 +22,25 @@
 	insert into party (party_num,party_name,party_leader)
 		values (party_seq.nextval,#{party_name},#{party_leader})
 	</insert>
+	
+	<select id="searchPartyNumber" resultType="int" parameterType="String">
+	select party_num from party where party_name = #{party_name}
+	</select>
+	
 	<insert id="insertPartyMember" parameterType="partymember">
 	insert into partymember (g_member_num,g_member_partynum,g_member_memberid)
 		values (partymember_seq.nextval,#{g_member_partynum},#{g_member_memberid})
 	</insert>
+	
+	<select id="searchLeaderPartyName" resultType="String" parameterType="String">
+	select party_name from party where party_leader = #{party_leader}
+	</select>
+	
+	<select id="searchMemberPartyName" resultType="int" parameterType="String">
+	select g_member_partynum from partymember where g_member_memberid = #{g_member_memberid}
+	</select>
+	
+	<select id="searchPartyName" resultType="String" parameterType="int">
+	select party_name from party where party_num = #{party_num}
+	</select>
 </mapper>

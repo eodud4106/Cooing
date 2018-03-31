@@ -12,6 +12,9 @@ public interface RelationMapper {
 	public int deleteFriend(Map<String , String> map);
 	
 	public int insertParty(Party group);
+	public int searchPartyNumber(String id);
+	public ArrayList<String> searchLeaderPartyName(String id);
 	public int insertPartyMember(PartyMember pm);
-	
+	public ArrayList<Integer> searchMemberPartyName(String id);
+	public String searchPartyName(int inum);
 }

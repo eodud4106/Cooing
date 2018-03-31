@@ -96,25 +96,58 @@ public class RelationController {
 	}
 	@ResponseBody
 	@RequestMapping(value="/party_create" , method = RequestMethod.POST)
-	public String party_create(HttpSession session , String groupname){
+	public int party_create(HttpSession session , String groupname){
 		logger.info("party_create__jinsu");
 		Member personally = (Member)session.getAttribute("Member");
-		if(relationDAO.insertParty(new Party(0,groupname , personally.getMember_id()))){
-			return "success";
+		if(personally == null){
+			return -1;
 		}
-		return "fail";
+		int inum = -1;
+		if(relationDAO.insertParty(new Party(0,groupname , personally.getMember_id()))){
+			inum = relationDAO.searchPartyNumber(groupname);			
+		}
+		return inum;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/party_member_create" , method = RequestMethod.POST)
-	public String party_member_create(HttpSession session , int partynum , String groupmember){
-		logger.info("party_member_create__jinsu");	
+	public String party_member_create(int partynum , String groupmember){
+		logger.info("party_member_create__jinsu");
 		String[] arr_str_member = groupmember.split("<br>");
-		for(String s : arr_str_member){
-			if(!relationDAO.insertPartyMember(new PartyMember(0 , partynum , s)) == true)
-				return "fail";
+		for(String s : arr_str_member){			
+			if(!s.isEmpty() && s.length() != 0){
+				if(!relationDAO.insertPartyMember(new PartyMember(0 , partynum , s)) == true)
+					return "fail";
+			}
+		}		
+		return "success";		
+	}
+	
+	@RequestMapping(value="/groupview_get" , method = RequestMethod.GET)
+	public String groupview_get(HttpSession session , Model model){
+		logger.info("groupview_get__jinsu");
+		Member personally = (Member)session.getAttribute("Member");
+		if(personally == null){
+			return "redirect:/";
+		}
+		ArrayList<String> groupleaderlist = new ArrayList<String>();
+		ArrayList<String> arraystrval = relationDAO.searchLeaderPartyName(personally.getMember_id());
+		for(String s : arraystrval){
+			groupleaderlist.add(s);
+		}
+		arraystrval.clear();
+		ArrayList<String> groupmemberlist = new ArrayList<String>();
+		ArrayList<Integer> arrayintval = relationDAO.searchMemberPartyName(personally.getMember_id());
+		for(Integer i : arrayintval){
+			arraystrval.add(relationDAO.searchPartyName(i));
+		}
+		for(String s : arraystrval){
+			groupmemberlist.add(s);
 		}
 		
-		return "success";		
+		model.addAttribute("leaderlist", groupleaderlist);
+		model.addAttribute("memberlist", groupmemberlist);
+		
+		return strpath + "/groupview";
 	}
 }

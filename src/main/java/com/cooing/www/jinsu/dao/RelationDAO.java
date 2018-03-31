@@ -44,11 +44,31 @@ public class RelationDAO {
 			return false;
 	}
 	
+	public int  searchPartyNumber(String id){
+		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
+		return mapper.searchPartyNumber(id);
+	}
+	
+	public ArrayList<String> searchLeaderPartyName(String id){
+		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
+		return mapper.searchLeaderPartyName(id);
+	}	
+	
 	public boolean insertPartyMember(PartyMember pm){
 		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
 		if(mapper.insertPartyMember(pm) > 0)
 			return true;
 		else 
 			return false;
+	}
+	
+	public ArrayList<Integer> searchMemberPartyName(String id){
+		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
+		return mapper.searchMemberPartyName(id);
+	}
+	
+	public String searchPartyName(int inum){
+		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
+		return mapper.searchPartyName(inum);
 	}
 }
