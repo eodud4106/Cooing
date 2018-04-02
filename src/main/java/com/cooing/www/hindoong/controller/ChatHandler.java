@@ -109,14 +109,14 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 			if(map.get("type").equals("loginId")) {
 				hashmap_id.put(map.get("id"), session.getId());
 				
-				//TODO 나와 상대와의 대화목록을 불러와서 클라이언트에게 보내줘야 함.
-				HashMap<String, String> search = new HashMap<>();
-				search.put("id1", map.get("id"));
-				search.put("id2", map.get("to"));
-				ArrayList<P_messageVO> messageList = pmDAO.selectP_message(search);
-				for (int i = 0; i < messageList.size(); i++) {
-					sendMessage(messageList.get(i), session.getId());
-				}
+//				//TODO 나와 상대와의 대화목록을 불러와서 클라이언트에게 보내줘야 함.
+//				HashMap<String, String> search = new HashMap<>();
+//				search.put("id1", map.get("id"));
+//				search.put("id2", map.get("to"));
+//				ArrayList<P_messageVO> messageList = pmDAO.selectP_message(search);
+//				for (int i = 0; i < messageList.size(); i++) {
+//					sendMessage(messageList.get(i), session.getId());
+//				}
 				
 			} else if (map.get("type").equals("message")) {
 				pm.setP_message_from(map.get("from"));
