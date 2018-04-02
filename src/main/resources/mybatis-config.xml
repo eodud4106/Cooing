@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.cooing.www.hindoong.vo.P_messageVO" alias="p_message"/>
+		<typeAlias type="com.cooing.www.jinsu.object.Member" alias="member"/>
+		<typeAlias type="com.cooing.www.jinsu.object.Category" alias="category"/>
+		<typeAlias type="com.cooing.www.jinsu.object.Party" alias="party"/>
+		<typeAlias type="com.cooing.www.jinsu.object.PartyMember" alias="partymember"/>
+	</typeAliases>
+ 	<mappers>
+		<mapper resource="mappers/p_messageMapper.xml"/>
+		<mapper resource="mappers/memberMapper.xml"/>
+		<mapper resource="mappers/relationMapper.xml"/>
+	</mappers>
+</configuration>

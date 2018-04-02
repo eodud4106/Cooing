@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cooing.www.jinsu.dao.MemberMapper">
+
+	<insert id="insertMember" parameterType="member">
+	insert into member (
+		member_id,member_pw,member_picture,member_recentlogin)
+	values (#{member_id},#{member_pw},#{member_picture},sysdate)
+	</insert>
+	
+	<select id="selectMember" resultType="member" parameterType="String">
+	select * from member where member_id = #{id}
+	</select>
+	
+	<select id="searchId" resultType="String" parameterType="String">
+	select member_id from member where member_id like '%'||#{id}||'%' 
+	</select>
+	
+	<update id="updateTimeMember" parameterType="String">
+	update member set member_recentlogin=sysdate where member_id=#{id}
+	</update>
+	
+	<insert id="insertCategory" parameterType="category">
+	insert into category (
+		category_num,category_memberid,category_kind)
+	values (category_seq.nextval , #{category_memberid} , #{category_kind})
+	</insert>
+	
+</mapper>
