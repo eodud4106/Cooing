@@ -40,6 +40,8 @@
 	   	websocket.onerror = function(evt) {
 	   		onError(evt)
 	   	};
+	   	
+	   	$("#data").scrollTop($("#data")[0].scrollHeight);
 
     });
     
@@ -62,10 +64,10 @@
 	function onOpen(evt) {
 		//TODO 채팅창 열렸을 때 모든 메시지를 핸들러가 보낸다. 여기서는 그 메시지를 차곡차곡 잘 보여주자...
 		//open할 때... 현재 유저의 아이디를 서버로 보내자...
-		var sendMessage = {
+ 		var sendMessage = {
 			type: "loginId",
 			id: $('#span_loginId').attr('loginId'),
-			to: $('#friend_id').attr('friend_id')
+			//to: $('#friend_id').attr('friend_id')
 		}
 
    		websocket.send(JSON.stringify(sendMessage));
@@ -86,11 +88,11 @@
         
         if (from == $('#span_loginId').attr('loginId')) {
 			//자기가 보낸 메시지
-			$(div_message).css('text-align', 'right').html(m_date + "/" + message + " < <br>");
+			$(div_message).css('text-align', 'right').html(m_date + " / " + message + " < <br>");
 			
 		} else {
 			//다른 사람이 보낸 메시지
-			$(div_message).css('text-align', 'left').html(from + " > " + message + "/" + m_date + "<br>");
+			$(div_message).css('text-align', 'left').html(from + " > " + message + " / " + m_date + "<br>");
 			
 		}
         
@@ -128,7 +130,26 @@
 		<p>로그인 아이디 -> <span id="span_loginId" loginId="${sessionScope.Member.member_id}">${sessionScope.Member.member_id}</span></p>
 		<p>대화 상대 -> <span id="friend_id" friend_id="${friend_id}">${friend_id}</span></p>
 	
-	    <div id="data" style="height: 300px; width: 80%; overflow-y: scroll; margin: auto"></div>
+	    <div id="data" style="height: 300px; width: 80%; overflow-y: scroll; margin: auto; display: block;">
+			<c:if test="${arr_pm != null }">
+				<c:forEach items="${arr_pm }" var="pm">
+					<c:if test="${pm.p_message_from == sessionScope.Member.member_id }">
+					<!-- 자기가 보낸 메세지 -->
+						<div style="text-align: right">
+							<a>${pm.p_message_date.substring(0, 16) } / </a>
+							<a>${pm.p_message_message } < </a>
+						</div>
+					</c:if>
+					<c:if test="${pm.p_message_from != sessionScope.Member.member_id }">
+					<!-- 상대가 보낸 메세지 -->
+						<div style="text-align: left">
+							<a> > ${pm.p_message_message } / </a>
+							<a>${pm.p_message_date.substring(0, 16) }</a>
+						</div>
+					</c:if>
+				</c:forEach>	
+			</c:if>
+	    </div>
 	    
 	    <div id="div_send">
 			<input type="text" id="message" autocomplete="off"/>
