@@ -4,10 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Albumview</title>
+<title>AlbumView</title>
 <meta charset="utf-8" />
+<meta name="viewport" content="width = 1050, user-scalable = no" />
+	<script type="text/javascript" src="./resources/album_page_js/extras/jquery.min.1.7.js"></script>
+	<script type="text/javascript" src="./resources/album_page_js/extras/modernizr.2.5.3.min.js"></script>
+	<link rel="stylesheet" href="resources/js/jquery-ui.css">
+	<script src="resources/js/external/jquery/jquery.js"></script>
+	<script src="resources/js/jquery-ui.js"></script>
 
-<title>2단 레이아웃</title>
 <style>
 
 body {
@@ -47,83 +52,209 @@ img {
 	width : 50px;
 	height: 50px;
 }
-.tab_menu{
-	width:200px;
-	font-size: 9pt;
-	font-weight: bold;
-	height : 30px;
-	text-align: left;
+.img1 {
+	width : 30px;
+	height: 30px;
 }
-.tab_menu>ul{
-	display : block;
-	margin : 0;
-	padding : 0;
-	width: 200px;
-	vertical-align: middle;
+
+p {
+    margin: 0 0 20px;
+    line-height: 1.5;}
+
+.main {
+    min-width: 200px;
+    max-width: 200px;
+    padding: 10px;
+    margin: 0 auto;
+    background: #ffffff;}
+
+section {
+    display: none;
+    padding: 20px 0 0;    
+    font-size : 14px;        
+    border-top: 1px solid #ddd;}
+
+/*라디오버튼 숨김*/
+input {
+      display: none;}
+
+label {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 5px 10px;
+    font-weight: 600;
+    text-align: center;
+    color: #bbb;
+    border: 1px solid transparent;
+    font-size: 15px;}
+
+label:hover {
+    color: #2e9cdf;
+    cursor: pointer;}
+
+/*input 클릭시, label 스타일*/
+input:checked + label {
+      color: #555;
+      border: 1px solid #ddd;
+      border-top: 2px solid #2e9cdf;
+      border-bottom: 1px solid #ffffff;}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2{
+    display: block;}
+     
+.search{	
+	width: 120px;
+	display:block;
+	position: absolute;	
 }
-.tab_menu>ul>li{
-	display: inline-block;
-	width: 50px;
-	line-height: 20px;
-	white-space: nowrap;
-	text-transform: capitalize !important;
-	text-align: center;
-	list-style: none;
-	vertical-align: middle;
-	color: #929292;
-	background-color: #DBDBDB;
-	border: 1px solid #989a9f;
-	cursor: pointer;
+.bt{
+	position: absolute;
+	right: 40px;
 }
-.tab_menu>ul>li.active{
-	color: #1c58af;
-	background-color: #ffffff;
-	border-bottom: 1px solid #ffffff;
-}
-.tab_content{
-	width: 200px;
-	padding: 1em;
-	border: 1px solid #989a9f;
-	font-size: 9pt;
-}
+.tb1{
+	padding-top: 20px;
+}	
 		
 </style>
 </head>
 <body>
-     <div id="container"> 
-        
-      <!--   앨범제목, 앨범내용, 태그, 댓글, 좋아요, 채팅 -->
-		<div id="sidebar">
-		<table>
-			<tr>	
-				<td><img src = "./resources/image_mj/suji.jpg"></td>	
-				<td>id</td>
-			</tr>				
-		</table>
-		<table id = "table1">
-			<tr>	
-				<td><p>앨범제목dkfadfadkfasdkfadklsfaklsdf 
-					<p>앨범설명dfadafadfadfadfadfadfaddfadfads
-					<p>해쉬태그dafdafadfadfadfadfadfadfadfad</td>													
-			</tr>
-		</table>
-		<div class ="tab_menu">
-			<ul>
-				<li class ="active">댓글</li>
-				<li>채팅</li>
-			</ul>
-		</div>
-		<div class = "tab_content">
-		content
-		</div>
-					
-		</div>
-		<div id="contents">
-			<h2>앨범</h2>
-            
-		</div>
+<div id="container"> 
+   
+<!--   앨범제목, 앨범내용, 태그, 댓글, 좋아요, 채팅 -->
+<div id="sidebar">
+<table>
+	<tr>	
+		<td><img src = "./resources/image_mj/suji.jpg"></td>	
+		<td>id</td>
+	</tr>				
+</table>
+<table id = "table1">
+	<tr>	
+		<td><p>앨범제목 
+			<p>앨범설명
+			<p>해쉬태그</td>													
+	</tr>
+</table>
+	
+	<div class="main">
+ 		<input id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
+		<label for="tab1">댓글</label>
+
+  		<input id="tab2" type="radio" name="tabs">
+    	<label for="tab2">채팅</label>   
+
+    	<section id="content1">     
+        <table>        	
+        <tr>	      
+			<td><img src = "./resources/image_mj/suji.jpg" class = "img1"></td>		 
+			<td><input type ="text" placeholder = ""  name="" value = "" class ="search">
+			<button class = "bt">s</button></td>		
+	    </tr>	
+        </table>
+     
+        <table class = tb1>
+        <tr>
+       		<th>mj</th>
+       		<td>css담당</td>
+        </tr>
+        <tr>
+       		<th>js</th>
+      	 	<td>우리조조장</td>
+        </tr>
+        <tr>
+       		<th>yj</th>
+       		<td>흰둥아빠</td>
+        </tr>
+        <tr>
+       		<th>dy</th>
+       		<td>앨범팀장</td>
+        </tr>
+        <tr>
+       		<th>hj</th>
+       		<td>9호선친구</td>
+        </tr>       	
+        </table>        
+    	</section>
+
+   		<section id="content2">
+       		<form id ="" method="" action="">
+			<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search">
+			<button class = "bt">s</button>
+			</form>					
+				<p></p>			
+				<p>친구1</p>
+				<p>친구2</p>
+				<p>친구3</p>
+				<p>친구4</p>
 		
-     </div> 
+				<p>그룹1</p>
+				<p>그룹2</p>		
+    	</section>
+	</div>			
+</div>
+<button>편집</button>
+
+<div id="contents">
+	<div class="flipbook-viewport">	
+		<div class="container">
+			<div class="flipbook">
+				<div style="background-image:url(./resources/image_mj/yui.jpg)"></div>
+				<div style="background-image:url(./resources/image_mj/suji2.jpg)"></div>
+				<div style="background-image:url(./resources/image_mj/yui2.jpeg)"></div>
+				<div style="background-image:url(./resources/image_mj/josh.jpg)"></div>
+		</div>
+	</div>
+</div>
+
+			
+<script type="text/javascript">
+
+function loadApp() {
+
+	// Create the flipbook
+
+	$('.flipbook').turn({
+			// Width
+
+			width:1200,
+			
+			// Height
+
+			height:600,
+
+			// Elevation
+
+			elevation: 50,
+			
+			// Enable gradients
+
+			gradients: true,
+			
+			// Auto center this flipbook
+
+			autoCenter: true
+
+	});
+}
+
+// Load the HTML4 version if there's not CSS transform
+
+yepnope({
+	test : Modernizr.csstransforms,
+	yep: ['./resources/album_page_js/lib/turn.js'],
+	nope: ['./resources/album_page_js/lib/turn.html4.min.js'],
+	both: ['./resources/css_album/basic.css'],
+	complete: loadApp
+});
+
+</script>           
+	
+	</div>	
+
+		
+</div> 
+
 </body>
 </html>
 

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>My Page</title>
+<title>group Page</title>
 <meta charset="utf-8" />
 
 <style>
@@ -123,25 +123,24 @@ img{
 
 	<!-- 왼쪽 사이드바 -->
 	<div id="sidebar_a">
-		<p><img src = "./resources/image_mj/suji.jpg">suji</p>
-		<p>Profile</p>
+		그룹명
+		<p><img src = "./resources/image_mj/yui.jpg">그룹원1</p>
+		<p><img src = "./resources/image_mj/suji.jpg">그룹원2</p>
+		<p><img src = "./resources/image_mj/josh.jpg">그룹원3</p>
+		
+		<p><button>그룹원추가</button>
+		
 		<p></p>
 		<p></p>
 		<p>ALBUM</p>
 		<ul> 	
 		<li>앨범1</li>
-		<li>앨범2</li>						
+		<li>앨범2</li>				
 		</ul>
-		<p>+앨범추가		
 	</div>	
 	
 	<!-- 앨범리스트 -->
 	<div id="content">
-	
-		<div id="albumLayout">
-		앨범 레이아웃
-		<p><button>앨범만들기</button>			
-		</div>
 					
 		<div id = "albumList">	
 		<!-- <button id="myBtn">모달 열기</button>
@@ -153,13 +152,13 @@ img{
 				 -->	
 		<table>
 		<tr>	
-			<td><img src = "./resources/image_mj/suji.jpg"></td>	
-			<td>친구id</td>
-		</tr>				
+			<td><img src = "./resources/image_mj/yui.jpg"></td>	
+			<td>그룹명</td>
+		</tr>					
 		</table>
 		<table id = "table1">
 		<tr>	
-			<td><img src = "./resources/image_mj/suji2.jpg" class = "img_1"></td>
+			<td><img src = "./resources/image_mj/yui2.jpeg" class = "img_1"></td>
 			<td></td>
 			<td><p>앨범제목dkfadfadkfasdkfadklsfaklsdfaklsddaf 
 				<p>앨범설명dfadafadfadfadfadfadfadfadfadfads

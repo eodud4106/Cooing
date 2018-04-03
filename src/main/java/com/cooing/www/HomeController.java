@@ -48,13 +48,6 @@ public class HomeController {
 		return "albumList";
 	}
 	
-	/**
-	 * 앨범뷰...?? 뭐지???
-	 */
-	@RequestMapping(value = "/albumView", method = RequestMethod.GET)
-	public String albumPage(Model model) {
-		
-		return "albumView";
-	}
+	
 	
 }
