@@ -9,8 +9,8 @@ public interface P_messageMapper {
 
 	public int insertP_message(P_messageVO p_message);
 	
-	//p_message_num을 받아 해당 메세지의 읽음 숫자를 하나 줄인다.
-	public int updateP_message(int p_message_num);
+	//해당 메세지의 읽음 숫자를 하나 줄인다.
+	public int updateP_message(HashMap<String, String> map);
 	
 	public ArrayList<P_messageVO> selectP_message(HashMap<String, String> map);
 	

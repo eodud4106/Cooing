@@ -27,9 +27,9 @@
 	<update id="updateP_message">
 	UPDATE p_message
 	SET
-		p_message_read = p_message_read-1
+		p_message_read = 0
 	WHERE
-		p_message_from = #{from} and p_message_to = #{to}
+		p_message_read = 1 and p_message_from = #{from} and p_message_to = #{to}
 	</update>
 	
 	<select id="selectP_message" resultType="p_message">

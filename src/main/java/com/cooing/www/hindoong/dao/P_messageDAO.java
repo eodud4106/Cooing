@@ -31,8 +31,14 @@ public class P_messageDAO implements P_messageMapper {
 	}
 
 	@Override
-	public int updateP_message(int p_message_num) {
-		// TODO Auto-generated method stub
+	public int updateP_message(HashMap<String, String> map) {
+
+		try {
+			System.out.println("읽은 메시지 -> " + session.getMapper(P_messageMapper.class).updateP_message(map));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return 0;
 	}
 

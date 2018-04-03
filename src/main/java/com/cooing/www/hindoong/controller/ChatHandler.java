@@ -23,6 +23,7 @@ import com.cooing.www.hindoong.vo.P_messageVO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 @Repository
 public class ChatHandler extends TextWebSocketHandler implements InitializingBean {
@@ -128,14 +129,16 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 				String str = sdf.format(new Date());
 				
 				pm.setP_message_date(str);
-				
-				this.logger.info(pm);
-				
+
 				sendMessage(pm);
+				
 				//db에 넣는 작업에서 딜레이가 발생하기 때문에... 우선 메시지를 뿌리고 나서 db에 넣는다...
 				pmDAO.insertP_message(pm);
+				
 			} else if (map.get("type").equals("read")) {
-				//TODO 읽음 처리 구현해야 함.. 
+				//TODO 읽음 처리 구현해야 함..
+				readMessage(map);
+				pmDAO.updateP_message(map);
 			}
 		
 		} catch (Exception e) {
@@ -166,7 +169,6 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 					if (hashmap_id.get(pm.getP_message_from()).equals(session.getId()) ||
 							hashmap_id.get(pm.getP_message_to()).equals(session.getId())) {
 						session.sendMessage(new TextMessage(gson.toJson(pm)));
-						this.logger.error(pm);
 					} 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -176,13 +178,13 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 		}
 	}
 	
-	//대화방 입장 시 이전 채팅 내역 보내기
-	public void sendMessage(P_messageVO pm, String id) {
+	//읽음 처리
+	public void readMessage(HashMap<String, String> map) {
 		for (WebSocketSession session : this.sessionSet) {
 			if (session.isOpen()) {
 				try {
-					if (id.equals(session.getId())) {
-						session.sendMessage(new TextMessage(gson.toJson(pm)));
+					if (hashmap_id.get(map.get("from")).equals(session.getId())) {
+						session.sendMessage(new TextMessage(gson.toJson(map)));
 						break;
 					} 
 				} catch (Exception e) {
