@@ -254,6 +254,16 @@ img {
 		<form id ="" method="" action="">
 		<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search1">
 		<button>s</button>
+		<div>				
+			<p>친구1</p>
+			<p>친구2</p>
+			<p>친구3</p>
+			<p>친구4</p>				
+		</div>
+		<div>
+		<p>그룹1</p>
+		<p>그룹2</p>
+		</div>
 		</form>		
 		<c:if test="${Member ne null}">
 			<c:if test="${fn:length(friend) ne 0}">

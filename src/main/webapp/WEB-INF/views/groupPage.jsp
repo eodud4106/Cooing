@@ -77,6 +77,10 @@ img{
 	width : 30px;
 	height: 30px;
 }
+.img_3{
+	width : 20px;
+	height: 20px;
+}
 .search{
 	margin: auto;	
 }
@@ -124,11 +128,12 @@ img{
 	<!-- 왼쪽 사이드바 -->
 	<div id="sidebar_a">
 		그룹명
-		<p><img src = "./resources/image_mj/yui.jpg">그룹원1</p>
-		<p><img src = "./resources/image_mj/suji.jpg">그룹원2</p>
-		<p><img src = "./resources/image_mj/josh.jpg">그룹원3</p>
-		
+		<p><img src = "./resources/image_mj/yui.jpg">그룹장</p>
+		<p><img src = "./resources/image_mj/suji.jpg">그룹원2<img src = "./resources/image_mj/remove.png" class = "img_3"></p>
+		<p><img src = "./resources/image_mj/josh.jpg">그룹원3<img src = "./resources/image_mj/remove.png" class = "img_3"></p>
+	
 		<p><button>그룹원추가</button>
+		<p><button>그룹해체</button>
 		
 		<p></p>
 		<p></p>
