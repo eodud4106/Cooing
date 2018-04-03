@@ -71,4 +71,28 @@ public class RelationDAO {
 		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
 		return mapper.searchPartyName(inum);
 	}
+	
+	public Party searchParty(String groupname){
+		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
+		return mapper.searchParty(groupname);
+	}
+	
+	public ArrayList<PartyMember> searchPartyMember(int groupnum){
+		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
+		return mapper.searchPartyMember(groupnum);
+	}
+	
+	public int deletePartyMember(Map<String,Object> map){
+		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
+		return mapper.deletePartyMember(map);
+	}
+	
+	public int deleteMemberParty(int groupnum){
+		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
+		return mapper.deleteMemberParty(groupnum);
+	}
+	public int deleteLeaderParty(int groupnum){
+		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
+		return mapper.deleteLeaderParty(groupnum);
+	}
 }

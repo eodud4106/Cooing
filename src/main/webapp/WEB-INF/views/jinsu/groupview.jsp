@@ -9,6 +9,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>GroupView</title>
 <script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>" ></script>
+<script>
+$(document).ready(function () {
+	initialize();
+});
+function initialize(){
+	$('#update').on('click' ,function(){
+		location.href="/groupupdate_get";
+	});
+}
+function openGUpdate(group_name) {
+	var url = "groupupdate_get?group_name=" + group_name;  
+	location.href=url;
+}
+</script>
 </head>
 <body>
 <h1>LeaderList</h1>
@@ -16,7 +30,7 @@
 	<c:if test="${fn:length(leaderlist) ne 0}">
 		<c:forEach var="arrll" items="${leaderlist}">
 			<div name="leaderlist">
-				<p>${arrll}</p>
+				<p onclick="openGUpdate('${arrll}')">${arrll}</p>
 			</div>
 		</c:forEach>
 	</c:if>
@@ -32,7 +46,5 @@
 		</c:forEach>
 	</c:if>
 </c:if>
-
-
 </body>
 </html>

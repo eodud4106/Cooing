@@ -31,7 +31,7 @@ function fiendplus(){
 					$('#friendbt').attr('data' , '1');
 				}
 				else{
-					alert('친구 추가가 되지 않았습니다.ERROR');
+					alert(a);
 				}
 			},
 			error:function(e){alert(JSON.stringify(e));}		
@@ -48,7 +48,7 @@ function fiendplus(){
 					$('#friendbt').attr('data' , '0');
 				}
 				else{
-					alert('친구 삭제가 되지 않았습니다.ERROR');
+					alert(a);
 				}
 			},
 			error:function(e){alert(JSON.stringify(e));}		

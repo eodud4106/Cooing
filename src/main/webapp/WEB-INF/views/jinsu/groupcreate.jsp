@@ -20,7 +20,6 @@ function initialize(){
 	$('#groupid').keyup(searchword);
 	$('#createbt').on('click' , creategroup);
 }
-//여기서 부터 제작해야 함 일반 멤버 부분에 partynum 구해와서 넣어줘야 됨 partyname이 unique니까 그걸로 찾아서 넣어주면 될듯 거의 다함.
 function creategroup(){
 	var name = $('#groupname').val();
 	if(name.length > 0){
@@ -30,7 +29,7 @@ function creategroup(){
 			data:{groupname:name},
 			dataType:'text',
 			success: function(a){
-				if(a != -1){
+				if(a != '-1'){
 					var idlist = $('#idlist').html();
 					if(idlist.length > 0){
 						$.ajax({
@@ -43,7 +42,7 @@ function creategroup(){
 									location.href="../";
 								}
 								else{
-									alert('파티 멤버 추가에 실패 했습니다.Error');
+									alert(a);
 								}
 							},
 							error:function(e){alert(JSON.stringify(e));}		
@@ -51,7 +50,7 @@ function creategroup(){
 					}
 				}
 				else{
-					alert('파티 생성에 실패 했습니다.Error');
+					alert('그룹 생성을 실패 했습니다. 잠시 후 다시 시도해 주십시오.');
 				}
 			},
 			error:function(e){alert(JSON.stringify(e));}		
@@ -68,9 +67,10 @@ function searchfriend(){
 		success: function(a){
 			if(a=='success'){
 				$('#idlist').append(text + '<br>');
+				$('#groupid').val('');
 			}
 			else{
-				alert('찾으시는 친구 ID가 없습니다.');
+				alert(a);
 			}
 		},
 		error:function(e){alert(JSON.stringify(e));}		

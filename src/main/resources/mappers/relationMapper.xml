@@ -43,4 +43,22 @@
 	<select id="searchPartyName" resultType="String" parameterType="int">
 	select party_name from party where party_num = #{party_num}
 	</select>
+	
+	<select id="searchParty" resultType="party" parameterType="String">
+	select * from party where party_name = #{party_name}
+	</select>
+	
+	<select id="searchPartyMember" resultType="partymember" parameterType="int">
+	select * from partymember where g_member_partynum = #{g_member_partynum}
+	</select>
+	
+	<delete id="deletePartyMember" parameterType="map">
+		delete from partymember where g_member_partynum=#{g_member_partynum} and g_member_memberid=#{g_member_memberid}
+	</delete>
+	<delete id="deleteLeaderParty" parameterType="int">
+		delete from party where party_num=#{party_num}
+	</delete>
+	<delete id="deleteMemberParty" parameterType="int">
+		delete from partymember where g_member_partynum=#{g_member_partynum}
+	</delete>
 </mapper>
