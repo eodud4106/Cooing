@@ -14,6 +14,10 @@
 
 <a href="<c:url value ="/albumList"/>">MainPage</a><br>
 <a href="<c:url value ="/albumView"/>">albumView</a><br>
+<a href="<c:url value ="/myPage"/>">myPage</a><br>
+<a href="<c:url value ="/friendPage"/>">friendPage</a><br>
+<a href="<c:url value ="/groupPage"/>">groupPage</a><br>
+<a href="<c:url value ="/albumEdit"/>">albumEdit</a><br>
 <a href="<c:url value ="/chat"/>">흰둥이 채팅방 입장</a><br>
 <a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a><br>
 <a href="<c:url value ="/jinsu/login_get"/>">로그인...</a><br>
