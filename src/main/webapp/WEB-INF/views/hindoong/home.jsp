@@ -13,7 +13,7 @@
 
 //TODO 내 아이디와 친구 아이디를 태그 속성 값이 넣어두는 건 위험할 것 같으니... 다른 방법을 생각해보자...
 
-	var wsUri = "ws://localhost:8080/cooing/chat/echo.do";
+	var wsUri = "ws://localhost:8080/www/chat/echo.do";
 	var websocket;
 
     $(document).ready(function() {
