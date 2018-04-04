@@ -1,0 +1,165 @@
+/* lg */
+@media (min-width: 1200px) {
+
+}
+
+/* md */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .content {
+
+        margin: 0 30px;
+
+    }
+
+    .main-content {
+        padding: 0 30px;
+
+    }
+
+    .footer {
+        padding: 0 30px;
+
+    }
+
+    .progress {
+
+        margin: 0 14% 50px;
+
+    }
+
+    .input-group {
+        margin: 0 14% 80px;
+    }
+
+}
+
+/* sm */
+@media (min-width: 768px) and (max-width: 991px) {
+    .content {
+
+        margin: 0 60px;
+
+    }
+
+    .main-content {
+        padding: 0 30px;
+
+    }
+
+    .footer {
+        padding: 0 30px;
+
+    }
+
+    .progress {
+
+        margin: 0 15% 50px;
+
+    }
+
+    .input-group {
+        margin: 0 15% 80px;
+    }
+
+}
+
+/* xs */
+@media (max-width: 767px) {
+    .content {
+
+        margin: 0 30px;
+
+    }
+
+    .main-content {
+        padding: 0 15px;
+
+    }
+
+    .footer {
+        padding: 0 15px;
+
+    }
+
+    .progress {
+
+        margin: 0 5% 50px;
+
+    }
+
+    .input-group {
+        margin: 0 5% 80px;
+    }
+
+    #counter {
+        margin: 0 -5%;
+
+    }
+
+    #home h1 {
+        font-size: 25px;
+
+    }
+
+}
+
+/* XS Portrait */
+@media (max-width: 479px) {
+    .content {
+        margin: 0 30px;
+
+    }
+
+    .main-content {
+        padding: 0 10px;
+
+    }
+
+    .footer {
+        padding: 0 1px;
+
+    }
+
+    .progress {
+        margin: 0 3% 50px;
+
+    }
+
+    .input-group {
+        margin: 0 3% 80px;
+    }
+
+    #counter {
+        margin: 0 3%;
+        float: none;
+
+    }
+
+    #counter .box {
+        display: block;
+        width: 75px;
+        height: 68px;
+        text-align: center;
+        overflow: hidden;
+        padding: 8px 0;
+        float: left;
+        margin: 5% 10px;
+        border: 2px solid #fff;
+        position: relative;
+        border-radius: 2px;
+
+    }
+
+    .footer .footer-left {
+        float: none;
+        text-align: center;
+        padding: 8px 0;
+    }
+
+    .footer .footer-right {
+        float: none;
+        text-align: center;
+        padding: 8px 0;
+    }
+
+}
