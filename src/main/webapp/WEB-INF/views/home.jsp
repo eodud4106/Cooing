@@ -33,6 +33,21 @@ $(document).ready(function () {
 	
 	$('#div_chat').draggable();
 	
+ 	$("#message").keydown(function (key) {
+        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+        		sendMessage();
+        		return false;
+        }
+    });
+	 	
+ 	$("#sendBtn").on('click', function() {
+		sendMessage();
+	});
+ 	
+ 	$('#inputbutton_close').on('click', function() {
+ 		closePChat();
+ 	});
+	
 });
 function initialize(){
 	$('#searchbt').on('click', function() {
@@ -348,18 +363,14 @@ img {
 	</c:if>
 
 	<div id="div_chat" style="width: 500px; height: 500px; position: absolute; padding: 0px; opacity: 1; background-color: rgb(240,240,240); display: none;">
-		<p>대화 상대 -> <span id="friend_id" friend_id="${friend_id}">${friend_id}</span></p>
+		<p><input type="button" value="닫기" id="inputbutton_close"></p>
 	    <div id="data" style="height: 350px; width: 100%; overflow-y: scroll; margin: auto; display: block; padding: 0px">
 	    </div>
-	    
 	    <div id="div_send">
 			<input type="text" id="message" autocomplete="off"/>
 			<input type="button" id="sendBtn" value="전송" />
 	    </div>
 	</div>
-<!-- 	<div id="div_chat" style="width: 500px; height: 500px">
-		
-	</div> -->
 	
 </body>
 </html>
