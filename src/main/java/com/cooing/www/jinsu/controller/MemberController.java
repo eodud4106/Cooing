@@ -150,16 +150,39 @@ public class MemberController {
 		logger.info("img__jinsu");
 		Member member = (Member)session.getAttribute("Member");
 		String fullpath = strFilePath + "/" + member.getMember_picture();
-		FileInputStream filein = null;
-		ServletOutputStream fileout = null;
-		try {
-			filein = new FileInputStream(fullpath);
-			fileout = response.getOutputStream();
-			FileCopyUtils.copy(filein, fileout);			
-			filein.close();
-			fileout.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if( member.getMember_picture() != null &&!member.getMember_picture().isEmpty() && member.getMember_picture().length() != 0){
+			FileInputStream filein = null;
+			ServletOutputStream fileout = null;
+			try {
+				filein = new FileInputStream(fullpath);
+				fileout = response.getOutputStream();
+				FileCopyUtils.copy(filein, fileout);			
+				filein.close();
+				fileout.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
+	
+	@RequestMapping(value = "memberimg", method = RequestMethod.GET)
+	public String memberimg(String strurl,HttpServletResponse response) {
+		logger.info("memberimg__jinsu");
+		String fullpath = strFilePath + "/" + strurl;
+		if(strurl != null && !strurl.isEmpty() && strurl.length() != 0){
+			FileInputStream filein = null;
+			ServletOutputStream fileout = null;
+			try {
+				filein = new FileInputStream(fullpath);
+				fileout = response.getOutputStream();
+				FileCopyUtils.copy(filein, fileout);			
+				filein.close();
+				fileout.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return null;

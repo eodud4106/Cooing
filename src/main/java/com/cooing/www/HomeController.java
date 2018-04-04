@@ -29,25 +29,19 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) {
-		
-		return "home";
-	}
-	
-	/**
-	 * 메인페이지로 이동.
-	 */
-	@RequestMapping(value = "/albumList", method = RequestMethod.GET)
-	public String mainPage(Model model,HttpSession session) {
+	public String home(Model model, HttpSession session) {
 		Member personal = (Member)session.getAttribute("Member");
 		if(personal != null){
 			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
 			model.addAttribute("friend", arr_friend);
+			ArrayList<String> arraystrval = relationDAO.searchLeaderPartyName(personal.getMember_id());
+			ArrayList<Integer> arrayintval = relationDAO.searchMemberPartyName(personal.getMember_id());
+			for(Integer i : arrayintval){
+				arraystrval.add(relationDAO.searchPartyName(i));
+			}
+			model.addAttribute("group", arraystrval);
 		}
 		
-		return "albumList";
+		return "home";
 	}
-	
-	
-	
 }

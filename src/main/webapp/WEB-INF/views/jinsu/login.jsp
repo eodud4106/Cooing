@@ -58,7 +58,7 @@ function member_check(){
 	<legend><strong>로그인</strong></legend>
 	<table>
 		<tr><th>ID : </th>	<td><input type="text" id="id" maxlength="10" required autofocus></td></tr>
-		<tr><th> 비밀번호 : </th>	<td><input type="password" id="password" maxlength="12" required></td></tr>
+		<tr><th> 비밀번호 : </th>	<td><input type="password" id="password" maxlength="12" required="true"></td></tr>
 		<tr align="right"><td colspan="2"><input type="button" id="join" value="가입">
 							<input type="button" onclick="javascript:location.href='<c:url value="/"/>';" value="취소"></td></tr>
 	</table>	

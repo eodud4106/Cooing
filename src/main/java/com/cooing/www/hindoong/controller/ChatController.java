@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.hindoong.dao.P_messageDAO;
 import com.cooing.www.hindoong.vo.P_messageVO;
@@ -52,6 +53,20 @@ public class ChatController {
 		//System.out.println(arr_pm.toString());
 		
 		return "hindoong/home";
+	}
+	
+	// 대화목록 불러오기
+	@ResponseBody
+	@RequestMapping(value = "/getChat", method = RequestMethod.POST)
+	public ArrayList<P_messageVO> getChat(Model model, String friend_id, HttpSession session) {
+
+		String id = ((Member) session.getAttribute("Member")).getMember_id();
+		HashMap<String, String> map_search = new HashMap<>();
+		map_search.put("id1", id);
+		map_search.put("id2", friend_id);
+		ArrayList<P_messageVO> arr_pm = pmDAO.selectP_message(map_search);
+		
+		return arr_pm;
 	}
 	
 }

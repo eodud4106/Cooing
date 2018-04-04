@@ -51,11 +51,11 @@ public class MainController {
 	}
 	
 	//그룹페이지
-	@RequestMapping(value = "/groupPage", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/groupPage", method = RequestMethod.GET)
 	public String groupPage(){
 			
 		return "groupPage";
-	}
+	}*/
 	
 	//앨범생성,편집
 	@RequestMapping(value = "/albumEdit", method = RequestMethod.GET)

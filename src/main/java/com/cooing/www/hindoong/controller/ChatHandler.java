@@ -80,6 +80,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 		super.afterConnectionClosed(session, status);
 
 		sessionSet.remove(session);
+		
 		this.logger.info("remove session!");
 	}
 
@@ -163,6 +164,9 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 
 	// 대화 푸시
 	public void sendMessage(P_messageVO pm) {
+		
+		System.out.println(hashmap_id.toString());
+		
 		for (WebSocketSession session : this.sessionSet) {
 			if (session.isOpen()) {
 				try {
@@ -172,7 +176,6 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 					} 
 				} catch (Exception e) {
 					e.printStackTrace();
-					//this.logger.error("fail to send message!");
 				}
 			}
 		}
@@ -183,9 +186,8 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 		for (WebSocketSession session : this.sessionSet) {
 			if (session.isOpen()) {
 				try {
-					if (hashmap_id.get(map.get("from")).equals(session.getId())) {
+					if (hashmap_id.get(map.get("from")) != null && hashmap_id.get(map.get("from")).equals(session.getId())) {
 						session.sendMessage(new TextMessage(gson.toJson(map)));
-						break;
 					} 
 				} catch (Exception e) {
 					e.printStackTrace();

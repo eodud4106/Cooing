@@ -18,7 +18,31 @@ $(document).ready(function () {
 function initialize(){
 	$('#searchidbt').on('click' ,searchfriend);
 	$('#groupid').keyup(searchword);
-	$('#createbt').on('click' , creategroup);
+	$('#groupname').keyup(searchgroupname);
+	
+}
+function searchgroupname(){
+	var name = $('#groupname').val();
+	if(name.length > 0){
+		$.ajax({
+			url:'party_search_name',
+			type:'POST',		
+			data:{groupname:name},
+			dataType:'text',
+			success: function(a){
+				if(a == 'success'){
+					$('#createbt').off();
+					$('#createbt').on('click' , creategroup);
+					$('#groupbody').css('background-color','#00ff00');
+				}
+				else{
+					$('#createbt').off();
+					$('#groupbody').css('background-color','#ff0000');														
+				}
+			},
+			error:function(e){alert(JSON.stringify(e));}		
+		});
+	}	
 }
 function creategroup(){
 	var name = $('#groupname').val();
@@ -38,8 +62,9 @@ function creategroup(){
 							data:{groupmember:idlist,partynum:a},
 							dataType:'text',
 							success: function(a){
-								if(a=='success'){
-									location.href="../";
+								if(a=='success'){									
+									opener.location.href="./groupPage?group_name="+name;
+									window.close();
 								}
 								else{
 									alert(a);
@@ -47,6 +72,10 @@ function creategroup(){
 							},
 							error:function(e){alert(JSON.stringify(e));}		
 						});
+					}
+					else{
+						opener.location.href="./groupPage?group_name="+name;
+						window.close();
 					}
 				}
 				else{
@@ -59,6 +88,7 @@ function creategroup(){
 }
 function searchfriend(){
 	var text = $('#groupid').val();
+	var id = $('#searchidbt').attr('data');
 	$.ajax({
 		url:'friend_check',
 		type:'POST',		
@@ -66,11 +96,23 @@ function searchfriend(){
 		dataType:'text',
 		success: function(a){
 			if(a=='success'){
-				$('#idlist').append(text + '<br>');
-				$('#groupid').val('');
+				var check = true;
+				var idlist = $('#idlist').html();
+				var strarray = idlist.split('<br>');
+				for(var i = 0; i < strarray.length; i++){
+					if(strarray[i] == text){
+						check = false;
+					}
+				}
+				if(id == text){
+					check = false;
+				}
+				if(check){
+					$('#idlist').append(text + '<br>');
+				}
 			}
 			else{
-				alert(a);
+				alert("찾으시는 ID의 회원이 없습니다.");
 			}
 		},
 		error:function(e){alert(JSON.stringify(e));}		
@@ -80,7 +122,7 @@ function searchword(){
 	var text = $('#groupid').val();
 	if(text.length >= 1){
 		$.ajax({
-			url:'search_id',
+			url:'jinsu/search_id',
 			type:'POST',		
 			data:{text:text},
 			dataType:'json',
@@ -95,12 +137,12 @@ function searchword(){
 }
 </script>
 </head>
-<body>
+<body id="groupbody">
 
 <h1>GroupCreate</h1>
 <table>
 <tr><th><input type="text" id="groupname" placeholder="GroupName" maxlength="10"></th></tr>
-<tr><th><input type="text" id="groupid" placeholder="ID검색"><input type="button" id="searchidbt" value="검색"></th></tr>
+<tr><th><input type="text" id="groupid" placeholder="ID검색"><input type="button" id="searchidbt" value="검색" data="${Member.getMember_id()}"></th></tr>
 <tr><th><div id="idlist"></div></th></tr>
 <tr><th><input type="button" id="createbt" value="그룹 생성"></th></tr>
 </table>
