@@ -1,7 +1,6 @@
 package com.cooing.www.hindoong.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,7 +22,6 @@ import com.cooing.www.hindoong.vo.P_messageVO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 @Repository
 public class ChatHandler extends TextWebSocketHandler implements InitializingBean {
@@ -40,25 +38,6 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	private Gson gson = new Gson();
 
 	// @Override
-	// public void afterConnectionClosed(WebSocketSession session, CloseStatus
-	// status) throws Exception {
-	// //웹 소켓 연결이 종료되고 나서 서버단에서 실행해야할 일들을 정의해주는 메소드
-	// super.afterConnectionClosed(session, status);
-	// sessionSet.remove(session);
-	// System.out.println("remove session!");
-	// }
-	//
-	// @Override
-	// public void afterConnectionEstablished(WebSocketSession session) throws
-	// Exception {
-	// //연결이 성사 되고 나서 해야할 일들.
-	// super.afterConnectionEstablished(session);
-	//
-	// sessionSet.add(session);
-	// System.out.println("add session!");
-	// }
-	//
-	// @Override
 	// protected void handleTextMessage(WebSocketSession session, TextMessage
 	// message) throws Exception {
 	// //웹소켓 서버단으로 메세지가 도착했을때 해주어야할 일들을 정의하는 메소드
@@ -69,6 +48,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	// //현재 수신자에게 몇개의 메세지가 와있는지 디비에서 검색함.
 	//
 	// }
+	
 	public ChatHandler() {
 		super();
 		this.logger.info("create SocketHandler instance!");
@@ -80,6 +60,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 		super.afterConnectionClosed(session, status);
 
 		sessionSet.remove(session);
+		System.out.println(session.getId() + " 삭제 됨!!\n" + sessionSet.toString());
 		
 		this.logger.info("remove session!");
 	}
@@ -90,6 +71,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 		super.afterConnectionEstablished(session);
 		
 		sessionSet.add(session);
+		System.out.println(session.getId() + " 추가 됨!!\n" + sessionSet.toString());
 		
 		this.logger.info("add session!");
 	}
@@ -110,15 +92,6 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 			
 			if(map.get("type").equals("loginId")) {
 				hashmap_id.put(map.get("id"), session.getId());
-				
-//				//TODO 나와 상대와의 대화목록을 불러와서 클라이언트에게 보내줘야 함.
-//				HashMap<String, String> search = new HashMap<>();
-//				search.put("id1", map.get("id"));
-//				search.put("id2", map.get("to"));
-//				ArrayList<P_messageVO> messageList = pmDAO.selectP_message(search);
-//				for (int i = 0; i < messageList.size(); i++) {
-//					sendMessage(messageList.get(i), session.getId());
-//				}
 				
 			} else if (map.get("type").equals("message")) {
 				pm.setP_message_from(map.get("from"));
@@ -164,8 +137,6 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 
 	// 대화 푸시
 	public void sendMessage(P_messageVO pm) {
-		
-		System.out.println(hashmap_id.toString());
 		
 		for (WebSocketSession session : this.sessionSet) {
 			if (session.isOpen()) {

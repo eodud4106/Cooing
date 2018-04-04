@@ -50,8 +50,6 @@ public class ChatController {
 		model.addAttribute("friend_id", friend_id);
 		model.addAttribute("arr_pm", arr_pm);
 		
-		//System.out.println(arr_pm.toString());
-		
 		return "hindoong/home";
 	}
 	

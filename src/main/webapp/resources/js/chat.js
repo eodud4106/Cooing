@@ -2,8 +2,23 @@
  * 채팅 관련 메소드 모음
  */
 var websocket;
+var websocket_alert;
+var wsUri = "ws://localhost:8080/www/chat/echo.do";
 
-function closePChat() {
+$(document).ready(function () {
+ 	$("#sendBtn").on('click', function() {
+		sendMessage();
+	});
+ 	
+ 	$('#inputbutton_close').on('click', function() {
+ 		closePChat();
+ 	});
+
+ 	websocket_alert2 = new WebSocket(wsUri);
+ 	
+})
+
+function closePChat(evt) {
 	
 	$('#div_chat').css('display', 'none');
 	websocket.close();
@@ -18,7 +33,6 @@ function openPChat(id, friend_id, goRoot) {
 	sessionStorage.setItem('id', id);
 	sessionStorage.setItem('friend_id', friend_id);
 	
-	var wsUri = "ws://localhost:8080/www/chat/echo.do";
     websocket = new WebSocket(wsUri);
     
    	websocket.onmessage = function(evt) {
@@ -29,6 +43,9 @@ function openPChat(id, friend_id, goRoot) {
    	};
    	websocket.onerror = function(evt) {
    		onError(evt)
+   	};
+   	websocket.onclose = function(evt) {
+   		closePChat(evt)
    	};
 		
 	$.ajax({

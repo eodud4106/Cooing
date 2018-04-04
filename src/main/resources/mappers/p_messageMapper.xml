@@ -43,5 +43,15 @@
 	ORDER BY
 		p_message_date
 	</select>
+	
+	<select id="selectUnreadP_message" resultType="int">
+	SELECT
+		count(*)
+	FROM p_message
+	WHERE
+		(p_message_from = #{from} and p_message_to = #{to})
+		AND
+		p_message_read = 1
+	</select>
 
 </mapper>
