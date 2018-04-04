@@ -156,22 +156,6 @@ public class RelationController {
 		return "/groupview";
 	}
 	
-	/*@RequestMapping(value="/groupupdate_get" , method = RequestMethod.GET)
-	public String groupudate_get(String group_name , HttpSession session , Model model){
-		logger.info("groupudate_get__jinsu");
-		Party party = relationDAO.searchParty(group_name);
-		Member smember = get_session(session);
-		if(party != null && smember != null){
-			ArrayList<PartyMember> arr_party_member = relationDAO.searchPartyMember(party.getParty_num());
-			if(smember.getMember_id().equals(party.getParty_leader())){
-				model.addAttribute("partyinfo", party);
-				model.addAttribute("memberlist", arr_party_member);
-				return "/groupupdate";
-			}
-		}
-		return "redirect:/";		
-	}*/
-	
 	@RequestMapping(value="/groupPage" , method = RequestMethod.GET)
 	public String groupPage_get(String group_name , Model model){
 		logger.info("groupPage__jinsu");
@@ -208,12 +192,13 @@ public class RelationController {
 	@RequestMapping(value="/delete_party" , method = RequestMethod.POST,produces = "application/text; charset=utf8")
 	public String delete_party(int partynum){
 		logger.info("delete_party__jinsu");
-		if(relationDAO.deleteMemberParty(partynum) > 0){
-			if(relationDAO.deleteLeaderParty(partynum) > 0){
-				return "success";
-			}
+		relationDAO.deleteMemberParty(partynum);
+		if(relationDAO.deleteLeaderParty(partynum) > 0){
+			return "success";
+		}else{
+			return "그룹 삭제를 실패 했습니다. 잠시 후 다시 시도해 주십시오.";
 		}
-		return "그룹 삭제를 실패 했습니다. 잠시 후 다시 시도해 주십시오.";
+				
 	}
 	
 	@ResponseBody
@@ -247,6 +232,17 @@ public class RelationController {
 		if(!relationDAO.insertPartyMember(new PartyMember(0 , partynum , groupmember)))
 			return "멤버 추가를 실패 했습니다. 잠시 후 다시 시도해 주십시오.";		
 		return "success";		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/party_search_name" , method = RequestMethod.POST,produces = "application/text; charset=utf8")
+	public String party_search_name(String groupname){
+		Party party = relationDAO.searchParty(groupname);
+		if(party == null){
+			return "success";
+		}else{
+			return "fail";
+		}		
 	}
 	
 	

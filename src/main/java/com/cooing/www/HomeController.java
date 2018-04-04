@@ -34,20 +34,6 @@ public class HomeController {
 		if(personal != null){
 			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
 			model.addAttribute("friend", arr_friend);
-		}
-		
-		return "home";
-	}
-	
-	/**
-	 * 메인페이지로 이동.
-	 */
-	@RequestMapping(value = "/albumList", method = RequestMethod.GET)
-	public String mainPage(Model model,HttpSession session) {
-		Member personal = (Member)session.getAttribute("Member");
-		if(personal != null){
-			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
-			model.addAttribute("friend", arr_friend);
 			ArrayList<String> arraystrval = relationDAO.searchLeaderPartyName(personal.getMember_id());
 			ArrayList<Integer> arrayintval = relationDAO.searchMemberPartyName(personal.getMember_id());
 			for(Integer i : arrayintval){
@@ -56,6 +42,6 @@ public class HomeController {
 			model.addAttribute("group", arraystrval);
 		}
 		
-		return "albumList";
+		return "home";
 	}
 }
