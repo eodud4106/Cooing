@@ -45,16 +45,20 @@ function initialize(){
 		loginmember('');
 	});
 }
+function openGUpdate(group_name) {
+	var url = "groupPage?group_name=" + group_name;  
+	location.href=url;
+}
 function searchfriend(){
 	var text = $('#searchtx').val();
 	$.ajax({
-		url:'jinsu/friend_check',
+		url:'friend_check',
 		type:'POST',		
 		data:{id:text},
 		dataType:'text',
 		success: function(a){
 			if(a=='success'){
-				location.href='jinsu/friend_get?id='+text;
+				location.href='./friend_get?id='+text;
 			}
 			else{
 				alert('찾으시는 친구 ID가 없습니다.');
@@ -314,9 +318,10 @@ img {
 		
 		<!-- 오른쪽 사이드바 -->
 		<div id="sidebar_b">
-			<form action="">
-				<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search1">
-				<button>s</button>
+		<div>
+			<form>
+			<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search1">
+			<button>s</button>
 			</form>		
 			<c:if test="${Member ne null}">
 				<c:if test="${fn:length(friend) ne 0}">
@@ -326,12 +331,19 @@ img {
 						</div>
 					</c:forEach>
 				</c:if>
-				<c:if test="${fn:length(friend) eq 0}">
-					<div>
-						<p>친구가 없습니다 친구를 추가해주세요.</p>
-					</div>
+			</c:if>
+		</div>
+		<div>
+			<c:if test="${Member ne null}">
+				<c:if test="${fn:length(group) ne 0}">
+					<c:forEach var="arrg" items="${group}">
+						<div name="group">
+							<p onclick="openGUpdate('${arrg}')">${arrg}</p>
+						</div>
+					</c:forEach>
 				</c:if>
 			</c:if>
+			<input type="button" value="그룹생성" onclick="window.open('./groupcreate_get?','','width=300 height=210 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
 		</div>
 	</c:if>
 

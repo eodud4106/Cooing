@@ -29,7 +29,7 @@ function deleteparty(){
 		dataType:'text',
 		success: function(list){
 			if(list=='success'){
-				location.href="./albumList";
+				location.href="./";
 			}else{
 				alert(list);
 			}
