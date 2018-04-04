@@ -22,10 +22,8 @@ import com.cooing.www.jinsu.object.Party;
 import com.cooing.www.jinsu.object.PartyMember;
 
 @Controller
-@RequestMapping("/jinsu")
 public class RelationController {
-	private static final Logger logger = LoggerFactory.getLogger(MemberController.class); 
-	private static final String strpath = "jinsu";
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
 	RelationDAO relationDAO;
@@ -42,11 +40,10 @@ public class RelationController {
 		for(String s:arrfriend){
 			if(s.equals(friend.getMember_id())){
 				model.addAttribute("check" , true);
-				logger.info("check_sita");
 				break;
 			}
 		}
-		return strpath + "/friend";
+		return "friendPage";
 	}
 	
 	@ResponseBody
@@ -92,7 +89,7 @@ public class RelationController {
 	@RequestMapping(value="/groupcreate_get" , method = RequestMethod.GET)
 	public String group_get(){
 		logger.info("group_get__jinsu");
-		return strpath + "/groupcreate";
+		return "/groupcreate";
 	}
 	@ResponseBody
 	@RequestMapping(value="/party_create" , method = RequestMethod.POST)
@@ -156,10 +153,10 @@ public class RelationController {
 		model.addAttribute("leaderlist", groupleaderlist);
 		model.addAttribute("memberlist", groupmemberlist);
 		
-		return strpath + "/groupview";
+		return "/groupview";
 	}
 	
-	@RequestMapping(value="/groupupdate_get" , method = RequestMethod.GET)
+	/*@RequestMapping(value="/groupupdate_get" , method = RequestMethod.GET)
 	public String groupudate_get(String group_name , HttpSession session , Model model){
 		logger.info("groupudate_get__jinsu");
 		Party party = relationDAO.searchParty(group_name);
@@ -169,16 +166,36 @@ public class RelationController {
 			if(smember.getMember_id().equals(party.getParty_leader())){
 				model.addAttribute("partyinfo", party);
 				model.addAttribute("memberlist", arr_party_member);
-				return strpath+"/groupupdate";
+				return "/groupupdate";
 			}
 		}
 		return "redirect:/";		
-	}	
+	}*/
+	
+	@RequestMapping(value="/groupPage" , method = RequestMethod.GET)
+	public String groupPage_get(String group_name , Model model){
+		logger.info("groupPage__jinsu");
+		Party party = relationDAO.searchParty(group_name);
+		if(party != null){
+			ArrayList<PartyMember> arr_party_member = relationDAO.searchPartyMember(party.getParty_num());
+			ArrayList<Member> arr_member = new ArrayList<Member>();
+			for(PartyMember pm: arr_party_member){
+				arr_member.add(memberDAO.selectMember(pm.getG_member_memberid()));
+			}
+			model.addAttribute("partyleader" , memberDAO.selectMember(party.getParty_leader()));
+			model.addAttribute("partyinfo", party);
+			model.addAttribute("memberlist", arr_party_member);
+			model.addAttribute("memberinfo", arr_member);
+			return "/groupPage";
+		}
+		return "redirect:/";		
+	}
 	
 	@ResponseBody
 	@RequestMapping(value="/delete_member" , method = RequestMethod.POST,produces = "application/text; charset=utf8")
 	public String delete_member(int partynum , String memberid){
 		logger.info("delete_member__jinsu");
+		logger.info(partynum+"_party , " + memberid + "_id");
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("g_member_partynum", partynum);
 		map.put("g_member_memberid", memberid);
@@ -201,9 +218,14 @@ public class RelationController {
 	
 	@ResponseBody
 	@RequestMapping(value="/member_list_post" , method = RequestMethod.POST)
-	public ArrayList<PartyMember> member_list_post(int partynum){
+	public ArrayList<Member> member_list_post(int partynum){
 		logger.info("member_list_post__jinsu");
-		return relationDAO.searchPartyMember(partynum);
+		ArrayList<PartyMember> arr_party_member = relationDAO.searchPartyMember(partynum);
+		ArrayList<Member> arr_member = new ArrayList<Member>();
+		for(PartyMember party : arr_party_member){
+			arr_member.add(memberDAO.selectMember(party.getG_member_memberid()));
+		}
+		return arr_member;
 	}
 	
 	@ResponseBody

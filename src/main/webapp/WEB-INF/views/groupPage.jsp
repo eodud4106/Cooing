@@ -1,9 +1,128 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	   pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <title>group Page</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>" ></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$(document).ready(function () {
+	initialize();
+});
+function initialize(){
+	$('#findid').keyup(searchword);
+	$('#gmemberplus').on('click',memberplus);
+	$('.img_3').on('click',memberdelete);
+	$('#desolve').on('click',deleteparty);
+}
+function deleteparty(){
+	var party_num = $('#desolve').attr('data');
+	$.ajax({
+		url:'delete_party',
+		type:'POST',		
+		data:{partynum:party_num},
+		dataType:'text',
+		success: function(list){
+			if(list=='success'){
+				location.href="./albumList";
+			}else{
+				alert(list);
+			}
+		},
+		error:function(e){alert(JSON.stringify(e));}		
+	});
+}
+function memberdelete(){
+	var member_id = $(this).attr('data');
+	var party_num = $(this).attr('data2');
+	$.ajax({
+		url:'delete_member',
+		type:'POST',		
+		data:{memberid:member_id,partynum:party_num},
+		dataType:'text',
+		success: function(a){
+			if(a=='success'){
+				$.ajax({
+					url:'member_list_post',
+					type:'POST',		
+					data:{partynum:party_num},
+					dataType:'json',
+					success: function(list){
+						var strmember='';
+						$.each(list,function(i,data){
+							strmember += '<p><img src = "<c:url value="/jinsu/memberimg?strurl='+(data.member_picture==null?'':data.member_picture)	+'"/>"></p><p>'+ data.member_id;
+							strmember +='<img src = "./resources/image_mj/remove.png" class = "img_3" data="'+data.member_id+'" data2="'+party_num+'">';	
+						});
+						$('#memberdiv').html(strmember);
+						$('#findid').val('');
+						$('.img_3').on('click',memberdelete);
+					},
+					error:function(e){alert(JSON.stringify(e));}		
+				});
+			}else{
+				alert(a);
+			}
+		},
+		error:function(e){alert(JSON.stringify(e));}		
+	});
+}
+function memberplus(){
+	var member_id = $('#findid').val();
+	var party_num = $('#gmemberplus').attr('data');
+	$.ajax({
+		url:'party_member_input',
+		type:'POST',		
+		data:{groupmember:member_id,partynum:party_num},
+		dataType:'text',
+		success: function(a){
+			if(a=='success'){
+				$.ajax({
+					url:'member_list_post',
+					type:'POST',		
+					data:{partynum:party_num},
+					dataType:'json',
+					success: function(list){
+						var strmember='';
+						$.each(list,function(i,data){
+							strmember += '<p><img src = "<c:url value="/jinsu/memberimg?strurl='+(data.member_picture==null?'':data.member_picture)+'"/>"></p><p>'+ data.member_id;
+							strmember +='<img src = "./resources/image_mj/remove.png" class = "img_3" data="'+data.member_id+'" data2="'+party_num+'">';	
+						});
+						$('#memberdiv').html(strmember);
+						$('#findid').val('');
+						$('.img_3').on('click',memberdelete);				
+					},
+					error:function(e){alert(JSON.stringify(e));}		
+				});				
+			}else{
+				alert(a);
+			}
+		},
+		error:function(e){alert(JSON.stringify(e));}		
+	});
+}
+function searchword(){
+	var text = $('#findid').val();
+	if(text.length >= 1){
+		$.ajax({
+			url:'jinsu/search_id',
+			type:'POST',		
+			data:{text:text},
+			dataType:'json',
+			success: function(array){
+				$('#findid').autocomplete({
+					source:array 
+				});
+			},
+			error:function(e){alert(JSON.stringify(e));}		
+		});
+	}
+}
+</script>
 <meta charset="utf-8" />
 
 <style>
@@ -127,14 +246,31 @@ img{
 
 	<!-- 왼쪽 사이드바 -->
 	<div id="sidebar_a">
-		그룹명
-		<p><img src = "./resources/image_mj/yui.jpg">그룹장</p>
-		<p><img src = "./resources/image_mj/suji.jpg">그룹원2<img src = "./resources/image_mj/remove.png" class = "img_3"></p>
-		<p><img src = "./resources/image_mj/josh.jpg">그룹원3<img src = "./resources/image_mj/remove.png" class = "img_3"></p>
-	
-		<p><button>그룹원추가</button>
-		<p><button>그룹해체</button>
-		
+		<c:if test="${partyinfo ne null}">${partyinfo.getParty_name()}</c:if>
+		<c:if test="${partyleader ne null}">
+			<p><img src = "<c:url value="/jinsu/memberimg?strurl=${partyleader.getMember_picture()}"/>"><c:if test="${partyleader ne null}">${partyleader.getMember_id()}</c:if></p>
+		</c:if>	
+		<div id="memberdiv">
+		<c:if test="${fn:length(memberinfo) ne 0}">
+			<c:forEach var="arrmi" items="${memberinfo}">
+					<p><img src = "<c:url value="/jinsu/memberimg?strurl=${arrmi.getMember_picture()}"/>"></p><p>${arrmi.getMember_id()}
+					<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id()}">
+						<img src = "./resources/image_mj/remove.png" class = "img_3" data="${arrmi.getMember_id()}" data2="${partyinfo.getParty_num()}">
+					</c:if>
+					</p>
+			</c:forEach>
+		</c:if>
+		</div>
+		<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id()}">
+			<div>
+			<p>멤버 추가</p>
+			<p>	<input type="text" id="findid" placeholder="Member Id 검색" size="10">
+				<input type="button" id="gmemberplus" value="추가" data="${partyinfo.getParty_num()}"></p>			
+			</div>
+			<div>
+				<p><input type="button" id="desolve" value="그룹해체" data="${partyinfo.getParty_num()}"></p>
+			</div>
+		</c:if>
 		<p></p>
 		<p></p>
 		<p>ALBUM</p>
@@ -198,7 +334,7 @@ img{
 			
 	</div>
 		
-	<script>
+	<!-- <script>
           var modal = document.getElementById("myModal");
 
           var btn = document.getElementById("myBtn");
@@ -218,7 +354,7 @@ img{
                   modal.style.display = "none";
               }
           }
-      </script>
+      </script> -->
 
 </body>
 </html>

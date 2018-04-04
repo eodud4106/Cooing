@@ -1,0 +1,9 @@
+diff a/src/main/java/com/cooing/www/HomeController.java b/src/main/java/com/cooing/www/HomeController.java	(rejected hunks)
+@@ -29,7 +29,6 @@
+ 	 * Simply selects the home view to render by returning its name.
+ 	 */
+ 	@RequestMapping(value = "/", method = RequestMethod.GET)
+-	public String home(Model model) {
+ 	public String home(Model model, HttpSession session) {
+ 		Member personal = (Member)session.getAttribute("Member");
+ 		if(personal != null){

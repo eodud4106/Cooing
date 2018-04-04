@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
@@ -39,6 +40,21 @@
  
     <beans:bean id="chatHandler" class="com.cooing.www.hindoong.controller.ChatHandler"/>
 
-	
+	<context:component-scan base-package="com.cooing.www" />
+	<beans:bean id="loginInterceptor" class="com.cooing.www.interceptor.LoginInterceptor"></beans:bean>
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/jinsu/groupview_get" />
+			<mvc:mapping path="/jinsu/groupcreate_get" />
+			<mvc:mapping path="/jinsu/groupview_get" />
+			<mvc:mapping path="/jinsu/groupupdate_get" />
+			<mvc:mapping path="/albumList" />
+			<mvc:mapping path="/albumView" />
+			<mvc:mapping path="/myPage" />
+			<mvc:mapping path="/friendPage" />
+			<mvc:mapping path="/groupPage" />		
+			<beans:ref bean="loginInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 	
 </beans:beans>

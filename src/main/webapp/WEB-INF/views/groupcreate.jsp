@@ -38,8 +38,9 @@ function creategroup(){
 							data:{groupmember:idlist,partynum:a},
 							dataType:'text',
 							success: function(a){
-								if(a=='success'){
-									location.href="../";
+								if(a=='success'){									
+									opener.location.href="./groupPage?group_name="+name;
+									window.close();
 								}
 								else{
 									alert(a);
@@ -80,7 +81,7 @@ function searchword(){
 	var text = $('#groupid').val();
 	if(text.length >= 1){
 		$.ajax({
-			url:'search_id',
+			url:'jinsu/search_id',
 			type:'POST',		
 			data:{text:text},
 			dataType:'json',
