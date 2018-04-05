@@ -9,7 +9,6 @@ import java.util.Locale;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.javassist.bytecode.annotation.MemberValueVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -56,15 +55,23 @@ public class ChatController {
 	// 대화목록 불러오기
 	@ResponseBody
 	@RequestMapping(value = "/getChat", method = RequestMethod.POST)
-	public ArrayList<P_messageVO> getChat(Model model, String friend_id, HttpSession session) {
+	public ArrayList<P_messageVO> getChat(Model model, String type, String counterpart, HttpSession session) {
 
 		String id = ((Member) session.getAttribute("Member")).getMember_id();
 		HashMap<String, String> map_search = new HashMap<>();
 		map_search.put("id1", id);
-		map_search.put("id2", friend_id);
-		ArrayList<P_messageVO> arr_pm = pmDAO.selectP_message(map_search);
+		map_search.put("id2", counterpart);
+		if (type.equals("p")) {
+			//개인 채팅
+			ArrayList<P_messageVO> arr_pm = pmDAO.selectP_message(map_search);
+			return arr_pm;
+		} else {
+			//그룹 채팅
+			//TODO 고쳐야 함.
+			ArrayList<P_messageVO> arr_pm = pmDAO.selectP_message(map_search);
+			return arr_pm;
+		}
 		
-		return arr_pm;
 	}
 	
 }
