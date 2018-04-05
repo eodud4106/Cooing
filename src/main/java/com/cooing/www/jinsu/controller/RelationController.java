@@ -125,6 +125,8 @@ public class RelationController {
 					return "멤버 추가를 실패 했습니다. 잠시 후 다시 시도해 주십시오.";
 			}
 		}		
+		if(!relationDAO.insertPartyMember(new PartyMember(0 , partynum , smember.getMember_id())) == true)
+			return "멤버 추가를 실패 했습니다. 잠시 후 다시 시도해 주십시오.";
 		return "success";		
 	}
 	
