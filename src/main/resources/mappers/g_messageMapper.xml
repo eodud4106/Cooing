@@ -13,6 +13,7 @@
 		g_message_from,
 		g_message_to,
 		g_message_message,
+		g_message_read,
 		g_message_date
 	)
 	VALUES (
@@ -20,6 +21,8 @@
 		#{g_message_from},
 		#{g_message_to},
 		#{g_message_message},
+		(SELECT LISTAGG( CONCAT( (CONCAT('.', g_member_memberid)), '.') , '') WITHIN GROUP FROM partymember
+		WHERE g_member_memberid != #{g_message_from} group by g_member_partynum),
 		sysdate
 	)
 	</insert>
@@ -27,9 +30,9 @@
 	<update id="updateG_message">
 	UPDATE g_message
 	SET
-		g_message_read = 0
+		g_message_read = replace(g_message_read, CONCAT('.',#{id},'.'), '')
 	WHERE
-		g_message_read = 1 and g_message_from = #{from} and g_message_to = #{to}
+		g_message_read like CONCAT('%.',#{id},'.%')
 	</update>
 	
 	<select id="selectG_message" resultType="g_message">
@@ -49,9 +52,9 @@
 		count(*)
 	FROM g_message
 	WHERE
-		(g_message_from = #{from} and g_message_to = #{to})
+		g_message_to = #{to}
 		AND
-		g_message_read = 1
+		g_message_read NOT LIKE CONCAT('%.',#{id},'.%')
 	</select>
 
 </mapper>

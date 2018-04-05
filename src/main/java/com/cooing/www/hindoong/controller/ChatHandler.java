@@ -36,18 +36,6 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	private HashMap<String, String> hashmap_id = new HashMap<>();
 	
 	private Gson gson = new Gson();
-
-	// @Override
-	// protected void handleTextMessage(WebSocketSession session, TextMessage
-	// message) throws Exception {
-	// //웹소켓 서버단으로 메세지가 도착했을때 해주어야할 일들을 정의하는 메소드
-	// ChatDAO dao = ((SqlSession) session).getMapper(ChatDAO.class);
-	// this.logger.info(message.getPayload());
-	// //session.sendMessage(new
-	// TextMessage(dao.count_receive_note(message.getPayload())));
-	// //현재 수신자에게 몇개의 메세지가 와있는지 디비에서 검색함.
-	//
-	// }
 	
 	public ChatHandler() {
 		super();
