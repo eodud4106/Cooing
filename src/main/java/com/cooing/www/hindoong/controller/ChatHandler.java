@@ -92,6 +92,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 			
 			if(map.get("type").equals("loginId")) {
 				hashmap_id.put(map.get("id"), session.getId());
+				System.out.println("세션아이디&로그인아이디 매칭 정보 -> " + hashmap_id);
 				
 			} else if (map.get("type").equals("message")) {
 				pm.setP_message_from(map.get("from"));

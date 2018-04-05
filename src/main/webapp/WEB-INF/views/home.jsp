@@ -31,7 +31,10 @@ $(document).ready(function () {
 		$('#myModal').css('display', 'none');
 	});
 	
-	$('#div_chat').draggable();
+	if (${sessionScope.Member != null}) {
+		readyChat();
+		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
+	}
 	
 });
 function initialize(){
@@ -348,7 +351,7 @@ img {
 	</c:if>
 
 	<div id="div_chat" style="width: 500px; height: 500px; position: absolute; padding: 0px; opacity: 1; background-color: rgb(240,240,240); display: none;">
-		<p>대화 상대 -> <span id="friend_id" friend_id="${friend_id}">${friend_id}</span></p>
+		<p><button id="button_close" onclick="closePChat()">닫기</button></p>
 	    <div id="data" style="height: 350px; width: 100%; overflow-y: scroll; margin: auto; display: block; padding: 0px">
 	    </div>
 	    
