@@ -57,11 +57,4 @@ public class MainController {
 		return "groupPage";
 	}*/
 	
-	//앨범생성,편집
-	@RequestMapping(value = "/albumEdit", method = RequestMethod.GET)
-	public String albumEdit(){
-			
-		return "albumEdit";
-	}
-	
 }

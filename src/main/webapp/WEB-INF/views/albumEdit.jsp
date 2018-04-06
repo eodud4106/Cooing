@@ -7,16 +7,16 @@
 <title>AlbumEdit</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width = 1050, user-scalable = no" />
-	<script type="text/javascript" src="resources/album_page_js/extras/jquery.min.1.7.js"></script>
-	<script type="text/javascript" src="resources/album_page_js/extras/modernizr.2.5.3.min.js"></script>
+	<script type="text/javascript" src="../resources/album_page_js/extras/jquery.min.1.7.js"></script>
+	<script type="text/javascript" src="../resources/album_page_js/extras/modernizr.2.5.3.min.js"></script>
+	<script type="text/javascript" src="../resources/album_page_js/basic.js"></script>
 		
-	<script src="resources/album_drag_and_drop_js/external/jquery/jquery.js"></script>
-	<script src="resources/album_drag_and_drop_js/jquery-ui.js"></script>
+	<script src="../resources/album_drag_and_drop_js/jquery-ui.js"></script>
 	
-	<link rel="stylesheet" href="resources/album_drag_and_drop_js/jquery-ui.css">
+	<link rel="stylesheet" href="../resources/album_drag_and_drop_js/jquery-ui.css">
 		
-	<link rel="stylesheet" href="resources/album_css/album_edit_basic.css">
-	<link rel="stylesheet" href="resources/album_css/album_edit_drag_and_drop.css">
+	<link rel="stylesheet" href="../resources/album_css/album_edit_basic.css">
+	<link rel="stylesheet" href="../resources/album_css/album_edit_drag_and_drop.css">
 
 <script>
 var count = 0;
@@ -24,6 +24,24 @@ var count = 0;
 var page_count = 1;
 
 $(function() {
+	
+	//$('.flipbook').turn('disable', true);
+	
+	$("#save").on('click', function () { 
+		
+		var id = "test";
+		
+		$.ajax({
+			url:'albumPageSave',
+			type:'GET',		
+			data:{id:"id"},
+			dataType:'text',
+			success: function(a){
+				alert(a);
+			},
+			error:function(e){alert('실패');}		
+		});
+	})
 	
 	$( "#picture_add" ).draggable({ revert: "valid" });
 	
@@ -33,7 +51,7 @@ $(function() {
 		}
 	});
 	
-	$( ".pages" ).droppable({
+	$(".page"+page_count).droppable({
 		accept: "#picture_add",
 		drop: function(event, ui) {
 			
@@ -75,7 +93,7 @@ function readURL(input) {
 			$('.close_picture').on('click', function() {
 	         	$(this).parent().css('background-image', 'url("")');
 	
-	         	var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" onchange="readURL(this)"> </label>';
+	         	var html = '<a class="close_border"></a> <label for="cross'+count+'"></label> <input type="file" onchange="readURL(this)"> ';
 	         	count++;
 	        	$(this).parent().html(html);
 	        	
@@ -97,7 +115,8 @@ function readURL(input) {
 <body>
 
 
-<div id="friend_container"> 
+<div id="friend_container">
+</div>
    
 <!--   앨범제목, 앨범내용, 태그, 댓글, 좋아요, 채팅 -->
 <div id="sidebar">	
@@ -118,19 +137,19 @@ function readURL(input) {
 	</div>			
 </div>     
 
-<div id="edit_bar" style="z-index: 100; float: left;">
-	<div id="picture_add" style="background-image: url(resources/image_mj/photo.png); width : 50px; height: 50px; z-index:99;"></div>
-	<div id="text_add" style="background-image: url(resources/image_mj/text.png); width : 50px; height: 50px; z-index:99;"></div>
-	<div id="video_add" style="background-image: url(resources/image_mj/Video-5-icon.png); width : 50px; height: 50px; z-index:99;"></div>
+<div id="edit_bar" style="z-index: 100; width: 50%;">
+	<div id="picture_add" style="background-image: url(../resources/image_mj/photo.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div>
+	<div id="text_add" style="background-image: url(../resources/image_mj/text.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div>
+	<div id="video_add" style="background-image: url(../resources/image_mj/Video-5-icon.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div>
+	<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="submit" value="저장" id="save" name=""></div>
+	<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="submit" value="+" id="page_plus" name=""></div>
 </div>
 
 <div id="contents">
 	<div class="flipbook-viewport">
 		<div class="container">
 			<div class="flipbook">
-				<div class="pages"></div>
-				<div class="pages2"></div>
-				<div class="pages3"></div>
+				<div class="page1"></div>
 			</div>
 		</div>
 	</div>
@@ -172,16 +191,13 @@ function loadApp() {
 
 yepnope({
 	test : Modernizr.csstransforms,
-	yep: ['./resources/album_page_js/lib/turn.js'],
-	nope: ['./resources/album_page_js/lib/turn.html4.min.js'],
-	both: ['resources/album_css/basic.css'],
+	yep: ['../resources/album_page_js/lib/turn.js'],
+	nope: ['../resources/album_page_js/lib/turn.html4.min.js'],
+	both: ['../resources/album_css/basic.css'],
 	complete: loadApp
 });
 
 </script>           
-	
-	</div>		
-</div> 
 
 </body>
 </html>

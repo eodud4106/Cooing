@@ -251,7 +251,7 @@ img {
 				<li><a href="<c:url value ="/myPage"/>">myPage</a></li>	
 				<li><a href="<c:url value ="/friendPage"/>">friendPage</a></li>	
 				<%-- <li><a href="<c:url value ="/groupPage"/>">groupPage</a></li> --%>	
-				<li><a href="<c:url value ="/albumEdit"/>">albumEdit</a></li>
+				<li><a href="<c:url value ="/albumEdit/edit"/>">albumEdit</a></li>
 				<li><a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a></li>	
 				<li><a href="<c:url value ="/jinsu/login_get"/>">로그인...</a></li>	
 			</ul>
