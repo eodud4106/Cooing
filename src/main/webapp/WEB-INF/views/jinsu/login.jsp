@@ -37,42 +37,18 @@
     <![endif]-->
 
 <script src="<c:url value="../resources/js_js/jquery-3.2.1.min.js"/>"></script>
+<script src="../resources/js/member.js"></script>
 <script>
 	$(document).ready(function() {
 		initialize();
 	});
 	function initialize() {
-		$('#join').on('click', loginmember);
+		$('#join').on('click', function () {
+			loginmember('../');
+		});
 		$('#id').keydown(function (evt) {
 			if (evt.which == 13) {
-				loginmember();
-			}
-			else{
-				alert('ID 혹은 비밀번호가 틀렸습니다.');
-			}		
-		},
-		error:function(e){alert(JSON.stringify(e));}		
-	});	
-}
-
-		$.ajax({
-			url : 'login_post',
-			type : 'POST',
-			data : {
-				member_id : $('#id').val(),
-				member_pw : $('#password').val()
-			},
-			dataType : "text",
-			success : function(a) {
-				if (a == 'success') {
-					//상대 주소로 되어있기에 나중에 절대주소로 바뀌어야 할 듯 하다.
-					location.href = "../";
-				} else {
-					alert('ID 혹은 비밀버호가 틀렸습니다.');
-				}
-			},
-			error : function(e) {
-				alert(JSON.stringify(e));
+				loginmember('../');
 			}
 		});
 	}

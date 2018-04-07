@@ -16,7 +16,7 @@ function loginmember(toRoot){
 		success: function(a){
 			if(a == 'success'){
 				//상대 주소로 되어있기에 나중에 절대주소로 바뀌어야 할 듯 하다.
-				location.reload();
+				location.href=toRoot;
 			}
 			else{
 				alert('ID 혹은 비밀버호가 틀렸습니다.');
