@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
 <html>
 <head>
 <title>AlbumEdit</title>
@@ -22,26 +23,32 @@
 var count = 0;
 
 var page_count = 1;
+var save_count = 0;
+
+function fileSubmit() {
+		
+		if(save_count == 1) {
+			
+			var formData = new FormData($("#fileForm")[0]);
+
+			$.ajax({
+				url:'albumPageSave',
+				processData: false,
+				contentType: false,
+				type:'POST',		
+				data:formData,
+				success: function(html){
+					alert('업로드 성공');
+				},
+				error:function(e){alert('파일 업로드 실패');}		
+			});
+			
+		}
+}
 
 $(function() {
 	
 	//$('.flipbook').turn('disable', true);
-	
-	$("#save").on('click', function () { 
-		
-		var id = "test";
-		
-		$.ajax({
-			url:'albumPageSave',
-			type:'GET',		
-			data:{id:"id"},
-			dataType:'text',
-			success: function(a){
-				alert(a);
-			},
-			error:function(e){alert('실패');}		
-		});
-	})
 	
 	$( "#picture_add" ).draggable({ revert: "valid" });
 	
@@ -55,9 +62,12 @@ $(function() {
 		accept: "#picture_add",
 		drop: function(event, ui) {
 			
+			var fileForm = document.createElement('form');
 			var div_holder = document.createElement('div');
-			var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" onchange="readURL(this)"> </label>';
 			count ++;
+			var file_html = ' <form id="fileForm" action="albumPageSave" method="post" enctype="multipart/form-data">'
+			var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" name="cross'+count+'" onchange="readURL(this)"> </label>';
+			
 			
 			$(div_holder).addClass('holder').html(html);
 			$(div_holder).css('position', 'absolute');
@@ -65,7 +75,9 @@ $(function() {
 			$(div_holder).draggable( { containment: ".page-wrapper", scroll: false });
 			$(div_holder).resizable();
 			
-			$(this).append(div_holder);
+			$(this).append(fileForm);
+			$(fileForm).append(div_holder);
+			
 			$('.close_border').on('click', function() {
 				$(this).parent().remove();
 			});
@@ -88,15 +100,17 @@ function readURL(input) {
 			$(target).children('.close_border').remove(); // div 하위 x링크
 			$(target).append('<a class="close_picture">');
 			$(target).css('background-image', "url(" + e.target.result + ")");
+			save_count = 1;
 			
 			
 			$('.close_picture').on('click', function() {
 	         	$(this).parent().css('background-image', 'url("")');
-	
-	         	var html = '<a class="close_border"></a> <label for="cross'+count+'"></label> <input type="file" onchange="readURL(this)"> ';
+				
+	         	$('#cross'+count).remove();
+	         	$('label').remove();
+	         	var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" onchange="readURL(this)"> </label>';
 	         	count++;
-	        	$(this).parent().html(html);
-	        	
+	        	$(this).parent().html(html);	        	
 	        	$(this).remove();
 	        	
 				$('.close_border').on('click', function() {
@@ -141,8 +155,8 @@ function readURL(input) {
 	<div id="picture_add" style="background-image: url(../resources/image_mj/photo.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div>
 	<div id="text_add" style="background-image: url(../resources/image_mj/text.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div>
 	<div id="video_add" style="background-image: url(../resources/image_mj/Video-5-icon.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div>
-	<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="submit" value="저장" id="save" name=""></div>
-	<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="submit" value="+" id="page_plus" name=""></div>
+	<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="저장" onClick="fileSubmit();"></div>
+	<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="+" id="page_plus" name=""></div>
 </div>
 
 <div id="contents">
