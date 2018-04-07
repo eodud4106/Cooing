@@ -21,8 +21,16 @@
 		#{message_from},
 		#{message_to},
 		#{message_message},
-		(SELECT LISTAGG( CONCAT( (CONCAT('.', g_member_memberid)), '.') , '') WITHIN GROUP FROM partymember
-		WHERE g_member_memberid != #{message_from} group by g_member_partynum),
+		(
+		SELECT 
+			LISTAGG( CONCAT( (CONCAT('.', g_member_memberid)), '.'), '')
+			WITHIN GROUP (ORDER BY g_member_memberid)
+		FROM partymember
+		WHERE
+			g_member_memberid != #{message_from}
+			AND g_member_partynum = #{message_to}
+		GROUP BY g_member_partynum
+		),
 		sysdate
 	)
 	</insert>
@@ -31,10 +39,10 @@
 	<update id="updateMessage">
 	UPDATE g_message
 	SET
-		g_message_read = replace(g_message_read, CONCAT('.',#{id},'.'), '')
+		g_message_read = REPLACE(g_message_read, CONCAT(CONCAT('.', #{id}), '.'), '')
 	WHERE
-		g_message_to = #{from}
-		AND g_message_read like CONCAT('%.',#{id},'.%')
+		g_message_to = #{counterpart}
+		AND g_message_read like CONCAT(CONCAT('%.',#{id}),'.%')
 	</update>
 	
 	<!-- 그룹 메시지 조회 -->
@@ -44,11 +52,11 @@
 		g_message_from AS message_from,
 		g_message_to AS message_to,
 		g_message_message AS message_message,
-		((length(g_message_read) - length(replace(g_message_read, '.', ''))) / 2) AS message_read,
+		nvl(((length(g_message_read) - length(replace(g_message_read, '.', ''))) / 2), 0) AS message_read,
 		g_message_date AS message_date
 	FROM g_message
 	WHERE
-		g_message_to = #{to}
+		g_message_to = #{group}
 	</select>
 	
 	<!-- 그룹 메시지 중 아직 읽지 않은 메시지의 개수를 조회 -->

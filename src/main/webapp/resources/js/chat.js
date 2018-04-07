@@ -72,8 +72,8 @@ function openChat(is1to1 , counterpart, goRoot) {
 	
 	// 기존 채팅창이 열려 있는 경우 닫는다.
 	if ($('#div_chat').css('display') == 'block') {
-		$('#div_chat').css('display', 'none');
-	};
+		closePChat();
+	}
 	
 	// session에 상대와 상대의 타입을 저장한다.
 	sessionStorage.setItem('counterpart', counterpart);
@@ -134,7 +134,15 @@ function onMessage(evt) {
     
     // 	상대가 메시지가 읽었을 경우 채팅창에서 1을 지운다.
     if (chatData.type == 'read') {
-		$('span[tag="read"]').remove();
+		$('.read').each(function(i, span) {
+			var read_count = $(span).html();
+			if (read_count != '') {
+				$(span).html(read_count-1);
+				if ($(span).html() < 1) {
+					$(span).html('');
+				}
+			}
+		});
 		return;
 	}
     
@@ -149,10 +157,8 @@ function onMessage(evt) {
 		// 알림1. 팝업 알림
 		alert(from + '님으로부터 메시지가 왔습니다!');
 		
-		// 알림2. 친구 이름 옆에 빨간색 표시
-		var message_num = document.createElement('span');
-		$(message_num).html('*').css('color', 'red');
-		$('p:contains(' + from + ')').append(message_num);
+		// 알림2. 친구 이름 빨간색 표시
+		$('p:contains(' + from + ')').css('color', 'red');
 	}
     
 }
@@ -168,21 +174,26 @@ function printChat(chatData) {
 		if (chat.message_from == sessionStorage.getItem('id')) {
 			//자기가 보낸 메시지
 			$(div_message).css('text-align', 'right');
-			if (chat.message_read == 1) {
-				$(div_message).html("<span tag='read' style='font-size: 6pt' >1 </span>" + 
+			if (chat.message_read != null && chat.message_read > 0) {
+				// 1. 읽지 않음이 있는 경우
+				$(div_message).html("<span class='read' style='font-size: 6pt'>" + chat.message_read + "</span>" + 
 						chat.message_date.substring(0,16) + " / " + chat.message_message + " < <br>");
 			} else {
+				// 2. 참여자 모두가 읽은 메시지
 				$(div_message).html( chat.message_date.substring(0,16) + " / " + chat.message_message + " < <br>");
 			}
-			
+	
 		} else {
 			//받은 메시지
 			$(div_message).css('text-align', 'left').html(chat.message_from + " > " + chat.message_message + " / " + chat.message_date.substring(0,16) + "<br>");
+			
 		}
 		
 		$("#data").append(div_message);
 		
 	});
+	
+	readMessage();
 	
 	$("#data").scrollTop($("#data")[0].scrollHeight);
 	

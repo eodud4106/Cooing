@@ -37,14 +37,16 @@ public class ChatController {
 
 		String id = ((Member) session.getAttribute("Member")).getMember_id();
 		HashMap<String, String> map_search = new HashMap<>();
-		map_search.put("id1", id);
-		map_search.put("id2", counterpart);
+		
 		ArrayList<MessageVO> arr_message = new ArrayList<>();
 		if (is1to1) {
 			//1to1 대화
+			map_search.put("id1", id);
+			map_search.put("id2", counterpart);
 			arr_message = pmDAO.selectMessage(map_search);
 		} else {
 			//그룹 대화
+			map_search.put("group", counterpart);
 			arr_message = gmDAO.selectMessage(map_search);
 		}
 		

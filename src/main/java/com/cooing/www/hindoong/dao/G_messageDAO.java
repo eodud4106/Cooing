@@ -33,13 +33,15 @@ public class G_messageDAO implements G_messageMapper {
 	@Override
 	public int updateMessage(HashMap<String, String> map) {
 
+		int result = 0;
+		
 		try {
-			session.getMapper(G_messageMapper.class).updateMessage(map);
+			result = session.getMapper(G_messageMapper.class).updateMessage(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return 0;
+		return result;
 	}
 
 	@Override

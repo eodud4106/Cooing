@@ -29,7 +29,7 @@
 	SET
 		p_message_read = 0
 	WHERE
-		p_message_read = 1 and p_message_from = #{from} and p_message_to = #{to}
+		p_message_read = 1 and p_message_from = #{id} and p_message_to = #{counterpart}
 	</update>
 	
 	<select id="selectMessage" resultType="message">
