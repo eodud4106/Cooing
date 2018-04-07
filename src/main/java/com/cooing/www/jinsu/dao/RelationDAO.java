@@ -62,9 +62,9 @@ public class RelationDAO {
 			return false;
 	}
 	
-	public ArrayList<Integer> searchMemberPartyName(String id){
+	public ArrayList<Party> searchPartyByMemberid(String id){
 		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
-		return mapper.searchMemberPartyName(id);
+		return mapper.searchPartyByMemberid(id);
 	}
 	
 	public String searchPartyName(int inum){

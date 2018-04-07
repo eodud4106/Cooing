@@ -36,8 +36,13 @@
 	select party_name from party where party_leader = #{party_leader}
 	</select>
 	
-	<select id="searchMemberPartyName" resultType="int" parameterType="String">
-	select g_member_partynum from partymember where g_member_memberid = #{g_member_memberid}
+	<select id="searchPartyByMemberid" resultType="party" parameterType="String">
+	SELECT *
+	FROM party
+	WHERE party_num in
+		(SELECT g_member_partynum
+		FROM partymember
+		WHERE g_member_memberid = #{g_member_memberid})
 	</select>
 	
 	<select id="searchPartyName" resultType="String" parameterType="int">

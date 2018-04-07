@@ -90,13 +90,20 @@ function searchword(){
 </script>
 <style>
 body {
-width:900px;
-margin:0 auto;
+margin: 0;
+padding: 0;
 }
+
 div {
 padding:20px;
 border:1px solid #ccc;
 }
+
+.wrapper {
+width:900px;
+margin:0 auto;
+}
+
 /* header */
 #header {
 margin:0 0 10px 0;
@@ -202,30 +209,8 @@ img {
 
 </head>
 <body>
-
-	<c:if test="${sessionScope.Member == null }">
-	<!-- 로그인을 하지 않은 상태 -->
-		<fieldset>
-			<legend><strong>로그인</strong></legend>
-			<table>
-				<tr>
-					<th>ID : </th>
-					<td><input type="text" id="id" maxlength="10" required autofocus></td>
-				</tr>
-				<tr>
-					<th> 비밀번호 : </th>
-					<td><input type="password" id="password" maxlength="12" required></td>
-				</tr>
-				<tr align="right">
-					<td colspan="2">
-						<input type="button" id="login" value="로그인">
-						<input type="button" onclick="javascript:location.href='<c:url value="/"/>';" value="취소">
-					</td>
-				</tr>
-			</table>	
-		</fieldset>
-	</c:if>
-	<c:if test="${sessionScope.Member != null }">
+	
+	<div class="wrapper">
 	<!-- 로그인을 한 상태 -->
 		<div id="header">
 			<h1>COOING</h1>
@@ -321,50 +306,48 @@ img {
 		
 		<!-- 오른쪽 사이드바 -->
 		<div id="sidebar_b">
-		<div>
-			<form>
-			<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search1">
-			<button>s</button>
-			</form>		
-			<c:if test="${Member ne null}">
-				<c:if test="${fn:length(friend) ne 0}">
-					<c:forEach var="arrf" items="${friend }">
-						<div name="friend">
-							<p onclick="openChat('p', '${arrf}', '')">${arrf}</p>
-						</div>
-					</c:forEach>
+			<div>
+				<form>
+				<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search1">
+				<button>s</button>
+				</form>		
+				<c:if test="${Member ne null}">
+					<c:if test="${fn:length(friend) ne 0}">
+						<c:forEach var="arrf" items="${friend }">
+							<div name="friend">
+								<p onclick="openChat(true, '${arrf}', '')">${arrf}</p>
+							</div>
+						</c:forEach>
+					</c:if>
 				</c:if>
-			</c:if>
-		</div>
-		<div>
-			<c:if test="${Member ne null}">
-				<c:if test="${fn:length(group) ne 0}">
-					<c:forEach var="arrg" items="${group}">
-						<div name="group">
-							<p onclick="openGUpdate('${arrg}')">${arrg}
-								<input type="button" value="채팅" onclick="openChat('g', '${arrg}', '')"/>
-							</p>
-						</div>
-					</c:forEach>
+			</div>
+			<div>
+				<c:if test="${Member ne null}">
+					<c:if test="${fn:length(group) ne 0}">
+						<c:forEach var="party" items="${group}">
+							<div name="group">
+								<p onclick="openGUpdate('${party.party_name}')">${party.party_name}</p>
+								<input type="button" value="채팅" onclick="openChat(false, '${party.party_num}', '')"/>
+							</div>
+						</c:forEach>
+					</c:if>
 				</c:if>
-			</c:if>
-			<input type="button" value="그룹생성" onclick="window.open('./groupcreate_get?','','width=300 height=400 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
+				<input type="button" value="그룹생성" onclick="window.open('./groupcreate_get?','','width=300 height=400 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
+			</div>
 		</div>
-	</c:if>
-
-	<div id="div_chat" style="width: 500px; height: 500px; position: absolute; padding: 0px; opacity: 1; background-color: rgb(240,240,240); display: none;">
-		<p><button id="button_close" onclick="closePChat()">닫기</button></p>
-	    <div id="data" style="height: 350px; width: 100%; overflow-y: scroll; margin: auto; display: block; padding: 0px">
-	    </div>
-	    
-	    <div id="div_send">
-			<input type="text" id="message" autocomplete="off"/>
-			<input type="button" id="sendBtn" value="전송" />
-	    </div>
-	</div>
-<!-- 	<div id="div_chat" style="width: 500px; height: 500px">
 		
-	</div> -->
+		<div id="div_chat" style="width: 500px; height: 500px; position: absolute; padding: 0px; opacity: 1; background-color: rgb(240,240,240); display: none;">
+			<p><button id="button_close" onclick="closePChat()">닫기</button></p>
+		    <div id="data" style="height: 350px; width: 100%; overflow-y: scroll; margin: auto; display: block; padding: 0px">
+		    </div>
+		    
+		    <div id="div_send">
+				<input type="text" id="message" autocomplete="off"/>
+				<input type="button" id="sendBtn" value="전송" />
+		    </div>
+		</div>
+		
+	</div>
 	
 </body>
 </html>

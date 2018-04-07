@@ -143,13 +143,19 @@ public class RelationController {
 			groupleaderlist.add(s);
 		}
 		arraystrval.clear();
+		
+		// 파티 멤버의 id만 담는 배열
 		ArrayList<String> groupmemberlist = new ArrayList<String>();
-		ArrayList<Integer> arrayintval = relationDAO.searchMemberPartyName(personally.getMember_id());
-		for(Integer i : arrayintval){
-			arraystrval.add(relationDAO.searchPartyName(i));
-		}
-		for(String s : arraystrval){
-			groupmemberlist.add(s);
+		
+		// 아이디가 속한 파티를 불러온다
+		ArrayList<Party> array_party = relationDAO.searchPartyByMemberid(personally.getMember_id());
+		
+		// 방금 불러온 파티의 party_num으로 파티 멤버를 불러와 멤버의 id만 배열에 담는다
+		for (Party party : array_party) {
+			ArrayList<PartyMember> array_memeber = relationDAO.searchPartyMember(party.getParty_num());
+			for (PartyMember partyMember : array_memeber) {
+				groupmemberlist.add(partyMember.getG_member_memberid());
+			}
 		}
 		
 		model.addAttribute("leaderlist", groupleaderlist);

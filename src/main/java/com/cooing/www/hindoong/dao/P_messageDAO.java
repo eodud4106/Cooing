@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.cooing.www.hindoong.vo.P_messageVO;
+import com.cooing.www.hindoong.vo.MessageVO;
 
 @Repository
 public class P_messageDAO implements P_messageMapper {
@@ -17,12 +17,12 @@ public class P_messageDAO implements P_messageMapper {
 	SqlSession session;
 
 	@Override
-	public int insertP_message(P_messageVO p_message) {
+	public int insertMessage(MessageVO message) {
 		
 		int result = 0;
 		
 		try {
-			result = session.getMapper(P_messageMapper.class).insertP_message(p_message);
+			result = session.getMapper(P_messageMapper.class).insertMessage(message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -31,10 +31,10 @@ public class P_messageDAO implements P_messageMapper {
 	}
 
 	@Override
-	public int updateP_message(HashMap<String, String> map) {
+	public int updateMessage(HashMap<String, String> map) {
 
 		try {
-			session.getMapper(P_messageMapper.class).updateP_message(map);
+			session.getMapper(P_messageMapper.class).updateMessage(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -43,12 +43,12 @@ public class P_messageDAO implements P_messageMapper {
 	}
 
 	@Override
-	public ArrayList<P_messageVO> selectP_message(HashMap<String, String> map) {
+	public ArrayList<MessageVO> selectMessage(HashMap<String, String> map) {
 		
-		ArrayList<P_messageVO> pmlist = new ArrayList<P_messageVO>();
+		ArrayList<MessageVO> pmlist = new ArrayList<MessageVO>();
 		
 		try {
-			pmlist = session.getMapper(P_messageMapper.class).selectP_message(map);
+			pmlist = session.getMapper(P_messageMapper.class).selectMessage(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

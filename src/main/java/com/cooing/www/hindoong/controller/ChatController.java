@@ -1,10 +1,7 @@
 package com.cooing.www.hindoong.controller;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -17,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cooing.www.hindoong.dao.G_messageDAO;
 import com.cooing.www.hindoong.dao.P_messageDAO;
-import com.cooing.www.hindoong.vo.P_messageVO;
+import com.cooing.www.hindoong.vo.MessageVO;
 import com.cooing.www.jinsu.object.Member;
 
 @Controller
@@ -29,49 +27,28 @@ public class ChatController {
 	
 	@Inject
 	private P_messageDAO pmDAO;
-	
-	// chat 홈으로 이동
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, String friend_id, HttpSession session) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		String formattedDate = dateFormat.format(date);
-
-		String id = ((Member) session.getAttribute("Member")).getMember_id();
-		HashMap<String, String> map_search = new HashMap<>();
-		map_search.put("id1", id);
-		map_search.put("id2", friend_id);
-		ArrayList<P_messageVO> arr_pm = pmDAO.selectP_message(map_search);
-		
-		model.addAttribute("serverTime", formattedDate);
-		model.addAttribute("friend_id", friend_id);
-		model.addAttribute("arr_pm", arr_pm);
-		
-		return "hindoong/home";
-	}
+	@Inject
+	private G_messageDAO gmDAO;
 	
 	// 대화목록 불러오기
 	@ResponseBody
 	@RequestMapping(value = "/getChat", method = RequestMethod.POST)
-	public ArrayList<P_messageVO> getChat(Model model, String type, String counterpart, HttpSession session) {
+	public ArrayList<MessageVO> getChat(Model model, String counterpart, boolean is1to1, HttpSession session) {
 
 		String id = ((Member) session.getAttribute("Member")).getMember_id();
 		HashMap<String, String> map_search = new HashMap<>();
 		map_search.put("id1", id);
 		map_search.put("id2", counterpart);
-		if (type.equals("p")) {
-			//개인 채팅
-			ArrayList<P_messageVO> arr_pm = pmDAO.selectP_message(map_search);
-			return arr_pm;
+		ArrayList<MessageVO> arr_message = new ArrayList<>();
+		if (is1to1) {
+			//1to1 대화
+			arr_message = pmDAO.selectMessage(map_search);
 		} else {
-			//그룹 채팅
-			//TODO 고쳐야 함.
-			ArrayList<P_messageVO> arr_pm = pmDAO.selectP_message(map_search);
-			return arr_pm;
+			//그룹 대화
+			arr_message = gmDAO.selectMessage(map_search);
 		}
 		
+		return arr_message;
+		
 	}
-	
 }

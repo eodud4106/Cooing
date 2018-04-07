@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.Member;
+import com.cooing.www.jinsu.object.Party;
 
 /**
  * Handles requests for the application home page.
@@ -34,11 +35,7 @@ public class HomeController {
 		if(personal != null){
 			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
 			model.addAttribute("friend", arr_friend);
-			ArrayList<String> arraystrval = relationDAO.searchLeaderPartyName(personal.getMember_id());
-			ArrayList<Integer> arrayintval = relationDAO.searchMemberPartyName(personal.getMember_id());
-			for(Integer i : arrayintval){
-				arraystrval.add(relationDAO.searchPartyName(i));
-			}
+			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
 			model.addAttribute("group", arraystrval);
 		}
 		

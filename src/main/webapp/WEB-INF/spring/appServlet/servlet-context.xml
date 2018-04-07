@@ -52,7 +52,8 @@
 			<mvc:mapping path="/albumView" />
 			<mvc:mapping path="/myPage" />
 			<mvc:mapping path="/friendPage" />
-			<mvc:mapping path="/groupPage" />		
+			<mvc:mapping path="/groupPage" />
+			<mvc:mapping path="/" />		
 			<beans:ref bean="loginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
