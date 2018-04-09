@@ -18,8 +18,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.cooing.www.hindoong.dao.G_messageDAO;
-import com.cooing.www.hindoong.dao.P_messageDAO;
+import com.cooing.www.hindoong.dao.MessageDAO;
 import com.cooing.www.hindoong.vo.MessageVO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.PartyMember;
@@ -31,9 +30,7 @@ import com.google.gson.Gson;
 public class ChatHandler extends TextWebSocketHandler implements InitializingBean {
 
 	@Autowired
-	P_messageDAO pmDAO;
-	@Autowired
-	G_messageDAO gmDAO;
+	MessageDAO mDAO;
 	@Autowired
 	RelationDAO rDAO;
 
@@ -96,10 +93,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 				
 			} else if (type.equals("message")) {
 				// 2. [사용자가 보낸 메시지]
-				
-				// 1to1메시지인지, 그룹메시지인지 판별
-				boolean is1to1 = Boolean.parseBoolean(map_message.get("is1to1"));
-				
+
 				//날짜 정보 저장
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String message_date = sdf.format(new Date());
@@ -107,39 +101,24 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 				msg.setMessage_from(map_message.get("from"));
 				msg.setMessage_to(map_message.get("to"));
 				msg.setMessage_message(map_message.get("message"));
+				msg.setIs1to1(Integer.parseInt(map_message.get("is1to1")));
 				msg.setMessage_date(message_date);
 				
-				if (is1to1) {
+				if (msg.getIs1to1() == 1) {
 					msg.setMessage_read("1");
 				} else {
 					msg.setMessage_read(rDAO.searchPartyMember(Integer.parseInt(msg.getMessage_to())).size()-1+"");
 				}
 				
-				sendMessage(msg, is1to1);
+				sendMessage(msg);
 				
 				//db에 넣는 작업에서 딜레이가 발생하기 때문에 푸시 후 db에 넣는다.
-				if (is1to1) {
-					//1to1메시지
-					pmDAO.insertMessage(msg);
-				} else {
-					//그룹메시지
-					gmDAO.insertMessage(msg);
-				}
+				mDAO.insertMessage(msg);
 				
 			} else if (type.equals("read")) {
 				// 3. [메시지 읽음]
-				
-				// 1to1메시지인지, 그룹메시지인지 판별
-				boolean is1to1 = Boolean.parseBoolean(map_message.get("is1to1"));
-				if (is1to1) {
-					//1to1메시지
-					pmDAO.updateMessage(map_message);
-					readMessage(map_message, is1to1);
-				} else {
-					//그룹메시지
-					if(gmDAO.updateMessage(map_message) > 0) {
-						readMessage(map_message, is1to1);
-					}
+				if(mDAO.updateMessage(map_message) > 0) {
+					readMessage(map_message);
 				}
 			}
 		
@@ -164,12 +143,12 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	}
 
 	// 대화 푸시
-	public void sendMessage(MessageVO message, boolean is1to1) {
+	public void sendMessage(MessageVO message) {
 		
 		try {
 			
 			// 1:1 채팅 & 그룹채팅 여부에 따른 처리
-			if (is1to1) {
+			if (message.getIs1to1() == 1) {
 			
 				for (WebSocketSession session : this.sessionSet) {
 					if (session.isOpen()) {
@@ -217,12 +196,12 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	}
 	
 	//읽음 처리
-	public void readMessage(HashMap<String, String> map, boolean is1to1) {
+	public void readMessage(HashMap<String, String> map) {
 		
 		try {
 			
 			// 1:1 채팅 & 그룹채팅 여부에 따른 처리
-			if (is1to1) {
+			if (map.get("is1to1").equals("1")) {
 			
 				for (WebSocketSession session : this.sessionSet) {
 					if (session.isOpen()) {

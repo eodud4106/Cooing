@@ -11,8 +11,7 @@
 		<typeAlias type="com.cooing.www.jinsu.object.PartyMember" alias="partymember"/>
 	</typeAliases>
  	<mappers>
-		<mapper resource="mappers/p_messageMapper.xml"/>
-		<mapper resource="mappers/g_messageMapper.xml"/>
+		<mapper resource="mappers/messageMapper.xml"/>
 		<mapper resource="mappers/memberMapper.xml"/>
 		<mapper resource="mappers/relationMapper.xml"/>
 	</mappers>

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.cooing.www.hindoong.vo.MessageVO;
 
 @Repository
-public class P_messageDAO implements P_messageMapper {
+public class MessageDAO implements MessageMapper {
 	
 	@Inject
 	SqlSession session;
@@ -22,7 +22,7 @@ public class P_messageDAO implements P_messageMapper {
 		int result = 0;
 		
 		try {
-			result = session.getMapper(P_messageMapper.class).insertMessage(message);
+			result = session.getMapper(MessageMapper.class).insertMessage(message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -33,27 +33,29 @@ public class P_messageDAO implements P_messageMapper {
 	@Override
 	public int updateMessage(HashMap<String, String> map) {
 
+		int result = 0;
+		
 		try {
-			session.getMapper(P_messageMapper.class).updateMessage(map);
+			result = session.getMapper(MessageMapper.class).updateMessage(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return 0;
+
+		return result;
 	}
 
 	@Override
 	public ArrayList<MessageVO> selectMessage(HashMap<String, String> map) {
 		
-		ArrayList<MessageVO> pmlist = new ArrayList<MessageVO>();
+		ArrayList<MessageVO> mlist = new ArrayList<MessageVO>();
 		
 		try {
-			pmlist = session.getMapper(P_messageMapper.class).selectMessage(map);
+			mlist = session.getMapper(MessageMapper.class).selectMessage(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return pmlist;
+		return mlist;
 	}
 
 }

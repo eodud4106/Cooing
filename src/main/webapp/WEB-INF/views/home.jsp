@@ -316,7 +316,7 @@ img {
 					<c:if test="${fn:length(friend) ne 0}">
 						<c:forEach var="arrf" items="${friend }">
 							<div name="friend">
-								<p onclick="openChat(true, '${arrf}', '')">${arrf}</p>
+								<p onclick="openChat('1', '${arrf}', '')">${arrf}</p>
 							</div>
 						</c:forEach>
 					</c:if>
@@ -327,8 +327,8 @@ img {
 					<c:if test="${fn:length(group) ne 0}">
 						<c:forEach var="party" items="${group}">
 							<div name="group">
-								<p onclick="openGUpdate('${party.party_name}')">${party.party_name}</p>
-								<input type="button" value="채팅" onclick="openChat(false, '${party.party_num}', '')"/>
+								<p onclick="openGUpdate('${party.party_name}')" partynum="${party.party_num}">${party.party_name}</p>
+								<input type="button" value="채팅" onclick="openChat('0', '${party.party_num}', '')"/>
 							</div>
 						</c:forEach>
 					</c:if>

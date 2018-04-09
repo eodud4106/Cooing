@@ -63,12 +63,12 @@ function onOpen(evt) {
 
 /**
  * 채팅창 오픈
- * @param type 1to1 = 1:1, group = 그룹
+ * @param is1to1 1 = 1:1, 0 = 그룹
  * @param counterpart 상대
  * @param goRoot 최상위 디렉토리까지의 경로
  * @returns
  */
-function openChat(is1to1 , counterpart, goRoot) {
+function openChat(is1to1, counterpart, goRoot) {
 	
 	// 기존 채팅창이 열려 있는 경우 닫는다.
 	if ($('#div_chat').css('display') == 'block') {
@@ -107,6 +107,7 @@ function closePChat() {
 	$('#div_chat').css('display', 'none');
 	sessionStorage.removeItem('counterpart');
 	sessionStorage.removeItem('is1to1');
+	$('#data').html('');
 }
 
 // 서버로 메시지 발신
@@ -129,11 +130,13 @@ function sendMessage() {
 function onMessage(evt) {
     
     var chatData = JSON.parse(evt.data);
-    
+    var is1to1 = chatData.is1to1;		// 1 = 1to1, 0 = 그룹
     var from = chatData.message_from;
+    var to = chatData.message_to;
     
-    // 	상대가 메시지가 읽었을 경우 채팅창에서 1을 지운다.
+    // TODO	상대가 메시지를 읽었을 경우 채팅창에서 1을 지운다.
     if (chatData.type == 'read') {
+    	
 		$('.read').each(function(i, span) {
 			var read_count = $(span).html();
 			if (read_count != '') {
@@ -147,7 +150,8 @@ function onMessage(evt) {
 	}
     
     // 메시지를 보낸 사람이 현재 대화 중인 상대 또는 자신인지 판별한다.
-    if (from == sessionStorage.getItem("counterpart") || from == sessionStorage.getItem("id")) {
+    if (from == sessionStorage.getItem("counterpart") || from == sessionStorage.getItem("id")
+    		|| to == sessionStorage.getItem("counterpart")) {
 		// 현재 대화 중인 상대 또는 자신 -> 대화창에 메시지 출력
     		printChat(evt.data);	
     		
@@ -157,8 +161,14 @@ function onMessage(evt) {
 		// 알림1. 팝업 알림
 		alert(from + '님으로부터 메시지가 왔습니다!');
 		
-		// 알림2. 친구 이름 빨간색 표시
-		$('p:contains(' + from + ')').css('color', 'red');
+		// 알림2. 대화창 빨간색 표시
+		if (is1to1 == 1) {
+			// 1:1
+			$('p:contains(' + from + ')').css('color', 'red');
+		} else {
+			// 그룹
+			$('p[partynum = "' + to + '"]').css('color', 'red');
+		}
 	}
     
 }
@@ -171,22 +181,30 @@ function printChat(chatData) {
 	$(arr_chat).each(function(i, chat) {
 		
 		var div_message = document.createElement('div');
+		var html = "";
+		
 		if (chat.message_from == sessionStorage.getItem('id')) {
 			//자기가 보낸 메시지
 			$(div_message).css('text-align', 'right');
-			if (chat.message_read != null && chat.message_read > 0) {
+			if (chat.message_read > 0) {
 				// 1. 읽지 않음이 있는 경우
-				$(div_message).html("<span class='read' style='font-size: 6pt'>" + chat.message_read + "</span>" + 
-						chat.message_date.substring(0,16) + " / " + chat.message_message + " < <br>");
-			} else {
-				// 2. 참여자 모두가 읽은 메시지
-				$(div_message).html( chat.message_date.substring(0,16) + " / " + chat.message_message + " < <br>");
+				html += "<span class='read' style='font-size: 6pt'>" + chat.message_read + "</span>";
 			}
+			html += chat.message_date.substring(0,16) + " / " + chat.message_message + " < <br>";
+			$(div_message).html(html);
 	
 		} else {
 			//받은 메시지
-			$(div_message).css('text-align', 'left').html(chat.message_from + " > " + chat.message_message + " / " + chat.message_date.substring(0,16) + "<br>");
-			
+			$(div_message).css('text-align', 'left');
+			html += chat.message_from + " > " + chat.message_message + " / " + chat.message_date.substring(0,16);
+			if (chat.message_read > 0) {
+				// 1. 읽지 않음이 있는 경우
+				if (chat.is1to1 == 0) {
+					html += "<span class='read' style='font-size: 6pt'>" + chat.message_read + "</span>";
+				}
+			}
+			html += "<br>";
+			$(div_message).html(html);
 		}
 		
 		$("#data").append(div_message);
