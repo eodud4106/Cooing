@@ -31,8 +31,7 @@ function pagePlus(){
 		$('#flipbook')
 				.turn('addPage',element , $('#flipbook').turn('pages')+1)
 			    .turn('pages', $('#flipbook').turn('pages'));
-		
-		$('.page'+$('#flipbook').turn('pages')).droppable({
+		$('#page'+$('#flipbook').turn('pages')).droppable({
 			accept: "#picture_add",
 			drop: function(event, ui) {
 				var div_holder = document.createElement('div');
@@ -43,7 +42,7 @@ function pagePlus(){
 				$(div_holder).addClass('holder').html(html);
 				$(div_holder).css('position', 'absolute');
 				
-				$(div_holder).draggable( { containment: '.page-wrapper', scroll: false });
+				$(div_holder).draggable( { containment: 'parent'/* '.page-wrapper' */, scroll: false });
 				$(div_holder).resizable();
 				
 				$(this).append(div_holder);
@@ -58,9 +57,10 @@ function pagePlus(){
 
 function fileSubmit() {		
 		var formData = new FormData();
-		for(var i = 0,num=0; i < $('input[class="cross'+$('#flipbook').turn('page')+'"]').size(); i++){
-			if($('input[class="cross'+$('#flipbook').turn('page')+'"]')[i].files[0]){
-				formData.append('file'+num , $('input[class="cross'+$('#flipbook').turn('page')+'"]')[i].files[0]);
+		var number  = ($('#flipbook').turn('page') == 1 ? $('#flipbook').turn('page') : $('#flipbook').turn('page')+1);
+		for(var i = 0,num=0; i < $('input[class="cross'+number+'"]').size(); i++){
+			if($('input[class="cross'+number+'"]')[i].files[0]){
+				formData.append('file'+num , $('input[class="cross'+number+'"]')[i].files[0]);
 				num++;
 			}
 		}
@@ -99,11 +99,10 @@ $(function() {
 			count ++;
 			var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross1" name="cross'+count+'" onchange="readURL(this)"> </label>';
 			
-			
 			$(div_holder).addClass('holder').html(html);
 			$(div_holder).css('position', 'absolute');
 			
-			$(div_holder).draggable( { containment: '.page-wrapper', scroll: false });
+			$(div_holder).draggable( { containment: 'parent'/* '.page-wrapper' */, scroll: false });
 			$(div_holder).resizable();
 			
 			$(this).append(div_holder);
