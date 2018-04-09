@@ -25,13 +25,13 @@ var count = 0;
 function pagePlus(){
 	for(var i = 0; i < 2; i++){
 		var element = $('<div />');
-		element.attr('class' , 'page' + ($('#flipbook').turn('pages')+1));
+		element.attr('class' , 'pages');
 		element.attr('id' , 'page' + ($('#flipbook').turn('pages')+1));
-		alert(element.attr('class'));
+		alert(element.attr('id'));
 		$('#flipbook')
 				.turn('addPage',element , $('#flipbook').turn('pages')+1)
 			    .turn('pages', $('#flipbook').turn('pages'));
-		alert($('#flipbook').turn('pages')+'_pages');
+		
 		$('.page'+$('#flipbook').turn('pages')).droppable({
 			accept: "#picture_add",
 			drop: function(event, ui) {
