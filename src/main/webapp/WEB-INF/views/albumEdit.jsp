@@ -25,31 +25,33 @@ var count = 0;
 var page_count = 1;
 var save_count = 0;
 
-function fileSubmit() {
-		
-		if(save_count == 1) {
-			
-			var formData = new FormData($("#fileForm")[0]);
-
-			$.ajax({
-				url:'albumPageSave',
-				processData: false,
-				contentType: false,
-				type:'POST',		
-				data:formData,
-				success: function(html){
-					alert('업로드 성공');
-				},
-				error:function(e){alert('파일 업로드 실패');}		
-			});
-			
+function fileSubmit() {		
+		var formData = new FormData();
+		for(var i = 0,num=0; i < $('input[class="cross'+page_count+'"]').size(); i++){
+			if($('input[class="cross'+page_count+'"]')[i].files[0]){
+				formData.append('file'+num , $('input[class="cross'+page_count+'"]')[i].files[0]);
+				num++;
+			}
 		}
+		$.ajax({
+			url:'albumPageSave',
+			processData: false,
+			contentType: false,
+			type:'POST',		
+			data:formData,
+			dataType:'text',
+			success: function(a){
+				if(a=='success'){
+					alert('success');
+				}else{
+					alert(a);
+				}
+			},
+			error:function(e){alert('파일 업로드 실패');}		
+		});
 }
 
 $(function() {
-	
-	//$('.flipbook').turn('disable', true);
-	
 	$( "#picture_add" ).draggable({ revert: "valid" });
 	
 	$('*').droppable({ //다른 쪽 드롭되도 돌아 올 수 있게 하는 코드
@@ -61,12 +63,9 @@ $(function() {
 	$(".page"+page_count).droppable({
 		accept: "#picture_add",
 		drop: function(event, ui) {
-			
-			var fileForm = document.createElement('form');
 			var div_holder = document.createElement('div');
 			count ++;
-			var file_html = ' <form id="fileForm" action="albumPageSave" method="post" enctype="multipart/form-data">'
-			var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" name="cross'+count+'" onchange="readURL(this)"> </label>';
+			var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross'+page_count+'" name="cross'+count+'" onchange="readURL(this)"> </label>';
 			
 			
 			$(div_holder).addClass('holder').html(html);
@@ -75,8 +74,7 @@ $(function() {
 			$(div_holder).draggable( { containment: ".page-wrapper", scroll: false });
 			$(div_holder).resizable();
 			
-			$(this).append(fileForm);
-			$(fileForm).append(div_holder);
+			$(this).append(div_holder);
 			
 			$('.close_border').on('click', function() {
 				$(this).parent().remove();
@@ -89,33 +87,21 @@ function readURL(input) {
 	
 	var target = $(input).parent().parent(); //사진 테두리 div
 	
-	$(input).parent().remove();
-	
 	if (input.files && input.files[0]) {
+		$(target).children().hide();
 		
 		var reader = new FileReader();
 		 
 		reader.onload = function (e) {
-			
-			$(target).children('.close_border').remove(); // div 하위 x링크
 			$(target).append('<a class="close_picture">');
 			$(target).css('background-image', "url(" + e.target.result + ")");
 			save_count = 1;
 			
 			
 			$('.close_picture').on('click', function() {
-	         	$(this).parent().css('background-image', 'url("")');
-				
-	         	$('#cross'+count).remove();
-	         	$('label').remove();
-	         	var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" onchange="readURL(this)"> </label>';
-	         	count++;
-	        	$(this).parent().html(html);	        	
-	        	$(this).remove();
-	        	
-				$('.close_border').on('click', function() {
-					$(this).parent().remove();
-				});
+	         	$(this).parent().css('background-image', 'url("")');	         	
+	         	$(this).parent().children().show();	
+	         	$(this).remove();
 			});
 			
         }
@@ -151,13 +137,14 @@ function readURL(input) {
 	</div>			
 </div>     
 
-<div id="edit_bar" style="z-index: 100; width: 50%;">
+<div id="edit_bar" style="z-index:100; width: 50%;">
 	<div id="picture_add" style="background-image: url(../resources/image_mj/photo.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div>
 	<div id="text_add" style="background-image: url(../resources/image_mj/text.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div>
 	<div id="video_add" style="background-image: url(../resources/image_mj/Video-5-icon.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div>
-	<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="저장" onClick="fileSubmit();"></div>
+	
 	<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="+" id="page_plus" name=""></div>
 </div>
+<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="저장" onClick="fileSubmit();"></div>
 
 <div id="contents">
 	<div class="flipbook-viewport">
