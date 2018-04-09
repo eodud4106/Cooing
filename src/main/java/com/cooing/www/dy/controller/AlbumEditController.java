@@ -33,6 +33,11 @@ public class AlbumEditController {
 	public String pageSave(MultipartHttpServletRequest multi){
         String newFileName = ""; 
         
+        File fpath = new File(strFilePath);
+		if(!fpath.isDirectory()){
+			fpath.mkdirs();			
+		}
+        
         String ext="";
         Map<String, MultipartFile> fileMap = multi.getFileMap();
         logger.info(fileMap.toString());
