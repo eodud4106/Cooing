@@ -10,12 +10,12 @@
 <meta name="viewport" content="width = 1050, user-scalable = no" />
 	<script type="text/javascript" src="../resources/album_page_js/extras/jquery.min.1.7.js"></script>
 	<script type="text/javascript" src="../resources/album_page_js/extras/modernizr.2.5.3.min.js"></script>
-	<script type="text/javascript" src="../resources/album_page_js/basic.js"></script>
-		
-	<script src="../resources/album_drag_and_drop_js/jquery-ui.js"></script>
+	<script type="text/javascript" src="../resources/album_page_js/basic.js"></script>		
 	
-	<link rel="stylesheet" href="../resources/album_drag_and_drop_js/jquery-ui.css">
-		
+	<script src="../resources/album_drag_and_drop_js/jquery-ui.js"></script>
+ 	<!-- <script src="../resources/js/jquery-3.3.1.min.js"></script>	 -->
+	
+	<link rel="stylesheet" href="../resources/album_drag_and_drop_js/jquery-ui.css">		
 	<link rel="stylesheet" href="../resources/album_css/album_edit_basic.css">
 	<link rel="stylesheet" href="../resources/album_css/album_edit_drag_and_drop.css">
 
@@ -60,7 +60,7 @@ $(function() {
 		}
 	});
 	
-	$(".page"+page_count).droppable({
+	$("#page"+page_count).droppable({
 		accept: "#picture_add",
 		drop: function(event, ui) {
 			var div_holder = document.createElement('div');
@@ -109,6 +109,28 @@ function readURL(input) {
 	reader.readAsDataURL(input.files[0]);
     }
 }
+
+//앨범 배경 커스텀마이징
+ function bgchange(num) {
+		
+		var bg = num;
+		//alert(bg);
+		
+		if(bg == 0) {
+			//alert(bg);
+			$('.pages').css("background-image","url(..//resources//image_mj//season.jpg)");
+		}
+		
+		if(bg == 1) {
+			//alert(bg);
+			$('.pages').css("background-color","pink");
+		}
+		
+		if(bg == 2) {
+			//alert(bg);
+			$('.pages').css("background-image","url(..//resources//image_mj//vintage.jpg)");
+		}
+	}
 </script>
 
 </head>
@@ -146,15 +168,67 @@ function readURL(input) {
 </div>
 <div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="저장" onClick="fileSubmit();"></div>
 
+<!-- 배경변경버튼 -->
+	<button onclick = "bgchange(0)">SAKURA</button>
+	<button onclick = "bgchange(1)">PINK</button>
+	<button onclick = "bgchange(2)">VINTAGAE</button> 
+	
 <div id="contents">
 	<div class="flipbook-viewport">
 		<div class="container">
 			<div class="flipbook">
-				<div class="page1"></div>
+				<div id="page1">
+				 	 <input type="file" name="img1" accept="image/*" id="img1"> 
+				 </div>
+				  <div class="pages" id="page2"></div>
+				 <div class="pages" id="page3"></div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<!-- 메인표지업로드 -->
+ <script type="text/javascript">
+ var file1 = document.querySelector('#img1');
+	file1.onchange = function () {
+	    var fileList = file1.files ;
+	    var reader = new FileReader();
+	    reader.readAsDataURL(fileList [0]);
+	    reader.onload = function  () {
+	        document.querySelector('#preview1').src = reader.result ;
+	    };
+	};	
+</script>
+
+<script>
+
+var homePhoto = document.querySelector(".flipbook");
+
+							
+
+homePhoto.onchange = function(e) {
+
+var file = e.target.files[0];
+
+var reader = new FileReader();
+
+reader.addEventListener("load", function() {
+
+var container = e.target.parentNode;
+
+container.style.background = "url("+reader.result+") no-repeat center";container.style["background-size"] = "cover";
+
+}, false);
+
+if (file) {
+
+reader.readAsDataURL(file);
+
+}
+
+}
+
+</script> 
 			
 <script type="text/javascript">
 
