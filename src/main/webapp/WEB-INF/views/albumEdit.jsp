@@ -22,6 +22,38 @@
 <script>
 var count = 0;
 
+var picture_coordinate = new Array(); //좌표 담는 배열
+
+function getCoordinate() {
+	
+	picture_coordinate.length = 0;
+	var temp_count = 1;
+		
+	for(var i=1; i<=count; i++) {
+			
+		var holder = $('#holder'+temp_count);
+		var current_page = $('#flipbook').turn('pages');
+		alert(current_page);
+		
+		if(holder != null) {
+			//기본위치
+			var holder_top = $('#holder'+temp_count).position().top;
+			var holder_left = $('#holder'+temp_count).position().left;
+			//크기
+			var holder_width = $('#holder'+temp_count).width();
+			var holder_height = $('#holder'+temp_count).height();
+			
+			picture_coordinate.push('p'+ current_page + 'd'+ temp_count + 't' + Math.floor(holder_top) + 'l' + Math.floor(holder_left) + 'w' + Math.floor(holder_width) + 'h' + Math.floor(holder_height));
+		}
+		
+		temp_count++;
+		
+	}
+	
+	alert(picture_coordinate);
+	
+}
+
 function pagePlus(){
 	for(var i = 0; i < 2; i++){
 		var element = $('<div />');
@@ -81,6 +113,27 @@ function fileSubmit() {
 			},
 			error:function(e){alert('파일 업로드 실패');}		
 		});
+		
+		getCoordinate(); //좌표값 구하는 함수
+		
+		jQuery.ajaxSettings.traditional = true;
+		
+		$.ajax({
+			url:'coordinate', 
+			type: 'POST',
+			data: {array : picture_coordinate},
+			dataType: 'text',		
+			success: function(a) {
+				if(a=='success'){
+					alert('success');
+				}else{
+					alert(a);
+				}
+			}, 
+			error: function(e) { 
+				alert(JSON.stringify(e));
+			}
+		});
 }
 
 $(function() {
@@ -103,6 +156,7 @@ $(function() {
 			$(div_holder).css('position', 'absolute');
 			
 			$(div_holder).draggable( { containment: 'parent'/* '.page-wrapper' */, scroll: false });
+			$(div_holder).attr('id', 'holder'+count);
 			$(div_holder).resizable();
 			
 			$(this).append(div_holder);

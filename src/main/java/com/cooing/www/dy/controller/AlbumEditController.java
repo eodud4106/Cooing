@@ -1,11 +1,13 @@
 package com.cooing.www.dy.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,10 +15,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.cooing.www.dy.dao.AlbumDAO;
+import com.cooing.www.dy.vo.Coordinate_Picture;
+
 @Controller
 @RequestMapping(value = "albumEdit")
 public class AlbumEditController {
 	private static String strFilePath = "/FileSave/upload/";
+	
+	@Autowired
+	AlbumDAO albumDAO;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
 	
@@ -66,6 +74,66 @@ public class AlbumEditController {
         
         return "success";
 
+	}
+	
+	//사진 좌표값
+	@ResponseBody
+	@RequestMapping(value = "/coordinate", method = RequestMethod.POST)
+	public String coordinate(String[] array){
+		
+		Coordinate_Picture cp = null;
+		ArrayList<Coordinate_Picture> list = new ArrayList<>();
+		
+		String page = null;
+		String div_num = null;
+		String top = null;
+		String left = null;
+		String width = null;
+		String height = null;
+		
+		for(int i=0; i<array.length; i++) {
+			String str = array[i];
+			int next = 0;
+			int j = 0;
+			
+			boolean flag = true;
+			while(flag) {
+				
+				if(str.charAt(j)=='d') {
+					page = null;
+					page = str.substring(1, j);
+					next = j;
+				} else if(str.charAt(j)=='t'){
+					div_num = null;
+					div_num = str.substring(next+1, j);
+					next = j;
+				} else if(str.charAt(j)=='l'){
+					top = null;
+					top = str.substring(next+1, j);
+					next = j;
+				} else if(str.charAt(j)=='w'){
+					left = null;
+					left = str.substring(next+1, j);
+					next = j;
+				} else if(str.charAt(j)=='h'){
+					width = null;
+					width = str.substring(next+1, j);
+					next = j;
+					height = null;
+					height = str.substring(next+1, str.length());
+					flag = false;
+				}
+				
+				j++;
+				
+			}
+			cp = new Coordinate_Picture(Integer.parseInt(page), Integer.parseInt(div_num) ,Integer.parseInt(top), Integer.parseInt(left), Integer.parseInt(width), Integer.parseInt(height));
+			list.add(cp);
+		}
+		
+		albumDAO.insertAlbum(list); //앨범 sql 저장
+			
+		return "success";
 	}
 	
 }
