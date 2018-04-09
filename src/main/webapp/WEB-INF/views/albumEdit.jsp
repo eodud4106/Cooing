@@ -22,14 +22,45 @@
 <script>
 var count = 0;
 
-var page_count = 1;
-var save_count = 0;
+function pagePlus(){
+	for(var i = 0; i < 2; i++){
+		var element = $('<div />');
+		element.attr('class' , 'page' + ($('#flipbook').turn('pages')+1));
+		element.attr('id' , 'page' + ($('#flipbook').turn('pages')+1));
+		alert(element.attr('class'));
+		$('#flipbook')
+				.turn('addPage',element , $('#flipbook').turn('pages')+1)
+			    .turn('pages', $('#flipbook').turn('pages'));
+		alert($('#flipbook').turn('pages')+'_pages');
+		$('.page'+$('#flipbook').turn('pages')).droppable({
+			accept: "#picture_add",
+			drop: function(event, ui) {
+				var div_holder = document.createElement('div');
+				count ++;
+				var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross'+$('#flipbook').turn('pages')+'" name="cross'+count+'" onchange="readURL(this)"> </label>';
+				
+				
+				$(div_holder).addClass('holder').html(html);
+				$(div_holder).css('position', 'absolute');
+				
+				$(div_holder).draggable( { containment: '.page-wrapper', scroll: false });
+				$(div_holder).resizable();
+				
+				$(this).append(div_holder);
+				
+				$('.close_border').on('click', function() {
+					$(this).parent().remove();
+				});
+			}
+		});
+	}
+}
 
 function fileSubmit() {		
 		var formData = new FormData();
-		for(var i = 0,num=0; i < $('input[class="cross'+page_count+'"]').size(); i++){
-			if($('input[class="cross'+page_count+'"]')[i].files[0]){
-				formData.append('file'+num , $('input[class="cross'+page_count+'"]')[i].files[0]);
+		for(var i = 0,num=0; i < $('input[class="cross'+$('#flipbook').turn('page')+'"]').size(); i++){
+			if($('input[class="cross'+$('#flipbook').turn('page')+'"]')[i].files[0]){
+				formData.append('file'+num , $('input[class="cross'+$('#flipbook').turn('page')+'"]')[i].files[0]);
 				num++;
 			}
 		}
@@ -42,7 +73,8 @@ function fileSubmit() {
 			dataType:'text',
 			success: function(a){
 				if(a=='success'){
-					alert('success');
+					pagePlus();
+					$('#flipbook').turn('next');
 				}else{
 					alert(a);
 				}
@@ -52,26 +84,26 @@ function fileSubmit() {
 }
 
 $(function() {
-	$( "#picture_add" ).draggable({ revert: "valid" });
+	$( '#picture_add' ).draggable({ revert: 'valid' });
 	
 	$('*').droppable({ //다른 쪽 드롭되도 돌아 올 수 있게 하는 코드
-		accept: "#picture_add",
+		accept: '#picture_add',
 		drop: function(event, ui) {
 		}
 	});
 	
-	$("#page"+page_count).droppable({
-		accept: "#picture_add",
+	$('#page1').droppable({
+		accept: '#picture_add',
 		drop: function(event, ui) {
 			var div_holder = document.createElement('div');
 			count ++;
-			var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross'+page_count+'" name="cross'+count+'" onchange="readURL(this)"> </label>';
+			var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross1" name="cross'+count+'" onchange="readURL(this)"> </label>';
 			
 			
 			$(div_holder).addClass('holder').html(html);
 			$(div_holder).css('position', 'absolute');
 			
-			$(div_holder).draggable( { containment: ".page-wrapper", scroll: false });
+			$(div_holder).draggable( { containment: '.page-wrapper', scroll: false });
 			$(div_holder).resizable();
 			
 			$(this).append(div_holder);
@@ -95,7 +127,6 @@ function readURL(input) {
 		reader.onload = function (e) {
 			$(target).append('<a class="close_picture">');
 			$(target).css('background-image', "url(" + e.target.result + ")");
-			save_count = 1;
 			
 			
 			$('.close_picture').on('click', function() {
@@ -176,12 +207,10 @@ function readURL(input) {
 <div id="contents">
 	<div class="flipbook-viewport">
 		<div class="container">
-			<div class="flipbook">
-				<div id="page1">
+			<div class="flipbook" id="flipbook">
+				<div class="page1" id="page1">
 				 	 <input type="file" name="img1" accept="image/*" id="img1"> 
 				 </div>
-				  <div class="pages" id="page2"></div>
-				 <div class="pages" id="page3"></div>
 			</div>
 		</div>
 	</div>
