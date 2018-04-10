@@ -22,106 +22,23 @@
 <script>
 var count = 0;
 
-var picture_coordinate = new Array(); //좌표 담는 배열
-
-function getCoordinate() {
+ function getCoordinate(holdername , page , name) {	
+	var holder = $('#' + holdername);
 	
-	picture_coordinate.length = 0;
-	var temp_count = 1;
+	if(holder != null) {
+		//기본위치
+		var holder_top = holder.position().top;
+		var holder_left = holder.position().left;
+		//크기
+		var holder_width = holder.width();
+		var holder_height = holder.height();
 		
-	for(var i=1; i<=count; i++) {
-			
-		var holder = $('#holder'+temp_count);
-		var current_page = $('#flipbook').turn('pages');
-		alert(current_page);
-		
-		if(holder != null) {
-			//기본위치
-			var holder_top = $('#holder'+temp_count).position().top;
-			var holder_left = $('#holder'+temp_count).position().left;
-			//크기
-			var holder_width = $('#holder'+temp_count).width();
-			var holder_height = $('#holder'+temp_count).height();
-			
-			picture_coordinate.push('p'+ current_page + 'd'+ temp_count + 't' + Math.floor(holder_top) + 'l' + Math.floor(holder_left) + 'w' + Math.floor(holder_width) + 'h' + Math.floor(holder_height));
-		}
-		
-		temp_count++;
-		
-	}
-	
-	alert(picture_coordinate);
-	
-}
-
-function pagePlus(){
-	for(var i = 0; i < 2; i++){
-		var element = $('<div />');
-		element.attr('class' , 'pages');
-		element.attr('id' , 'page' + ($('#flipbook').turn('pages')+1));
-		alert(element.attr('id'));
-		$('#flipbook')
-				.turn('addPage',element , $('#flipbook').turn('pages')+1)
-			    .turn('pages', $('#flipbook').turn('pages'));
-		$('#page'+$('#flipbook').turn('pages')).droppable({
-			accept: "#picture_add",
-			drop: function(event, ui) {
-				var div_holder = document.createElement('div');
-				count ++;
-				var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross'+$('#flipbook').turn('pages')+'" name="cross'+count+'" onchange="readURL(this)"> </label>';
-				
-				
-				$(div_holder).addClass('holder').html(html);
-				$(div_holder).css('position', 'absolute');
-				
-				$(div_holder).draggable( { containment: 'parent'/* '.page-wrapper' */, scroll: false });
-				$(div_holder).resizable();
-				
-				$(this).append(div_holder);
-				
-				$('.close_border').on('click', function() {
-					$(this).parent().remove();
-				});
-			}
-		});
-	}
-}
-
-function fileSubmit() {		
-		var formData = new FormData();
-		var number  = ($('#flipbook').turn('page') == 1 ? $('#flipbook').turn('page') : $('#flipbook').turn('page')+1);
-		for(var i = 0,num=0; i < $('input[class="cross'+number+'"]').size(); i++){
-			if($('input[class="cross'+number+'"]')[i].files[0]){
-				formData.append('file'+num , $('input[class="cross'+number+'"]')[i].files[0]);
-				num++;
-			}
-		}
-		$.ajax({
-			url:'albumPageSave',
-			processData: false,
-			contentType: false,
-			type:'POST',		
-			data:formData,
-			dataType:'text',
-			success: function(a){
-				if(a=='success'){
-					pagePlus();
-					$('#flipbook').turn('next');
-				}else{
-					alert(a);
-				}
-			},
-			error:function(e){alert('파일 업로드 실패');}		
-		});
-		
-		getCoordinate(); //좌표값 구하는 함수
-		
-		jQuery.ajaxSettings.traditional = true;
+		var string = ('p'+ page + 't' + Math.floor(holder_top) + 'l' + Math.floor(holder_left) + 'w' + Math.floor(holder_width) + 'h' + Math.floorS(holder_height) + 'n' + name);
 		
 		$.ajax({
 			url:'coordinate', 
 			type: 'POST',
-			data: {array : picture_coordinate},
+			data: {array:string},
 			dataType: 'text',		
 			success: function(a) {
 				if(a=='success'){
@@ -134,6 +51,86 @@ function fileSubmit() {
 				alert(JSON.stringify(e));
 			}
 		});
+	}
+}
+
+function pagePlus(){
+	for(var i = 0; i < 2; i++){
+		var element = $('<div />');
+		element.attr('class' , 'pages');
+		element.attr('id' , 'page' + ($('#flipbook').turn('pages')+1));
+		$('#flipbook')
+				.turn('addPage',element , $('#flipbook').turn('pages')+1)
+			    .turn('pages', $('#flipbook').turn('pages'));
+		$('#page'+$('#flipbook').turn('pages')).droppable({
+			accept: "#picture_add",
+			drop: function(event, ui) {
+				var pageid = $(this).attr('id');
+				var pagenum = pageid.substring(4,pageid.length);
+				var div_holder = document.createElement('div');
+				count ++;
+				var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross'+pagenum+'" name="cross'+count+'" onchange="readURL(this)"> </label>';
+
+				$(div_holder).addClass('holder').html(html);
+				$(div_holder).css('position', 'absolute');
+				
+				$(div_holder).draggable( { containment: 'parent'/* '.page-wrapper' */, scroll: false });
+				$(div_holder).attr('id', 'holder'+count);
+				$(div_holder).resizable();
+				
+				$(this).append(div_holder);
+				
+				$('.close_border').on('click', function() {
+					$(this).parent().remove();
+				});
+			}
+		});
+	}
+}
+
+function fileSave(formdata , item , number){
+	$.ajax({
+		url:'albumPageSave',
+		processData: false,
+		contentType: false,
+		type:'POST',		
+		data:formdata,
+		dataType:'text',
+		success: function(a){
+			if(a!='fail'){
+				getCoordinate($(item).attr('data') , number , a);
+			}else{
+				alert(a);
+			}
+		},
+		error:function(e){alert('파일 업로드 실패');}		
+	});
+}
+
+function fileSubmit() {
+		var number  = ($('#flipbook').turn('page') == 1 ? $('#flipbook').turn('page') : ($('#flipbook').turn('page')%2 == 0 ? $('#flipbook').turn('page') : $('#flipbook').turn('page')-1));
+		var num = 0;		
+		
+		$('input[class="cross'+number+'"]').each(function(index,item){
+			if($('input[class="cross'+number+'"]')[index].files[0]){
+				var formData = new FormData();
+				formData.append('file'+num , $('input[class="cross'+number+'"]')[index].files[0]);
+				fileSave(formData,item,number);
+			}
+		});		
+		if(number != 1){
+			number = (parseInt(number) + 1);
+			$('input[class="cross'+number+'"]').each(function(index,item){
+				if($('input[class="cross'+number+'"]')[index].files[0]){
+					var formData = new FormData();
+					formData.append('file'+num , $('input[class="cross'+number+'"]')[index].files[0]);
+					fileSave(formData,item,number);
+				}
+			});
+		}
+		
+		pagePlus();
+		$('#flipbook').turn('next');
 }
 
 $(function() {
@@ -148,9 +145,11 @@ $(function() {
 	$('#page1').droppable({
 		accept: '#picture_add',
 		drop: function(event, ui) {
+			var pageid = $(this).attr('id');
+			var pagenum = pageid.substring(4,pageid.length);
 			var div_holder = document.createElement('div');
 			count ++;
-			var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross1" name="cross'+count+'" onchange="readURL(this)"> </label>';
+			var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross'+pagenum+'" name="cross'+count+'" onchange="readURL(this)"> </label>';
 			
 			$(div_holder).addClass('holder').html(html);
 			$(div_holder).css('position', 'absolute');
@@ -181,15 +180,14 @@ function readURL(input) {
 			$(target).append('<a class="close_picture">');
 			$(target).css('background-image', "url(" + e.target.result + ")");
 			
+			$(target).children().children().attr('data',$(target).attr('id'));
 			
 			$('.close_picture').on('click', function() {
 	         	$(this).parent().css('background-image', 'url("")');	         	
 	         	$(this).parent().children().show();	
 	         	$(this).remove();
-			});
-			
+			});			
         }
-
 	reader.readAsDataURL(input.files[0]);
     }
 }

@@ -36,104 +36,91 @@ public class AlbumEditController {
 	}
 	
 	// 앨범 임시 저장
-	@ResponseBody
-	@RequestMapping(value = "/albumPageSave", method = RequestMethod.POST)
-	public String pageSave(MultipartHttpServletRequest multi){
-        String newFileName = ""; 
-        
-        File fpath = new File(strFilePath);
-		if(!fpath.isDirectory()){
-			fpath.mkdirs();			
+		@ResponseBody
+		@RequestMapping(value = "/albumPageSave", method = RequestMethod.POST)
+		public String pageSave(MultipartHttpServletRequest multi){
+	        String newFileName = ""; 	        
+	        File fpath = new File(strFilePath);
+			if(!fpath.isDirectory()){
+				fpath.mkdirs();			
+			}	        
+	        String ext="";
+	        Map<String, MultipartFile> fileMap = multi.getFileMap();
+	        logger.info(fileMap.toString());
+	        for(MultipartFile multipartfile:fileMap.values()){
+	        	int lastIndex = multipartfile.getOriginalFilename().lastIndexOf('.');
+	    		if(lastIndex == -1)
+	    			ext = "";		
+	    		else{
+	    			ext = "." + multipartfile.getOriginalFilename().substring(lastIndex + 1);
+	    			newFileName = multipartfile.getOriginalFilename().substring(0,lastIndex);
+	    		}
+	    		newFileName += new Date().getTime();
+	        	File serverFile = null;
+	            while(true){
+	    			serverFile = new File(strFilePath + newFileName + ext);
+	    			if ( !serverFile.isFile()) break;
+	    			newFileName = newFileName + new Date().getTime();
+	    		}		
+	             try {
+	            	 multipartfile.transferTo(serverFile);
+	             } catch (Exception e) {
+	                 e.printStackTrace();
+	                 return "fail";
+	             }
+	        }	        
+	        return newFileName + ext;
 		}
-        
-        String ext="";
-        Map<String, MultipartFile> fileMap = multi.getFileMap();
-        logger.info(fileMap.toString());
-        for(MultipartFile multipartfile:fileMap.values()){
-        	int lastIndex = multipartfile.getOriginalFilename().lastIndexOf('.');
-    		if(lastIndex == -1)
-    			ext = "";		
-    		else{
-    			ext = "." + multipartfile.getOriginalFilename().substring(lastIndex + 1);
-    			newFileName = multipartfile.getOriginalFilename().substring(0,lastIndex);
-    		}
-    		newFileName += new Date().getTime();
-        	File serverFile = null;
-            while(true){
-    			serverFile = new File(strFilePath + newFileName + ext);
-    			if ( !serverFile.isFile()) break;
-    			newFileName = newFileName + new Date().getTime();
-    		}		
-             try {
-            	 multipartfile.transferTo(serverFile);
-             } catch (Exception e) {
-                 e.printStackTrace();
-                 return "앨범이미지 저장을 실패 했습니다. 잠시 후 다시 시도해 주십시오.";
-             }
-        }
-        
-        return "success";
-
-	}
-	
-	//사진 좌표값
-	@ResponseBody
-	@RequestMapping(value = "/coordinate", method = RequestMethod.POST)
-	public String coordinate(String[] array){
 		
-		Coordinate_Picture cp = null;
-		ArrayList<Coordinate_Picture> list = new ArrayList<>();
+		//사진 좌표값
+		@ResponseBody
+		@RequestMapping(value = "/coordinate", method = RequestMethod.POST)
+		public String coordinate(String array){
+			
+			Coordinate_Picture cp = null;
+			
+			String page = null;
+			String div_num = null;
+			String top = null;
+			String left = null;
+			String width = null;
+			String height = null;
 		
-		String page = null;
-		String div_num = null;
-		String top = null;
-		String left = null;
-		String width = null;
-		String height = null;
-		
-		for(int i=0; i<array.length; i++) {
-			String str = array[i];
 			int next = 0;
 			int j = 0;
-			
-			boolean flag = true;
+			logger.info(array);
+			/*boolean flag = true;
 			while(flag) {
-				
-				if(str.charAt(j)=='d') {
+				if(array.charAt(j)=='p') {
 					page = null;
-					page = str.substring(1, j);
+					page = array.substring(1, j);
 					next = j;
-				} else if(str.charAt(j)=='t'){
+				} else if(array.charAt(j)=='t'){
 					div_num = null;
-					div_num = str.substring(next+1, j);
+					div_num = array.substring(next+1, j);
 					next = j;
-				} else if(str.charAt(j)=='l'){
+				} else if(array.charAt(j)=='l'){
 					top = null;
-					top = str.substring(next+1, j);
+					top = array.substring(next+1, j);
 					next = j;
-				} else if(str.charAt(j)=='w'){
+				} else if(array.charAt(j)=='w'){
 					left = null;
-					left = str.substring(next+1, j);
+					left = array.substring(next+1, j);
 					next = j;
-				} else if(str.charAt(j)=='h'){
+				} else if(array.charAt(j)=='h'){
 					width = null;
-					width = str.substring(next+1, j);
+					width = array.substring(next+1, j);
 					next = j;
 					height = null;
-					height = str.substring(next+1, str.length());
+					height = array.substring(next+1, array.length());
 					flag = false;
 				}
-				
-				j++;
-				
-			}
-			cp = new Coordinate_Picture(Integer.parseInt(page), Integer.parseInt(div_num) ,Integer.parseInt(top), Integer.parseInt(left), Integer.parseInt(width), Integer.parseInt(height));
-			list.add(cp);
+				j++;				
+				cp = new Coordinate_Picture(Integer.parseInt(page), Integer.parseInt(div_num) ,Integer.parseInt(top), Integer.parseInt(left), Integer.parseInt(width), Integer.parseInt(height));
+			}			
+			albumDAO.insertAlbum(cp); //앨범 sql 저장
+*/				
+			return "success";
 		}
-		
-		albumDAO.insertAlbum(list); //앨범 sql 저장
-			
-		return "success";
-	}
 	
 }
