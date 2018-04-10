@@ -31,6 +31,15 @@ $(document).ready(function () {
 		$('#myModal').css('display', 'none');
 	});
 	
+	$('#createBtn').click(function() {
+		$('#album_create_modal').css('display', 'block');
+	});
+	
+	$('#createBtn_close').click(function() {
+		$('#album_create_frame').attr('src', 'albumEdit/AlbumNameCreate');
+		$('#album_create_modal').css('display', 'none');
+	});
+	
 	if (${sessionScope.Member != null}) {
 		readyChat();
 		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
@@ -254,7 +263,12 @@ img {
 		                <span id="myBtn_close" class="close">&times;</span>
 		                <iframe src="albumView" allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
 			        </div>
-		        </div>		
+		        </div>
+		    	<input type="button" id="createBtn" value="앨범 생성">
+					<div id="album_create_modal" class="modal">
+						<span id="createBtn_close" class="close">&times;</span>
+						<iframe id="album_create_frame" src="albumEdit/AlbumNameCreate" allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
+					</div>			
 	        </form>
 								
 			<div id = "albumList">				

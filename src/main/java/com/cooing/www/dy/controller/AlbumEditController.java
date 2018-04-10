@@ -122,5 +122,25 @@ public class AlbumEditController {
 */				
 			return "success";
 		}
+		
+		//앨범생성
+		@RequestMapping(value = "/AlbumNameCreate", method = RequestMethod.GET)
+		public String AlbumNameCreate(){
+				
+			return "Album/AlbumNameCreate";
+		}
+		
+		//앨범 생성
+		@RequestMapping(value = "/AlbumFirstCreate", method = RequestMethod.POST)
+		public String AlbumFirstCreate(String album_name, String album_contents, int album_party, int album_version){
+			
+			System.out.println(album_name);
+			System.out.println(album_contents);
+			System.out.println(album_party);
+			System.out.println(album_version);
+			
+			
+			return "albumEdit";
+		}
 	
 }

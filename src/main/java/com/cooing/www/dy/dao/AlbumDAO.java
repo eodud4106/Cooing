@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cooing.www.dy.vo.Coordinate_Picture;
+import com.cooing.www.jinsu.dao.MemberMapper;
 
 @Repository
 public class AlbumDAO {
@@ -15,13 +16,15 @@ public class AlbumDAO {
 	
 	public boolean insertAlbum(ArrayList<Coordinate_Picture> list){
 		
-		for(int i=0; i<list.size(); i++) {
-			System.out.println(list.get(i).toString());
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		int cnt = mapper.insertAlbum(list);
+		
+		if(cnt > 0) {
+			return true;
+		} else {
+			return false;
 		}
 		
-		if(list.size() < 0)
-			return true;
-		else 
-			return false;
+		
 	}
 }
