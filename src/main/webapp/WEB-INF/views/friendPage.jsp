@@ -1,9 +1,60 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	   pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <title>friend Page</title>
+<script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>" ></script>
+<script>
+$(document).ready(function () {
+	initialize();
+});
+function initialize(){
+	$('#friendbt').on('click',fiendplus);
+}
+function fiendplus(){
+	var friendid = $('#friendid').val();
+	var data = $('#friendbt').attr('data');
+	if(data == 0){
+		$.ajax({
+			url:'friend_plus',
+			type:'POST',		
+			data:{friendid:friendid},
+			dataType:'text',
+			success: function(a){
+				if(a=='success'){
+					$('#friendbt').val('친구삭제');
+					$('#friendbt').attr('data' , '1');
+				}
+				else{
+					alert(a);
+				}
+			},
+			error:function(e){alert(JSON.stringify(e));}		
+		});
+	}else if(data == 1){
+		$.ajax({
+			url:'friend_delete',
+			type:'POST',		
+			data:{friendid:friendid},
+			dataType:'text',
+			success: function(a){
+				if(a=='success'){
+					$('#friendbt').val('친구추가');
+					$('#friendbt').attr('data' , '0');
+				}
+				else{
+					alert(a);
+				}
+			},
+			error:function(e){alert(JSON.stringify(e));}		
+		});
+	}
+}
+</script>
 <meta charset="utf-8" />
 
 <style>
@@ -123,8 +174,16 @@ img{
 
 	<!-- 왼쪽 사이드바 -->
 	<div id="sidebar_a">
-		<p><img src = "./resources/image_mj/yui.jpg">친구ID</p>
-		<p><button>친구추가</button>
+		<p><img src = "<c:url value="/jinsu/memberimg?strurl=${friend.getMember_picture()}" />">${friend.getMember_id()}</p>
+		<p>
+			<c:if test="${check ne true }">
+				<input type="button" id="friendbt" value="친구추가" data="0">
+			</c:if>
+			<c:if test="${check eq true }">
+				<input type="button" id="friendbt" value="친구삭제" data="1">
+			</c:if>
+			<input type="hidden" value="${friend.getMember_id()}" id="friendid">
+		</p>
 		<p>Profile</p>
 		<p></p>
 		<p></p>
@@ -180,6 +239,10 @@ img{
 			<p>친구2</p>
 			<p>친구3</p>
 			<p>친구4</p>				
+		</div>
+		<div>
+		<p>그룹1</p>
+		<p>그룹2</p>
 		</div>
 	</div>
 			

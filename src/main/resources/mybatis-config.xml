@@ -4,15 +4,17 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.cooing.www.hindoong.vo.P_messageVO" alias="p_message"/>
+		<typeAlias type="com.cooing.www.hindoong.vo.MessageVO" alias="message"/>
 		<typeAlias type="com.cooing.www.jinsu.object.Member" alias="member"/>
 		<typeAlias type="com.cooing.www.jinsu.object.Category" alias="category"/>
 		<typeAlias type="com.cooing.www.jinsu.object.Party" alias="party"/>
 		<typeAlias type="com.cooing.www.jinsu.object.PartyMember" alias="partymember"/>
+		<typeAlias type="com.cooing.www.dy.vo.Coordinate_Picture" alias="coordinate_picture"/>
 	</typeAliases>
  	<mappers>
-		<mapper resource="mappers/p_messageMapper.xml"/>
+		<mapper resource="mappers/messageMapper.xml"/>
 		<mapper resource="mappers/memberMapper.xml"/>
 		<mapper resource="mappers/relationMapper.xml"/>
+		<mapper resource="mappers/albumMapper.xml"/>
 	</mappers>
 </configuration>

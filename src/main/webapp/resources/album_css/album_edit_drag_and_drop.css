@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+#pages{position: relative;}
+#edit_bar div {width: 50px; height: 50px; background-repeat:no-repeat; background-position:center; background-size:contain;}
+	
+	.holder { border: 2px dashed #ccc; width: 150px; height: 170px; background-repeat:no-repeat; background-position:center; background-size:contain;}
+	.holder.hover { border: 2px dashed #0c0; }
+	
+	.holder img {width:152px; height:170px;}
+	.holder label {background: black; height: 30px; position: relative; width: 6px; display: block; margin : 45% auto; cursor:pointer;}
+	.holder label:after {background: black; content: ""; height: 6px; left: -12px; position: absolute; top: 12px; width: 30px; }
+	.holder label:hover {background:blue;}
+	.holder label:hover:after {background:blue;}
+	.holder input[type="file"] { /* 파일 필드 숨기기 */ position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0; }
+	
+	.close_border {position: absolute; right: 13px; top: 1px; width: 13px; height:1px;opacity: 0.3;}
+	.close_border:hover {opacity: 1;}
+	.close_border:before {position: absolute; left: 17px; content: ' '; height: 16px; width: 2px; background-color: black;} 
+	.close_border:after {position: absolute; left: 17px; content: ' '; height: 16px; width: 2px; background-color: black;}
+	.close_border:before {transform: rotate(45deg);} 
+	.close_border:after {transform: rotate(-45deg);}
+	
+	.close_picture {position: absolute; right: 13px; top: 1px; width: 13px; height:1px;opacity: 0.3;}
+	.close_picture:hover {opacity: 1;}
+	.close_picture:before {position: absolute; left: 17px; content: ' '; height: 16px; width: 2px; background-color: black;} 
+	.close_picture:after {position: absolute; left: 17px; content: ' '; height: 16px; width: 2px; background-color: black;}
+	.close_picture:before {transform: rotate(45deg);} 
+	.close_picture:after {transform: rotate(-45deg);}	

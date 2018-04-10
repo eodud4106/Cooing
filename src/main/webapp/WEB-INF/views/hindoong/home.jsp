@@ -13,7 +13,7 @@
 
 //TODO 내 아이디와 친구 아이디를 태그 속성 값이 넣어두는 건 위험할 것 같으니... 다른 방법을 생각해보자...
 
-	var wsUri = "ws://localhost:8080/cooing/chat/echo.do";
+	var wsUri = "ws://localhost:8080/www/chat/echo.do";
 	var websocket;
 
     $(document).ready(function() {
@@ -146,7 +146,7 @@
 		<p>로그인 아이디 -> <span id="span_loginId" loginId="${sessionScope.Member.member_id}">${sessionScope.Member.member_id}</span></p>
 		<p>대화 상대 -> <span id="friend_id" friend_id="${friend_id}">${friend_id}</span></p>
 	
-	    <div id="data" style="height: 300px; width: 80%; overflow-y: scroll; margin: auto; display: block;">
+	    <div id="data" style="height: 60%; width: 100%; overflow-y: scroll; margin: auto; display: block;">
 			<c:if test="${arr_pm != null }">
 				<c:forEach items="${arr_pm }" var="pm">
 					<c:if test="${pm.p_message_from == sessionScope.Member.member_id }">
@@ -175,7 +175,6 @@
 			<input type="text" id="message" autocomplete="off"/>
 			<input type="button" id="sendBtn" value="전송" />
 	    </div>
-	    
 	</div>
 	<div id="output"></div>
 </body>

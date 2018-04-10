@@ -18,18 +18,21 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.cooing.www.hindoong.dao.P_messageDAO;
-import com.cooing.www.hindoong.vo.P_messageVO;
+import com.cooing.www.hindoong.dao.MessageDAO;
+import com.cooing.www.hindoong.vo.MessageVO;
+import com.cooing.www.jinsu.dao.RelationDAO;
+import com.cooing.www.jinsu.object.PartyMember;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 @Repository
 public class ChatHandler extends TextWebSocketHandler implements InitializingBean {
 
 	@Autowired
-	P_messageDAO pmDAO;
+	MessageDAO mDAO;
+	@Autowired
+	RelationDAO rDAO;
 
 	private final Logger logger = LogManager.getLogger(getClass());
 
@@ -38,37 +41,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	private HashMap<String, String> hashmap_id = new HashMap<>();
 	
 	private Gson gson = new Gson();
-
-	// @Override
-	// public void afterConnectionClosed(WebSocketSession session, CloseStatus
-	// status) throws Exception {
-	// //웹 소켓 연결이 종료되고 나서 서버단에서 실행해야할 일들을 정의해주는 메소드
-	// super.afterConnectionClosed(session, status);
-	// sessionSet.remove(session);
-	// System.out.println("remove session!");
-	// }
-	//
-	// @Override
-	// public void afterConnectionEstablished(WebSocketSession session) throws
-	// Exception {
-	// //연결이 성사 되고 나서 해야할 일들.
-	// super.afterConnectionEstablished(session);
-	//
-	// sessionSet.add(session);
-	// System.out.println("add session!");
-	// }
-	//
-	// @Override
-	// protected void handleTextMessage(WebSocketSession session, TextMessage
-	// message) throws Exception {
-	// //웹소켓 서버단으로 메세지가 도착했을때 해주어야할 일들을 정의하는 메소드
-	// ChatDAO dao = ((SqlSession) session).getMapper(ChatDAO.class);
-	// this.logger.info(message.getPayload());
-	// //session.sendMessage(new
-	// TextMessage(dao.count_receive_note(message.getPayload())));
-	// //현재 수신자에게 몇개의 메세지가 와있는지 디비에서 검색함.
-	//
-	// }
+	
 	public ChatHandler() {
 		super();
 		this.logger.info("create SocketHandler instance!");
@@ -80,6 +53,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 		super.afterConnectionClosed(session, status);
 
 		sessionSet.remove(session);
+		
 		this.logger.info("remove session!");
 	}
 
@@ -98,47 +72,54 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 		super.handleMessage(session, message);
 		
-		P_messageVO pm = new P_messageVO();
-		HashMap<String, String> map = new HashMap<String, String>();
+		HashMap<String, String> map_message = new HashMap<String, String>();
+		MessageVO msg = new MessageVO();
 		
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			//사용자가 보낸 메세지는 message.getPayload에 담겨 있다.
-			map = mapper.readValue(message.getPayload().toString(), 
+			map_message = mapper.readValue(message.getPayload().toString(), 
 					new TypeReference<HashMap<String, String>>(){});
 			
-			if(map.get("type").equals("loginId")) {
-				hashmap_id.put(map.get("id"), session.getId());
+			// 메세지의 타입
+			String type = map_message.get("type");
+			
+			// 타입 별 처리
+			if(type.equals("login")) {
+				// 1. [홈페이지 접속]
+				// 실제 id와 웹소켓 세션 id를 key, value로 저장 
+				// (메시지 푸시 받을 id -> 웹소켓 세션 id -> 발송) 구조이기 때문.
+				hashmap_id.put(map_message.get("id"), session.getId());
 				
-//				//TODO 나와 상대와의 대화목록을 불러와서 클라이언트에게 보내줘야 함.
-//				HashMap<String, String> search = new HashMap<>();
-//				search.put("id1", map.get("id"));
-//				search.put("id2", map.get("to"));
-//				ArrayList<P_messageVO> messageList = pmDAO.selectP_message(search);
-//				for (int i = 0; i < messageList.size(); i++) {
-//					sendMessage(messageList.get(i), session.getId());
-//				}
-				
-			} else if (map.get("type").equals("message")) {
-				pm.setP_message_from(map.get("from"));
-				pm.setP_message_to(map.get("to"));
-				pm.setP_message_message(map.get("message"));
+			} else if (type.equals("message")) {
+				// 2. [사용자가 보낸 메시지]
 
+				//날짜 정보 저장
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-				String str = sdf.format(new Date());
+				String message_date = sdf.format(new Date());
 				
-				pm.setP_message_date(str);
-
-				sendMessage(pm);
+				msg.setMessage_from(map_message.get("from"));
+				msg.setMessage_to(map_message.get("to"));
+				msg.setMessage_message(map_message.get("message"));
+				msg.setIs1to1(Integer.parseInt(map_message.get("is1to1")));
+				msg.setMessage_date(message_date);
 				
-				//db에 넣는 작업에서 딜레이가 발생하기 때문에... 우선 메시지를 뿌리고 나서 db에 넣는다...
-				pmDAO.insertP_message(pm);
+				if (msg.getIs1to1() == 1) {
+					msg.setMessage_read("1");
+				} else {
+					msg.setMessage_read(rDAO.searchPartyMember(Integer.parseInt(msg.getMessage_to())).size()-1+"");
+				}
 				
-			} else if (map.get("type").equals("read")) {
-				//TODO 읽음 처리 구현해야 함..
-				readMessage(map);
-				pmDAO.updateP_message(map);
+				sendMessage(msg);
+				
+				//db에 넣는 작업에서 딜레이가 발생하기 때문에 푸시 후 db에 넣는다.
+				mDAO.insertMessage(msg);
+				
+			} else if (type.equals("read")) {
+				// 3. [메시지 읽음]
+				if(mDAO.updateMessage(map_message) > 0) {
+					readMessage(map_message);
+				}
 			}
 		
 		} catch (Exception e) {
@@ -153,7 +134,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 		this.logger.error("web socket error!", exception);
 	}
 
-	//웹소켓 핸들러가 부분메세지???를 처리할 때 호출
+	//웹소켓 핸들러가 부분메세지를 처리할 때 호출
 	@Override
 	public boolean supportsPartialMessages() {
 		this.logger.info("call method!");
@@ -162,36 +143,102 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	}
 
 	// 대화 푸시
-	public void sendMessage(P_messageVO pm) {
-		for (WebSocketSession session : this.sessionSet) {
-			if (session.isOpen()) {
-				try {
-					if (hashmap_id.get(pm.getP_message_from()).equals(session.getId()) ||
-							hashmap_id.get(pm.getP_message_to()).equals(session.getId())) {
-						session.sendMessage(new TextMessage(gson.toJson(pm)));
-					} 
-				} catch (Exception e) {
-					e.printStackTrace();
-					//this.logger.error("fail to send message!");
+	public void sendMessage(MessageVO message) {
+		
+		try {
+			
+			// 1:1 채팅 & 그룹채팅 여부에 따른 처리
+			if (message.getIs1to1() == 1) {
+			
+				for (WebSocketSession session : this.sessionSet) {
+					if (session.isOpen()) {
+						
+						// 1:1 채팅(가독성을 위해 1, 2로 나누어 작성)
+						// 1. 발신인이 웹소켓 세션에 있을 경우 메시지 푸시
+						if (hashmap_id.containsKey(message.getMessage_from())
+								&& hashmap_id.get(message.getMessage_from()).equals(session.getId())) {
+							session.sendMessage(new TextMessage(gson.toJson(message)));
+						} 
+						// 2. 수신인이 웹소켓 세션에 있을 경우 메시지 푸시
+						else if (hashmap_id.containsKey(message.getMessage_to())
+								&& hashmap_id.get(message.getMessage_to()).equals(session.getId())) {
+							session.sendMessage(new TextMessage(gson.toJson(message)));
+						}
+					}
+				}
+				
+			} else {
+				// 그룹 채팅
+
+				// 1. message_to(수신 대상 그룹)으로 그룹 멤버를 조회
+				ArrayList<PartyMember> arr_partymember = 
+						rDAO.searchPartyMember(Integer.parseInt(message.getMessage_to()));
+				// 2. 조회한 그룹 멤버들의 id 중 현재 세션에 연결된 경우 메시지 발신
+				
+				for (PartyMember partyMember : arr_partymember) {
+					String memberid = partyMember.getG_member_memberid();
+					
+					for (WebSocketSession session : this.sessionSet) {
+						if (session.isOpen()) {
+							if (hashmap_id.containsKey(memberid)
+									&& hashmap_id.get(memberid).equals(session.getId())) {
+								session.sendMessage(new TextMessage(gson.toJson(message)));
+							}
+						}
+					}
 				}
 			}
+	
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
+	
 	}
 	
 	//읽음 처리
 	public void readMessage(HashMap<String, String> map) {
-		for (WebSocketSession session : this.sessionSet) {
-			if (session.isOpen()) {
-				try {
-					if (hashmap_id.get(map.get("from")).equals(session.getId())) {
-						session.sendMessage(new TextMessage(gson.toJson(map)));
-						break;
-					} 
-				} catch (Exception e) {
-					e.printStackTrace();
+		
+		try {
+			
+			// 1:1 채팅 & 그룹채팅 여부에 따른 처리
+			if (map.get("is1to1").equals("1")) {
+			
+				for (WebSocketSession session : this.sessionSet) {
+					if (session.isOpen()) {
+						
+						// 1. 발신인이 웹소켓 세션에 있을 경우 읽음 푸시
+						if (hashmap_id.containsKey(map.get("counterpart"))
+								&& hashmap_id.get(map.get("counterpart")).equals(session.getId())) {
+							session.sendMessage(new TextMessage(gson.toJson(map)));
+						}
+					}
+				}
+				
+			} else {
+				// 그룹 채팅
+
+				// 1. message_to(수신 대상 그룹)으로 그룹 멤버를 조회
+				ArrayList<PartyMember> arr_partymember = 
+						rDAO.searchPartyMember(Integer.parseInt(map.get("counterpart")));
+				// 2. 조회한 그룹 멤버들의 id 중 현재 세션에 연결된 경우 읽음 메시지 발신
+				
+				for (PartyMember partyMember : arr_partymember) {
+					String memberid = partyMember.getG_member_memberid();
+					for (WebSocketSession session : this.sessionSet) {
+						if (session.isOpen()) {
+							if (hashmap_id.containsKey(memberid)
+									&& hashmap_id.get(memberid).equals(session.getId())) {
+								session.sendMessage(new TextMessage(gson.toJson(map)));
+							}
+						}
+					}
 				}
 			}
+	
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
+		
 	}
 
 	@Override

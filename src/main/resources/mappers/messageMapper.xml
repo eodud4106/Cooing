@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- message 처리 SQL -->
+<mapper namespace="com.cooing.www.hindoong.dao.MessageMapper">
+
+	<!-- message 저장 -->
+	<insert id="insertMessage" parameterType="message">
+	INSERT INTO message (
+		message_num,
+		message_from,
+		message_to,
+		is1to1,
+		message_message,
+		message_read,
+		message_date
+	)
+	VALUES (
+		message_seq.nextval,
+		#{message_from},
+		#{message_to},
+		#{is1to1},
+		#{message_message},
+		<if test="is1to1 == 1">
+		CONCAT( (CONCAT('.', #{message_to})), '.'),
+		</if>
+		<if test="is1to1 == 0">
+		(
+		SELECT 
+			LISTAGG( CONCAT( (CONCAT('.', g_member_memberid)), '.'), '')
+			WITHIN GROUP (ORDER BY g_member_memberid)
+		FROM partymember
+		WHERE
+			g_member_memberid != #{message_from}
+			AND g_member_partynum = #{message_to}
+		GROUP BY g_member_partynum
+		),
+		</if>
+		sysdate
+	)
+	</insert>
+	
+	<!-- message 읽음 처리 -->
+	<update id="updateMessage">
+	UPDATE message
+	SET
+		message_read = REPLACE(message_read, CONCAT(CONCAT('.', #{id}), '.'), '')
+	WHERE
+		<if test="is1to1 == 1">
+		message_from = #{counterpart}
+		AND message_read like CONCAT(CONCAT('%.',#{id}),'.%')
+		</if>
+		<if test="is1to1 == 0">
+		message_to = #{counterpart}
+		AND message_read like CONCAT(CONCAT('%.',#{id}),'.%')
+		</if>
+	</update>
+	
+	<!-- 메시지 조회 -->
+	<select id="selectMessage" resultType="message">
+	SELECT
+		message_num,
+		message_from,
+		message_to,
+		is1to1,
+		message_message,
+		nvl(((length(message_read) - length(replace(message_read, '.', ''))) / 2), 0) AS message_read,
+		message_date
+	FROM message
+	WHERE
+		<if test="is1to1 == 1">
+		message_to = #{counterpart} AND message_from = #{id}
+		OR
+		message_to = #{id} AND message_from = #{counterpart}
+		</if>
+		<if test="is1to1 == 0">
+		message_to = #{counterpart}
+		</if>
+	</select>
+	
+	<!--TODO 메시지 중 아직 읽지 않은 메시지의 개수를 조회 -->
+	<select id="selectCountUnreadMessage" resultType="int">
+	SELECT
+		count(*)
+	FROM message
+	WHERE
+		message_to = #{to}
+		AND
+		message_read NOT LIKE CONCAT('%.',#{id},'.%')
+	</select>
+
+</mapper>

@@ -132,10 +132,7 @@ img{
 		<li>앨범1</li>
 		<li>앨범2</li>						
 		</ul>
-		<p>+앨범추가
-		<ul> 	
-		<li>그룹앨범</li>						
-		</ul>
+		<p>+앨범추가		
 	</div>	
 	
 	<!-- 앨범리스트 -->
@@ -143,8 +140,7 @@ img{
 	
 		<div id="albumLayout">
 		앨범 레이아웃
-		<p><button>기본스타일</button>
-		<button>도시스타일</button>		
+		<p><button>앨범만들기</button>			
 		</div>
 					
 		<div id = "albumList">	
@@ -189,6 +185,10 @@ img{
 			<p>친구2</p>
 			<p>친구3</p>
 			<p>친구4</p>				
+		</div>
+		<div>
+		<p>그룹1</p>
+		<p>그룹2</p>
 		</div>
 	</div>
 			
