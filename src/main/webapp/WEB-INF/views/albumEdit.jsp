@@ -109,7 +109,7 @@ function fileSave(formdata , item , number){
 
 function fileSubmit() {
 		var number  = ($('#flipbook').turn('page') == 1 ? $('#flipbook').turn('page') : ($('#flipbook').turn('page')%2 == 0 ? $('#flipbook').turn('page') : $('#flipbook').turn('page')-1));
-		var num = 0;		
+		var num = 0;
 		
 		$('input[class="cross'+number+'"]').each(function(index,item){
 			if($('input[class="cross'+number+'"]')[index].files[0]){

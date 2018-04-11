@@ -28,4 +28,19 @@
 		
 	</insert>
 	
+	<insert id="insertAlbum_Picture" parameterType="page">
+		insert into Page (
+			PAGE_ID,
+			PAGE_ALBUMNUM,
+			PAGE_NUM,			
+			PAGE_HTML
+		)
+		values (
+			#{page_id},
+			#{page_albumnum},
+			#{page_num},
+			#{page_html}
+		)
+	</insert>
+	
 </mapper>

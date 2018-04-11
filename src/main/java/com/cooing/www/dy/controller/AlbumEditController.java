@@ -19,7 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cooing.www.dy.dao.AlbumDAO;
-import com.cooing.www.dy.vo.AlbumWrite;
+import com.cooing.www.dy.vo.PageHtmlVO;
+import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.dy.vo.Coordinate_Picture;
 import com.cooing.www.jinsu.object.Member;
 
@@ -82,6 +83,10 @@ public class AlbumEditController {
 		@RequestMapping(value = "/coordinate", method = RequestMethod.POST)
 		public String coordinate(String array){
 			
+			
+			
+			
+			/*
 			Coordinate_Picture cp = null;
 			
 			String page = null;
@@ -94,7 +99,7 @@ public class AlbumEditController {
 			int next = 0;
 			int j = 0;
 			logger.info(array);
-			/*boolean flag = true;
+			boolean flag = true;
 			while(flag) {
 				if(array.charAt(j)=='p') {
 					page = null;
@@ -131,6 +136,9 @@ public class AlbumEditController {
 		//앨범생성
 		@RequestMapping(value = "/AlbumNameCreate", method = RequestMethod.GET)
 		public String AlbumNameCreate(){
+			
+//			PageHtmlVO page = new PageHtmlVO(1, 27, 5, "testasdasgagahaha");
+//			albumDAO.insertAlbum_Picture(page);
 				
 			return "Album/AlbumNameCreate";
 		}
@@ -143,13 +151,10 @@ public class AlbumEditController {
 			String album_writer = null;
 			album_writer = ((Member) session.getAttribute("Member")).getMember_id();
 			
-			AlbumWrite albumwrite = new AlbumWrite(album_writer, album_name, album_party, 0, album_contents, album_version, album_category);
-			
-			System.out.println(albumwrite.toString());
+			AlbumWriteVO albumwrite = new AlbumWriteVO(album_writer, album_name, album_party, 0, album_contents, album_version, album_category);
 			
 			boolean create_confirmed = false;
 			create_confirmed = albumDAO.createAlbum(albumwrite);
-			System.out.println(create_confirmed);
 			
 			
 			return "albumEdit";

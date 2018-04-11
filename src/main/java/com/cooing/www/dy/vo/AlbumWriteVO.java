@@ -1,6 +1,6 @@
 package com.cooing.www.dy.vo;
 
-public class AlbumWrite {	
+public class AlbumWriteVO {	
 	private String album_writer;	
 	private String album_name;	
 	private int album_party;	
@@ -11,11 +11,11 @@ public class AlbumWrite {
 	private int album_version;
 	private int album_category;
 	
-	public AlbumWrite() {
+	public AlbumWriteVO() {
 		super();
 	}	
 
-	public AlbumWrite(String album_writer, String album_name, int album_party, int album_delete, String album_contents,
+	public AlbumWriteVO(String album_writer, String album_name, int album_party, int album_delete, String album_contents,
 			int album_version, int album_category) {
 		super();
 		this.album_writer = album_writer;
@@ -28,7 +28,7 @@ public class AlbumWrite {
 	}
 
 
-	public AlbumWrite(String album_writer, String album_name, int album_party, int album_delete, String album_deleteid,
+	public AlbumWriteVO(String album_writer, String album_name, int album_party, int album_delete, String album_deleteid,
 			String album_contents, String album_editor, int album_version, int album_category) {
 		super();
 		this.album_writer = album_writer;
