@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cooing.www.dy.dao.AlbumDAO;
+import com.cooing.www.dy.vo.AlbumWrite;
 import com.cooing.www.dy.vo.Coordinate_Picture;
+import com.cooing.www.jinsu.object.Member;
 
 @Controller
 @RequestMapping(value = "albumEdit")
@@ -132,12 +137,19 @@ public class AlbumEditController {
 		
 		//앨범 생성
 		@RequestMapping(value = "/AlbumFirstCreate", method = RequestMethod.POST)
-		public String AlbumFirstCreate(String album_name, String album_contents, int album_party, int album_version){
+		public String AlbumFirstCreate(HttpSession session, String album_name, String album_contents,
+				int album_party, int album_version, int album_category){
 			
-			System.out.println(album_name);
-			System.out.println(album_contents);
-			System.out.println(album_party);
-			System.out.println(album_version);
+			String album_writer = null;
+			album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+			
+			AlbumWrite albumwrite = new AlbumWrite(album_writer, album_name, album_party, 0, album_contents, album_version, album_category);
+			
+			System.out.println(albumwrite.toString());
+			
+			boolean create_confirmed = false;
+			create_confirmed = albumDAO.createAlbum(albumwrite);
+			System.out.println(create_confirmed);
 			
 			
 			return "albumEdit";

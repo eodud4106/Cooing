@@ -1,9 +1,7 @@
 package com.cooing.www.dy.dao;
 
-import java.util.ArrayList;
-
-import com.cooing.www.dy.vo.Coordinate_Picture;
+import com.cooing.www.dy.vo.AlbumWrite;
 
 public interface AlbumMapper {
-	public int insertAlbum(ArrayList<Coordinate_Picture> list);
+	public int createAlbum(AlbumWrite albumwrite);
 }
