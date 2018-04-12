@@ -13,7 +13,8 @@
 			ALBUM_DELETE,
 			ALBUM_CONTENTS,
 			ALBUM_VERSION,
-			ALBUM_CATEGORY
+			ALBUM_CATEGORY,
+			ALBUM_IDENTIFIER
 		)
 		values (
 			ALBUMLIST_SEQ.nextval,
@@ -23,12 +24,13 @@
 			#{album_delete},
 			#{album_contents},
 			#{album_version},
-			#{album_category}
+			#{album_category},
+			#{album_identifier}
 		)
 		
 	</insert>
 	
-	<insert id="insertAlbum_Picture" parameterType="page">
+	<insert id="insertAlbumOfPage" parameterType="page">
 		insert into Page (
 			PAGE_ID,
 			PAGE_ALBUMNUM,
@@ -36,11 +38,15 @@
 			PAGE_HTML
 		)
 		values (
-			#{page_id},
+			PAGE_SEQ.nextval,
 			#{page_albumnum},
 			#{page_num},
 			#{page_html}
 		)
 	</insert>
+	
+	<select id="first_selectAlbum_Num" parameterType="String" resultType="int">
+		select album_num from albumlist where ALBUM_IDENTIFIER = #{album_identifier}
+	</select>
 	
 </mapper>

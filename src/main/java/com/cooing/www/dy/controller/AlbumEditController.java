@@ -3,7 +3,9 @@ package com.cooing.www.dy.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
@@ -23,6 +25,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
+import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.jinsu.object.Member;
 
 @Controller
@@ -85,75 +88,50 @@ public class AlbumEditController {
 	        return newFileName + ext;
 		}
 		
+		//앨범 페이지별 저장
 		@ResponseBody
 		@RequestMapping(value = "/pageSave", method = RequestMethod.POST)
-		public String pageSave(String html , String pagenum){
-			logger.info(html);
-			logger.info(pagenum);
-			return "success";
-		}
-		
-		//사진 좌표값
-		@ResponseBody
-		@RequestMapping(value = "/coordinate", method = RequestMethod.POST)
-		public String coordinate(String array){
-			
-			
-			
-			
-			/*
-			Coordinate_Picture cp = null;
-			
-			String page = null;
-			String div_num = null;
-			String top = null;
-			String left = null;
-			String width = null;
-			String height = null;
-		
-			int next = 0;
-			int j = 0;
-			logger.info(array);
-			boolean flag = true;
-			while(flag) {
-				if(array.charAt(j)=='p') {
-					page = null;
-					page = array.substring(1, j);
-					next = j;
-				} else if(array.charAt(j)=='t'){
-					div_num = null;
-					div_num = array.substring(next+1, j);
-					next = j;
-				} else if(array.charAt(j)=='l'){
-					top = null;
-					top = array.substring(next+1, j);
-					next = j;
-				} else if(array.charAt(j)=='w'){
-					left = null;
-					left = array.substring(next+1, j);
-					next = j;
-				} else if(array.charAt(j)=='h'){
-					width = null;
-					width = array.substring(next+1, j);
-					next = j;
-					height = null;
-					height = array.substring(next+1, array.length());
-					flag = false;
-				}
-				j++;				
-				cp = new Coordinate_Picture(Integer.parseInt(page), Integer.parseInt(div_num) ,Integer.parseInt(top), Integer.parseInt(left), Integer.parseInt(width), Integer.parseInt(height));
-			}			
-			albumDAO.insertAlbum(cp); //앨범 sql 저장
-*/				
+		public String createpageSave(String html , String pagenum, HttpSession session){
+					
+			String isWrite = null;
+			isWrite = (String) session.getAttribute("writing");
+					
+			//처음 페이지 만들 때
+			if(isWrite != null) {
+				int page_albumnum = 0;
+				page_albumnum = albumDAO.first_selectAlbum_Num(isWrite);
+				session.removeAttribute("writing");
+				session.setAttribute("create_page_albumnum", page_albumnum);
+							
+				int page_num = 0;
+				page_num = Integer.parseInt(pagenum);
+				String page_html = null;
+							
+				page_html = html;
+				PageHtmlVO page = new PageHtmlVO(page_albumnum, page_num, page_html);
+				boolean insertAlbumOfPage = albumDAO.insertAlbumOfPage(page);
+			} 
+					
+			else {
+				int page_albumnum = 0;
+				page_albumnum = (int) session.getAttribute("create_page_albumnum");
+							
+				int page_num = 0;
+				page_num = Integer.parseInt(pagenum);
+				String page_html = null;
+							
+				page_html = html;
+				PageHtmlVO page = new PageHtmlVO(page_albumnum, page_num, page_html);
+				boolean insertAlbumOfPage = albumDAO.insertAlbumOfPage(page);
+			}
+					
+					
 			return "success";
 		}
 		
 		//앨범생성
 		@RequestMapping(value = "/AlbumNameCreate", method = RequestMethod.GET)
 		public String AlbumNameCreate(){
-			
-//			PageHtmlVO page = new PageHtmlVO(1, 27, 5, "testasdasgagahaha");
-//			albumDAO.insertAlbum_Picture(page);
 				
 			return "Album/AlbumNameCreate";
 		}
@@ -161,17 +139,26 @@ public class AlbumEditController {
 		//앨범 생성
 		@RequestMapping(value = "/AlbumFirstCreate", method = RequestMethod.POST)
 		public String AlbumFirstCreate(HttpSession session, String album_name, String album_contents,
-				int album_party, int album_version, int album_category){
-			
+				int album_party, int album_version, int album_category, Locale locale){
+					
+			//아이디 불러오기
 			String album_writer = null;
 			album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-			
-			AlbumWriteVO albumwrite = new AlbumWriteVO(album_writer, album_name, album_party, 0, album_contents, album_version, album_category);
-			
+					
+			//난수 추가
+			Date date = new Date();
+			DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+			String formatting = dateFormat.format(date);
+			String album_identifier = formatting.concat(album_writer);
+					
+			session.setAttribute("writing", album_identifier);
+					
+			//앨범 생성
+			AlbumWriteVO albumwrite = new AlbumWriteVO(album_writer, album_name, album_party, 0, album_contents, album_version, album_category, album_identifier);
 			boolean create_confirmed = false;
 			create_confirmed = albumDAO.createAlbum(albumwrite);
-			
-			
+					
+					
 			return "albumEdit";
 		}
 		

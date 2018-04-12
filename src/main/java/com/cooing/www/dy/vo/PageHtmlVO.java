@@ -8,6 +8,17 @@ public class PageHtmlVO {
 	
 	public PageHtmlVO() {
 	}
+	
+	
+
+	public PageHtmlVO(int page_albumnum, int page_num, String page_html) {
+		super();
+		this.page_albumnum = page_albumnum;
+		this.page_num = page_num;
+		this.page_html = page_html;
+	}
+
+
 
 	public PageHtmlVO(int page_id, int page_albumnum, int page_num, String page_html) {
 		this.page_id = page_id;

@@ -9,7 +9,6 @@
 		<typeAlias type="com.cooing.www.jinsu.object.Category" alias="category"/>
 		<typeAlias type="com.cooing.www.jinsu.object.Party" alias="party"/>
 		<typeAlias type="com.cooing.www.jinsu.object.PartyMember" alias="partymember"/>
-		<typeAlias type="com.cooing.www.dy.vo.Coordinate_Picture" alias="coordinate_picture"/>
 		<typeAlias type="com.cooing.www.dy.vo.AlbumWriteVO" alias="albumwrite"/>
 		<typeAlias type="com.cooing.www.dy.vo.PageHtmlVO" alias="page"/>
 	</typeAliases>

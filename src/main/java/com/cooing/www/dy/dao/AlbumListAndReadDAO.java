@@ -11,7 +11,7 @@ import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.jinsu.dao.MemberMapper;
 
 @Repository
-public class AlbumDAO {
+public class AlbumListAndReadDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
