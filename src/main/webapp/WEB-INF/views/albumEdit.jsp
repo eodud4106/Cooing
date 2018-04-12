@@ -83,7 +83,7 @@ function fileSave(formdata , file , pagenum , last){
 				
 				$('#page'+pagenum).append(div_holder);
 				if(last){
-					pageSave($('#page'+pagenum).html(),pagenum , (pagenum == 1 ? true : false));
+					pageSave($('#page'+pagenum).html(),pagenum , (pagenum%2 == 1 ? true : false));
 				}
 			}else{
 				alert(a);
@@ -114,28 +114,41 @@ function pageSave(strhtml , nowpage , check){
 	});
 }
 
+function pageallEmpty(pageNum){
+	$('#page'+pageNum).html('');
+	pagePlus();
+	$('#flipbook').turn('next');	
+}
+
 function fileSubmit() {
 	var number  = ($('#flipbook').turn('page') == 1 ? $('#flipbook').turn('page') : ($('#flipbook').turn('page')%2 == 0 ? $('#flipbook').turn('page') : $('#flipbook').turn('page')-1));
 	var num = 0;
 	var last = $('input[class="cross'+number+'"]').length;
+	var check = true;
 	$('input[class="cross'+number+'"]').each(function(index,item){
 		if($('input[class="cross'+number+'"]')[index].files[0]){
+			check = false;
 			var formData = new FormData();
 			formData.append('file'+num , $('input[class="cross'+number+'"]')[index].files[0]);
 			fileSave(formData,item , number,(index == last-1 ? true : false));
 		}
-	});	
+	});		
+	if(check && number == 1)
+		pageallEmpty(number);
 	
 	if(number != 1){
 		number = (parseInt(number) + 1);
 		last = $('input[class="cross'+number+'"]').length;
 		$('input[class="cross'+number+'"]').each(function(index,item){
 			if($('input[class="cross'+number+'"]')[index].files[0]){
+				check = false;
 				var formData = new FormData();
 				formData.append('file'+num , $('input[class="cross'+number+'"]')[index].files[0]);
 				fileSave(formData,item , number,(index == last-1 ? true : false));
 			}
 		});
+		if(check)
+			pageallEmpty(number);
 	}
 }
 
