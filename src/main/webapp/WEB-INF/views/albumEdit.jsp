@@ -35,22 +35,25 @@ var count = 0;
 				drop: function(event, ui) {
 					var pageid = $(this).attr('id');
 					var pagenum = pageid.substring(4,pageid.length);
-					var div_holder = document.createElement('div');
-					count ++;
-					var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross'+pagenum+'" name="cross'+count+'" onchange="readURL(this)"> </label>';
-
-					$(div_holder).addClass('holder').html(html);
-					$(div_holder).css('position', 'absolute');
-					
-					$(div_holder).draggable( { containment: 'parent'/* '.page-wrapper' */, scroll: false });
-					$(div_holder).attr('id', 'holder'+count);
-					$(div_holder).resizable();
-					
-					$(this).append(div_holder);
-					
-					$('.close_border').on('click', function() {
-						$(this).parent().remove();
-					});
+					var number  = ($('#flipbook').turn('page') == 1 ? $('#flipbook').turn('page') : ($('#flipbook').turn('page')%2 == 0 ? $('#flipbook').turn('page') : $('#flipbook').turn('page')-1));
+					if(pagenum == number || pagenum == (parseInt(number) + 1)){
+						var div_holder = document.createElement('div');
+						count ++;
+						var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross'+pagenum+'" name="cross'+count+'" onchange="readURL(this)"> </label>';
+	
+						$(div_holder).addClass('holder').html(html);
+						$(div_holder).css('position', 'absolute');
+						
+						$(div_holder).draggable( { containment: 'parent'/* '.page-wrapper' */, scroll: false });
+						$(div_holder).attr('id', 'holder'+count);
+						$(div_holder).resizable();
+						
+						$(this).append(div_holder);
+						
+						$('.close_border').on('click', function() {
+							$(this).parent().remove();
+						});
+					}
 				}
 			});
 		}
@@ -166,21 +169,24 @@ $(function() {
 		drop: function(event, ui) {
 			var pageid = $(this).attr('id');
 			var pagenum = pageid.substring(4,pageid.length);
-			var div_holder = document.createElement('div');
-			count ++;
-			var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross'+pagenum+'" name="cross'+count+'" onchange="readURL(this)"> </label>';
-			
-			$(div_holder).addClass('holder').html(html);
-			$(div_holder).css('position', 'absolute');
-			$(div_holder).draggable( { containment: 'parent', scroll: false });
-			$(div_holder).attr('id', 'holder'+count);
-			$(div_holder).resizable();
-			
-			$(this).append(div_holder);
-			
-			$('.close_border').on('click', function() {
-				$(this).parent().remove();
-			});
+			var number  = ($('#flipbook').turn('page') == 1 ? $('#flipbook').turn('page') : ($('#flipbook').turn('page')%2 == 0 ? $('#flipbook').turn('page') : $('#flipbook').turn('page')-1));
+			if(pagenum == number || pagenum == (parseInt(number) + 1)){
+				var div_holder = document.createElement('div');
+				count ++;
+				var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross'+pagenum+'" name="cross'+count+'" onchange="readURL(this)"> </label>';
+				
+				$(div_holder).addClass('holder').html(html);
+				$(div_holder).css('position', 'absolute');
+				$(div_holder).draggable( { containment: 'parent', scroll: false });
+				$(div_holder).attr('id', 'holder'+count);
+				$(div_holder).resizable();
+				
+				$(this).append(div_holder);
+				
+				$('.close_border').on('click', function() {
+					$(this).parent().remove();
+				});
+			}
 		}
 	});
 });
