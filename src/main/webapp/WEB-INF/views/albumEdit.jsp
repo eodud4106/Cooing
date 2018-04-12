@@ -13,7 +13,6 @@
 	<script type="text/javascript" src="../resources/album_page_js/basic.js"></script>		
 	
 	<script src="../resources/album_drag_and_drop_js/jquery-ui.js"></script>
- 	<!-- <script src="../resources/js/jquery-3.3.1.min.js"></script>	 -->
 	
 	<link rel="stylesheet" href="../resources/album_drag_and_drop_js/jquery-ui.css">		
 	<link rel="stylesheet" href="../resources/album_css/album_edit_basic.css">
@@ -21,6 +20,19 @@
 
 <script>
 var count = 0;
+
+function pageChange(page){
+	if(page){
+		$('#flipbook').turn('disable' , false);
+		$('#flipbook').turn('previous');
+		$('#flipbook').turn('disable' , true);
+		
+	}else{
+		$('#flipbook').turn('disable' , false);
+		$('#flipbook').turn('next');
+		$('#flipbook').turn('disable' , true);		
+	}
+}
 
  function pagePlus(){
 		for(var i = 0; i < 2; i++){
@@ -44,7 +56,7 @@ var count = 0;
 						$(div_holder).addClass('holder').html(html);
 						$(div_holder).css('position', 'absolute');
 						
-						$(div_holder).draggable( { containment: 'parent'/* '.page-wrapper' */, scroll: false });
+						$(div_holder).draggable( { containment: 'parent', scroll: false });
 						$(div_holder).attr('id', 'holder'+count);
 						$(div_holder).resizable();
 						
@@ -57,6 +69,7 @@ var count = 0;
 				}
 			});
 		}
+		$('#flipbook').turn('disable' , true);
 	}
 
 function fileSave(formdata , file , pagenum , last){
@@ -106,7 +119,9 @@ function pageSave(strhtml , nowpage , check){
 			if(a=='success'){
 				if(check){
 					pagePlus();
+					$('#flipbook').turn('disable' , false);
 					$('#flipbook').turn('next');
+					$('#flipbook').turn('disable' , true);
 				}
 			}
 			else{
@@ -118,6 +133,8 @@ function pageSave(strhtml , nowpage , check){
 }
 
 function pageallEmpty(pageNum){
+	if(pageNum != 1)
+		$('#page'+(parseInt(pageNum)-1)).html('');
 	$('#page'+pageNum).html('');
 	pagePlus();
 	$('#flipbook').turn('next');	
@@ -142,6 +159,7 @@ function fileSubmit() {
 	if(number != 1){
 		number = (parseInt(number) + 1);
 		last = $('input[class="cross'+number+'"]').length;
+		check=true;
 		$('input[class="cross'+number+'"]').each(function(index,item){
 			if($('input[class="cross'+number+'"]')[index].files[0]){
 				check = false;
@@ -155,7 +173,7 @@ function fileSubmit() {
 	}
 }
 
-$(function() {
+$(document).ready(function () {
 	$( '#picture_add' ).draggable({ revert: 'valid' });
 	
 	$('*').droppable({ //다른 쪽 드롭되도 돌아 올 수 있게 하는 코드
@@ -277,6 +295,8 @@ function readURL(input) {
 	<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="+" id="page_plus" name=""></div>
 </div>
 <div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="저장" onClick="fileSubmit();"></div>
+<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="전장" onClick="pageChange(true);"></div>
+<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="뒷장" onClick="pageChange(false);"></div>
 
 <!-- 배경변경버튼 -->
 	<button onclick = "bgchange(0)">SAKURA</button>
@@ -294,7 +314,6 @@ function readURL(input) {
 		</div>
 	</div>
 </div>
-
 <!-- 메인표지업로드 -->
  <script type="text/javascript">
  var file1 = document.querySelector('#img1');

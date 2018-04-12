@@ -63,7 +63,7 @@ public class AlbumEditController {
 	    			newFileName = multipartfile.getOriginalFilename().substring(0,lastIndex);
 	    		}
 	    		newFileName += new Date().getTime();
-	    		String[] strarray = {"%" , "," , "\\\\",  "\\" , "." , "?",  "&",  "*", "^"  ,"$" ,"#" , "@" , "!" ,"-" , "="  ,"/" };
+	    		String[] strarray = {"%" , "," , "\\\\",  "\\" , "." , "?",  "&",  "*", "^"  ,"$" ,"#" , "@" , "!" ,"-" , "="  ,"/" , "Ű" };
 	    		for(String s : strarray){
 	    			if(newFileName.indexOf(s) != -1){
 	    				newFileName = newFileName.replaceAll(s, "");
