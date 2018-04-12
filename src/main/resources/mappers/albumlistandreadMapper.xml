@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cooing.www.dy.dao.AlbumMapper">
+	<insert id="createAlbum" parameterType="albumwrite">
+		insert into ALBUMLIST (
+			ALBUM_NUM,
+			ALBUM_WRITER,	
+			ALBUM_NAME,	
+			ALBUM_PARTY,	
+			ALBUM_DELETE,
+			ALBUM_CONTENTS,
+			ALBUM_VERSION,
+			ALBUM_CATEGORY,
+			ALBUM_IDENTIFIER
+		)
+		values (
+			ALBUMLIST_SEQ.nextval,
+			#{album_writer},
+			#{album_name},
+			#{album_party},
+			#{album_delete},
+			#{album_contents},
+			#{album_version},
+			#{album_category},
+			#{album_identifier}
+		)
+		
+	</insert>
+	
+	<insert id="insertAlbumOfPage" parameterType="page">
+		insert into Page (
+			PAGE_ID,
+			PAGE_ALBUMNUM,
+			PAGE_NUM,			
+			PAGE_HTML
+		)
+		values (
+			PAGE_SEQ.nextval,
+			#{page_albumnum},
+			#{page_num},
+			#{page_html}
+		)
+	</insert>
+	
+	<select id="first_selectAlbum_Num" parameterType="String" resultType="int">
+		select album_num from albumlist where ALBUM_IDENTIFIER = #{album_identifier}
+	</select>
+	
+</mapper>
