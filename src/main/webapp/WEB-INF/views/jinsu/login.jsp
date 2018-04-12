@@ -51,6 +51,9 @@
 				loginmember('../');
 			}
 		});
+		$('#member').on('click' , function(){
+			location.href='./member_get';
+		});
 	}
 
 	function member_check() {
@@ -114,6 +117,7 @@
 											<input type="button" id="join" value="로그인" class="button-login">
 											<input type="button" onclick="javascript:location.href='<c:url value="/"/>';"value="취소"
 											class="button-login">
+											<input type="button" id="member" value="회원가입" class="button-login">
 										</td>
 									</tr>
 								</table>

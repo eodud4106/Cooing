@@ -10,118 +10,11 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>" ></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="<c:url value="/resources/js/groupview.js"/>" ></script>
 <script>
 $(document).ready(function () {
 	initialize();
 });
-function initialize(){
-	$('#findid').keyup(searchword);
-	$('#gmemberplus').on('click',memberplus);
-	$('.img_3').on('click',memberdelete);
-	$('#desolve').on('click',deleteparty);
-}
-function deleteparty(){
-	var party_num = $('#desolve').attr('data');
-	$.ajax({
-		url:'delete_party',
-		type:'POST',		
-		data:{partynum:party_num},
-		dataType:'text',
-		success: function(list){
-			if(list=='success'){
-				location.href="./";
-			}else{
-				alert(list);
-			}
-		},
-		error:function(e){alert(JSON.stringify(e));}		
-	});
-}
-function memberdelete(){
-	var member_id = $(this).attr('data');
-	var party_num = $(this).attr('data2');
-	$.ajax({
-		url:'delete_member',
-		type:'POST',		
-		data:{memberid:member_id,partynum:party_num},
-		dataType:'text',
-		success: function(a){
-			if(a=='success'){
-				$.ajax({
-					url:'member_list_post',
-					type:'POST',		
-					data:{partynum:party_num},
-					dataType:'json',
-					success: function(list){
-						var strmember='';
-						$.each(list,function(i,data){
-							strmember += '<p><img src = "<c:url value="/jinsu/memberimg?strurl='+(data.member_picture==null?'':data.member_picture)	+'"/>"></p><p>'+ data.member_id;
-							strmember +='<img src = "./resources/image_mj/remove.png" class = "img_3" data="'+data.member_id+'" data2="'+party_num+'">';	
-						});
-						$('#memberdiv').html(strmember);
-						$('#findid').val('');
-						$('.img_3').on('click',memberdelete);
-					},
-					error:function(e){alert(JSON.stringify(e));}		
-				});
-			}else{
-				alert(a);
-			}
-		},
-		error:function(e){alert(JSON.stringify(e));}		
-	});
-}
-function memberplus(){
-	var member_id = $('#findid').val();
-	var party_num = $('#gmemberplus').attr('data');
-	$.ajax({
-		url:'party_member_input',
-		type:'POST',		
-		data:{groupmember:member_id,partynum:party_num},
-		dataType:'text',
-		success: function(a){
-			if(a=='success'){
-				$.ajax({
-					url:'member_list_post',
-					type:'POST',		
-					data:{partynum:party_num},
-					dataType:'json',
-					success: function(list){
-						var strmember='';
-						$.each(list,function(i,data){
-							strmember += '<p><img src = "<c:url value="/jinsu/memberimg?strurl='+(data.member_picture==null?'':data.member_picture)+'"/>"></p><p>'+ data.member_id;
-							strmember +='<img src = "./resources/image_mj/remove.png" class = "img_3" data="'+data.member_id+'" data2="'+party_num+'">';	
-						});
-						$('#memberdiv').html(strmember);
-						$('#findid').val('');
-						$('.img_3').on('click',memberdelete);				
-					},
-					error:function(e){alert(JSON.stringify(e));}		
-				});				
-			}else{
-				alert(a);
-			}
-		},
-		error:function(e){alert(JSON.stringify(e));}		
-	});
-}
-function searchword(){
-	var text = $('#findid').val();
-	if(text.length >= 1){
-		$.ajax({
-			url:'jinsu/search_id',
-			type:'POST',		
-			data:{text:text},
-			dataType:'json',
-			success: function(array){
-				$('#findid').autocomplete({
-					source:array 
-				});
-			},
-			error:function(e){alert(JSON.stringify(e));}		
-		});
-	}
-}
 </script>
 <meta charset="utf-8" />
 
@@ -254,7 +147,7 @@ img{
 		<c:if test="${fn:length(memberinfo) ne 0}">
 			<c:forEach var="arrmi" items="${memberinfo}">
 					<p><img src = "<c:url value="/jinsu/memberimg?strurl=${arrmi.getMember_picture()}"/>"></p><p>${arrmi.getMember_id()}
-					<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id()}">
+					<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id() and partyinfo.getParty_leader() ne arrmi.getMember_id()}">
 						<img src = "./resources/image_mj/remove.png" class = "img_3" data="${arrmi.getMember_id()}" data2="${partyinfo.getParty_num()}">
 					</c:if>
 					</p>

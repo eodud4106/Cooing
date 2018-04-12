@@ -8,52 +8,11 @@
 <head>
 <title>friend Page</title>
 <script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>" ></script>
+<script src="<c:url value="/resources/js/friend.js"/>" ></script>
 <script>
 $(document).ready(function () {
 	initialize();
 });
-function initialize(){
-	$('#friendbt').on('click',fiendplus);
-}
-function fiendplus(){
-	var friendid = $('#friendid').val();
-	var data = $('#friendbt').attr('data');
-	if(data == 0){
-		$.ajax({
-			url:'friend_plus',
-			type:'POST',		
-			data:{friendid:friendid},
-			dataType:'text',
-			success: function(a){
-				if(a=='success'){
-					$('#friendbt').val('친구삭제');
-					$('#friendbt').attr('data' , '1');
-				}
-				else{
-					alert(a);
-				}
-			},
-			error:function(e){alert(JSON.stringify(e));}		
-		});
-	}else if(data == 1){
-		$.ajax({
-			url:'friend_delete',
-			type:'POST',		
-			data:{friendid:friendid},
-			dataType:'text',
-			success: function(a){
-				if(a=='success'){
-					$('#friendbt').val('친구추가');
-					$('#friendbt').attr('data' , '0');
-				}
-				else{
-					alert(a);
-				}
-			},
-			error:function(e){alert(JSON.stringify(e));}		
-		});
-	}
-}
 </script>
 <meta charset="utf-8" />
 
