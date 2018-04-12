@@ -1,17 +1,20 @@
 package com.cooing.www.dy.controller;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,9 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cooing.www.dy.dao.AlbumDAO;
-import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
-import com.cooing.www.dy.vo.Coordinate_Picture;
 import com.cooing.www.jinsu.object.Member;
 
 @Controller
@@ -43,7 +44,7 @@ public class AlbumEditController {
 	
 	// 앨범 임시 저장
 		@ResponseBody
-		@RequestMapping(value = "/albumPageSave", method = RequestMethod.POST)
+		@RequestMapping(value = "/albumImageSave", method = RequestMethod.POST)
 		public String pageSave(MultipartHttpServletRequest multi){
 	        String newFileName = ""; 	        
 	        File fpath = new File(strFilePath);
@@ -62,6 +63,12 @@ public class AlbumEditController {
 	    			newFileName = multipartfile.getOriginalFilename().substring(0,lastIndex);
 	    		}
 	    		newFileName += new Date().getTime();
+	    		String[] strarray = {"%" , "," , "\\\\",  "\\" , "." , "?",  "&",  "*", "^"  ,"$" ,"#" , "@" , "!" ,"-" , "="  ,"/" };
+	    		for(String s : strarray){
+	    			if(newFileName.indexOf(s) != -1){
+	    				newFileName = newFileName.replaceAll(s, "");
+	    			}	    			
+	    		}
 	        	File serverFile = null;
 	            while(true){
 	    			serverFile = new File(strFilePath + newFileName + ext);
@@ -76,6 +83,14 @@ public class AlbumEditController {
 	             }
 	        }	        
 	        return newFileName + ext;
+		}
+		
+		@ResponseBody
+		@RequestMapping(value = "/pageSave", method = RequestMethod.POST)
+		public String pageSave(String html , String pagenum){
+			logger.info(html);
+			logger.info(pagenum);
+			return "success";
 		}
 		
 		//사진 좌표값
@@ -158,6 +173,26 @@ public class AlbumEditController {
 			
 			
 			return "albumEdit";
+		}
+		
+		@RequestMapping(value = "img", method = RequestMethod.GET)
+		public String img(HttpServletResponse response , HttpSession session , String filePath) {
+			logger.info("img__jinsu");
+			String fullpath = strFilePath + "/" + filePath;
+			if( filePath.length() != 0){
+				FileInputStream filein = null;
+				ServletOutputStream fileout = null;
+				try {
+					filein = new FileInputStream(fullpath);
+					fileout = response.getOutputStream();
+					FileCopyUtils.copy(filein, fileout);			
+					filein.close();
+					fileout.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			return null;
 		}
 	
 }
