@@ -16,9 +16,9 @@
 	    	ALBUMLIST L,
 	    	Page P 
 	    where
-	    	L.ALBUM_NUM = P.PAGE_ALBUMNUM 
+	    	L.ALBUM_NUM = P.ALBUM_NUM 
 	    	and L.ALBUM_WRITER = #{ALBUM_WRITER} 
-	    	and L.album_party = 1 and P.PAGE_NUM = 1
+	    	and L.album_openrange = 1 and P.PAGE_NUM = 1
 	    order by
 	    	L.Album_num desc
 	</select>
