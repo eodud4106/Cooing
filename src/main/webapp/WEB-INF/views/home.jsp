@@ -46,12 +46,18 @@ $(document).ready(function () {
 	});
 	
 	$('#createBtn').click(function() {
-		$('#album_create_modal').css('display', 'block');
+		$('#album_create_modal').css({
+			'display': 'block',
+			'z-index': '10000'
+		});
 	});
 	
 	$('#createBtn_close').click(function() {
 		$('#album_create_frame').attr('src', 'albumEdit/AlbumNameCreate');
-		$('#album_create_modal').css('display', 'none');
+		$('#album_create_modal').css({
+			'display': 'none',
+			'z-index': '0'
+		});
 	});
 	
 	if (${sessionScope.Member != null}) {
@@ -158,11 +164,6 @@ $(document).ready(function () {
 				</div>
 			</div>
 			<input type="button" id="createBtn" value="앨범 생성">
-			<div id="album_create_modal" class="modal">
-				<span id="createBtn_close" class="close">&times;</span>
-				<iframe id="album_create_frame" src="albumEdit/AlbumNameCreate"
-					allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
-			</div>
 		</form>
 	</aside>
 
@@ -384,6 +385,12 @@ $(document).ready(function () {
 			<input type="text" id="message" autocomplete="off" />
 			<input type="button" id="sendBtn" value="전송" />
 		</div>
+	</div>
+	
+	<div id="album_create_modal" class="modal">
+		<span id="createBtn_close" class="close">&times;</span>
+		<iframe id="album_create_frame" src="albumEdit/AlbumNameCreate"
+			allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
 	</div>
 
 	<script src="resources/aside_js/popper.min.js"></script>
