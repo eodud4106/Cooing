@@ -30,6 +30,7 @@
 $(document).ready(function () {
 	initialize();
 	
+	
 	$('window').click(function(event) {
 		if (event.target == $('#myModal')) {
 			$('#myModal').css('display', 'none');
