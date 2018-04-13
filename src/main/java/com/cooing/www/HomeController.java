@@ -48,13 +48,9 @@ public class HomeController {
 		ArrayList<AlbumListVO> myAlbumList = null;
 		myAlbumList = albumListAndReadDAO.MyAlbumList(album_writer);
 		
-		System.out.println(myAlbumList.size());
+		model.addAttribute("myAlbumListSize", myAlbumList.size());
+		model.addAttribute("myAlbumList", myAlbumList);
 		
-		if(myAlbumList.isEmpty() != true){
-			for(int i=0; i<myAlbumList.size(); i++){
-				System.out.println(myAlbumList.get(i).toString());
-			}
-		}
 		
 		return "home";
 	}
