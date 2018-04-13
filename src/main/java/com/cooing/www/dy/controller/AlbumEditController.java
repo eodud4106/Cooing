@@ -154,7 +154,7 @@ public class AlbumEditController {
 			session.setAttribute("writing", album_identifier);
 					
 			//앨범 생성
-			AlbumWriteVO albumwrite = new AlbumWriteVO(album_writer, album_name, 1);
+			AlbumWriteVO albumwrite = new AlbumWriteVO(0 , album_writer, 1);
 			boolean create_confirmed = false;
 			create_confirmed = albumDAO.createAlbum(albumwrite);
 					
