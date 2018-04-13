@@ -9,21 +9,21 @@
 <title>COOING</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
- <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans">
 
-<link rel="stylesheet" href="./resources/aside_css/bootstrap.min.css">
-<link rel="stylesheet" href="./resources/aside_css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/aside_css/open-iconic-bootstrap.min.css">
 
-<link rel="stylesheet" href="./resources/aside_css/owl.carousel.min.css">
-<link rel="stylesheet" href="./resources/aside_css/owl.theme.default.min.css">
+<link rel="stylesheet" href="resources/aside_css/owl.carousel.min.css">
+<link rel="stylesheet" href="resources/aside_css/owl.theme.default.min.css">
 
-<link rel="stylesheet" href="./resources/aside_css/icomoon.css">
-<link rel="stylesheet" href="./resources/aside_css/animate.css">
-<link rel="stylesheet" href="./resources/aside_css/style.css">
+<link rel="stylesheet" href="resources/aside_css/icomoon.css">
+<link rel="stylesheet" href="resources/aside_css/animate.css">
+<link rel="stylesheet" href="resources/aside_css/style.css">
 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="resources/js/jquery-3.3.1.min.js"></script>
-<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="resources/js/jquery-ui.min.js"></script>
 <script src="<c:url value="/resources/js/home.js"/>" ></script>
 <script src="resources/js/chat.js"></script>
 <script>
@@ -582,14 +582,13 @@ img {
 			<input type="button" id="sendBtn" value="전송" />
 	    </div>
 	</div>	
-	
-<!-- <script src="./resources/aside_js/jquery-3.2.1.slim.min.js"></script> -->
-<script src="./resources/aside_js/popper.min.js"></script>
-<script src="./resources/aside_js/bootstrap.min.js"></script>
-<script src="./resources/aside_js/owl.carousel.min.js"></script>
-<script src="./resources/aside_js/jquery.waypoints.min.js"></script>
-<script src="./resources/aside_js/imagesloaded.pkgd.min.js"></script>
 
-<script src="./resources/aside_js/main.js"></script>	
+<script src="resources/aside_js/popper.min.js"></script>
+<script src="resources/aside_js/bootstrap.min.js"></script>
+<script src="resources/aside_js/owl.carousel.min.js"></script>
+<script src="resources/aside_js/jquery.waypoints.min.js"></script>
+<script src="resources/aside_js/imagesloaded.pkgd.min.js"></script>
+
+<script src="resources/aside_js/main.js"></script>
 </body>
 </html>

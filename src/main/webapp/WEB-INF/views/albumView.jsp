@@ -7,12 +7,10 @@
 <title>AlbumView</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width = 1050, user-scalable = no" />
-	<script type="text/javascript" src="./resources/album_page_js/extras/jquery.min.1.7.js"></script>
+	<script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
+	<script src="resources/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="./resources/album_page_js/extras/modernizr.2.5.3.min.js"></script>
-	<link rel="stylesheet" href="resources/js/jquery-ui.css">
-	<script src="resources/js/external/jquery/jquery.js"></script>
-	<script src="resources/js/jquery-ui.js"></script>
-
+	<link rel="stylesheet" href="resources/css/jquery-ui.min.css">
 <style>
 
 body {
@@ -244,7 +242,7 @@ yepnope({
 	test : Modernizr.csstransforms,
 	yep: ['./resources/album_page_js/lib/turn.js'],
 	nope: ['./resources/album_page_js/lib/turn.html4.min.js'],
-	both: ['./resources/css_album/basic.css'],
+	both: ['./resources/album_css/basic.css'],
 	complete: loadApp
 });
 
@@ -252,7 +250,6 @@ yepnope({
 	
 	</div>	
 
-		
 </div> 
 
 </body>
