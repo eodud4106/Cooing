@@ -8,12 +8,14 @@
 		insert into ALBUMLIST (
 			ALBUM_NUM,
 			ALBUM_WRITER,
-			ALBUM_OPENRANGE
+			ALBUM_OPENRANGE,
+			ALBUM_IDENTIFIER
 		)
 		values (
 			ALBUMLIST_SEQ.nextval,
 			#{album_writer},
-			#{album_openrange}
+			#{album_openrange},
+			#{album_identifier}
 		)
 		
 	</insert>
