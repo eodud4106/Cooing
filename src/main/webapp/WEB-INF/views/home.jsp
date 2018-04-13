@@ -338,9 +338,8 @@ $(document).ready(function () {
 		<div class="probootstrap-overflow">
 			<div>
 				<form>
-					<input type="text" placeholder="친구검색" name="" value=""
-						class="search1">
-					<button>s</button>
+					<input type="text" placeholder="친구검색" id="friendsearch" class="search1">
+					<input type="button" id="friendsearchbt" value="s">
 				</form>
 
 				<c:if test="${Member ne null}">
