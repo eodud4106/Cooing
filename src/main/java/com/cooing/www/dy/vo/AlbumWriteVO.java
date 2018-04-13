@@ -1,48 +1,40 @@
 package com.cooing.www.dy.vo;
 
 public class AlbumWriteVO {	
+	private int album_num;
 	private String album_writer;	
 	private String album_name;	
-	private int album_party;	
-	private int album_delete;	
-	private String album_deleteid;	
+	private int album_openrange;		
 	private String album_contents;	
 	private String album_editor;	
-	private int album_version;
 	private int album_category;
 	private String album_identifier;
 	
 	public AlbumWriteVO() {
 		super();
 	}	
-
-	public AlbumWriteVO(String album_writer, String album_name, int album_party, int album_delete, String album_contents,
-			int album_version, int album_category, String album_identifier) {
-		super();
+	
+	public AlbumWriteVO(int album_num , String album_writer, int album_openrange){
+		this.album_num = album_num;
 		this.album_writer = album_writer;
+		this.album_openrange = album_openrange;
+	}
+	
+	public AlbumWriteVO(int album_num , String album_writer , String album_name , int album_openrange , String album_contents , String album_editor , int album_category , String album_identifier ){
+		this(album_num , album_writer , album_openrange);
 		this.album_name = album_name;
-		this.album_party = album_party;
-		this.album_delete = album_delete;
 		this.album_contents = album_contents;
-		this.album_version = album_version;
+		this.album_editor = album_editor;
 		this.album_category = album_category;
 		this.album_identifier = album_identifier;
 	}
 
-	public AlbumWriteVO(String album_writer, String album_name, int album_party, int album_delete,
-			String album_deleteid, String album_contents, String album_editor, int album_version, int album_category,
-			String album_identifier) {
-		super();
-		this.album_writer = album_writer;
-		this.album_name = album_name;
-		this.album_party = album_party;
-		this.album_delete = album_delete;
-		this.album_deleteid = album_deleteid;
-		this.album_contents = album_contents;
-		this.album_editor = album_editor;
-		this.album_version = album_version;
-		this.album_category = album_category;
-		this.album_identifier = album_identifier;
+	public int getAlbum_num() {
+		return album_num;
+	}
+
+	public void setAlbum_num(int album_num) {
+		this.album_num = album_num;
 	}
 
 	public String getAlbum_writer() {
@@ -61,28 +53,12 @@ public class AlbumWriteVO {
 		this.album_name = album_name;
 	}
 
-	public int getAlbum_party() {
-		return album_party;
+	public int getAlbum_openrange() {
+		return album_openrange;
 	}
 
-	public void setAlbum_party(int album_party) {
-		this.album_party = album_party;
-	}
-
-	public int getAlbum_delete() {
-		return album_delete;
-	}
-
-	public void setAlbum_delete(int album_delete) {
-		this.album_delete = album_delete;
-	}
-
-	public String getAlbum_deleteid() {
-		return album_deleteid;
-	}
-
-	public void setAlbum_deleteid(String album_deleteid) {
-		this.album_deleteid = album_deleteid;
+	public void setAlbum_openrange(int album_openrange) {
+		this.album_openrange = album_openrange;
 	}
 
 	public String getAlbum_contents() {
@@ -101,14 +77,6 @@ public class AlbumWriteVO {
 		this.album_editor = album_editor;
 	}
 
-	public int getAlbum_version() {
-		return album_version;
-	}
-
-	public void setAlbum_version(int album_version) {
-		this.album_version = album_version;
-	}
-	
 	public int getAlbum_category() {
 		return album_category;
 	}
@@ -127,13 +95,10 @@ public class AlbumWriteVO {
 
 	@Override
 	public String toString() {
-		return "AlbumWriteVO [album_writer=" + album_writer + ", album_name=" + album_name + ", album_party="
-				+ album_party + ", album_delete=" + album_delete + ", album_deleteid=" + album_deleteid
-				+ ", album_contents=" + album_contents + ", album_editor=" + album_editor + ", album_version="
-				+ album_version + ", album_category=" + album_category + ", album_identifier=" + album_identifier + "]";
+		return "AlbumWriteVO [album_num=" + album_num + ", album_writer=" + album_writer + ", album_name=" + album_name
+				+ ", album_openrange=" + album_openrange + ", album_contents=" + album_contents + ", album_editor="
+				+ album_editor + ", album_category=" + album_category + ", album_identifier=" + album_identifier + "]";
 	}
-
 	
-
 	
 }
