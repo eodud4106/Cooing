@@ -6,17 +6,20 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cooing.www.dy.vo.AlbumListVO;
+
 @Repository
 public class AlbumListAndReadDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public String MyAlbumList(String album_writer){
+	public ArrayList<AlbumListVO> MyAlbumList(String album_writer){
 		
 		AlbumListAndReadMapper mapper = sqlSession.getMapper(AlbumListAndReadMapper.class);
-		String str = null;
+		ArrayList<AlbumListVO> myalbumlist = null;
+		myalbumlist = mapper.MyAlbumList(album_writer);
 		
-		return str;
+		return myalbumlist;
 			
 	}
 	

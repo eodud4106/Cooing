@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.cooing.www.dy.dao.AlbumListAndReadDAO;
+import com.cooing.www.dy.vo.AlbumListVO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.Member;
 import com.cooing.www.jinsu.object.Party;
@@ -26,6 +28,8 @@ public class HomeController {
 	
 	@Autowired
 	RelationDAO relationDAO;
+	@Autowired
+	AlbumListAndReadDAO albumListAndReadDAO;
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -37,6 +41,19 @@ public class HomeController {
 			model.addAttribute("friend", arr_friend);
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
 			model.addAttribute("group", arraystrval);
+		}
+		
+		String album_writer = null;
+		album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+		ArrayList<AlbumListVO> myAlbumList = null;
+		myAlbumList = albumListAndReadDAO.MyAlbumList(album_writer);
+		
+		System.out.println(myAlbumList.size());
+		
+		if(myAlbumList.isEmpty() != true){
+			for(int i=0; i<myAlbumList.size(); i++){
+				System.out.println(myAlbumList.get(i).toString());
+			}
 		}
 		
 		return "home";

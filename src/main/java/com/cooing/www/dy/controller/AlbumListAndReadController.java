@@ -40,20 +40,18 @@ public class AlbumListAndReadController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumListAndReadController.class);
 		
-		//앨범 생성
-		@RequestMapping(value = "/MyAlbumList", method = RequestMethod.POST)
-		public String MyAlbumListOutPut(Model model, HttpSession session){
-			
-			//아이디 불러오기
-			String album_writer = null;
-			album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-			
-			
-			
-			
-			
-			
-			return "albumEdit";
-		}
+//		
+//		@RequestMapping(value = "/MyAlbumList", method = RequestMethod.POST)
+//		public String MyAlbumListOutPut(Model model, HttpSession session){
+//			
+//			//아이디 불러오기
+//			String album_writer = null;
+//			album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+//			
+//			
+//			
+//			
+//			return "albumEdit";
+//		}
 	
 }

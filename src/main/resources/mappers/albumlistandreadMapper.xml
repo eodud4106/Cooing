@@ -3,6 +3,13 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cooing.www.dy.dao.albumlistandreadMapper">
+<mapper namespace="com.cooing.www.dy.dao.AlbumListAndReadMapper">
+
+	<select id="MyAlbumList" parameterType="String" resultType="albumlist">
+		select L.ALBUM_NUM, L.ALBUM_NAME, L.ALBUM_CONTENTS, P.PAGE_HTML, P.PAGE_NUM
+	    from ALBUMLIST L, Page P where L.ALBUM_NUM = P.PAGE_ALBUMNUM and L.ALBUM_WRITER = #{ALBUM_WRITER} 
+	    and L.album_party = 1 and P.PAGE_NUM = 1
+	    order by L.Album_num desc
+	</select>
 	
 </mapper>
