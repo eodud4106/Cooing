@@ -2,7 +2,7 @@
  * 채팅 관련 메소드 모음
  */
 var websocket;
-var wsUri = "ws://localhost:8080/www/chat/echo.do";
+var wsUri = "ws://localhost:8888/www/chat/echo.do";
 
 // 로그인 상태일 경우 채팅 준비
 function readyChat () {
@@ -42,7 +42,7 @@ function readyChat () {
    		onMessage(evt)
    	};
    	websocket.onerror = function(evt) {
-   		onError(evt)
+   		//onError(evt)
    	};
    	websocket.onclose = function(evt) {
    		closePChat(evt)
