@@ -59,4 +59,19 @@ public class AlbumDAO {
 		
 	}
 	
+	public ArrayList<AlbumWriteVO> searchAlbum(String searchtext){
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		return mapper.searchAlbum(searchtext);
+	}
+	
+	public AlbumWriteVO searchAlbumNum(int num){
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		return mapper.searchAlbumNum(num);		
+	}
+	
+	public PageHtmlVO searchPage1(int num){
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		return mapper.searchPage1(num);		
+	}
+	
 }
