@@ -43,8 +43,9 @@ function memberdelete(){
 					success: function(list){
 						var strmember='';
 						$.each(list,function(i,data){
-							strmember += '<p><img src = "<c:url value="/jinsu/memberimg?strurl='+(data.member_picture==null?'':data.member_picture)	+'"/>"></p><p>'+ data.member_id;
-							strmember +='<img src = "./resources/image_mj/remove.png" class = "img_3" data="'+data.member_id+'" data2="'+party_num+'">';	
+							strmember += '<p><img src = "./jinsu/memberimg?strurl='+(data.member_picture==null?'':data.member_picture)	+'"></p><p>'+ data.member_id;
+							if(data.member_id  != $('#sessionid').attr('data') )
+								strmember +='<img src = "./resources/image_mj/remove.png" class = "img_3" data="'+data.member_id+'" data2="'+party_num+'">';	
 						});
 						$('#memberdiv').html(strmember);
 						$('#findid').val('');
@@ -77,8 +78,9 @@ function memberplus(){
 					success: function(list){
 						var strmember='';
 						$.each(list,function(i,data){
-							strmember += '<p><img src = "<c:url value="/jinsu/memberimg?strurl='+(data.member_picture==null?'':data.member_picture)+'"/>"></p><p>'+ data.member_id;
-							strmember +='<img src = "./resources/image_mj/remove.png" class = "img_3" data="'+data.member_id+'" data2="'+party_num+'">';	
+							strmember += '<p><img src = "./jinsu/memberimg?strurl='+(data.member_picture==null?'':data.member_picture)	+'"></p><p>'+ data.member_id;
+							if(data.member_id  != $('#sessionid').attr('data') )
+								strmember +='<img src = "./resources/image_mj/remove.png" class = "img_3" data="'+data.member_id+'" data2="'+party_num+'">';	
 						});
 						$('#memberdiv').html(strmember);
 						$('#findid').val('');

@@ -139,7 +139,7 @@ img{
 
 	<!-- 왼쪽 사이드바 -->
 	<div id="sidebar_a">
-		<c:if test="${partyinfo ne null}">${partyinfo.getParty_name()}</c:if>
+		<c:if test="${partyinfo ne null}">${partyinfo.getParty_name()}<input type="hidden" id="sessionid" data="${Member.getMember_id()}"></c:if>
 		<c:if test="${partyleader ne null}">
 			<p><img src = "<c:url value="/jinsu/memberimg?strurl=${partyleader.getMember_picture()}"/>"><c:if test="${partyleader ne null}">${partyleader.getMember_id()}</c:if></p>
 		</c:if>	
