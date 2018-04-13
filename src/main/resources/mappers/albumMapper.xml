@@ -7,25 +7,13 @@
 	<insert id="createAlbum" parameterType="albumwrite">
 		insert into ALBUMLIST (
 			ALBUM_NUM,
-			ALBUM_WRITER,	
-			ALBUM_NAME,	
-			ALBUM_PARTY,	
-			ALBUM_DELETE,
-			ALBUM_CONTENTS,
-			ALBUM_VERSION,
-			ALBUM_CATEGORY,
-			ALBUM_IDENTIFIER
+			ALBUM_WRITER,
+			ALBUM_OPENRANGE
 		)
 		values (
 			ALBUMLIST_SEQ.nextval,
 			#{album_writer},
-			#{album_name},
-			#{album_party},
-			#{album_delete},
-			#{album_contents},
-			#{album_version},
-			#{album_category},
-			#{album_identifier}
+			#{album_openrange}
 		)
 		
 	</insert>
