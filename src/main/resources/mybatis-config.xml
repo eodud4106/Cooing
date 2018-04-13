@@ -11,6 +11,7 @@
 		<typeAlias type="com.cooing.www.jinsu.object.PartyMember" alias="partymember"/>
 		<typeAlias type="com.cooing.www.dy.vo.AlbumWriteVO" alias="albumwrite"/>
 		<typeAlias type="com.cooing.www.dy.vo.PageHtmlVO" alias="page"/>
+		<typeAlias type="com.cooing.www.dy.vo.AlbumListVO" alias="albumlist"/>
 	</typeAliases>
  	<mappers>
 		<mapper resource="mappers/messageMapper.xml"/>

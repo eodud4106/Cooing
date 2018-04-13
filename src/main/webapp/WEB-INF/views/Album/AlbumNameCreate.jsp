@@ -11,7 +11,7 @@
 
 <title>Login</title>
 
-<script src="<c:url value="../resources/js_js/jquery-3.2.1.min.js"/>"></script>
+<script src="<c:url value="../resources/js/jquery-3.3.1.min.js"/>"></script>
 <script>
 function formCheck() {
 	var album_name = $('#album_name').val();

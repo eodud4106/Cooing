@@ -98,30 +98,30 @@ public class AlbumEditController {
 					
 			//처음 페이지 만들 때
 			if(isWrite != null) {
-				int page_albumnum = 0;
-				page_albumnum = albumDAO.first_selectAlbum_Num(isWrite);
+				int album_num = 0;
+				album_num = albumDAO.first_selectAlbum_Num(isWrite);
 				session.removeAttribute("writing");
-				session.setAttribute("create_page_albumnum", page_albumnum);
+				session.setAttribute("create_page_albumnum", album_num);
 							
 				int page_num = 0;
 				page_num = Integer.parseInt(pagenum);
 				String page_html = null;
 							
 				page_html = html;
-				PageHtmlVO page = new PageHtmlVO(page_albumnum, page_num, page_html);
+				PageHtmlVO page = new PageHtmlVO(album_num, page_num, page_html);
 				boolean insertAlbumOfPage = albumDAO.insertAlbumOfPage(page);
 			} 
 					
 			else {
-				int page_albumnum = 0;
-				page_albumnum = (int) session.getAttribute("create_page_albumnum");
+				int album_num = 0;
+				album_num = (int) session.getAttribute("create_page_albumnum");
 							
 				int page_num = 0;
 				page_num = Integer.parseInt(pagenum);
 				String page_html = null;
 							
 				page_html = html;
-				PageHtmlVO page = new PageHtmlVO(page_albumnum, page_num, page_html);
+				PageHtmlVO page = new PageHtmlVO(album_num, page_num, page_html);
 				boolean insertAlbumOfPage = albumDAO.insertAlbumOfPage(page);
 			}
 					
