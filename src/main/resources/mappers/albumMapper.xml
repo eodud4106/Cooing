@@ -21,13 +21,13 @@
 	<insert id="insertAlbumOfPage" parameterType="page">
 		insert into Page (
 			PAGE_ID,
-			PAGE_ALBUMNUM,
+			ALBUM_NUM,
 			PAGE_NUM,			
 			PAGE_HTML
 		)
 		values (
 			PAGE_SEQ.nextval,
-			#{page_albumnum},
+			#{album_num},
 			#{page_num},
 			#{page_html}
 		)
@@ -36,5 +36,22 @@
 	<select id="first_selectAlbum_Num" parameterType="String" resultType="int">
 		select album_num from albumlist where ALBUM_IDENTIFIER = #{album_identifier}
 	</select>
+	
+	<select id="searchAlbum" parameterType="String" resultType="albumwrite">
+		select * from albumlist 
+			where album_writer like '%'||#{search}||'%'
+			or album_name like '%'||#{search}||'%'
+			or album_contents like '%'||#{search}||'%'
+	</select>
+	
+	<select id="searchAlbumNum" parameterType="int" resultType="albumwrite">
+		select * from albumlist	where album_num=#{searchnum}
+	</select>
+	
+	<select id="searchPage1" parameterType="int" resultType="page">
+		select * from page	where album_num=#{number}
+	</select>
+	
+	
 	
 </mapper>
