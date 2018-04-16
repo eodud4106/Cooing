@@ -7,6 +7,34 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+    @import url(https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+    @import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+    @import url(http://fonts.googleapis.com/earlyaccess/kopubbatang.css);
+    @import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+    @import url(http://fonts.googleapis.com/earlyaccess/jejuhallasan.css);
+    @import url(http://fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
+    @import url(http://cdn.jsdelivr.net/font-nanum/1.0/nanumbarungothic/nanumbarungothic.css);
+    @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+    @import url('https://fonts.googleapis.com/css?family=Gugi');
+    @import url('https://fonts.googleapis.com/css?family=Gamja+Flower|Indie+Flower');
+    @import url('https://fonts.googleapis.com/css?family=Hi+Melody');
+    @import url('https://fonts.googleapis.com/css?family=Stylish');
+  	@import url('https://fonts.googleapis.com/css?family=Black+And+White+Picture');
+  	@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+  	@import url('https://fonts.googleapis.com/css?family=Dokdo');
+  	@import url('https://fonts.googleapis.com/css?family=East+Sea+Dokdo');
+  	@import url('https://fonts.googleapis.com/css?family=Sunflower:300');
+  	@import url('https://fonts.googleapis.com/css?family=Kirang+Haerang');
+  	@import url('https://fonts.googleapis.com/css?family=Poor+Story');
+  	@import url('https://fonts.googleapis.com/css?family=Do+Hyeon');
+  	@import url('https://fonts.googleapis.com/css?family=Cute+Font');
+  	@import url('https://fonts.googleapis.com/css?family=Yeon+Sung');
+  	@import url('https://fonts.googleapis.com/css?family=Gaegu');
+  	@import url('https://fonts.googleapis.com/css?family=Jua');
+  	@import url('https://fonts.googleapis.com/css?family=Song+Myung');
+  	@import url('https://fonts.googleapis.com/css?family=Black+Han+Sans');
+    </style>
     <script>
 
         // [start] 맵을 쓰기 위한 코드
@@ -365,11 +393,25 @@
             }).mouseleave(function(e) {
                 $('.tooltip').remove();
             });
-
-
+            
+			// 글씨 크기
             $arr_bt.push($('<button />', {
-                "id": "bt_color",
+                "id": "bt_size",
                 "text": "크기"
+            }));
+            $arr_bt[$arr_bt.length - 1].click(function() {
+                if($('.innerDiv').css('display') == 'none') {
+                    $('.innerDiv').css('display', 'block');
+                } else {
+                    $('.innerDiv').css('display', 'none');
+                }
+                
+            });
+            
+			// 글꼴
+            $arr_bt.push($('<button />', {
+                "id": "bt_font",
+                "text": "글꼴"
             }));
             $arr_bt[$arr_bt.length - 1].click(function() {
                 if($('.innerDiv').css('display') == 'none') {
@@ -435,20 +477,460 @@
                 $tmp_div.append($arr_bt[i]);
 
                 // div를 열어야 하는 경우
-                if($arr_bt[i].attr('id') == "bt_color") {
+                if($arr_bt[i].attr('id') == "bt_size") {
                     var $innerDiv = $('<div />', {
                         "class": "innerDiv"
                     });
                     $innerDiv.css({
-                        "display": "none"
+                        "display": "none", 
+                        "z-index": "1000"
                     });
-
-                    // 여기여기
-
-                    
-
+					// 글씨 크기   	
+		           	var $arr_bt_size = [];
+		           	// 7pt
+		            $arr_bt_size.push($('<button />', {
+		            	"class": "bt_size", 
+		            	"text": "Cooing(7pt)"
+		            }));
+		            $arr_bt_size[$arr_bt_size.length -1].css({
+		            	"font-size": "7pt"
+		            }).click(function() {
+		                $('.onSelect').css("font-size", "7pt");
+		            });
+		           	// 8pt
+		            $arr_bt_size.push($('<button />', {
+		            	"class": "bt_size", 
+		            	"text": "Cooing(8pt)"
+		            }));
+		            $arr_bt_size[$arr_bt_size.length -1].css({
+		            	"font-size": "8pt"
+		            }).click(function() {
+		                $('.onSelect').css("font-size", "8pt");
+		            });
+		           	// 9pt
+		            $arr_bt_size.push($('<button />', {
+		            	"class": "bt_size", 
+		            	"text": "Cooing(9pt)"
+		            }));
+		            $arr_bt_size[$arr_bt_size.length -1].css({
+		            	"font-size": "9pt"
+		            }).click(function() {
+		                $('.onSelect').css("font-size", "9pt");
+		            });
+		           	// 10pt
+		            $arr_bt_size.push($('<button />', {
+		            	"class": "bt_size", 
+		            	"text": "Cooing(10pt)"
+		            }));
+		            $arr_bt_size[$arr_bt_size.length -1].css({
+		            	"font-size": "10pt"
+		            }).click(function() {
+		                $('.onSelect').css("font-size", "10pt");
+		            });
+		           	// 11pt
+		            $arr_bt_size.push($('<button />', {
+		            	"class": "bt_size", 
+		            	"text": "Cooing(11pt)"
+		            }));
+		            $arr_bt_size[$arr_bt_size.length -1].css({
+		            	"font-size": "11pt"
+		            }).click(function() {
+		                $('.onSelect').css("font-size", "11pt");
+		            });
+		           	// 12pt
+		            $arr_bt_size.push($('<button />', {
+		            	"class": "bt_size", 
+		            	"text": "Cooing(12pt)"
+		            }));
+		            $arr_bt_size[$arr_bt_size.length -1].css({
+		            	"font-size": "12pt"
+		            }).click(function() {
+		                $('.onSelect').css("font-size", "12pt");
+		            });
+		           	// 14pt
+		            $arr_bt_size.push($('<button />', {
+		            	"class": "bt_size", 
+		            	"text": "Cooing(14pt)"
+		            }));
+		            $arr_bt_size[$arr_bt_size.length -1].css({
+		            	"font-size": "14pt"
+		            }).click(function() {
+		                $('.onSelect').css("font-size", "14pt");
+		            });
+		           	// 18pt
+		            $arr_bt_size.push($('<button />', {
+		            	"class": "bt_size", 
+		            	"text": "Cooing(18pt)"
+		            }));
+		            $arr_bt_size[$arr_bt_size.length -1].css({
+		            	"font-size": "18pt"
+		            }).click(function() {
+		                $('.onSelect').css("font-size", "18pt");
+		            });
+		           	// 24pt
+		            $arr_bt_size.push($('<button />', {
+		            	"class": "bt_size", 
+		            	"text": "Cooing(24pt)"
+		            }));
+		            $arr_bt_size[$arr_bt_size.length -1].css({
+		            	"font-size": "24pt"
+		            }).click(function() {
+		                $('.onSelect').css("font-size", "24pt");
+		            });
+		           	// 36pt
+		            $arr_bt_size.push($('<button />', {
+		            	"class": "bt_size", 
+		            	"text": "Cooing(36pt)"
+		            }));
+		            $arr_bt_size[$arr_bt_size.length -1].css({
+		            	"font-size": "36pt"
+		            }).click(function() {
+		                $('.onSelect').css("font-size", "36pt");
+		            });
+		           	// 48pt
+		            $arr_bt_size.push($('<button />', {
+		            	"class": "bt_size", 
+		            	"text": "Cooing(48pt)"
+		            }));
+		            $arr_bt_size[$arr_bt_size.length -1].css({
+		            	"font-size": "48pt"
+		            }).click(function() {
+		                $('.onSelect').css("font-size", "48pt");
+		            });       
+					for (var i = 0; i < $arr_bt_size.length; i++) {
+						$innerDiv.append($arr_bt_size[i])
+					}
                     $tmp_div.append($innerDiv);
                 }
+	            // div를 열어야 하는 경우
+	            else if($arr_bt[i].attr('id') == "bt_font") {
+                    var $innerDiv = $('<div />', {
+                        "class": "innerDiv_font"
+                    });
+                    $innerDiv.css({
+                        "display": "none", 
+                        "z-index": "1000"
+                    });
+
+                    // 글꼴
+                   	var $arr_bt_font = [];
+                   	// 궁서체
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(궁서체)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "궁서체, serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "궁서체, serif");
+                    });
+                   	// 맑은고딕
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(맑은고딕)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Malgun Gothic, serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Malgun Gothic, serif");
+                    });
+                   	// 돋움
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(돋움)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "돋움, serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "돋움, serif");
+                    });
+                   	// 굴림
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(굴림)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "굴림, serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "굴림, serif");
+                    });
+                   	// 바탕
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(바탕)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "바탕, serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "바탕, serif");
+                    });
+                   	// Nanum Brush Script
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Nanum Brush Script)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Nanum Brush Script, serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Nanum Brush Script, serif");
+                    });
+                   	// hanna
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(hanna)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "hanna, serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "hanna, serif");
+                    });
+                   	// KoPub Batang
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(KoPub Batang)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "KoPub Batang, serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "KoPub Batang, serif");
+                    });
+                   	// Nanum Pen Script
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Nanum Pen Script)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Nanum Pen Script, serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Nanum Pen Script, serif");
+                    });
+                   	// Jeju Hallasan
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Jeju Hallasan)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Jeju Hallasan, serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Jeju Hallasan, serif");
+                    });
+                   	// Jeju Myeongjo
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Jeju Myeongjo)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Jeju Myeongjo, serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Jeju Myeongjo, serif");
+                    });
+                   	// Nanum Barun Gothic
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Nanum Barun Gothic)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Nanum Barun Gothic, serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Nanum Barun Gothic, serif");
+                    });
+                   	// Noto Sans KR
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Noto Sans KR)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Noto Sans KR, serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Noto Sans KR, serif");
+                    });
+                   	// Gugi
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Gugi)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Gugi, cursive"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Gugi, cursive");
+                    });
+                   	// Gamja Flower
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Gamja Flower)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Gamja Flower, cursive"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Gamja Flower, cursive");
+                    });
+                   	// Indie Flower
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Indie Flower)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Indie Flower, cursive"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Indie Flower, cursive");
+                    });
+                   	// Hi Melody
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Gugi)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Hi Melody, cursive"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Hi Melody, cursive");
+                    });
+                   	// Stylish
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Stylish)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Stylish, sans-serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Stylish, sans-serif");
+                    });
+                   	// Black And White Picture
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Black And White Picture)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Black And White Picture, sans-serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Black And White Picture, sans-serif");
+                    });
+                   	// Dokdo
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Dokdo)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Dokdo, cursive"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Dokdo, cursive");
+                    });
+                   	// East Sea Dokdo
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(East Sea Dokdo)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "East Sea Dokdo, cursive"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "East Sea Dokdo, cursive");
+                    });
+                   	// Sunflower
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Sunflower)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Sunflower, sans-serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Sunflower, sans-serif");
+                    });
+                   	// Kirang Haerang
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Kirang Haerang)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Kirang Haerang, cursive"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Kirang Haerang, cursive");
+                    });
+                   	// Poor Story
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Poor Story)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Poor Story, cursive"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Poor Story, cursive");
+                    });
+                   	// Do Hyeon
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Do Hyeon)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Do Hyeon, sans-serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Do Hyeon, sans-serif");
+                    });
+                   	// Cute Font
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Cute Font)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Cute Font, cursive"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Cute Font, cursive");
+                    });
+                   	// Yeon Sung
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Yeon Sung)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Yeon Sung, cursive"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Yeon Sung, cursive");
+                    });
+                   	// Gaegu
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Gaegu)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Gaegu, cursive"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Gaegu, cursive");
+                    });
+                   	// Jua
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Jua)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Jua, cursive"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Jua, cursive");
+                    });
+                   	// Song Myung
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Song Myung)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Song Myung, serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Song Myung, serif");
+                    });
+                   	// Black Han Sans
+                    $arr_bt_font.push($('<button />', {
+                    	"class": "bt_font", 
+                    	"text": "Cooing(Black Han Sans)"
+                    }));
+                    $arr_bt_font[$arr_bt_font.length -1].css({
+                    	"font-family": "Black Han Sans, sans-serif"
+                    }).click(function() {
+                        $('.onSelect').css("font-family", "Black Han Sans, sans-serif");
+                    });
+                    
+					for (var i = 0; i < $arr_bt_font.length; i++) {
+						$innerDiv.append($arr_bt_font[i])
+					}
+                    $tmp_div.append($innerDiv);
+                }
+                
                 $div_whole_editor.append($tmp_div);
             }
 
