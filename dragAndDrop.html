@@ -400,10 +400,10 @@
                 "text": "크기"
             }));
             $arr_bt[$arr_bt.length - 1].click(function() {
-                if($('.innerDiv').css('display') == 'none') {
-                    $('.innerDiv').css('display', 'block');
+                if($('.div_fontsize').css('display') == 'none') {
+                    $('.div_fontsize').css('display', 'block');
                 } else {
-                    $('.innerDiv').css('display', 'none');
+                    $('.div_fontsize').css('display', 'none');
                 }
                 
             });
@@ -414,10 +414,10 @@
                 "text": "글꼴"
             }));
             $arr_bt[$arr_bt.length - 1].click(function() {
-                if($('.innerDiv').css('display') == 'none') {
-                    $('.innerDiv').css('display', 'block');
+                if($('.div_font').css('display') == 'none') {
+                    $('.div_font').css('display', 'block');
                 } else {
-                    $('.innerDiv').css('display', 'none');
+                    $('.div_font').css('display', 'none');
                 }
                 
             });
@@ -479,7 +479,7 @@
                 // div를 열어야 하는 경우
                 if($arr_bt[i].attr('id') == "bt_size") {
                     var $innerDiv = $('<div />', {
-                        "class": "innerDiv"
+                        "class": "div_fontsize"
                     });
                     $innerDiv.css({
                         "display": "none", 
@@ -597,15 +597,16 @@
 		            }).click(function() {
 		                $('.onSelect').css("font-size", "48pt");
 		            });       
-					for (var i = 0; i < $arr_bt_size.length; i++) {
-						$innerDiv.append($arr_bt_size[i])
+					for (var j = 0; j < $arr_bt_size.length; j++) {
+						$innerDiv.append($arr_bt_size[j])
 					}
                     $tmp_div.append($innerDiv);
                 }
 	            // div를 열어야 하는 경우
 	            else if($arr_bt[i].attr('id') == "bt_font") {
+
                     var $innerDiv = $('<div />', {
-                        "class": "innerDiv_font"
+                        "class": "div_font"
                     });
                     $innerDiv.css({
                         "display": "none", 
@@ -925,8 +926,8 @@
                         $('.onSelect').css("font-family", "Black Han Sans, sans-serif");
                     });
                     
-					for (var i = 0; i < $arr_bt_font.length; i++) {
-						$innerDiv.append($arr_bt_font[i])
+					for (var j = 0; j < $arr_bt_font.length; j++) {
+						$innerDiv.append($arr_bt_font[j])
 					}
                     $tmp_div.append($innerDiv);
                 }
