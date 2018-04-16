@@ -28,6 +28,8 @@
 <script src="resources/js/chat.js"></script>
 <script>
 $(document).ready(function () {
+	
+	myAlbumList()
 	initialize();
 	
 	
@@ -65,7 +67,20 @@ $(document).ready(function () {
 		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
 	}
 	
+	
 });
+
+function myAlbumList() {
+	var listsize = ${myAlbumListSize};
+	var myAlbumList = <c:set var="checkDate" var='${request.getParameter("Date")}' />
+		${myAlbumList};
+	alert(listsize);
+	for(var i=0; i<listsize; i++){
+		alert(myAlbumList[i]);
+	}
+	
+
+}
 </script>
 
 <style>
