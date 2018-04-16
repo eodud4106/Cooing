@@ -13,6 +13,40 @@
 
 <script src="<c:url value="../resources/js/jquery-3.3.1.min.js"/>"></script>
 <script>
+$(document).ready(function () {
+	$('#hashtagbt').on('click' , function(){
+		hashtagCheck();
+	});
+});
+
+function byteCheck(chaval){
+	var char_val = "";
+	var total_byte = 0;
+	for(var i = 0; i < chaval.length; i++){
+		char_val = chaval.charAt(i);
+		if(escape(char_val).length > 4)
+			total_byte += 3;
+		else
+			total_byte++;
+	}
+	return total_byte;
+}
+
+function hashtagCheck(){
+	var strhashtag = $('#hashtagtx').val();
+	var strhashtaglist = $('#hashtagvw').html();  
+	
+	  var tags = [];
+	  strhashtag = strhashtag.replace(/#[^#\s,;]+/gm, function(tag) {
+	    if(byteCheck(tag) <= 60)
+		  	tags.push(tag);
+	    else
+	    	alert('너무 길게 입력하신 단어는 출력되지 않습니다.');
+	  });
+	  $('#hashtagvw').html(tags.join(','));	
+	  $('#hashtag').val($('#hashtagvw').html());
+}
+
 function formCheck() {
 	var album_name = $('#album_name').val();
 	if(album_name.val.length < 1) {
@@ -57,9 +91,13 @@ function formCheck() {
 		    <option value="19">건강</option>
 		    <option value="20" selected="selected">기타</option>
 		</select>
+		<br>
+		<input type="text" id="hashtagtx" placeholder="해쉬태그"><input type="button" id="hashtagbt" value="추가">
+		<div id="hashtagvw"></div>
 		<br><br>
 		<input type="hidden" name="album_party" value="1">
 		<input type="hidden" name="album_version" value="1">
+		<input type="hidden" id="hashtag" name="hashtag">
 		<input type="submit" onsubmit="formCheck()">
 	</div>
 </form>

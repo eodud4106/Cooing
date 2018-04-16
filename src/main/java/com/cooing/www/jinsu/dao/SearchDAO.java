@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cooing.www.jinsu.object.HashTag;
+import com.cooing.www.jinsu.object.Search;
 
 @Repository
 public class SearchDAO {
@@ -24,6 +25,19 @@ public class SearchDAO {
 	public ArrayList<HashTag> selectHashTag(String search){
 		SearchMapper mapper = sqlSession.getMapper(SearchMapper.class);
 		return mapper.selectHashTag(search);
+	}
+	
+	public boolean insertSearch(Search search){
+		SearchMapper mapper = sqlSession.getMapper(SearchMapper.class);
+		if(mapper.insertSearch(search) > 0)
+			return true;
+		else 
+			return false;
+	}
+	
+	public ArrayList<Search> selectDaySearch(String date){
+		SearchMapper mapper = sqlSession.getMapper(SearchMapper.class);
+		return mapper.selectDaySearch(date);
 	}
 	
 }

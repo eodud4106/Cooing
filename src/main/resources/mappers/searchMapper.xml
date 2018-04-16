@@ -7,12 +7,22 @@
 
 	<insert id="insertHashTag" parameterType="tag">
 	insert into tag (tag_num,tag_albumnum,tag_content)
-		values (teg_seq.nextval,#{tag_albumnum},#{tag_content})
+		values (tag_seq.nextval,#{tag_albumnum},#{tag_content})
 	</insert>
 	
 	<select id="selectHashTag" resultType="tag" parameterType="String">
 		select * from tag where tag_content = #{search}
 	</select>
+	
+	<insert id="insertSearch" parameterType="search">
+	insert into search (search_num,search_word,search_date)
+		values (search_seq.nextval,#{search_word},sysdate)
+	</insert>
+	
+	<select id="selectDaySearch" resultType="search" parameterType="String">
+		select * from search where to_char(search_date , 'yyyymmdd') = #{date}
+	</select>
+	
 	
 	
 </mapper>

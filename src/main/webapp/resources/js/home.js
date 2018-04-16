@@ -24,7 +24,7 @@ function openGUpdate(group_name) {
 }
 
 function search(){
-	var searchtext = $('#searchtext').val();
+	var searchtext = $('#searchtx').val();
 	$.ajax({
 		url:'searchWord',
 		type:'POST',		
@@ -32,6 +32,7 @@ function search(){
 		dataType:'json',
 		success: function(list){
 			//list 받아오면 리스트 돌려서 처리할 부분
+			alert(JSON.stringify(list));
 		},
 		error:function(e){alert(JSON.stringify(e));}		
 	});

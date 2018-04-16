@@ -12,6 +12,8 @@
 		<typeAlias type="com.cooing.www.dy.vo.AlbumWriteVO" alias="albumwrite"/>
 		<typeAlias type="com.cooing.www.dy.vo.PageHtmlVO" alias="page"/>
 		<typeAlias type="com.cooing.www.dy.vo.AlbumListVO" alias="albumlist"/>
+		<typeAlias type="com.cooing.www.jinsu.object.HashTag" alias="tag"/>
+		<typeAlias type="com.cooing.www.jinsu.object.Search" alias="search"/>
 	</typeAliases>
  	<mappers>
 		<mapper resource="mappers/messageMapper.xml"/>
@@ -19,5 +21,6 @@
 		<mapper resource="mappers/relationMapper.xml"/>
 		<mapper resource="mappers/albumMapper.xml"/>
 		<mapper resource="mappers/albumlistandreadMapper.xml"/>
+		<mapper resource="mappers/searchMapper.xml"/>
 	</mappers>
 </configuration>

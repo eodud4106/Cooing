@@ -26,6 +26,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.dy.vo.PageHtmlVO;
+import com.cooing.www.jinsu.dao.SearchDAO;
+import com.cooing.www.jinsu.object.HashTag;
 import com.cooing.www.jinsu.object.Member;
 
 @Controller
@@ -35,6 +37,9 @@ public class AlbumEditController {
 	
 	@Autowired
 	AlbumDAO albumDAO;
+	
+	@Autowired
+	SearchDAO searchDAO;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
 	
@@ -139,7 +144,7 @@ public class AlbumEditController {
 		//앨범 생성
 		@RequestMapping(value = "/AlbumFirstCreate", method = RequestMethod.POST)
 		public String AlbumFirstCreate(HttpSession session, String album_name, String album_contents,
-				int album_party, int album_version, int album_category, Locale locale){
+				int album_party, int album_version, int album_category, Locale locale , String hashtag){
 					
 			//아이디 불러오기
 			String album_writer = null;
@@ -157,8 +162,14 @@ public class AlbumEditController {
 			AlbumWriteVO albumwrite = new AlbumWriteVO(0 , album_writer, 1 , album_identifier);
 			boolean create_confirmed = false;
 			create_confirmed = albumDAO.createAlbum(albumwrite);
-					
-					
+			
+			int ialbumnum = albumDAO.first_selectAlbum_Num(album_identifier); 
+			//해쉬 태그
+			String[] tags = hashtag.split(",");
+			for(int i = 0; i < tags.length; i++){
+				searchDAO.insertHashTag(new HashTag(0 , ialbumnum , tags[i]));
+			}
+			
 			return "albumEdit";
 		}
 		
