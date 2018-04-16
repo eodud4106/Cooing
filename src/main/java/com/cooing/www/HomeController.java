@@ -1,6 +1,7 @@
 package com.cooing.www;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -55,8 +56,20 @@ public class HomeController {
 		
 		
 		model.addAttribute("myAlbumListSize", myAlbumList.size());
+		
+		ArrayList<AlbumListVO> myAlbumList2 = new ArrayList<>();
+		HashMap<String, String> map = new HashMap<>();
+		
+		
+		for(AlbumListVO albumListVO: myAlbumList) {
+			String tmp = albumListVO.getPage_html();
+			albumListVO.setPage_html(tmp.replaceAll("<", "\\<").replaceAll(">", "\\>"));
+		}
+		
+		
+		
 		model.addAttribute("myAlbumList", myAlbumList);
-		System.out.println(myAlbumList.toString());
+		System.out.println(myAlbumList2.toString());
 		
 		
 		return "home";

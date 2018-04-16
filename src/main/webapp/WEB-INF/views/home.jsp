@@ -72,12 +72,11 @@ $(document).ready(function () {
 
 function myAlbumList() {
 	var listsize = ${myAlbumListSize};
-	var myAlbumList = <c:set var="checkDate" var='${request.getParameter("Date")}' />
-		${myAlbumList};
-	alert(listsize);
-	for(var i=0; i<listsize; i++){
+	var myAlbumList = '<c:out value="${myAlbumList}" escapeXml="false"/>';
+	alert(myAlbumList);
+	/* for(var i=0; i<myAlbumList.length; i++){
 		alert(myAlbumList[i]);
-	}
+	} */
 	
 
 }

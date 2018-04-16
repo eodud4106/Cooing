@@ -10,12 +10,11 @@
 <meta name="viewport" content="width = 1050, user-scalable = no" />
 
 <script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="../resources/album_page_js/extras/modernizr.2.5.3.min.js"></script>
-<script type="text/javascript" src="../resources/album_page_js/basic.js"></script>		
+<script type="text/javascript" src="../resources/album_page_js/basic.js"></script>
 
-<script src="../resources/album_drag_and_drop_js/jquery-ui.js"></script>
-
-<link rel="stylesheet" href="../resources/album_drag_and_drop_js/jquery-ui.css">		
+<link rel="stylesheet" href="../resources/css/jquery-ui.min.css">		
 <link rel="stylesheet" href="../resources/album_css/album_edit_basic.css">
 <link rel="stylesheet" href="../resources/album_css/album_edit_drag_and_drop.css">
 
