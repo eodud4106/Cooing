@@ -11,7 +11,19 @@ public class AlbumListVO {
 	public AlbumListVO() {
 		super();
 	}
-
+	
+	public AlbumListVO(String page_html) {
+		super();
+		this.page_html = page_html;
+	}
+	
+	public AlbumListVO(int album_num, String album_name, String album_contents) {
+		super();
+		this.album_num = album_num;
+		this.album_name = album_name;
+		this.album_contents = album_contents;
+	}
+	
 	public AlbumListVO(int album_num, String album_name, String album_contents, String page_html, int page_num) {
 		super();
 		this.album_num = album_num;

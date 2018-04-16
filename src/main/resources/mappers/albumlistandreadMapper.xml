@@ -10,8 +10,7 @@
 			L.ALBUM_NUM,
 			L.ALBUM_NAME,
 			L.ALBUM_CONTENTS,
-			P.PAGE_HTML,
-			P.PAGE_NUM
+			P.PAGE_HTML
 	    from
 	    	ALBUMLIST L,
 	    	Page P 
