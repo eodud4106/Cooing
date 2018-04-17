@@ -8,7 +8,7 @@ public interface AlbumListAndReadMapper {
 	
 	public int albumListCount(String album_writer);
 	
-	public ArrayList<AlbumListVO> MyAlbumList(String album_writer);
+	public ArrayList<AlbumListVO> TotalAlbumList(String album_writer);
 	
 	
 	

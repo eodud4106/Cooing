@@ -54,13 +54,14 @@ public class HomeController {
 	
 	// 책 목록 조회
 	@ResponseBody
-	@RequestMapping(value = "/getMyAlbumList", method= RequestMethod.POST)
+	@RequestMapping(value = "/getTotalAlbumList", method= RequestMethod.POST)
 	public ArrayList<AlbumListVO> getMyAlbumList(HttpSession session) {
 		
 		ArrayList<AlbumListVO> albumList = new ArrayList<>();
 		String album_writer = null;
 		album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-		albumList = albumListAndReadDAO.MyAlbumList(album_writer);
+		albumList = albumListAndReadDAO.TotalAlbumList(album_writer);
+		System.out.println(albumList.toString());
 		for (AlbumListVO albumListVO : albumList) {
 			albumListVO.setPage_html(albumListVO.getPage_html().replaceAll("\\n", ""));
 		}

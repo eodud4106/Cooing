@@ -13,13 +13,13 @@ public class AlbumListAndReadDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public ArrayList<AlbumListVO> MyAlbumList(String album_writer){
+	public ArrayList<AlbumListVO> TotalAlbumList(String album_writer){
 		
 		AlbumListAndReadMapper mapper = sqlSession.getMapper(AlbumListAndReadMapper.class);
-		ArrayList<AlbumListVO> myalbumlist = null;
-		myalbumlist = mapper.MyAlbumList(album_writer);
+		ArrayList<AlbumListVO> totalalbumlist = null;
+		totalalbumlist = mapper.TotalAlbumList(album_writer);
 		
-		return myalbumlist;
+		return totalalbumlist;
 			
 	}
 	

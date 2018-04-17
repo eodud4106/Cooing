@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.cooing.www.dy.dao.AlbumListAndReadDAO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.Member;
 
@@ -25,6 +26,8 @@ public class MainController {
 	
 	@Autowired
 	RelationDAO relationDAO;
+	@Autowired
+	AlbumListAndReadDAO albumListAndReadDAO;
 
 
 	/**
@@ -45,8 +48,12 @@ public class MainController {
 	
 	//마이페이지
 	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
-	public String myPage(){
-			
+	public String myPage(HttpSession session){
+		
+		String album_writer = null;
+		album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+		
+		
 		return "myPage";
 	}
 	

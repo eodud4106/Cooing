@@ -115,6 +115,17 @@ img{
 }
 </style>
 
+<script>
+
+$(document).ready(function() {
+	
+	fu
+	
+	
+})
+
+</script>
+
 </head>
 <body>
 	<div id="header">

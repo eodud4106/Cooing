@@ -29,7 +29,6 @@
 <script>
 $(document).ready(function () {
 	
-	myAlbumList() //앨범리스트 출력
 	initialize();
 	
 	
@@ -67,18 +66,18 @@ $(document).ready(function () {
 		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
 	}
 	
-	getMyAlbumList();
+	getTotalAlbumList();
 	
 });
 
 //앨범 리스트 Ajax로 받는 코드
-function getMyAlbumList() {
+function getTotalAlbumList() {
 	$.ajax({
-		url: 'getMyAlbumList',
+		url: 'getTotalAlbumList',
 		type: 'post',
 		dataType: 'json',
 		success: function(result) {
-			myAlbumList(result);
+			totalAlbumList(result);
 		},
 		error: function(e) {
 			alert(JSON.stringify(e));	
@@ -87,7 +86,7 @@ function getMyAlbumList() {
 }
 
 //앨범 리스트 출력
-function myAlbumList(result) {
+function totalAlbumList(result) {
 	
 	var album_num;
 	var album_html;
@@ -247,7 +246,13 @@ $(result).each(function(i, album) {
 		<div class="card">
 			<a href="single.html">
 				<img class="card-img-top probootstrap-animate" 
-				src="./resources/aside_images/img_1.jpg" alt="Card image cap">
+				src="resources/aside_images/img_1.jpg" alt="Card image cap">
+			</a>
+		</div>
+		<div class="card">
+			<a href="single.html">
+				<img class="card-img-top probootstrap-animate" 
+				src="resources/image_mj/a1.jpg" alt="Card image cap">
 			</a>
 		</div>
 	</div>
