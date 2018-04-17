@@ -71,14 +71,23 @@ $(document).ready(function () {
 });
 
 function myAlbumList() {
-	var listsize = ${myAlbumListSize};
-	var myAlbumList = '<c:out value="${myAlbumList}" escapeXml="false"/>';
-	alert(myAlbumList);
-	/* for(var i=0; i<myAlbumList.length; i++){
-		alert(myAlbumList[i]);
-	} */
+	var pageAry = new Array();
+	var start_count = 0;
+	var end_count = 0;
+	var rotate_count_album = 0;
+	var rotate_count_page = 0;
 	
-
+	var listsize = ${myAlbumListSize};
+	
+	var arr_page = '${arr_page}';
+	
+	alert(arr_page.length);
+	
+	
+	
+	
+	
+	
 }
 </script>
 
