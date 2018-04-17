@@ -54,6 +54,7 @@ public class SearchController {
 			PageHtmlVO page=albumDAO.searchPage1(arrayalbum.get(i).getAlbum_num()); 
 			arraypicture.add(new Albumlist(arrayalbum.get(i) , (page == null ? "" : page.getPage_html())));
 		}			
+		
 		return arrayalbum;		
 	}
 	
@@ -69,14 +70,36 @@ public class SearchController {
 	}
 	
 	@RequestMapping(value = "/infomation", method = RequestMethod.GET)
-	public String home(Model model, HttpSession session) {
+	public String infomation() {
 		logger.info("infosData__jinsu");
-		SimpleDateFormat formatter = new SimpleDateFormat ( "yy-MM-dd", Locale.KOREA );
-		Date currentTime = new Date ( );
-		String dTime = formatter.format ( currentTime );
-		logger.info(dTime);
-		model.addAttribute("date",dTime );
 		return "infomation";
+	}
+	
+	@RequestMapping(value = "/searchHashTag", method = RequestMethod.GET)
+	public String searchHashTag(Model model, String hashTag) {
+		logger.info("searchHashTag__jinsu");
+		model.addAttribute("searchWord", hashTag);
+		//저장
+		hashTag = hashTag.substring(1, hashTag.length());
+		searchDAO.insertSearch(new Search(0 , hashTag , "0"));
+		
+		//검색어가 해쉬 태그 , 앨범 이름, 설명 , 앨범 만든 사람
+		ArrayList<AlbumWriteVO> arrayalbum = albumDAO.searchAlbum(hashTag);		
+		ArrayList<HashTag> arraytag = searchDAO.selectHashTag(hashTag);
+		for(int i = 0; i < arraytag.size();i++){
+			arrayalbum.add(albumDAO.searchAlbumNum(arraytag.get(i).getTag_albumnum()));
+		}
+		ArrayList<Albumlist> arraypicture = new ArrayList<Albumlist>();
+		for(int i = 0; i < arrayalbum.size();i++){
+			PageHtmlVO page=albumDAO.searchPage1(arrayalbum.get(i).getAlbum_num()); 
+			arraypicture.add(new Albumlist(arrayalbum.get(i) , (page == null ? "" : page.getPage_html())));
+		}
+		
+		logger.info(arrayalbum.toString());
+		
+		model.addAttribute("listalbum", arrayalbum.toString());		
+		
+		return "home";
 	}
 	
 	protected class Albumlist{

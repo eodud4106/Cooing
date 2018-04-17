@@ -66,9 +66,6 @@ function initialize(){
 			},
 			error:function(e){alert(JSON.stringify(e));}		
 		});
-		
-		
-		
 	});
 }
 </script>

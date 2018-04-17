@@ -33,18 +33,49 @@ function byteCheck(chaval){
 }
 
 function hashtagCheck(){
-	var strhashtag = $('#hashtagtx').val();
+	/* var strhashtag = $('#hashtagtx').val();
 	var strhashtaglist = $('#hashtagvw').html();  
 	
-	  var tags = [];
-	  strhashtag = strhashtag.replace(/#[^#\s,;]+/gm, function(tag) {
-	    if(byteCheck(tag) <= 60)
-		  	tags.push(tag);
-	    else
-	    	alert('너무 길게 입력하신 단어는 출력되지 않습니다.');
-	  });
-	  $('#hashtagvw').html(tags.join(','));	
-	  $('#hashtag').val($('#hashtagvw').html());
+	var splitedArray = strhashtag.split(' '); 
+	var filter = /#[^#\s,;]+/gm;
+	var linkedContent = '';
+	for(var word in splitedArray)
+	{
+	  word = splitedArray[word];
+	   if(word.match(filter)) // # 문자를 찾는다.
+	   {
+		   word = '<a href="./">' + word + '</a>'; 
+	   }
+	   linkedContent += word+' ';
+	}
+	$('#hashtagvw').html(linkedContent); */
+	
+	var strhashtag = $('#album_contents').val();
+	
+	var splitedArray = strhashtag.split(' '); 
+	var filter = /#[^#\s,;]+/gm;
+	var linkedContent = '';
+	for(var word in splitedArray)
+	{
+	  word = splitedArray[word];
+	   if(word.match(filter) && word.charAt(0) == '#') // # 문자를 찾는다.
+	   {
+		   var hashword = word.substring(1,word.length);
+		   word = '<a href="../searchHashTag?hashTag='+ hashword+'">' + word + '</a>'; 
+	   }
+	   linkedContent += word+' ';
+	}
+	$('#hashtagvw').html(linkedContent);
+	 
+	/* var tags = [];
+	strhashtag = strhashtag.replace(/#[^#\s,;]+/gm, function(tag) {
+	if(byteCheck(tag) <= 60)
+		tags.push(tag);
+	else
+	  	alert('너무 길게 입력하신 단어는 출력되지 않습니다.');
+	});
+	$('#hashtagvw').html(tags.join(','));	
+	$('#hashtag').val($('#hashtagvw').html()); */
 }
 
 function formCheck() {
@@ -92,12 +123,13 @@ function formCheck() {
 		    <option value="20" selected="selected">기타</option>
 		</select>
 		<br>
-		<input type="text" id="hashtagtx" placeholder="해쉬태그"><input type="button" id="hashtagbt" value="추가">
+		<!-- <input type="text" id="hashtagtx" placeholder="해쉬태그"><input type="button" id="hashtagbt" value="추가">--> 
 		<div id="hashtagvw"></div>
+		<input type="button" id="hashtagbt" value="추가">
 		<br><br>
 		<input type="hidden" name="album_party" value="1">
 		<input type="hidden" name="album_version" value="1">
-		<input type="hidden" id="hashtag" name="hashtag">
+		<!-- <input type="hidden" id="hashtag" name="hashtag"> -->
 		<input type="submit" onsubmit="formCheck()">
 	</div>
 </form>
