@@ -977,8 +977,7 @@ turnMethods = {
 
       var page, prop,
         data = this.data(),
-        pageWidth = (data.display=='double') ? width/2 : width;
-
+        pageWidth = (data.display=='double') ? width/2 : width;       
       this.css({width: width, height: height});
 
       if (data.pageObjs[0])

@@ -8,13 +8,29 @@
 <title>AlbumEdit</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width = 1050, user-scalable = no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+<link rel="stylesheet" href="../resources/aside_css/bootstrap.min.css">
+<link rel="stylesheet" href="../resources/aside_css/open-iconic-bootstrap.min.css">
+
+<link rel="stylesheet" href="../resources/aside_css/owl.carousel.min.css">
+<link rel="stylesheet" href="../resources/aside_css/owl.theme.default.min.css">
+
+<link rel="stylesheet" href="../resources/aside_css/icomoon.css">
+<link rel="stylesheet" href="../resources/aside_css/animate.css">
+<link rel="stylesheet" href="../resources/aside_css/style.css">
 <script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="../resources/album_page_js/extras/modernizr.2.5.3.min.js"></script>
-<script type="text/javascript" src="../resources/album_page_js/basic.js"></script>
+<script type="text/javascript" src="../resources/album_page_js/basic.js"></script>		
 
-<link rel="stylesheet" href="../resources/css/jquery-ui.min.css">		
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" ></script>
+
+<script src="../resources/album_drag_and_drop_js/jquery-ui.js"></script>
+
+<link rel="stylesheet" href="../resources/skin_radio/green.css">		
+<script src="../resources/skin_radio/icheck.js"></script>
+
+<link rel="stylesheet" href="../resources/album_drag_and_drop_js/jquery-ui.css">		
 <link rel="stylesheet" href="../resources/album_css/album_edit_basic.css">
 <link rel="stylesheet" href="../resources/album_css/album_edit_drag_and_drop.css">
 
@@ -26,12 +42,12 @@ function pageChange(page){
 	if(page){
 		$('#flipbook').turn('disable', false);
 		$('#flipbook').turn('previous');
-		$('#flipbook').turn('disable', true);
+		/* $('#flipbook').turn('disable', true); */
 		
 	}else{
 		$('#flipbook').turn('disable', false);
 		$('#flipbook').turn('next');
-		$('#flipbook').turn('disable', true);		
+		/* $('#flipbook').turn('disable', true); */		
 	}
 }
 
@@ -80,7 +96,7 @@ function pagePlus(){
 			}
 		});
 	}
-	$('#flipbook').turn('disable', true);
+	/* $('#flipbook').turn('disable', true); */
 }
 
 function fileSave(formdata, file, pagenum, last){
@@ -138,7 +154,7 @@ function pageSave(strhtml , nowpage , check){
 					pagePlus();
 					$('#flipbook').turn('disable', false);
 					$('#flipbook').turn('next');
-					$('#flipbook').turn('disable', true);
+					/* $('#flipbook').turn('disable', true); */
 				}
 			}
 			else{
@@ -274,8 +290,8 @@ function readURL(input) {
 
 //앨범 배경 커스텀마이징
 function bgchange(num) {
-		
-	switch(num) {
+	
+		switch(num) {
 		case 0:
 			$('.pages').css("background-image","url(..//resources//image_mj//season.jpg)"); break;
 		case 1:
@@ -283,16 +299,91 @@ function bgchange(num) {
 		case 2:
 			$('.pages').css("background-image","url(..//resources//image_mj//vintage.jpg)"); break;
 		default:
-	}
+
+		
+	
+	
+	} 
+		
+	
 }
+
+//라디오버튼
+$(document).ready(function(){
+		
+  $('input').iCheck({
+    radioClass: 'iradio_square-green',
+   // increaseArea: '20%' // optional
+   
+   
+  });
+  
+//value값
+	
+});
+
+function checkRadioButton(objName)
+{
+	var radioObj = document.all(objName);
+	var isChecked;
+	if(radioObj.length == null)
+	{ // 라디오버튼이 같은 name 으로 하나밖에 없다면
+	isChecked = radioObj.checked;
+	}
+	else
+	{ // 라디오 버튼이 같은 name 으로 여러개 있다면
+		for(i=0; i<radioObj.length; i++)
+		{
+			if(radioObj[i].checked)
+			{
+				isChecked = true;
+				break;
+			}
+		}
+	}
+
+	if(isChecked)
+	alert('체크된거있음');
+	else
+	alert('체크된거없음');
+	
+
+	//value값
+ 	 for(i=0; i<radioObj.length; i++)
+	{
+		 if(radioObj[i].value)
+		{
+			 if(value = 1)
+		    	{
+					$('.pages').css("background-image","url(..//resources//image_mj//season.jpg)"); 
+					alert(radioObj[i].value);break;	 
+				}			
+			 if(value = 2)
+		    	{
+					$('.pages').css("background-color","pink"); alert(radioObj[i].value);break;	 
+				}
+			 if(value = 3)
+	    	{
+				$('.pages').css("background-image","url(..//resources//image_mj//vintage.jpg)"); alert(radioObj[i].value);break;	 
+			}
+		
+			
+		} 
+		
+	
+	
+	} 
+}
+
+
 </script>
 
 </head>
 <body>
 
-<div id="friend_container"></div>
+<!-- <div id="friend_container"></div>
    
-<!--   앨범제목, 앨범내용, 태그, 댓글, 좋아요, 채팅 -->
+  앨범제목, 앨범내용, 태그, 댓글, 좋아요, 채팅
 <div id="sidebar">	
 	<div>	 
        	<form id ="" method="post" action="">
@@ -324,7 +415,7 @@ function bgchange(num) {
 	
 </div>
 
-<!-- 배경변경버튼 -->
+배경변경버튼
 <button onclick = "bgchange(0)">SAKURA</button>
 <button onclick = "bgchange(1)">PINK</button>
 <button onclick = "bgchange(2)">VINTAGAE</button> 
@@ -339,7 +430,137 @@ function bgchange(num) {
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
+
+ <aside class="probootstrap-aside js-probootstrap-aside">
+      <a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none"><span class="oi oi-arrow-left"></span> Close</a>
+      <div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
+        
+        <a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
+        <p class="mb-0">친구목록출력, 채팅기능 <a href="https://uicookies.com/" target="_blank">uiCookies</a></p>
+      </div>
+      <div class="probootstrap-overflow">
+        <nav class="probootstrap-nav">
+          <input type ="text" placeholder = "친구검색"  name="" value = "" class ="search">
+			<button class = "bt">s</button>
+        </nav>
+        
+        <p></p>			
+				<p>친구1</p>
+				<p>친구2</p>
+				<p>친구3</p>
+				<p>친구4</p>
+		
+				<p>그룹1</p>
+				<p>그룹2</p>						 		
+    	
+        <footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft">
+         
+          <p>&copy; 2018 <a href="https://uicookies.com/" target="_blank">COOING</a>. <br> All Rights Reserved.</p>
+        </footer>
+      </div>
+    </aside>
+
+<main role="main" class="probootstrap-main2 js-probootstrap-main">
+      <div class="probootstrap-bar">
+      
+        <a href="#" class="probootstrap-toggle js-probootstrap-toggle"><span class="oi oi-menu"></span></a>
+        <div class="probootstrap-main-site-logo"><a href="index.html">COOING</a></div>
+        
+      </div>
+      
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+       
+          <div class="col-xl-8 col-lg-12">
+            <div id="text_add" style= "z-index:99; float:left; width: 5%;"><i class="fas fa-align-justify"></i></div>
+      		<div id="picture_add" style="z-index:99; float:left; width: 5%;"><i class="far fa-image"></i></div>
+      		<div id="video_add" style="z-index:99; float:left; width: 5%;"><i class="fas fa-video"></i></div>
+      		<!-- 배경변경버튼 -->
+      		<form name = "form">
+      		<input type="radio" name="iCheck"  value ="1" onclick = "bgchange(0)">Sakura 
+      		<input type="radio" name="iCheck"  value ="2" onclick = "bgchange(1)">Pink     		
+			<input type="radio" name="iCheck"  value ="3" checked onclick = "bgchange(2)">Vintage
+			<input type=button value="라디오버튼 체크여부확인" onClick="checkRadioButton('iCheck')"> 
+			</form>
+<!-- 	<button onclick = "bgchange(0)">SAKURA</button>
+	<button onclick = "bgchange(1)">PINK</button>
+	<button onclick = "bgchange(2)">VINTAGAE</button>  -->
+          
+           <!--  <p class="mb-5"><img src="images/img_bg_2.jpg" alt="Free Bootstrap 4 Template by uicookies.com" class="img-fluid"></p>
+ -->
+            	 <div class="row">
+            	 
+            		 <div class="col-xl-8 col-lg-12 mx-auto">
+            		 
+              
+         <!--    <div id="edit_bar" style="z-index:100; width: 50%;"> -->
+	<!-- <div id="picture_add" style="background-image: url(../resources/image_mj/photo.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div>
+	<div id="text_add" style="background-image: url(../resources/image_mj/text.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div>
+	<div id="video_add" style="background-image: url(../resources/image_mj/Video-5-icon.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div> -->
+
+	  
+
+             
+            	  </div>
+             </div> 
+            
+          </div>
+          <div class="flipbook" id="flipbook">
+				<div class="page1" id="page1">
+				 	 <input type="file" name="img1" accept="image/*" id="img1"> 
+				 </div>
+			</div> 
+        </div>
+        <!-- END row -->
+
+      <!--   <section class="probootstrap-section"> -->
+          <div class="container-fluid">
+            <div class="row mb-5 justify-content-center">
+              <div class="col-md-8">
+                <div class="row">
+                  <div class="col-md-8 mx-auto">
+              <!--   <div class="flipbook" id="flipbook">
+				<div class="page1" id="page1">
+				 	 <input type="file" name="img1" accept="image/*" id="img1"> 
+				 </div>
+			</div> -->
+			 <div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="+" id="page_plus" name=""></div>
+
+<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="저장" onClick="fileSubmit();"></div>
+<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="전장" onClick="pageChange(true);"></div>
+<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="뒷장" onClick="pageChange(false);"></div>
+
+
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+        
+           <!--  <div class="row mb-5">
+              <div class="col-md-12">
+               <div class="owl-carousel probootstrap-owl">
+                </div> 
+                 
+           
+                 
+                </div>
+              </div> -->
+            </div>
+            
+
+            
+          </div>
+       <!--  </section> -->
+        <!-- END section -->
+
+      </div>
+
+     
+
+    </main>
+
 
 <!-- 메인표지업로드 -->
 <script type="text/javascript">
@@ -397,7 +618,15 @@ yepnope({
 	complete: loadApp
 });
 
-</script>           
+</script>   
+
+
+    <script src="../resources/aside_js/popper.min.js"></script>
+    <script src="../resources/aside_js/owl.carousel.min.js"></script>
+    <script src="../resources/aside_js/jquery.waypoints.min.js"></script>
+    <script src="../resources/aside_js/imagesloaded.pkgd.min.js"></script>
+
+    <script src="../resources/aside_js/main.js"></script>        
 
 </body>
 </html>  
