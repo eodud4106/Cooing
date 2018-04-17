@@ -7,7 +7,6 @@
 <head>
 <title>AlbumEdit</title>
 <meta charset="utf-8" />
-<meta name="viewport" content="width = 1050, user-scalable = no" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <link rel="stylesheet" href="../resources/aside_css/bootstrap.min.css">
@@ -41,9 +40,72 @@
 <link rel="stylesheet" href="../resources/album_css/album_edit_drag_and_drop.css">
 
 <script>
+
+	// 전역 변수
 	var count = 0;
 
-	// 페이지 넘김 효과 관련
+
+	// 페이지 로딩 후 초기화
+	$(document).ready(function() {
+
+		// 첫페이지 droppable 설정
+		$('#page1').droppable({
+
+			// drop 이벤트
+			drop : function(event, ui) {
+
+				// drop한 페이지의 정보 추출
+				var pageid = $(this).attr('id');
+				var pagenum = pageid.substring(4, pageid.length);
+				var number = $('#flipbook').turn('page');
+				
+				console.log('number ->' + number);
+
+				if ($('#flipbook').turn('page') > 1 && $('#flipbook').turn('page') % 2 == 1) {
+					number--;
+				}
+				
+				if (pagenum == number || pagenum == (parseInt(number) + 1)) {
+					var div_holder = document
+							.createElement('div');
+					count++;
+					var html = '<a class="close_border"></a><label for="cross' + count + '">'
+							+ '<input type="file" id="cross'
+							+ count
+							+ '"class="cross'
+							+ pagenum
+							+ '"name="cross'
+							+ count
+							+ '"onchange="readURL(this)"></label>';
+
+					$(div_holder)
+						.addClass('holder')
+						.html(html)
+						.attr(
+								'id',
+								'holder'
+										+ count);
+					$(div_holder).css('position', 'absolute');
+					$(div_holder).draggable({
+						containment : 'parent',
+						scroll : false
+					}).resizable();
+
+					$(this).append(div_holder);
+
+					$('.close_border').click(function() {
+						$(this).parent().remove();
+					});
+				}
+			}
+		});
+	});
+
+	/**
+	 *	페이지 넘김 애니메이션
+	 *	@param -true: 이전 장으로 이동 / -false: 다음 장으로 이동
+	 *	@returns void
+	 **/
 	function pageChange(page) {
 		if (page) {
 			$('#flipbook').turn('disable', false);
@@ -57,6 +119,10 @@
 		}
 	}
 
+	/**
+	 *	페이지 더하기
+	 *	@returns void
+	 **/
 	function pagePlus() {
 		for (var i = 0; i < 2; i++) {
 
@@ -69,7 +135,6 @@
 					$('#flipbook').turn('pages'));
 
 			$('#page' + $('#flipbook').turn('pages')).droppable({
-				accept : "#picture_add",
 				drop : function(event, ui) {
 					var pageid = $(this).attr('id');
 					var pagenum = pageid.substring(4, pageid.length);
@@ -114,6 +179,11 @@
 		}
 	}
 
+	/**
+	 *	이미지 저장
+	 *	@param (fomadata, file, 페이지번호, last)
+	 *	@returns void
+	 **/
 	function fileSave(formdata, file, pagenum, last) {
 		$.ajax({
 			url : 'albumImageSave',
@@ -123,8 +193,9 @@
 			data : formdata,
 			dataType : 'text',
 			success : function(a) {
+
+				// fail이 아닐 경우 -> 이미지 저장됨
 				if (a != 'fail') {
-					alert(a);
 	
 					var div_holder = document.createElement('div');
 					$(div_holder).addClass('holder').attr('id', $(file).parent().parent().attr('id'));
@@ -185,6 +256,11 @@
 		});
 	}
 
+	/**
+	 * 페이지 번호를 받아 그 페이지의 html을 비우고 페이지를 증가시킴
+	 * @param 페이지 번호
+	 * @returns void
+	 */
 	function pageallEmpty(pageNum) {
 		if (pageNum != 1)
 			$('#page' + (parseInt(pageNum) - 1)).html('');
@@ -193,27 +269,46 @@
 		$('#flipbook').turn('next');
 	}
 
+	/**
+	 * 앨범 하단 '저장' 버튼 누를 때 호출
+	 * @returns void
+	 */
 	function fileSubmit() {
+
+		// $('#flipbook').turn('page') -> 보여주는 페이지 2쪽 중 작은 페이지의 숫자를 반환?
 		var number = $('#flipbook').turn('page');
+
+		// 1페이지 이상일 경우 왼쪽(짝수) 페이지 번호로 number를 바꿈
 		if ($('#flipbook').turn('page') > 1
 				&& $('#flipbook').turn('page') % 2 == 1) {
 			number -= 1;
 		}
-		var num = 0;
-		var last = $('input[class="cross' + number + '"]').length;
-		var check = true;
-		$('input[class="cross' + number + '"]').each(
-			function(index, item) {
-				if ($('input[class="cross' + number + '"]')[index].files[0]) {
-					check = false;
-					var formData = new FormData();
-					formData.append('file' + num, $('input[class="cross' + number + '"]')[index].files[0]);
-					fileSave(formData, item, number, (index == last - 1 ? true : false));
-				}
-			});
 
-		if (check && number == 1)
+		// ?
+		var num = 0;
+
+		// 사진 입력창의 개수
+		var last = $('input[class="cross' + number + '"]').length;
+
+		// ?
+		var check = true;
+
+		//	
+		$('input[class="cross' + number + '"]').each(function(index, item) {
+			if ($('input[class="cross' + number + '"]')[index].files[0]) {
+				check = false;
+				var formData = new FormData();
+				formData.append('file' + num, $('input[class="cross' + number + '"]')[index].files[0]);
+
+				console.log(formData);
+
+				fileSave(formData, item, number, (index == last - 1 ? true : false));
+			}
+		});
+
+		if (check && number == 1) {
 			pageallEmpty(number);
+		}
 
 		if (number != 1) {
 			number = (parseInt(number) + 1);
@@ -230,63 +325,13 @@
 							(index == last - 1 ? true : false));
 				}
 			});
-			if (check)
+			if (check) {
 				pageallEmpty(number);
+			}
 		}
 	}
 
-	// 페이지 로딩 후 초기화
-	$(document).ready(function() {
-		$('#picture_add').draggable({
-			revert : 'valid'
-		});
-
-		$('#page1').droppable({
-			accept : '#picture_add',
-			drop : function(event, ui) {
-				var pageid = $(this).attr('id');
-				var pagenum = pageid.substring(4, pageid.length);
-				var number = $('#flipbook').turn('page');
-				
-				if ($('#flipbook').turn('page') > 1 && $('#flipbook').turn('page') % 2 == 1) {
-					number -= 1;
-				}
-				
-				if (pagenum == number || pagenum == (parseInt(number) + 1)) {
-					var div_holder = document
-							.createElement('div');
-					count++;
-					var html = '<a class="close_border"></a><label for="cross' + count + '">'
-							+ '<input type="file" id="cross'
-							+ count
-							+ '"class="cross'
-							+ pagenum
-							+ '"name="cross'
-							+ count
-							+ '"onchange="readURL(this)"></label>';
-
-					$(div_holder)
-						.addClass('holder')
-						.html(html)
-						.attr(
-								'id',
-								'holder'
-										+ count);
-					$(div_holder).css('position', 'absolute');
-					$(div_holder).draggable({
-						containment : 'parent',
-						scroll : false
-					}).resizable();
-
-					$(this).append(div_holder);
-
-					$('.close_border').click(function() {
-						$(this).parent().remove();
-					});
-				}
-			}
-		});
-	});
+	
 
 	function readURL(input) {
 
@@ -321,6 +366,10 @@
 		}
 	}
 
+	/*
+		[start] 앨범 배경 꾸미기
+	*/
+
 	//앨범 배경 커스텀마이징
 	function bgchange(num) {
 
@@ -341,7 +390,6 @@
 		}
 
 	}
-
 	//라디오버튼
 	$(document).ready(function() {
 
@@ -410,6 +458,10 @@
 
 	 
 	}
+	/*
+		[end] 앨범 배경 꾸미기
+	*/
+
 </script>
 
 </head>
@@ -468,8 +520,8 @@
 			<div class="row justify-content-center">
 	
 				<div class="col-xl-8 col-lg-12">
-					<!-- 개채 삽입 버튼 -->
-					<!-- <div class="tool text"><i class="fas fa-align-justify"></i></div>
+					<!-- 텍스트, 이미지, 비디오 삽입 버튼 -->
+					<div class="tool text"><i class="fas fa-align-justify"></i></div>
                 	<div class="tool image"><i class="far fa-image"></i></div>
                 	<div class="tool video"><i class="fas fa-video"></i></div> -->
                 	<!-- 고침 -->
@@ -585,7 +637,7 @@
 
 			// Create the flipbook
 			$('.flipbook').turn({
-				width : 1200,
+				width : 1000,
 				height : 600,
 				elevation : 50,
 				gradients : true,
