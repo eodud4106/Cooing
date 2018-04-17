@@ -38,6 +38,17 @@
 	    order by
 	    	L.Album_num desc
 	</select>
+	
+	<select id="MyAlbumRead" parameterType="int" resultType="String">
+		select 
+			page_html 
+		from
+			Page 
+		where 
+			ALBUM_NUM = #{ALBUM_NUM}
+		order by
+	    	Album_num desc
+	</select>
 
 	
 </mapper>

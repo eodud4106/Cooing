@@ -61,7 +61,7 @@ public class HomeController {
 		String album_writer = null;
 		album_writer = ((Member) session.getAttribute("Member")).getMember_id();
 		albumList = albumListAndReadDAO.TotalAlbumList(album_writer);
-		System.out.println(albumList.toString());
+
 		for (AlbumListVO albumListVO : albumList) {
 			albumListVO.setPage_html(albumListVO.getPage_html().replaceAll("\\n", ""));
 		}

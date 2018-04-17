@@ -10,6 +10,10 @@ public interface AlbumListAndReadMapper {
 	
 	public ArrayList<AlbumListVO> TotalAlbumList(String album_writer);
 	
+	public ArrayList<AlbumListVO> MyAlbumList(String album_writer);
+	
+	public ArrayList<String> MyAlbumRead(int album_num);
+	
 	
 	
 	

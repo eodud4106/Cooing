@@ -23,4 +23,26 @@ public class AlbumListAndReadDAO {
 			
 	}
 	
+	public ArrayList<AlbumListVO> MyAlbumList(String album_writer){
+		
+		AlbumListAndReadMapper mapper = sqlSession.getMapper(AlbumListAndReadMapper.class);
+		ArrayList<AlbumListVO> myalbumlist = null;
+		myalbumlist = mapper.MyAlbumList(album_writer);
+		
+		return myalbumlist;
+			
+	}
+	
+	public ArrayList<String> MyAlbumRead(int album_num){
+		
+		AlbumListAndReadMapper mapper = sqlSession.getMapper(AlbumListAndReadMapper.class);
+		ArrayList<String> myAlbumReadList = null;
+		myAlbumReadList = mapper.MyAlbumRead(album_num);
+		
+		return myAlbumReadList;
+			
+	}
+	
+	
+	
 }

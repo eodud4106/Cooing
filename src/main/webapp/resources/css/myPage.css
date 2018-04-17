@@ -1,0 +1,106 @@
+body {
+width:900px;
+margin:0 auto;
+}
+div {
+padding:20px;
+border:1px solid #ccc;
+}
+/* header */
+#header {
+margin:0 0 10px 0;
+padding:10px;
+width:900px;
+position: fixed;
+background-color:#FFB2F5;
+color: #F6F6F6;
+text-align: center;
+}
+
+/* Content */
+#container {
+width:900px;
+}
+#content {
+float:left;
+padding:10px;
+width:520px;
+margin-left: 200px;
+margin-top:110px;	
+}
+/* Sidebar A */
+#sidebar_a {
+width: 150px;
+float: left;
+position: fixed; 				
+height: 100%; 
+margin-top:110px;		
+}
+/* Sidebar B */
+#sidebar_b {
+float:right;
+height : 100%;
+position: fixed; 	
+padding:10px;
+width:150px;
+margin-left: 750px;
+position: fixed;
+margin-top:110px;    			
+}
+
+/* Footer */
+#footer {
+clear:both;
+padding:10px;
+background-color:#CCC;
+width:778px;
+}
+
+img{
+	width : 50px;
+	height: 50px;
+}
+.img_1{
+	width : 150px;
+	height: 150px;
+}
+.img_2{
+	width : 30px;
+	height: 30px;
+}
+.search{
+	margin: auto;	
+}
+#albumList{
+	margin-top: 20px;
+}
+.search1 {
+	width: 110px;
+}
+.modal {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: none;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+.close {
+    color: #aaa;
+    float: left;
+    font-size: 30px;
+    font-weight: bold;
+	position: fixed;
+	right: 16;
+	top: 0;
+	background-color: #f0f0f0;
+ }
+.close:hover,
+.close:focus {
+   color: black;
+   text-decoration: none;
+   cursor: pointer;
+}

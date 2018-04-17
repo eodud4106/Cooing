@@ -197,7 +197,7 @@ $(result).each(function(i, album) {
 					<li class="category" data="0">여행</li>
 					<li class="category" data="1">음식</li>
 					<li><a href="<c:url value ="/"/>">MainPage</a></li>
-					<li><a href="<c:url value ="/albumView"/>">albumView</a></li>
+					<li><a href="<c:url value ="/albumTestView"/>">albumView</a></li>
 					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
 					<li><a href="<c:url value ="/friendPage"/>">friendPage</a></li>
 					<li><a href="<c:url value ="/albumEdit/edit"/>">albumEdit</a></li>
