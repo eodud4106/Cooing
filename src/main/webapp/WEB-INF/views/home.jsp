@@ -29,7 +29,7 @@
 <script>
 $(document).ready(function () {
 	
-	myAlbumList()
+	myAlbumList() //앨범리스트 출력
 	initialize();
 	
 	
@@ -71,6 +71,7 @@ $(document).ready(function () {
 	
 });
 
+//앨범 리스트 Ajax로 받는 코드
 function getMyAlbumList() {
 	$.ajax({
 		url: 'getMyAlbumList',
@@ -85,6 +86,7 @@ function getMyAlbumList() {
 	});
 }
 
+//앨범 리스트 출력
 function myAlbumList(result) {
 	
 	var album_num;
@@ -107,7 +109,7 @@ $(result).each(function(i, album) {
 				
 				$(div_page).addClass('page1').html(album_html);
 				a_read_album.append(div_page);
-				$(div_card).addClass('card').append(a_read_album);
+				$(div_card).addClass('card img-loaded').append(a_read_album);
 				
 				//a태그 링크 걸어주기
 				$('.card-columns').append(div_card);
@@ -157,6 +159,8 @@ $(result).each(function(i, album) {
 	text-decoration: none;
 	cursor: pointer;
 }
+
+
 </style>
 </head>
 <body>
@@ -238,6 +242,8 @@ $(result).each(function(i, album) {
 	
 	<!-- 앨범 리스트 -->
 	<div class="card-columns" id="card-columns">
+	
+		<!--  -->
 		<div class="card">
 			<a href="single.html">
 				<img class="card-img-top probootstrap-animate" 
