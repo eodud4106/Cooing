@@ -241,14 +241,6 @@
 			revert : 'valid'
 		});
 
-		//다른 쪽 드롭되도 돌아 올 수 있게 하는 코드
-		$('*').droppable({
-			accept : '#picture_add',
-			drop : function(event, ui) {
-				//TODO
-			}
-		});
-
 		$('#page1').droppable({
 			accept : '#picture_add',
 			drop : function(event, ui) {
@@ -363,49 +355,60 @@
 
 	});
 
-	function checkRadioButton(objName) {
-		var radioObj = document.all(objName);
-		var isChecked;
-		if (radioObj.length == null) { // 라디오버튼이 같은 name 으로 하나밖에 없다면
-			isChecked = radioObj.checked;
-		} else { // 라디오 버튼이 같은 name 으로 여러개 있다면
-			for (i = 0; i < radioObj.length; i++) {
-				if (radioObj[i].checked) {
-					isChecked = true;
-					break;
-				}
-			}
-		}
+	function checkRadioButton(iCheck){   
+	   
+	   var temp;
+	   
+	   var radioObj = document.all(iCheck);
+	   
+	   
+	   var isChecked;
+	   if(radioObj.length == null)
+	   { // 라디오버튼이 같은 name 으로 하나밖에 없다면
+	   isChecked = radioObj.checked;
+	   }
+	   else
+	   { // 라디오 버튼이 같은 name 으로 여러개 있다면
+	      for(var i=0; i<radioObj.length; i++)
+	      {
+	         if(radioObj[i].checked)
+	         {
+	            isChecked = true;
+	            break;
+	         }
+	      }
+	   }
 
-		if (isChecked)
-			alert('체크된거있음');
-		else
+	   if(isChecked){
+		   alert('체크된거있음' + radioObj[i].value);
+		   temp = radioObj[i].value; 
+		   alert('템프 값 : ' + temp);
+		   
+		   //value값
+		   switch (temp) {
+		      case '1':
+		         alert(temp);
+		         $('.pages').css("background-image","url(..//resources//image_mj//season.jpg)"); 
+		         break;
+		         
+		      case '2':
+		         alert(temp);
+		         $('.pages').css("background-color","pink");
+		         break;
+	
+		      default:
+		         alert(temp);
+		         $('.pages').css("background-image","url(..//resources//image_mj//vintage.jpg)");
+		         break;    
+		   }
+	   
+	   }else{
 			alert('체크된거없음');
+	   }
 
-		//value값
-		for (i = 0; i < radioObj.length; i++) {
-			if (radioObj[i].value) {
-				if (value = 1) {
-					$('.pages').css("background-image",
-							"url(..//resources//image_mj//season.jpg)");
-					alert(radioObj[i].value);
-					break;
-				}
-				if (value = 2) {
-					$('.pages').css("background-color", "pink");
-					alert(radioObj[i].value);
-					break;
-				}
-				if (value = 3) {
-					$('.pages').css("background-image",
-							"url(..//resources//image_mj//vintage.jpg)");
-					alert(radioObj[i].value);
-					break;
-				}
+	       
 
-			}
-
-		}
+	 
 	}
 </script>
 
@@ -465,16 +468,7 @@
 			<div class="row justify-content-center">
 	
 				<div class="col-xl-8 col-lg-12">
-					<!-- <div id="text_add" style="z-index: 99; float: left; width: 5%;">
-						<i class="fas fa-align-justify"></i>
-					</div>
-					<div id="picture_add" style="z-index: 99; float: left; width: 5%;">
-						<i class="far fa-image"></i>
-					</div>
-					<div id="video_add" style="z-index: 99; float: left; width: 5%;">
-						<i class="fas fa-video"></i>
-					</div> -->
-					<!-- 텍스트, 이미지, 비디오 삽입 버튼 -->
+					<!-- 개채 삽입 버튼 -->
 					<div class="tool text"><i class="fas fa-align-justify"></i></div>
                 	<div class="tool image"><i class="far fa-image"></i></div>
                 	<div class="tool video"><i class="fas fa-video"></i></div>

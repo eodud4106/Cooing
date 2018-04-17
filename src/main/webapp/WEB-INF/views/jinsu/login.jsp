@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="../resources/assets/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="../resources/assets/css/font-awesome.min.css">
-<link rel="stylesheet" href="../resources/style.css">
+<link rel="stylesheet" href="../resources/css/login.css">
 <link rel="stylesheet" href="../resources/assets/css/responsive.css">
 
 <!-- HTML5 shim and Respond.js IE9 support of HTML5 elements and media queries -->
