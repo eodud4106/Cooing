@@ -73,7 +73,8 @@ var PAGE_HEIGHT = 600;      // 페이지 당 높이
 // [start] 페이지 로딩 후 처리
 $(document).ready(function(){
 
-    //TODO 앨범 로딩...
+    //캔버스 변수 선언, 엘리멘트 연결
+    var page = $(".pages");
 
 
     //로딩된 결과가 없는 경우 -> 앨범을 새로 만드는 경우
@@ -87,7 +88,8 @@ $(document).ready(function(){
     }
 
     // 캔버스에 아이템 드랍 시 이벤트 처리
-    apply_page_droppable($('.page'));
+   page.droppable({
+        drop: function(event, ui) {
 
     // 앨범 flip 효과 적용
 	$('#album').turn({
@@ -105,10 +107,8 @@ $(document).ready(function(){
             },
             turned: function(event, page, view) {
 
-                console.log('현재 페이지 -> ' + $('#album').turn('page'));
-                // 1페이지와 마지막 페이지를 
-                var curr_page = $('#album').turn('page');
-                var total_page = $('#album').turn('pages');
+            // node의 최초 위치 조정..?
+            node.position.left -=page.position().left;
 
                 var arr_single_page = [1];
                 
@@ -133,10 +133,12 @@ $(document).ready(function(){
     album_top = $('#album').position().top + Number($('#album').css('margin-top').replace('px',''));
     album_left = $('#album').position().left + Number($('#album').css('margin-left').replace('px',''));
 
-    // .tool을 드래그할 경우 드래그한 element를 복제한 helper 생성
-    // (캔버스 위에 생성되는 textbox는 helper 속성을 물려받는다.)
-    $(".tool").draggable({
-        helper: "clone"
+            // 드랍으로 만든 node를page 위에 그림
+            renderbox(node);
+
+            // node의 아이디를 구별하기 위해 1 증가
+            count++;
+        }
     });
   
 
@@ -189,33 +191,9 @@ $(document).ready(function(){
 });
 // [end] 페이지 로딩 후 처리
 
-
-/**
- *  새 앨범 생성
- **/
-function createNewAlbum() {
-
-    // 최초 페이지 수
-    var init_page = 6;
-
-    // 표지로 사용될 페이지
-    var arr_hard = [1, 2, init_page - 1, init_page];
-
-    // 페이지 생성 후 album div에 부착
-    for(var i = 1; i <= init_page; i++) {
-        $page = $('<div />', {
-            'id': 'page' + i,
-            'class': 'page'
-        });
-
-        // 표지로 사용될 페이지는 hard 클래스 추가
-        if(arr_hard.indexOf(i) > -1) {
-            $page.addClass('hard');
-        }
-
-        $page.appendTo($('#album'));
-    }
-    
+//TODOpage 초기화
+function initpage(diagram) {
+   page.empty();
 }
 
 
@@ -377,25 +355,29 @@ function renderbox(event, ui, page) {
         drag: function(event, ui) {
 
             $('.div_whole_editor').css({
-                "top": $('.onSelect').position().top + curr_page_top - 40,
-                "left": $('.onSelect').position().left + curr_page_left
+                "top": ui.position.top + $('.pages').position().top + 40,
+                "left": ui.position.left + $('.pages').position().left
             });
             
         },
-        containment: $('#page' + page + '')  // 캔버스 영역 밖으로 나가지 못하게 제한
-
+        containment: $('.pages')  // 캔버스 영역 밖으로 나가지 못하게 제한
     }).resizable({
-
-        containment: $('#page' + page + ''), // 캔버스 영역을 넘지 못하도록 제한
+        // textbox 크기 조절 처리
+        stop: function(event, ui) {
+            var id = ui.helper.attr("id");
+            var box = map_box.get(id);
+            box.width = $(this).width();
+            box.height = $(this).height();
+        },
+        containment: $('.pages'), // 캔버스 영역을 넘지 못하도록 제한
         disabled: true          // 리사이즈는 onSelect 상태인 박스만 가능하므로.. 초기 설정에는 disable
 
     });
 
     //page에 box 출력
     $div_box.find(".ui-resizable-handle").hide();
-    
-    // z-index 관리용 코드
-    arr_box_id.push($div_box.attr('id'));
+    $('.pages').append($div_box);
+    arr_id_of_div_box.push($div_box.attr('id'));
     $div_box.css({
         "z-index": 2 + arr_box_id.indexOf($div_box.attr('id'))
     })
@@ -598,8 +580,8 @@ function createWholeEditor($elem) {
     var $div_whole_editor = $('<div />');
     $div_whole_editor.addClass('edit').addClass('div_whole_editor').css({
         "position": "absolute",
-        "top": $('.onSelect').position().top + curr_page_top - 40,
-        "left": $('.onSelect').position().left + curr_page_left
+        "top": $('.onSelect').position().top + $('.pages').position().top + scrollTop + 40,
+        "left": $('.onSelect').position().left + $('.pages').position().left + scrollLeft
     }).prop("contenteditable", false);
 
     // div append
