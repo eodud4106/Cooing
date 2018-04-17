@@ -63,7 +63,7 @@ var arr_id_of_div_box = [];      //div_box의 id를 담을 jquery 배열
 $(document).ready(function(){
 
     //캔버스 변수 선언, 엘리멘트 연결
-    var canvas = $(".canvas");
+    var page = $(".pages");
 
     // .tool을 드래그할 경우 드래그한 element를 복제한 helper 생성
     // (캔버스 위에 생성되는 textbox는 helper 속성을 물려받는다.)
@@ -72,7 +72,7 @@ $(document).ready(function(){
     });
 
     // 캔버스에 아이템 드랍 시 이벤트 처리
-    canvas.droppable({
+   page.droppable({
         drop: function(event, ui) {
 
             // node는 각 텍스트 상자, node를 상기 기본값으로 초기화한다.
@@ -87,7 +87,7 @@ $(document).ready(function(){
             };
 
             // node의 최초 위치 조정..?
-            node.position.left -= canvas.position().left;
+            node.position.left -=page.position().left;
 
             // 드랍한 아이템이 3가지 텍스트 메뉴 중 어느 것인지 판별해서 type에 저장
             if(ui.helper.hasClass("text")){
@@ -103,7 +103,7 @@ $(document).ready(function(){
             // node를 map에 저장
             map_box.put(id, node);
 
-            // 드랍으로 만든 node를 canvas 위에 그림
+            // 드랍으로 만든 node를page 위에 그림
             renderbox(node);
 
             // node의 아이디를 구별하기 위해 1 증가
@@ -163,9 +163,9 @@ $(document).ready(function(){
 });
 // [end] 페이지 로딩 후 처리
 
-//TODO canvas 초기화
-function init_canvas(diagram) {
-    canvas.empty();
+//TODOpage 초기화
+function initpage(diagram) {
+   page.empty();
 }
 
 // [start] 텍스트 박스를 캔버스에 추가
@@ -220,11 +220,11 @@ function renderbox(node) {
         },
         drag: function(event, ui) {
             $('.div_whole_editor').css({
-                "top": ui.position.top + $('.canvas').position().top + 40,
-                "left": ui.position.left + $('.canvas').position().left
+                "top": ui.position.top + $('.pages').position().top + 40,
+                "left": ui.position.left + $('.pages').position().left
             });
         },
-        containment: '.canvas'  // 캔버스 영역 밖으로 나가지 못하게 제한
+        containment: $('.pages')  // 캔버스 영역 밖으로 나가지 못하게 제한
     }).resizable({
         // textbox 크기 조절 처리
         stop: function(event, ui) {
@@ -233,13 +233,13 @@ function renderbox(node) {
             box.width = $(this).width();
             box.height = $(this).height();
         },
-        containment: ".canvas", // 캔버스 영역을 넘지 못하도록 제한
+        containment: $('.pages'), // 캔버스 영역을 넘지 못하도록 제한
         disabled: true          // 리사이즈는 onSelect 상태인 박스만 가능하므로.. 초기 설정에는 disable
     });
 
-    // canvas에 box 출력
+    //page에 box 출력
     $div_box.find(".ui-resizable-handle").hide();
-    $('.canvas').append($div_box);
+    $('.pages').append($div_box);
     arr_id_of_div_box.push($div_box.attr('id'));
     $div_box.css({
         "z-index": 2 + arr_id_of_div_box.indexOf($div_box.attr('id'))
@@ -429,8 +429,8 @@ function createWholeEditor($elem) {
     var $div_whole_editor = $('<div />');
     $div_whole_editor.addClass('edit').addClass('div_whole_editor').css({
         "position": "absolute",
-        "top": $('.onSelect').position().top + $('.canvas').position().top + scrollTop + 40,
-        "left": $('.onSelect').position().left + $('.canvas').position().left + scrollLeft
+        "top": $('.onSelect').position().top + $('.pages').position().top + scrollTop + 40,
+        "left": $('.onSelect').position().left + $('.pages').position().left + scrollLeft
     }).prop("contenteditable", false);
 
     // div append
@@ -826,11 +826,11 @@ function save_div() {
     //         box.position.top = ui.position.top;
     //         box.position.left = ui.position.left;
     //     },
-    //     containment: '.canvas'  // 캔버스 영역 밖으로 나가지 못하게 제한
+    //     containment: '.page-wrapper'  // 캔버스 영역 밖으로 나가지 못하게 제한
     // });
     $(target).remove();
     renderbox(clone);
-    //$('.canvas').append(clone);
+    //$('.page-wrapper').append(clone);
     //alert(target.outerHTML);
     //$('#map_box').text();
 }
