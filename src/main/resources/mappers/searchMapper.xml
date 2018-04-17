@@ -25,4 +25,15 @@
 			group by search_word
 	</select>
 	
+	<insert id="insertCategoryPop" parameterType="categorypop">
+	insert into category_pop (category_pop_num , category_pop_kind , category_pop_date)
+		values (category_pop_seq.nextval,#{category_pop_kind},sysdate)
+	</insert>
+	
+	<select id="selectDayCategory" resultType="Map" parameterType="String">
+		select category_pop_kind,count(category_pop_kind) as count from category_pop
+			where to_char(category_pop_date,'yyyy-mm-dd') = #{date}
+			group by category_pop_kind
+	</select>
+	
 </mapper>

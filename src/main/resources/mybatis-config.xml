@@ -14,6 +14,7 @@
 		<typeAlias type="com.cooing.www.dy.vo.AlbumListVO" alias="albumlist"/>
 		<typeAlias type="com.cooing.www.jinsu.object.HashTag" alias="tag"/>
 		<typeAlias type="com.cooing.www.jinsu.object.Search" alias="search"/>
+		<typeAlias type="com.cooing.www.jinsu.object.CategoryPop" alias="categorypop"/>
 	</typeAliases>
  	<mappers>
 		<mapper resource="mappers/messageMapper.xml"/>

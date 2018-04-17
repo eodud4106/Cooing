@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cooing.www.jinsu.object.CategoryPop;
 import com.cooing.www.jinsu.object.HashTag;
 import com.cooing.www.jinsu.object.Search;
 
@@ -41,4 +42,16 @@ public class SearchDAO {
 		return mapper.selectDaySearch(date);
 	}
 	
+	public boolean insertCategoryPop(CategoryPop categorypop){
+		SearchMapper mapper = sqlSession.getMapper(SearchMapper.class);
+		if(mapper.insertCategoryPop(categorypop) > 0)
+			return true;
+		else 
+			return false;
+	}
+	
+	public ArrayList<Map<String , Integer>> selectDayCategory(String date){
+		SearchMapper mapper = sqlSession.getMapper(SearchMapper.class);
+		return mapper.selectDayCategory(date);
+	}	
 }
