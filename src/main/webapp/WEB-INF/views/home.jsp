@@ -212,7 +212,7 @@ $(result).each(function(i, album) {
 
 		<form>
 			<div class="search">
-				<input type="text" id="searchtx" placeholder="검색어를 입력해주세요">
+				<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}">
 				<input type="button" value="검색" id="searchbt"> 테스트<br /> <input
 					type="button" id="myBtn" value="모달 열기">
 				<div id="myModal" class="modal">
