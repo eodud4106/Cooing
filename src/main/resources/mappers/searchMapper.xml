@@ -31,7 +31,7 @@
 	</insert>
 	
 	<select id="selectDayCategory" resultType="Map" parameterType="String">
-		select category_pop_kind,count(category_pop_kind) as count from category_pop
+		select category_pop_kind as kind,count(category_pop_kind) as count from category_pop
 			where to_char(category_pop_date,'yyyy-mm-dd') = #{date}
 			group by category_pop_kind
 	</select>

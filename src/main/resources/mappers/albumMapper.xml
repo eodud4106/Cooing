@@ -46,6 +46,11 @@
 			or album_contents like '%'||#{search}||'%'
 	</select>
 	
+	<select id="searchCategory" parameterType="int" resultType="albumwrite">
+		select * from albumlist 
+			where album_category=#{album_category}
+	</select>
+	
 	<select id="searchAlbumNum" parameterType="int" resultType="albumwrite">
 		select * from albumlist	where album_num=#{searchnum}
 	</select>

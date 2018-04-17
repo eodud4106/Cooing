@@ -74,4 +74,8 @@ public class AlbumDAO {
 		return mapper.searchPage1(num);		
 	}
 	
+	public ArrayList<AlbumWriteVO> searchCategory(int icategorynum){
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		return mapper.searchCategory(icategorynum);		
+	}	
 }

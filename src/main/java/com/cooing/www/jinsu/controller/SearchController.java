@@ -1,13 +1,8 @@
 package com.cooing.www.jinsu.controller;
 
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +17,7 @@ import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.jinsu.dao.SearchDAO;
+import com.cooing.www.jinsu.object.CategoryPop;
 import com.cooing.www.jinsu.object.HashTag;
 import com.cooing.www.jinsu.object.Search;
 
@@ -59,11 +55,37 @@ public class SearchController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/searchCategory" , method = RequestMethod.POST)
+	public ArrayList<AlbumWriteVO> searchCategory(int searchtext){
+		logger.info("search_Category__jinsu");		
+		//저장
+		searchDAO.insertCategoryPop(new CategoryPop(0 , searchtext , "0"));
+		
+		//검색어가 해쉬 태그 , 앨범 이름, 설명 , 앨범 만든 사람
+		ArrayList<AlbumWriteVO> arrayalbum = albumDAO.searchCategory(searchtext);				
+		
+		logger.info(arrayalbum.toString());
+		
+		return arrayalbum;		
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/searchInfomation" , method = RequestMethod.POST)
 	public ArrayList<Map<String , Object>> searchInfomation(String searchdate){
 		logger.info("searchInfomation__jinsu");
 		
 		ArrayList<Map<String , Object>> map = searchDAO.selectDaySearch(searchdate);
+		
+		return map;
+				
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/searchCategorypop" , method = RequestMethod.POST)
+	public ArrayList<Map<String , Object>> searchCategorypop(String searchdate){
+		logger.info("searchCategorypop__jinsu");
+		
+		ArrayList<Map<String , Object>> map = searchDAO.selectDayCategory(searchdate);
 		
 		return map;
 				

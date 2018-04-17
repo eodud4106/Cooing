@@ -50,7 +50,7 @@ public class SearchDAO {
 			return false;
 	}
 	
-	public ArrayList<Map<String , Integer>> selectDayCategory(String date){
+	public ArrayList<Map<String , Object>> selectDayCategory(String date){
 		SearchMapper mapper = sqlSession.getMapper(SearchMapper.class);
 		return mapper.selectDayCategory(date);
 	}	

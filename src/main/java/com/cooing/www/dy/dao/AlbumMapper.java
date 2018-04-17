@@ -17,6 +17,8 @@ public interface AlbumMapper {
 	
 	public ArrayList<AlbumWriteVO> searchAlbum(String searchtext);
 	
+	public ArrayList<AlbumWriteVO> searchCategory(int icategorynum);
+	
 	public AlbumWriteVO searchAlbumNum(int num);
 	
 	public PageHtmlVO searchPage1(int num);

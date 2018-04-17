@@ -38,7 +38,8 @@ $(document).ready(function() {
 	initialize();
 });
 function initialize(){
-	$('#datepicker').on('change' , function(){
+	//밑 에 부분은 검색어에 관련된 부분 
+	/* $('#datepicker').on('change' , function(){
 		$.ajax({
 			url:'searchInfomation',
 			type:'POST',		
@@ -57,6 +58,39 @@ function initialize(){
 						}
 					});	
 					array[i] = [count , word , '#f3f3f3'];		
+				});
+				$('#graphdiv').html('');
+				$('#graphdiv').jqBarGraph({ 
+					data: array,		
+					animate: false
+				});
+			},
+			error:function(e){alert(JSON.stringify(e));}		
+		});
+	}); */
+	
+	//밑에 부분은 카테고리 검색에 관한 부분
+	var vector = ['여행' , '음식'];
+	$('#datepicker').on('change' , function(){
+		$.ajax({
+			url:'searchCategorypop',
+			type:'POST',		
+			data:{searchdate:$('#datepicker').val()},
+			dataType:"json",
+			success: function(list){
+				array = new Array();
+				$.each(list,function(i,data){
+					var count = 0;
+					var kind = 0;
+					$.each(data,function(key,value){
+						if(key == 'KIND'){
+							kind = value;
+						}else if(key == 'COUNT'){
+							count = value;
+						}
+					});	
+					
+					array[i] = [count ,vector[kind], '#f3f3f3'];		
 				});
 				$('#graphdiv').html('');
 				$('#graphdiv').jqBarGraph({ 

@@ -15,5 +15,5 @@ public interface SearchMapper {
 	public ArrayList<Map<String , Object>> selectDaySearch(String date);
 	
 	public int insertCategoryPop(CategoryPop categorypop);
-	public ArrayList<Map<String , Integer>> selectDayCategory(String date);
+	public ArrayList<Map<String , Object>> selectDayCategory(String date);
 }
