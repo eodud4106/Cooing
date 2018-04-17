@@ -67,26 +67,29 @@ $(document).ready(function () {
 		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
 	}
 	
+	getMyAlbumList();
 	
 });
 
-function myAlbumList() {
-	var pageAry = new Array();
-	var start_count = 0;
-	var end_count = 0;
-	var rotate_count_album = 0;
-	var rotate_count_page = 0;
+function getMyAlbumList() {
+	$.ajax({
+		url: 'getMyAlbumList',
+		type: 'post',
+		dataType: 'json',
+		success: function(result) {
+			myAlbumList(result);
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+}
+
+function myAlbumList(result) {
 	
-	var listsize = ${myAlbumListSize};
-	
-	var arr_page = '${arr_page}';
-	
-	alert(arr_page.length);
-	
-	
-	
-	
-	
+	$(result).each(function(i, album) {
+		alert(album.page_html);
+	});
 	
 }
 </script>
