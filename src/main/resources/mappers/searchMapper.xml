@@ -19,10 +19,10 @@
 		values (search_seq.nextval,#{search_word},sysdate)
 	</insert>
 	
-	<select id="selectDaySearch" resultType="search" parameterType="String">
-		select * from search where to_char(search_date , 'yyyymmdd') = #{date}
+	<select id="selectDaySearch" resultType="Map" parameterType="String">
+		select search_word,count(search_word) as count from search 
+			where to_char(search_date,'yyyy-mm-dd') = #{date}
+			group by search_word
 	</select>
-	
-	
 	
 </mapper>

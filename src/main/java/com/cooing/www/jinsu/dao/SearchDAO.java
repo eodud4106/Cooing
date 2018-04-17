@@ -1,6 +1,7 @@
 package com.cooing.www.jinsu.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class SearchDAO {
 			return false;
 	}
 	
-	public ArrayList<Search> selectDaySearch(String date){
+	public ArrayList<Map<String , Object>> selectDaySearch(String date){
 		SearchMapper mapper = sqlSession.getMapper(SearchMapper.class);
 		return mapper.selectDaySearch(date);
 	}

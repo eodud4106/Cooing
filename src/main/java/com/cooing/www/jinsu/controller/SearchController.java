@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -56,7 +57,18 @@ public class SearchController {
 		return arrayalbum;		
 	}
 	
-/*	@RequestMapping(value = "/infoData", method = RequestMethod.GET)
+	@ResponseBody
+	@RequestMapping(value="/searchInfomation" , method = RequestMethod.POST)
+	public ArrayList<Map<String , Object>> searchInfomation(String searchdate){
+		logger.info("searchInfomation__jinsu");
+		
+		ArrayList<Map<String , Object>> map = searchDAO.selectDaySearch(searchdate);
+		
+		return map;
+				
+	}
+	
+	@RequestMapping(value = "/infomation", method = RequestMethod.GET)
 	public String home(Model model, HttpSession session) {
 		logger.info("infosData__jinsu");
 		SimpleDateFormat formatter = new SimpleDateFormat ( "yy-MM-dd", Locale.KOREA );
@@ -64,8 +76,8 @@ public class SearchController {
 		String dTime = formatter.format ( currentTime );
 		logger.info(dTime);
 		model.addAttribute("date",dTime );
-		return "infoData";
-	}*/
+		return "infomation";
+	}
 	
 	protected class Albumlist{
 		private AlbumWriteVO albumobj;
