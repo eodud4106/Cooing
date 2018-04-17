@@ -87,8 +87,37 @@ function getMyAlbumList() {
 
 function myAlbumList(result) {
 	
-	$(result).each(function(i, album) {
-		alert(album.page_html);
+	var album_num;
+	var album_html;
+	var sw = 0;
+	
+$(result).each(function(i, album) {
+		
+		album_num = album.album_num;
+		
+		for(var i=0; i<album.page_html.length; i++) {
+			
+			if(album.page_html[i] == '<' && sw == 0){
+				sw = 1;
+				album_html = album.page_html.substring(i, album.page_html.length);
+				
+				var div_card = document.createElement('div'); //카드 클래스 div
+				var div_page = document.createElement('div'); //a태그에 들어갈 div
+				var a_read_album = document.createElement('a'); //a태그
+				
+				$(div_page).addClass('page1').html(album_html);
+				a_read_album.append(div_page);
+				$(div_card).addClass('card').append(a_read_album);
+				
+				//a태그 링크 걸어주기
+				$('.card-columns').append(div_card);
+				
+			}
+			
+		}
+		
+		sw = 0;
+		
 	});
 	
 }
@@ -193,6 +222,7 @@ function myAlbumList(result) {
 		</form>
 	</aside>
 
+
 	<main role="main" class="probootstrap-main js-probootstrap-main">
 	<div class="probootstrap-bar">
 		<a href="#" class="probootstrap-toggle js-probootstrap-toggle">
@@ -202,134 +232,23 @@ function myAlbumList(result) {
 			<a href="index.html">COOING</a>
 		</div>
 	</div>
-	<div class="card-columns">
+	
+	
+	
+	
+	<!-- 앨범 리스트 -->
+	<div class="card-columns" id="card-columns">
 		<div class="card">
 			<a href="single.html">
 				<img class="card-img-top probootstrap-animate" 
 				src="./resources/aside_images/img_1.jpg" alt="Card image cap">
 			</a>
 		</div>
-		<div class="card">
-			<a href="single.html">
-				<img class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_2.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html">
-				<img class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_3.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html">
-				<img class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_4.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html">
-				<img class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_5.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html">
-				<img class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_6.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html">
-				<img class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_7.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html">
-				<img class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_8.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html"> <img
-				class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_9.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html"> <img
-				class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_10.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html"> <img
-				class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_11.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html"> <img
-				class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_12.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html"> <img
-				class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_13.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html"> <img
-				class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_14.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html"> <img
-				class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_15.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html"> <img
-				class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_16.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html"> <img
-				class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_17.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html"> <img
-				class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_18.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html"> <img
-				class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_19.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html"> <img
-				class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_20.jpg" alt="Card image cap">
-			</a>
-		</div>
-		<div class="card">
-			<a href="single.html"> <img
-				class="card-img-top probootstrap-animate"
-				src="./resources/aside_images/img_21.jpg" alt="Card image cap">
-			</a>
-		</div>
 	</div>
+	
+	
+	
+	
 
 	<div class="container-fluid d-md-none">
 		<div class="row">

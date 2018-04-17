@@ -48,40 +48,6 @@ public class HomeController {
 			model.addAttribute("group", arraystrval);
 		}
 		
-		String album_writer = null;
-		album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-		ArrayList<AlbumListVO> myAlbumList = null;
-		myAlbumList = albumListAndReadDAO.MyAlbumList(album_writer);
-		model.addAttribute("myAlbumListSize", myAlbumList.size());
-		
-		HashMap<String, AlbumListVO> myAlbumMap = new HashMap<>();
-		HashMap<String, String> myAlbumPageMap = new HashMap<>();
-		
-//		for(AlbumListVO albumListVO: myAlbumList) {
-//			String tmp = albumListVO.getPage_html();
-//			String str = "#"+albumListVO.getAlbum_num();
-//			
-//			//앨범 넘버와 페이지만 가져가는 부분
-//			tmp.replaceAll("\\t", "");
-//			tmp.replaceAll(" ", "");
-//			albumListVO.setPage_html(tmp.replaceAll("\\n", ""));
-//			myAlbumPageMap.put(str, albumListVO.getPage_html());
-//			
-//			//앨범 넘버와 제목,내용, 작성자를 가져가는 부분
-//			albumListVO.setPage_html(null);
-//			myAlbumMap.put(str, albumListVO);
-//			
-//		}
-		
-		for (AlbumListVO albumListVO : myAlbumList) {
-			albumListVO.setPage_html(albumListVO.getPage_html().replaceAll("\\n", "\\\\n"));
-		}
-		
-		model.addAttribute("arr_page", myAlbumList);
-		
-//		model.addAttribute("albumlist", myAlbumMap);
-//		model.addAttribute("pagelist", myAlbumPageMap);
-		
 		return "home";
 	}
 	
@@ -96,7 +62,7 @@ public class HomeController {
 		album_writer = ((Member) session.getAttribute("Member")).getMember_id();
 		albumList = albumListAndReadDAO.MyAlbumList(album_writer);
 		for (AlbumListVO albumListVO : albumList) {
-			albumListVO.setPage_html(albumListVO.getPage_html().replaceAll("\\n", "\\\\n"));
+			albumListVO.setPage_html(albumListVO.getPage_html().replaceAll("\\n", ""));
 		}
 		
 		return albumList;
