@@ -65,11 +65,11 @@ public class AlbumEditController {
 	//앨범 생성
 	@RequestMapping(value = "/personal_AlbumTotalCreate", method = RequestMethod.POST)
 	public String AlbumFirstCreate(HttpSession session, int album_num, String album_name, String album_contents,
-			int album_party, int album_version, int album_category, String hashtag){
+			int album_openrange, int album_category, String hashtag){
 		
 		
 		
-		AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_contents, album_category);
+		AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_contents, album_category, album_openrange);
 		
 		boolean update_check = false;
 		update_check = albumDAO.personal_update_page1_Album(albumwrite);
@@ -178,7 +178,6 @@ public class AlbumEditController {
 		@RequestMapping(value = "img", method = RequestMethod.GET)
 		public String img(HttpServletResponse response , HttpSession session , String filePath) {
 			logger.info("img__jinsu");
-			System.out.println("들어오니 img");
 			
 			String fullpath = strFilePath + "/" + filePath;
 			if( filePath.length() != 0){

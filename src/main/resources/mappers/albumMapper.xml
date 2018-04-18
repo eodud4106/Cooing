@@ -39,7 +39,8 @@
 		update albumlist set 
 			album_name = #{album_name},
 			album_contents = #{album_contents},
-			album_category = #{album_category}
+			album_category = #{album_category},
+			album_openrange = #{album_openrange}
 		where
 			album_num = #{album_num}
 	</update>

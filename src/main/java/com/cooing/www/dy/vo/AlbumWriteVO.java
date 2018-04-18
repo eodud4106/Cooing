@@ -32,12 +32,13 @@ public class AlbumWriteVO {
 	
 
 	public AlbumWriteVO(int album_num, String album_name, String album_contents,
-			int album_category) {
+			int album_category, int album_openrange) {
 		super();
 		this.album_num = album_num;
 		this.album_name = album_name;
 		this.album_contents = album_contents;
 		this.album_category = album_category;
+		this.album_openrange = album_openrange;
 	}
 
 	public int getAlbum_num() {

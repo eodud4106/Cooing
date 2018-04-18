@@ -514,7 +514,14 @@
 				    <option value="19">건강</option>
 				    <option value="20" selected="selected">기타</option>
 				</select>
-				<br>
+				<h3 style="color: black;">앨범 공개범위</h3>
+				<select name="album_openrange">		
+					<option value="1" selected="selected">나만 보기</option>
+				    <option value="2">전체 공개</option>
+				    <option value="3">더 추가해서 ㄱㄱ</option>
+				</select>
+				
+				<br><br><br>
 				<!-- <input type="text" id="hashtagtx" placeholder="해쉬태그"><input type="button" id="hashtagbt" value="추가">--> 
 				<div id="hashtagvw"></div>
 				<input type="button" id="hashtagbt" value="추가">
