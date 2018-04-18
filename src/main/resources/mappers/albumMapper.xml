@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cooing.www.dy.dao.AlbumMapper">
-	<insert id="createAlbum" parameterType="albumwrite">
+	<insert id="personal_createAlbum" parameterType="albumwrite">
 		insert into ALBUMLIST (
 			ALBUM_NUM,
 			ALBUM_WRITER,
@@ -20,7 +20,7 @@
 		
 	</insert>
 	
-	<insert id="insertAlbumOfPage" parameterType="page">
+	<insert id="personal_insertAlbumOfPage" parameterType="page">
 		insert into Page (
 			PAGE_ID,
 			ALBUM_NUM,
@@ -35,7 +35,16 @@
 		)
 	</insert>
 	
-	<select id="first_selectAlbum_Num" parameterType="String" resultType="int">
+	<update id="personal_update_page1_Album" parameterType="albumwrite">
+		update albumlist set 
+			album_name = #{album_name},
+			album_contents = #{album_contents},
+			album_category = #{album_category}
+		where
+			album_num = #{album_num}
+	</update>
+	
+	<select id="personal_selectAlbum_Num" parameterType="String" resultType="int">
 		select album_num from albumlist where ALBUM_IDENTIFIER = #{album_identifier}
 	</select>
 	

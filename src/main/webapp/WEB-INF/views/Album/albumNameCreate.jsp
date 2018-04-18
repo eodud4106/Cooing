@@ -94,7 +94,7 @@ function formCheck() {
 </head>
 <body class="bodys">
 
-<form method="POST" action="AlbumFirstCreate">
+<form method="POST" action="AlbumTotalCreate">
 	<div id="entry">
 		<h3 style="color: white;">앨범 이름</h3><input type="text" id="album_name" name="album_name">
 		<h3 style="color: white;">앨범 내용</h3><input type="text" id="album_contents" name="album_contents">
@@ -130,7 +130,6 @@ function formCheck() {
 		<input type="hidden" name="album_party" value="1">
 		<input type="hidden" name="album_version" value="1">
 		<!-- <input type="hidden" id="hashtag" name="hashtag"> -->
-		<input type="submit" onsubmit="formCheck()">
 	</div>
 </form>
 

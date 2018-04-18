@@ -95,10 +95,6 @@ public class MainController {
 		for (AlbumListVO albumListVO : albumList) {
 			albumListVO.setPage_html(albumListVO.getPage_html().replaceAll("\\n", ""));
 		}
-		
-		System.out.println("test");
-		System.out.println(albumList.toString());
-		
 		return albumList;
 	}
 	

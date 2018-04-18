@@ -9,6 +9,8 @@
 <title>My Page</title>
 <meta charset="utf-8" />
 
+<script src="<c:url value="resources/js/jquery-3.3.1.min.js"/>"></script>
+
 <link rel="stylesheet" href="<c:url value="resources/css/myPage.css"/>">
 
 <link rel="stylesheet" href="<c:url value="resources/aside_css/bootstrap.min.css"/>">
@@ -28,7 +30,7 @@
 <script src="<c:url value="resources/aside_js/imagesloaded.pkgd.min.js"/>"></script>
 <script src="<c:url value="resources/aside_js/main.js"/>"></script>
 
-<script src="<c:url value="resources/js/jquery-3.3.1.min.js"/>"></script>
+
 
 <script>
 
@@ -108,7 +110,7 @@ $(result).each(function(i, album) {
 		<li>앨범1</li>
 		<li>앨범2</li>						
 		</ul>
-		<p>+앨범추가		
+		<a href="albumEdit/personal_albumCreate">앨범추가</a>	
 	</div>	
 	
 	<!-- 앨범리스트 -->

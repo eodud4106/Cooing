@@ -1,6 +1,8 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	     pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 
 <html>
@@ -10,28 +12,28 @@
 <meta name="viewport" content="width = 1050, user-scalable = no" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet" href="<c:url value="resources/aside_css/bootstrap.min.css"/>">
-<link rel="stylesheet" href="<c:url value="resources/aside_css/open-iconic-bootstrap.min.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/aside_css/bootstrap.min.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/aside_css/open-iconic-bootstrap.min.css"/>">
 
-<link rel="stylesheet" href="<c:url value="resources/aside_css/owl.carousel.min.css"/>">
-<link rel="stylesheet" href="<c:url value="resources/aside_css/owl.theme.default.min.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/aside_css/owl.carousel.min.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/aside_css/owl.theme.default.min.css"/>">
 
-<link rel="stylesheet" href="<c:url value="resources/aside_css/icomoon.css"/>">
-<link rel="stylesheet" href="<c:url value="resources/aside_css/animate.css"/>">
-<link rel="stylesheet" href="<c:url value="resources/aside_css/style.css"/>">
-<script type="text/javascript" src="<c:url value="resources/js/jquery-3.3.1.min.js"/>"></script>
-<script type="text/javascript" src="<c:url value="resources/album_page_js/extras/modernizr.2.5.3.min.js"/>"></script>
-<script type="text/javascript" src="<c:url value="resources/album_page_js/basic.js"/>"></script>		
+<link rel="stylesheet" href="<c:url value="/resources/aside_css/icomoon.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/aside_css/animate.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/aside_css/style.css"/>">
+<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/album_page_js/extras/modernizr.2.5.3.min.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/album_page_js/basic.js"/>"></script>		
 <script defer src="<c:url value="https://use.fontawesome.com/releases/v5.0.10/js/all.js"/>"></script>
 
 
-<script src="<c:url value="resources/aside_js/popper.min.js"/>"></script>
-<script src="<c:url value="resources/aside_js/owl.carousel.min.js"/>"></script>
-<script src="<c:url value="resources/aside_js/jquery.waypoints.min.js"/>"></script>
-<script src="<c:url value="resources/aside_js/imagesloaded.pkgd.min.js"/>"></script>
-<script src="<c:url value="resources/aside_js/main.js"/>"></script>    
+<script src="<c:url value="/resources/aside_js/popper.min.js"/>"></script>
+<script src="<c:url value="/resources/aside_js/owl.carousel.min.js"/>"></script>
+<script src="<c:url value="/resources/aside_js/jquery.waypoints.min.js"/>"></script>
+<script src="<c:url value="/resources/aside_js/imagesloaded.pkgd.min.js"/>"></script>
+<script src="<c:url value="/resources/aside_js/main.js"/>"></script>    
 
-<link rel="stylesheet" href="<c:url value="resources/skin_radio/green.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/skin_radio/green.css"/>">
 
 <script>
 
@@ -63,7 +65,7 @@ function myAlbumRead(result) {
 	
 $(result).each(function(i, page) {
 		
-		page_num = i+3;
+		page_num = i+1;
 		page_html = page;
 		
 		alert(page_html);

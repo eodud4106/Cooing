@@ -15,10 +15,10 @@ public class AlbumDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public boolean createAlbum(AlbumWriteVO albumwrite){
+	public boolean personal_createAlbum(AlbumWriteVO albumwrite){
 		
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		int cnt = mapper.createAlbum(albumwrite);
+		int cnt = mapper.personal_createAlbum(albumwrite);
 		
 		if(cnt > 0) {
 			return true;
@@ -27,21 +27,31 @@ public class AlbumDAO {
 		}	
 	}
 	
-	public int first_selectAlbum_Num(String isWrite){
+	public int personal_selectAlbum_Num(String album_identifier){
 			
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		int cnt = 0;
-		cnt = mapper.first_selectAlbum_Num(isWrite);
+		cnt = mapper.personal_selectAlbum_Num(album_identifier);
 		
 		return cnt;
 	}
-		
-		
 	
-	public boolean insertAlbumOfPage(PageHtmlVO page){
+	public boolean personal_insertAlbumOfPage(PageHtmlVO page){
 		
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		int cnt = mapper.insertAlbumOfPage(page);
+		int cnt = mapper.personal_insertAlbumOfPage(page);
+		
+		if(cnt > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean personal_update_page1_Album(AlbumWriteVO albumwrite){
+		
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		int cnt = mapper.personal_update_page1_Album(albumwrite);
 		
 		if(cnt > 0) {
 			return true;
