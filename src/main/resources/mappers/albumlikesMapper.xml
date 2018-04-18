@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cooing.www.joon.dao.AlbumLikesMapper">
+
+<!-- 앨범 좋아요 -->
+<insert id="addLikes" parameterType="albumlikes">
+	insert into LIKEIT (
+		likeit_num
+		, likeit_albumnum
+		, likeit_memberid
+	) 
+	values (
+		LIKEIT_SEQ.nextval
+		, #{likeit_albumnum}
+		, #{likeit_memberid}
+	)
+</insert>
+
+
+<!-- 좋아요 취소 -->
+<delete id="deleteLikes" parameterType="albumlikes">
+delete from likeit where likeit_memberid = #{likeit_memberid} and likeit_albumnum = #{likeit_albumnum}
+</delete>
+
+</mapper>

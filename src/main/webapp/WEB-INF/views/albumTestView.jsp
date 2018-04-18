@@ -354,13 +354,62 @@ function checkRadioButton(iCheck)
 	else{
 	alert('체크된거없음');
 	}
-
-		 
-
- 
 }
 
-
+	function likes(){
+		
+		var num = 15;
+		
+		$.ajax({
+			url:'likes',
+			type: 'POST',		
+			data: {
+				"likeit_albumnum": num
+			},
+			dataType: 'text',
+			success: function(a){
+				if(a == 'success'){
+					alert("좋아요 성공");	
+				}
+				else{
+					alert(a);
+				}
+			},
+			error:function(e){
+				alert(JSON.stringify(e));
+			}		
+		});
+	}
+	// 좋아요 취소
+	function deletelikes(){
+		/* var str = $("#text").val(); */
+		//앨범번호
+		var num = 15;
+		
+		$.ajax({
+			url:'deleteLikes',
+			type: 'POST',		
+			data: {
+				"likeit_albumnum": num
+				/* ,
+				
+				"content": str */
+			},
+			dataType: 'text',
+			success: function(a){
+				if(a == 'success'){
+					alert("좋아요 취소");
+					
+				}
+				else{
+					alert(a);
+				}
+			},
+			error:function(e){
+				alert(JSON.stringify(e));
+			}		
+		});
+	}
 </script>
 
 </head>
@@ -388,7 +437,10 @@ function checkRadioButton(iCheck)
 				<p>친구4</p>
 		
 				<p>그룹1</p>
-				<p>그룹2</p>						 		
+				<p>그룹2</p>		
+				<p>그룹3</p>		
+				<button type="button" onclick="likes()">좋아요!</button>	
+				<button type="button" onclick="deletelikes()">좋아요취소!</button> 		
     	
         <footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft">
          
