@@ -9,34 +9,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet" href="../resources/aside_css/bootstrap.min.css">
-<link rel="stylesheet" href="../resources/aside_css/open-iconic-bootstrap.min.css">
-
-<link rel="stylesheet" href="../resources/aside_css/owl.carousel.min.css">
-<link rel="stylesheet" href="../resources/aside_css/owl.theme.default.min.css">
-
-<link rel="stylesheet" href="../resources/aside_css/icomoon.css">
-<link rel="stylesheet" href="../resources/aside_css/animate.css">
-<link rel="stylesheet" href="../resources/aside_css/style.css">
-
 <!-- 기본 js -->
 <script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
-
-<!-- <script type="text/javascript" src="../resources/album_page_js/extras/modernizr.2.5.3.min.js"></script> -->
-<!-- <script type="text/javascript" src="../resources/album_page_js/basic.js"></script> -->
-
-
-<!-- 기본 css -->
-<link rel="stylesheet" href="../resources/css/albumEdit.css">
-<link rel="stylesheet" href="../resources/css/jquery-ui.min.css">
-
-<script src="../resources/skin_radio/icheck.js"></script>
-<link rel="stylesheet" href="../resources/skin_radio/green.css">
-
-<link rel="stylesheet" href="../resources/album_css/album_edit_basic.css">
-<link rel="stylesheet" href="../resources/album_css/album_edit_drag_and_drop.css">
 
 <script src="../resources/aside_js/popper.min.js"></script>
 <script src="../resources/aside_js/owl.carousel.min.js"></script>
@@ -44,22 +20,31 @@
 <script src="../resources/aside_js/imagesloaded.pkgd.min.js"></script>
 <script src="../resources/aside_js/main.js"></script>
 
-<!-- <script type="">
-	//Load the HTML4 version if there's not CSS transform
-    yepnope({
-        test : Modernizr.csstransforms,
-        yep : [ '../resources/album_page_js/lib/turn.js' ],
-        nope : [ '../resources/album_page_js/lib/turn.html4.min.js' ],
-        both : [ '../resources/album_css/basic.css' ],
-        complete : loadApp
-    });
-
-</script> -->
+<script src="../resources/skin_radio/icheck.js"></script>
 
 <!-- 페이지 넘김 효과를 위한 js -->
 <script type="text/javascript" src="../resources/js/turn.min.js"></script>
+
 <!-- albumEdit 용 js -->
 <script type="text/javascript" src="../resources/js/albumEdit.js"></script>
+
+<!-- 기본 css -->
+<link rel="stylesheet" href="../resources/css/albumEdit.css">
+<link rel="stylesheet" href="../resources/css/jquery-ui.min.css">
+
+<!-- 기타 css -->
+<link rel="stylesheet" href="../resources/album_css/album_edit_basic.css">
+<link rel="stylesheet" href="../resources/album_css/album_edit_drag_and_drop.css">
+
+<link rel="stylesheet" href="../resources/aside_css/bootstrap.min.css">
+<link rel="stylesheet" href="../resources/aside_css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="../resources/aside_css/owl.carousel.min.css">
+<link rel="stylesheet" href="../resources/aside_css/owl.theme.default.min.css">
+<link rel="stylesheet" href="../resources/aside_css/icomoon.css">
+<link rel="stylesheet" href="../resources/aside_css/animate.css">
+<link rel="stylesheet" href="../resources/aside_css/style.css">
+
+<link rel="stylesheet" href="../resources/skin_radio/green.css">
 
 <style type="text/css">
 html, body, main, .container-fluid {
@@ -69,13 +54,13 @@ html, body, main, .container-fluid {
 	padding: 0;
 }
 
-.album_wrapper {
+.view_wrapper {
 	margin: 0;
 	margin-left: 250px;
 	display: flex;
 	flex-wrap: wrap;
 }
-.album, .top_bar {
+.album_wrapper, .top_bar {
 	margin: auto !important;
 }
 .checkbox {
@@ -142,7 +127,7 @@ html, body, main, .container-fluid {
 		</div>
 	
 		<div class="container-fluid">
-			<div class="album_wrapper">
+			<div class="view_wrapper">
 	
 				<div class="col-xl-8 col-lg-12 top_bar">
 					<!-- 텍스트, 이미지, 비디오 삽입 버튼 -->
@@ -165,29 +150,14 @@ html, body, main, .container-fluid {
 				</div>
 				
 				<!-- 앨범 영역 -->
+				<div class="album_wrapper" id="album_wrapper">
+					<div class="album" id="album"></div>
 				<div class="album" id="album">
-<!-- 					<div class="hard page" id="page1">
-						1
-					</div>
-					<div class="hard page" id="page2">
-						2
-					</div>
-					<div class="page" id="page3">
-						3
-					</div>
-					<div class="page" id="page4">
-						4
-					</div> -->
-				</div>
 				
 			</div>
 			<!-- END row -->
 	
-			<!--   <section class="probootstrap-section"> -->
-			<div class="container-fluid">
-			
-	
-			</div>
+			<div class="container-fluid"></div>
 	
 		</div>
 
