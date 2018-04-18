@@ -63,7 +63,7 @@ var arr_id_of_div_box = [];      //div_box의 id를 담을 jquery 배열
 $(document).ready(function(){
 
     //캔버스 변수 선언, 엘리멘트 연결
-    var page = $(".pages");
+    var $page = $('.pages');
 
     // .tool을 드래그할 경우 드래그한 element를 복제한 helper 생성
     // (캔버스 위에 생성되는 textbox는 helper 속성을 물려받는다.)
@@ -72,8 +72,10 @@ $(document).ready(function(){
     });
 
     // 캔버스에 아이템 드랍 시 이벤트 처리
-   page.droppable({
+   $page.droppable({
         drop: function(event, ui) {
+
+            console.log('페이지 드랍' + $(this).attr('id'));
 
             // node는 각 텍스트 상자, node를 상기 기본값으로 초기화한다.
             var id = 'box_' + count;
@@ -87,7 +89,20 @@ $(document).ready(function(){
             };
 
             // node의 최초 위치 조정..?
-            node.position.left -=page.position().left;
+            node.position.left -= $('.flipbook').position().left;
+            node.position.top -= $('.flipbook').position().top;
+
+            var pagenum = $(this).attr('id').replace(/\D/g,'');
+            var left = $('.flipbook').position().left + parseInt($('.flipbook').css('margin-left').replace(/\D/g,''));
+            if(pagenum % 2 == 1) {
+                left += 600;
+            }
+
+            node.postion.left += left;
+            node.postion.top += top;
+
+            console.log('flipbook left -> ' + left);
+            console.log('flipbook top -> ' + $('.flipbook').position().top);
 
             // 드랍한 아이템이 3가지 텍스트 메뉴 중 어느 것인지 판별해서 type에 저장
             if(ui.helper.hasClass("text")){
@@ -203,6 +218,9 @@ function renderbox(node) {
             break;
         case "video": $div_box.addClass('videobox'); break;
     }
+
+    console.log('node position top -> ' + node.position.top);
+    console.log('node position left -> ' + node.position.left);
 
     $div_box.css({
         "position": "absolute",
