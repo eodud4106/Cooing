@@ -56,7 +56,7 @@
 	</select>
 	
 	<select id="searchPage1" parameterType="int" resultType="page">
-		select * from page	where album_num=#{number}
+		select * from page	where album_num=#{number} and page_num=1
 	</select>
 	
 	
