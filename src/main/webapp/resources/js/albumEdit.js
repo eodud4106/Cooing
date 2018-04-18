@@ -74,7 +74,7 @@ var PAGE_HEIGHT = 600;      // 페이지 당 높이
 $(document).ready(function(){
 
     //캔버스 변수 선언, 엘리멘트 연결
-    var page = $(".pages");
+    var $page = $('.pages');
 
 
     //로딩된 결과가 없는 경우 -> 앨범을 새로 만드는 경우
@@ -88,43 +88,42 @@ $(document).ready(function(){
     }
 
     // 캔버스에 아이템 드랍 시 이벤트 처리
-   page.droppable({
+   $page.droppable({
         drop: function(event, ui) {
 
-    // 앨범 flip 효과 적용
-	$('#album').turn({
-		display: 'double',  // 한 번에 보여줄 페이지
-        inclination: 50,    // 페이지 넘김 효과 시의 경사도
-        width: PAGE_WIDTH * 2,
-        height: PAGE_HEIGHT,
-        when: {             // 이벤트 리스너
-            turning: function(event, page, view) {
-                // 편집창 제거
-                removeEdit();
-                // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
-                clearOn();
+            console.log('페이지 드랍' + $(this).attr('id'));
+
+            // node는 각 텍스트 상자, node를 상기 기본값으로 초기화한다.
+            var id = 'box_' + count;
 
             },
             turned: function(event, page, view) {
 
             // node의 최초 위치 조정..?
-            node.position.left -=page.position().left;
+            node.position.left -= $('.flipbook').position().left;
+            node.position.top -= $('.flipbook').position().top;
 
-                var arr_single_page = [1];
-                
-                if(total_page % 2 == 0) {
-                    // 총 페이지 수가 짝수일 경우 마지막 페이지는 싱글 페이지이므로 배열에 추가한다.
-                    arr_single_page.push(total_page);
-                }
+            var pagenum = $(this).attr('id').replace(/\D/g,'');
+            var left = $('.flipbook').position().left + parseInt($('.flipbook').css('margin-left').replace(/\D/g,''));
+            if(pagenum % 2 == 1) {
+                left += 600;
+            }
 
-                // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
-                $('.page').droppable("option", "disabled", true);
-                $('#page' + curr_page + '').droppable("option", "disabled", false);
+            node.postion.left += left;
+            node.postion.top += top;
 
-                // 현재 페이지가 싱글 페이지가 아닌 경우 오른쪽 페이지도 droppable을 켠다.
-                if(arr_single_page.indexOf(curr_page) == -1) {
-                    $('#page' + (curr_page + 1) + '').droppable("option", "disabled", false);
-                }
+            console.log('flipbook left -> ' + left);
+            console.log('flipbook top -> ' + $('.flipbook').position().top);
+
+            // 드랍한 아이템이 3가지 텍스트 메뉴 중 어느 것인지 판별해서 type에 저장
+            if(ui.helper.hasClass("text")){
+                node.type = "text";
+            } else if(ui.helper.hasClass("image")){
+                node.type = "image";
+            } else if(ui.helper.hasClass("video")){
+                node.type = "video";
+            } else {
+                return;
             }
         } 
     });
@@ -339,6 +338,9 @@ function renderbox(event, ui, page) {
         });
 
     }
+
+    console.log('node position top -> ' + node.position.top);
+    console.log('node position left -> ' + node.position.left);
 
     $div_box.css({
         "position": "absolute",

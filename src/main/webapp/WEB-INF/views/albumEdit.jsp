@@ -41,61 +41,71 @@
 	// 전역 변수
 	var count = 0;
 
+	var PAGE_WIDTH = 600;		// 페이지 당 너비
+	var PAGE_HEIGHT = 600;		// 페이지 당 높이
+
 
 	// 페이지 로딩 후 초기화
 	$(document).ready(function() {
 
 		// 첫페이지 droppable 설정
-		$('#page1').droppable({
+		// $('#page1').droppable({
 
-			// drop 이벤트
-			drop : function(event, ui) {
+		// 	// drop 이벤트
+		// 	drop : function(event, ui) {
 
-				// drop한 페이지의 정보 추출
-				var pageid = $(this).attr('id');
-				var pagenum = pageid.substring(4, pageid.length);
-				var number = $('#flipbook').turn('page');
+		// 		// drop한 페이지의 정보 추출
+		// 		var pageid = $(this).attr('id');
+
+		// 		console.log('pageid -> ' + pageid);
+
+		// 		// pagenum 추출
+		// 		var pagenum = pageid.substring(4, pageid.length);
+
+		// 		// 페이지 로딩 후 처음은 1
+		// 		var number = $('#flipbook').turn('page');
 				
-				console.log('number ->' + number);
+		// 		console.log('number ->' + number);
 
-				if ($('#flipbook').turn('page') > 1 && $('#flipbook').turn('page') % 2 == 1) {
-					number--;
-				}
+		// 		if ($('#flipbook').turn('page') > 1 && $('#flipbook').turn('page') % 2 == 1) {
+		// 			number--;
+		// 		}
 				
-				if (pagenum == number || pagenum == (parseInt(number) + 1)) {
-					var div_holder = document
-							.createElement('div');
-					count++;
-					var html = '<a class="close_border"></a><label for="cross' + count + '">'
-							+ '<input type="file" id="cross'
-							+ count
-							+ '"class="cross'
-							+ pagenum
-							+ '"name="cross'
-							+ count
-							+ '"onchange="readURL(this)"></label>';
+		// 		// 왼쪽 페이지가 드랍한 div의 번호와 같거나 || 오른쪽 번호와 같은 경우... (즉 현재 보고 있는 페이지에 드랍한 경우) 
+		// 		if (pagenum == number || pagenum == (parseInt(number) + 1)) {
+		// 			var div_holder = document.createElement('div');
+					
+		// 			count++;
+		// 			var html = '<a class="close_border"></a><label for="cross' + count + '">'
+		// 					+ '<input type="file" id="cross'
+		// 					+ count
+		// 					+ '"class="cross'
+		// 					+ pagenum
+		// 					+ '"name="cross'
+		// 					+ count
+		// 					+ '"onchange="readURL(this)"></label>';
 
-					$(div_holder)
-						.addClass('holder')
-						.html(html)
-						.attr(
-								'id',
-								'holder'
-										+ count);
-					$(div_holder).css('position', 'absolute');
-					$(div_holder).draggable({
-						containment : 'parent',
-						scroll : false
-					}).resizable();
+		// 			$(div_holder)
+		// 				.addClass('holder')
+		// 				.html(html)
+		// 				.attr(
+		// 						'id',
+		// 						'holder'
+		// 								+ count);
+		// 			$(div_holder).css('position', 'absolute');
+		// 			$(div_holder).draggable({
+		// 				containment : 'parent',
+		// 				scroll : false
+		// 			}).resizable();
 
-					$(this).append(div_holder);
+		// 			$(this).append(div_holder);
 
-					$('.close_border').click(function() {
-						$(this).parent().remove();
-					});
-				}
-			}
-		});
+		// 			$('.close_border').click(function() {
+		// 				$(this).parent().remove();
+		// 			});
+		// 		}
+		// 	}
+		// });
 	});
 
 	/**
@@ -135,6 +145,9 @@ html, body, main, .container-fluid {
 			$('#page' + $('#flipbook').turn('pages')).droppable({
 				drop : function(event, ui) {
 					var pageid = $(this).attr('id');
+					
+					console.log('pageid -> ' + pageid);
+					
 					var pagenum = pageid.substring(4, pageid.length);
 
 					var number = $('#flipbook').turn('page');
@@ -183,6 +196,9 @@ html, body, main, .container-fluid {
 	 *	@returns void
 	 **/
 	function fileSave(formdata, file, pagenum, last) {
+
+		console.log('fileSave 호출');
+
 		$.ajax({
 			url : 'albumImageSave',
 			processData : false,
@@ -273,6 +289,8 @@ html, body, main, .container-fluid {
 	 */
 	function fileSubmit() {
 
+		console.log('fileSubmit 호출');
+
 		// $('#flipbook').turn('page') -> 보여주는 페이지 2쪽 중 작은 페이지의 숫자를 반환?
 		var number = $('#flipbook').turn('page');
 
@@ -291,11 +309,18 @@ html, body, main, .container-fluid {
 		// ?
 		var check = true;
 
-		//	
+		//	cross 클래스가 붙은 input 개수 만큼 반복문 실행
 		$('input[class="cross' + number + '"]').each(function(index, item) {
+			// 각 index의 input에 파일이 있는 경우
 			if ($('input[class="cross' + number + '"]')[index].files[0]) {
+
+				// check는 ???
 				check = false;
+
+				// formData 선언
 				var formData = new FormData();
+
+				// 
 				formData.append('file' + num, $('input[class="cross' + number + '"]')[index].files[0]);
 
 				console.log(formData);
@@ -460,7 +485,104 @@ html, body, main, .container-fluid {
 		[end] 앨범 배경 꾸미기
 	*/
 
+	
+
+	/**
+	 *	[start] 메인 표지 업로드 관련
+	 **/
+
+	// img1 태그 불러와 file1에 저장
+	var file1 = document.querySelector('#img1');
+	
+	// file1이 바뀌면 FileReader로 파일을 읽고 #preview1의 src에 그 결과를 입력..
+	// file1.onchange = function() {
+
+	// 	var fileList = file1.files;
+	// 	var reader = new FileReader();
+	// 	reader.readAsDataURL(fileList[0]);
+	// 	reader.onload = function() {
+	// 		document.querySelector('#preview1').src = reader.result;
+	// 	};
+	// };
+
+
+	$('.flipbook').change(function(e) {
+
+		var file = e.target.files[0];
+
+		var reader = new FileReader();
+
+		reader.addEventListener("load", function() {
+
+			var container = e.target.parentNode;
+
+			container.style.background = "url(" + reader.result
+					+ ") no-repeat center";
+			container.style["background-size"] = "cover";
+
+		}, false);
+
+		if (file) {
+			reader.readAsDataURL(file);
+		}
+
+	});
+
+	function loadApp() {
+
+		// Create the flipbook
+		$('.flipbook').turn({
+			width : PAGE_WIDTH * 2,
+			height : PAGE_HEIGHT,
+			elevation : 50,
+			gradients : true,
+			autoCenter : true
+		});
+	}
+
+	//Load the HTML4 version if there's not CSS transform
+	yepnope({
+		test : Modernizr.csstransforms,
+		yep : [ '../resources/album_page_js/lib/turn.js' ],
+		nope : [ '../resources/album_page_js/lib/turn.html4.min.js' ],
+		both : [ '../resources/album_css/basic.css' ],
+		complete : loadApp
+	});
+
+	/**
+	 *	[end] 메인 표지 업로드 관련
+	 **/
 </script>
+
+
+<script src="../resources/aside_js/popper.min.js"></script>
+<script src="../resources/aside_js/owl.carousel.min.js"></script>
+<script src="../resources/aside_js/jquery.waypoints.min.js"></script>
+<script src="../resources/aside_js/imagesloaded.pkgd.min.js"></script>
+
+<script src="../resources/aside_js/main.js"></script>
+
+<style type="text/css">
+html, body, main, .container-fluid {
+	height: 100%;
+}
+.container-fluid {
+	padding: 0;
+}
+
+.album_wrapper {
+	margin: 0;
+	margin-left: 250px;
+	display: flex;
+	flex-wrap: wrap;
+}
+.flipbook, .top_bar {
+	margin: auto !important;
+}
+.checkbox {
+	font-size: 20px;
+}
+</style>
 
 </head>
 <body>
@@ -578,9 +700,9 @@ html, body, main, .container-fluid {
 		</div>
 	
 		<div class="container-fluid">
-			<div class="view_wrapper">
+			<div class="album_wrapper">
 	
-				<div class="col-xl-8 col-lg-12">
+				<div class="col-xl-8 col-lg-12 top_bar">
 					<!-- 텍스트, 이미지, 비디오 삽입 버튼 -->
 					<div class="tool text"><i class="fas fa-align-justify"></i></div>
                 	<div class="tool image"><i class="far fa-image"></i></div>
@@ -596,8 +718,11 @@ html, body, main, .container-fluid {
 				</div>
 				
 				<!-- 앨범 영역 -->
-				<div class="album_wrapper" id="album_wrapper">
-					<div class="album" id="album"></div>
+				<div class="flipbook" id="flipbook">
+					<div class="pages page1 canvas" id="page1">
+						<!-- image 태그의 accept는 입력 받을 파일의 형식을 제한 -->
+						<input type="file" name="img1" accept="image/*" id="img1">
+					</div>
 				</div>
 				
 			</div>
@@ -610,60 +735,6 @@ html, body, main, .container-fluid {
 	</main>
 
 
-
-		var homePhoto = document.querySelector(".flipbook");
-
-		homePhoto.onchange = function(e) {
-
-			var file = e.target.files[0];
-
-			var reader = new FileReader();
-
-			reader.addEventListener("load", function() {
-
-				var container = e.target.parentNode;
-
-				container.style.background = "url(" + reader.result
-						+ ") no-repeat center";
-				container.style["background-size"] = "cover";
-
-			}, false);
-
-			if (file) {
-				reader.readAsDataURL(file);
-			}
-
-		}
-
-		function loadApp() {
-
-			// Create the flipbook
-			$('.flipbook').turn({
-				width : 1000,
-				height : 600,
-				elevation : 50,
-				gradients : true,
-				autoCenter : true
-			});
-		}
-
-		// Load the HTML4 version if there's not CSS transform
-		yepnope({
-			test : Modernizr.csstransforms,
-			yep : [ '../resources/album_page_js/lib/turn.js' ],
-			nope : [ '../resources/album_page_js/lib/turn.html4.min.js' ],
-			both : [ '../resources/album_css/basic.css' ],
-			complete : loadApp
-		});
-	</script>
-
-
-	<script src="../resources/aside_js/popper.min.js"></script>
-	<script src="../resources/aside_js/owl.carousel.min.js"></script>
-	<script src="../resources/aside_js/jquery.waypoints.min.js"></script>
-	<script src="../resources/aside_js/imagesloaded.pkgd.min.js"></script>
-
-	<script src="../resources/aside_js/main.js"></script>
 
 </body>
 </html>
