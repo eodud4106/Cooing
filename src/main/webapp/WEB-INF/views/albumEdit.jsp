@@ -14,10 +14,9 @@
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 
-<!-- <script type="text/javascript" src="../resources/album_page_js/extras/modernizr.2.5.3.min.js"></script>
-<script type="text/javascript" src="../resources/album_page_js/basic.js"></script> -->
+<!-- <script type="text/javascript" src="../resources/album_page_js/extras/modernizr.2.5.3.min.js"></script> -->
+<!-- <script type="text/javascript" src="../resources/album_page_js/basic.js"></script> -->
 
-<script src="../resources/skin_radio/icheck.js"></script>
 
 <!-- 페이지 넘김 효과를 위한 js -->
 <script type="text/javascript" src="../resources/js/turn.min.js"></script>
@@ -51,7 +50,10 @@
 
 </script> -->
 
-<script src="../resources/js/turn.min.js"></script>
+<!-- 페이지 넘김 효과를 위한 js -->
+<script type="text/javascript" src="../resources/js/turn.min.js"></script>
+<!-- albumEdit 용 js -->
+<script type="text/javascript" src="../resources/js/albumEdit.js"></script>
 
 <style type="text/css">
 html, body, main, .container-fluid {
@@ -67,19 +69,17 @@ html, body, main, .container-fluid {
 	display: flex;
 	flex-wrap: wrap;
 }
-.flipbook, .top_bar {
+.album, .top_bar {
 	margin: auto !important;
 }
 .checkbox {
 	font-size: 20px;
 }
-.flipbook{
-	width:800px;
-	height:600px;
+.page {
+	background-color: #eee;
 }
-.flipbook .page{
-	width:400px;
-	height:600px;
+.hard {
+	background-color: #aaa;
 }
 </style>
 
@@ -217,27 +217,19 @@ html, body, main, .container-fluid {
 				</div>
 				
 				<!-- 앨범 영역 -->
-				<div class="flipbook" id="flipbook">
-					<div class="hard page" id="page1">
-						언뇽,....
-						<!-- image 태그의 accept는 입력 받을 파일의 형식을 제한 -->
-						<!-- <input type="file" name="img1" accept="image/*" id="img1"> -->
+				<div class="album" id="album">
+<!-- 					<div class="hard page" id="page1">
+						1
 					</div>
 					<div class="hard page" id="page2">
 						2
-						<!-- image 태그의 accept는 입력 받을 파일의 형식을 제한 -->
-						<!-- <input type="file" name="img1" accept="image/*" id="img1"> -->
 					</div>
 					<div class="page" id="page3">
 						3
-						<!-- image 태그의 accept는 입력 받을 파일의 형식을 제한 -->
-						<!-- <input type="file" name="img1" accept="image/*" id="img1"> -->
 					</div>
 					<div class="page" id="page4">
 						4
-						<!-- image 태그의 accept는 입력 받을 파일의 형식을 제한 -->
-						<!-- <input type="file" name="img1" accept="image/*" id="img1"> -->
-					</div>
+					</div> -->
 				</div>
 				
 			</div>
