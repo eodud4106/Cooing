@@ -172,10 +172,8 @@ $(document).ready(function(){
                 // 편집창 제거
                 removeEdit();
 
-
-                // arr_id_of_div_box 조정
-                var id_index = arr_id_of_div_box.indexOf($('.onSelect').attr('id'));
-                arr_id_of_div_box.splice(id_index, 1);
+                // arr_box_id 조정
+                arr_box_id.splice(id_index, 1);
 
                 // arr_box_id를 바탕으로 모든 박스의 z-index 조정
                 for(var i = 0; i < arr_box_id.length; i++) {
@@ -228,6 +226,7 @@ function createNewAlbum() {
 function apply_page_droppable($page) {
 
     $page.droppable({
+        accept: '.tool',
         drop: function(event, ui) {
 
             event.stopPropagation();
@@ -240,9 +239,6 @@ function apply_page_droppable($page) {
 
             // 드랍으로 만든 node를 page 위에 그림
             renderbox(event, ui, page);
-
-            // node의 아이디를 구별하기 위해 1 증가
-            count++;
         }
     });
 }
@@ -360,7 +356,7 @@ function renderbox(event, ui, page) {
     $div_box.find(".ui-resizable-handle").hide();
     
     // z-index 관리용 코드
-    arr_id_of_div_box.push($div_box.attr('id'));
+    arr_box_id.push($div_box.attr('id'));
     $div_box.css({
         "z-index": 2 + arr_box_id.indexOf($div_box.attr('id'))
     })
@@ -927,10 +923,10 @@ function removeEdit() {
 // onSelect, onEdit 상태 해제
 function clearOn() {
     $('.onEdit').draggable('enable').resizable('disable').prop("contenteditable", false).css({
-            "z-index": 2 + arr_id_of_div_box.indexOf($('.onEdit').attr('id'))
+            "z-index": 2 + arr_box_id.indexOf($('.onEdit').attr('id'))
         }).removeClass('onEdit').find(".ui-resizable-handle").hide();
     $('.onSelect').draggable('enable').resizable('disable').css({
-            "z-index": 2 + arr_id_of_div_box.indexOf($('.onSelect').attr('id'))
+            "z-index": 2 + arr_box_id.indexOf($('.onSelect').attr('id'))
         }).removeClass('onSelect').find(".ui-resizable-handle").hide();
 }
 
