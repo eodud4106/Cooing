@@ -404,7 +404,7 @@ $(result).each(function(i, album) {
 					<li><a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a></li>
 					<li><a href="<c:url value ="/jinsu/login_get"/>">로그인...</a></li>
 					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
-<a href="albumEdit/personal_albumCreate">앨범추가</a>
+					<a href="albumEdit/personal_albumCreate">앨범추가</a>
 				</ul>
 			</nav>
 
@@ -448,7 +448,7 @@ $(result).each(function(i, album) {
 		<!-- 정렬순 -->
 		<div class = "array" style= "z-index:99; float:right; padding-left : 10px;"><i class="fas fa-align-justify"></i></div>	
 		<div class = "array" style= "z-index:99; float:right; padding-left : 10px;"><i class="fas fa-align-justify"></i></div>
-		<div class = "array" style= "z-index:99; float:right; padding-left : 10px;"><i class="fas fa-align-justify"></i></div>	
+		
 		
 	</div>
 		<br>
