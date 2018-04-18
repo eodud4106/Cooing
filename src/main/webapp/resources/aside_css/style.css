@@ -125,6 +125,7 @@ h1, h2, h3, h4, h5,
   .probootstrap-aside-social a:hover {
     color: #1FAD9F; }
   
+/*   사이드오른쪽 */
   .probootstrap-aside2 {
   height: 100vh;
   width: 250px;
@@ -146,15 +147,14 @@ h1, h2, h3, h4, h5,
     .probootstrap-aside2 {
       -webkit-transform: translateX(-250px);
       -ms-transform: translateX(-250px);
-      transform: translateX(-250px);
+      transform: translateX(250px);
       padding-top: 40px; } }
   .probootstrap-aside2.active {
     -webkit-transform: translateX(0px);
     -ms-transform: translateX(0px);
-    transform: translateX(0px); }
+    transform: translateX(-180px); }
   .probootstrap-aside2 .probootstrap-close-menu {
-    position: absolute;
-    right: 15px;
+    position: absolute;    
     color: #000;
     font-size: 14px;
     top: 20px;
@@ -275,6 +275,16 @@ h1, h2, h3, h4, h5,
       top: 50%;
       -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
+      transform: translateY(-50%); }      
+      .probootstrap-main .probootstrap-bar .probootstrap-toggle2 {
+      position: absolute;
+      right: 15px;
+      font-size: 20px;
+      color: #000;
+      z-index: 2;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
       transform: translateY(-50%); }
     .probootstrap-main .probootstrap-bar .probootstrap-main-site-logo {
       margin: 0 auto;
@@ -295,7 +305,7 @@ h1, h2, h3, h4, h5,
     .probootstrap-main .card-columns {
       -webkit-columns: 3;
       -moz-columns: 3;
-      columns: 3; } }
+      columns: 3; }}
   @media screen and (max-width: 960px) {
     .probootstrap-main .card-columns {
       -webkit-columns: 2;

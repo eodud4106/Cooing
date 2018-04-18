@@ -26,9 +26,16 @@ $(function(){
 
 	var toggleMenu = function() {
 		var aside = $('.js-probootstrap-aside'),
+			aside2 = $('.js-probootstrap-aside2'),
 			main = $('.js-probootstrap-main');
+		
 		$('.js-probootstrap-toggle').on('click', function(e) {
 			aside.addClass('active');
+			main.addClass('mobile-open');
+			e.preventDefault();
+		});
+		$('.js-probootstrap-toggle2').on('click', function(e) {
+			aside2.addClass('active');
 			main.addClass('mobile-open');
 			e.preventDefault();
 		});
@@ -37,13 +44,23 @@ $(function(){
 			main.removeClass('mobile-open');
 			e.preventDefault();
 		});
+		$('.js-probootstrap-close-menu2').on('click', function(e) {
+			aside2.removeClass('active');
+			main.removeClass('mobile-open');
+			e.preventDefault();
+		});
 
 		$(document).mouseup(function(e) {
 			var container = $(".probootstrap-aside");
+			var container2 = $(".probootstrap-aside2");
 	    if (!container.is(e.target) && container.has(e.target).length === 0) {
 	      aside.removeClass('active');
 	      main.removeClass('mobile-open');
 	    }
+	    if (!container2.is(e.target) && container.has(e.target).length === 0) {
+		      aside2.removeClass('active');
+		      main.removeClass('mobile-open');
+		    }
     });
     
 	};
