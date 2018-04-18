@@ -360,6 +360,22 @@ $(result).each(function(i, album) {
       } }
 
 
+select {
+  width: 100px; 
+  font-family: inherit;
+  background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%;  
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid #999;
+  border-radius: 0px;
+}
+
+select::-ms-expand { /* for IE 11 */
+    display: none;
+}
+
+
 </style>
 </head>
 <body>
@@ -441,15 +457,19 @@ $(result).each(function(i, album) {
 	
 		<div class ="search-bar">
 		<br>
-		<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}" style = "float : left; margin-left: 20px;">
+		<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}" style = "float : left; margin-left: 200px;">
 		<input type="button" value="검색" id="searchbt">
 		<div class = "search" style= "z-index:99; float:left; padding-left : 10px;" id="searchbt" onclick=""><i class="fas fa-search"></i></div>
 			
 		<!-- 정렬순 -->
-		<div class = "array" style= "z-index:99; float:right; padding-left : 10px;"><i class="fas fa-align-justify"></i></div>	
-		<div class = "array" style= "z-index:99; float:right; padding-left : 10px;"><i class="fas fa-align-justify"></i></div>
-		
-		
+		<!-- <div class = "array" style= "z-index:99; float:right; padding-left : 10px;"><i class="fas fa-align-justify"></i></div>	
+		<div class = "array" style= "z-index:99; float:right; padding-left : 10px;"><i class="fas fa-align-justify"></i></div> -->
+		<select style = "float:right; padding-left : 10px;">
+  <option selected >정렬순</option>
+  <option>최신순</option>
+  <option>인기순</option>
+</select>
+	
 	</div>
 		<br>
 	
