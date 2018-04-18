@@ -56,11 +56,25 @@ Map.prototype = {
 
 // 전역 변수 선언
 var map_box = new Map();    //box를 담을 map
+//TODO db에서 박스를 여러 개 가지고 온 경우 || '${arr_box.length}'-1 처럼 숫자를 넣어두기....
 var count = 0;              //각 텍스트박스에 id를 주기 위해 증가시킬 변수
 var arr_id_of_div_box = [];      //div_box의 id를 담을 jquery 배열
+var album_top = 0;           //앨범의 top
+var album_left = 0;         //앨범의 left
+
+var count = 0;
+
+var PAGE_WIDTH = 600;       // 페이지 당 너비
+var PAGE_HEIGHT = 600;      // 페이지 당 높이
+
+
 
 // [start] 페이지 로딩 후 처리
 $(document).ready(function(){
+
+    // album의 절대 위치 확인
+    album_top = $('.flipbook').position().top + parseInt($('.flipbook').css('margin-top').replace(/\D/g,''));
+    album_left = $('.flipbook').position().left + parseInt($('.flipbook').css('margin-left').replace(/\D/g,'')); 
 
     //캔버스 변수 선언, 엘리멘트 연결
     var $page = $('.pages');
@@ -72,59 +86,8 @@ $(document).ready(function(){
     });
 
     // 캔버스에 아이템 드랍 시 이벤트 처리
-   $page.droppable({
-        drop: function(event, ui) {
-
-            console.log('페이지 드랍' + $(this).attr('id'));
-
-            // node는 각 텍스트 상자, node를 상기 기본값으로 초기화한다.
-            var id = 'box_' + count;
-
-            // node 객체 생성
-            var node = {
-                id: id,
-                position: ui.helper.position(),
-                width: ui.helper.width,
-                height: ui.helper.height
-            };
-
-            // node의 최초 위치 조정..?
-            node.position.left -= $('.flipbook').position().left;
-            node.position.top -= $('.flipbook').position().top;
-
-            var pagenum = $(this).attr('id').replace(/\D/g,'');
-            var left = $('.flipbook').position().left + parseInt($('.flipbook').css('margin-left').replace(/\D/g,''));
-            if(pagenum % 2 == 1) {
-                left += 600;
-            }
-
-            node.postion.left += left;
-            node.postion.top += top;
-
-            console.log('flipbook left -> ' + left);
-            console.log('flipbook top -> ' + $('.flipbook').position().top);
-
-            // 드랍한 아이템이 3가지 텍스트 메뉴 중 어느 것인지 판별해서 type에 저장
-            if(ui.helper.hasClass("text")){
-                node.type = "text";
-            } else if(ui.helper.hasClass("image")){
-                node.type = "image";
-            } else if(ui.helper.hasClass("video")){
-                node.type = "video";
-            } else {
-                return;
-            }
-
-            // node를 map에 저장
-            map_box.put(id, node);
-
-            // 드랍으로 만든 node를page 위에 그림
-            renderbox(node);
-
-            // node의 아이디를 구별하기 위해 1 증가
-            count++;
-        }
-    });
+    apply_page_droppable($page);
+  
 
     // 편집창이 아닌 곳 클릭하면.... 효과 해제해버림...
     $('body').mousedown(function(e) {
@@ -178,13 +141,79 @@ $(document).ready(function(){
 });
 // [end] 페이지 로딩 후 처리
 
+/**
+ *  페이지에 아이템 droppable 적용
+ *  @param : jquery 형식의 page 엘리먼트
+ **/
+function apply_page_droppable($page) {
+    $page.droppable({
+        drop: function(event, ui) {
+
+            console.log('페이지 드랍' + $(this).attr('id'));
+
+            // node는 각 텍스트 상자, node를 상기 기본값으로 초기화한다.
+            var id = 'box_' + count;
+
+            // node 객체 생성
+            var node = {
+                id: id,
+                position: ui.helper.position(),
+                width: ui.helper.width,
+                height: ui.helper.height,
+                init_page: $(this).attr('id')
+            };
+
+            // 드랍한 페이지 번호
+            var pagenum = $(this).attr('id').replace(/\D/g,'');
+
+            // 클릭한 페이지의 위치 확인
+            var curr_page_top = album_top;
+            var curr_page_left = album_left;
+            if(pagenum % 2 == 1) {
+                // 드랍한 페이지가 홀수 페이지일 경우 우측에 위치하므로 왼쪽 페이지의 너비만큼 더해준다.
+                curr_page_left += PAGE_WIDTH;
+            }
+
+            // node의 위치 조정
+            node.position.left = event.pageX - curr_page_left;
+            node.position.top = event.pageY - curr_page_top;
+
+            // 드랍한 아이템이 3가지 텍스트 메뉴 중 어느 것인지 판별해서 type에 저장
+            if(ui.helper.hasClass("text")){
+                node.type = "text";
+            } else if(ui.helper.hasClass("image")){
+                node.type = "image";
+            } else if(ui.helper.hasClass("video")){
+                node.type = "video";
+            } else {
+                return;
+            }
+
+            // node를 map에 저장
+            map_box.put(id, node);
+
+            // 드랍으로 만든 node를 page 위에 그림
+            renderbox(node);
+
+            // node의 아이디를 구별하기 위해 1 증가
+            count++;
+        }
+    });
+}
+
 //TODOpage 초기화
 function initpage(diagram) {
    page.empty();
 }
 
 // [start] 텍스트 박스를 캔버스에 추가
-function renderbox(node) {
+/**
+ *  텍스트 박스를 캔버스에 추가
+ *  @param : (캔버스 정보를 담은 객체)
+ **/
+function renderbox(node, page) {
+
+    console.log('render 호출' + JSON.stringify(node));
 
     // var div_box;
 
@@ -219,28 +248,57 @@ function renderbox(node) {
         case "video": $div_box.addClass('videobox'); break;
     }
 
-    console.log('node position top -> ' + node.position.top);
-    console.log('node position left -> ' + node.position.left);
+
+
+
+    // 드랍한 페이지 번호
+    var pagenum = node.init_page.replace(/\D/g,'');
+
+    // 클릭한 페이지의 위치 확인
+    var curr_page_top = album_top;
+    var curr_page_left = album_left;
+    if(pagenum % 2 == 1) {
+        // 드랍한 페이지가 홀수 페이지일 경우 우측에 위치하므로 왼쪽 페이지의 너비만큼 더해준다.
+        curr_page_left += PAGE_WIDTH;
+    }
 
     $div_box.css({
         "position": "absolute",
-        "top": node.position.top,
-        "left": node.position.left,
+        "top": event.pageY - curr_page_top,
+        "left": event.pageX - curr_page_left,
         "width": node.width,
         "height": node.height
-    }).draggable({
+    });
+
+    // 초기 페이지에 div 부착
+    $('#' + node.init_page + '').append($div_box);
+
+
+
+    $div_box.draggable({
         // textbox 드래그 시 위치 이동 처리 (ui.helper는 이벤트의 대상)
         stop: function(event, ui) {
+
+            console.log("x: " + ui.offset.left + '\/n' + "y:" + ui.offset.top);
+
             var id = ui.helper.attr("id");
             var box = map_box.get(id);
             box.position.top = ui.position.top;
             box.position.left = ui.position.left;
+            console.log("box: " + JSON.stringify(box));
         },
         drag: function(event, ui) {
-            $('.div_whole_editor').css({
-                "top": ui.position.top + $('.pages').position().top + 40,
-                "left": ui.position.left + $('.pages').position().left
+
+            $('.onSelect').css({
+                "top": event.pageY - curr_page_top, 
+                "left": event.pageX - curr_page_left
             });
+
+            $('.div_whole_editor').css({
+                "top": $('.onSelect').position().top + curr_page_top - 40,
+                "left": $('.onSelect').position().left + curr_page_left
+            });
+            
         },
         containment: $('.pages')  // 캔버스 영역 밖으로 나가지 못하게 제한
     }).resizable({
@@ -257,7 +315,7 @@ function renderbox(node) {
 
     //page에 box 출력
     $div_box.find(".ui-resizable-handle").hide();
-    $('.pages').append($div_box);
+    
     arr_id_of_div_box.push($div_box.attr('id'));
     $div_box.css({
         "z-index": 2 + arr_id_of_div_box.indexOf($div_box.attr('id'))
@@ -443,12 +501,34 @@ function createWholeEditor($elem) {
     var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
 
+
+
+
+
+    // onSelect가 속한 페이지 번호
+    var pagenum = $('.onSelect').parent().attr('id').replace(/\D/g,'');
+
+    // 클릭한 페이지의 위치 확인
+    var curr_page_top = album_top;
+    var curr_page_left = album_left;
+    if(pagenum % 2 == 1) {
+        // 드랍한 페이지가 홀수 페이지일 경우 우측에 위치하므로 왼쪽 페이지의 너비만큼 더해준다.
+        curr_page_left += 600; 
+    }
+
+    console.log('onSelect top -> ' + $('.onSelect').position().top);
+    console.log('onSelect left -> ' + $('.onSelect').position().left);
+
+
+
+
+
     // 전역 편집창
     var $div_whole_editor = $('<div />');
     $div_whole_editor.addClass('edit').addClass('div_whole_editor').css({
         "position": "absolute",
-        "top": $('.onSelect').position().top + $('.pages').position().top + scrollTop + 40,
-        "left": $('.onSelect').position().left + $('.pages').position().left + scrollLeft
+        "top": $('.onSelect').position().top + curr_page_top - 40,
+        "left": $('.onSelect').position().left + curr_page_left
     }).prop("contenteditable", false);
 
     // div append
@@ -852,3 +932,469 @@ function save_div() {
     //alert(target.outerHTML);
     //$('#map_box').text();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     *  페이지 넘김 애니메이션
+     *  @param -true: 이전 장으로 이동 / -false: 다음 장으로 이동
+     *  @returns void
+     **/
+    function pageChange(page) {
+
+        console.log('pageChange 호출')
+
+
+        if (page) {
+            $('#flipbook').turn('disable', false);
+            $('#flipbook').turn('previous');
+            /* $('#flipbook').turn('disable', true); */
+
+        } else {
+            $('#flipbook').turn('disable', false);
+            $('#flipbook').turn('next');
+            /* $('#flipbook').turn('disable', true); */
+        }
+    }
+
+    /**
+     *  페이지 더하기
+     *  @returns void
+     **/
+    function pagePlus() {
+
+        console.log('pagePlus 호출')
+
+        // 페이지를 두 번 씩 만드므로 2번 반복한다.
+        for (var i = 0; i < 2; i++) {
+
+            var new_page_num = ($('#flipbook').turn('pages') + 1);
+
+            var $new_page = $('<div />', {
+                "id" : 'page' + ($('#flipbook').turn('pages') + 1),
+                "class" : "pages"
+            });
+
+            // 앨범에 $new_page를 추가한다.
+            $('#flipbook')
+                .turn('addPage', $new_page, $('#flipbook').turn('pages') + 1)
+                .turn('pages', $('#flipbook').turn('pages'));
+
+            // 새로 추가한 페이지에 droppable 효과 적용
+            apply_page_droppable($new_page);
+
+            // 새로 추가한 페이지에 droppable 효과 적용
+
+            // $('#page' + $('#flipbook').turn('pages')).droppable({
+            //     drop : function(event, ui) {
+
+            //         var pageid = $(this).attr('id');
+            //         var pagenum = pageid.replace(/\D/g,'');
+
+
+            //         var number = $('#flipbook').turn('page');
+            //         if ($('#flipbook').turn('page') > 1
+            //                 && $('#flipbook').turn('page') % 2 == 1) {
+            //             number -= 1;
+            //         }
+
+            //         if (pagenum == number
+            //                 || pagenum == (parseInt(number) + 1)) {
+            //             var div_holder = document.createElement('div');
+            //             count++;
+            //             var html = '<a class="close_border"></a><label for="cross' + count + '">'
+            //                     + '<input type="file" id="cross'
+            //                     + count
+            //                     + '"class="cross'
+            //                     + pagenum
+            //                     + '"name="cross'
+            //                     + count
+            //                     + '"onchange="readURL(this)"></label>';
+
+            //             $(div_holder).attr('id',
+            //                     'holder' + count).addClass(
+            //                     'holder').html(html);
+            //             $(div_holder).css('position', 'absolute');
+
+            //             $(div_holder).draggable({
+            //                 containment : 'parent',
+            //                 scroll : false
+            //             }).resizable();
+
+            //             $(this).append(div_holder);
+
+            //             $('.close_border').on('click', function() {
+            //                 $(this).parent().remove();
+            //             });
+            //         }
+            //     }
+            // });
+        }
+
+        
+    }
+
+    /**
+     *  이미지 저장
+     *  @param (fomadata, file, 페이지번호, last)
+     *  @returns void
+     **/
+    function fileSave(formdata, file, pagenum, last) {
+
+        console.log('fileSave 호출');
+
+        $.ajax({
+            url : 'albumImageSave',
+            processData : false,
+            contentType : false,
+            type : 'POST',
+            data : formdata,
+            dataType : 'text',
+            success : function(a) {
+
+                // fail이 아닐 경우 -> 이미지 저장됨
+                if (a != 'fail') {
+    
+                    var div_holder = document.createElement('div');
+                    $(div_holder).addClass('holder').attr('id', $(file).parent().parent().attr('id'));
+                    $(div_holder).css({
+                        'position' : 'absolute',
+                        'top' : $(file).parent().parent().css('top'),
+                        'left' : $(file).parent().parent().css('left'),
+                        'height' : $(file).parent().parent().css('height'),
+                        'width' : $(file).parent().parent().css('width')
+                    });
+    
+                    $(div_holder)
+                        .append('<img src="<c:url value="/albumEdit/img?filePath=' + a
+                                + '"/>" style="width:100%; height:100%;" class="img">');
+    
+                    $('#page' + pagenum).children('#' + $(file).parent().parent().attr('id')).remove();
+                    $('#page' + pagenum).append(div_holder);
+    
+                    if (last) {
+                        pageSave($('#page' + pagenum).html(), pagenum,
+                            (pagenum % 2 == 1 ? true : false));
+                    }
+    
+                } else {
+                    alert(a);
+                }
+            },
+            error : function(e) {
+                alert('파일 업로드 실패');
+            }
+        });
+    }
+
+    function pageSave(strhtml, nowpage, check) {
+
+
+        console.log('pageSave 호출')
+
+        $.ajax({
+            url : 'pageSave',
+            type : 'POST',
+            data : {
+                html : strhtml,
+                pagenum : nowpage
+            },
+            dataType : 'text',
+            success : function(a) {
+                if (a == 'success') {
+                    if (check) {
+                        pagePlus();
+                        $('#flipbook').turn('disable', false);
+                        $('#flipbook').turn('next');
+                        /* $('#flipbook').turn('disable', true); */
+                    }
+                } else {
+                    alert(a);
+                }
+            },
+            error : function(e) {
+                alert(JSON.stringify(e));
+            }
+        });
+    }
+
+    /**
+     * 페이지 번호를 받아 그 페이지의 html을 비우고 페이지를 증가시킴
+     * @param 페이지 번호
+     * @returns void
+     */
+    function pageallEmpty(pageNum) {
+
+        console.log('pageallEmpty 호출')
+
+        if (pageNum != 1)
+            $('#page' + (parseInt(pageNum) - 1)).html('');
+        $('#page' + pageNum).html('');
+        pagePlus();
+        $('#flipbook').turn('next');
+    }
+
+    /**
+     * 앨범 하단 '저장' 버튼 누를 때 호출
+     * @returns void
+     */
+    function fileSubmit() {
+
+        console.log('fileSubmit 호출');
+
+        // $('#flipbook').turn('page') -> 보여주는 페이지 2쪽 중 작은 페이지의 숫자를 반환?
+        var number = $('#flipbook').turn('page');
+
+        // 1페이지 이상일 경우 왼쪽(짝수) 페이지 번호로 number를 바꿈
+        if ($('#flipbook').turn('page') > 1
+                && $('#flipbook').turn('page') % 2 == 1) {
+            number -= 1;
+        }
+
+        // ?
+        var num = 0;
+
+        // 사진 입력창의 개수
+        var last = $('input[class="cross' + number + '"]').length;
+
+        // ?
+        var check = true;
+
+        //  cross 클래스가 붙은 input 개수 만큼 반복문 실행
+        $('input[class="cross' + number + '"]').each(function(index, item) {
+            // 각 index의 input에 파일이 있는 경우
+            if ($('input[class="cross' + number + '"]')[index].files[0]) {
+
+                // check는 ???
+                check = false;
+
+                // formData 선언
+                var formData = new FormData();
+
+                // 
+                formData.append('file' + num, $('input[class="cross' + number + '"]')[index].files[0]);
+
+                console.log(formData);
+
+                fileSave(formData, item, number, (index == last - 1 ? true : false));
+            }
+        });
+
+        if (check && number == 1) {
+            pageallEmpty(number);
+        }
+
+        if (number != 1) {
+            number = (parseInt(number) + 1);
+            last = $('input[class="cross' + number + '"]').length;
+            check = true;
+            $('input[class="cross' + number + '"]').each(function(index, item) {
+                if ($('input[class="cross' + number + '"]')[index].files[0]) {
+                    check = false;
+                    var formData = new FormData();
+                    formData.append('file' + num,
+                            $('input[class="cross' + number
+                                    + '"]')[index].files[0]);
+                    fileSave(formData, item, number,
+                            (index == last - 1 ? true : false));
+                }
+            });
+            if (check) {
+                pageallEmpty(number);
+            }
+        }
+    }
+
+    
+
+    function readURL(input) {
+
+        console.log('readURL 호출')
+
+        //사진 테두리 div
+        var target = $(input).parent().parent();
+
+        $(target).append(
+                '<img src="" style="width:100%; height:100%;" class="img">');
+
+        if (input.files && input.files[0]) {
+            $(target).children('label').hide();
+
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $(target).append('<a class="close_picture">');
+                $(target).children('.img').attr('src', e.target.result);
+                /* $(target).css('background-image', "url(" + e.target.result + ")"); */
+
+                $(target).children().children().attr('data',
+                        $(target).attr('id'));
+
+                $('.close_picture').on('click', function() {
+                    //$(this).parent().css('background-image', 'url("")');
+                    $(this).parent().children().show();
+                    $(this).parent().children('.img').hide();
+                    $(this).remove();
+                });
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    /*
+        [start] 앨범 배경 꾸미기
+    */
+
+    //앨범 배경 커스텀마이징
+    function bgchange(num) {
+
+        switch (num) {
+        case 0:
+            $('.pages').css("background-image",
+                    "url(..//resources//image_mj//season.jpg)");
+            break;
+        case 1:
+            $('.pages').css("background-color", "pink");
+            break;
+        case 2:
+            $('.pages').css("background-image",
+                    "url(..//resources//image_mj//vintage.jpg)");
+            break;
+        default:
+
+        }
+
+    }
+    //라디오버튼
+    $(document).ready(function() {
+
+        $('input').iCheck({
+            radioClass : 'iradio_square-green',
+        // increaseArea: '20%' // optional
+
+        });
+
+        //value값
+
+    });
+
+    function checkRadioButton(objName) {
+        var radioObj = document.all(objName);
+        var isChecked;
+        if (radioObj.length == null) { // 라디오버튼이 같은 name 으로 하나밖에 없다면
+            isChecked = radioObj.checked;
+        } else { // 라디오 버튼이 같은 name 으로 여러개 있다면
+            for (i = 0; i < radioObj.length; i++) {
+                if (radioObj[i].checked) {
+                    isChecked = true;
+                    break;
+                }
+            }
+        }
+
+        if (isChecked)
+            alert('체크된거있음');
+        else
+            alert('체크된거없음');
+
+        //value값
+        for (i = 0; i < radioObj.length; i++) {
+            if (radioObj[i].value) {
+                if (value = 1) {
+                    $('.pages').css("background-image",
+                            "url(..//resources//image_mj//season.jpg)");
+                    alert(radioObj[i].value);
+                    break;
+                }
+                if (value = 2) {
+                    $('.pages').css("background-color", "pink");
+                    alert(radioObj[i].value);
+                    break;
+                }
+                if (value = 3) {
+                    $('.pages').css("background-image",
+                            "url(..//resources//image_mj//vintage.jpg)");
+                    alert(radioObj[i].value);
+                    break;
+                }
+
+            }
+
+        }
+    }
+    /*
+        [end] 앨범 배경 꾸미기
+    */
+
+    
+
+    /**
+     *  [start] 메인 표지 업로드 관련
+     **/
+
+    // img1 태그 불러와 file1에 저장
+    //var file1 = document.querySelector('#img1');
+    
+    // file1이 바뀌면 FileReader로 파일을 읽고 #preview1의 src에 그 결과를 입력..
+    // file1.onchange = function() {
+
+    //  var fileList = file1.files;
+    //  var reader = new FileReader();
+    //  reader.readAsDataURL(fileList[0]);
+    //  reader.onload = function() {
+    //      document.querySelector('#preview1').src = reader.result;
+    //  };
+    // };
+
+
+    $('.flipbook').change(function(e) {
+
+        console.log('flipbook change 감지')
+
+        var file = e.target.files[0];
+
+        var reader = new FileReader();
+
+        reader.addEventListener("load", function() {
+
+            var container = e.target.parentNode;
+
+            container.style.background = "url(" + reader.result
+                    + ") no-repeat center";
+            container.style["background-size"] = "cover";
+
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+
+    });
+
+    function loadApp() {
+
+        // Create the flipbook
+        $('.flipbook').turn({
+            width : PAGE_WIDTH * 2,
+            height : PAGE_HEIGHT,
+            elevation : 50,
+            gradients : true,
+            autoCenter : true
+        });
+    }
+
+    
+
+    /**
+     *  [end] 메인 표지 업로드 관련
+     **/
