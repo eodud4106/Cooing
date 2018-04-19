@@ -196,6 +196,7 @@ html, body, main, .container-fluid {
 					<!-- 텍스트, 이미지, 비디오 삽입 버튼 -->
 					<div class="tool text"><i class="fas fa-align-justify"></i></div>
                 	<div class="tool image"><i class="far fa-image"></i></div>
+                	<div class="tool video"><i class="fas fa-video"></i></div>
 					<!-- 배경변경버튼 -->
 					<form class="tool checkbox" name="form">
 						<input type="radio" name="iCheck" value="1" onclick="bgchange(0)">Sakura
@@ -210,7 +211,7 @@ html, body, main, .container-fluid {
 				<!-- 앨범 영역 -->
 				<div class="album_wrapper" id="album_wrapper">
 					<div class="album" id="album"></div>
-				<div class="album" id="album">
+				</div>
 				
 			</div>
 			<!-- END row -->
