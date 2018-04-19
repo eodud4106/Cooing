@@ -193,10 +193,9 @@ html, body, main, .container-fluid {
 			<div class="view_wrapper">
 	
 				<div class="col-xl-8 col-lg-12 top_bar">
-					<!-- 텍스트, 이미지, 비디오 삽입 버튼 -->
+					<!-- 텍스트, 이미지 삽입 버튼 -->
 					<div class="tool text"><i class="fas fa-align-justify"></i></div>
                 	<div class="tool image"><i class="far fa-image"></i></div>
-                	<div class="tool video"><i class="fas fa-video"></i></div>
 					<!-- 배경변경버튼 -->
 					<form class="tool checkbox" name="form">
 						<input type="radio" name="iCheck" value="1" onclick="bgchange(0)">Sakura

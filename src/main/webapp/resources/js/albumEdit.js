@@ -349,34 +349,15 @@ function renderbox(event, ui, page) {
             //alert('파일 업로드')
             var $img = $('.onSelect image');
             var file = document.querySelector('.onSelect input[type=file]').files[0];
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('.onSelect image').css({
-                    // "background-image": "url('" + e.target.result + "')",
-                    // "background-size": "100%",
-                    // "background-repeat": "no-repeat",
-                    // "background-position": "center"
-                    "src": "url()"
-                })
-            }
-            reader.addEventListener("load", function () {
-                $img.attr("src", reader.result);
-            }, false);
 
             if (file) {
-                reader.readAsDataURL(file);
                 $('.onSelect svg').remove();
             }
             
-            
             // formData 선언
             var formData = new FormData();
-
-            // formData.append('file' + num, $('.onSelect input[type=file]')[0].files[0]);
             
             formData.append('file', file);
-
-            console.log('ajax 직전');
             
             $.ajax({
                 url : 'albumImageSave',
@@ -394,30 +375,8 @@ function renderbox(event, ui, page) {
                     	
                     	$img.attr('src', '/albumEdit/img?filePath=' + saved_name + '');
 
-//                        var div_holder = document.createElement('div');
-//                        $(div_holder).addClass('holder').attr('id', $(file).parent().parent().attr('id'));
-//                        $(div_holder).css({
-//                            'position' : 'absolute',
-//                            'top' : $(file).parent().parent().css('top'),
-//                            'left' : $(file).parent().parent().css('left'),
-//                            'height' : $(file).parent().parent().css('height'),
-//                            'width' : $(file).parent().parent().css('width')
-//                        });
-//
-//                        $(div_holder)
-//                            .append('<img src="<c:url value="/albumEdit/img?filePath=' + a
-//                                    + '"/>" style="width:100%; height:100%;" class="img">');
-//
-//                        $('#page' + pagenum).children('#' + $(file).parent().parent().attr('id')).remove();
-//                        $('#page' + pagenum).append(div_holder);
-//
-//                        if (last) {
-//                            pageSave($('#page' + pagenum).html(), pagenum,
-//                                (pagenum % 2 == 1 ? true : false));
-//                        }
-
                     } else {
-                        alert(a);
+                        alert('업로드 실패');
                     }
                 },
                 error : function(e) {
@@ -428,20 +387,6 @@ function renderbox(event, ui, page) {
             
   
         });
-
-
-        
-        // var $init_image = $('<img />', {
-        //     src : 'https://vignette.wikia.nocookie.net/wikiaglobal/images/'
-        //         + '4/4c/Wikia-Visualization-Main%2Chamsters.png/revision/latest?cb=20130314175520'
-        // }).css({
-        //     "width": "100%",
-        //     "height": "100%"
-        // })
-        // $div_box.addClass('imagebox').append($init_image);
-
-    } else if(ui.helper.hasClass("video")) {
-        // 비디오인 경우
 
     }
 
