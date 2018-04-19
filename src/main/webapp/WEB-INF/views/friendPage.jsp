@@ -522,25 +522,20 @@ select::-ms-expand { /* for IE 11 */
 	
 	</div>	
 	
-		<div class ="search-bar">
+	<div class ="search-bar">
 		<br>
 		<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}" style = "float : left; margin-left: 200px;">
 		<input type="button" value="검색" id="searchbt">
 		<div class = "search" style= "z-index:99; float:left; padding-left : 10px;" id="searchbt" onclick=""><i class="fas fa-search"></i></div>
 			
-		<!-- 정렬순 -->
-		<!-- <div class = "array" style= "z-index:99; float:right; padding-left : 10px;"><i class="fas fa-align-justify"></i></div>	
-		<div class = "array" style= "z-index:99; float:right; padding-left : 10px;"><i class="fas fa-align-justify"></i></div> -->
+		<!-- 정렬순서 -->		
 		<select style = "float:right; padding-left : 10px;">
-  <option selected >정렬순</option>
-  <option>최신순</option>
-  <option>인기순</option>
-</select>
-	
+		  <option selected >정렬순</option>
+		  <option>최신순</option>
+		  <option>인기순</option>
+		</select>	
 	</div>
-		<br>
-	
-	
+		<br>	
 	
 	
 	<!-- 앨범 리스트 -->
@@ -562,8 +557,6 @@ select::-ms-expand { /* for IE 11 */
 			</a>
 		</div>
 	</div>
-	
-	
 	
 	
 
