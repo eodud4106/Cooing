@@ -45,9 +45,9 @@
 		from
 			Page 
 		where 
-			ALBUM_NUM = #{ALBUM_NUM}
+			ALBUM_NUM = #{album_num}
 		order by
-	    	Album_num desc
+	    	page_num asc
 	</select>
 
 	

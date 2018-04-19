@@ -68,12 +68,15 @@ $(result).each(function(i, page) {
 		page_num = i+1;
 		page_html = page;
 		
-		alert(page_html);
-		
-		var page = document.createElement('div'); //페이지 클래스 div
-		$(page).addClass('page');
-		$(page).attr('id', 'page'+page_num).html(page_html);
-		$('#flipbook').append(page);
+		if(page_num == 1){
+			$('#page1').html(page_html);
+		} else{	
+			var element = $('<div />').html(page_html);
+			element.attr('class', 'pages'+page_num);
+			element.attr('id', 'page');
+			$('#flipbook').turn("addPage", element, page_num);
+		}
+
 		
 	});
 	
@@ -114,9 +117,18 @@ $(result).each(function(i, page) {
         </footer>
       </div>
     </aside>
-	  
-    <div class="flipbook" id="flipbook">
-	</div> 
+
+
+	<div id="contents">
+		<div class="flipbook-viewport">
+			<div class="container">  
+		    	<div class="flipbook" id="flipbook">
+		    		<div class=pages id=page1>
+		    		</div>
+				</div>
+			</div>
+		</div>	
+	</div>
 
 
 <!-- 메인표지업로드 -->
