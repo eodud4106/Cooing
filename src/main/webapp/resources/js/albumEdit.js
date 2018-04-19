@@ -110,7 +110,6 @@ $(document).ready(function(){
             turned: function(event, page, view) {
 
                 console.log('현재 페이지 -> ' + $('#album').turn('page'));
-                // 1페이지와 마지막 페이지를 
 
                 var total_page = $('#album').turn('pages');
 
@@ -121,13 +120,21 @@ $(document).ready(function(){
                     arr_single_page.push(total_page);
                 }
 
+                curr_page = $('#album').turn('page');
+
+                // 첫페이지와 끝페이지가 아니고, 홀수 번째(오른쪽 페이지) 페이지일 경우 1을 줄여서 왼쪽 페이지를 가리키게 함.
+                if(arr_single_page.indexOf(curr_page) == -1 && curr_page % 2 == 1) {
+                    curr_page--;
+                }
+
                 // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
-                $('.page').droppable("option", "disabled", true);
-                $('#page' + curr_page + '').droppable("option", "disabled", false);
+                apply_page_droppable($('.page'));
+                $('.page').droppable("disable");
+                $('#page' + curr_page + '').droppable("enable");
 
                 // 현재 페이지가 싱글 페이지가 아닌 경우 오른쪽 페이지도 droppable을 켠다.
                 if(arr_single_page.indexOf(curr_page) == -1) {
-                    $('#page' + (curr_page + 1) + '').droppable("option", "disabled", false);
+                    $('#page' + (curr_page + 1) + '').droppable("enable");
                 }
             }
         } 
@@ -180,7 +187,7 @@ $(document).ready(function(){
                 // arr_box_id를 바탕으로 모든 박스의 z-index 조정
                 for(var i = 0; i < arr_box_id.length; i++) {
                     $('#' + arr_box_id[i] + '').css({
-                        "z-index": 2 + i
+                        "z-index": 500 + i
                     })
                 }
                 
@@ -233,9 +240,6 @@ function apply_page_droppable($page) {
 
             event.stopPropagation();
 
-            console.log('페이지 드랍 -> ' + $(this).attr('id'));
-            console.log('page x: ' + event.pageX + ' // page y : ' + event.pageY);
-
             // 드랍한 페이지
             var page = $(this).attr('id').replace(/\D/g,'');
 
@@ -246,36 +250,6 @@ function apply_page_droppable($page) {
 }
 
 //TODO page 초기화
-function initpage(diagram) {
-   page.empty();
-}
-
-
-/**
- *  페이지에 아이템 droppable 적용
- *  @param : jquery 형식의 page 엘리먼트
- **/
-function apply_page_droppable($page) {
-
-    $page.droppable({
-        accept: '.tool',
-        drop: function(event, ui) {
-
-            event.stopPropagation();
-
-            console.log('페이지 드랍 -> ' + $(this).attr('id'));
-            console.log('page x: ' + event.pageX + ' // page y : ' + event.pageY);
-
-            // 드랍한 페이지
-            var page = $(this).attr('id').replace(/\D/g,'');
-
-            // 드랍으로 만든 node를 page 위에 그림
-            renderbox(event, ui, page);
-        }
-    });
-}
-
-//TODOpage 초기화
 function initpage(diagram) {
    page.empty();
 }
@@ -429,7 +403,7 @@ function renderbox(event, ui, page) {
     // z-index 관리용 코드
     arr_box_id.push($div_box.attr('id'));
     $div_box.css({
-        "z-index": 2 + arr_box_id.indexOf($div_box.attr('id'))
+        "z-index": 500 + arr_box_id.indexOf($div_box.attr('id'))
     })
     //$('#selection').text(arr_box_id);
 
@@ -580,7 +554,7 @@ function createWholeEditor($elem) {
     $arr_bt[$arr_bt.length-1].append($i_to_the_top).click(function() {
         // TODO 제일 위로 올리기
 
-        // id 배열 내 index(z-index는 인덱스 + 2)
+        // id 배열 내 index(z-index는 인덱스 + 500)
         var target_index = arr_box_id.indexOf($('.onSelect').attr('id'));
 
         // id 배열 내 onSelect의 id를 가장 뒤로 이동
@@ -590,7 +564,7 @@ function createWholeEditor($elem) {
         // z-index 조정
         for(var i = 0; i < arr_box_id.length; i++) {
             $('#' + arr_box_id[i] + '').css({
-                "z-index" : 2 + i
+                "z-index" : 500 + i
             })
         }
 
@@ -994,10 +968,10 @@ function removeEdit() {
 // onSelect, onEdit 상태 해제
 function clearOn() {
     $('.onEdit').draggable('enable').resizable('disable').prop("contenteditable", false).css({
-            "z-index": 2 + arr_box_id.indexOf($('.onEdit').attr('id'))
+            "z-index": 500 + arr_box_id.indexOf($('.onEdit').attr('id'))
         }).removeClass('onEdit').find(".ui-resizable-handle").hide();
     $('.onSelect').draggable('enable').resizable('disable').css({
-            "z-index": 2 + arr_box_id.indexOf($('.onSelect').attr('id'))
+            "z-index": 500 + arr_box_id.indexOf($('.onSelect').attr('id'))
         }).removeClass('onSelect').find(".ui-resizable-handle").hide();
 }
 
