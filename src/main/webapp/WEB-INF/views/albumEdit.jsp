@@ -40,6 +40,61 @@
 <link rel="stylesheet" href="../resources/album_css/album_edit_basic.css">
 <link rel="stylesheet" href="../resources/album_css/album_edit_drag_and_drop.css">
 
+<style>
+.main {
+    min-width: 200px;
+    max-width: 200px;
+    padding: 10px;
+    margin: 0 auto;
+    background: #ffffff;}
+section {
+    display: none;
+    padding: 20px 0 0;    
+    font-size : 14px;        
+    border-top: 1px solid #ddd;}
+
+/*라디오버튼 숨김*/
+.input1 {
+      display: none;}
+
+label {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 5px 10px;
+    font-weight: 600;
+    text-align: center;
+    color: #bbb;
+    border: 1px solid transparent;
+    font-size: 15px;}
+
+label:hover {
+    color: #2e9cdf;
+    cursor: pointer;}
+
+/*input 클릭시, label 스타일*/
+.input1:checked + label {
+      color: #555;
+      border: 1px solid #ddd;
+      border-top: 2px solid #2e9cdf;
+      border-bottom: 1px solid #ffffff;}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2{
+    display: block;}
+
+.search{	
+	width: 120px;
+	display:block;
+	position: absolute;	
+}
+.bt{
+	position: absolute;
+	right: 40px;
+}
+.tb1{
+	padding-top: 20px;
+}	    
+</style>
 <script>
 	var count = 0;
 
@@ -321,31 +376,11 @@
 		}
 	}
 
-	//앨범 배경 커스텀마이징
-	function bgchange(num) {
-
-		switch (num) {
-		case 0:
-			$('.pages').css("background-image",
-					"url(..//resources//image_mj//season.jpg)");
-			break;
-		case 1:
-			$('.pages').css("background-color", "pink");
-			break;
-		case 2:
-			$('.pages').css("background-image",
-					"url(..//resources//image_mj//vintage.jpg)");
-			break;
-		default:
-
-		}
-
-	}
 
 	//라디오버튼
 	$(document).ready(function() {
 
-		$('input').iCheck({
+		$('.input').iCheck({
 			radioClass : 'iradio_square-green',
 		// increaseArea: '20%' // optional
 
@@ -427,19 +462,82 @@
 			</p>
 		</div>
 		<div class="probootstrap-overflow">
-			<nav class="probootstrap-nav">
-				<input type="text" placeholder="친구검색" name="" value="" class="search">
-				<button class="bt">s</button>
-			</nav>
+		<div class="main">
+		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
+		<label for="tab1">앨범생성</label>
 
-			<p></p>
-			<p>친구1</p>
-			<p>친구2</p>
-			<p>친구3</p>
-			<p>친구4</p>
+  		<input class = "input1" id="tab2" type="radio" name="tabs">
+    	<label for="tab2">채팅</label>   
 
-			<p>그룹1</p>
-			<p>그룹2</p>
+    	<section id="content1"> 
+    	<!-- 페이지 저장 -->		
+		<form method="POST" action="personal_AlbumTotalCreate" id="albumlist_form">
+			<div id="entry">
+				<h5 style="color: black;">앨범명</h5><input type="text" id="album_name" name="album_name">
+				<h5 style="color: black;">앨범 내용</h5>
+				<input type="text" id="album_contents" style = "height: 100px;" name="album_contents">
+				<h5 style="color: black;">앨범 카테고리</h5>
+				<select name="album_category">		
+					<option value="0">여행</option>
+				    <option value="1">스포츠/래저</option>
+				    <option value="2">동물</option>
+				    <option value="3">음악</option>
+				    <option value="4">요리/음식</option>
+				    <option value="5">패션/뷰티</option>
+				    <option value="6">연예/TV</option>
+				    <option value="7">게임</option>
+				    <option value="8">영화</option>
+				    <option value="9">도서</option>
+				    <option value="10">공연/전시</option>
+				    <option value="11">외국어</option>
+				    <option value="12">전문지식</option>
+				    <option value="13">수집/제작</option>
+				    <option value="14">자기계발</option>
+				    <option value="15">육아</option>
+				    <option value="16">일상생활</option>
+				    <option value="17">자동차</option>
+				    <option value="18">낚시</option>
+				    <option value="19">건강</option>
+				    <option value="20" selected="selected">기타</option>
+				</select>
+				<h5 style="color: black;">앨범 공개범위</h5>
+				<select name="album_openrange">		
+					<option value="1" selected="selected">나만 보기</option>
+				    <option value="2">전체 공개</option>
+				    <option value="3">더 추가해서 ㄱㄱ</option>
+				</select>
+				
+				<br><br><br>
+				<!-- <input type="text" id="hashtagtx" placeholder="해쉬태그"><input type="button" id="hashtagbt" value="추가">--> 
+				<div id="hashtagvw"></div>
+				<input type="button" id="hashtagbt" value="추가">
+				<br><br>
+				<input type="hidden" name="album_party" value="1">
+				<input type="hidden" name="album_version" value="1">
+				<!-- <input type="hidden" id="hashtag" name="hashtag"> -->
+				<!-- <input type="submit" onsubmit="formCheck()"> -->
+			</div>
+			
+		</form>
+		    
+       
+    	</section>
+
+   		<section id="content2">
+       		<form id ="" method="" action="">
+			<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search">
+			<button class = "bt">s</button>
+			</form>					
+				<p></p>			
+				<p>친구1</p>
+				<p>친구2</p>
+				<p>친구3</p>
+				<p>친구4</p>
+		
+				<p>그룹1</p>
+				<p>그룹2</p>		
+    	</section>
+    	</div>			
 
 			<footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft">
 
@@ -468,21 +566,17 @@
 			<div class="row justify-content-center">
 	
 				<div class="col-xl-8 col-lg-12">
-					<!-- 개채 삽입 버튼 -->
-					<!-- <div class="tool text"><i class="fas fa-align-justify"></i></div>
-                	<div class="tool image"><i class="far fa-image"></i></div>
-                	<div class="tool video"><i class="fas fa-video"></i></div> -->
-                	<!-- 고침 -->
+					<!-- 개채 삽입 버튼 -->					
                 	<div id="text_add" style= "z-index:99; float:left; width: 5%;"><i class="fas fa-align-justify"></i></div>
 					<div id="picture_add" style="z-index:99; float:left; width: 5%;"><i class="far fa-image"></i></div>
 					<div id="video_add" style="z-index:99; float:left; width: 5%;"><i class="fas fa-video"></i></div>
 					<!-- 배경변경버튼 -->
-					<form name="form">
-						<input type="radio" name="iCheck" value="1" onclick="bgchange(0)">Sakura
-						<input type="radio" name="iCheck" value="2" onclick="bgchange(1)">Pink
-						<input type="radio" name="iCheck" value="3" checked
-							onclick="bgchange(2)">Vintage <input type=button
-							value="라디오버튼 체크여부확인" onClick="checkRadioButton('iCheck')">
+					<form name="form" style = "float:right;">
+						<input type="radio" name="iCheck" class = "input" value="1" >Sakura
+						<input type="radio" name="iCheck" class = "input" value="2" >Pink
+						<input type="radio" name="iCheck" class = "input" value="3" checked	>Vintage 
+						<div style= "z-index:99; float:right; " onClick="checkRadioButton('iCheck')"><i class="far fa-check-circle"></i></div>
+							
 					</form>
 	
 					<div class="row">
@@ -510,21 +604,25 @@
 							<div class="col-md-8 mx-auto">
 	
 								<div
-									style="width: 50px; height: 50px; z-index: 99; float: left; width: 10%;">
-									<input type="button" value="+" id="page_plus" name="">
-								</div>
-	
-								<div
-									style="width: 50px; height: 50px; z-index: 99; float: left; width: 10%;">
-									<input type="button" value="저장" onClick="fileSubmit();">
+									style="width: 50px; height: 50px; z-index: 99; float: left; width: 10%;" onClick="fileSubmit();">
+									<i class="fas fa-plus"></i>
+									<!-- <input type="button" value="저장" onClick="fileSubmit();"> -->
 								</div>
 								<div
-									style="width: 50px; height: 50px; z-index: 99; float: left; width: 10%;">
-									<input type="button" value="전장" onClick="pageChange(true);">
+									style="width: 50px; height: 50px; z-index: 99; float: left; width: 10%;" onClick="pageChange(true);">
+									<i class="fas fa-backward"></i>
+									<!-- <input type="button" value="전장" onClick="pageChange(true);"> -->
 								</div>
 								<div
-									style="width: 50px; height: 50px; z-index: 99; float: left; width: 10%;">
-									<input type="button" value="뒷장" onClick="pageChange(false);">
+									style="width: 50px; height: 50px; z-index: 99; float: left; width: 10%;" onClick="pageChange(false);">
+									<i class="fas fa-forward"></i>
+									<!-- <input type="button" value="뒷장" onClick="pageChange(false);"> -->
+								</div>
+								
+								<div
+									style="width: 50px; height: 50px; z-index: 99; float: left; width: 10%;" onClick="outOfPage();">
+									<i class="fas fa-check"></i>
+									<!-- <input type="button" value="페이지 나가기" onClick="outOfPage();"> -->
 								</div>
 	
 	
