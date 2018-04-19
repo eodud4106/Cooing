@@ -140,7 +140,7 @@ public class AlbumEditController {
 		return "fail";
 	}	
 		
-	// 앨범 임시 저장
+	// 사진 저장
 	@ResponseBody
 	@RequestMapping(value = "/albumImageSave", method = RequestMethod.POST)
 	public String pageSave(MultipartHttpServletRequest multi){
@@ -174,36 +174,41 @@ public class AlbumEditController {
 	        	serverFile = new File(strFilePath + newFileName + ext);
 	    		if ( !serverFile.isFile()) break;
 	    			newFileName = newFileName + new Date().getTime();
-	    		}		
-	             try {
-	            	 multipartfile.transferTo(serverFile);
-	             } catch (Exception e) {
-	                 e.printStackTrace();
-	                 return "fail";
-	             }
-	        }	        
-	        return newFileName + ext;
-		}
+	    	}		
+            
+            try {
+            	 multipartfile.transferTo(serverFile);
+            } catch (Exception e) {
+                 e.printStackTrace();
+                 return "fail";
+            }
+        }	        
+        
+	    System.out.println(newFileName + ext);
+        return newFileName + ext;
+
+	}
 		
-		@RequestMapping(value = "img", method = RequestMethod.GET)
-		public String img(HttpServletResponse response , HttpSession session , String filePath) {
-			logger.info("img__jinsu");
-			
-			String fullpath = strFilePath + "/" + filePath;
-			if( filePath.length() != 0){
-				FileInputStream filein = null;
-				ServletOutputStream fileout = null;
-				try {
-					filein = new FileInputStream(fullpath);
-					fileout = response.getOutputStream();
-					FileCopyUtils.copy(filein, fileout);			
-					filein.close();
-					fileout.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+	// 이미지 src 로 이미지 제공
+	@RequestMapping(value = "img", method = RequestMethod.GET)
+	public String img(HttpServletResponse response , HttpSession session , String filePath) {
+		logger.info("img__jinsu");
+		
+		String fullpath = strFilePath + "/" + filePath;
+		if( filePath.length() != 0){
+			FileInputStream filein = null;
+			ServletOutputStream fileout = null;
+			try {
+				filein = new FileInputStream(fullpath);
+				fileout = response.getOutputStream();
+				FileCopyUtils.copy(filein, fileout);			
+				filein.close();
+				fileout.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			return null;
 		}
+		return null;
+	}
 	
 }
