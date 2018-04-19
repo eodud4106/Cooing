@@ -309,14 +309,77 @@ function renderbox(event, ui, page) {
 
     } else if(ui.helper.hasClass("image")) {
         // 이미지인 경우
-        var $init_image = $('<img />', {
-            src : 'https://vignette.wikia.nocookie.net/wikiaglobal/images/'
-                + '4/4c/Wikia-Visualization-Main%2Chamsters.png/revision/latest?cb=20130314175520'
+
+        var $input_file = $('<input />', {
+            "type": "file",
+            "accept": "image/*",
+            "id": "hidden_input",
+            "name": "hidden_input"
         }).css({
+            "opacity": "0",
+            "position": "absolute",
+            "top": "115px",
+            "left": "135px",
+            "width": "30px",
+            "height": "30px"
+        });
+
+        var $i_plus = $('<i />', {
+            "class": "fas fa-plus",
+            "position": "absolute",
+            "top": "140px",
+            "left": "140px"
+        });
+
+        var $image = $('<image />', {
             "width": "100%",
-            "height": "100%"
+            "height": "100%",
+            "opacity": "1"
+        });
+        
+        $div_box.addClass('imagebox').css({
+            "width": "300px",
+            "height": "300px",
+            "font-size": "xx-large",
+            "text-align": "center",
+            "line-height": "8"
+        }).append($i_plus).append($input_file);
+
+        $input_file.change(function() {
+            //alert('파일 업로드')
+            var $img = $('.onSelect image');
+            var file = document.querySelector('.onSelect input[type=file]').files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('.onSelect image').css({
+                    // "background-image": "url('" + e.target.result + "')",
+                    // "background-size": "100%",
+                    // "background-repeat": "no-repeat",
+                    // "background-position": "center"
+                    "src": "url()"
+                })
+            }
+            reader.addEventListener("load", function () {
+                $img.attr("src", reader.result);
+            }, false);
+
+            if (file) {
+                reader.readAsDataURL(file);
+                $('.onSelect svg').remove();
+            }
+  
         })
-        $div_box.addClass('imagebox').append($init_image);
+
+
+        
+        // var $init_image = $('<img />', {
+        //     src : 'https://vignette.wikia.nocookie.net/wikiaglobal/images/'
+        //         + '4/4c/Wikia-Visualization-Main%2Chamsters.png/revision/latest?cb=20130314175520'
+        // }).css({
+        //     "width": "100%",
+        //     "height": "100%"
+        // })
+        // $div_box.addClass('imagebox').append($init_image);
 
     } else if(ui.helper.hasClass("video")) {
         // 비디오인 경우
