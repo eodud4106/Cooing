@@ -42,6 +42,7 @@ public class AlbumEditController {
 	//private static String id = null; 
 	//private static String strFilePath = "/FileSave/upload/"+id+"/";
 	private static String strFilePath = "/FileSave/upload/";
+	private static String album_identifier = null;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
 	
@@ -75,55 +76,66 @@ public class AlbumEditController {
 		update_check = albumDAO.personal_update_page1_Album(albumwrite);
 		
 		
-		
-		
-		
 		//해쉬태그
 //		String[] tags = hashtag.split(",");
 //		for(int i = 0; i < tags.length; i++){
 //			searchDAO.insertHashTag(new HashTag(0 , ialbumnum , tags[i]));
 //		}
 				
-		return "albumEdit";
+		return "redirect:/";
 	}
 	
 	//앨범 페이지별 저장하면서 앨범 생성
 	@ResponseBody
 	@RequestMapping(value = "/personal_pageSave", method = RequestMethod.POST)
-	public String personal_createpageSave(String html , String pagenum, HttpSession session, Locale locale){
-				
+	public String personal_createpageSave(String html , int pagenum, HttpSession session, Locale locale){
+		
 		int page_num = 0;
-		page_num = Integer.parseInt(pagenum);
+		page_num = pagenum;
 		
 		String page_html = null;
 		page_html = html;
 		
-		String album_writer = null;
-		album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-				
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		String formatting = dateFormat.format(date);
-		String album_identifier = formatting.concat(album_writer);
-		
-		AlbumWriteVO albumwrite = new AlbumWriteVO(0, album_writer, 1 , album_identifier);
-		
-		
-		boolean create_confirmed = false;
-		//앨범 만들기
-		create_confirmed = albumDAO.personal_createAlbum(albumwrite);
-		
-		//앨범 만들고 바로 앨범 넘버 받아서 page태그랑 연결해 주는 코드
-		if(create_confirmed == true) {
+		if(page_num == 1) {
+
+			String album_writer = null;
+			album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+					
+			Date date = new Date();
+			DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+			String formatting = dateFormat.format(date);
+			album_identifier = formatting.concat(album_writer);
 			
+			AlbumWriteVO albumwrite = new AlbumWriteVO(0, album_writer, 1 , album_identifier);
+			
+			boolean create_confirmed = false;
+			//앨범 만들기
+			create_confirmed = albumDAO.personal_createAlbum(albumwrite);
+			
+			if(create_confirmed == true) {
+				
+				//앨범 만들고 바로 앨범 넘버 받아서 page태그랑 연결해 주는 코드
+				int album_num = 0; 
+				album_num = albumDAO.personal_selectAlbum_Num(album_identifier);
+				PageHtmlVO page = new PageHtmlVO(album_num, page_num, page_html);
+				albumDAO.personal_insertAlbumOfPage(page);
+				return String.valueOf(album_num);
+				
+				
+			} else {
+				System.err.println("첫 페이지 저장 실패");
+			}
+		
+		} else{
+			//앨범 만들고 바로 앨범 넘버 받아서 page태그랑 연결해 주는 코드
 			int album_num = 0; 
 			album_num = albumDAO.personal_selectAlbum_Num(album_identifier);
 			PageHtmlVO page = new PageHtmlVO(album_num, page_num, page_html);
 			albumDAO.personal_insertAlbumOfPage(page);
-			
 			return String.valueOf(album_num);
-			
 		}
+		
+
 			
 		return "fail";
 	}	
@@ -132,9 +144,7 @@ public class AlbumEditController {
 	@ResponseBody
 	@RequestMapping(value = "/albumImageSave", method = RequestMethod.POST)
 	public String pageSave(MultipartHttpServletRequest multi){
-		
-		System.out.println("들어오니 albumimage");
-		
+
 		String newFileName = ""; 	        
 	    File fpath = new File(strFilePath);
 	    if(!fpath.isDirectory()){

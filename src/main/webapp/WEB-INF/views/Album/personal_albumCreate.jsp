@@ -51,7 +51,7 @@
 	//페이지 완전저장 할 때 코드
 	//현재 페이지 파일 저장 한번 더 하고
 	function outOfPage() {
-		fileSubmit();
+		
 		var album_name = $('#album_name').val();
 		var album_contents = $('#album_contents').val();
 		
@@ -71,7 +71,6 @@
 		);
 		
 		alert('앨명 번호 : '+album_num);
-		
 		document.getElementById('albumlist_form').submit();
 		
 	}
@@ -485,7 +484,7 @@
 				</p>
 			</footer>
 			
-					<!-- 페이지 저장 -->		
+		<!-- 페이지 저장 -->		
 		<form method="POST" action="personal_AlbumTotalCreate" id="albumlist_form">
 			<div id="entry">
 				<h3 style="color: black;">앨범 이름</h3><input type="text" id="album_name" name="album_name">
@@ -556,10 +555,14 @@
 			<div class="row justify-content-center">
 	
 				<div class="col-xl-8 col-lg-12">
-					<!-- 개채 삽입 버튼 -->
+					<!-- 개채 삽입 버튼 
 					<div class="tool text"><i class="fas fa-align-justify"></i></div>
                 	<div class="tool image"><i class="far fa-image"></i></div>
                 	<div class="tool video"><i class="fas fa-video"></i></div>
+                	-->
+                	<div id="text_add" style= "z-index:99; float:left; width: 5%;"><i class="fas fa-align-justify"></i></div>
+					<div id="picture_add" style="z-index:99; float:left; width: 5%;"><i class="far fa-image"></i></div>
+					<div id="video_add" style="z-index:99; float:left; width: 5%;"><i class="fas fa-video"></i></div>    	
 					<!-- 배경변경버튼 -->
 					<form name="form">
 						<input type="radio" name="iCheck" value="1" onclick="bgchange(0)">Sakura

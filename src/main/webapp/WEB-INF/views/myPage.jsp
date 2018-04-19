@@ -221,7 +221,7 @@ $(result).each(function(i, album) {
 $(document).ready(function () {
 	
 	initialize();
-	
+	getMyAlbumList();
 	
 	$('window').click(function(event) {
 		if (event.target == $('#myModal')) {
@@ -262,13 +262,13 @@ $(document).ready(function () {
 });
 
 //앨범 리스트 Ajax로 받는 코드
-function getTotalAlbumList() {
+function getMyAlbumList() {
 	$.ajax({
-		url: 'getTotalAlbumList',
+		url: 'getMyAlbumList',
 		type: 'post',
 		dataType: 'json',
 		success: function(result) {
-			totalAlbumList(result);
+			myAlbumList(result);
 		},
 		error: function(e) {
 			alert(JSON.stringify(e));	
@@ -277,40 +277,52 @@ function getTotalAlbumList() {
 }
 
 //앨범 리스트 출력
-function totalAlbumList(result) {
+function getMyAlbumList() {
+	$.ajax({
+		url: 'getMyAlbumList',
+		type: 'post',
+		dataType: 'json',
+		success: function(result) {
+			myAlbumList(result);
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+}
+
+function myAlbumList(result) {
 	
 	var album_num;
 	var album_html;
 	var sw = 0;
 	
-$(result).each(function(i, album) {
-		
-		album_num = album.album_num;
-		
-		for(var i=0; i<album.page_html.length; i++) {
+	$(result).each(function(i, album) {
 			
-			if(album.page_html[i] == '<' && sw == 0){
-				sw = 1;
-				album_html = album.page_html.substring(i, album.page_html.length);
+			album_num = album.album_num;
+			
+			for(var i=0; i<album.page_html.length; i++) {
 				
-				var div_card = document.createElement('div'); //카드 클래스 div
-				var div_page = document.createElement('div'); //a태그에 들어갈 div
-				var a_read_album = document.createElement('a'); //a태그
-				
-				$(div_page).addClass('page1').html(album_html);
-				a_read_album.append(div_page);
-				$(div_card).addClass('card img-loaded').append(a_read_album);
-				
-				//a태그 링크 걸어주기
-				$('.card-columns').append(div_card);
+				if(album.page_html[i] == '<' && sw == 0){
+					sw = 1;
+					album_html = album.page_html.substring(i, album.page_html.length);
+					
+					var div_card = document.createElement('div'); //카드 클래스 div
+					var div_page = document.createElement('div'); //a태그에 들어갈 div
+					var a_read_album = document.createElement('a'); //a태그
+					
+					$(div_page).addClass('page1').html(album_html);
+					$(a_read_album).attr('href', 'albumView?album_num=' + album_num + '').append(div_page);
+					$(div_card).addClass('card img-loaded').append(a_read_album);
+					$('.card-columns').append(div_card);
+					
+				}
 				
 			}
 			
-		}
-		
-		sw = 0;
-		
-	});
+			sw = 0;
+			
+		});
 	
 }
 </script>
@@ -420,8 +432,10 @@ select::-ms-expand { /* for IE 11 */
 					<li><a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a></li>
 					<li><a href="<c:url value ="/jinsu/login_get"/>">로그인...</a></li>
 					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
-					<a href="albumEdit/personal_albumCreate">앨범추가</a>
+					
 				</ul>
+				
+				<a href="albumEdit/personal_albumCreate">앨범추가</a>
 			</nav>
 
 		</div>

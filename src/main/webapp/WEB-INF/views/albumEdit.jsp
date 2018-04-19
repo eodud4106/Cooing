@@ -472,6 +472,7 @@
 					<!-- <div class="tool text"><i class="fas fa-align-justify"></i></div>
                 	<div class="tool image"><i class="far fa-image"></i></div>
                 	<div class="tool video"><i class="fas fa-video"></i></div> -->
+                	<!-- 고침 -->
                 	<div id="text_add" style= "z-index:99; float:left; width: 5%;"><i class="fas fa-align-justify"></i></div>
 					<div id="picture_add" style="z-index:99; float:left; width: 5%;"><i class="far fa-image"></i></div>
 					<div id="video_add" style="z-index:99; float:left; width: 5%;"><i class="fas fa-video"></i></div>
