@@ -27,7 +27,6 @@ import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.jinsu.dao.SearchDAO;
-import com.cooing.www.jinsu.object.HashTag;
 import com.cooing.www.jinsu.object.Member;
 
 @Controller
@@ -41,7 +40,8 @@ public class AlbumEditController {
 	
 	//private static String id = null; 
 	//private static String strFilePath = "/FileSave/upload/"+id+"/";
-	private static String strFilePath = "/FileSave/upload/";
+	private final String strFilePath = "/FileSave/upload/";
+	private final String strFilePath_mac = "/Users/insect/hindoong_upload/";
 	private static String album_identifier = null;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
@@ -89,6 +89,8 @@ public class AlbumEditController {
 	@ResponseBody
 	@RequestMapping(value = "/personal_pageSave", method = RequestMethod.POST)
 	public String personal_createpageSave(String html , int pagenum, HttpSession session, Locale locale){
+		
+		System.out.println("pagenum: " + pagenum + "\n" + "html : " + html);
 		
 		int page_num = 0;
 		page_num = pagenum;
@@ -140,13 +142,13 @@ public class AlbumEditController {
 		return "fail";
 	}	
 		
-	// 앨범 임시 저장
+	// 사진 저장
 	@ResponseBody
 	@RequestMapping(value = "/albumImageSave", method = RequestMethod.POST)
 	public String pageSave(MultipartHttpServletRequest multi){
 
 		String newFileName = ""; 	        
-	    File fpath = new File(strFilePath);
+	    File fpath = new File(strFilePath_mac);
 	    if(!fpath.isDirectory()){
 			fpath.mkdirs();			
 		}	        
@@ -171,39 +173,44 @@ public class AlbumEditController {
 	    	}
 	        File serverFile = null;
 	        while(true){
-	        	serverFile = new File(strFilePath + newFileName + ext);
+	        	serverFile = new File(strFilePath_mac + newFileName + ext);
 	    		if ( !serverFile.isFile()) break;
 	    			newFileName = newFileName + new Date().getTime();
-	    		}		
-	             try {
-	            	 multipartfile.transferTo(serverFile);
-	             } catch (Exception e) {
-	                 e.printStackTrace();
-	                 return "fail";
-	             }
-	        }	        
-	        return newFileName + ext;
-		}
+	    	}		
+            
+            try {
+            	 multipartfile.transferTo(serverFile);
+            } catch (Exception e) {
+                 e.printStackTrace();
+                 return "fail";
+            }
+        }	        
+        
+	    System.out.println(newFileName + ext);
+        return newFileName + ext;
+
+	}
 		
-		@RequestMapping(value = "img", method = RequestMethod.GET)
-		public String img(HttpServletResponse response , HttpSession session , String filePath) {
-			logger.info("img__jinsu");
-			
-			String fullpath = strFilePath + "/" + filePath;
-			if( filePath.length() != 0){
-				FileInputStream filein = null;
-				ServletOutputStream fileout = null;
-				try {
-					filein = new FileInputStream(fullpath);
-					fileout = response.getOutputStream();
-					FileCopyUtils.copy(filein, fileout);			
-					filein.close();
-					fileout.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+	// 이미지 src 로 이미지 제공
+	@RequestMapping(value = "img", method = RequestMethod.GET)
+	public String img(HttpServletResponse response , HttpSession session , String filePath) {
+		logger.info("img__jinsu");
+		
+		String fullpath = strFilePath_mac + filePath;
+		if( filePath.length() != 0){
+			FileInputStream filein = null;
+			ServletOutputStream fileout = null;
+			try {
+				filein = new FileInputStream(fullpath);
+				fileout = response.getOutputStream();
+				FileCopyUtils.copy(filein, fileout);			
+				filein.close();
+				fileout.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			return null;
 		}
+		return null;
+	}
 	
 }
