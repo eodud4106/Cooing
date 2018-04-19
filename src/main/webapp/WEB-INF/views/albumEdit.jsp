@@ -69,7 +69,7 @@ html, body, main, .container-fluid {
 .page {
 	background-color: #eee;
 }
-.hard {
+.outer {
 	background-color: #aaa;
 }
 </style>

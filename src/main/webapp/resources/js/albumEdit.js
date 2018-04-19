@@ -104,7 +104,7 @@ $(document).ready(function(){
                 // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
                 clearOn();
                 // page 저장
-                savePage();
+                //savePage();
 
             },
             turned: function(event, page, view) {
@@ -113,18 +113,25 @@ $(document).ready(function(){
 
                 var total_page = $('#album').turn('pages');
 
-                var arr_single_page = [1];
-                
-                if(total_page % 2 == 0) {
-                    // 총 페이지 수가 짝수일 경우 마지막 페이지는 싱글 페이지이므로 배열에 추가한다.
-                    arr_single_page.push(total_page);
-                }
+                // 표지로 사용될 페이지
+                var arr_hard = [1, 2, total_page - 1, total_page];
+
+                var arr_single_page = [1, total_page];
 
                 curr_page = $('#album').turn('page');
 
                 // 첫페이지와 끝페이지가 아니고, 홀수 번째(오른쪽 페이지) 페이지일 경우 1을 줄여서 왼쪽 페이지를 가리키게 함.
                 if(arr_single_page.indexOf(curr_page) == -1 && curr_page % 2 == 1) {
                     curr_page--;
+                }
+
+                // 로딩되는 페이지의 범위
+                var range = $('#album').turn('range', curr_page);
+                for(var i = range[0]; i <= range[1]; i++) {
+                    // 로딩 된 페이지가 hard에 속하는 경우 hard 클래스를 준다...
+                    if(arr_hard.indexOf(i) > -1 ) {
+                        $('#page' + i + '').addClass('outer');
+                    }
                 }
 
                 // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
@@ -140,7 +147,9 @@ $(document).ready(function(){
         } 
     });
 
-    // album의 절대 위치 확인
+
+
+
     album_top = $('#album').position().top + Number($('#album').css('margin-top').replace('px',''));
     album_left = $('#album').position().left + Number($('#album').css('margin-left').replace('px',''));
 
@@ -207,26 +216,17 @@ function createNewAlbum() {
     // 최초 페이지 수
     var init_page = 12;
 
-    // 표지로 사용될 페이지
-    var arr_hard = [1, 2, init_page - 1, init_page];
-
     // 페이지 생성 후 album div에 부착
     for(var i = 1; i <= init_page; i++) {
         $page = $('<div />', {
             'id': 'page' + i,
-            'class': 'page'
+            'class': 'page hard'
         });
-
-        // 표지로 사용될 페이지는 hard 클래스 추가
-        if(arr_hard.indexOf(i) > -1) {
-            $page.addClass('hard');
-        }
 
         $page.appendTo($('#album'));
     }
     
 }
-
 
 /**
  *  페이지에 아이템 droppable 적용
@@ -292,12 +292,14 @@ function renderbox(event, ui, page) {
             "id": "hidden_input",
             "name": "hidden_input"
         }).css({
-            "opacity": "0",
             "position": "absolute",
-            "top": "115px",
+            "top": "110px",
             "left": "135px",
             "width": "30px",
-            "height": "30px"
+            "height": "30px",
+            "margin": "auto",
+            "opacity": "0",
+            "overflow": "hidden"
         });
 
         var $i_plus = $('<i />', {
@@ -309,8 +311,9 @@ function renderbox(event, ui, page) {
 
         var $image = $('<img />', {
             "width": "100%",
-            "height": "100%",
-            "opacity": "1"
+            "height": "100%"
+        }).css({
+            "display": "none"
         });
         
         $div_box.addClass('imagebox').css({
@@ -349,7 +352,9 @@ function renderbox(event, ui, page) {
                     // fail이 아닐 경우 -> 이미지 저장됨
                     if (saved_name != 'fail') {
                     	
-                    	$img.attr('src', 'img?filePath=' + saved_name);
+                    	$img.attr('src', 'img?filePath=' + saved_name).css({
+                            "display": "block"
+                        });
                     	
                     	
 
@@ -1000,26 +1005,6 @@ function createTooltip($elem, text) {
 }
 // [end] 도움말 생성
 
-function save_div() {
-    var target = document.getElementById('box_0');
-    $(target).draggable('destroy').resizable('destroy');
-    var clone = $(target.outerHTML);
-    // clone.css('background-color', 'blue').draggable({
-    //     // textbox 드래그 시 위치 이동 처리 (ui.helper는 이벤트의 대상)
-    //     stop: function(event, ui) {
-    //         var id = ui.helper.attr("id");
-    //         var box = map_box.get(id);
-    //         box.position.top = ui.position.top;
-    //         box.position.left = ui.position.left;
-    //     },
-    //     containment: '.page-wrapper'  // 캔버스 영역 밖으로 나가지 못하게 제한
-    // });
-    $(target).remove();
-    renderbox(clone);
-    //$('.page-wrapper').append(clone);
-    //alert(target.outerHTML);
-    //$('#map_box').text();
-}
 
 
 /**
@@ -1076,98 +1061,87 @@ function savePage() {
     // 페이지 추가는 커버 바로 앞에 두 페이지 씩 추가하는 형태
     var total_page = $('#album').turn('pages');
 
-    var $target = $('#page' + (total_page -2) + '');
-
-    var $element = $('<div />');
-
-
     //2페이지 추가이므로 2번 반복
-    // for(var i = 0; i < 2; i++) {
+    for(var i = 0; i < 2; i++) {
 
-    //     // 우선 뒤쪽 커버 두 장의 아이디의 넘버를 2씩 더해준다.
-    //     $('#page' + (total_page - i) + '').attr('id', 'page' + (total_page + 2 - i) );
+        // 새 뒷 커버 생성
+        var $page = $('<div />', {
+            'id': 'page' + (total_page + (i+1)),
+            'class': 'page hard'
+        });
 
-    //     // 새 속지 생성
-    //     var $page = $('<div />', {
-    //         'id': 'page' + (total_page + i),
-    //         'class': 'page'
-    //     });
+        //뒷 커버를 추가
+        $('#album').turn('addPage', $page, (total_page+1+i));
+    }
 
-    //     //$target.after($page);
-    //     $('#album').turn('addPage', $page, (total_page+1+i));
-    // }
+    //기존 페이지의 아이디와 innerHTML을 두 페이지 씩 뒤로 이동
+    for(var i = $('#album').turn('pages'); i > curr_page+2; i--) {
 
+        $('#page' + i + '').html($('#page' + (i - 2) + '').html());
+        $('#page' + i + '').attr('id', $('#page' + (i - 2) + '').attr('id'));
 
-    // $('#album').turn({
-    //     display: 'double',  // 한 번에 보여줄 페이지
-    //     inclination: 50,    // 페이지 넘김 효과 시의 경사도
-    //     width: PAGE_WIDTH * 2,
-    //     height: PAGE_HEIGHT,
-    //     when: {             // 이벤트 리스너
-    //         turning: function(event, page, view) {
-    //             // 편집창 제거
-    //             removeEdit();
-    //             // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
-    //             clearOn();
-    //             // page 저장
-    //             savePage();
+    }
 
-    //         },
-    //         turned: function(event, page, view) {
-
-    //             console.log('현재 페이지 -> ' + $('#album').turn('page'));
-    //             // 1페이지와 마지막 페이지를 
-    //             var curr_page = $('#album').turn('page');
-    //             var total_page = $('#album').turn('pages');
-
-    //             var arr_single_page = [1];
-                
-    //             if(total_page % 2 == 0) {
-    //                 // 총 페이지 수가 짝수일 경우 마지막 페이지는 싱글 페이지이므로 배열에 추가한다.
-    //                 arr_single_page.push(total_page);
-    //             }
-
-    //             // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
-    //             $('.page').droppable("option", "disabled", true);
-    //             $('#page' + curr_page + '').droppable("option", "disabled", false);
-
-    //             // 현재 페이지가 싱글 페이지가 아닌 경우 오른쪽 페이지도 droppable을 켠다.
-    //             if(arr_single_page.indexOf(curr_page) == -1) {
-    //                 $('#page' + (curr_page + 1) + '').droppable("option", "disabled", false);
-    //             }
-    //         }
-    //     } 
-    // });
+    apply_page_droppable($('.page'));
 
 
+    $('#album').turn({
+        display: 'double',  // 한 번에 보여줄 페이지
+        inclination: 50,    // 페이지 넘김 효과 시의 경사도
+        width: PAGE_WIDTH * 2,
+        height: PAGE_HEIGHT,
+        when: {             // 이벤트 리스너
+            turning: function(event, page, view) {
+                // 편집창 제거
+                removeEdit();
+                // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
+                clearOn();
+                // page 저장
+                //savePage();
 
-    var range = $('#album').turn('range', curr_page);
-    /*
-    1페이지면 range[1] - 3
-    2~3페이지면 range[1] -1
-    tp-1~2면 range[1] -1
-    tp면 range[0] +3
+            },
+            turned: function(event, page, view) {
 
-    */
+                console.log('현재 페이지 -> ' + $('#album').turn('page'));
 
-    console.log('range: ' + range);
-    // for (var page = range[0]; page<=range[1]; page++) {
-    //     if (!$('#flipbook').turn('hasPage', page)) {
-    //         $('#flipbook').turn('addPage', $('<div />', {
-    //             'id': 'page' + (total_page + i),
-    //             'class': 'page'
-    //         }), page);
-    //     }
-    // }
-    
+                var total_page = $('#album').turn('pages');
 
-    // var $element = $('<div />');
-    // $('#album').turn(‘addPage’, $element, total_page-2);
+                // 표지로 사용될 페이지
+                var arr_hard = [1, 2, total_page - 1, total_page];
+
+                var arr_single_page = [1, total_page];
+
+                curr_page = $('#album').turn('page');
+
+                // 첫페이지와 끝페이지가 아니고, 홀수 번째(오른쪽 페이지) 페이지일 경우 1을 줄여서 왼쪽 페이지를 가리키게 함.
+                if(arr_single_page.indexOf(curr_page) == -1 && curr_page % 2 == 1) {
+                    curr_page--;
+                }
+
+                // 로딩되는 페이지의 범위
+                var range = $('#album').turn('range', curr_page);
+                for(var i = range[0]; i <= range[1]; i++) {
+                    // 로딩 된 페이지가 hard에 속하는 경우 hard 클래스를 준다...
+                    if(arr_hard.indexOf(i) > -1 ) {
+                        $('#page' + i + '').addClass('outer');
+                    }
+                }
+
+                // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
+                apply_page_droppable($('.page'));
+                $('.page').droppable("disable");
+                $('#page' + curr_page + '').droppable("enable");
+
+                // 현재 페이지가 싱글 페이지가 아닌 경우 오른쪽 페이지도 droppable을 켠다.
+                if(arr_single_page.indexOf(curr_page) == -1) {
+                    $('#page' + (curr_page + 1) + '').droppable("enable");
+                }
+            }
+        } 
+    });
 
  }
     
-
-
 
 
 /*
