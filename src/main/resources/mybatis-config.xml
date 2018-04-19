@@ -16,6 +16,7 @@
 		<typeAlias type="com.cooing.www.jinsu.object.Search" alias="search"/>
 		<typeAlias type="com.cooing.www.jinsu.object.CategoryPop" alias="categorypop"/>
 		<typeAlias type="com.cooing.www.joon.vo.AlbumLikesVO" alias="albumlikes"/>
+		<typeAlias type="com.cooing.www.hindoong.vo.ImgVO" alias="img"/>
 	</typeAliases>
  	<mappers>
 		<mapper resource="mappers/messageMapper.xml"/>
@@ -25,5 +26,6 @@
 		<mapper resource="mappers/albumlistandreadMapper.xml"/>
 		<mapper resource="mappers/searchMapper.xml"/>
 		<mapper resource="mappers/albumlikesMapper.xml"/>
+		<mapper resource="mappers/imgMapper.xml"/>
 	</mappers>
 </configuration>
