@@ -27,7 +27,6 @@ import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.jinsu.dao.SearchDAO;
-import com.cooing.www.jinsu.object.HashTag;
 import com.cooing.www.jinsu.object.Member;
 
 @Controller
@@ -41,7 +40,8 @@ public class AlbumEditController {
 	
 	//private static String id = null; 
 	//private static String strFilePath = "/FileSave/upload/"+id+"/";
-	private static String strFilePath = "/FileSave/upload/";
+	private final String strFilePath = "/FileSave/upload/";
+	private final String strFilePath_mac = "/Users/insect/hindoong_upload/";
 	private static String album_identifier = null;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
@@ -146,7 +146,7 @@ public class AlbumEditController {
 	public String pageSave(MultipartHttpServletRequest multi){
 
 		String newFileName = ""; 	        
-	    File fpath = new File(strFilePath);
+	    File fpath = new File(strFilePath_mac);
 	    if(!fpath.isDirectory()){
 			fpath.mkdirs();			
 		}	        
@@ -171,7 +171,7 @@ public class AlbumEditController {
 	    	}
 	        File serverFile = null;
 	        while(true){
-	        	serverFile = new File(strFilePath + newFileName + ext);
+	        	serverFile = new File(strFilePath_mac + newFileName + ext);
 	    		if ( !serverFile.isFile()) break;
 	    			newFileName = newFileName + new Date().getTime();
 	    	}		
@@ -194,7 +194,7 @@ public class AlbumEditController {
 	public String img(HttpServletResponse response , HttpSession session , String filePath) {
 		logger.info("img__jinsu");
 		
-		String fullpath = strFilePath + "/" + filePath;
+		String fullpath = strFilePath_mac + filePath;
 		if( filePath.length() != 0){
 			FileInputStream filein = null;
 			ServletOutputStream fileout = null;
