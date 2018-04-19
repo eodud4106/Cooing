@@ -343,7 +343,7 @@ function renderbox(event, ui, page) {
             "font-size": "xx-large",
             "text-align": "center",
             "line-height": "8"
-        }).append($i_plus).append($input_file);
+        }).append($i_plus).append($input_file).append($image);
 
         $input_file.change(function() {
             //alert('파일 업로드')
@@ -367,8 +367,67 @@ function renderbox(event, ui, page) {
                 reader.readAsDataURL(file);
                 $('.onSelect svg').remove();
             }
+            
+            
+            // formData 선언
+            var formData = new FormData();
+
+            // formData.append('file' + num, $('.onSelect input[type=file]')[0].files[0]);
+            
+            formData.append('file', file);
+
+            console.log('ajax 직전');
+            
+            $.ajax({
+                url : 'albumImageSave',
+                processData : false,
+                contentType : false,
+                type : 'POST',
+                data : formData,
+                dataType : 'text',
+                success : function(saved_name) {
+                	
+                	//saved_name을 받으면 이미지 src에 연결한다.
+
+                    // fail이 아닐 경우 -> 이미지 저장됨
+                    if (saved_name != 'fail') {
+                    	
+                    	$img.attr('src', '/albumEdit/img?filePath=' + saved_name + '');
+
+//                        var div_holder = document.createElement('div');
+//                        $(div_holder).addClass('holder').attr('id', $(file).parent().parent().attr('id'));
+//                        $(div_holder).css({
+//                            'position' : 'absolute',
+//                            'top' : $(file).parent().parent().css('top'),
+//                            'left' : $(file).parent().parent().css('left'),
+//                            'height' : $(file).parent().parent().css('height'),
+//                            'width' : $(file).parent().parent().css('width')
+//                        });
+//
+//                        $(div_holder)
+//                            .append('<img src="<c:url value="/albumEdit/img?filePath=' + a
+//                                    + '"/>" style="width:100%; height:100%;" class="img">');
+//
+//                        $('#page' + pagenum).children('#' + $(file).parent().parent().attr('id')).remove();
+//                        $('#page' + pagenum).append(div_holder);
+//
+//                        if (last) {
+//                            pageSave($('#page' + pagenum).html(), pagenum,
+//                                (pagenum % 2 == 1 ? true : false));
+//                        }
+
+                    } else {
+                        alert(a);
+                    }
+                },
+                error : function(e) {
+                    alert('파일 업로드 실패');
+                }
+            });
+
+            
   
-        })
+        });
 
 
         
