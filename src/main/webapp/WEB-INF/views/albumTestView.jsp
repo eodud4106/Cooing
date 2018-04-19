@@ -369,7 +369,7 @@ function checkRadioButton(iCheck)
 			dataType: 'text',
 			success: function(a){
 				if(a == 'success'){
-					alert("좋아요 성공");	
+					alert("좋아요!");	
 				}
 				else{
 					alert(a);
@@ -414,6 +414,7 @@ function checkRadioButton(iCheck)
 	function replyWin(){  
     window.open("albumReply", "댓글 창", "width=800, height=300, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
 	}  
+
 </script>
 
 </head>
@@ -446,6 +447,7 @@ function checkRadioButton(iCheck)
 				<p><button type="button" onclick="likes()">좋아요!</button></p>		
 				<p><button type="button" onclick="deletelikes()">좋아요취소!</button></p> 		
 				<p><button type="button" onClick="javascript:replyWin();">댓글 작성</button></p>  
+
 
         <footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft">
          

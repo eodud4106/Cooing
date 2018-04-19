@@ -19,4 +19,9 @@
 		, #{reply_contents}
 	)
 </insert>
+
+<!-- 댓글 삭제 -->
+<delete id="replyDelete" parameterType="albumreply">
+delete from reply where reply_memberid = #{reply_memberid} and reply_albumnum = #{reply_albumnum}
+</delete>
 </mapper>

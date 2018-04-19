@@ -28,7 +28,7 @@ public class AlbumReplyController {
 	// 댓글 작성
 	@ResponseBody
 	@RequestMapping(value = "/writeReply", method = RequestMethod.POST)
-	public String addLikes(Model model, @RequestParam int reply_albumnum, 
+	public String writeReply(Model model, @RequestParam int reply_albumnum, 
 			@RequestParam String reply_contents) {
 		
 		String str = null;
@@ -43,6 +43,27 @@ public class AlbumReplyController {
 		vo.setReply_contents(reply_contents);
 		 
 		albumreplyDAO.replyWrite(vo);
+		
+		str= "success";
+		
+		return str;
+	}
+	// 댓글 삭제
+	@ResponseBody
+	@RequestMapping(value = "/deleteReply", method = RequestMethod.POST)
+	public String deleteReply(Model model, @RequestParam int reply_albumnum) {
+		
+		String str = null;
+		
+		logger.debug("댓글 삭제: " + reply_albumnum);
+
+		String id = "test";
+		 
+		AlbumReplyVO vo = new AlbumReplyVO();
+		vo.setReply_memberid(id);
+		vo.setReply_albumnum(reply_albumnum);
+		 
+		albumreplyDAO.replyDelete(vo);
 		
 		str= "success";
 		

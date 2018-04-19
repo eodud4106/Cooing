@@ -36,14 +36,42 @@ function writereply(){
 		}		
 	});
 }
+// 댓글 삭제
+function deletereply(){
 
+	var num = 15;
+	
+	$.ajax({
+		url:'deleteReply',
+		type: 'POST',		
+		data: {
+			"reply_albumnum": num,
+		},
+		dataType: 'text',
+		success: function(a){
+			
+			if(a == 'success'){
+				alert("댓글 삭제");
+				
+			}
+			else{
+				alert(a);
+			}
+		},
+		error:function(e){
+			alert(JSON.stringify(e));
+		}		
+	});
+}
 </script>
 <body>
 <form>
 댓글 내용
 &nbsp;<input type="text" id="reply" name="reply" size="70">
 &nbsp;<input type="submit" onclick="writereply()" value="저장">
+&nbsp;<button type="button" onClick="deletereply();">삭제</button>
 </form>
+
 </body>
 </html>
 
