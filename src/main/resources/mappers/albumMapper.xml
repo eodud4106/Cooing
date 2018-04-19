@@ -41,9 +41,6 @@
 			album_contents = #{album_contents},
 			album_category = #{album_category},
 			album_openrange = #{album_openrange}
-			<if test="album_thummbnail != null">
-			,album_thumbnail = #{album_thumbnail}
-			</if>
 		where
 			album_num = #{album_num}
 	</update>

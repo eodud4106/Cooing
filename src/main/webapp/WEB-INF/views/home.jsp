@@ -32,6 +32,7 @@ $(document).ready(function () {
 	initialize();
 	
 	
+	
 	$('window').click(function(event) {
 		if (event.target == $('#myModal')) {
 			$('#myModal').css('display', 'none');
@@ -245,13 +246,13 @@ $(result).each(function(i, album) {
 	
 		<!--  -->
 		<div class="card">
-			<a href="single.html">
+			<a href="single.html" id="test1">
 				<img class="card-img-top probootstrap-animate" 
 				src="resources/aside_images/img_1.jpg" alt="Card image cap">
 			</a>
 		</div>
 		<div class="card">
-			<a href="single.html">
+			<a href="single.html" id="test2">
 				<img class="card-img-top probootstrap-animate" 
 				src="resources/image_mj/a1.jpg" alt="Card image cap">
 			</a>

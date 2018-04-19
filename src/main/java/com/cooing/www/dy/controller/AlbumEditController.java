@@ -205,5 +205,25 @@ public class AlbumEditController {
 			}
 			return null;
 		}
+		
+		@ResponseBody
+		@RequestMapping(value = "/modifiy_AlbumInfomation", method = RequestMethod.POST)
+		public String modifiy_AlbumInfomation(int album_num, String album_name, String album_contents,
+				int album_category, int album_openrange){
+			
+			AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_contents, album_category, album_openrange);
+			boolean check_infomationUpdate = false;
+			check_infomationUpdate = albumDAO.personal_update_page1_Album(albumwrite);
+			
+			if(check_infomationUpdate == true) {
+				return "success";
+			}else{
+				return "fail";
+			}
+			
+			
+		}
+		
+		
 	
 }

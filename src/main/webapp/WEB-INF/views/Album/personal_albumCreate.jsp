@@ -101,34 +101,41 @@ label:hover {
 </style>
 <script>
 	var count = 0;
-	var album_num = 0;
-
-	//페이지 완전저장 할 때 코드
-	//현재 페이지 파일 저장 한번 더 하고
-	function outOfPage() {
+	
+	function modifiy_AlbumInfomation() {
 		
+		alert('들어오니?');
+		
+		var album_num = 52; //수정 필요
 		var album_name = $('#album_name').val();
 		var album_contents = $('#album_contents').val();
+		var album_category = $('#album_category').val();
+		var album_openrange = $('#album_openrange').val();
 		
-		if(album_name.length == 0){
-			alert('앨범 이름을 입력하세요.');
-			return false;
-		}
-		
-		if(album_contents.length == 0){
-			alert('앨범 내용을 입력하세요.');
-			return false;
-		}
-		
-		
-		$('#albumlist_form').append(
-			'<input type="hidden" name="album_num" value="' + album_num + '">'	
-		);
-		
-		alert('앨명 번호 : '+album_num);
-		document.getElementById('albumlist_form').submit();
-		
+		$.ajax({
+			url : 'modifiy_AlbumInfomation',
+			type : 'POST',
+			data : {
+				album_num : album_num,
+				album_name : album_name,
+				album_contents : album_contents,
+				album_category : album_category,
+				album_openrange : album_openrange
+				
+			},
+			dataType : 'text',
+			success : function(a) {
+				if(a == 'success'){
+					alert('저장 성공');
+				}
+			},
+			error : function(e) {
+				alert(JSON.stringify(e));
+			}
+		});
 	}
+	
+	
 	
 	
 	// 페이지 넘김 효과 관련
@@ -506,13 +513,12 @@ label:hover {
 
     	<section id="content1"> 
     	<!-- 페이지 저장 -->		
-		<form method="POST" action="personal_AlbumTotalCreate" id="albumlist_form">
 			<div id="entry">
-				<h5 style="color: black;">앨범명</h5><input type="text" id="album_name" name="album_name">
+				<h5 style="color: black;">앨범명</h5><input type="text" id="album_name" name="album_name" value="앨범이름을 입력해주세요.">
 				<h5 style="color: black; ">앨범 내용</h5>
-				<input type="text" style = "height: 100px;"id="album_contents" name="album_contents">
+				<input type="text" style = "height: 100px;"id="album_contents" name="album_contents" value="앨범내용을 입력해주세요.">
 				<h5 style="color: black;">앨범 카테고리</h5>
-				<select name="album_category">		
+				<select name="album_category" id="album_category">		
 					<option value="0">여행</option>
 				    <option value="1">스포츠/래저</option>
 				    <option value="2">동물</option>
@@ -536,24 +542,23 @@ label:hover {
 				    <option value="20" selected="selected">기타</option>
 				</select>
 				<h5 style="color: black;">앨범 공개범위</h5>
-				<select name="album_openrange">		
+				<select name="album_openrange" id="album_openrange">		
 					<option value="1" selected="selected">나만 보기</option>
 				    <option value="2">전체 공개</option>
 				    <option value="3">더 추가해서 ㄱㄱ</option>
 				</select>
 				
+				<input type="button" value="앨범정보저장" onclick="modifiy_AlbumInfomation()">
 				<br><br><br>
 				<!-- <input type="text" id="hashtagtx" placeholder="해쉬태그"><input type="button" id="hashtagbt" value="추가">--> 
 				<div id="hashtagvw"></div>
-				<input type="button" id="hashtagbt" value="추가">
 				<br><br>
-				<input type="hidden" name="album_party" value="1">
-				<input type="hidden" name="album_version" value="1">
+				<input type="button" id="hashtagbt" value="추가">
+				
+				<br><br>
 				<!-- <input type="hidden" id="hashtag" name="hashtag"> -->
 				<!-- <input type="submit" onsubmit="formCheck()"> -->
 			</div>
-			
-		</form>
 		    
        
     	</section>
@@ -657,7 +662,6 @@ label:hover {
 								<div
 									style="width: 50px; height: 50px; z-index: 99; float: left; width: 10%;" onClick="outOfPage();">
 									<i class="fas fa-check"></i>
-									<!-- <input type="button" value="페이지 나가기" onClick="outOfPage();"> -->
 								</div>
 	
 	
