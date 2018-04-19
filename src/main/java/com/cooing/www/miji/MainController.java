@@ -98,11 +98,11 @@ public class MainController {
 		return albumList;
 	}
 	
-	//그룹페이지
-	/*@RequestMapping(value = "/groupPage", method = RequestMethod.GET)
-	public String groupPage(){
+	//랭킹페이지
+	@RequestMapping(value = "/LankingPage", method = RequestMethod.GET)
+	public String LankingPage(){
 			
-		return "groupPage";
-	}*/
+		return "LankingPage";
+	}
 	
 }
