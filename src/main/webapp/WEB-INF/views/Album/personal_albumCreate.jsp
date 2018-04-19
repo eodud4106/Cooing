@@ -102,11 +102,13 @@ label:hover {
 <script>
 	var count = 0;
 	
+	var selectcheck = true;
+	
 	function modifiy_AlbumInfomation() {
 		
 		alert('들어오니?');
 		
-		var album_num = 52; //수정 필요
+		var album_num = $('#album_num').val();
 		var album_name = $('#album_name').val();
 		var album_contents = $('#album_contents').val();
 		var album_category = $('#album_category').val();
@@ -254,19 +256,20 @@ label:hover {
 	}
 
 	function pageSave(strhtml, nowpage, check) {
+		var album_num = $('#album_num').val();
+		
 		$.ajax({
 			url : 'personal_pageSave',
 			type : 'POST',
 			data : {
 				html : strhtml,
-				pagenum : nowpage
+				pagenum : nowpage,
+				albumnum : album_num
 			},
 			dataType : 'text',
 			success : function(a) {
 				if (a != 'fail') {
 					if (check) {
-						album_num = a;
-						alert(album_num);
 						pagePlus();
 						$('#flipbook').turn('disable', false);
 						$('#flipbook').turn('next');
@@ -289,9 +292,50 @@ label:hover {
 		pagePlus();
 		$('#flipbook').turn('next');
 	}
+	
+	function thumbnailSave(){
+		//앨범 번호 불러오기
+		var album_num = $('#album_num').val();
+		var formData = new FormData();
+		formData.append('file', $('#img1')[0].files[0]);
+		//앨범 썸네일 이미지 C드라이브에 파일 저장 
+		$.ajax({
+			url : 'thumbnailSave',
+			processData : false,
+			contentType : false,
+			type : 'POST',
+			data :formData,
+			dataType : 'text',
+			success : function(a) {
+				if (a != 'fail') {
+					//앨범 썸네일 경로 서버에 저장 후 배경 이미지 변경
+					$.ajax({
+						url : 'thumbnailPathSave',
+						type : 'POST',
+						data :{thumbnail:a , albumnum:album_num },
+						dataType : 'text',
+						success : function(b) {
+							$('#page1').css('background-image' , 'url(./thumbnail?filePath='+a+')');
+						},
+						error : function(e) {
+							alert(JSON.stringify(e));
+						}
+					});	
+				} else {
+					alert(a);
+				}
+			},
+			error : function(e) {
+				alert(JSON.stringify(e));
+			}
+		});		
+	}
 
 	function fileSubmit() {
 		var number = $('#flipbook').turn('page');
+		if(number == 1){
+			thumbnailSave();
+		}
 		if ($('#flipbook').turn('page') > 1
 				&& $('#flipbook').turn('page') % 2 == 1) {
 			number -= 1;
@@ -480,12 +524,31 @@ label:hover {
 	   
 	   }else{
 			alert('체크된거없음');
-	   }
-
-	       
-
-	 
+	   }	 
 	}
+	
+	/* function pageExit() {
+		if(selectcheck){
+			var album_num = $('#album_num').val();
+		      //페이지를 끝낼 때 하고 싶은 것을 지정합니다.  
+			$.ajax({
+				url : 'deleteAlbum',
+				type : 'POST',
+				data :{albumnum:album_num},
+				dataType : 'text',
+				success : function(a) {
+					if (a != 'fail') {
+						
+					} else {
+						alert("저장 실패");
+					}
+				},
+				error : function(e) {
+					alert(JSON.stringify(e));
+				}
+			});	      
+		}
+	}  */
 </script>
 
 </head>
@@ -554,6 +617,7 @@ label:hover {
 				<div id="hashtagvw"></div>
 				<br><br>
 				<input type="button" id="hashtagbt" value="추가">
+				<input type="hidden" name="album_num" value="${albumnum }" id="album_num">
 				
 				<br><br>
 				<!-- <input type="hidden" id="hashtag" name="hashtag"> -->
@@ -681,19 +745,6 @@ label:hover {
 
 	<!-- 메인표지업로드 -->
 	<script type="text/javascript">
-		// img1 태그 불러와 file1에 저장
-		var file1 = document.querySelector('#img1');
-		
-		// file1이 바뀌면 FileReader로 파일을 읽고 #preview1의 src에 그 결과를 입력..
-		file1.onchange = function() {
-			var fileList = file1.files;
-			var reader = new FileReader();
-			reader.readAsDataURL(fileList[0]);
-			reader.onload = function() {
-				document.querySelector('#preview1').src = reader.result;
-			};
-		};
-
 		var homePhoto = document.querySelector(".flipbook");
 
 		homePhoto.onchange = function(e) {

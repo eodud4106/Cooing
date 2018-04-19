@@ -45,6 +45,11 @@
 			album_num = #{album_num}
 	</update>
 	
+	<update id="updateThumbnail" parameterType="map">
+		update albumlist set album_thumbnail = #{album_thumbnail}
+			where album_num = #{album_num}
+	</update>
+	
 	<select id="personal_selectAlbum_Num" parameterType="String" resultType="int">
 		select album_num from albumlist where ALBUM_IDENTIFIER = #{album_identifier}
 	</select>
@@ -69,6 +74,8 @@
 		select * from page	where album_num=#{number} and page_num=1
 	</select>
 	
-	
+	<delete id="deleteAlbum" parameterType="int">
+		delete	from albumlist where album_num=#{album_num}
+	</delete>	
 	
 </mapper>

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +29,6 @@ import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.jinsu.dao.SearchDAO;
-import com.cooing.www.jinsu.object.HashTag;
 import com.cooing.www.jinsu.object.Member;
 
 @Controller
@@ -42,6 +43,7 @@ public class AlbumEditController {
 	//private static String id = null; 
 	//private static String strFilePath = "/FileSave/upload/"+id+"/";
 	private static String strFilePath = "/FileSave/upload/";
+	private static String strThumbnailPath = "/FileSave/thumbnail/";
 	private static String album_identifier = null;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
@@ -49,7 +51,27 @@ public class AlbumEditController {
 	
 	//앨범생성
 	@RequestMapping(value = "/personal_albumCreate", method = RequestMethod.GET)
-	public String personal_albumCreate(){
+	public String personal_albumCreate(Model model , HttpSession session,Locale locale){
+		
+		String album_writer = null;
+		album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+				
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		String formatting = dateFormat.format(date);
+		album_identifier = formatting.concat(album_writer);
+		
+		AlbumWriteVO albumwrite = new AlbumWriteVO(0, album_writer, 1 , album_identifier);
+		
+		boolean create_confirmed = false;
+		//앨범 만들기
+		create_confirmed = albumDAO.personal_createAlbum(albumwrite);
+		int album_num = 0;
+		if(create_confirmed){
+			album_num = albumDAO.personal_selectAlbum_Num(album_identifier);
+		}
+		
+		model.addAttribute("albumnum", album_num);
 			
 		return "Album/personal_albumCreate";
 	}
@@ -88,57 +110,62 @@ public class AlbumEditController {
 	//앨범 페이지별 저장하면서 앨범 생성
 	@ResponseBody
 	@RequestMapping(value = "/personal_pageSave", method = RequestMethod.POST)
-	public String personal_createpageSave(String html , int pagenum, HttpSession session, Locale locale){
+	public String personal_createpageSave(String html , int pagenum , int albumnum , HttpSession session, Locale locale){
 		
-		int page_num = 0;
-		page_num = pagenum;
-		
-		String page_html = null;
-		page_html = html;
-		
-		if(page_num == 1) {
-
-			String album_writer = null;
-			album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-					
-			Date date = new Date();
-			DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-			String formatting = dateFormat.format(date);
-			album_identifier = formatting.concat(album_writer);
-			
-			AlbumWriteVO albumwrite = new AlbumWriteVO(0, album_writer, 1 , album_identifier);
-			
-			boolean create_confirmed = false;
-			//앨범 만들기
-			create_confirmed = albumDAO.personal_createAlbum(albumwrite);
-			
-			if(create_confirmed == true) {
-				
-				//앨범 만들고 바로 앨범 넘버 받아서 page태그랑 연결해 주는 코드
-				int album_num = 0; 
-				album_num = albumDAO.personal_selectAlbum_Num(album_identifier);
-				PageHtmlVO page = new PageHtmlVO(album_num, page_num, page_html);
-				albumDAO.personal_insertAlbumOfPage(page);
-				return String.valueOf(album_num);
-				
-				
-			} else {
-				System.err.println("첫 페이지 저장 실패");
-			}
-		
-		} else{
-			//앨범 만들고 바로 앨범 넘버 받아서 page태그랑 연결해 주는 코드
-			int album_num = 0; 
-			album_num = albumDAO.personal_selectAlbum_Num(album_identifier);
-			PageHtmlVO page = new PageHtmlVO(album_num, page_num, page_html);
-			albumDAO.personal_insertAlbumOfPage(page);
-			return String.valueOf(album_num);
-		}
-		
-
+		//앨범 만들고 바로 앨범 넘버 받아서 page태그랑 연결해 주는 코드 
+		PageHtmlVO page = new PageHtmlVO(albumnum, pagenum, html);
+		if(albumDAO.personal_insertAlbumOfPage(page))
+			return "success";
 			
 		return "fail";
 	}	
+	
+	@ResponseBody
+	@RequestMapping(value = "/deleteAlbum", method = RequestMethod.POST)
+	public String deleteAlbum(int albumnum){
+		logger.info("deleteAlbum_LJS");
+		if(albumDAO.deleteAlbum(albumnum) > 0)
+			return "success";
+		
+		return "fail";
+	}
+	
+	/*@ResponseBody
+	@RequestMapping(value = "/page1ImageSave", method = RequestMethod.POST)
+	public String page1ImageSave(HttpServletRequest request) throws Exception{
+		logger.info("page1 Image Save _ ljs");
+		String binaryData = request.getParameter("imgSrc");
+        FileOutputStream stream = null;
+        try{
+            logger.info("binary file   "  + binaryData);
+            if(binaryData == null || binaryData=="") {
+                throw new Exception();    
+            }
+            
+            binaryData = binaryData.replaceAll("data:image/png;base64,", "");
+            String encode = DatatypeConverter.printBase64Binary(binaryData.getBytes());
+            String decode = new String(DatatypeConverter.parseBase64Binary(binaryData));
+            byte[] binary = binaryData.getBytes();
+            byte[] decode = Base64.decode(binaryData.getBytes("UTF-8"));
+           
+           byte[] decoded = Base64.decodeBase64(binaryData.getBytes());
+            
+            byte[] decodedBytes = Base64.decode(binaryData.getBytes());
+            
+            String decode = new String(Base64.decode(binaryData, 0));
+            stream = new FileOutputStream(strThumbnailPath+"test"+".png");
+            stream.write(decoded);
+            stream.close();
+            logger.info("파일 작성 완료");
+            
+        }catch(Exception e){
+        	logger.info("파일이 정상적으로 넘어오지 않았습니다.");
+            return "fail";
+        }finally{
+            stream.close();
+        }
+        return "success";		
+	}*/
 		
 	// 앨범 임시 저장
 	@ResponseBody
@@ -184,6 +211,62 @@ public class AlbumEditController {
 	        }	        
 	        return newFileName + ext;
 		}
+	
+	@ResponseBody
+	@RequestMapping(value = "/thumbnailSave", method = RequestMethod.POST)
+	public String thumbnailSave(MultipartHttpServletRequest multi){
+
+		String newFileName = ""; 	        
+	    File fpath = new File(strThumbnailPath);
+	    if(!fpath.isDirectory()){
+			fpath.mkdirs();			
+		}	        
+	    String ext="";
+	    Map<String, MultipartFile> fileMap = multi.getFileMap();
+	    
+	    for(MultipartFile multipartfile:fileMap.values()){
+	    	int lastIndex = multipartfile.getOriginalFilename().lastIndexOf('.');
+	    	if(lastIndex == -1)
+	    		ext = "";		
+	    	else{
+	    		ext = "." + multipartfile.getOriginalFilename().substring(lastIndex + 1);
+	    		newFileName = multipartfile.getOriginalFilename().substring(0,lastIndex);
+	    	}
+	    	newFileName += new Date().getTime();
+	    	String[] strarray = {"%" , "," , "\\\\",  "\\" , "." , "?",  "&",  "*", "^"  ,"$" ,"#" , "@" , "!" ,"-" , "="  ,"/" , "Ű" };
+	    	for(String s : strarray){
+	    		if(newFileName.indexOf(s) != -1){
+	    			newFileName = newFileName.replaceAll(s, "");
+	    		}	    			
+	    	}
+	        File serverFile = null;
+	        while(true){
+	        	serverFile = new File(strThumbnailPath + newFileName + ext);
+	    		if ( !serverFile.isFile()) break;
+	    			newFileName = newFileName + new Date().getTime();
+	    		}		
+	             try {
+	            	 multipartfile.transferTo(serverFile);
+	             } catch (Exception e) {
+	                 e.printStackTrace();
+	                 return "fail";
+	             }
+	        }	        
+	        return newFileName + ext;
+		}
+	
+		@ResponseBody
+		@RequestMapping(value = "/thumbnailPathSave", method = RequestMethod.POST)
+		public String thumbnailSave(String thumbnail , String albumnum){
+			Map<String , String> map = new HashMap<String,String>();
+			map.put("album_thumbnail", thumbnail);
+			map.put("album_num", albumnum);
+			logger.info(map.toString());
+			if(albumDAO.updateThumbnail(map) > 0)
+				return "success";
+			else 
+				return "fail";
+		}
 		
 		@RequestMapping(value = "img", method = RequestMethod.GET)
 		public String img(HttpServletResponse response , HttpSession session , String filePath) {
@@ -222,6 +305,27 @@ public class AlbumEditController {
 			}
 			
 			
+		}
+		
+		@RequestMapping(value = "thumbnail", method = RequestMethod.GET)
+		public String thumbnail(HttpServletResponse response , String filePath) {
+			logger.info("thumbnail__jinsu");
+			
+			String fullpath = strThumbnailPath + "/" + filePath;
+			if( filePath.length() != 0){
+				FileInputStream filein = null;
+				ServletOutputStream fileout = null;
+				try {
+					filein = new FileInputStream(fullpath);
+					fileout = response.getOutputStream();
+					FileCopyUtils.copy(filein, fileout);			
+					filein.close();
+					fileout.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			return null;
 		}
 		
 		

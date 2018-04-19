@@ -289,6 +289,76 @@ label:hover {
 				pageallEmpty(number);
 		}
 	}
+	
+	/* function testthum(){
+	html2canvas($('#page1'), {
+        onrendered: function(canvas) {
+            if (typeof FlashCanvas != "undefined") {
+                FlashCanvas.initElement(canvas);
+            }                
+            $('#imgtest').attr('src' , canvas.toDataURL().toString());
+            $('#imgSrc').val(canvas.toDataURL('image/png'));
+            
+            $.ajax({
+    			url : 'page1ImageSave',
+    			type : 'POST',
+    			data : $('#testimg').serialize(),
+    			dataType : 'text',
+    			success : function(a) {
+    				if (a != 'fail') {
+    					alert(a);
+    				} else {
+    					alert(a);
+    				}
+    			},
+    			error : function(e) {
+    				alert('파일 업로드 실패');
+    			}
+    		});
+            
+            $.ajax({
+    			url : 'page1ImageSave',
+    			type : 'POST',
+    			data : {imgpath:image},
+    			dataType : 'text',
+    			success : function(a) {
+    				if (a != 'fail') {
+    					alert(a);
+    				} else {
+    					alert(a);
+    				}
+    			},
+    			error : function(e) {
+    				alert('파일 업로드 실패');
+    			}
+    		});
+            
+            
+            var image = canvas.toDataURL('image/png'); 
+            var formData = new FormData();
+            formData.append('file15' , image);
+            $.ajax({
+    			url : 'albumImageSave',
+    			processData : false,
+    			contentType : false,
+    			type : 'POST',
+    			data : formData,
+    			dataType : 'text',
+    			success : function(a) {
+    				if (a != 'fail') {
+    					alert(a);
+    				} else {
+    					alert(a);
+    				}
+    			},
+    			error : function(e) {
+    				alert('파일 업로드 실패');
+    			}
+    		});  
+        }
+    });
+} */
+	
 
 	// 페이지 로딩 후 초기화
 	$(document).ready(function() {
@@ -536,6 +606,10 @@ label:hover {
 		
 				<p>그룹1</p>
 				<p>그룹2</p>		
+				<!-- <img src="" id="imgtest">
+			<form id="testimg">
+				<input type="hidden" name="imgSrc" id="imgSrc" />
+			</form> -->
     	</section>
     	</div>			
 

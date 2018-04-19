@@ -1,6 +1,7 @@
 package com.cooing.www.dy.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.dy.vo.PageHtmlVO;
@@ -25,4 +26,8 @@ public interface AlbumMapper {
 	public AlbumWriteVO searchAlbumNum(int num);
 	
 	public PageHtmlVO searchPage1(int num);
+	
+	public int updateThumbnail(Map<String,String> map);
+	
+	public int deleteAlbum(int album_num);
 }
