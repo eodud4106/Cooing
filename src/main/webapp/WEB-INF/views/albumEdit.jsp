@@ -211,6 +211,16 @@ html, body, main, .container-fluid {
 				<div class="album_wrapper" id="album_wrapper">
 					<div class="album" id="album"></div>
 				</div>
+
+				<!-- 하단 바 영역 -->
+				<div class="under_bar">
+					<button>페이지 삭제</button>
+					<button>이전</button>
+					<button onclick="savePage()">저장</button>
+					<button onclick="addPage()">페이지 추가</button>
+					<button>다음</button>
+					<button>페이지 삭제</button>
+				</div>
 				
 			</div>
 			<!-- END row -->
