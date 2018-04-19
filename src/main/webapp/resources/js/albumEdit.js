@@ -301,7 +301,7 @@ function renderbox(event, ui, page) {
             "left": "140px"
         });
 
-        var $image = $('<image />', {
+        var $image = $('<img />', {
             "width": "100%",
             "height": "100%",
             "opacity": "1"
@@ -317,32 +317,15 @@ function renderbox(event, ui, page) {
 
         $input_file.change(function() {
             //alert('파일 업로드')
-            var $img = $('.onSelect image');
+            var $img = $('.onSelect img');
             var file = document.querySelector('.onSelect input[type=file]').files[0];
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('.onSelect image').css({
-                    // "background-image": "url('" + e.target.result + "')",
-                    // "background-size": "100%",
-                    // "background-repeat": "no-repeat",
-                    // "background-position": "center"
-                    "src": "url()"
-                })
-            }
-            reader.addEventListener("load", function () {
-                $img.attr("src", reader.result);
-            }, false);
-
-            if (file) {
-                reader.readAsDataURL(file);
-                $('.onSelect svg').remove();
-            }
             
+            if (file) {
+                $('.onSelect svg').remove();
+            }   
             
             // formData 선언
             var formData = new FormData();
-
-            // formData.append('file' + num, $('.onSelect input[type=file]')[0].files[0]);
             
             formData.append('file', file);
 
@@ -362,7 +345,9 @@ function renderbox(event, ui, page) {
                     // fail이 아닐 경우 -> 이미지 저장됨
                     if (saved_name != 'fail') {
                     	
-                    	$img.attr('src', '/albumEdit/img?filePath=' + saved_name + '');
+                    	$img.attr('src', 'img?filePath=' + saved_name);
+                    	
+                    	
 
 //                        var div_holder = document.createElement('div');
 //                        $(div_holder).addClass('holder').attr('id', $(file).parent().parent().attr('id'));
