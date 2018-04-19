@@ -301,7 +301,7 @@ function renderbox(event, ui, page) {
             "left": "140px"
         });
 
-        var $image = $('<image />', {
+        var $image = $('<img />', {
             "width": "100%",
             "height": "100%",
             "opacity": "1"
@@ -317,12 +317,12 @@ function renderbox(event, ui, page) {
 
         $input_file.change(function() {
             //alert('파일 업로드')
-            var $img = $('.onSelect image');
+            var $img = $('.onSelect img');
             var file = document.querySelector('.onSelect input[type=file]').files[0];
-
+            
             if (file) {
                 $('.onSelect svg').remove();
-            }
+            }   
             
             // formData 선언
             var formData = new FormData();
@@ -343,7 +343,9 @@ function renderbox(event, ui, page) {
                     // fail이 아닐 경우 -> 이미지 저장됨
                     if (saved_name != 'fail') {
                     	
-                    	$img.attr('src', '/albumEdit/img?filePath=' + saved_name + '');
+                    	$img.attr('src', 'img?filePath=' + saved_name);
+                    	
+                    	
 
                     } else {
                         alert('업로드 실패');
