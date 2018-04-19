@@ -90,6 +90,8 @@ public class AlbumEditController {
 	@RequestMapping(value = "/personal_pageSave", method = RequestMethod.POST)
 	public String personal_createpageSave(String html , int pagenum, HttpSession session, Locale locale){
 		
+		System.out.println("pagenum: " + pagenum + "\n" + "html : " + html);
+		
 		int page_num = 0;
 		page_num = pagenum;
 		
