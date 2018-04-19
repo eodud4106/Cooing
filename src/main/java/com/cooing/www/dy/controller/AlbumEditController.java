@@ -148,7 +148,7 @@ public class AlbumEditController {
 	public String pageSave(MultipartHttpServletRequest multi){
 
 		String newFileName = ""; 	        
-	    File fpath = new File(strFilePath_mac);
+	    File fpath = new File(strFilePath);
 	    if(!fpath.isDirectory()){
 			fpath.mkdirs();			
 		}	        
@@ -173,7 +173,7 @@ public class AlbumEditController {
 	    	}
 	        File serverFile = null;
 	        while(true){
-	        	serverFile = new File(strFilePath_mac + newFileName + ext);
+	        	serverFile = new File(strFilePath + newFileName + ext);
 	    		if ( !serverFile.isFile()) break;
 	    			newFileName = newFileName + new Date().getTime();
 	    	}		
@@ -196,7 +196,7 @@ public class AlbumEditController {
 	public String img(HttpServletResponse response , HttpSession session , String filePath) {
 		logger.info("img__jinsu");
 		
-		String fullpath = strFilePath_mac + filePath;
+		String fullpath = strFilePath + filePath;
 		if( filePath.length() != 0){
 			FileInputStream filein = null;
 			ServletOutputStream fileout = null;
