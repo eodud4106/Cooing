@@ -63,6 +63,5 @@ public class AlbumLikesController {
 
 		return str;
 	}
-	
-	
+
 }

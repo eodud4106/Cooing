@@ -355,7 +355,7 @@ function checkRadioButton(iCheck)
 	alert('체크된거없음');
 	}
 }
-
+	// 좋아요
 	function likes(){
 		
 		var num = 15;
@@ -410,6 +410,10 @@ function checkRadioButton(iCheck)
 			}		
 		});
 	}
+	// 댓글 창 이동
+	function replyWin(){  
+    window.open("albumReply", "댓글 창", "width=800, height=300, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+	}  
 </script>
 
 </head>
@@ -439,9 +443,10 @@ function checkRadioButton(iCheck)
 				<p>그룹1</p>
 				<p>그룹2</p>		
 				<p>그룹3</p>		
-				<button type="button" onclick="likes()">좋아요!</button>	
-				<button type="button" onclick="deletelikes()">좋아요취소!</button> 		
-    	
+				<p><button type="button" onclick="likes()">좋아요!</button></p>		
+				<p><button type="button" onclick="deletelikes()">좋아요취소!</button></p> 		
+				<p><button type="button" onClick="javascript:replyWin();">댓글 작성</button></p>  
+
         <footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft">
          
           <p>&copy; 2018 <a href="https://uicookies.com/" target="_blank">COOING</a>. <br> All Rights Reserved.</p>

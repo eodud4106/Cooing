@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cooing.www.joon.dao.AlbumReplyMapper">
+<!-- 댓글 작성 -->
+<insert id="replyWrite" parameterType="albumreply">
+	insert into reply (
+		reply_num
+		, reply_albumnum
+		, reply_memberid
+		, reply_contents
+	) 
+	values (
+		reply_SEQ.nextval
+		, #{reply_albumnum}
+		, #{reply_memberid}
+		, #{reply_contents}
+	)
+</insert>
+</mapper>

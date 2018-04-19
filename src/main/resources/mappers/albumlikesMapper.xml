@@ -18,8 +18,6 @@
 		, #{likeit_memberid}
 	)
 </insert>
-
-
 <!-- 좋아요 취소 -->
 <delete id="deleteLikes" parameterType="albumlikes">
 delete from likeit where likeit_memberid = #{likeit_memberid} and likeit_albumnum = #{likeit_albumnum}
