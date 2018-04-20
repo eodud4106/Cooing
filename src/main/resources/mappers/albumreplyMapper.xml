@@ -13,7 +13,7 @@
 		, reply_contents
 	) 
 	values (
-		reply_SEQ.nextval
+		reply_seq.nextval
 		, #{reply_albumnum}
 		, #{reply_memberid}
 		, #{reply_contents}
