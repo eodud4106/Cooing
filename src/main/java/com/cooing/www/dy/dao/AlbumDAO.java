@@ -1,14 +1,14 @@
 package com.cooing.www.dy.dao;
 
-import java.util.ArrayList;  
+import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
-import com.cooing.www.jinsu.dao.MemberMapper;
+import com.cooing.www.dy.vo.PageHtmlVO;
 
 @Repository
 public class AlbumDAO {
@@ -88,4 +88,14 @@ public class AlbumDAO {
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		return mapper.searchCategory(icategorynum);		
 	}	
+	
+	public int updateThumbnail(Map<String,String> map){
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		return mapper.updateThumbnail(map);	
+	}
+	
+	public int deleteAlbum(int album_num){
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		return mapper.deleteAlbum(album_num);	
+	}
 }

@@ -238,6 +238,7 @@ select::-ms-expand { /* for IE 11 */
 				
 				<a href="albumEdit/personal_albumCreate">앨범추가</a>
 			</nav>
+			<br><br><br>
 
 		</div>
 

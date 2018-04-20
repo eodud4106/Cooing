@@ -56,40 +56,24 @@ Map.prototype = {
 
 // 전역 변수 선언
 var map_box = new Map();    //box를 담을 map
-
-//TODO db에서 박스를 여러 개 가지고 온 경우 || '${arr_box.length}'-1 처럼 숫자를 넣어두기....
-var $arr_div_box = [];      // 텍스트, 이미지 등의 박스를 담을 배열
-var arr_box_id = [];        //div_box의 id를 담을 jquery 배열
-var album_top = 0;          //앨범의 top
-var album_left = 0;         //앨범의 left
-
-var PAGE_WIDTH = 500;       // 페이지 당 너비
-var PAGE_HEIGHT = 600;      // 페이지 당 높이
-
-var curr_page = 1;
-
-
-
-
+var count = 0;              //각 텍스트박스에 id를 주기 위해 증가시킬 변수
+var arr_id_of_div_box = [];      //div_box의 id를 담을 jquery 배열
 
 // [start] 페이지 로딩 후 처리
 $(document).ready(function(){
 
-    //TODO 앨범 로딩...
+    //캔버스 변수 선언, 엘리멘트 연결
+    var canvas = $(".canvas");
 
-
-    //로딩된 결과가 없는 경우 -> 앨범을 새로 만드는 경우
-    if(1 == 2) {
-        // 앨범 로딩 결과 있음
-    } else {
-        // 앨범 로딩 결과 없음
-
-        // 기본 앨범 div 생성
-        createNewAlbum();
-    }
+    // .tool을 드래그할 경우 드래그한 element를 복제한 helper 생성
+    // (캔버스 위에 생성되는 textbox는 helper 속성을 물려받는다.)
+    $(".tool").draggable({
+        helper: "clone"
+    });
 
     // 캔버스에 아이템 드랍 시 이벤트 처리
-    apply_page_droppable($('.page'));
+    canvas.droppable({
+        drop: function(event, ui) {
 
     // 앨범 flip 효과 적용
 	$('#album').turn({
@@ -106,12 +90,26 @@ $(document).ready(function(){
                 // page 저장
                 //savePage();
 
-            },
-            turned: function(event, page, view) {
+            // node 객체 생성
+            var node = {
+                id: id,
+                position: ui.helper.position(),
+                width: ui.helper.width,
+                height: ui.helper.height
+            };
 
                 console.log('현재 페이지 -> ' + $('#album').turn('page'));
 
-                var total_page = $('#album').turn('pages');
+            // 드랍한 아이템이 3가지 텍스트 메뉴 중 어느 것인지 판별해서 type에 저장
+            if(ui.helper.hasClass("text")){
+                node.type = "text";
+            } else if(ui.helper.hasClass("image")){
+                node.type = "image";
+            } else if(ui.helper.hasClass("video")){
+                node.type = "video";
+            } else {
+                return;
+            }
 
                 var arr_single_page = [1, total_page];
 
@@ -149,9 +147,9 @@ $(document).ready(function(){
 
     // 편집창이 아닌 곳 클릭하면.... 효과 해제해버림...
     $('body').mousedown(function(e) {
-        //e.stopPropagation();
+        e.stopPropagation();
 
-        //$('#title').text(e.target.nodeName);
+        $('#title').text(e.target.nodeName);
 
         if(!$(e.target.parentNode.parentNode).hasClass('edit')) {
 
@@ -159,7 +157,12 @@ $(document).ready(function(){
             removeEdit();
 
             // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
-            clearOn();
+            $('.onEdit').draggable('enable').resizable('disable').prop("contenteditable", false).css({
+                    "z-index": 2 + arr_id_of_div_box.indexOf($('.onEdit').attr('id'))
+                }).removeClass('onEdit').find(".ui-resizable-handle").hide();
+            $('.onSelect').draggable('enable').resizable('disable').css({
+                    "z-index": 2 + arr_id_of_div_box.indexOf($('.onSelect').attr('id'))
+                }).removeClass('onSelect').find(".ui-resizable-handle").hide();
         }
     })
 
@@ -168,17 +171,15 @@ $(document).ready(function(){
         // 백스페이스 keyCode == 8
         if(e.keyCode == '8') {
 
-            var id_index = arr_box_id.indexOf($('.onSelect').attr('id'));
-            console.log(id_index);
-
             // onSelect인 박스일 경우만 삭제
-            if($('.onSelect').remove()) {
+            if($('.onSelect')) {
 
                 // 편집창 제거
                 removeEdit();
 
-                // arr_box_id 조정
-                arr_box_id.splice(id_index, 1);
+                // arr_id_of_div_box 조정
+                var id_index = arr_id_of_div_box.indexOf($('.onSelect').attr('id'));
+                arr_id_of_div_box.splice(id_index, 1);
 
                 // arr_box_id를 바탕으로 모든 박스의 z-index 조정
                 for(var i = 0; i < arr_box_id.length; i++) {
@@ -186,7 +187,9 @@ $(document).ready(function(){
                         "z-index": 500 + i
                     })
                 }
-                
+
+                // onSelect 박스 삭제
+                $('.onSelect').remove();
             }
         }
     })
@@ -243,26 +246,20 @@ function initpage(diagram) {
 }
 
 // [start] 텍스트 박스를 캔버스에 추가
-/**
- *  텍스트 박스를 캔버스에 추가
- *  @param : (좌표가 포함된 이벤트, 드래그 드랍한 박스, 드랍한 페이지)
- **/
-function renderbox(event, ui, page) {
+function renderbox(node) {
 
-    console.log('render 호출');
+    // var div_box;
 
-    // 클릭한 페이지의 위치 확인
-    var curr_page_top = album_top;
-    var curr_page_left = album_left;
-    if(page % 2 == 1) {
-        // 드랍한 페이지가 홀수 페이지일 경우 우측에 위치하므로 왼쪽 페이지의 너비만큼 더해준다.
-        curr_page_left += PAGE_WIDTH;
-    }
+    // if(node.id == null) {
+    //     // 새로 만든 박스
+    // } else {
+
+    // }
 
     // 위치, 크기 조절 이벤트 적용할 div_box
     // box 드래그, 리사이즈 초기화
     var $div_box = $('<div />', {
-        'id' : 'box_' + $arr_div_box.length,
+        'id' : node.id,
         'class' : 'div_box'
     });
 
@@ -363,42 +360,45 @@ function renderbox(event, ui, page) {
 
     $div_box.css({
         "position": "absolute",
-        "top": event.pageY - curr_page_top - 30,
-        "left": event.pageX - curr_page_left - 50
-    }).appendTo($('#page' + page + ''));
-
-
-    $arr_div_box.push($div_box);
-
-
-    $div_box.draggable({
+        "top": node.position.top,
+        "left": node.position.left,
+        "width": node.width,
+        "height": node.height
+    }).draggable({
         // textbox 드래그 시 위치 이동 처리 (ui.helper는 이벤트의 대상)
-        drag: function(event, ui) {
-
-            $('.div_whole_editor').css({
-                "top": $('.onSelect').position().top + curr_page_top - 40,
-                "left": $('.onSelect').position().left + curr_page_left
-            });
-            
+        stop: function(event, ui) {
+            var id = ui.helper.attr("id");
+            var box = map_box.get(id);
+            box.position.top = ui.position.top;
+            box.position.left = ui.position.left;
         },
-        containment: $('#page' + page + '')  // 캔버스 영역 밖으로 나가지 못하게 제한
-
+        drag: function(event, ui) {
+            $('.div_whole_editor').css({
+                "top": ui.position.top + $('.canvas').position().top + 40,
+                "left": ui.position.left + $('.canvas').position().left
+            });
+        },
+        containment: '.canvas'  // 캔버스 영역 밖으로 나가지 못하게 제한
     }).resizable({
-
-        containment: $('#page' + page + ''), // 캔버스 영역을 넘지 못하도록 제한
+        // textbox 크기 조절 처리
+        stop: function(event, ui) {
+            var id = ui.helper.attr("id");
+            var box = map_box.get(id);
+            box.width = $(this).width();
+            box.height = $(this).height();
+        },
+        containment: ".canvas", // 캔버스 영역을 넘지 못하도록 제한
         disabled: true          // 리사이즈는 onSelect 상태인 박스만 가능하므로.. 초기 설정에는 disable
-
     });
 
-    //page에 box 출력
+    // canvas에 box 출력
     $div_box.find(".ui-resizable-handle").hide();
-    
-    // z-index 관리용 코드
-    arr_box_id.push($div_box.attr('id'));
+    $('.canvas').append($div_box);
+    arr_id_of_div_box.push($div_box.attr('id'));
     $div_box.css({
         "z-index": 500 + arr_box_id.indexOf($div_box.attr('id'))
     })
-    //$('#selection').text(arr_box_id);
+    //$('#selection').text(arr_id_of_div_box);
 
     // textbox 마우스 다운 시 크기 조절 모드 + 전역 편집 모드
     $div_box.mousedown(function(e) {
@@ -412,8 +412,12 @@ function renderbox(event, ui, page) {
             // 선택 중인 박스였다면... 무얼 할까??
         } else {
             // 아무 것도 아닌 박스였다면... 수정 중/선택 중인 다른 박스 모두 해제하고... 클릭한 대상에게 선택 중 효과 적용..
-            clearOn();
-
+            $('.onEdit').draggable('enable').resizable('disable').prop("contenteditable", false).css({
+                    "z-index": 2 + arr_id_of_div_box.indexOf($('.onEdit').attr('id'))
+                }).removeClass('onEdit').find(".ui-resizable-handle").hide();
+            $('.onSelect').draggable('enable').resizable('disable').css({
+                    "z-index": 2 + arr_id_of_div_box.indexOf($('.onSelect').attr('id'))
+                }).removeClass('onSelect').find(".ui-resizable-handle").hide();
             $(this).draggable('enable').resizable('enable')
                 .addClass('onSelect').find(".ui-resizable-handle").show();
             
@@ -421,8 +425,10 @@ function renderbox(event, ui, page) {
             createWholeEditor($div_box);
         }
 
-    }).dblclick(function(e){
-        //textbox 더블클릭 시 텍스트 입력 + 선택 편집 모드로 전환(TODO 텍스트 입력에 따라 높이 자동 조절되도록, 너비는 직접 수정)
+    });
+    
+    // textbox 더블클릭 시 텍스트 입력 + 선택 편집 모드로 전환(TODO 텍스트 입력에 따라 높이 자동 조절되도록, 너비는 직접 수정)
+    $div_box.dblclick(function(e){
 
         //이벤트 bubble 제거
         e.stopPropagation();
@@ -440,8 +446,10 @@ function renderbox(event, ui, page) {
             $div_box.prop("contenteditable", true);
         }
 
-    }).mouseup(function(e) {
-        // 마우스 업 이벤트 시 텍스트편집창 띄울 것인지 판단
+    });
+
+    // 마우스 업 이벤트 시 텍스트편집창 띄울 것인지 판단
+    $div_box.mouseup(function(e) {
 
         // 클릭한 대상이...
         if($(this).hasClass('onEdit')) {
@@ -551,8 +559,8 @@ function createWholeEditor($elem) {
         var target_index = arr_box_id.indexOf($('.onSelect').attr('id'));
 
         // id 배열 내 onSelect의 id를 가장 뒤로 이동
-        arr_box_id.splice(target_index, 1);
-        arr_box_id.push($('.onSelect').attr('id'));
+        arr_id_of_div_box.splice(target_index, 1);
+        arr_id_of_div_box.push($('.onSelect').attr('id'));
 
         // z-index 조정
         for(var i = 0; i < arr_box_id.length; i++) {
@@ -571,34 +579,12 @@ function createWholeEditor($elem) {
     var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
 
-
-
-
-
-    // onSelect가 속한 페이지 번호
-    var pagenum = $('.onSelect').parent().attr('id').replace(/\D/g,'');
-
-    // 클릭한 페이지의 위치 확인
-    var curr_page_top = album_top;
-    var curr_page_left = album_left;
-    if(pagenum % 2 == 1) {
-        // 드랍한 페이지가 홀수 페이지일 경우 우측에 위치하므로 왼쪽 페이지의 너비만큼 더해준다.
-        curr_page_left += PAGE_WIDTH; 
-    }
-
-    console.log('onSelect top -> ' + $('.onSelect').position().top);
-    console.log('onSelect left -> ' + $('.onSelect').position().left);
-
-
-
-
-
     // 전역 편집창
     var $div_whole_editor = $('<div />');
     $div_whole_editor.addClass('edit').addClass('div_whole_editor').css({
         "position": "absolute",
-        "top": $('.onSelect').position().top + curr_page_top - 40,
-        "left": $('.onSelect').position().left + curr_page_left
+        "top": $('.onSelect').position().top + $('.canvas').position().top + scrollTop + 40,
+        "left": $('.onSelect').position().left + $('.canvas').position().left + scrollLeft
     }).prop("contenteditable", false);
 
     // div append
