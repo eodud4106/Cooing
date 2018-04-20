@@ -4,10 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
@@ -46,37 +44,67 @@ public class AlbumEditController {
 	//private static String id = null; 
 	//private static String strFilePath = "/FileSave/upload/"+id+"/";
 	private static String strFilePath = "/FileSave/upload/";
+	private static String strFilePath_mac = "/Users/insect/hindoong_upload/";
 	private static String strThumbnailPath = "/FileSave/thumbnail/";
-	private static String album_identifier = null;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
 	
 	
 	//앨범생성
-	@RequestMapping(value = "/personal_albumCreate", method = RequestMethod.GET)
-	public String personal_albumCreate(Model model , HttpSession session,Locale locale){
+	@ResponseBody
+	@RequestMapping(value = "/create_personal_album", method = RequestMethod.POST)
+	public String personal_albumCreate(Model model, HttpSession session){
 		
-		String album_writer = null;
-		album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-				
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		String formatting = dateFormat.format(date);
-		album_identifier = formatting.concat(album_writer);
+		String returnMessage = null;
 		
-		AlbumWriteVO albumwrite = new AlbumWriteVO(0, album_writer, 1 , album_identifier);
+		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+		if (album_writer == null) returnMessage = "user null";
 		
-		boolean create_confirmed = false;
+		AlbumWriteVO albumwrite = new AlbumWriteVO(-1, album_writer, "임시 앨범", 1);
+
 		//앨범 만들기
-		create_confirmed = albumDAO.personal_createAlbum(albumwrite);
-		int album_num = 0;
-		if(create_confirmed){
-			album_num = albumDAO.personal_selectAlbum_Num(album_identifier);
+		int created_album_num = albumDAO.personal_createAlbum(albumwrite);
+		
+		// created_album_num이 -1이면 앨범 제작 실패임
+		if(created_album_num == -1) {
+			returnMessage = "fail";
+		} else {
+			returnMessage = created_album_num + "";
+		}
+			
+		return returnMessage;
+	}
+	
+	// 앨범 수정 창으로 이동
+	@RequestMapping(value = "/edit_album", method = RequestMethod.GET)
+	public String edit_album(String str_album_num, Model model, HttpSession session){
+		
+		int album_num = -1;
+		
+		try {
+			album_num = Integer.parseInt(str_album_num);
+		} catch (Exception e) {
+			return "../";
 		}
 		
-		model.addAttribute("albumnum", album_num);
+		String returnMessage = null;
+		
+		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+		if (album_writer == null) returnMessage = "user null";
+		
+		AlbumWriteVO albumwrite = new AlbumWriteVO(-1, album_writer, "임시 앨범", 1);
+
+		//앨범 만들기
+		int created_album_num = albumDAO.personal_createAlbum(albumwrite);
+		
+		// created_album_num이 -1이면 앨범 제작 실패임
+		if(created_album_num == -1) {
+			returnMessage = "fail";
+		} else {
+			returnMessage = created_album_num + "";
+		}
 			
-		return "Album/personal_albumCreate";
+		return returnMessage;
 	}
 	
 	
@@ -88,8 +116,8 @@ public class AlbumEditController {
 		return "albumEdit";
 	}
 
-	//앨범 생성
-	@RequestMapping(value = "/personal_AlbumTotalCreate", method = RequestMethod.POST)
+	//앨범 정보 업데이트
+	@RequestMapping(value = "/update_albuminfo", method = RequestMethod.POST)
 	public String AlbumFirstCreate(HttpSession session, int album_num, String album_name, String album_contents,
 			int album_openrange, int album_category, String hashtag){
 		
@@ -110,13 +138,14 @@ public class AlbumEditController {
 		return "redirect:/";
 	}
 	
-	//앨범 페이지별 저장하면서 앨범 생성
+	//앨범 페이지별 저장
 	@ResponseBody
-	@RequestMapping(value = "/personal_pageSave", method = RequestMethod.POST)
-	public String personal_createpageSave(String html , int pagenum , int albumnum , HttpSession session, Locale locale){
+	@RequestMapping(value = "/save_page", method = RequestMethod.POST)
+	public String save_page(PageHtmlVO page, HttpSession session){
 		
-		//앨범 만들고 바로 앨범 넘버 받아서 page태그랑 연결해 주는 코드 
-		PageHtmlVO page = new PageHtmlVO(albumnum, pagenum, html);
+		if(page == null) return "empty";
+		
+		//앨범 만들고 바로 앨범 넘버 받아서 page태그랑 연결해 주는 코드
 		if(albumDAO.personal_insertAlbumOfPage(page))
 			return "success";
 			
@@ -168,7 +197,7 @@ public class AlbumEditController {
 	public String pageSave(MultipartHttpServletRequest multi){
 
 		String newFileName = ""; 	        
-	    File fpath = new File(strFilePath);
+	    File fpath = new File(strFilePath_mac);
 	    if(!fpath.isDirectory()){
 			fpath.mkdirs();			
 		}	        
@@ -193,7 +222,7 @@ public class AlbumEditController {
 	    	}
 	        File serverFile = null;
 	        while(true){
-	        	serverFile = new File(strFilePath + newFileName + ext);
+	        	serverFile = new File(strFilePath_mac + newFileName + ext);
 	    		if ( !serverFile.isFile()) break;
 	    			newFileName = newFileName + new Date().getTime();
 	    		}		
@@ -267,7 +296,7 @@ public class AlbumEditController {
 		public String img(HttpServletResponse response , HttpSession session , String filePath) {
 			logger.info("img__jinsu");
 			
-			String fullpath = strFilePath + "/" + filePath;
+			String fullpath = strFilePath_mac + filePath;
 			if( filePath.length() != 0){
 				FileInputStream filein = null;
 				ServletOutputStream fileout = null;
