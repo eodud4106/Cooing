@@ -72,8 +72,7 @@ $(document).ready(function(){
     });
 
     // 캔버스에 아이템 드랍 시 이벤트 처리
-    canvas.droppable({
-        drop: function(event, ui) {
+    apply_page_droppable($('.page'));
 
     // 앨범 flip 효과 적용
 	$('#album').turn({
