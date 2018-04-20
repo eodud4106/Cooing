@@ -23,7 +23,7 @@
 <script src="../resources/skin_radio/icheck.js"></script>
 
 <!-- 페이지 넘김 효과를 위한 js -->
-<script type="text/javascript" src="../resources/js/turn.min.js"></script>
+<script type="text/javascript" src="../resources/js/turn.js"></script>
 
 <!-- albumEdit 용 js -->
 <script type="text/javascript" src="../resources/js/albumEdit.js"></script>

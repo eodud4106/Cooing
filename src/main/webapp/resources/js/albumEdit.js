@@ -113,9 +113,6 @@ $(document).ready(function(){
 
                 var total_page = $('#album').turn('pages');
 
-                // 표지로 사용될 페이지
-                var arr_hard = [1, 2, total_page - 1, total_page];
-
                 var arr_single_page = [1, total_page];
 
                 curr_page = $('#album').turn('page');
@@ -125,17 +122,7 @@ $(document).ready(function(){
                     curr_page--;
                 }
 
-                // 로딩되는 페이지의 범위
-                var range = $('#album').turn('range', curr_page);
-                for(var i = range[0]; i <= range[1]; i++) {
-                    // 로딩 된 페이지가 hard에 속하는 경우 hard 클래스를 준다...
-                    if(arr_hard.indexOf(i) > -1 ) {
-                        $('#page' + i + '').addClass('outer');
-                    }
-                }
-
                 // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
-                apply_page_droppable($('.page'));
                 $('.page').droppable("disable");
                 $('#page' + curr_page + '').droppable("enable");
 
@@ -220,7 +207,8 @@ function createNewAlbum() {
     for(var i = 1; i <= init_page; i++) {
         $page = $('<div />', {
             'id': 'page' + i,
-            'class': 'page hard'
+            'class': 'page hard',
+            'text': i
         });
 
         $page.appendTo($('#album'));
@@ -1054,7 +1042,7 @@ function savePage() {
 
 /**
  *  페이지 추가
- *  
+ *  현재 보고 있는 페이지를 기준으로 2페이지 추가
  **/
  function addPage() {
 
@@ -1072,73 +1060,67 @@ function savePage() {
 
         //뒷 커버를 추가
         $('#album').turn('addPage', $page, (total_page+1+i));
+        apply_page_droppable($('#page' + (total_page+1+i) + ''))
     }
 
     //기존 페이지의 아이디와 innerHTML을 두 페이지 씩 뒤로 이동
-    for(var i = $('#album').turn('pages'); i > curr_page+2; i--) {
+    for(var i = $('#album').turn('pages'); i >= curr_page+2; i--) {
 
         $('#page' + i + '').html($('#page' + (i - 2) + '').html());
-        $('#page' + i + '').attr('id', $('#page' + (i - 2) + '').attr('id'));
 
     }
 
-    apply_page_droppable($('.page'));
+    // 새로 추가한 페이지는 아니지만... 한 장 새로 추가한 것처럼 보이기 위해 현재 페이지와 그 다음 페이지를 비운다...
+    $('#page' + curr_page + '').html('');
+    $('#page' + (curr_page + 1) + '').html('');
 
+    // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
+    $('.page').droppable("disable");
+    $('#page' + curr_page + '').droppable("enable");
 
-    $('#album').turn({
-        display: 'double',  // 한 번에 보여줄 페이지
-        inclination: 50,    // 페이지 넘김 효과 시의 경사도
-        width: PAGE_WIDTH * 2,
-        height: PAGE_HEIGHT,
-        when: {             // 이벤트 리스너
-            turning: function(event, page, view) {
-                // 편집창 제거
-                removeEdit();
-                // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
-                clearOn();
-                // page 저장
-                //savePage();
+    alert('2페이지 추가되었습니다!');
 
-            },
-            turned: function(event, page, view) {
+ }
 
-                console.log('현재 페이지 -> ' + $('#album').turn('page'));
+ /**
+  *  페이지 삭제
+  *  현재 보고 있는 페이지를 기준으로 2페이지 삭제
+  **/
+ function removePage() {
 
-                var total_page = $('#album').turn('pages');
+    // 페이지 추가는 커버 바로 앞에 두 페이지 씩 추가하는 형태
+    var total_page = $('#album').turn('pages');
 
-                // 표지로 사용될 페이지
-                var arr_hard = [1, 2, total_page - 1, total_page];
+    //2페이지 추가이므로 2번 반복
+    for(var i = 0; i < 2; i++) {
 
-                var arr_single_page = [1, total_page];
+        // 새 뒷 커버 생성
+        var $page = $('<div />', {
+            'id': 'page' + (total_page + (i+1)),
+            'class': 'page hard'
+        });
 
-                curr_page = $('#album').turn('page');
+        //뒷 커버를 추가
+        $('#album').turn('addPage', $page, (total_page+1+i));
+        apply_page_droppable($('#page' + (total_page+1+i) + ''))
+    }
 
-                // 첫페이지와 끝페이지가 아니고, 홀수 번째(오른쪽 페이지) 페이지일 경우 1을 줄여서 왼쪽 페이지를 가리키게 함.
-                if(arr_single_page.indexOf(curr_page) == -1 && curr_page % 2 == 1) {
-                    curr_page--;
-                }
+    //기존 페이지의 아이디와 innerHTML을 두 페이지 씩 뒤로 이동
+    for(var i = $('#album').turn('pages'); i >= curr_page+2; i--) {
 
-                // 로딩되는 페이지의 범위
-                var range = $('#album').turn('range', curr_page);
-                for(var i = range[0]; i <= range[1]; i++) {
-                    // 로딩 된 페이지가 hard에 속하는 경우 hard 클래스를 준다...
-                    if(arr_hard.indexOf(i) > -1 ) {
-                        $('#page' + i + '').addClass('outer');
-                    }
-                }
+        $('#page' + i + '').html($('#page' + (i - 2) + '').html());
 
-                // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
-                apply_page_droppable($('.page'));
-                $('.page').droppable("disable");
-                $('#page' + curr_page + '').droppable("enable");
+    }
 
-                // 현재 페이지가 싱글 페이지가 아닌 경우 오른쪽 페이지도 droppable을 켠다.
-                if(arr_single_page.indexOf(curr_page) == -1) {
-                    $('#page' + (curr_page + 1) + '').droppable("enable");
-                }
-            }
-        } 
-    });
+    // 새로 추가한 페이지는 아니지만... 한 장 새로 추가한 것처럼 보이기 위해 현재 페이지와 그 다음 페이지를 비운다...
+    $('#page' + curr_page + '').html('');
+    $('#page' + (curr_page + 1) + '').html('');
+
+    // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
+    $('.page').droppable("disable");
+    $('#page' + curr_page + '').droppable("enable");
+
+    alert('2페이지 추가되었습니다!');
 
  }
     
