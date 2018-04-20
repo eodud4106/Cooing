@@ -44,7 +44,7 @@ public class AlbumReplyController {
 		 
 		albumreplyDAO.replyWrite(vo);
 		
-		str= "success";
+		str = "success";
 		
 		return str;
 	}
@@ -65,7 +65,7 @@ public class AlbumReplyController {
 		 
 		albumreplyDAO.replyDelete(vo);
 		
-		str= "success";
+		str = "success";
 		
 		return str;
 	}

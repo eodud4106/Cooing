@@ -370,6 +370,7 @@ function checkRadioButton(iCheck)
 			success: function(a){
 				if(a == 'success'){
 					alert("좋아요!");	
+					
 				}
 				else{
 					alert(a);
@@ -382,8 +383,7 @@ function checkRadioButton(iCheck)
 	}
 	// 좋아요 취소
 	function deletelikes(){
-		/* var str = $("#text").val(); */
-		//앨범번호
+
 		var num = 15;
 		
 		$.ajax({
@@ -391,9 +391,6 @@ function checkRadioButton(iCheck)
 			type: 'POST',		
 			data: {
 				"likeit_albumnum": num
-				/* ,
-				
-				"content": str */
 			},
 			dataType: 'text',
 			success: function(a){
@@ -412,7 +409,7 @@ function checkRadioButton(iCheck)
 	}
 	// 댓글 창 이동
 	function replyWin(){  
-    window.open("albumReply", "댓글 창", "width=800, height=300, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
+    window.open("albumReply", "댓글 창", "width=700, height=200, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );  
 	}  
 
 </script>
@@ -445,7 +442,7 @@ function checkRadioButton(iCheck)
 				<p>그룹2</p>		
 				<p>그룹3</p>		
 				<p><button type="button" onclick="likes()">좋아요!</button></p>		
-				<p><button type="button" onclick="deletelikes()">좋아요취소!</button></p> 		
+				<p><button type="button" onclick="deletelikes()">좋아요 취소!</button></p> 		
 				<p><button type="button" onClick="javascript:replyWin();">댓글 작성</button></p>  
 
 

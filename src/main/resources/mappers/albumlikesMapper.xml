@@ -7,13 +7,13 @@
 
 <!-- 앨범 좋아요 -->
 <insert id="addLikes" parameterType="albumlikes">
-	insert into LIKEIT (
+	insert into likeit (
 		likeit_num
 		, likeit_albumnum
 		, likeit_memberid
 	) 
 	values (
-		LIKEIT_SEQ.nextval
+		likeit_seq.nextval
 		, #{likeit_albumnum}
 		, #{likeit_memberid}
 	)

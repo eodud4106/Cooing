@@ -1,6 +1,5 @@
 package com.cooing.www.joon.controller;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,7 @@ public class AlbumLikesController {
 		 
 		albumlikesDAO.addLikes(vo);
 		
-		str= "success";
+		str = "success";
 		
 		return str;
 	}
@@ -59,7 +58,7 @@ public class AlbumLikesController {
 		 
 		albumlikesDAO.deleteLikes(vo);
 			
-		str= "success";
+		str = "success";
 
 		return str;
 	}

@@ -25,7 +25,6 @@ function writereply(){
 			
 			if(a == 'success'){
 				alert("댓글 등록");
-				
 			}
 			else{
 				alert(a);
@@ -51,8 +50,7 @@ function deletereply(){
 		success: function(a){
 			
 			if(a == 'success'){
-				alert("댓글 삭제");
-				
+				alert("댓글 삭제");	
 			}
 			else{
 				alert(a);
@@ -66,10 +64,10 @@ function deletereply(){
 </script>
 <body>
 <form>
-댓글 내용
+내용
 &nbsp;<input type="text" id="reply" name="reply" size="70">
-&nbsp;<input type="submit" onclick="writereply()" value="저장">
-&nbsp;<button type="button" onClick="deletereply();">삭제</button>
+&nbsp;<button type="button" onclick="writereply()">저장</button>
+&nbsp;<button type="button" onClick="deletereply()">삭제</button>
 </form>
 
 </body>
