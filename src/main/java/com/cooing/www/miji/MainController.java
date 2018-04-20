@@ -34,11 +34,23 @@ public class MainController {
 
 
 	/**
-	 * 앨범뷰...?? 뭐지???
+	 * 앨범뷰... 앨범과 페이지 리스트를 갖고 albumView로 이동....
 	 */
 	@RequestMapping(value = "/albumView", method = RequestMethod.GET)
 	public String albumPage(int album_num, Model model) {
-		model.addAttribute("album_num", album_num);
+		
+		try {
+			AlbumWriteVO album = albumDAO.searchAlbumNum(album_num);
+			if(album == null) return "redirect:/";
+			ArrayList<PageHtmlVO> arr_page = albumDAO.select_pages_by_album_num(album_num);
+			
+			model.addAttribute("album", album);
+			model.addAttribute("arr_page", arr_page);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return "Album/albumView";
 	}
 	

@@ -146,11 +146,8 @@ html, body, main, .container-fluid {
 		// increaseArea: '20%' // optional
 
 		});
-
-		//value값
 		
-		alert(JSON.stringify('${album}'));
-		alert(JSON.stringify('${arr_page}'));
+		ready_album('edit');
 
 	});
 
@@ -383,7 +380,13 @@ html, body, main, .container-fluid {
 				
 				<!-- 앨범 영역 -->
 				<div class="album_wrapper" id="album_wrapper">
-					<div class="album" id="album"></div>
+					<div class="album" id="album" style="display: none">
+						<c:if test="${arr_page.size() > 0 }">
+							<c:forEach items="${arr_page}" var="page">
+								<div id="page${page.page_num}" class="page hard">${page.page_html}</div>
+							</c:forEach>
+						</c:if>	
+					</div>
 				</div>
 
 				<!-- 하단 바 영역 -->

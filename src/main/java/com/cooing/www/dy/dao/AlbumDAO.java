@@ -62,7 +62,13 @@ public class AlbumDAO {
 	public boolean personal_insertAlbumOfPage(PageHtmlVO page){
 		
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		int cnt = mapper.personal_insertAlbumOfPage(page);
+		int cnt = 0;
+		try {
+			cnt = mapper.personal_insertAlbumOfPage(page);
+		} catch (Exception e) {
+			
+		}
+		
 		
 		if(cnt > 0) {
 			return true;

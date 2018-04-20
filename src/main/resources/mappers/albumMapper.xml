@@ -23,18 +23,45 @@
 	</insert>
 	
 	<insert id="personal_insertAlbumOfPage" parameterType="page">
-		insert into Page (
-			PAGE_ID,
-			ALBUM_NUM,
-			PAGE_NUM,			
-			PAGE_HTML
-		)
-		values (
-			PAGE_SEQ.nextval,
-			#{album_num},
-			#{page_num},
-			#{page_html}
-		)
+		MERGE INTO page p1
+		USING
+		(
+			SELECT
+				#{album_num} as album_num
+				, #{page_num} as page_num
+			FROM
+				dual
+		) p2
+		ON ( p1.album_num = p2.album_num AND p1.page_num = p2.page_num)
+		WHEN MATCHED THEN
+			UPDATE
+			SET
+				page_html = 
+				<if test="#{page_html} != null">
+				#{page_html}
+				</if>
+				<if test="#{page_html} == null">
+				''
+				</if>
+		WHEN NOT MATCHED THEN
+			INSERT ( 
+				page_id
+				, album_num
+				, page_num
+				, page_html
+		     )
+			 VALUES (
+				page_seq.nextval
+				, #{album_num}
+				, #{page_num}
+				, 
+				<if test="#{page_html} != null">
+				#{page_html}
+				</if>
+				<if test="#{page_html} == null">
+				''
+				</if>
+			 )
 	</insert>
 	
 	<update id="personal_update_page1_Album" parameterType="albumwrite">

@@ -72,128 +72,149 @@ var curr_page = 1;
 
 
 
-// [start] 페이지 로딩 후 처리
-$(document).ready(function(){
-
+// [start] 페이지 로딩 후 앨범 준비
+function ready_album(mode) {
     //TODO 앨범 로딩...
+	
+	if(mode == 'view') {
+		
+		$('#album').css("display", "block");
+		// 앨범 flip 효과 적용
+	    $('#album').turn({
+	        display: 'double',  // 한 번에 보여줄 페이지
+	        inclination: 50,    // 페이지 넘김 효과 시의 경사도
+	        width: PAGE_WIDTH * 2,
+	        height: PAGE_HEIGHT
+	    });
+		
+	} else if (mode == 'edit') {
+		
+		if($('#album').children('.page').length == 0) {
+	    	// 앨범 로딩 결과 없음
+	    	createNewAlbum();
+	    } else {
+	    	// 로딩된 앨범 있음
+	    	
+	    	// 페이지 별 div_box에 편집 기능 적용
+	    	$('#album').children('.page').each(function(i, page) {	
+	    		$(page).children('.div_box').each(function(j, div_box) {
+	    			apply_event_to_box($(div_box));
+	    		})
+	    	})
+	    }
+	    
+	    $('#album').css("display", "block");
+
+	    // 캔버스에 아이템 드랍 시 이벤트 처리
+	    apply_page_droppable($('.page'));
+
+	    // 앨범 flip 효과 적용
+	    $('#album').turn({
+	        display: 'double',  // 한 번에 보여줄 페이지
+	        inclination: 50,    // 페이지 넘김 효과 시의 경사도
+	        width: PAGE_WIDTH * 2,
+	        height: PAGE_HEIGHT,
+	        when: {             // 이벤트 리스너
+	            turning: function(event, page, view) {
+	                // 편집창 제거
+	                removeEdit();
+	                // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
+	                clearOn();
+	                // page 저장
+	                savePage();
+
+	            },
+	            turned: function(event, page, view) {
+
+	                console.log('현재 페이지 -> ' + $('#album').turn('page'));
+
+	                var total_page = $('#album').turn('pages');
+
+	                var arr_single_page = [1, total_page];
+
+	                curr_page = $('#album').turn('page');
+
+	                // 첫페이지와 끝페이지가 아니고, 홀수 번째(오른쪽 페이지) 페이지일 경우 1을 줄여서 왼쪽 페이지를 가리키게 함.
+	                if(arr_single_page.indexOf(curr_page) == -1 && curr_page % 2 == 1) {
+	                    curr_page--;
+	                }
+
+	                // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
+	                $('.page').droppable("disable");
+	                $('#page' + curr_page + '').droppable("enable");
+
+	                // 현재 페이지가 싱글 페이지가 아닌 경우 오른쪽 페이지도 droppable을 켠다.
+	                if(arr_single_page.indexOf(curr_page) == -1) {
+	                    $('#page' + (curr_page + 1) + '').droppable("enable");
+	                }
+	            }
+	        } 
+	    });
 
 
-    //로딩된 결과가 없는 경우 -> 앨범을 새로 만드는 경우
-    if(1 == 2) {
-        // 앨범 로딩 결과 있음
-        alert('페이지 있음')
-    } else {
-        // 앨범 로딩 결과 없음
-        alert('페이지 없음')
-        // 기본 앨범 div 생성
-        createNewAlbum();
-    }
-
-    // 캔버스에 아이템 드랍 시 이벤트 처리
-    apply_page_droppable($('.page'));
-
-    // 앨범 flip 효과 적용
-    $('#album').turn({
-        display: 'double',  // 한 번에 보여줄 페이지
-        inclination: 50,    // 페이지 넘김 효과 시의 경사도
-        width: PAGE_WIDTH * 2,
-        height: PAGE_HEIGHT,
-        when: {             // 이벤트 리스너
-            turning: function(event, page, view) {
-                // 편집창 제거
-                removeEdit();
-                // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
-                clearOn();
-                // page 저장
-                savePage();
-
-            },
-            turned: function(event, page, view) {
-
-                console.log('현재 페이지 -> ' + $('#album').turn('page'));
-
-                var total_page = $('#album').turn('pages');
-
-                var arr_single_page = [1, total_page];
-
-                curr_page = $('#album').turn('page');
-
-                // 첫페이지와 끝페이지가 아니고, 홀수 번째(오른쪽 페이지) 페이지일 경우 1을 줄여서 왼쪽 페이지를 가리키게 함.
-                if(arr_single_page.indexOf(curr_page) == -1 && curr_page % 2 == 1) {
-                    curr_page--;
-                }
-
-                // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
-                $('.page').droppable("disable");
-                $('#page' + curr_page + '').droppable("enable");
-
-                // 현재 페이지가 싱글 페이지가 아닌 경우 오른쪽 페이지도 droppable을 켠다.
-                if(arr_single_page.indexOf(curr_page) == -1) {
-                    $('#page' + (curr_page + 1) + '').droppable("enable");
-                }
-            }
-        } 
-    });
 
 
+	    album_top = $('#album').position().top + Number($('#album').css('margin-top').replace('px',''));
+	    album_left = $('#album').position().left + Number($('#album').css('margin-left').replace('px',''));
 
+	    // .tool을 드래그할 경우 드래그한 element를 복제한 helper 생성
+	    // (캔버스 위에 생성되는 textbox는 helper 속성을 물려받는다.)
+	    $(".tool").draggable({
+	        helper: "clone"
+	    });
+	  
 
-    album_top = $('#album').position().top + Number($('#album').css('margin-top').replace('px',''));
-    album_left = $('#album').position().left + Number($('#album').css('margin-left').replace('px',''));
+	    // 편집창이 아닌 곳 클릭하면.... 효과 해제해버림...
+	    $('body').mousedown(function(e) {
+	        //e.stopPropagation();
 
-    // .tool을 드래그할 경우 드래그한 element를 복제한 helper 생성
-    // (캔버스 위에 생성되는 textbox는 helper 속성을 물려받는다.)
-    $(".tool").draggable({
-        helper: "clone"
-    });
-  
+	        //$('#title').text(e.target.nodeName);
 
-    // 편집창이 아닌 곳 클릭하면.... 효과 해제해버림...
-    $('body').mousedown(function(e) {
-        //e.stopPropagation();
+	        if(!$(e.target.parentNode.parentNode).hasClass('edit')) {
 
-        //$('#title').text(e.target.nodeName);
+	            // 편집창 제거
+	            removeEdit();
 
-        if(!$(e.target.parentNode.parentNode).hasClass('edit')) {
+	            // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
+	            clearOn();
+	        }
+	    })
 
-            // 편집창 제거
-            removeEdit();
+	    // 백스페이스 누를 시 onSelect 박스 삭제!!!!
+	    $('body').keydown(function(e){
+	        // 백스페이스 keyCode == 8
+	        if(e.keyCode == '8') {
 
-            // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
-            clearOn();
-        }
-    })
+	            var id_index = arr_box_id.indexOf($('.onSelect').attr('id'));
+	            console.log(id_index);
 
-    // 백스페이스 누를 시 onSelect 박스 삭제!!!!
-    $('body').keydown(function(e){
-        // 백스페이스 keyCode == 8
-        if(e.keyCode == '8') {
+	            // onSelect인 박스일 경우만 삭제
+	            if($('.onSelect').remove()) {
 
-            var id_index = arr_box_id.indexOf($('.onSelect').attr('id'));
-            console.log(id_index);
+	                // 편집창 제거
+	                removeEdit();
 
-            // onSelect인 박스일 경우만 삭제
-            if($('.onSelect').remove()) {
+	                // arr_box_id 조정
+	                arr_box_id.splice(id_index, 1);
 
-                // 편집창 제거
-                removeEdit();
+	                // arr_box_id를 바탕으로 모든 박스의 z-index 조정
+	                for(var i = 0; i < arr_box_id.length; i++) {
+	                    $('#' + arr_box_id[i] + '').css({
+	                        "z-index": 500 + i
+	                    })
+	                }
+	                
+	            }
+	        }
+	    })
+	} else {
+		alert('설정 오류!');
+	}
+	
+    
 
-                // arr_box_id 조정
-                arr_box_id.splice(id_index, 1);
-
-                // arr_box_id를 바탕으로 모든 박스의 z-index 조정
-                for(var i = 0; i < arr_box_id.length; i++) {
-                    $('#' + arr_box_id[i] + '').css({
-                        "z-index": 500 + i
-                    })
-                }
-                
-            }
-        }
-    })
-
-});
-// [end] 페이지 로딩 후 처리
+}
+// [end] 페이지 로딩 후 앨범 준비
 
 
 /**
@@ -237,14 +258,14 @@ function apply_page_droppable($page) {
     });
 }
 
-//TODO page 초기화
-function initpage(diagram) {
-   page.empty();
+//TODO page 비우기
+function initpage($page) {
+	$page.empty();
 }
 
-// [start] 텍스트 박스를 캔버스에 추가
+
 /**
- *  텍스트 박스를 캔버스에 추가
+ *  [start] 텍스트 박스를 캔버스에 추가
  *  @param : (좌표가 포함된 이벤트, 드래그 드랍한 박스, 드랍한 페이지)
  **/
 function renderbox(event, ui, page) {
@@ -367,7 +388,18 @@ function renderbox(event, ui, page) {
         "left": event.pageX - curr_page_left - 50
     }).appendTo($('#page' + page + ''));
 
+    apply_event_to_box($div_box);
 
+
+}
+// [end] 텍스트 박스를 캔버스에 추가
+
+/**
+ * [start] 박스에 이벤트 추가
+ * @param $div_box
+ */ 
+function apply_event_to_box($div_box) {
+	
     $arr_div_box.push($div_box);
 
 
@@ -381,11 +413,11 @@ function renderbox(event, ui, page) {
             });
             
         },
-        containment: $('#page' + page + '')  // 캔버스 영역 밖으로 나가지 못하게 제한
+        containment: $div_box.parent()  // 캔버스 영역 밖으로 나가지 못하게 제한
 
     }).resizable({
 
-        containment: $('#page' + page + ''), // 캔버스 영역을 넘지 못하도록 제한
+        containment: $div_box.parent(), // 캔버스 영역을 넘지 못하도록 제한
         disabled: true          // 리사이즈는 onSelect 상태인 박스만 가능하므로.. 초기 설정에는 disable
 
     });
@@ -406,15 +438,15 @@ function renderbox(event, ui, page) {
         e.stopPropagation();
 
         // 클릭한 대상이...
-        if($(this).hasClass('onEdit')) {
+        if($div_box.hasClass('onEdit')) {
             // 뭐하지?????
-        } else if ($(this).hasClass('onSelect')) {
+        } else if ($div_box.hasClass('onSelect')) {
             // 선택 중인 박스였다면... 무얼 할까??
         } else {
             // 아무 것도 아닌 박스였다면... 수정 중/선택 중인 다른 박스 모두 해제하고... 클릭한 대상에게 선택 중 효과 적용..
             clearOn();
 
-            $(this).draggable('enable').resizable('enable')
+            $div_box.draggable('enable').resizable('enable')
                 .addClass('onSelect').find(".ui-resizable-handle").show();
             
             removeEdit();
@@ -430,7 +462,7 @@ function renderbox(event, ui, page) {
         removeEdit();
 
         // 텍스트박스일 경우만 적용
-        if ($(this).hasClass('textbox')) {
+        if ($div_box.hasClass('textbox')) {
 
             // textbox 드래그 끔, 리사이즈 켬, 수정 중 css 적용
             $div_box.draggable('disable').resizable('disable').removeClass('onSelect').addClass('onEdit')
@@ -444,12 +476,12 @@ function renderbox(event, ui, page) {
         // 마우스 업 이벤트 시 텍스트편집창 띄울 것인지 판단
 
         // 클릭한 대상이...
-        if($(this).hasClass('onEdit')) {
+        if($div_box.hasClass('onEdit')) {
             // 수정 중인 박스였다면 부분 옵션창을 켠다.
             removeEdit();
             isTextboxHighlighted();
 
-        } else if ($(this).hasClass('onSelect')) {
+        } else if ($div_box.hasClass('onSelect')) {
             // 선택 중인 박스였다면... 무얼 할까??
 
         } else {
@@ -458,16 +490,8 @@ function renderbox(event, ui, page) {
         }
 
     });
-
 }
-// [end] 텍스트 박스를 캔버스에 추가
-
-// 폰트 크기 적용
-function execFontSize(size, unit) {
-    var $spanString = $('<span />');
-    $spanString.html(getSelectionHtml()).css("font-size", size+unit);
-    document.execCommand('insertHTML', false, spanString.outerHTML);
-};
+// [end] 박스에 이벤트 추가
 
 // 텍스트 선택 시 텍스트 상단에 편집창 팝업
 function isTextboxHighlighted(e) {
@@ -483,7 +507,7 @@ function isTextboxHighlighted(e) {
     }
 }
 
-// [start] 전역 편집창 생성
+// [start] 1단계 편집창 생성
 function createWholeEditor($elem) {
 
     var $arr_bt = [];
@@ -609,7 +633,7 @@ function createWholeEditor($elem) {
 
 
 
-    // 전역 편집창
+    // 1단계 편집창 div 생성
     var $div_whole_editor = $('<div />');
     $div_whole_editor.addClass('edit').addClass('div_whole_editor').css({
         "position": "absolute",
@@ -1256,9 +1280,9 @@ function createWholeEditor($elem) {
     $div_whole_editor.contents().contents().addClass('edit');
     
 }
-// [end] 전역 편집창 생성
+// [end] 1단계 편집창 생성
 
-// [start] 텍스트 부분 편집창 생성
+// [start] 2단계 편집창(텍스트 전용) 생성
 function createTextEditor(top, left) {
 
     var $arr_bt = [];
@@ -1365,7 +1389,7 @@ function createTextEditor(top, left) {
     $div_selection_editor.contents().addClass('edit');
     $div_selection_editor.contents().contents().addClass('edit');
 }
-// [end] 텍스트 부분 편집창 생성
+// [end] 2단계 편집창(텍스트 전용) 생성
 
 // 편집창 제거
 function removeEdit() {
@@ -1383,8 +1407,9 @@ function clearOn() {
         }).removeClass('onSelect').find(".ui-resizable-handle").hide();
 }
 
-
-// [start] 도움말 생성
+/**
+ *  [start] 도움말 생성
+ **/
 function createTooltip($elem, text) {
 
     // 스크롤 보정을 위한 변수
@@ -1409,18 +1434,15 @@ function createTooltip($elem, text) {
 // [end] 도움말 생성
 
 
-
 /**
- *  현재 페이지 저장
+ *  [start] 현재 페이지 저장
  **/
 function savePage() {
-
-    //console.log('savePage 호출 -> ' + curr_page);
 
     var count = 1;
     
     if(curr_page == 1){
-    	page1ImageSave();
+    	//page1ImageSave();
     }
 
     if(curr_page != 1 && curr_page != $('#album').turn('pages')) {
@@ -1458,7 +1480,7 @@ function savePage() {
     }
 
 }
-
+// [end] 현재 페이지 저장
 
 /**
  *  페이지 추가
@@ -1468,6 +1490,7 @@ function savePage() {
 
     // 페이지 추가는 커버 바로 앞에 두 페이지 씩 추가하는 형태
     var total_page = $('#album').turn('pages');
+    //console.log('totla_page -> ' + total_page);
 
     //2페이지 추가이므로 2번 반복
     for(var i = 0; i < 2; i++) {
@@ -1480,7 +1503,9 @@ function savePage() {
 
         //뒷 커버를 추가
         $('#album').turn('addPage', $page, (total_page+1+i));
+        console.log('totla_page 1 -> ' + total_page);
         apply_page_droppable($('#page' + (total_page+1+i) + ''))
+        console.log('totla_page 2 -> ' + total_page);
     }
 
     //기존 페이지의 아이디와 innerHTML을 두 페이지 씩 뒤로 이동
@@ -1539,101 +1564,3 @@ function savePage() {
     alert('페이지가 삭제되었습니다!');
 
  }
-    
-
-
-/*
-    [start] 앨범 배경 꾸미기
-*/
-
-//앨범 배경 커스텀마이징
-function bgchange(num) {
-
-    switch (num) {
-    case 0:
-        $('.pages').css("background-image",
-                "url(..//resources//image_mj//season.jpg)");
-        break;
-    case 1:
-        $('.pages').css("background-color", "pink");
-        break;
-    case 2:
-        $('.pages').css("background-image",
-                "url(..//resources//image_mj//vintage.jpg)");
-        break;
-    default:
-
-    }
-
-}
-//라디오버튼
-$(document).ready(function() {
-
-    $('input').iCheck({
-        radioClass : 'iradio_square-green',
-    // increaseArea: '20%' // optional
-
-    });
-
-    //value값
-
-});
-
-function checkRadioButton(objName) {
-    var radioObj = document.all(objName);
-    var isChecked;
-    if (radioObj.length == null) { // 라디오버튼이 같은 name 으로 하나밖에 없다면
-        isChecked = radioObj.checked;
-    } else { // 라디오 버튼이 같은 name 으로 여러개 있다면
-        for (i = 0; i < radioObj.length; i++) {
-            if (radioObj[i].checked) {
-                isChecked = true;
-                break;
-            }
-        }
-    }
-
-    if (isChecked)
-        alert('체크된거있음');
-    else
-        alert('체크된거없음');
-
-    //value값
-    for (i = 0; i < radioObj.length; i++) {
-        if (radioObj[i].value) {
-            if (value = 1) {
-                $('.pages').css("background-image",
-                        "url(..//resources//image_mj//season.jpg)");
-                alert(radioObj[i].value);
-                break;
-            }
-            if (value = 2) {
-                $('.pages').css("background-color", "pink");
-                alert(radioObj[i].value);
-                break;
-            }
-            if (value = 3) {
-                $('.pages').css("background-image",
-                        "url(..//resources//image_mj//vintage.jpg)");
-                alert(radioObj[i].value);
-                break;
-            }
-
-        }
-
-    }
-}
-/*
-    [end] 앨범 배경 꾸미기
-*/
-
-
-
-/**
- *  [start] 메인 표지 업로드 관련
- **/
-
-
-/**
- *  [end] 메인 표지 업로드 관련
- **/

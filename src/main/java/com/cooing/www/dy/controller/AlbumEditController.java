@@ -80,24 +80,24 @@ public class AlbumEditController {
 	@RequestMapping(value = "/edit_album", method = RequestMethod.GET)
 	public String edit_album(String str_album_num, Model model, HttpSession session){
 		
-		int album_num = -1;
+		int int_album_num = -1;
 		
 		// 숫자가 아니거나 -1 그대로인 경우 홈으로 리턴
 		try {
-			album_num = Integer.parseInt(str_album_num);
-			if(album_num == -1) {
+			int_album_num = Integer.parseInt(str_album_num);
+			if(int_album_num == -1) {
 				new Exception();
 			}
 		} catch (Exception e) {
-			return "../";
+			return "redirect:../";
 		}
 		
 		try {
-			System.out.println("album_num -> " + album_num);
 			//TODO 앨범 넘버로 앨범 정보 가져와 모델에 담기
-			AlbumWriteVO album = albumDAO.searchAlbumNum(album_num);
+			AlbumWriteVO album = albumDAO.searchAlbumNum(int_album_num);
+			if(album == null) return "redirect:../";
 			//TODO 앨범 넘버로 페이지 배열로 받아와 모델에 담기
-			ArrayList<PageHtmlVO> arr_page = albumDAO.select_pages_by_album_num(album_num);
+			ArrayList<PageHtmlVO> arr_page = albumDAO.select_pages_by_album_num(int_album_num);
 			
 			model.addAttribute("album", album);
 			model.addAttribute("arr_page", arr_page);
@@ -110,8 +110,7 @@ public class AlbumEditController {
 		return "Album/edit_album";
 	}
 	
-	
-	
+
 	//앨범생성,편집(임시)
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String albumEdit(){

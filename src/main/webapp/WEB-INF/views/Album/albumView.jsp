@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -7,155 +8,291 @@
 
 <html>
 <head>
-<title>AlbumView</title>
+<title>AlbumEdit</title>
 <meta charset="utf-8" />
-<meta name="viewport" content="width = 1050, user-scalable = no" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet" href="<c:url value="/resources/aside_css/bootstrap.min.css"/>">
-<link rel="stylesheet" href="<c:url value="/resources/aside_css/open-iconic-bootstrap.min.css"/>">
+<!-- 기본 js -->
+<script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="resources/js/jquery-ui.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 
-<link rel="stylesheet" href="<c:url value="/resources/aside_css/owl.carousel.min.css"/>">
-<link rel="stylesheet" href="<c:url value="/resources/aside_css/owl.theme.default.min.css"/>">
+<script src="resources/aside_js/popper.min.js"></script>
+<script src="resources/aside_js/owl.carousel.min.js"></script>
+<script src="resources/aside_js/jquery.waypoints.min.js"></script>
+<script src="resources/aside_js/imagesloaded.pkgd.min.js"></script>
+<script src="resources/aside_js/main.js"></script>
 
-<link rel="stylesheet" href="<c:url value="/resources/aside_css/icomoon.css"/>">
-<link rel="stylesheet" href="<c:url value="/resources/aside_css/animate.css"/>">
-<link rel="stylesheet" href="<c:url value="/resources/aside_css/style.css"/>">
-<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/album_page_js/extras/modernizr.2.5.3.min.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/album_page_js/basic.js"/>"></script>		
-<script defer src="<c:url value="https://use.fontawesome.com/releases/v5.0.10/js/all.js"/>"></script>
+<script src="resources/skin_radio/icheck.js"></script>
 
+<!-- 페이지 넘김 효과를 위한 js -->
+<script type="text/javascript" src="resources/js/turn.js"></script>
 
-<script src="<c:url value="/resources/aside_js/popper.min.js"/>"></script>
-<script src="<c:url value="/resources/aside_js/owl.carousel.min.js"/>"></script>
-<script src="<c:url value="/resources/aside_js/jquery.waypoints.min.js"/>"></script>
-<script src="<c:url value="/resources/aside_js/imagesloaded.pkgd.min.js"/>"></script>
-<script src="<c:url value="/resources/aside_js/main.js"/>"></script>    
+<!-- albumEdit 용 js -->
+<script type="text/javascript" src="resources/js/albumEdit.js"></script>
+<script type="text/javascript" src="resources/js_js/html2canvas.min.js"></script>
+<!-- 기본 css -->
+<link rel="stylesheet" href="resources/css/albumEdit.css">
+<link rel="stylesheet" href="resources/css/jquery-ui.min.css">
 
-<link rel="stylesheet" href="<c:url value="/resources/skin_radio/green.css"/>">
+<!-- 기타 css -->
+<link rel="stylesheet" href="resources/album_css/album_edit_basic.css">
+<link rel="stylesheet" href="resources/album_css/album_edit_drag_and_drop.css">
+
+<link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/aside_css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="resources/aside_css/owl.carousel.min.css">
+<link rel="stylesheet" href="resources/aside_css/owl.theme.default.min.css">
+<link rel="stylesheet" href="resources/aside_css/icomoon.css">
+<link rel="stylesheet" href="resources/aside_css/animate.css">
+<link rel="stylesheet" href="resources/aside_css/style.css">
+
+<link rel="stylesheet" href="resources/skin_radio/green.css">
+
+<style type="text/css">
+
+.main {
+    min-width: 200px;
+    max-width: 200px;
+    padding: 10px;
+    margin: 0 auto;
+    background: #ffffff;}
+section {
+    display: none;
+    padding: 20px 0 0;    
+    font-size : 14px;        
+    border-top: 1px solid #ddd;}
+    
+/*라디오버튼 숨김*/
+.input1 {
+      display: none;}
+
+label {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 5px 10px;
+    font-weight: 600;
+    text-align: center;
+    color: #bbb;
+    border: 1px solid transparent;
+    font-size: 15px;}
+
+label:hover {
+    color: #2e9cdf;
+    cursor: pointer;}
+
+/*input 클릭시, label 스타일*/
+.input1:checked + label {
+      color: #555;
+      border: 1px solid #ddd;
+      border-top: 2px solid #2e9cdf;
+      border-bottom: 1px solid #ffffff;}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2{
+    display: block;}
+
+.search{	
+	width: 120px;
+	display:block;
+	position: absolute;	
+}
+.bt{
+	position: absolute;
+	right: 40px;
+}
+.tb1{
+	padding-top: 20px;
+}	    
+
+html, body, main, .container-fluid {
+	height: 100%;
+}
+.container-fluid {
+	padding: 0;
+}
+
+.view_wrapper {
+	margin: 0;
+	margin-left: 250px;
+	display: flex;
+	flex-wrap: wrap;
+}
+.album_wrapper, .top_bar {
+	margin: auto !important;
+	display: block;
+}
+.checkbox {
+	font-size: 20px;
+}
+.page {
+	background-color: #eee;
+}
+.outer {
+	background-color: #aaa;
+}
+</style>
 
 <script>
+	
+	var selectcheck = true;
 
-$(document).ready(function() {
-	getMyAlbumRead();
-})
 
-	//앨범 읽기 Ajax로 받는 코드
-function getMyAlbumRead() {
-	$.ajax({
-		url: 'getMyAlbumRead',
-		type: 'post',
-		data:{num : ${album_num}},
-		dataType: 'json',
-		success: function(result) {
-			myAlbumRead(result);
-		},
-		error: function(e) {
-			alert(JSON.stringify(e));	
-		}
+	//라디오버튼
+	$(document).ready(function() {
+
+		$('.input').iCheck({
+			radioClass : 'iradio_square-green',
+		// increaseArea: '20%' // optional
+
+		});
+		
+		ready_album('view');
+
 	});
-}
 
-function myAlbumRead(result) {
-	
-	var page_num;
-	var page_html;
-	var sw = 0;
-	
-$(result).each(function(i, page) {
-		
-		page_num = i+1;
-		page_html = page;
-		
-		if(page_num == 1){
-			$('#page1').html(page_html);
-		} else{	
-			var element = $('<div />').html(page_html);
-			element.attr('class', 'pages'+page_num);
-			element.attr('id', 'page');
-			$('#flipbook').turn("addPage", element, page_num);
-		}
+	function checkRadioButton(iCheck){   
+	   
+	   var temp;
+	   
+	   var radioObj = document.all(iCheck);
+	   
+	   
+	   var isChecked;
+	   if(radioObj.length == null)
+	   { // 라디오버튼이 같은 name 으로 하나밖에 없다면
+	   isChecked = radioObj.checked;
+	   }
+	   else
+	   { // 라디오 버튼이 같은 name 으로 여러개 있다면
+	      for(var i=0; i<radioObj.length; i++)
+	      {
+	         if(radioObj[i].checked)
+	         {
+	            isChecked = true;
+	            break;
+	         }
+	      }
+	   }
 
-		
-	});
+	   if(isChecked){
+		   alert('체크된거있음' + radioObj[i].value);
+		   temp = radioObj[i].value; 
+		   alert('템프 값 : ' + temp);
+		   
+		   //value값
+		   switch (temp) {
+		      case '1':
+		         alert(temp);
+		         $('.pages').css("background-image","url(..//resources//image_mj//season.jpg)"); 
+		         break;
+		         
+		      case '2':
+		         alert(temp);
+		         $('.pages').css("background-color","pink");
+		         break;
 	
-}
+		      default:
+		         alert(temp);
+		         $('.pages').css("background-image","url(..//resources//image_mj//vintage.jpg)");
+		         break;    
+		   }
+	   
+	   }else{
+			alert('체크된거없음');
+	   }	 
+	}
 
 </script>
 
 </head>
 <body>
 
+	<!-- 사이드 바 -->
+	<aside class="probootstrap-aside js-probootstrap-aside">
+		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
+			<span class="oi oi-arrow-left"></span> Close
+		</a>
+		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
+			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
+			<p class="mb-0"> 친구목록출력, 채팅기능
+				<a href="https://uicookies.com/" target="_blank">uiCookies</a>
+			</p>
+		</div>
+		<div class="probootstrap-overflow">
+		<div class="main">
 
+  		<input class = "input1" id="tab2" type="radio" name="tabs" checked>
+    	<label for="tab2">채팅</label>   
 
- <aside class="probootstrap-aside js-probootstrap-aside">
-      <a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none"><span class="oi oi-arrow-left"></span> Close</a>
-      <div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-        
-        <a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
-        <p class="mb-0">친구목록출력, 채팅기능 <a href="https://uicookies.com/" target="_blank">uiCookies</a></p>
-      </div>
-      <div class="probootstrap-overflow">
-        <nav class="probootstrap-nav">
-          <input type ="text" placeholder = "친구검색"  name="" value = "" class ="search">
+   		<section id="content2">
+       		<form id ="" method="" action="">
+			<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search">
 			<button class = "bt">s</button>
-        </nav>
-        
-        <p></p>			
+			</form>					
+				<p></p>			
 				<p>친구1</p>
 				<p>친구2</p>
 				<p>친구3</p>
 				<p>친구4</p>
 		
 				<p>그룹1</p>
-				<p>그룹2</p>						 		
-    	
-        <footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft">
-         
-          <p>&copy; 2018 <a href="https://uicookies.com/" target="_blank">COOING</a>. <br> All Rights Reserved.</p>
-        </footer>
-      </div>
-    </aside>
+				<p>그룹2</p>	
+				<form id="testimg">
+					<input type="hidden" name="imgSrc" id="imgSrc" />
+				</form>	
+    	</section>
+    	</div>			
 
+			<footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft">
 
-	<div id="contents">
-		<div class="flipbook-viewport">
-			<div class="container">  
-		    	<div class="flipbook" id="flipbook">
-		    		<div class=pages id=page1>
-		    		</div>
-				</div>
+				<p>
+					&copy; 2018 <a href="https://uicookies.com/" target="_blank">COOING</a>
+					<br> All Rights Reserved.
+				</p>
+			</footer>
+		</div>
+	</aside>
+
+	<!-- 메인 -->
+	<main role="main" class="probootstrap-main2 js-probootstrap-main">
+		<div class="probootstrap-bar">
+	
+			<a href="#" class="probootstrap-toggle js-probootstrap-toggle">
+				<span class="oi oi-menu"></span>
+			</a>
+			<div class="probootstrap-main-site-logo">
+				<a href="index.html">COOING</a>
 			</div>
-		</div>	
-	</div>
+	
+		</div>
+	
+		<div class="container-fluid">
+			<div class="view_wrapper">
+			
+				<!-- 앨범 영역 -->
+				<div class="album_wrapper" id="album_wrapper">
+					<div class="album" id="album" style="display: none">
+						<c:if test="${arr_page.size() > 0 }">
+							<c:forEach items="${arr_page}" var="page">
+								<div id="page${page.page_num}" class="page hard">${page.page_html}</div>
+							</c:forEach>
+						</c:if>	
+					</div>
+				</div>
 
+				<!-- 하단 바 영역 -->
+				<div class="under_bar">
+					<button>이전</button>
+					<button>다음</button>
+				</div>
+				
+			</div>
+			<!-- END row -->
+	
+		</div>
 
-<!-- 메인표지업로드 -->
-<script type="text/javascript">
-
-function loadApp() {
-
-	// Create the flipbook
-	$('.flipbook').turn({
-		width:1200,
-		height:600,
-		elevation: 50,
-		gradients: true,
-		autoCenter: true
-	});
-}
-
-// Load the HTML4 version if there's not CSS transform
-yepnope({
-	test : Modernizr.csstransforms,
-	yep: ['resources/album_page_js/lib/turn.js'],
-	nope: ['resources/album_page_js/lib/turn.html4.min.js'],
-	both: ['resources/album_css/basic.css'],
-	complete: loadApp
-});
-
-</script>    
+	</main>
 
 </body>
-</html>  
+</html>
