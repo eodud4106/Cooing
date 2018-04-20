@@ -92,11 +92,16 @@
 	    order by Album_num desc
 	</select>
 	
-	<select id="MyAlbumRead" parameterType="int" resultType="String">
-		select page_html 
-		from Page 
-		where ALBUM_NUM = #{album_num}
-		order by page_num asc
+	<!-- 앨범 넘버로 앨범 내 페이지 검색 -->
+	<select id="select_pages_by_album_num" parameterType="int" resultType="page">
+		SELECT
+			* 
+		FROM
+			page 
+		WHERE
+			album_num = #{album_num}
+		ORDER BY
+			page_num asc
 	</select>
 	
 </mapper>

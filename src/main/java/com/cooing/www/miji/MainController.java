@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
+import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.Member;
 
@@ -43,8 +44,8 @@ public class MainController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/getMyAlbumRead", method = RequestMethod.POST)
-	public ArrayList<String> getMyAlbumRead(String num) {
-		return  albumDAO.MyAlbumRead(Integer.parseInt(num));
+	public ArrayList<PageHtmlVO> getMyAlbumRead(String num) {
+		return  albumDAO.select_pages_by_album_num(Integer.parseInt(num));
 	}
 	
 	@RequestMapping(value = "/albumTestView", method = RequestMethod.GET)

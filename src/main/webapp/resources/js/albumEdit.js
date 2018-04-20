@@ -81,9 +81,10 @@ $(document).ready(function(){
     //로딩된 결과가 없는 경우 -> 앨범을 새로 만드는 경우
     if(1 == 2) {
         // 앨범 로딩 결과 있음
+        alert('페이지 있음')
     } else {
         // 앨범 로딩 결과 없음
-
+        alert('페이지 없음')
         // 기본 앨범 div 생성
         createNewAlbum();
     }
@@ -104,7 +105,7 @@ $(document).ready(function(){
                 // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
                 clearOn();
                 // page 저장
-                //savePage();
+                savePage();
 
             },
             turned: function(event, page, view) {
@@ -1435,11 +1436,12 @@ function savePage() {
         });
 
         $.ajax({
-            url : 'personal_pageSave',
+            url : '../albumEdit/save_page',
             type : 'POST',
             data : {
-                html : $page_clone.html(),
-                pagenum : (curr_page + i)
+            	album_num: $('#hidden_album_num').val(),
+                page_html : $page_clone.html(),
+                page_num : (curr_page + i)
             },
             dataType : 'text',
             success : function(a) {

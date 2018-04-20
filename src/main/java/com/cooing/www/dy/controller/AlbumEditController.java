@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -81,30 +82,32 @@ public class AlbumEditController {
 		
 		int album_num = -1;
 		
+		// 숫자가 아니거나 -1 그대로인 경우 홈으로 리턴
 		try {
 			album_num = Integer.parseInt(str_album_num);
+			if(album_num == -1) {
+				new Exception();
+			}
 		} catch (Exception e) {
 			return "../";
 		}
 		
-		String returnMessage = null;
-		
-		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-		if (album_writer == null) returnMessage = "user null";
-		
-		AlbumWriteVO albumwrite = new AlbumWriteVO(-1, album_writer, "임시 앨범", 1);
-
-		//앨범 만들기
-		int created_album_num = albumDAO.personal_createAlbum(albumwrite);
-		
-		// created_album_num이 -1이면 앨범 제작 실패임
-		if(created_album_num == -1) {
-			returnMessage = "fail";
-		} else {
-			returnMessage = created_album_num + "";
-		}
+		try {
+			System.out.println("album_num -> " + album_num);
+			//TODO 앨범 넘버로 앨범 정보 가져와 모델에 담기
+			AlbumWriteVO album = albumDAO.searchAlbumNum(album_num);
+			//TODO 앨범 넘버로 페이지 배열로 받아와 모델에 담기
+			ArrayList<PageHtmlVO> arr_page = albumDAO.select_pages_by_album_num(album_num);
 			
-		return returnMessage;
+			model.addAttribute("album", album);
+			model.addAttribute("arr_page", arr_page);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+			
+		return "Album/edit_album";
 	}
 	
 	
@@ -141,9 +144,9 @@ public class AlbumEditController {
 	//앨범 페이지별 저장
 	@ResponseBody
 	@RequestMapping(value = "/save_page", method = RequestMethod.POST)
-	public String save_page(PageHtmlVO page, HttpSession session){
-		
-		if(page == null) return "empty";
+	public String save_page(String album_num, String page_html, String page_num, HttpSession session){
+			
+		PageHtmlVO page = new PageHtmlVO(Integer.parseInt(album_num), Integer.parseInt(page_num), page_html);
 		
 		//앨범 만들고 바로 앨범 넘버 받아서 page태그랑 연결해 주는 코드
 		if(albumDAO.personal_insertAlbumOfPage(page))

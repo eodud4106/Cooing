@@ -30,6 +30,30 @@ public class AlbumDAO {
 		return albumwrite.getAlbum_num();
 	}
 	
+	/**
+	 * 앨범 넘버로 앨범 검색
+	 */
+	public AlbumWriteVO searchAlbumNum(int album_num){
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		return mapper.searchAlbumNum(album_num);		
+	}
+	
+	/**
+	 *	앨범 넘버로 페이지 리스트 검색
+	 */
+	public ArrayList<PageHtmlVO> select_pages_by_album_num(int album_num) {
+		
+		ArrayList<PageHtmlVO> arr_page = null; 
+		
+		try {
+			arr_page = sqlSession.getMapper(AlbumMapper.class).select_pages_by_album_num(album_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return arr_page;
+	}
+	
 	public int personal_selectAlbum_Num(String album_identifier){
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		return mapper.personal_selectAlbum_Num(album_identifier);
@@ -68,10 +92,7 @@ public class AlbumDAO {
 		return mapper.searchAlbum(searchtext);
 	}
 	
-	public AlbumWriteVO searchAlbumNum(int num){
-		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		return mapper.searchAlbumNum(num);		
-	}
+
 	
 	public PageHtmlVO searchPage1(int num){
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
@@ -103,8 +124,4 @@ public class AlbumDAO {
 		return mapper.MyAlbumList(album_writer);
 	}
 	
-	public ArrayList<String> MyAlbumRead(int album_num){
-		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		return mapper.MyAlbumRead(album_num);		
-	}
 }

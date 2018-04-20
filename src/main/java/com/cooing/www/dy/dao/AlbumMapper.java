@@ -35,6 +35,5 @@ public interface AlbumMapper {
 	
 	public ArrayList<AlbumWriteVO> MyAlbumList(String album_writer);
 	
-	//바뀐부분
-	public ArrayList<String> MyAlbumRead(int album_num);
+	public ArrayList<PageHtmlVO> select_pages_by_album_num(int album_num);
 }

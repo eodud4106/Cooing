@@ -1,6 +1,9 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 
 <html>
@@ -47,6 +50,61 @@
 <link rel="stylesheet" href="../resources/skin_radio/green.css">
 
 <style type="text/css">
+
+.main {
+    min-width: 200px;
+    max-width: 200px;
+    padding: 10px;
+    margin: 0 auto;
+    background: #ffffff;}
+section {
+    display: none;
+    padding: 20px 0 0;    
+    font-size : 14px;        
+    border-top: 1px solid #ddd;}
+    
+/*라디오버튼 숨김*/
+.input1 {
+      display: none;}
+
+label {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 5px 10px;
+    font-weight: 600;
+    text-align: center;
+    color: #bbb;
+    border: 1px solid transparent;
+    font-size: 15px;}
+
+label:hover {
+    color: #2e9cdf;
+    cursor: pointer;}
+
+/*input 클릭시, label 스타일*/
+.input1:checked + label {
+      color: #555;
+      border: 1px solid #ddd;
+      border-top: 2px solid #2e9cdf;
+      border-bottom: 1px solid #ffffff;}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2{
+    display: block;}
+
+.search{	
+	width: 120px;
+	display:block;
+	position: absolute;	
+}
+.bt{
+	position: absolute;
+	right: 40px;
+}
+.tb1{
+	padding-top: 20px;
+}	    
+
 html, body, main, .container-fluid {
 	height: 100%;
 }
@@ -75,6 +133,81 @@ html, body, main, .container-fluid {
 }
 </style>
 
+<script>
+	
+	var selectcheck = true;
+
+
+	//라디오버튼
+	$(document).ready(function() {
+
+		$('.input').iCheck({
+			radioClass : 'iradio_square-green',
+		// increaseArea: '20%' // optional
+
+		});
+
+		//value값
+		
+		alert(JSON.stringify('${album}'));
+		alert(JSON.stringify('${arr_page}'));
+
+	});
+
+	function checkRadioButton(iCheck){   
+	   
+	   var temp;
+	   
+	   var radioObj = document.all(iCheck);
+	   
+	   
+	   var isChecked;
+	   if(radioObj.length == null)
+	   { // 라디오버튼이 같은 name 으로 하나밖에 없다면
+	   isChecked = radioObj.checked;
+	   }
+	   else
+	   { // 라디오 버튼이 같은 name 으로 여러개 있다면
+	      for(var i=0; i<radioObj.length; i++)
+	      {
+	         if(radioObj[i].checked)
+	         {
+	            isChecked = true;
+	            break;
+	         }
+	      }
+	   }
+
+	   if(isChecked){
+		   alert('체크된거있음' + radioObj[i].value);
+		   temp = radioObj[i].value; 
+		   alert('템프 값 : ' + temp);
+		   
+		   //value값
+		   switch (temp) {
+		      case '1':
+		         alert(temp);
+		         $('.pages').css("background-image","url(..//resources//image_mj//season.jpg)"); 
+		         break;
+		         
+		      case '2':
+		         alert(temp);
+		         $('.pages').css("background-color","pink");
+		         break;
+	
+		      default:
+		         alert(temp);
+		         $('.pages').css("background-image","url(..//resources//image_mj//vintage.jpg)");
+		         break;    
+		   }
+	   
+	   }else{
+			alert('체크된거없음');
+	   }	 
+	}
+
+</script>
+
 </head>
 <body>
 
@@ -99,13 +232,12 @@ html, body, main, .container-fluid {
 
     	<section id="content1"> 
     	<!-- 페이지 저장 -->		
-		<form method="POST" action="personal_AlbumTotalCreate" id="albumlist_form">
 			<div id="entry">
-				<h5 style="color: black;">앨범명</h5><input type="text" id="album_name" name="album_name">
-				<h5 style="color: black;">앨범 내용</h5>
-				<input type="text" id="album_contents" style = "height: 100px;" name="album_contents">
+				<h5 style="color: black;">앨범명</h5><input type="text" id="album_name" name="album_name" value="앨범이름을 입력해주세요.">
+				<h5 style="color: black; ">앨범 내용</h5>
+				<input type="text" style = "height: 100px;"id="album_contents" name="album_contents" value="앨범내용을 입력해주세요.">
 				<h5 style="color: black;">앨범 카테고리</h5>
-				<select name="album_category">		
+				<select name="album_category" id="album_category">		
 					<option value="0">여행</option>
 				    <option value="1">스포츠/래저</option>
 				    <option value="2">동물</option>
@@ -129,24 +261,24 @@ html, body, main, .container-fluid {
 				    <option value="20" selected="selected">기타</option>
 				</select>
 				<h5 style="color: black;">앨범 공개범위</h5>
-				<select name="album_openrange">		
+				<select name="album_openrange" id="album_openrange">		
 					<option value="1" selected="selected">나만 보기</option>
 				    <option value="2">전체 공개</option>
 				    <option value="3">더 추가해서 ㄱㄱ</option>
 				</select>
 				
+				<input type="button" value="앨범정보저장" onclick="modifiy_AlbumInfomation()">
 				<br><br><br>
 				<!-- <input type="text" id="hashtagtx" placeholder="해쉬태그"><input type="button" id="hashtagbt" value="추가">--> 
 				<div id="hashtagvw"></div>
-				<input type="button" id="hashtagbt" value="추가">
 				<br><br>
-				<input type="hidden" name="album_party" value="1">
-				<input type="hidden" name="album_version" value="1">
+				<input type="button" id="hashtagbt" value="추가">
+				<input type="hidden" name="album_num" value="${albumnum }" id="album_num">
+				
+				<br><br>
 				<!-- <input type="hidden" id="hashtag" name="hashtag"> -->
 				<!-- <input type="submit" onsubmit="formCheck()"> -->
 			</div>
-			
-		</form>
 		    
        
     	</section>
@@ -163,7 +295,10 @@ html, body, main, .container-fluid {
 				<p>친구4</p>
 		
 				<p>그룹1</p>
-				<p>그룹2</p>		
+				<p>그룹2</p>	
+				<form id="testimg">
+					<input type="hidden" name="imgSrc" id="imgSrc" />
+				</form>	
     	</section>
     	</div>			
 
@@ -220,6 +355,7 @@ html, body, main, .container-fluid {
 					<button onclick="addPage()">페이지 추가</button>
 					<button onclick="removePage()">페이지 삭제</button>
 					<button>다음</button>
+					<input type="hidden" id="hidden_album_num" value="${album.album_num}">
 				</div>
 				
 			</div>
@@ -228,8 +364,6 @@ html, body, main, .container-fluid {
 		</div>
 
 	</main>
-
-
 
 </body>
 </html>

@@ -115,6 +115,30 @@ function myAlbumList(result) {
 	});
 	
 }
+
+/**
+ * 앨범 생성
+ */
+function create_personal_album() {
+	$.ajax({
+		url: 'albumEdit/create_personal_album',
+		type: 'post',
+		dataType: 'json',
+		success: function(result) {
+			if(result == 'user null') {
+				alert('로그인 정보 없음!');
+			} else if(result == 'fail') {
+				alert('오류 발생!!');
+			} else {
+				 //TODO 앨범 편집창으로 이동
+				 location.href="albumEdit/edit_album?str_album_num=" + result;
+			}
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+}
 </script>
 
 <style>
@@ -222,7 +246,7 @@ select::-ms-expand { /* for IE 11 */
 					<li><a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a></li>
 					<li><a href="<c:url value ="/jinsu/login_get"/>">로그인...</a></li>
 					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
-					<li><a href="<c:url value ="albumEdit/create_personal_album"/>">앨범 만들기</a></li>
+					<li><a href="javascript:create_personal_album()">앨범 만들기</a></li>
 					
 				</ul>
 			
