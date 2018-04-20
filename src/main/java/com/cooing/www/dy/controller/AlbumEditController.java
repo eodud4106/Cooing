@@ -2,6 +2,7 @@ package com.cooing.www.dy.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
@@ -10,9 +11,11 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,31 +133,23 @@ public class AlbumEditController {
 		return "fail";
 	}
 	
-	/*@ResponseBody
+	@ResponseBody
 	@RequestMapping(value = "/page1ImageSave", method = RequestMethod.POST)
 	public String page1ImageSave(HttpServletRequest request) throws Exception{
 		logger.info("page1 Image Save _ ljs");
 		String binaryData = request.getParameter("imgSrc");
         FileOutputStream stream = null;
+        String newFileName = "" + new Date().getTime();
         try{
             logger.info("binary file   "  + binaryData);
             if(binaryData == null || binaryData=="") {
                 throw new Exception();    
             }
-            
-            binaryData = binaryData.replaceAll("data:image/png;base64,", "");
-            String encode = DatatypeConverter.printBase64Binary(binaryData.getBytes());
-            String decode = new String(DatatypeConverter.parseBase64Binary(binaryData));
-            byte[] binary = binaryData.getBytes();
-            byte[] decode = Base64.decode(binaryData.getBytes("UTF-8"));
-           
-           byte[] decoded = Base64.decodeBase64(binaryData.getBytes());
-            
-            byte[] decodedBytes = Base64.decode(binaryData.getBytes());
-            
-            String decode = new String(Base64.decode(binaryData, 0));
-            stream = new FileOutputStream(strThumbnailPath+"test"+".png");
-            stream.write(decoded);
+            newFileName = newFileName + new Date().getTime();
+            binaryData = binaryData.replaceAll("data:image/png;base64,", "");            
+            byte[] decode = Base64.decodeBase64(binaryData);
+            stream = new FileOutputStream(strThumbnailPath+newFileName+".png");
+            stream.write(decode);
             stream.close();
             logger.info("파일 작성 완료");
             
@@ -164,8 +159,8 @@ public class AlbumEditController {
         }finally{
             stream.close();
         }
-        return "success";		
-	}*/
+        return newFileName + ".png";		
+	}
 		
 	// 앨범 임시 저장
 	@ResponseBody

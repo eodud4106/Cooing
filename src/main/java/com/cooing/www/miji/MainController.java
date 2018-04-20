@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cooing.www.dy.dao.AlbumListAndReadDAO;
-import com.cooing.www.dy.vo.AlbumListVO;
+import com.cooing.www.dy.dao.AlbumDAO;
+import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.Member;
 
@@ -29,7 +29,7 @@ public class MainController {
 	@Autowired
 	RelationDAO relationDAO;
 	@Autowired
-	AlbumListAndReadDAO albumListAndReadDAO;
+	AlbumDAO albumDAO;
 
 
 	/**
@@ -37,27 +37,14 @@ public class MainController {
 	 */
 	@RequestMapping(value = "/albumView", method = RequestMethod.GET)
 	public String albumPage(int album_num, Model model) {
-		
 		model.addAttribute("album_num", album_num);
-		
-		
 		return "Album/albumView";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/getMyAlbumRead", method = RequestMethod.POST)
 	public ArrayList<String> getMyAlbumRead(String num) {
-		
-		int album_num = 0;
-		album_num = Integer.parseInt(num);
-		
-		ArrayList<String> myAlbumReadList = null;
-		myAlbumReadList = albumListAndReadDAO.MyAlbumRead(album_num);
-		
-		System.out.println(myAlbumReadList.toString());
-		
-		
-		return myAlbumReadList;
+		return  albumDAO.MyAlbumRead(Integer.parseInt(num));
 	}
 	
 	@RequestMapping(value = "/albumTestView", method = RequestMethod.GET)
@@ -76,32 +63,20 @@ public class MainController {
 	//마이페이지
 	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
 	public String myPage(){
-
-		
-		
 		return "myPage";
 	}
 	
 	// 책 목록 조회
 	@ResponseBody
 	@RequestMapping(value = "/getMyAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumListVO> getMyAlbumList(HttpSession session) {
-		
-		ArrayList<AlbumListVO> albumList = new ArrayList<>();
-		String album_writer = null;
-		album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-		albumList = albumListAndReadDAO.MyAlbumList(album_writer);
-		System.out.println(albumList.toString());
-		for (AlbumListVO albumListVO : albumList) {
-			albumListVO.setPage_html(albumListVO.getPage_html().replaceAll("\\n", ""));
-		}
-		return albumList;
+	public ArrayList<AlbumWriteVO> getMyAlbumList(HttpSession session) {
+		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+		return albumDAO.MyAlbumList(album_writer);
 	}
 	
 	//랭킹페이지
 	@RequestMapping(value = "/LankingPage", method = RequestMethod.GET)
 	public String LankingPage(){
-			
 		return "LankingPage";
 	}
 	
