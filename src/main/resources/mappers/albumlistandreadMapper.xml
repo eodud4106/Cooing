@@ -5,20 +5,8 @@
 
 <mapper namespace="com.cooing.www.dy.dao.AlbumListAndReadMapper">
 
-	<select id="TotalAlbumList" parameterType="String" resultType="albumlist">
-		select
-			L.ALBUM_NUM,
-			L.ALBUM_NAME,
-			L.ALBUM_CONTENTS,
-			P.PAGE_HTML
-	    from
-	    	ALBUMLIST L,
-	    	Page P 
-	    where
-	    	L.ALBUM_NUM = P.ALBUM_NUM 
-	    	and P.PAGE_NUM = 1
-	    order by
-	    	L.Album_num desc
+	<select id="TotalAlbumList" resultType="albumwrite">
+		select *  from ALBUMLIST order by Album_num desc
 	</select>
 	
 	
@@ -26,7 +14,8 @@
 		select
 			L.ALBUM_NUM,
 			L.ALBUM_NAME,
-			L.ALBUM_CONTENTS,
+			L.ALBUM_CONTENTS,			
+			L.ALBUM_THUMBNAIL,
 			P.PAGE_HTML
 	    from
 	    	ALBUMLIST L,

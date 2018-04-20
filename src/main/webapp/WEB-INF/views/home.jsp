@@ -93,33 +93,15 @@ function totalAlbumList(result) {
 	var album_html;
 	var sw = 0;
 	
-	$(result).each(function(i, album) {
+	$(result).each(function(i, album) {	
+		var div_card = document.createElement('div'); //카드 클래스 div
+		var a_read_album = document.createElement('a'); //a태그
+		var img = '<img src="./albumEdit/thumbnail?filePath='+album.album_thumbnail+'" style="width:100%;height:100%">';
+		a_read_album.html(img);
+		$(div_card).addClass('card img-loaded').append(a_read_album);
 		
-		album_num = album.album_num;
-		
-		for(var i=0; i<album.page_html.length; i++) {
-			
-			if(album.page_html[i] == '<' && sw == 0){
-				sw = 1;
-				album_html = album.page_html.substring(i, album.page_html.length);
-				
-				var div_card = document.createElement('div'); //카드 클래스 div
-				var div_page = document.createElement('div'); //a태그에 들어갈 div
-				var a_read_album = document.createElement('a'); //a태그
-				
-				$(div_page).addClass('page1').html(album_html);
-				a_read_album.append(div_page);
-				$(div_card).addClass('card img-loaded').append(a_read_album);
-				
-				//a태그 링크 걸어주기
-				$('.card-columns').append(div_card);
-				
-			}
-			
-		}
-		
-		sw = 0;
-		
+		//a태그 링크 걸어주기
+		$('.card-columns').append(div_card);				
 	});
 	
 }

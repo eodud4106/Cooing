@@ -1,7 +1,6 @@
 package com.cooing.www;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,10 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.socket.TextMessage;
 
 import com.cooing.www.dy.dao.AlbumListAndReadDAO;
-import com.cooing.www.dy.vo.AlbumListVO;
+import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.Member;
 import com.cooing.www.jinsu.object.Party;
@@ -55,18 +53,8 @@ public class HomeController {
 	// 책 목록 조회
 	@ResponseBody
 	@RequestMapping(value = "/getTotalAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumListVO> getMyAlbumList(HttpSession session) {
-		
-		ArrayList<AlbumListVO> albumList = new ArrayList<>();
-		/*String album_writer = null;
-		album_writer = ((Member) session.getAttribute("Member")).getMember_id();*/
-		/*albumList = albumListAndReadDAO.TotalAlbumList(album_writer);*/
-
-		for (AlbumListVO albumListVO : albumList) {
-			albumListVO.setPage_html(albumListVO.getPage_html().replaceAll("\\n", ""));
-		}
-		
-		return albumList;
+	public ArrayList<AlbumWriteVO> getMyAlbumList() {
+		return albumListAndReadDAO.TotalAlbumList();
 	}
 	
 	

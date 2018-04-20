@@ -48,9 +48,6 @@ public class AlbumListAndReadController {
 			String album_writer = null;
 			album_writer = ((Member) session.getAttribute("Member")).getMember_id();
 			
-			
-			
-			
 			return "albumEdit";
 		}
 	
