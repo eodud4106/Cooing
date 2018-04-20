@@ -207,7 +207,7 @@ html, body, main, .container-fluid {
 	}
 	
 	function page1ImageSave(){
-		var album_num = $('#album_num').val();
+		var album_num = $('#hidden_album_num').val();
 		html2canvas($('#page1'), { 
 	          onrendered: function(canvas) { 
 	              if (typeof FlashCanvas != "undefined") { 
@@ -226,8 +226,7 @@ html, body, main, .container-fluid {
 	                  type : 'POST', 
 	                  data :{thumbnail:a , albumnum:album_num }, 
 	                  dataType : 'text', 
-	                  success : function(b) { 
-	                    $('#page1').css('background-image' , 'url(./thumbnail?filePath='+a+')'); 
+	                  success : function(b) {
 	                  }, 
 	                  error : function(e) { 
 	                    alert(JSON.stringify(e)); 
@@ -312,7 +311,7 @@ html, body, main, .container-fluid {
 				<div id="hashtagvw"></div>
 				<br><br>
 				<input type="button" id="hashtagbt" value="추가">
-				<input type="hidden" name="album_num" value="${albumnum }" id="album_num">
+				<input type="hidden" name="album_num" id="hidden_album_num" value="${album.album_num}">
 				
 				<br><br>
 				<!-- <input type="hidden" id="hashtag" name="hashtag"> -->
@@ -394,7 +393,6 @@ html, body, main, .container-fluid {
 					<button onclick="addPage()">페이지 추가</button>
 					<button onclick="removePage()">페이지 삭제</button>
 					<button>다음</button>
-					<input type="hidden" id="hidden_album_num" value="${album.album_num}">
 				</div>
 				
 			</div>
