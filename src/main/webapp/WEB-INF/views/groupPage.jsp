@@ -279,11 +279,8 @@ img{
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
-<script src="<c:url value="/resources/js/home.js"/>"></script>
 <script src="resources/js/chat.js"></script>
-
-<script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>" ></script>
-<script src="<c:url value="/resources/js/friend.js"/>" ></script>
+<script src="<c:url value="/resources/js/groupview.js"/>" ></script>
 <script>
 $(document).ready(function () {
 	initialize();
@@ -312,9 +309,7 @@ window.onclick = function(event) {
 
 
 $(document).ready(function () {
-	
 	initialize();
-	
 	
 	$('window').click(function(event) {
 		if (event.target == $('#myModal')) {
@@ -395,14 +390,10 @@ $(result).each(function(i, album) {
 				$(div_card).addClass('card img-loaded').append(a_read_album);
 				
 				//a태그 링크 걸어주기
-				$('.card-columns').append(div_card);
-				
-			}
-			
+				$('.card-columns').append(div_card);				
+			}			
 		}
-		
-		sw = 0;
-		
+		sw = 0;		
 	});
 	
 }
