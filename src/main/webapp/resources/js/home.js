@@ -70,6 +70,7 @@ function searchfriend(){
 				location.href='./friend_get?id='+text;
 			}
 			else{
+				$('#friendsearch').val('');
 				alert('찾으시는 친구 ID가 없습니다.');
 			}
 		},
