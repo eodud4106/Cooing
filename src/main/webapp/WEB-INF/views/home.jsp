@@ -144,8 +144,7 @@ $(document).ready(function () {
 
 		<form>
 			<div class="search">
-				<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}">
-				<input type="button" value="검색" id="searchbt"> 테스트<br /> <input
+				 테스트<br /> <input
 					type="button" id="myBtn" value="모달 열기">
 				<div id="myModal" class="modal">
 					<span id="myBtn_close" class="close">&times;</span>
@@ -165,7 +164,25 @@ $(document).ready(function () {
 		<div class="probootstrap-main-site-logo">
 			<a href="index.html">COOING</a>
 		</div>
+		<a href="#" class="probootstrap-toggle2 js-probootstrap-toggle2">
+			<span class="oi oi-menu"></span>
+		</a>	
 	</div>
+	
+	<div class ="search-bar">
+		<br>
+		<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}" style = "float : left; margin-left: 200px;">
+		<input type="button" value="검색" id="searchbt">
+		<div class = "search" style= "z-index:99; float:left; padding-left : 10px;" id="searchbt" onclick=""><i class="fas fa-search"></i></div>
+			
+		<!-- 정렬순서 -->		
+		<select style = "float:right; padding-left : 10px;">
+		  <option selected >정렬순</option>
+		  <option>최신순</option>
+		  <option>인기순</option>
+		</select>	
+	</div>
+		<br>	
 	
 	
 	
@@ -201,7 +218,7 @@ $(document).ready(function () {
 					<li><a href="#" class="p-2"><span class="icon-dribbble"></span></a></li>
 				</ul>
 				<p>
-					&copy; 2017 <a href="https://uicookies.com/" target="_blank">uiCookies:Aside</a>.
+					&copy; 2018 <a href="https://uicookies.com/" target="_blank">uiCookies:Aside</a>.
 					<br> All Rights Reserved. Designed by <a
 						href="https://uicookies.com/" target="_blank">uicookies.com</a>
 				</p>
@@ -211,10 +228,10 @@ $(document).ready(function () {
 
 	</main>
 
-	<aside class="probootstrap-aside2 js-probootstrap-aside">
+	<aside class="probootstrap-aside2 js-probootstrap-aside2">
 		<a href="#"
 			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
-			<span class="oi oi-arrow-left"></span> Close
+			<span class="oi oi-arrow-right"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING2</a>
