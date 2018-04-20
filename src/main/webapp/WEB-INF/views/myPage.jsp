@@ -11,7 +11,7 @@
 
 <script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
 
-<link rel="stylesheet" href="<c:url value="/resources/css/myPage.css"/>">
+ <link rel="stylesheet" href="<c:url value="/resources/css/myPage.css"/>">
 
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/bootstrap.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/open-iconic-bootstrap.min.css"/>">
@@ -132,69 +132,6 @@ function create_personal_album() {
 	});
 }
 </script>
-
-<style>
-.img1 {
-	width: 50px;
-	height: 50px;
-}
-
-.modal {
-	display: none;
-	position: absolute;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: none;
-	background-color: rgba(0, 0, 0, 0.7);
-}
-
-.close {
-	color: #aaa;
-	float: left;
-	font-size: 30px;
-	font-weight: bold;
-	position: fixed;
-	right: 16;
-	top: 0;
-	background-color: #f0f0f0;
-}
-
-.close:hover, .close:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-
- @media screen and (max-width: 768px) {
-   .probootstrap-main .search-bar{
-      width: 100%;
-      padding: 30px 15px; 
-      padding-top: 30px;
-	  padding-bottom: 30px;
-      } }
-
-
-select {
-  width: 100px; 
-  font-family: inherit;
-  background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%;  
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: 1px solid #999;
-  border-radius: 0px;
-}
-
-select::-ms-expand { /* for IE 11 */
-    display: none;
-}
-
-
-</style>
 </head>
 <body>
 
