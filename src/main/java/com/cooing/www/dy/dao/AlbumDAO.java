@@ -15,13 +15,19 @@ public class AlbumDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public boolean personal_createAlbum(AlbumWriteVO albumwrite){
+	/**
+	 * 개인 앨범 생성 후 album_num 리턴
+	 */
+	public int personal_createAlbum(AlbumWriteVO albumwrite){
+		
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		if(mapper.personal_createAlbum(albumwrite) > 0) {
-			return true;
-		} else {
-			return false;
-		}	
+		try {
+			mapper.personal_createAlbum(albumwrite);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return albumwrite.getAlbum_num();
 	}
 	
 	public int personal_selectAlbum_Num(String album_identifier){

@@ -15,15 +15,15 @@ public class AlbumWriteVO {
 		super();
 	}
 	
-	public AlbumWriteVO(int album_num , String album_writer, int album_openrange , String album_identifier){
+	public AlbumWriteVO(int album_num, String album_writer, String album_name, int album_openrange){
 		this.album_num = album_num;
 		this.album_writer = album_writer;
+		this.album_name = album_name;
 		this.album_openrange = album_openrange;
-		this.album_identifier = album_identifier;
 	}
 	
 	public AlbumWriteVO(int album_num , String album_writer , String album_name , int album_openrange , String album_contents , String album_editor , int album_category , String album_identifier , String album_thumbnail){
-		this(album_num , album_writer , album_openrange , album_identifier);
+		this(album_num, album_writer, album_name, album_openrange);
 		this.album_name = album_name;
 		this.album_contents = album_contents;
 		this.album_editor = album_editor;
