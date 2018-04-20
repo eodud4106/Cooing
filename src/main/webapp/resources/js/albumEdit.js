@@ -56,8 +56,6 @@ Map.prototype = {
 
 // 전역 변수 선언
 var map_box = new Map();    //box를 담을 map
-var count = 0;              //각 텍스트박스에 id를 주기 위해 증가시킬 변수
-var arr_id_of_div_box = [];      //div_box의 id를 담을 jquery 배열
 
 //TODO db에서 박스를 여러 개 가지고 온 경우 || '${arr_box.length}'-1 처럼 숫자를 넣어두기....
 var $arr_div_box = [];      // 텍스트, 이미지 등의 박스를 담을 배열
@@ -77,21 +75,25 @@ var curr_page = 1;
 // [start] 페이지 로딩 후 처리
 $(document).ready(function(){
 
-    //캔버스 변수 선언, 엘리멘트 연결
-    var canvas = $(".canvas");
+    //TODO 앨범 로딩...
 
-    // .tool을 드래그할 경우 드래그한 element를 복제한 helper 생성
-    // (캔버스 위에 생성되는 textbox는 helper 속성을 물려받는다.)
-    $(".tool").draggable({
-        helper: "clone"
-    });
+
+    //로딩된 결과가 없는 경우 -> 앨범을 새로 만드는 경우
+    if(1 == 2) {
+        // 앨범 로딩 결과 있음
+    } else {
+        // 앨범 로딩 결과 없음
+
+        // 기본 앨범 div 생성
+        createNewAlbum();
+    }
 
     // 캔버스에 아이템 드랍 시 이벤트 처리
     apply_page_droppable($('.page'));
 
     // 앨범 flip 효과 적용
-	$('#album').turn({
-		display: 'double',  // 한 번에 보여줄 페이지
+    $('#album').turn({
+        display: 'double',  // 한 번에 보여줄 페이지
         inclination: 50,    // 페이지 넘김 효과 시의 경사도
         width: PAGE_WIDTH * 2,
         height: PAGE_HEIGHT,
@@ -102,28 +104,14 @@ $(document).ready(function(){
                 // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
                 clearOn();
                 // page 저장
-                //savePage();
+                savePage();
 
-            // node 객체 생성
-            var node = {
-                id: id,
-                position: ui.helper.position(),
-                width: ui.helper.width,
-                height: ui.helper.height
-            };
+            },
+            turned: function(event, page, view) {
 
                 console.log('현재 페이지 -> ' + $('#album').turn('page'));
 
-            // 드랍한 아이템이 3가지 텍스트 메뉴 중 어느 것인지 판별해서 type에 저장
-            if(ui.helper.hasClass("text")){
-                node.type = "text";
-            } else if(ui.helper.hasClass("image")){
-                node.type = "image";
-            } else if(ui.helper.hasClass("video")){
-                node.type = "video";
-            } else {
-                return;
-            }
+                var total_page = $('#album').turn('pages');
 
                 var arr_single_page = [1, total_page];
 
@@ -161,9 +149,9 @@ $(document).ready(function(){
 
     // 편집창이 아닌 곳 클릭하면.... 효과 해제해버림...
     $('body').mousedown(function(e) {
-        e.stopPropagation();
+        //e.stopPropagation();
 
-        $('#title').text(e.target.nodeName);
+        //$('#title').text(e.target.nodeName);
 
         if(!$(e.target.parentNode.parentNode).hasClass('edit')) {
 
@@ -171,12 +159,7 @@ $(document).ready(function(){
             removeEdit();
 
             // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
-            $('.onEdit').draggable('enable').resizable('disable').prop("contenteditable", false).css({
-                    "z-index": 2 + arr_id_of_div_box.indexOf($('.onEdit').attr('id'))
-                }).removeClass('onEdit').find(".ui-resizable-handle").hide();
-            $('.onSelect').draggable('enable').resizable('disable').css({
-                    "z-index": 2 + arr_id_of_div_box.indexOf($('.onSelect').attr('id'))
-                }).removeClass('onSelect').find(".ui-resizable-handle").hide();
+            clearOn();
         }
     })
 
@@ -185,15 +168,17 @@ $(document).ready(function(){
         // 백스페이스 keyCode == 8
         if(e.keyCode == '8') {
 
+            var id_index = arr_box_id.indexOf($('.onSelect').attr('id'));
+            console.log(id_index);
+
             // onSelect인 박스일 경우만 삭제
-            if($('.onSelect')) {
+            if($('.onSelect').remove()) {
 
                 // 편집창 제거
                 removeEdit();
 
-                // arr_id_of_div_box 조정
-                var id_index = arr_id_of_div_box.indexOf($('.onSelect').attr('id'));
-                arr_id_of_div_box.splice(id_index, 1);
+                // arr_box_id 조정
+                arr_box_id.splice(id_index, 1);
 
                 // arr_box_id를 바탕으로 모든 박스의 z-index 조정
                 for(var i = 0; i < arr_box_id.length; i++) {
@@ -201,9 +186,7 @@ $(document).ready(function(){
                         "z-index": 500 + i
                     })
                 }
-
-                // onSelect 박스 삭제
-                $('.onSelect').remove();
+                
             }
         }
     })
@@ -259,20 +242,26 @@ function initpage(diagram) {
 }
 
 // [start] 텍스트 박스를 캔버스에 추가
-function renderbox(node) {
+/**
+ *  텍스트 박스를 캔버스에 추가
+ *  @param : (좌표가 포함된 이벤트, 드래그 드랍한 박스, 드랍한 페이지)
+ **/
+function renderbox(event, ui, page) {
 
-    // var div_box;
+    console.log('render 호출');
 
-    // if(node.id == null) {
-    //     // 새로 만든 박스
-    // } else {
-
-    // }
+    // 클릭한 페이지의 위치 확인
+    var curr_page_top = album_top;
+    var curr_page_left = album_left;
+    if(page % 2 == 1) {
+        // 드랍한 페이지가 홀수 페이지일 경우 우측에 위치하므로 왼쪽 페이지의 너비만큼 더해준다.
+        curr_page_left += PAGE_WIDTH;
+    }
 
     // 위치, 크기 조절 이벤트 적용할 div_box
     // box 드래그, 리사이즈 초기화
     var $div_box = $('<div />', {
-        'id' : node.id,
+        'id' : 'box_' + $arr_div_box.length,
         'class' : 'div_box'
     });
 
@@ -344,17 +333,17 @@ function renderbox(node) {
                 data : formData,
                 dataType : 'text',
                 success : function(saved_name) {
-                	
-                	//saved_name을 받으면 이미지 src에 연결한다.
+                    
+                    //saved_name을 받으면 이미지 src에 연결한다.
 
                     // fail이 아닐 경우 -> 이미지 저장됨
                     if (saved_name != 'fail') {
-                    	
-                    	$img.attr('src', 'img?filePath=' + saved_name).css({
+                        
+                        $img.attr('src', 'img?filePath=' + saved_name).css({
                             "display": "block"
                         });
-                    	
-                    	
+                        
+                        
 
                     } else {
                         alert('업로드 실패');
@@ -373,45 +362,42 @@ function renderbox(node) {
 
     $div_box.css({
         "position": "absolute",
-        "top": node.position.top,
-        "left": node.position.left,
-        "width": node.width,
-        "height": node.height
-    }).draggable({
+        "top": event.pageY - curr_page_top - 30,
+        "left": event.pageX - curr_page_left - 50
+    }).appendTo($('#page' + page + ''));
+
+
+    $arr_div_box.push($div_box);
+
+
+    $div_box.draggable({
         // textbox 드래그 시 위치 이동 처리 (ui.helper는 이벤트의 대상)
-        stop: function(event, ui) {
-            var id = ui.helper.attr("id");
-            var box = map_box.get(id);
-            box.position.top = ui.position.top;
-            box.position.left = ui.position.left;
-        },
         drag: function(event, ui) {
+
             $('.div_whole_editor').css({
-                "top": ui.position.top + $('.canvas').position().top + 40,
-                "left": ui.position.left + $('.canvas').position().left
+                "top": $('.onSelect').position().top + curr_page_top - 40,
+                "left": $('.onSelect').position().left + curr_page_left
             });
+            
         },
-        containment: '.canvas'  // 캔버스 영역 밖으로 나가지 못하게 제한
+        containment: $('#page' + page + '')  // 캔버스 영역 밖으로 나가지 못하게 제한
+
     }).resizable({
-        // textbox 크기 조절 처리
-        stop: function(event, ui) {
-            var id = ui.helper.attr("id");
-            var box = map_box.get(id);
-            box.width = $(this).width();
-            box.height = $(this).height();
-        },
-        containment: ".canvas", // 캔버스 영역을 넘지 못하도록 제한
+
+        containment: $('#page' + page + ''), // 캔버스 영역을 넘지 못하도록 제한
         disabled: true          // 리사이즈는 onSelect 상태인 박스만 가능하므로.. 초기 설정에는 disable
+
     });
 
-    // canvas에 box 출력
+    //page에 box 출력
     $div_box.find(".ui-resizable-handle").hide();
-    $('.canvas').append($div_box);
-    arr_id_of_div_box.push($div_box.attr('id'));
+    
+    // z-index 관리용 코드
+    arr_box_id.push($div_box.attr('id'));
     $div_box.css({
         "z-index": 500 + arr_box_id.indexOf($div_box.attr('id'))
     })
-    //$('#selection').text(arr_id_of_div_box);
+    //$('#selection').text(arr_box_id);
 
     // textbox 마우스 다운 시 크기 조절 모드 + 전역 편집 모드
     $div_box.mousedown(function(e) {
@@ -425,12 +411,8 @@ function renderbox(node) {
             // 선택 중인 박스였다면... 무얼 할까??
         } else {
             // 아무 것도 아닌 박스였다면... 수정 중/선택 중인 다른 박스 모두 해제하고... 클릭한 대상에게 선택 중 효과 적용..
-            $('.onEdit').draggable('enable').resizable('disable').prop("contenteditable", false).css({
-                    "z-index": 2 + arr_id_of_div_box.indexOf($('.onEdit').attr('id'))
-                }).removeClass('onEdit').find(".ui-resizable-handle").hide();
-            $('.onSelect').draggable('enable').resizable('disable').css({
-                    "z-index": 2 + arr_id_of_div_box.indexOf($('.onSelect').attr('id'))
-                }).removeClass('onSelect').find(".ui-resizable-handle").hide();
+            clearOn();
+
             $(this).draggable('enable').resizable('enable')
                 .addClass('onSelect').find(".ui-resizable-handle").show();
             
@@ -438,10 +420,8 @@ function renderbox(node) {
             createWholeEditor($div_box);
         }
 
-    });
-    
-    // textbox 더블클릭 시 텍스트 입력 + 선택 편집 모드로 전환(TODO 텍스트 입력에 따라 높이 자동 조절되도록, 너비는 직접 수정)
-    $div_box.dblclick(function(e){
+    }).dblclick(function(e){
+        //textbox 더블클릭 시 텍스트 입력 + 선택 편집 모드로 전환(TODO 텍스트 입력에 따라 높이 자동 조절되도록, 너비는 직접 수정)
 
         //이벤트 bubble 제거
         e.stopPropagation();
@@ -459,10 +439,8 @@ function renderbox(node) {
             $div_box.prop("contenteditable", true);
         }
 
-    });
-
-    // 마우스 업 이벤트 시 텍스트편집창 띄울 것인지 판단
-    $div_box.mouseup(function(e) {
+    }).mouseup(function(e) {
+        // 마우스 업 이벤트 시 텍스트편집창 띄울 것인지 판단
 
         // 클릭한 대상이...
         if($(this).hasClass('onEdit')) {
@@ -522,7 +500,7 @@ function createWholeEditor($elem) {
         $('.tooltip').remove();
     });
     
-	// 글씨 크기
+    // 글씨 크기
     $arr_bt.push($('<button />', {
         "id": "bt_size",
         "text": "크기"
@@ -536,7 +514,7 @@ function createWholeEditor($elem) {
         
     });
     
-	// 글꼴
+    // 글꼴
     $arr_bt.push($('<button />', {
         "id": "bt_font",
         "text": "글꼴"
@@ -572,8 +550,8 @@ function createWholeEditor($elem) {
         var target_index = arr_box_id.indexOf($('.onSelect').attr('id'));
 
         // id 배열 내 onSelect의 id를 가장 뒤로 이동
-        arr_id_of_div_box.splice(target_index, 1);
-        arr_id_of_div_box.push($('.onSelect').attr('id'));
+        arr_box_id.splice(target_index, 1);
+        arr_box_id.push($('.onSelect').attr('id'));
 
         // z-index 조정
         for(var i = 0; i < arr_box_id.length; i++) {
@@ -592,12 +570,34 @@ function createWholeEditor($elem) {
     var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
 
+
+
+
+
+    // onSelect가 속한 페이지 번호
+    var pagenum = $('.onSelect').parent().attr('id').replace(/\D/g,'');
+
+    // 클릭한 페이지의 위치 확인
+    var curr_page_top = album_top;
+    var curr_page_left = album_left;
+    if(pagenum % 2 == 1) {
+        // 드랍한 페이지가 홀수 페이지일 경우 우측에 위치하므로 왼쪽 페이지의 너비만큼 더해준다.
+        curr_page_left += PAGE_WIDTH; 
+    }
+
+    console.log('onSelect top -> ' + $('.onSelect').position().top);
+    console.log('onSelect left -> ' + $('.onSelect').position().left);
+
+
+
+
+
     // 전역 편집창
     var $div_whole_editor = $('<div />');
     $div_whole_editor.addClass('edit').addClass('div_whole_editor').css({
         "position": "absolute",
-        "top": $('.onSelect').position().top + $('.canvas').position().top + scrollTop + 40,
-        "left": $('.onSelect').position().left + $('.canvas').position().left + scrollLeft
+        "top": $('.onSelect').position().top + curr_page_top - 40,
+        "left": $('.onSelect').position().left + curr_page_left
     }).prop("contenteditable", false);
 
     // div append
@@ -614,91 +614,91 @@ function createWholeEditor($elem) {
                 "display": "none", 
                 "z-index": "1000"
             });
-			// 글씨 크기   	
-           	var $arr_bt_size = [];
-           	// 9pt
+            // 글씨 크기    
+            var $arr_bt_size = [];
+            // 9pt
             $arr_bt_size.push($('<button />', {
-            	"class": "bt_size", 
-            	"text": "Cooing(9pt)"
+                "class": "bt_size", 
+                "text": "Cooing(9pt)"
             }));
             $arr_bt_size[$arr_bt_size.length -1].css({
-            	"font-size": "9pt"
+                "font-size": "9pt"
             }).click(function() {
                 $('.onSelect').css("font-size", "9pt");
             });
-           	// 10pt
+            // 10pt
             $arr_bt_size.push($('<button />', {
-            	"class": "bt_size", 
-            	"text": "Cooing(10pt)"
+                "class": "bt_size", 
+                "text": "Cooing(10pt)"
             }));
             $arr_bt_size[$arr_bt_size.length -1].css({
-            	"font-size": "10pt"
+                "font-size": "10pt"
             }).click(function() {
                 $('.onSelect').css("font-size", "10pt");
             });
-           	// 11pt
+            // 11pt
             $arr_bt_size.push($('<button />', {
-            	"class": "bt_size", 
-            	"text": "Cooing(11pt)"
+                "class": "bt_size", 
+                "text": "Cooing(11pt)"
             }));
             $arr_bt_size[$arr_bt_size.length -1].css({
-            	"font-size": "11pt"
+                "font-size": "11pt"
             }).click(function() {
                 $('.onSelect').css("font-size", "11pt");
             });
-           	// 12pt
+            // 12pt
             $arr_bt_size.push($('<button />', {
-            	"class": "bt_size", 
-            	"text": "Cooing(12pt)"
+                "class": "bt_size", 
+                "text": "Cooing(12pt)"
             }));
             $arr_bt_size[$arr_bt_size.length -1].css({
-            	"font-size": "12pt"
+                "font-size": "12pt"
             }).click(function() {
                 $('.onSelect').css("font-size", "12pt");
             });
-           	// 14pt
+            // 14pt
             $arr_bt_size.push($('<button />', {
-            	"class": "bt_size", 
-            	"text": "Cooing(14pt)"
+                "class": "bt_size", 
+                "text": "Cooing(14pt)"
             }));
             $arr_bt_size[$arr_bt_size.length -1].css({
-            	"font-size": "14pt"
+                "font-size": "14pt"
             }).click(function() {
                 $('.onSelect').css("font-size", "14pt");
             });
-           	// 18pt
+            // 18pt
             $arr_bt_size.push($('<button />', {
-            	"class": "bt_size", 
-            	"text": "Cooing(18pt)"
+                "class": "bt_size", 
+                "text": "Cooing(18pt)"
             }));
             $arr_bt_size[$arr_bt_size.length -1].css({
-            	"font-size": "18pt"
+                "font-size": "18pt"
             }).click(function() {
                 $('.onSelect').css("font-size", "18pt");
             });
-           	// 24pt
+            // 24pt
             $arr_bt_size.push($('<button />', {
-            	"class": "bt_size", 
-            	"text": "Cooing(24pt)"
+                "class": "bt_size", 
+                "text": "Cooing(24pt)"
             }));
             $arr_bt_size[$arr_bt_size.length -1].css({
-            	"font-size": "24pt"
+                "font-size": "24pt"
             }).click(function() {
                 $('.onSelect').css("font-size", "24pt");
             });
-           	// 36pt
+            // 36pt
             $arr_bt_size.push($('<button />', {
-            	"class": "bt_size", 
-            	"text": "Cooing(36pt)"
+                "class": "bt_size", 
+                "text": "Cooing(36pt)"
             }));
             $arr_bt_size[$arr_bt_size.length -1].css({
-            	"font-size": "36pt"
+                "font-size": "36pt"
             }).click(function() {
                 $('.onSelect').css("font-size", "36pt");
             });       
-			for (var j = 0; j < $arr_bt_size.length; j++) {
-				$innerDiv.append($arr_bt_size[j])
-			}
+            for (var j = 0; j < $arr_bt_size.length; j++) {
+                $innerDiv.append($arr_bt_size[j])
+            }
             $tmp_div.append($innerDiv);
         }
         // div를 열어야 하는 경우
@@ -713,80 +713,80 @@ function createWholeEditor($elem) {
             });
 
             // 글꼴
-           	var $arr_bt_font = [];
-           	// 궁서체
+            var $arr_bt_font = [];
+            // 궁서체
             $arr_bt_font.push($('<button />', {
-            	"class": "bt_font", 
-            	"text": "궁서체"
+                "class": "bt_font", 
+                "text": "궁서체"
             }));
             $arr_bt_font[$arr_bt_font.length -1].css({
-            	"font-family": "궁서체, serif"
+                "font-family": "궁서체, serif"
             }).click(function() {
                 $('.onSelect').css("font-family", "궁서체, serif");
             });
-           	// 맑은고딕
+            // 맑은고딕
             $arr_bt_font.push($('<button />', {
-            	"class": "bt_font", 
-            	"text": "맑은고딕"
+                "class": "bt_font", 
+                "text": "맑은고딕"
             }));
             $arr_bt_font[$arr_bt_font.length -1].css({
-            	"font-family": "Malgun Gothic, serif"
+                "font-family": "Malgun Gothic, serif"
             }).click(function() {
                 $('.onSelect').css("font-family", "Malgun Gothic, serif");
             });
-           	// 굴림
+            // 굴림
             $arr_bt_font.push($('<button />', {
-            	"class": "bt_font", 
-            	"text": "굴림"
+                "class": "bt_font", 
+                "text": "굴림"
             }));
             $arr_bt_font[$arr_bt_font.length -1].css({
-            	"font-family": "굴림, serif"
+                "font-family": "굴림, serif"
             }).click(function() {
                 $('.onSelect').css("font-family", "굴림, serif");
             });
-           	// 바탕
+            // 바탕
             $arr_bt_font.push($('<button />', {
-            	"class": "bt_font", 
-            	"text": "바탕"
+                "class": "bt_font", 
+                "text": "바탕"
             }));
             $arr_bt_font[$arr_bt_font.length -1].css({
-            	"font-family": "바탕, serif"
+                "font-family": "바탕, serif"
             }).click(function() {
                 $('.onSelect').css("font-family", "바탕, serif");
             });
-           	// Nanum Brush Script
+            // Nanum Brush Script
             $arr_bt_font.push($('<button />', {
-            	"class": "bt_font", 
-            	"text": "Nanum Brush Script"
+                "class": "bt_font", 
+                "text": "Nanum Brush Script"
             }));
             $arr_bt_font[$arr_bt_font.length -1].css({
-            	"font-family": "Nanum Brush Script, serif"
+                "font-family": "Nanum Brush Script, serif"
             }).click(function() {
                 $('.onSelect').css("font-family", "Nanum Brush Script, serif");
             });
-           	// Gamja Flower
+            // Gamja Flower
             $arr_bt_font.push($('<button />', {
-            	"class": "bt_font", 
-            	"text": "Gamja Flower"
+                "class": "bt_font", 
+                "text": "Gamja Flower"
             }));
             $arr_bt_font[$arr_bt_font.length -1].css({
-            	"font-family": "Gamja Flower, cursive"
+                "font-family": "Gamja Flower, cursive"
             }).click(function() {
                 $('.onSelect').css("font-family", "Gamja Flower, cursive");
             }); 
-           	// Hi Melody
+            // Hi Melody
             $arr_bt_font.push($('<button />', {
-            	"class": "bt_font", 
-            	"text": "Gugi"
+                "class": "bt_font", 
+                "text": "Gugi"
             }));
             $arr_bt_font[$arr_bt_font.length -1].css({
-            	"font-family": "Hi Melody, cursive"
+                "font-family": "Hi Melody, cursive"
             }).click(function() {
                 $('.onSelect').css("font-family", "Hi Melody, cursive");
             });
-			for (var j = 0; j < $arr_bt_font.length; j++) {
-				$innerDiv.append($arr_bt_font[j])
-			}
+            for (var j = 0; j < $arr_bt_font.length; j++) {
+                $innerDiv.append($arr_bt_font[j])
+            }
             $tmp_div.append($innerDiv);
         }
         
