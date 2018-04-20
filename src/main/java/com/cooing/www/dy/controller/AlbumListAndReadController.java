@@ -25,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cooing.www.dy.dao.AlbumDAO;
-import com.cooing.www.dy.dao.AlbumListAndReadDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.jinsu.object.Member;
@@ -36,7 +35,7 @@ public class AlbumListAndReadController {
 	//private static String strFilePath = "/FileSave/upload/";
 	
 	@Autowired
-	AlbumListAndReadDAO albumListAndReadDAO;
+	AlbumDAO albumDAO;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumListAndReadController.class);
 		

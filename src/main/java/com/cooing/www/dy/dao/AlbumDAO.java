@@ -16,11 +16,8 @@ public class AlbumDAO {
 	private SqlSession sqlSession;
 	
 	public boolean personal_createAlbum(AlbumWriteVO albumwrite){
-		
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		int cnt = mapper.personal_createAlbum(albumwrite);
-		
-		if(cnt > 0) {
+		if(mapper.personal_createAlbum(albumwrite) > 0) {
 			return true;
 		} else {
 			return false;
@@ -28,12 +25,8 @@ public class AlbumDAO {
 	}
 	
 	public int personal_selectAlbum_Num(String album_identifier){
-			
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		int cnt = 0;
-		cnt = mapper.personal_selectAlbum_Num(album_identifier);
-		
-		return cnt;
+		return mapper.personal_selectAlbum_Num(album_identifier);
 	}
 	
 	public boolean personal_insertAlbumOfPage(PageHtmlVO page){
@@ -51,9 +44,7 @@ public class AlbumDAO {
 	public boolean personal_update_page1_Album(AlbumWriteVO albumwrite){
 		
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		int cnt = mapper.personal_update_page1_Album(albumwrite);
-		
-		if(cnt > 0) {
+		if( mapper.personal_update_page1_Album(albumwrite) > 0) {
 			return true;
 		} else {
 			return false;
@@ -61,11 +52,8 @@ public class AlbumDAO {
 	}
 	
 	public String MyAlbumListOutPut(String html){
-		
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		String list_html = mapper.MyAlbumListOutPut(html);
-		
-		return list_html;
+		return mapper.MyAlbumListOutPut(html);
 		
 	}
 	
@@ -97,5 +85,20 @@ public class AlbumDAO {
 	public int deleteAlbum(int album_num){
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		return mapper.deleteAlbum(album_num);	
+	}
+	
+	public ArrayList<AlbumWriteVO> TotalAlbumList(){		
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);		
+		return mapper.TotalAlbumList();			
+	}
+	
+	public ArrayList<AlbumWriteVO> MyAlbumList(String album_writer){
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		return mapper.MyAlbumList(album_writer);
+	}
+	
+	public ArrayList<String> MyAlbumRead(int pagenum){
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		return mapper.MyAlbumRead(pagenum);		
 	}
 }

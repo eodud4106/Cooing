@@ -30,4 +30,10 @@ public interface AlbumMapper {
 	public int updateThumbnail(Map<String,String> map);
 	
 	public int deleteAlbum(int album_num);
+	
+	public ArrayList<AlbumWriteVO> TotalAlbumList();
+	
+	public ArrayList<AlbumWriteVO> MyAlbumList(String album_writer);
+	
+	public ArrayList<String> MyAlbumRead(int pagenum);
 }

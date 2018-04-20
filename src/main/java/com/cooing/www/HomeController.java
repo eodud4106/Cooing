@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cooing.www.dy.dao.AlbumListAndReadDAO;
+import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.Member;
@@ -31,7 +31,7 @@ public class HomeController {
 	@Autowired
 	RelationDAO relationDAO;
 	@Autowired
-	AlbumListAndReadDAO albumListAndReadDAO;
+	AlbumDAO albumDAO;
 	private Gson gson = new Gson();
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -54,7 +54,7 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value = "/getTotalAlbumList", method= RequestMethod.POST)
 	public ArrayList<AlbumWriteVO> getMyAlbumList() {
-		return albumListAndReadDAO.TotalAlbumList();
+		return albumDAO.TotalAlbumList();
 	}
 	
 	
