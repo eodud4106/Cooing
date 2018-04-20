@@ -9,7 +9,7 @@ function initialize(){
 	});
 	//초기 친구 찾을 때만 사용했었음
 	$('#friendsearch').keyup(function() {
-		searchfriend();
+		searchword();
 	});
 	$('#login').on('click', function() {
 		loginmember('');
@@ -86,7 +86,7 @@ function searchword(){
 			data:{text:text},
 			dataType:'json',
 			success: function(array){
-				$('#searchtx').autocomplete({
+				$('#friendsearch').autocomplete({
 					source:array
 				});
 			},
