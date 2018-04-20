@@ -19,6 +19,7 @@ function writereply(){
 		data: {
 			"reply_albumnum": num,
 			"reply_contents": str 
+			
 		},
 		dataType: 'text',
 		success: function(a){
@@ -40,26 +41,29 @@ function deletereply(){
 
 	var num = 1;
 	
-	$.ajax({
-		url:'deleteReply',
-		type: 'POST',		
-		data: {
-			"reply_albumnum": num,
-		},
-		dataType: 'text',
-		success: function(a){
-			
-			if(a == 'success'){
-				alert("댓글 삭제");	
-			}
-			else{
-				alert(a);
-			}
-		},
-		error:function(e){
-			alert(JSON.stringify(e));
-		}		
-	});
+	if(confirm("댓글을 삭제 하시겠습니까?")){
+		 	
+		$.ajax({
+			url:'deleteReply',
+			type: 'POST',		
+			data: {
+				"reply_albumnum": num
+			},
+			dataType: 'text',
+			success: function(a){
+				
+				if(a == 'success'){
+					alert("댓글 삭제");	
+				}
+				else{
+					alert(a);
+				}
+			},
+			error:function(e){
+				alert(JSON.stringify(e));
+			}		
+		});
+	} 
 }
 </script>
 <body>
@@ -67,7 +71,33 @@ function deletereply(){
 내용
 &nbsp;<input type="text" id="reply" name="reply" size="70">
 &nbsp;<button type="button" onclick="writereply()">저장</button>
-&nbsp;<button type="button" onClick="deletereply()">삭제</button>
+</form>
+<form>
+<c:forEach var="reply" items="${list}">
+<table>
+	<tr>
+		<td><input type="hidden" value="${reply.reply_num }"></td>
+	</tr>
+	<tr>
+		<td> 작성자 </td>
+		<td>${reply.reply_memberid}</td>
+	</tr>
+	<tr>
+		<td> 작성일 </td>
+		<td>${reply.reply_date}</td>
+	</tr>
+	<tr>
+		<td> 내용 </td>
+		<td>${reply.reply_contents}</td>
+	</tr>
+		<td>
+<button type="button" onClick="deletereply()">삭제</button>
+		</td>
+	</tr>
+</table>
+
+=====================================
+</c:forEach>
 </form>
 
 </body>

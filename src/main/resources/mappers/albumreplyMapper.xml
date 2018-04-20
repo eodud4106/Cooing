@@ -19,7 +19,10 @@
 		, #{reply_contents}
 	)
 </insert>
-
+<!-- 댓글 목록-->
+<select id = "selectReply" resultType = "albumreply">
+select * from reply order by reply_albumnum desc
+</select>
 <!-- 댓글 삭제 -->
 <delete id="replyDelete" parameterType="albumreply">
 delete from reply where reply_memberid = #{reply_memberid} and reply_albumnum = #{reply_albumnum}

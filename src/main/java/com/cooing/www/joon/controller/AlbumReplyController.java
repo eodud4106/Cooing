@@ -1,5 +1,8 @@
 package com.cooing.www.joon.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +24,8 @@ public class AlbumReplyController {
 	AlbumReplyDAO albumreplyDAO;
 	// 댓글 창 이동
 	@RequestMapping(value = "/albumReply", method = RequestMethod.GET)
-	public String albumReply(Model model) {
-		
+	public String albumReply(HttpServletRequest request, Model model) {
+		model.addAttribute("list", albumreplyDAO.selectReply());
 		return "./albumReply";
 	}
 	// 댓글 작성

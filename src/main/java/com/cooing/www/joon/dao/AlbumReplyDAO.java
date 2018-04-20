@@ -1,5 +1,8 @@
 package com.cooing.www.joon.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,4 +23,10 @@ public class AlbumReplyDAO {
 		AlbumReplyMapper albumreplymapper = sqlSession.getMapper(AlbumReplyMapper.class);
 		albumreplymapper.replyDelete(vo);	
 	}
+	// 댓글 목록
+	public ArrayList<AlbumReplyVO> selectReply() {
+		AlbumReplyMapper albumreplymapper = sqlSession.getMapper(AlbumReplyMapper.class);
+		return albumreplymapper.selectReply();
+	}
+
 }

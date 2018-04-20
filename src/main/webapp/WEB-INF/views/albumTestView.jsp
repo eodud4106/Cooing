@@ -1,6 +1,8 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	     pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 
 <html>
@@ -443,8 +445,7 @@ function checkRadioButton(iCheck)
 				<p>그룹3</p>		
 				<p><button type="button" onclick="likes()">좋아요!</button></p>		
 				<p><button type="button" onclick="deletelikes()">좋아요 취소!</button></p> 		
-				<p><button type="button" onClick="javascript:replyWin();">댓글 작성</button></p>  
-
+				<p><button type="button" onClick="javascript:replyWin();">댓글</button></p> 
 
         <footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft">
          
