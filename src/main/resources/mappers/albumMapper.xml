@@ -41,11 +41,13 @@
 			album_contents = #{album_contents},
 			album_category = #{album_category},
 			album_openrange = #{album_openrange}
-			<if test="album_thummbnail != null">
-			,album_thumbnail = #{album_thumbnail}
-			</if>
 		where
 			album_num = #{album_num}
+	</update>
+	
+	<update id="updateThumbnail" parameterType="map">
+		update albumlist set album_thumbnail = #{album_thumbnail}
+			where album_num = #{album_num}
 	</update>
 	
 	<select id="personal_selectAlbum_Num" parameterType="String" resultType="int">
@@ -72,6 +74,8 @@
 		select * from page	where album_num=#{number} and page_num=1
 	</select>
 	
-	
+	<delete id="deleteAlbum" parameterType="int">
+		delete	from albumlist where album_num=#{album_num}
+	</delete>	
 	
 </mapper>

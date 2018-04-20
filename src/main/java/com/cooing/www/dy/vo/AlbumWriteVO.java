@@ -13,7 +13,7 @@ public class AlbumWriteVO {
 	
 	public AlbumWriteVO() {
 		super();
-	}	
+	}
 	
 	public AlbumWriteVO(int album_num , String album_writer, int album_openrange , String album_identifier){
 		this.album_num = album_num;

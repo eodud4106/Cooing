@@ -30,7 +30,6 @@ svg, path {
     word-break: break-all;
     font-size: medium;
     padding: 5px;
-    /*z-index: 2;*/
     -webkit-user-select: none;
     user-select: none;
 }
