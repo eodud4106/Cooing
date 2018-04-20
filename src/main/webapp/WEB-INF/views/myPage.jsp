@@ -233,10 +233,10 @@ select::-ms-expand { /* for IE 11 */
 					<li><a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a></li>
 					<li><a href="<c:url value ="/jinsu/login_get"/>">로그인...</a></li>
 					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
+					<li><a href="<c:url value ="albumEdit/create_personal_album"/>">앨범 만들기</a></li>
 					
 				</ul>
-				
-				<a href="albumEdit/personal_albumCreate">앨범추가</a>
+			
 			</nav>
 			<br><br><br>
 
@@ -252,7 +252,6 @@ select::-ms-expand { /* for IE 11 */
 						width=100% height="100%"></iframe>
 				</div>
 			</div>
-			<input type="button" id="createBtn" value="앨범 생성">
 		</form>
 	</aside>
 
