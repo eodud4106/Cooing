@@ -79,6 +79,7 @@ $(document).ready(function () {
 
 //앨범 리스트 Ajax로 받는 코드
 function getMyAlbumList() {
+
 	$.ajax({
 		url: 'getMyAlbumList',
 		type: 'post',
@@ -95,35 +96,23 @@ function getMyAlbumList() {
 function myAlbumList(result) {
 	
 	var album_num;
-	var album_html;
-	var sw = 0;
+	var album_thumbnail;
 	
 	$(result).each(function(i, album) {
+		
+		album_num = album.album_num;
+		album_thumbnail = album.album_thumbnail;
+
+		var div_card = document.createElement('div'); //카드 클래스 div
+		var album_a_tag = document.createElement('a'); //a태그
+		var img_tag_html = '<img src="./albumEdit/thumbnail?filePath=' + album_thumbnail + '" style = "width:100%; heigth:100%;">';
+		
+		
+		$(album_a_tag).attr('href', 'albumView?album_num=' + album_num + '').append(img_tag_html);
+		$(div_card).addClass('card img-loaded').append(album_a_tag);
+		$('.card-columns').append(div_card);
 			
-			album_num = album.album_num;
-			
-			for(var i=0; i<album.page_html.length; i++) {
-				
-				if(album.page_html[i] == '<' && sw == 0){
-					sw = 1;
-					album_html = album.page_html.substring(i, album.page_html.length);
-					
-					var div_card = document.createElement('div'); //카드 클래스 div
-					var div_page = document.createElement('div'); //a태그에 들어갈 div
-					var a_read_album = document.createElement('a'); //a태그
-					
-					$(div_page).addClass('page1').html(album_html);
-					$(a_read_album).attr('href', 'albumView?album_num=' + album_num + '').append(div_page);
-					$(div_card).addClass('card img-loaded').append(a_read_album);
-					$('.card-columns').append(div_card);
-					
-				}
-				
-			}
-			
-			sw = 0;
-			
-		});
+	});
 	
 }
 </script>

@@ -40,6 +40,17 @@ public class AlbumWriteVO {
 		this.album_category = album_category;
 		this.album_openrange = album_openrange;
 	}
+	
+	//추가 부분
+	public AlbumWriteVO(int album_num, String album_writer, String album_name, String album_contents,
+			String album_thumbnail) {
+		super();
+		this.album_num = album_num;
+		this.album_writer = album_writer;
+		this.album_name = album_name;
+		this.album_contents = album_contents;
+		this.album_thumbnail = album_thumbnail;
+	}
 
 	public int getAlbum_num() {
 		return album_num;

@@ -103,8 +103,8 @@ public class AlbumDAO {
 		return mapper.MyAlbumList(album_writer);
 	}
 	
-	public ArrayList<String> MyAlbumRead(int pagenum){
+	public ArrayList<String> MyAlbumRead(int album_num){
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		return mapper.MyAlbumRead(pagenum);		
+		return mapper.MyAlbumRead(album_num);		
 	}
 }
