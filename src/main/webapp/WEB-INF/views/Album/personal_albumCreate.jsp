@@ -27,6 +27,7 @@
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-ui.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/albumEdit.js"/>"></script>
+<script type="text/javascript" src="../resources/js_js/html2canvas.min.js"></script>
 
 <script type="text/javascript" src="<c:url value="/resources/album_page_js/extras/modernizr.2.5.3.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/album_page_js/basic.js"/>"></script>
@@ -270,6 +271,9 @@ label:hover {
 			success : function(a) {
 				if (a != 'fail') {
 					if (check) {
+						if(nowpage == 1){
+							page1ImageSave();
+						}
 						pagePlus();
 						$('#flipbook').turn('disable', false);
 						$('#flipbook').turn('next');
@@ -293,49 +297,49 @@ label:hover {
 		$('#flipbook').turn('next');
 	}
 	
-	function thumbnailSave(){
-		//앨범 번호 불러오기
+	function page1ImageSave(){
 		var album_num = $('#album_num').val();
-		var formData = new FormData();
-		formData.append('file', $('#img1')[0].files[0]);
-		//앨범 썸네일 이미지 C드라이브에 파일 저장 
-		$.ajax({
-			url : 'thumbnailSave',
-			processData : false,
-			contentType : false,
-			type : 'POST',
-			data :formData,
-			dataType : 'text',
-			success : function(a) {
-				if (a != 'fail') {
-					//앨범 썸네일 경로 서버에 저장 후 배경 이미지 변경
-					$.ajax({
-						url : 'thumbnailPathSave',
-						type : 'POST',
-						data :{thumbnail:a , albumnum:album_num },
-						dataType : 'text',
-						success : function(b) {
-							$('#page1').css('background-image' , 'url(./thumbnail?filePath='+a+')');
-						},
-						error : function(e) {
-							alert(JSON.stringify(e));
-						}
-					});	
-				} else {
-					alert(a);
-				}
-			},
-			error : function(e) {
-				alert(JSON.stringify(e));
-			}
-		});		
+		html2canvas($('#page1'), {
+	        onrendered: function(canvas) {
+	            if (typeof FlashCanvas != "undefined") {
+	                FlashCanvas.initElement(canvas);
+	            }                
+	            $('#imgtest').attr('src' , canvas.toDataURL().toString());
+	            $('#imgSrc').val(canvas.toDataURL('image/png'));
+	            
+	            $.ajax({
+	    			url : 'page1ImageSave',
+	    			type : 'POST',
+	    			data : $('#testimg').serialize(),
+	    			dataType : 'text',
+	    			success : function(a) {
+	    				if (a != 'fail') {
+	    					$.ajax({
+	    						url : 'thumbnailPathSave',
+	    						type : 'POST',
+	    						data :{thumbnail:a , albumnum:album_num },
+	    						dataType : 'text',
+	    						success : function(b) {
+	    							$('#page1').css('background-image' , 'url(./thumbnail?filePath='+a+')');
+	    						},
+	    						error : function(e) {
+	    							alert(JSON.stringify(e));
+	    						}
+	    					});	
+	    				} else {
+	    					alert(a);
+	    				}
+	    			},
+	    			error : function(e) {
+	    				alert('파일 업로드 실패');
+	    			}
+	    		});
+	        }
+	    });
 	}
 
 	function fileSubmit() {
 		var number = $('#flipbook').turn('page');
-		if(number == 1){
-			thumbnailSave();
-		}
 		if ($('#flipbook').turn('page') > 1
 				&& $('#flipbook').turn('page') % 2 == 1) {
 			number -= 1;
@@ -639,7 +643,10 @@ label:hover {
 				<p>친구4</p>
 		
 				<p>그룹1</p>
-				<p>그룹2</p>		
+				<p>그룹2</p>	
+				<form id="testimg">
+					<input type="hidden" name="imgSrc" id="imgSrc" />
+				</form>	
     	</section>
     	</div>			
 

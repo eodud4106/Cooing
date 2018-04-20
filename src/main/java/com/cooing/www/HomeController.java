@@ -58,9 +58,9 @@ public class HomeController {
 	public ArrayList<AlbumListVO> getMyAlbumList(HttpSession session) {
 		
 		ArrayList<AlbumListVO> albumList = new ArrayList<>();
-		String album_writer = null;
-		album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-		albumList = albumListAndReadDAO.TotalAlbumList(album_writer);
+		/*String album_writer = null;
+		album_writer = ((Member) session.getAttribute("Member")).getMember_id();*/
+		/*albumList = albumListAndReadDAO.TotalAlbumList(album_writer);*/
 
 		for (AlbumListVO albumListVO : albumList) {
 			albumListVO.setPage_html(albumListVO.getPage_html().replaceAll("\\n", ""));

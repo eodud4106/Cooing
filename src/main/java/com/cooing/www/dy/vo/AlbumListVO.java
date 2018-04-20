@@ -5,6 +5,7 @@ public class AlbumListVO {
 	private int album_num;
 	private String album_name;
 	private String album_contents;
+	private String album_thumbnail;
 	private String page_html;
 	private int page_num;
 	
@@ -17,18 +18,20 @@ public class AlbumListVO {
 		this.page_html = page_html;
 	}
 	
-	public AlbumListVO(int album_num, String album_name, String album_contents) {
+	public AlbumListVO(int album_num, String album_name, String album_contents , String album_thumbnail) {
 		super();
 		this.album_num = album_num;
 		this.album_name = album_name;
 		this.album_contents = album_contents;
+		this.album_thumbnail = album_thumbnail;
 	}
 	
-	public AlbumListVO(int album_num, String album_name, String album_contents, String page_html, int page_num) {
+	public AlbumListVO(int album_num, String album_name, String album_contents , String album_thumbnail , String page_html, int page_num) {
 		super();
 		this.album_num = album_num;
 		this.album_name = album_name;
 		this.album_contents = album_contents;
+		this.album_thumbnail = album_thumbnail;
 		this.page_html = page_html;
 		this.page_num = page_num;
 	}
@@ -43,6 +46,14 @@ public class AlbumListVO {
 
 	public String getAlbum_name() {
 		return album_name;
+	}
+
+	public String getAlbum_thumbnail() {
+		return album_thumbnail;
+	}
+
+	public void setAlbum_thumbnail(String album_thumbnail) {
+		this.album_thumbnail = album_thumbnail;
 	}
 
 	public void setAlbum_name(String album_name) {
@@ -76,7 +87,7 @@ public class AlbumListVO {
 	@Override
 	public String toString() {
 		return "AlbumListVO [album_num=" + album_num + ", album_name=" + album_name + ", album_contents="
-				+ album_contents + ", page_html=" + page_html + ", page_num=" + page_num + "]";
+				+ album_contents + " , album_thumbnail=" + album_thumbnail + ", page_html=" + page_html + ", page_num=" + page_num + "]";
 	}
 
 }
