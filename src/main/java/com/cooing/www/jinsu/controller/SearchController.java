@@ -41,16 +41,11 @@ public class SearchController {
 		
 		//검색어가 해쉬 태그 , 앨범 이름, 설명 , 앨범 만든 사람
 		ArrayList<AlbumWriteVO> arrayalbum = albumDAO.searchAlbum(searchtext);		
+		//해쉬태그 찾아야 된다. 찾았네..
 		ArrayList<HashTag> arraytag = searchDAO.selectHashTag(searchtext);
 		for(int i = 0; i < arraytag.size();i++){
 			arrayalbum.add(albumDAO.searchAlbumNum(arraytag.get(i).getTag_albumnum()));
-		}
-		ArrayList<Albumlist> arraypicture = new ArrayList<Albumlist>();
-		for(int i = 0; i < arrayalbum.size();i++){
-			PageHtmlVO page=albumDAO.searchPage1(arrayalbum.get(i).getAlbum_num()); 
-			arraypicture.add(new Albumlist(arrayalbum.get(i) , (page == null ? "" : page.getPage_html())));
-		}			
-		
+		}		
 		return arrayalbum;		
 	}
 	
@@ -60,22 +55,16 @@ public class SearchController {
 		logger.info("search_Category__jinsu");		
 		//저장
 		searchDAO.insertCategoryPop(new CategoryPop(0 , searchtext , "0"));
-		
-		//검색어가 해쉬 태그 , 앨범 이름, 설명 , 앨범 만든 사람
-		ArrayList<AlbumWriteVO> arrayalbum = albumDAO.searchCategory(searchtext);				
-		
-		logger.info(arrayalbum.toString());
-		
+		//카테고리 번호로 찾아온다.
+		ArrayList<AlbumWriteVO> arrayalbum = albumDAO.searchCategory(searchtext);						
 		return arrayalbum;		
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/searchInfomation" , method = RequestMethod.POST)
+	@RequestMapping(value="/searchInformation" , method = RequestMethod.POST)
 	public ArrayList<Map<String , Object>> searchInfomation(String searchdate){
-		logger.info("searchInfomation__jinsu");
-		
-		ArrayList<Map<String , Object>> map = searchDAO.selectDaySearch(searchdate);
-		
+		logger.info("searchInformation__jinsu");
+		ArrayList<Map<String , Object>> map = searchDAO.selectDaySearch(searchdate);		
 		return map;
 				
 	}
@@ -84,17 +73,15 @@ public class SearchController {
 	@RequestMapping(value="/searchCategorypop" , method = RequestMethod.POST)
 	public ArrayList<Map<String , Object>> searchCategorypop(String searchdate){
 		logger.info("searchCategorypop__jinsu");
-		
-		ArrayList<Map<String , Object>> map = searchDAO.selectDayCategory(searchdate);
-		
+		ArrayList<Map<String , Object>> map = searchDAO.selectDayCategory(searchdate);		
 		return map;
 				
 	}
 	
-	@RequestMapping(value = "/infomation", method = RequestMethod.GET)
+	@RequestMapping(value = "/information", method = RequestMethod.GET)
 	public String infomation() {
-		logger.info("infosData__jinsu");
-		return "infomation";
+		logger.info("information__jinsu");
+		return "information";
 	}
 	
 	@RequestMapping(value = "/searchHashTag", method = RequestMethod.GET)
@@ -104,49 +91,15 @@ public class SearchController {
 		//저장
 		hashTag = hashTag.substring(1, hashTag.length());
 		searchDAO.insertSearch(new Search(0 , hashTag , "0"));
-		
 		//검색어가 해쉬 태그 , 앨범 이름, 설명 , 앨범 만든 사람
 		ArrayList<AlbumWriteVO> arrayalbum = albumDAO.searchAlbum(hashTag);		
 		ArrayList<HashTag> arraytag = searchDAO.selectHashTag(hashTag);
 		for(int i = 0; i < arraytag.size();i++){
 			arrayalbum.add(albumDAO.searchAlbumNum(arraytag.get(i).getTag_albumnum()));
 		}
-		ArrayList<Albumlist> arraypicture = new ArrayList<Albumlist>();
-		for(int i = 0; i < arrayalbum.size();i++){
-			PageHtmlVO page=albumDAO.searchPage1(arrayalbum.get(i).getAlbum_num()); 
-			arraypicture.add(new Albumlist(arrayalbum.get(i) , (page == null ? "" : page.getPage_html())));
-		}
 		
-		logger.info(arrayalbum.toString());
-		
-		model.addAttribute("listalbum", arrayalbum.toString());		
+		model.addAttribute("listalbum", arrayalbum.toString());	
 		
 		return "home";
-	}
-	
-	protected class Albumlist{
-		private AlbumWriteVO albumobj;
-		private String picturehtml;
-		
-		public Albumlist(AlbumWriteVO albumobj , String picturehtml){
-			this.albumobj = albumobj;
-			this.picturehtml = picturehtml;
-		}
-		public AlbumWriteVO getAlbumobj() {
-			return albumobj;
-		}
-		public void setAlbumobj(AlbumWriteVO albumobj) {
-			this.albumobj = albumobj;
-		}
-		public String getPicturehtml() {
-			return picturehtml;
-		}
-		public void setPicturehtml(String picturehtml) {
-			this.picturehtml = picturehtml;
-		}
-		@Override
-		public String toString() {
-			return "Albumlist [albumobj=" + albumobj + ", picturehtml=" + picturehtml + "]";
-		}		
 	}
 }

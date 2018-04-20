@@ -55,11 +55,10 @@ function search(){
 		},
 		error:function(e){alert(JSON.stringify(e));}		
 	});
-	
 }
 
 function searchfriend(){
-	//초기 친구찾아서 친페이지 가는  코드 
+	//초기 친구찾아서 친구페이지 가는  코드 
 	var text = $('#friendsearch').val();
 	$.ajax({
 		url:'friend_check',
@@ -78,7 +77,7 @@ function searchfriend(){
 	});
 }
 function searchword(){
-	//친구 찾아서 검색창 및에 띄워주는 코드
+	//친구 찾아서 검색창 밑에 띄워주는 코드
 	var text = $('#friendsearch').val();
 	if(text.length >= 2){
 		$.ajax({
@@ -95,3 +94,39 @@ function searchword(){
 		});
 	}
 }
+
+//앨범 리스트 출력
+function totalAlbumList(result) {	
+	$(result).each(function(i, album) {	
+		var div_card = document.createElement('div'); //카드 클래스 div
+		var a_read_album = document.createElement('a'); //a태그
+		var img = document.createElement("img"); // 이미지 생성
+		$(img).attr('src' ,'./albumEdit/thumbnail?filePath='+album.album_thumbnail+'' );
+		$(img).attr('style' ,'width:100%;height:100%');
+		$(a_read_album).append(img);
+		$(div_card).addClass('card img-loaded').append(a_read_album);
+		//a태그 링크 걸어주기
+		$('.card-columns').append(div_card);				
+	});
+}
+
+//앨범 리스트 Ajax로 받는 코드
+function getTotalAlbumList() {
+	$.ajax({
+		url: 'getTotalAlbumList',
+		type: 'post',
+		dataType: 'json',
+		success: function(result) {
+			totalAlbumList(result);
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+}
+
+
+
+
+
+
