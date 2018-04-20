@@ -93,6 +93,9 @@ label:hover {
 	display:block;
 	position: absolute;	
 }
+.album_wrapper, .top_bar {
+	margin: auto !important;
+	display: block;
 .bt{
 	position: absolute;
 	right: 40px;
@@ -680,6 +683,15 @@ label:hover {
 						<!-- image 태그의 accept는 입력 받을 파일의 형식을 제한 -->
 						<input type="file" name="img1" accept="image/*" id="img1">
 					</div>
+				</div>
+
+				<!-- 하단 바 영역 -->
+				<div class="under_bar">
+					<button>이전</button>
+					<button onclick="savePage()">저장</button>
+					<button onclick="addPage()">페이지 추가</button>
+					<button onclick="removePage()">페이지 삭제</button>
+					<button>다음</button>
 				</div>
 				
 			</div>

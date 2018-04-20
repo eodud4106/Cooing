@@ -59,6 +59,21 @@ var map_box = new Map();    //box를 담을 map
 var count = 0;              //각 텍스트박스에 id를 주기 위해 증가시킬 변수
 var arr_id_of_div_box = [];      //div_box의 id를 담을 jquery 배열
 
+//TODO db에서 박스를 여러 개 가지고 온 경우 || '${arr_box.length}'-1 처럼 숫자를 넣어두기....
+var $arr_div_box = [];      // 텍스트, 이미지 등의 박스를 담을 배열
+var arr_box_id = [];        //div_box의 id를 담을 jquery 배열
+var album_top = 0;          //앨범의 top
+var album_left = 0;         //앨범의 left
+
+var PAGE_WIDTH = 600;       // 페이지 당 너비
+var PAGE_HEIGHT = 700;      // 페이지 당 높이
+
+var curr_page = 1;
+
+
+
+
+
 // [start] 페이지 로딩 후 처리
 $(document).ready(function(){
 
@@ -198,7 +213,7 @@ $(document).ready(function(){
 
 
 /**
- *  새 앨범 생성
+ *  새 앨범 기본 페이지 설정
  **/
 function createNewAlbum() {
 
@@ -207,15 +222,14 @@ function createNewAlbum() {
 
     // 페이지 생성 후 album div에 부착
     for(var i = 1; i <= init_page; i++) {
-        $page = $('<div />', {
+        var $page = $('<div />', {
             'id': 'page' + i,
             'class': 'page hard',
             'text': i
         });
 
-        $page.appendTo($('#album'));
+        $page.appendTo('#album');
     }
-    
 }
 
 /**
@@ -1063,7 +1077,7 @@ function savePage() {
     $('.page').droppable("disable");
     $('#page' + curr_page + '').droppable("enable");
 
-    alert('2페이지 추가되었습니다!');
+    alert('페이지가 추가되었습니다!');
 
  }
 
@@ -1073,39 +1087,35 @@ function savePage() {
   **/
  function removePage() {
 
-    // 페이지 추가는 커버 바로 앞에 두 페이지 씩 추가하는 형태
     var total_page = $('#album').turn('pages');
+
+    // 페이지 삭제 전 확인
+    if(!confirm('보고 있는 페이지가 삭제됩니다. 정말 삭제하시겠습니까? (표지일 경우 뒷장도 함께 삭제됩니다!)')) return;
 
     //2페이지 추가이므로 2번 반복
     for(var i = 0; i < 2; i++) {
 
-        // 새 뒷 커버 생성
-        var $page = $('<div />', {
-            'id': 'page' + (total_page + (i+1)),
-            'class': 'page hard'
-        });
+        if(curr_page == total_page) {
+            // 마지막 페이지일 경우 앞 장도 
+            $('#album').turn('removePage', curr_page - i);
 
-        //뒷 커버를 추가
-        $('#album').turn('addPage', $page, (total_page+1+i));
-        apply_page_droppable($('#page' + (total_page+1+i) + ''))
+        } else {
+            // 마지막 페이지가 아닐 경우 현재 페이지와 그 다음 페이지 삭제
+            $('#album').turn('removePage', curr_page);
+        }
     }
 
-    //기존 페이지의 아이디와 innerHTML을 두 페이지 씩 뒤로 이동
-    for(var i = $('#album').turn('pages'); i >= curr_page+2; i--) {
-
-        $('#page' + i + '').html($('#page' + (i - 2) + '').html());
-
+    // id 수정
+    for(var i = curr_page + 2; i <= $('#album').turn('pages'); i++) {
+        $('#page' + i + '').attr('id', 'page' + (i - 2));
     }
 
-    // 새로 추가한 페이지는 아니지만... 한 장 새로 추가한 것처럼 보이기 위해 현재 페이지와 그 다음 페이지를 비운다...
-    $('#page' + curr_page + '').html('');
-    $('#page' + (curr_page + 1) + '').html('');
+    // 현재 페이지가 총 페이지 수를 초과할 경우 수정
+    if(curr_page > $('#album').turn('pages')) {
+        curr_page = $('#album').turn('pages');
+    }
 
-    // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
-    $('.page').droppable("disable");
-    $('#page' + curr_page + '').droppable("enable");
-
-    alert('2페이지 추가되었습니다!');
+    alert('페이지가 삭제되었습니다!');
 
  }
     
