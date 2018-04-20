@@ -30,7 +30,7 @@
 
 <!-- albumEdit 용 js -->
 <script type="text/javascript" src="../resources/js/albumEdit.js"></script>
-
+<script type="text/javascript" src="../resources/js_js/html2canvas.min.js"></script>
 <!-- 기본 css -->
 <link rel="stylesheet" href="../resources/css/albumEdit.css">
 <link rel="stylesheet" href="../resources/css/jquery-ui.min.css">
@@ -204,6 +204,45 @@ html, body, main, .container-fluid {
 	   }else{
 			alert('체크된거없음');
 	   }	 
+	}
+	
+	function page1ImageSave(){
+		var album_num = $('#album_num').val();
+		html2canvas($('#page1') , {
+			if(typeof FlashCanvas != "undefined"){
+				FlashCanvas.initElement(canvas);
+			}
+			$('#imgSrc').val(canvas.toDataURL('image/png'));
+			
+			$.ajax({ 
+	            url : 'page1ImageSave', 
+	            type : 'POST', 
+	            data : $('#testimg').serialize(), 
+	            dataType : 'text', 
+	            success : function(a) { 
+	              if (a != 'fail') { 
+	                $.ajax({ 
+	                  url : 'thumbnailPathSave', 
+	                  type : 'POST', 
+	                  data :{thumbnail:a , albumnum:album_num }, 
+	                  dataType : 'text', 
+	                  success : function(b) { 
+	                    $('#page1').css('background-image' , 'url(./thumbnail?filePath='+a+')'); 
+	                  }, 
+	                  error : function(e) { 
+	                    alert(JSON.stringify(e)); 
+	                  } 
+	                });   
+	              } else { 
+	                alert(a); 
+	              } 
+	            }, 
+	            error : function(e) { 
+	              alert('파일 업로드 실패'); 
+	            } 
+	          });
+			
+		});
 	}
 
 </script>

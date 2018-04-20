@@ -1418,6 +1418,10 @@ function savePage() {
     //console.log('savePage 호출 -> ' + curr_page);
 
     var count = 1;
+    
+    if(curr_page == 1){
+    	page1ImageSave();
+    }
 
     if(curr_page != 1 && curr_page != $('#album').turn('pages')) {
         // 현재 페이지가 싱글 페이지가 아니면 오른쪽 장도 저장해야 함.
