@@ -358,7 +358,7 @@ function checkRadioButton(iCheck)
 	// 좋아요
 	function likes(){
 		
-		var num = 15;
+		var num = 1;
 		
 		$.ajax({
 			url:'likes',
@@ -384,7 +384,7 @@ function checkRadioButton(iCheck)
 	// 좋아요 취소
 	function deletelikes(){
 
-		var num = 15;
+		var num = 1;
 		
 		$.ajax({
 			url:'deleteLikes',

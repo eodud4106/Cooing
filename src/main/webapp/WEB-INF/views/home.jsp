@@ -93,7 +93,7 @@ function totalAlbumList(result) {
 	var album_html;
 	var sw = 0;
 	
-$(result).each(function(i, album) {
+	$(result).each(function(i, album) {
 		
 		album_num = album.album_num;
 		

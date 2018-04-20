@@ -11,7 +11,7 @@
 function writereply(){
 
 	var str = $('#reply').val();
-	var num = 15;
+	var num = 1;
 	
 	$.ajax({
 		url:'writeReply',
@@ -38,7 +38,7 @@ function writereply(){
 // 댓글 삭제
 function deletereply(){
 
-	var num = 15;
+	var num = 1;
 	
 	$.ajax({
 		url:'deleteReply',
