@@ -29,9 +29,7 @@
 <script>
 $(document).ready(function () {
 	
-	initialize();
-	
-	
+	initialize();	
 	
 	$('window').click(function(event) {
 		if (event.target == $('#myModal')) {
@@ -45,21 +43,6 @@ $(document).ready(function () {
 	
 	$('#myBtn_close').click(function() {
 		$('#myModal').css('display', 'none');
-	});
-	
-	$('#createBtn').click(function() {
-		$('#album_create_modal').css({
-			'display': 'block',
-			'z-index': '10000'
-		});
-	});
-	
-	$('#createBtn_close').click(function() {
-		$('#album_create_frame').attr('src', 'albumEdit/AlbumNameCreate');
-		$('#album_create_modal').css({
-			'display': 'none',
-			'z-index': '0'
-		});
 	});
 	
 	if (${sessionScope.Member != null}) {
@@ -87,19 +70,15 @@ function getTotalAlbumList() {
 }
 
 //앨범 리스트 출력
-function totalAlbumList(result) {
-	
-	var album_num;
-	var album_html;
-	var sw = 0;
-	
+function totalAlbumList(result) {	
 	$(result).each(function(i, album) {	
 		var div_card = document.createElement('div'); //카드 클래스 div
 		var a_read_album = document.createElement('a'); //a태그
-		var img = '<img src="./albumEdit/thumbnail?filePath='+album.album_thumbnail+'" style="width:100%;height:100%">';
-		a_read_album.html(img);
+		var img = document.createElement("img"); // 이미지 생성
+		$(img).attr('src' ,'./albumEdit/thumbnail?filePath='+album.album_thumbnail+'' );
+		$(img).attr('style' ,'width:100%;height:100%');
+		$(a_read_album).append(img);
 		$(div_card).addClass('card img-loaded').append(a_read_album);
-		
 		//a태그 링크 걸어주기
 		$('.card-columns').append(div_card);				
 	});
@@ -325,12 +304,6 @@ function totalAlbumList(result) {
 			<input type="text" id="message" autocomplete="off" />
 			<input type="button" id="sendBtn" value="전송" />
 		</div>
-	</div>
-	
-	<div id="album_create_modal" class="modal">
-		<span id="createBtn_close" class="close">&times;</span>
-		<iframe id="album_create_frame" src="albumEdit/AlbumNameCreate"
-			allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
 	</div>
 
 	<script src="resources/aside_js/popper.min.js"></script>
