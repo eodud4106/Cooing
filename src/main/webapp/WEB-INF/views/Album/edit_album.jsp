@@ -208,13 +208,13 @@ html, body, main, .container-fluid {
 	
 	function page1ImageSave(){
 		var album_num = $('#album_num').val();
-		html2canvas($('#page1') , {
-			if(typeof FlashCanvas != "undefined"){
-				FlashCanvas.initElement(canvas);
-			}
-			$('#imgSrc').val(canvas.toDataURL('image/png'));
-			
-			$.ajax({ 
+		html2canvas($('#page1'), { 
+	          onrendered: function(canvas) { 
+	              if (typeof FlashCanvas != "undefined") { 
+	                  FlashCanvas.initElement(canvas); 
+	              } 
+	              $('#imgSrc').val(canvas.toDataURL('image/png'));
+	              $.ajax({ 
 	            url : 'page1ImageSave', 
 	            type : 'POST', 
 	            data : $('#testimg').serialize(), 
@@ -240,9 +240,9 @@ html, body, main, .container-fluid {
 	            error : function(e) { 
 	              alert('파일 업로드 실패'); 
 	            } 
-	          });
-			
-		});
+	          }); 
+	          } 
+	      });
 	}
 
 </script>
