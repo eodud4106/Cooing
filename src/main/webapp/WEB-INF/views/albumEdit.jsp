@@ -225,8 +225,6 @@ html, body, main, .container-fluid {
 			</div>
 			<!-- END row -->
 	
-			<div class="container-fluid"></div>
-	
 		</div>
 
 	</main>
