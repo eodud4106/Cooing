@@ -104,36 +104,39 @@ $(document).ready(function(){
                 // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
                 clearOn();
                 // page 저장
-                savePage();
+                //savePage();
 
             },
             turned: function(event, page, view) {
 
                 console.log('현재 페이지 -> ' + $('#album').turn('page'));
-                // 1페이지와 마지막 페이지를 
 
                 var total_page = $('#album').turn('pages');
 
-                var arr_single_page = [1];
-                
-                if(total_page % 2 == 0) {
-                    // 총 페이지 수가 짝수일 경우 마지막 페이지는 싱글 페이지이므로 배열에 추가한다.
-                    arr_single_page.push(total_page);
+                var arr_single_page = [1, total_page];
+
+                curr_page = $('#album').turn('page');
+
+                // 첫페이지와 끝페이지가 아니고, 홀수 번째(오른쪽 페이지) 페이지일 경우 1을 줄여서 왼쪽 페이지를 가리키게 함.
+                if(arr_single_page.indexOf(curr_page) == -1 && curr_page % 2 == 1) {
+                    curr_page--;
                 }
 
                 // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
-                $('.page').droppable("option", "disabled", true);
-                $('#page' + curr_page + '').droppable("option", "disabled", false);
+                $('.page').droppable("disable");
+                $('#page' + curr_page + '').droppable("enable");
 
                 // 현재 페이지가 싱글 페이지가 아닌 경우 오른쪽 페이지도 droppable을 켠다.
                 if(arr_single_page.indexOf(curr_page) == -1) {
-                    $('#page' + (curr_page + 1) + '').droppable("option", "disabled", false);
+                    $('#page' + (curr_page + 1) + '').droppable("enable");
                 }
             }
         } 
     });
 
-    // album의 절대 위치 확인
+
+
+
     album_top = $('#album').position().top + Number($('#album').css('margin-top').replace('px',''));
     album_left = $('#album').position().left + Number($('#album').css('margin-left').replace('px',''));
 
@@ -180,7 +183,7 @@ $(document).ready(function(){
                 // arr_box_id를 바탕으로 모든 박스의 z-index 조정
                 for(var i = 0; i < arr_box_id.length; i++) {
                     $('#' + arr_box_id[i] + '').css({
-                        "z-index": 2 + i
+                        "z-index": 500 + i
                     })
                 }
                 
@@ -200,26 +203,18 @@ function createNewAlbum() {
     // 최초 페이지 수
     var init_page = 12;
 
-    // 표지로 사용될 페이지
-    var arr_hard = [1, 2, init_page - 1, init_page];
-
     // 페이지 생성 후 album div에 부착
     for(var i = 1; i <= init_page; i++) {
         $page = $('<div />', {
             'id': 'page' + i,
-            'class': 'page'
+            'class': 'page hard',
+            'text': i
         });
-
-        // 표지로 사용될 페이지는 hard 클래스 추가
-        if(arr_hard.indexOf(i) > -1) {
-            $page.addClass('hard');
-        }
 
         $page.appendTo($('#album'));
     }
     
 }
-
 
 /**
  *  페이지에 아이템 droppable 적용
@@ -232,9 +227,6 @@ function apply_page_droppable($page) {
         drop: function(event, ui) {
 
             event.stopPropagation();
-
-            console.log('페이지 드랍 -> ' + $(this).attr('id'));
-            console.log('page x: ' + event.pageX + ' // page y : ' + event.pageY);
 
             // 드랍한 페이지
             var page = $(this).attr('id').replace(/\D/g,'');
@@ -246,36 +238,6 @@ function apply_page_droppable($page) {
 }
 
 //TODO page 초기화
-function initpage(diagram) {
-   page.empty();
-}
-
-
-/**
- *  페이지에 아이템 droppable 적용
- *  @param : jquery 형식의 page 엘리먼트
- **/
-function apply_page_droppable($page) {
-
-    $page.droppable({
-        accept: '.tool',
-        drop: function(event, ui) {
-
-            event.stopPropagation();
-
-            console.log('페이지 드랍 -> ' + $(this).attr('id'));
-            console.log('page x: ' + event.pageX + ' // page y : ' + event.pageY);
-
-            // 드랍한 페이지
-            var page = $(this).attr('id').replace(/\D/g,'');
-
-            // 드랍으로 만든 node를 page 위에 그림
-            renderbox(event, ui, page);
-        }
-    });
-}
-
-//TODOpage 초기화
 function initpage(diagram) {
    page.empty();
 }
@@ -318,12 +280,14 @@ function renderbox(event, ui, page) {
             "id": "hidden_input",
             "name": "hidden_input"
         }).css({
-            "opacity": "0",
             "position": "absolute",
-            "top": "115px",
+            "top": "110px",
             "left": "135px",
             "width": "30px",
-            "height": "30px"
+            "height": "30px",
+            "margin": "auto",
+            "opacity": "0",
+            "overflow": "hidden"
         });
 
         var $i_plus = $('<i />', {
@@ -335,8 +299,9 @@ function renderbox(event, ui, page) {
 
         var $image = $('<img />', {
             "width": "100%",
-            "height": "100%",
-            "opacity": "1"
+            "height": "100%"
+        }).css({
+            "display": "none"
         });
         
         $div_box.addClass('imagebox').css({
@@ -375,7 +340,9 @@ function renderbox(event, ui, page) {
                     // fail이 아닐 경우 -> 이미지 저장됨
                     if (saved_name != 'fail') {
                     	
-                    	$img.attr('src', 'img?filePath=' + saved_name);
+                    	$img.attr('src', 'img?filePath=' + saved_name).css({
+                            "display": "block"
+                        });
                     	
                     	
 
@@ -429,7 +396,7 @@ function renderbox(event, ui, page) {
     // z-index 관리용 코드
     arr_box_id.push($div_box.attr('id'));
     $div_box.css({
-        "z-index": 2 + arr_box_id.indexOf($div_box.attr('id'))
+        "z-index": 500 + arr_box_id.indexOf($div_box.attr('id'))
     })
     //$('#selection').text(arr_box_id);
 
@@ -580,7 +547,7 @@ function createWholeEditor($elem) {
     $arr_bt[$arr_bt.length-1].append($i_to_the_top).click(function() {
         // TODO 제일 위로 올리기
 
-        // id 배열 내 index(z-index는 인덱스 + 2)
+        // id 배열 내 index(z-index는 인덱스 + 500)
         var target_index = arr_box_id.indexOf($('.onSelect').attr('id'));
 
         // id 배열 내 onSelect의 id를 가장 뒤로 이동
@@ -590,7 +557,7 @@ function createWholeEditor($elem) {
         // z-index 조정
         for(var i = 0; i < arr_box_id.length; i++) {
             $('#' + arr_box_id[i] + '').css({
-                "z-index" : 2 + i
+                "z-index" : 500 + i
             })
         }
 
@@ -994,10 +961,10 @@ function removeEdit() {
 // onSelect, onEdit 상태 해제
 function clearOn() {
     $('.onEdit').draggable('enable').resizable('disable').prop("contenteditable", false).css({
-            "z-index": 2 + arr_box_id.indexOf($('.onEdit').attr('id'))
+            "z-index": 500 + arr_box_id.indexOf($('.onEdit').attr('id'))
         }).removeClass('onEdit').find(".ui-resizable-handle").hide();
     $('.onSelect').draggable('enable').resizable('disable').css({
-            "z-index": 2 + arr_box_id.indexOf($('.onSelect').attr('id'))
+            "z-index": 500 + arr_box_id.indexOf($('.onSelect').attr('id'))
         }).removeClass('onSelect').find(".ui-resizable-handle").hide();
 }
 
@@ -1026,26 +993,6 @@ function createTooltip($elem, text) {
 }
 // [end] 도움말 생성
 
-function save_div() {
-    var target = document.getElementById('box_0');
-    $(target).draggable('destroy').resizable('destroy');
-    var clone = $(target.outerHTML);
-    // clone.css('background-color', 'blue').draggable({
-    //     // textbox 드래그 시 위치 이동 처리 (ui.helper는 이벤트의 대상)
-    //     stop: function(event, ui) {
-    //         var id = ui.helper.attr("id");
-    //         var box = map_box.get(id);
-    //         box.position.top = ui.position.top;
-    //         box.position.left = ui.position.left;
-    //     },
-    //     containment: '.page-wrapper'  // 캔버스 영역 밖으로 나가지 못하게 제한
-    // });
-    $(target).remove();
-    renderbox(clone);
-    //$('.page-wrapper').append(clone);
-    //alert(target.outerHTML);
-    //$('#map_box').text();
-}
 
 
 /**
@@ -1095,105 +1042,88 @@ function savePage() {
 
 /**
  *  페이지 추가
- *  
+ *  현재 보고 있는 페이지를 기준으로 2페이지 추가
  **/
  function addPage() {
 
     // 페이지 추가는 커버 바로 앞에 두 페이지 씩 추가하는 형태
     var total_page = $('#album').turn('pages');
 
-    var $target = $('#page' + (total_page -2) + '');
+    //2페이지 추가이므로 2번 반복
+    for(var i = 0; i < 2; i++) {
 
-    var $element = $('<div />');
+        // 새 뒷 커버 생성
+        var $page = $('<div />', {
+            'id': 'page' + (total_page + (i+1)),
+            'class': 'page hard'
+        });
 
+        //뒷 커버를 추가
+        $('#album').turn('addPage', $page, (total_page+1+i));
+        apply_page_droppable($('#page' + (total_page+1+i) + ''))
+    }
+
+    //기존 페이지의 아이디와 innerHTML을 두 페이지 씩 뒤로 이동
+    for(var i = $('#album').turn('pages'); i >= curr_page+2; i--) {
+
+        $('#page' + i + '').html($('#page' + (i - 2) + '').html());
+
+    }
+
+    // 새로 추가한 페이지는 아니지만... 한 장 새로 추가한 것처럼 보이기 위해 현재 페이지와 그 다음 페이지를 비운다...
+    $('#page' + curr_page + '').html('');
+    $('#page' + (curr_page + 1) + '').html('');
+
+    // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
+    $('.page').droppable("disable");
+    $('#page' + curr_page + '').droppable("enable");
+
+    alert('2페이지 추가되었습니다!');
+
+ }
+
+ /**
+  *  페이지 삭제
+  *  현재 보고 있는 페이지를 기준으로 2페이지 삭제
+  **/
+ function removePage() {
+
+    // 페이지 추가는 커버 바로 앞에 두 페이지 씩 추가하는 형태
+    var total_page = $('#album').turn('pages');
 
     //2페이지 추가이므로 2번 반복
-    // for(var i = 0; i < 2; i++) {
+    for(var i = 0; i < 2; i++) {
 
-    //     // 우선 뒤쪽 커버 두 장의 아이디의 넘버를 2씩 더해준다.
-    //     $('#page' + (total_page - i) + '').attr('id', 'page' + (total_page + 2 - i) );
+        // 새 뒷 커버 생성
+        var $page = $('<div />', {
+            'id': 'page' + (total_page + (i+1)),
+            'class': 'page hard'
+        });
 
-    //     // 새 속지 생성
-    //     var $page = $('<div />', {
-    //         'id': 'page' + (total_page + i),
-    //         'class': 'page'
-    //     });
+        //뒷 커버를 추가
+        $('#album').turn('addPage', $page, (total_page+1+i));
+        apply_page_droppable($('#page' + (total_page+1+i) + ''))
+    }
 
-    //     //$target.after($page);
-    //     $('#album').turn('addPage', $page, (total_page+1+i));
-    // }
+    //기존 페이지의 아이디와 innerHTML을 두 페이지 씩 뒤로 이동
+    for(var i = $('#album').turn('pages'); i >= curr_page+2; i--) {
 
+        $('#page' + i + '').html($('#page' + (i - 2) + '').html());
 
-    // $('#album').turn({
-    //     display: 'double',  // 한 번에 보여줄 페이지
-    //     inclination: 50,    // 페이지 넘김 효과 시의 경사도
-    //     width: PAGE_WIDTH * 2,
-    //     height: PAGE_HEIGHT,
-    //     when: {             // 이벤트 리스너
-    //         turning: function(event, page, view) {
-    //             // 편집창 제거
-    //             removeEdit();
-    //             // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
-    //             clearOn();
-    //             // page 저장
-    //             savePage();
+    }
 
-    //         },
-    //         turned: function(event, page, view) {
+    // 새로 추가한 페이지는 아니지만... 한 장 새로 추가한 것처럼 보이기 위해 현재 페이지와 그 다음 페이지를 비운다...
+    $('#page' + curr_page + '').html('');
+    $('#page' + (curr_page + 1) + '').html('');
 
-    //             console.log('현재 페이지 -> ' + $('#album').turn('page'));
-    //             // 1페이지와 마지막 페이지를 
-    //             var curr_page = $('#album').turn('page');
-    //             var total_page = $('#album').turn('pages');
+    // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
+    $('.page').droppable("disable");
+    $('#page' + curr_page + '').droppable("enable");
 
-    //             var arr_single_page = [1];
-                
-    //             if(total_page % 2 == 0) {
-    //                 // 총 페이지 수가 짝수일 경우 마지막 페이지는 싱글 페이지이므로 배열에 추가한다.
-    //                 arr_single_page.push(total_page);
-    //             }
-
-    //             // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
-    //             $('.page').droppable("option", "disabled", true);
-    //             $('#page' + curr_page + '').droppable("option", "disabled", false);
-
-    //             // 현재 페이지가 싱글 페이지가 아닌 경우 오른쪽 페이지도 droppable을 켠다.
-    //             if(arr_single_page.indexOf(curr_page) == -1) {
-    //                 $('#page' + (curr_page + 1) + '').droppable("option", "disabled", false);
-    //             }
-    //         }
-    //     } 
-    // });
-
-
-
-    var range = $('#album').turn('range', curr_page);
-    /*
-    1페이지면 range[1] - 3
-    2~3페이지면 range[1] -1
-    tp-1~2면 range[1] -1
-    tp면 range[0] +3
-
-    */
-
-    console.log('range: ' + range);
-    // for (var page = range[0]; page<=range[1]; page++) {
-    //     if (!$('#flipbook').turn('hasPage', page)) {
-    //         $('#flipbook').turn('addPage', $('<div />', {
-    //             'id': 'page' + (total_page + i),
-    //             'class': 'page'
-    //         }), page);
-    //     }
-    // }
-    
-
-    // var $element = $('<div />');
-    // $('#album').turn(‘addPage’, $element, total_page-2);
+    alert('2페이지 추가되었습니다!');
 
  }
     
-
-
 
 
 /*
