@@ -495,7 +495,7 @@ html, body, main, .container-fluid {
 					<button>이전</button>
 					<button>다음</button>
 					<c:if test="${album.album_writer == sessionScope.Member.member_id }">
-						<button onclick="location.href='albumEdit/edit_album?album_num=${album.album_num}'">편집</button>
+						<button onclick="location.href='/edit_album?album_num=${album.album_num}'">편집</button>
 					</c:if>
 				</div>
 				

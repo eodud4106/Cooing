@@ -177,7 +177,7 @@ $(document).ready(function () {
 					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
 					<li><a href="<c:url value ="/friendPage"/>">friendPage</a></li>		
 					<li><a href="<c:url value ="/LankingPage"/>">LankingPage</a></li>				 		
-					<li><a href="<c:url value ="/albumEdit/edit"/>">albumEdit</a></li>
+					<li><a href="<c:url value ="/edit"/>">albumEdit</a></li>
 					<li><a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a></li>
 					<li><a href="<c:url value ="/jinsu/login_get"/>">로그인...</a></li>
 					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>

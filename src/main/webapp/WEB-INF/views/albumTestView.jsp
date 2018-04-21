@@ -123,7 +123,7 @@ function fileSave(formdata, file, pagenum, last){
 					'width': $(file).parent().parent().css('width')
 				});
 				
-				$(div_holder).append('<img src="<c:url value="/albumEdit/img?filePath=' + a 
+				$(div_holder).append('<img src="<c:url value="/img?filePath=' + a 
 						+ '"/>" style="width:100%; height:100%;" class="img">');
 				
 				$('#page' + pagenum).children('#' + $(file).parent().parent().attr('id')).remove();

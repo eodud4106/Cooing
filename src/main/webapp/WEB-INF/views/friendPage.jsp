@@ -317,7 +317,7 @@ $(document).ready(function () {
 	});
 	
 	$('#createBtn_close').click(function() {
-		$('#album_create_frame').attr('src', 'albumEdit/AlbumNameCreate');
+		$('#album_create_frame').attr('src', '/AlbumNameCreate');
 		$('#album_create_modal').css({
 			'display': 'none',
 			'z-index': '0'
@@ -485,7 +485,7 @@ select::-ms-expand { /* for IE 11 */
 					<li><a href="<c:url value ="/albumTestView"/>">albumView</a></li>
 					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
 					<li><a href="<c:url value ="/friendPage"/>">friendPage</a></li>
-					<li><a href="<c:url value ="/albumEdit/edit"/>">albumEdit</a></li>
+					<li><a href="<c:url value ="/edit"/>">albumEdit</a></li>
 					<li><a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a></li>
 					<li><a href="<c:url value ="/jinsu/login_get"/>">로그인...</a></li>
 					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
@@ -642,7 +642,7 @@ select::-ms-expand { /* for IE 11 */
 	
 	<div id="album_create_modal" class="modal">
 		<span id="createBtn_close" class="close">&times;</span>
-		<iframe id="album_create_frame" src="albumEdit/AlbumNameCreate"
+		<iframe id="album_create_frame" src="/AlbumNameCreate"
 			allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
 	</div>
 

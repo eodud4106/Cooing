@@ -10,7 +10,7 @@ function AlbumListPaging(check , result) {
 		var div_card = document.createElement('div'); //카드 클래스 div
 		var a_read_album = document.createElement('a'); //a태그
 		var img = document.createElement("img"); // 이미지 생성
-		$(img).attr('src' ,'./albumEdit/thumbnail?filePath='+album.album_thumbnail+'' );
+		$(img).attr('src' ,'./thumbnail?filePath='+album.album_thumbnail+'' );
 		$(img).attr('style' ,'width:100%;height:100%');
 		$(a_read_album).attr('href', 'albumView?album_num=' + album.album_num + '');
 		$(a_read_album).append(img);

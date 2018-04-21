@@ -37,7 +37,6 @@ import com.cooing.www.jinsu.object.Member;
 import com.google.gson.Gson;
 
 @Controller
-@RequestMapping(value = "albumEdit")
 public class AlbumEditController {
 	
 	@Autowired
@@ -93,13 +92,13 @@ public class AlbumEditController {
 				new Exception();
 			}
 		} catch (Exception e) {
-			return "redirect:../";
+			return "redirect:./";
 		}
 		
 		try {
 			//TODO 앨범 넘버로 앨범 정보 가져와 모델에 담기
 			AlbumWriteVO album = albumDAO.searchAlbumNum(int_album_num);
-			if(album == null) return "redirect:../";
+			if(album == null) return "redirect:./";
 			//TODO 앨범 넘버로 페이지 배열로 받아와 모델에 담기
 			ArrayList<PageHtmlVO> arr_page = albumDAO.select_pages_by_album_num(int_album_num);
 			

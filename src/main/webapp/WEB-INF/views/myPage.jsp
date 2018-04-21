@@ -88,7 +88,7 @@ function getMyAlbumList(pagenum) {
  */
 function create_personal_album() {
 	$.ajax({
-		url: 'albumEdit/create_personal_album',
+		url: 'create_personal_album',
 		type: 'post',
 		dataType: 'json',
 		success: function(result) {
@@ -98,7 +98,7 @@ function create_personal_album() {
 				alert('오류 발생!!');
 			} else {
 				 //TODO 앨범 편집창으로 이동
-				 location.href="albumEdit/edit_album?album_num=" + result;
+				 location.href="edit_album?album_num=" + result;
 			}
 		},
 		error: function(e) {
@@ -146,7 +146,7 @@ function create_personal_album() {
 					<li><a href="<c:url value ="/albumTestView"/>">albumView</a></li>
 					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
 					<li><a href="<c:url value ="/friendPage"/>">friendPage</a></li>
-					<li><a href="<c:url value ="/albumEdit/edit"/>">albumEdit</a></li>
+					<li><a href="<c:url value ="/edit"/>">albumEdit</a></li>
 					<li><a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a></li>
 					<li><a href="<c:url value ="/jinsu/login_get"/>">로그인...</a></li>
 					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
@@ -317,7 +317,7 @@ function create_personal_album() {
 	
 	<div id="album_create_modal" class="modal">
 		<span id="createBtn_close" class="close">&times;</span>
-		<iframe id="album_create_frame" src="albumEdit/AlbumNameCreate"
+		<iframe id="album_create_frame" src="AlbumNameCreate"
 			allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
 	</div>
 
