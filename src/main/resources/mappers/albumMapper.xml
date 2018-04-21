@@ -112,11 +112,19 @@
 		select *  from ALBUMLIST order by Album_num desc
 	</select>
 	
+	<select id="TotalAlbumCount" resultType="int">
+		select count(*)  from albumlist
+	</select>
+	
 	<select id="MyAlbumList" parameterType="String" resultType="albumwrite">
 		select *
 	    from ALBUMLIST 
 	    where ALBUM_WRITER = #{ALBUM_WRITER} 
 	    order by Album_num desc
+	</select>
+	
+	<select id="IDAlbumCount" parameterType="String" resultType="int">
+		select count(*) from albumlist where album_writer = #{album_writer} order by album_num desc
 	</select>
 	
 	<!-- 앨범 넘버로 앨범 내 페이지 검색 -->

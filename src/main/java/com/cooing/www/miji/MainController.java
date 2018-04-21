@@ -18,6 +18,7 @@ import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.Member;
+import com.cooing.www.jinsu.object.PageLimit;
 
 /**
  * Handles requests for the application home page.
@@ -75,16 +76,21 @@ public class MainController {
 	
 	//마이페이지
 	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
-	public String myPage(){
+	public String myPage(HttpSession session , Model model){
+		Member member = (Member)session.getAttribute("Member");
+		int totalpage = albumDAO.IDAlbumCount(member.getMember_id());
+		model.addAttribute("totalpage", (totalpage/10));		
 		return "myPage";
 	}
 	
 	// 책 목록 조회
 	@ResponseBody
 	@RequestMapping(value = "/getMyAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumWriteVO> getMyAlbumList(HttpSession session) {
+	public ArrayList<AlbumWriteVO> getMyAlbumList(HttpSession session , int pagenum) {
 		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-		return albumDAO.MyAlbumList(album_writer);
+		int totalnum = albumDAO.IDAlbumCount(album_writer);
+		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
+		return albumDAO.MyAlbumList(album_writer , pl.getStartBoard() , pl.getCountPage());
 	}
 	
 	//랭킹페이지

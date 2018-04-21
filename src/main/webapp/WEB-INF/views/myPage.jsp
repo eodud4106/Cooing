@@ -29,60 +29,49 @@
 <script src="<c:url value="/resources/aside_js/jquery.waypoints.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/imagesloaded.pkgd.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/main.js"/>"></script>
+<script src="<c:url value="/resources/js/search.js"/>"></script>
 
 
 <script>
-$(document).ready(function () {
 
-	getMyAlbumList();
-	/*
+var pagenum = 0;
+var pagingcheck = false;
+$(window).scroll(function() {
+    if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
+    	if($('#totalpage').val() >= pagenum){
+    		getMyAlbumList(++pagenum);
+	    	pagingcheck = true;
+    	}
+    }
+});
+
+$(document).ready(function () {
 	
-	$('window').click(function(event) {
-		if (event.target == $('#myModal')) {
-			$('#myModal').css('display', 'none');
-	    }
+	$('#friendsearchbt').on('click', function() {
+		searchfriend();
+	});
+	//초기 친구 찾을 때만 사용했었음
+	$('#friendsearch').keyup(function() {
+		searchword();
 	});
 	
-	$('#myBtn').click(function() {
-		$('#myModal').css('display', 'block');
+	$('#searchbt').on('click' , function(){
+		search();
 	});
 	
-	$('#myBtn_close').click(function() {
-		$('#myModal').css('display', 'none');
+	$('.category').on('click' , function(){
+		searchCategory($(this).attr('data'));
 	});
-	
-	$('#createBtn').click(function() {
-		$('#album_create_modal').css({
-			'display': 'block',
-			'z-index': '10000'
-		});
-	});
-	
-	$('#createBtn_close').click(function() {
-		$('#album_create_frame').attr('src', 'albumEdit/AlbumNameCreate');
-		$('#album_create_modal').css({
-			'display': 'none',
-			'z-index': '0'
-		});
-	});
-	
-	
-	
-	if (${sessionScope.Member != null}) {
-		readyChat();
-		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
-	}
-	
-	*/
-	
+
+	getMyAlbumList(++pagenum);	
 });
 
 //앨범 리스트 Ajax로 받는 코드
-function getMyAlbumList() {
-
+function getMyAlbumList(pagenum) {
 	$.ajax({
 		url: 'getMyAlbumList',
 		type: 'post',
+		data:{pagenum:pagenum},
 		dataType: 'json',
 		success: function(result) {
 			myAlbumList(result);
@@ -336,6 +325,7 @@ function create_personal_album() {
 		<div id="div_send">
 			<input type="text" id="message" autocomplete="off" />
 			<input type="button" id="sendBtn" value="전송" />
+			<input type="hidden" id="totalpage" value="${totalpage}">
 		</div>
 	</div>
 	
