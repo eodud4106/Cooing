@@ -1317,7 +1317,7 @@ function savePage(mode) {
         
         if(curr_page == 1){
             //앨범 표지 섬네일 생성
-        	//page1ImageSave();
+        	page1ImageSave();
         }
 
         if(curr_page != 1 && curr_page != $('#album').turn('pages')) {
