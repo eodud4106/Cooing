@@ -112,7 +112,7 @@ function create_personal_album() {
 				alert('오류 발생!!');
 			} else {
 				 //TODO 앨범 편집창으로 이동
-				 location.href="albumEdit/edit_album?str_album_num=" + result;
+				 location.href="albumEdit/edit_album?album_num=" + result;
 			}
 		},
 		error: function(e) {
