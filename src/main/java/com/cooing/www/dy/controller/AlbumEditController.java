@@ -46,10 +46,10 @@ public class AlbumEditController {
 	
 	//private static String id = null; 
 	//private static String strFilePath = "/FileSave/upload/"+id+"/";
-	//private static String strFilePath = "/FileSave/upload/";					// windows
-	private static String strFilePath = "/Users/insect/hindoong_upload/";		// mac
-	//private static String strThumbnailPath = "/FileSave/thumbnail/";			// windows
-	private static String strThumbnailPath = "/Users/insect/hindoong_upload/";	// mac
+	private static String strFilePath = "/FileSave/upload/";					// windows
+	//private static String strFilePath = "/Users/insect/hindoong_upload/";		// mac
+	private static String strThumbnailPath = "/FileSave/thumbnail/";			// windows
+	//private static String strThumbnailPath = "/Users/insect/hindoong_upload/";	// mac
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
 	
