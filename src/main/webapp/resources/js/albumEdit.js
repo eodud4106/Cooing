@@ -1377,7 +1377,7 @@ function savePage(mode) {
 
 
     $.ajax({
-        url : '../albumEdit/save_page',
+        url : 'save_page',
         type : 'POST',
         data : {
             album_num: $('#hidden_album_num').val(),
