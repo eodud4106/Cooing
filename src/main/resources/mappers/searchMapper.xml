@@ -40,7 +40,7 @@
 				WHERE TAG_CONTENT LIKE '%'||#{SEARCH}||'%'
 				GROUP BY TAG_ALBUMNUM
 			)
-		ORDER BY ALBUM_NUM asc
+		ORDER BY ALBUM_NUM DESC
 	</select>
 	
 	<insert id="insertSearch" parameterType="search">

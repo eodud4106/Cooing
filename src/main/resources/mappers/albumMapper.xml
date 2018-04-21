@@ -93,7 +93,7 @@
 	<select id="searchCategory" parameterType="int" resultType="albumwrite">
 		select * from albumlist 
 			where album_category=#{album_category}
-			order by album_num asc
+			order by album_num desc
 	</select>
 	
 	<select id="searchAlbumNum" parameterType="int" resultType="albumwrite">

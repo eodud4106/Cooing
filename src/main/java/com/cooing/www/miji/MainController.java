@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.dy.vo.PageHtmlVO;
+import com.cooing.www.jinsu.dao.MemberDAO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.Member;
 import com.cooing.www.jinsu.object.PageLimit;
@@ -32,6 +33,8 @@ public class MainController {
 	RelationDAO relationDAO;
 	@Autowired
 	AlbumDAO albumDAO;
+	@Autowired
+	MemberDAO memberDAO;
 
 
 	/**
@@ -69,8 +72,18 @@ public class MainController {
 	
 	//친구페이지
 	@RequestMapping(value = "/friendPage", method = RequestMethod.GET)
-	public String friendPage(){
-			
+	public String friendPage(String id , Model model , HttpSession session){
+		logger.info("friend_get__jinsu");
+		Member personally = (Member)session.getAttribute("Member");
+		Member friend= memberDAO.selectMember(id);
+		model.addAttribute("friend", friend);
+		ArrayList<String> arrfriend = relationDAO.selectFriend(personally.getMember_id());
+		for(String s:arrfriend){
+			if(s.equals(friend.getMember_id())){
+				model.addAttribute("check" , true);
+				break;
+			}
+		}
 		return "friendPage";
 	}
 	

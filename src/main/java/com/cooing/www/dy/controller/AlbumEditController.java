@@ -193,6 +193,10 @@ public class AlbumEditController {
 	public String page1ImageSave(HttpServletRequest request) throws Exception{
 		logger.info("page1 Image Save _ ljs");
 		String binaryData = request.getParameter("imgSrc");
+		File fpath = new File(strThumbnailPath);
+	    if(!fpath.isDirectory()){
+			fpath.mkdirs();			
+		}	
         FileOutputStream stream = null;
         String newFileName = "" + new Date().getTime();
         try{

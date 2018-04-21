@@ -262,8 +262,6 @@ img{
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="<c:url value="/resources/js/home.js"/>"></script>
 <script src="resources/js/chat.js"></script>
-
-<script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>" ></script>
 <script src="<c:url value="/resources/js/friend.js"/>" ></script>
 <script>
 $(document).ready(function () {
