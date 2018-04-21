@@ -1,5 +1,7 @@
 package com.cooing.www.joon.dao;
 
+import java.util.ArrayList;
+
 import com.cooing.www.joon.vo.AlbumLikesVO;
 
 public interface AlbumLikesMapper {
@@ -7,5 +9,11 @@ public interface AlbumLikesMapper {
 	public void addLikes(AlbumLikesVO vo);
 	// 좋아요 취소
 	public void deleteLikes(AlbumLikesVO vo);
+	// 앨범 하나 가져옴
+	public AlbumLikesVO getAlbum(int likeit_albumnum);
+	// 좋아요 목록
+	public ArrayList<AlbumLikesVO> listLikes(int likeit_albumnum);
+	
+	public String confirm_Likes(AlbumLikesVO vo);
 
 }

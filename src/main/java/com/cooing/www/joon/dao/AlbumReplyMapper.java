@@ -12,5 +12,7 @@ public interface AlbumReplyMapper {
 	// 댓글 삭제
 	public void replyDelete(AlbumReplyVO vo);
 	// 댓글 목록
-	public ArrayList<AlbumReplyVO> selectReply();
+	public ArrayList<AlbumReplyVO> listReply(int reply_albumnum);
+	// 댓글 하나 가져옴
+	public AlbumReplyVO getReply(int reply_num);
 }

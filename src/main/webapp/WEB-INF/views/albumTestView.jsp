@@ -218,6 +218,9 @@ function fileSubmit() {
 $(document).ready(function () {
 	$('#picture_add').draggable({ revert: 'valid' });
 	
+	//좋아요 체크하는 코드
+	function check_likes();
+	
 	//다른 쪽 드롭되도 돌아 올 수 있게 하는 코드
 	$('*').droppable({
 		accept: '#picture_add',
@@ -360,13 +363,13 @@ function checkRadioButton(iCheck)
 	// 좋아요
 	function likes(){
 		
-		var num = 1;
+		var albumnum = 1;
 		
 		$.ajax({
 			url:'likes',
 			type: 'POST',		
 			data: {
-				"likeit_albumnum": num
+				"likeit_albumnum": albumnum
 			},
 			dataType: 'text',
 			success: function(a){
@@ -375,7 +378,7 @@ function checkRadioButton(iCheck)
 					
 				}
 				else{
-					alert(a);
+					alert("좋아요 실패!");
 				}
 			},
 			error:function(e){
@@ -386,13 +389,13 @@ function checkRadioButton(iCheck)
 	// 좋아요 취소
 	function deletelikes(){
 
-		var num = 1;
+		var albumnum = 1;
 		
 		$.ajax({
 			url:'deleteLikes',
 			type: 'POST',		
 			data: {
-				"likeit_albumnum": num
+				"likeit_albumnum": albumnum
 			},
 			dataType: 'text',
 			success: function(a){
@@ -401,8 +404,28 @@ function checkRadioButton(iCheck)
 					
 				}
 				else{
-					alert(a);
+					alert("좋아요 취소 실패");
 				}
+			},
+			error:function(e){
+				alert(JSON.stringify(e));
+			}		
+		});
+	}
+	
+	function check_likes() {
+		
+		var albumnum = 1;
+		
+		$.ajax({
+			url:'check_likes',
+			type: 'GET',		
+			data: {
+				"likeit_albumnum": albumnum
+			},
+			dataType: 'text',
+			success: function(a){
+				alert(a);
 			},
 			error:function(e){
 				alert(JSON.stringify(e));
@@ -418,9 +441,6 @@ function checkRadioButton(iCheck)
 
 </head>
 <body>
-
-
-
  <aside class="probootstrap-aside js-probootstrap-aside">
       <a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none"><span class="oi oi-arrow-left"></span> Close</a>
       <div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
@@ -443,10 +463,15 @@ function checkRadioButton(iCheck)
 				<p>그룹1</p>
 				<p>그룹2</p>		
 				<p>그룹3</p>		
-				<p><button type="button" onclick="likes()">좋아요!</button></p>		
-				<p><button type="button" onclick="deletelikes()">좋아요 취소!</button></p> 		
+				
+				 <c:if test = "${check_id != Member.member_id}"> 
+				<p><button type="button" onclick="likes()">좋아요!</button></p>
+						 	</c:if> 
+				 <c:if test = "${check_id == Member.member_id}"> 
+				<p><button type="button" onclick="deletelikes()">좋아요 취소!</button></p> 	
+				</c:if> 
 				<p><button type="button" onClick="javascript:replyWin();">댓글</button></p> 
-
+				
         <footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft">
          
           <p>&copy; 2018 <a href="https://uicookies.com/" target="_blank">COOING</a>. <br> All Rights Reserved.</p>

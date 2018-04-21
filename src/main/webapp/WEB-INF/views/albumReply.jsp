@@ -7,28 +7,32 @@
 <title>albumReply</title>
 <script type="text/javascript" src="./resources/js/jquery-3.3.1.min.js"></script>
 <script>
+$( document ).ready(function() {
+	replyList();
+});
 // 댓글 쓰기
 function writereply(){
 
-	var str = $('#reply').val();
-	var num = 1;
+	var conents = $('#contents').val();
+	var albumnum = 1;
 	
 	$.ajax({
 		url:'writeReply',
 		type: 'POST',		
 		data: {
-			"reply_albumnum": num,
-			"reply_contents": str 
+			"reply_albumnum": albumnum,
+			"reply_contents": conents 
 			
 		},
 		dataType: 'text',
 		success: function(a){
 			
 			if(a == 'success'){
-				alert("댓글 등록");
+				// alert("댓글 등록");	
+				replyList();		
 			}
 			else{
-				alert(a);
+				alert('실패');
 			}
 		},
 		error:function(e){
@@ -36,10 +40,52 @@ function writereply(){
 		}		
 	});
 }
-// 댓글 삭제
-function deletereply(){
+//댓글 목록
+function replyList(){
+	
+	var albumnum = 1;
+	
+	$.ajax({
+		url:'listReply',
+		type: 'get',		
+		data: {
+			"reply_albumnum": albumnum		
+		},
+		dataType: 'json',
+		success: function(list){
+			viewResult(list);
+		},
+		error:function(e){
+			alert(JSON.stringify(e));
+		}		
+	});
+}
+// 댓글 목록
+function viewResult(list){
+	
+	var str = '';
+	
+	str += '<table>';
+	$(list).each(function(i, vo){
+		str += '<tr>';
+		str += '<td>';
+		str += ' ' + vo.reply_memberid;
+		str += ' ' + vo.reply_contents;
+		str += ' ' + vo.reply_date;
+		if (vo.reply_memberid == '${Member.member_id}') {
+		str += ' ' + "<input type='button' value='삭제' onclick='deletereply("+vo.reply_num+")'>";
+		}
+		str += '</td>';
+		str += '</tr>';
+	});
+	str += '</table>';
+	$("#resultDiv").html(str);
+}
 
-	var num = 1;
+// 댓글 삭제
+function deletereply(replynum){
+
+	// alert(replynum);
 	
 	if(confirm("댓글을 삭제 하시겠습니까?")){
 		 	
@@ -47,16 +93,16 @@ function deletereply(){
 			url:'deleteReply',
 			type: 'POST',		
 			data: {
-				"reply_albumnum": num
+				"reply_num": replynum
 			},
 			dataType: 'text',
 			success: function(a){
-				
 				if(a == 'success'){
-					alert("댓글 삭제");	
+					// alert("댓글 삭제");	
+					replyList();
 				}
 				else{
-					alert(a);
+					alert("본인 글이 아닙니다.");
 				}
 			},
 			error:function(e){
@@ -69,36 +115,14 @@ function deletereply(){
 <body>
 <form>
 내용
-&nbsp;<input type="text" id="reply" name="reply" size="70">
+&nbsp;<input type="text" id="contents" name="contents" size="70">
 &nbsp;<button type="button" onclick="writereply()">저장</button>
+<input type="hidden" name="reply_albumnum" value="11">
 </form>
-<form>
-<c:forEach var="reply" items="${list}">
-<table>
-	<tr>
-		<td><input type="hidden" value="${reply.reply_num }"></td>
-	</tr>
-	<tr>
-		<td> 작성자 </td>
-		<td>${reply.reply_memberid}</td>
-	</tr>
-	<tr>
-		<td> 작성일 </td>
-		<td>${reply.reply_date}</td>
-	</tr>
-	<tr>
-		<td> 내용 </td>
-		<td>${reply.reply_contents}</td>
-	</tr>
-		<td>
-<button type="button" onClick="deletereply()">삭제</button>
-		</td>
-	</tr>
-</table>
 
-=====================================
-</c:forEach>
-</form>
+<div id="resultDiv">
+
+</div>
 
 </body>
 </html>

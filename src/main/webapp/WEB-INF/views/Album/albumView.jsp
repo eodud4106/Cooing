@@ -137,6 +137,10 @@ html, body, main, .container-fluid {
 .outer {
 	background-color: #aaa;
 }
+.div_reply, .div_reply form, .div_reply form input,
+#resultDiv, #resultDiv table {
+	position: relative;
+}
 </style>
 
 <script>
@@ -146,7 +150,8 @@ html, body, main, .container-fluid {
 
 	//라디오버튼
 	$(document).ready(function() {
-
+		replyList();
+		// alert(${album.album_num});	
 		$('.input').iCheck({
 			radioClass : 'iradio_square-green',
 		// increaseArea: '20%' // optional
@@ -154,9 +159,184 @@ html, body, main, .container-fluid {
 		});
 		
 		ready_album('view');
-
+	
+		/* check_likes(); */
+		
 	});
+	// 좋아요 확인
+	function check_likes() {
+		
+		var albumnum = ${album.album_num};
+		
+		$.ajax({
+			url:'check_likes',
+			type: 'GET',		
+			data: {
+				"likeit_albumnum": albumnum
+			},
+			dataType: 'text',
+			success: function(a){
+				alert(a);
+			},
+			error:function(e){
+				alert(JSON.stringify(e));
+			}		
+		});
+	}
+	// 좋아요
+	function likes() {
+		
+		var albumnum = ${album.album_num};
+				
+		$.ajax({
+			url:'likes',
+			type: 'POST',		
+			data: {
+				"likeit_albumnum": albumnum
+			},
+			dataType: 'text',
+			success: function(a){
+				if(a == 'success'){
+					alert("좋아요!");	
+							
+				}
+				else{
+					alert("좋아요 실패!");
+				}
+			},
+			error:function(e){
+				alert(JSON.stringify(e));
+			}		
+		});
+	}
+	// 좋아요 취소
+	function deletelikes(){
 
+		var albumnum = ${album.album_num};
+		
+		$.ajax({
+			url:'deleteLikes',
+			type: 'POST',		
+			data: {
+				"likeit_albumnum": albumnum
+			},
+			dataType: 'text',
+			success: function(a){
+				if(a == 'success'){
+					alert("좋아요 취소");
+					
+				}
+				else{
+					alert("좋아요 취소 실패");
+				}
+			},
+			error:function(e){
+				alert(JSON.stringify(e));
+			}		
+		});
+	}
+	
+	// 댓글 쓰기
+	function writereply(){
+
+		var conents = $('#contents').val();
+		var albumnum = ${album.album_num};
+		
+		$.ajax({
+			url:'writeReply',
+			type: 'POST',		
+			data: {
+				"reply_albumnum": albumnum,
+				"reply_contents": conents 
+				
+			},
+			dataType: 'text',
+			success: function(a){
+				
+				if(a == 'success'){
+					// alert("댓글 등록");	
+					replyList();		
+				}
+				else{
+					alert('실패');
+				}
+			},
+			error:function(e){
+				alert(JSON.stringify(e));
+			}		
+		});
+	}
+	//댓글 목록
+	function replyList(){
+		
+		var albumnum = ${album.album_num};
+		
+		$.ajax({
+			url:'listReply',
+			type: 'get',		
+			data: {
+				"reply_albumnum": albumnum		
+			},
+			dataType: 'json',
+			success: function(list){
+				viewResult(list);
+			},
+			error:function(e){
+				alert(JSON.stringify(e));
+			}		
+		});
+	}
+	// 댓글 목록
+	function viewResult(list){
+		
+		var str = '';
+		
+		str += '<table>';
+		$(list).each(function(i, vo){
+			str += '<tr>';
+			str += '<td>';
+			str += ' ' + vo.reply_memberid;
+			str += ' ' + vo.reply_contents;
+			/* str += ' ' + vo.reply_date; */
+			if (vo.reply_memberid == '${Member.member_id}') {
+			str += ' ' + "<input type='button' value='삭제' onclick='deletereply("+vo.reply_num+")'>";
+			}
+			str += '</td>';
+			str += '</tr>';
+		});
+		str += '</table>';
+		$("#resultDiv").html(str);
+	}
+
+	// 댓글 삭제
+	function deletereply(replynum){
+
+		// alert(replynum);
+		
+		if(confirm("댓글을 삭제 하시겠습니까?")){
+			 	
+			$.ajax({
+				url:'deleteReply',
+				type: 'POST',		
+				data: {
+					"reply_num": replynum
+				},
+				dataType: 'text',
+				success: function(a){
+					if(a == 'success'){
+						// alert("댓글 삭제");	
+						replyList();
+					}
+					else{
+						alert("본인 글이 아닙니다.");
+					}
+				},
+				error:function(e){
+					alert(JSON.stringify(e));
+				}		
+			});
+		} 
+	}
 	function checkRadioButton(iCheck){   
 	   
 	   var temp;
@@ -247,6 +427,26 @@ html, body, main, .container-fluid {
 				<form id="testimg">
 					<input type="hidden" name="imgSrc" id="imgSrc" />
 				</form>	
+				<c:if test = "${check_isLike != Member.member_id}"> 
+				<p><button type="button" onclick="likes()">좋아요!</button></p>
+				</c:if> 
+				<c:if test = "${check_isLike == Member.member_id}"> 
+				<p><button type="button" onclick="deletelikes()">좋아요 취소!</button></p> 	
+				</c:if> 
+				<!-- 하단 바 영역 -->
+				<div class="div_reply">
+				<form>
+				내용
+				<input type="text" id="contents" class ="reply">
+				<button type="button" onclick="writereply()">저장</button>
+				<input type="hidden" name="reply_albumnum">
+				</form>
+				<div id="resultDiv">
+				
+				</div>
+				</div>
+				
+				
     	</section>
     	</div>			
 
@@ -287,7 +487,7 @@ html, body, main, .container-fluid {
 					</div>
 				</div>
 				
-				<!-- 하단 바 영역 -->
+
 				<div class="under_bar">
 					<div id="slider-bar" class="turnjs-slider">
 						<div id="slider"></div>
