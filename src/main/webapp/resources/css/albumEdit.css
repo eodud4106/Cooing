@@ -85,7 +85,7 @@ svg, path {
     padding: 5px;
     font-size: medium;
     display: block;
-    opacity: 1;
+    opacity: 1 !important;
     vertical-align: middle;
     min-width: 30px;
 }
