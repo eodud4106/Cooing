@@ -1,232 +1,157 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	     pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <html>
 <head>
 <title>AlbumEdit</title>
 <meta charset="utf-8" />
-<meta name="viewport" content="width = 1050, user-scalable = no" />
-	<script type="text/javascript" src="../resources/album_page_js/extras/jquery.min.1.7.js"></script>
-	<script type="text/javascript" src="../resources/album_page_js/extras/modernizr.2.5.3.min.js"></script>
-	<script type="text/javascript" src="../resources/album_page_js/basic.js"></script>		
-	
-	<script src="../resources/album_drag_and_drop_js/jquery-ui.js"></script>
- 	<!-- <script src="../resources/js/jquery-3.3.1.min.js"></script>	 -->
-	
-	<link rel="stylesheet" href="../resources/album_drag_and_drop_js/jquery-ui.css">		
-	<link rel="stylesheet" href="../resources/album_css/album_edit_basic.css">
-	<link rel="stylesheet" href="../resources/album_css/album_edit_drag_and_drop.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<script>
-var count = 0;
+<!-- 기본 js -->
+<script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 
-var picture_coordinate = new Array(); //좌표 담는 배열
+<script src="../resources/aside_js/popper.min.js"></script>
+<script src="../resources/aside_js/owl.carousel.min.js"></script>
+<script src="../resources/aside_js/jquery.waypoints.min.js"></script>
+<script src="../resources/aside_js/imagesloaded.pkgd.min.js"></script>
+<script src="../resources/aside_js/main.js"></script>
 
-function getCoordinate() {
-	
-	picture_coordinate.length = 0;
-	var temp_count = 1;
-		
-	for(var i=1; i<=count; i++) {
-			
-		var holder = $('#holder'+temp_count);
-		var current_page = $('#flipbook').turn('pages');
-		alert(current_page);
-		
-		if(holder != null) {
-			//기본위치
-			var holder_top = $('#holder'+temp_count).position().top;
-			var holder_left = $('#holder'+temp_count).position().left;
-			//크기
-			var holder_width = $('#holder'+temp_count).width();
-			var holder_height = $('#holder'+temp_count).height();
-			
-			picture_coordinate.push('p'+ current_page + 'd'+ temp_count + 't' + Math.floor(holder_top) + 'l' + Math.floor(holder_left) + 'w' + Math.floor(holder_width) + 'h' + Math.floor(holder_height));
-		}
-		
-		temp_count++;
-		
-	}
-	
-	alert(picture_coordinate);
-	
+<script src="../resources/skin_radio/icheck.js"></script>
+
+<!-- 페이지 넘김 효과를 위한 js -->
+<script type="text/javascript" src="../resources/js/turn.js"></script>
+
+<!-- albumEdit 용 js -->
+<script type="text/javascript" src="../resources/js/albumEdit.js"></script>
+
+<!-- 기본 css -->
+<link rel="stylesheet" href="../resources/css/albumEdit.css">
+<link rel="stylesheet" href="../resources/css/jquery-ui.min.css">
+
+<!-- 기타 css -->
+<link rel="stylesheet" href="../resources/album_css/album_edit_basic.css">
+<link rel="stylesheet" href="../resources/album_css/album_edit_drag_and_drop.css">
+
+<link rel="stylesheet" href="../resources/aside_css/bootstrap.min.css">
+<link rel="stylesheet" href="../resources/aside_css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="../resources/aside_css/owl.carousel.min.css">
+<link rel="stylesheet" href="../resources/aside_css/owl.theme.default.min.css">
+<link rel="stylesheet" href="../resources/aside_css/icomoon.css">
+<link rel="stylesheet" href="../resources/aside_css/animate.css">
+<link rel="stylesheet" href="../resources/aside_css/style.css">
+
+<link rel="stylesheet" href="../resources/skin_radio/green.css">
+
+<style type="text/css">
+html, body, main, .container-fluid {
+	height: 100%;
+}
+.container-fluid {
+	padding: 0;
 }
 
-function pagePlus(){
-	for(var i = 0; i < 2; i++){
-		var element = $('<div />');
-		element.attr('class' , 'pages');
-		element.attr('id' , 'page' + ($('#flipbook').turn('pages')+1));
-		alert(element.attr('id'));
-		$('#flipbook')
-				.turn('addPage',element , $('#flipbook').turn('pages')+1)
-			    .turn('pages', $('#flipbook').turn('pages'));
-		$('#page'+$('#flipbook').turn('pages')).droppable({
-			accept: "#picture_add",
-			drop: function(event, ui) {
-				var div_holder = document.createElement('div');
-				count ++;
-				var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross'+$('#flipbook').turn('pages')+'" name="cross'+count+'" onchange="readURL(this)"> </label>';
-				
-				
-				$(div_holder).addClass('holder').html(html);
-				$(div_holder).css('position', 'absolute');
-				
-				$(div_holder).draggable( { containment: 'parent'/* '.page-wrapper' */, scroll: false });
-				$(div_holder).resizable();
-				
-				$(this).append(div_holder);
-				
-				$('.close_border').on('click', function() {
-					$(this).parent().remove();
-				});
-			}
-		});
-	}
+.view_wrapper {
+	margin: 0;
+	margin-left: 250px;
+	display: flex;
+	flex-wrap: wrap;
 }
-
-function fileSubmit() {		
-		var formData = new FormData();
-		var number  = ($('#flipbook').turn('page') == 1 ? $('#flipbook').turn('page') : $('#flipbook').turn('page')+1);
-		for(var i = 0,num=0; i < $('input[class="cross'+number+'"]').size(); i++){
-			if($('input[class="cross'+number+'"]')[i].files[0]){
-				formData.append('file'+num , $('input[class="cross'+number+'"]')[i].files[0]);
-				num++;
-			}
-		}
-		$.ajax({
-			url:'albumPageSave',
-			processData: false,
-			contentType: false,
-			type:'POST',		
-			data:formData,
-			dataType:'text',
-			success: function(a){
-				if(a=='success'){
-					pagePlus();
-					$('#flipbook').turn('next');
-				}else{
-					alert(a);
-				}
-			},
-			error:function(e){alert('파일 업로드 실패');}		
-		});
-		
-		getCoordinate(); //좌표값 구하는 함수
-		
-		jQuery.ajaxSettings.traditional = true;
-		
-		$.ajax({
-			url:'coordinate', 
-			type: 'POST',
-			data: {array : picture_coordinate},
-			dataType: 'text',		
-			success: function(a) {
-				if(a=='success'){
-					alert('success');
-				}else{
-					alert(a);
-				}
-			}, 
-			error: function(e) { 
-				alert(JSON.stringify(e));
-			}
-		});
+.album_wrapper, .top_bar {
+	margin: auto !important;
+	display: block;
 }
-
-$(function() {
-	$( '#picture_add' ).draggable({ revert: 'valid' });
-	
-	$('*').droppable({ //다른 쪽 드롭되도 돌아 올 수 있게 하는 코드
-		accept: '#picture_add',
-		drop: function(event, ui) {
-		}
-	});
-	
-	$('#page1').droppable({
-		accept: '#picture_add',
-		drop: function(event, ui) {
-			var div_holder = document.createElement('div');
-			count ++;
-			var html = '<a class="close_border"></a> <label for="cross'+count+'"> <input type="file" id="cross'+count+'" class="cross1" name="cross'+count+'" onchange="readURL(this)"> </label>';
-			
-			$(div_holder).addClass('holder').html(html);
-			$(div_holder).css('position', 'absolute');
-			
-			$(div_holder).draggable( { containment: 'parent'/* '.page-wrapper' */, scroll: false });
-			$(div_holder).attr('id', 'holder'+count);
-			$(div_holder).resizable();
-			
-			$(this).append(div_holder);
-			
-			$('.close_border').on('click', function() {
-				$(this).parent().remove();
-			});
-		}
-	});
-});
-
-function readURL(input) {
-	
-	var target = $(input).parent().parent(); //사진 테두리 div
-	
-	if (input.files && input.files[0]) {
-		$(target).children().hide();
-		
-		var reader = new FileReader();
-		 
-		reader.onload = function (e) {
-			$(target).append('<a class="close_picture">');
-			$(target).css('background-image', "url(" + e.target.result + ")");
-			
-			
-			$('.close_picture').on('click', function() {
-	         	$(this).parent().css('background-image', 'url("")');	         	
-	         	$(this).parent().children().show();	
-	         	$(this).remove();
-			});
-			
-        }
-
-	reader.readAsDataURL(input.files[0]);
-    }
+.checkbox {
+	font-size: 20px;
 }
-
-//앨범 배경 커스텀마이징
- function bgchange(num) {
-		
-		var bg = num;
-		//alert(bg);
-		
-		if(bg == 0) {
-			//alert(bg);
-			$('.pages').css("background-image","url(..//resources//image_mj//season.jpg)");
-		}
-		
-		if(bg == 1) {
-			//alert(bg);
-			$('.pages').css("background-color","pink");
-		}
-		
-		if(bg == 2) {
-			//alert(bg);
-			$('.pages').css("background-image","url(..//resources//image_mj//vintage.jpg)");
-		}
-	}
-</script>
+.page {
+	background-color: #eee;
+}
+.outer {
+	background-color: #aaa;
+}
+</style>
 
 </head>
 <body>
 
+	<!-- 사이드 바 -->
+	<aside class="probootstrap-aside js-probootstrap-aside">
+		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
+			<span class="oi oi-arrow-left"></span> Close
+		</a>
+		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
+			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
+			<p class="mb-0"> 친구목록출력, 채팅기능
+				<a href="https://uicookies.com/" target="_blank">uiCookies</a>
+			</p>
+		</div>
+		<div class="probootstrap-overflow">
+		<div class="main">
+		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
+		<label for="tab1">앨범생성</label>
 
-<div id="friend_container">
-</div>
-   
-<!--   앨범제목, 앨범내용, 태그, 댓글, 좋아요, 채팅 -->
-<div id="sidebar">	
-	<div>	 
+  		<input class = "input1" id="tab2" type="radio" name="tabs">
+    	<label for="tab2">채팅</label>   
+
+    	<section id="content1"> 
+    	<!-- 페이지 저장 -->		
+		<form method="POST" action="personal_AlbumTotalCreate" id="albumlist_form">
+			<div id="entry">
+				<h5 style="color: black;">앨범명</h5><input type="text" id="album_name" name="album_name">
+				<h5 style="color: black;">앨범 내용</h5>
+				<input type="text" id="album_contents" style = "height: 100px;" name="album_contents">
+				<h5 style="color: black;">앨범 카테고리</h5>
+				<select name="album_category">		
+					<option value="0">여행</option>
+				    <option value="1">스포츠/래저</option>
+				    <option value="2">동물</option>
+				    <option value="3">음악</option>
+				    <option value="4">요리/음식</option>
+				    <option value="5">패션/뷰티</option>
+				    <option value="6">연예/TV</option>
+				    <option value="7">게임</option>
+				    <option value="8">영화</option>
+				    <option value="9">도서</option>
+				    <option value="10">공연/전시</option>
+				    <option value="11">외국어</option>
+				    <option value="12">전문지식</option>
+				    <option value="13">수집/제작</option>
+				    <option value="14">자기계발</option>
+				    <option value="15">육아</option>
+				    <option value="16">일상생활</option>
+				    <option value="17">자동차</option>
+				    <option value="18">낚시</option>
+				    <option value="19">건강</option>
+				    <option value="20" selected="selected">기타</option>
+				</select>
+				<h5 style="color: black;">앨범 공개범위</h5>
+				<select name="album_openrange">		
+					<option value="1" selected="selected">나만 보기</option>
+				    <option value="2">전체 공개</option>
+				    <option value="3">더 추가해서 ㄱㄱ</option>
+				</select>
+				
+				<br><br><br>
+				<!-- <input type="text" id="hashtagtx" placeholder="해쉬태그"><input type="button" id="hashtagbt" value="추가">--> 
+				<div id="hashtagvw"></div>
+				<input type="button" id="hashtagbt" value="추가">
+				<br><br>
+				<input type="hidden" name="album_party" value="1">
+				<input type="hidden" name="album_version" value="1">
+				<!-- <input type="hidden" id="hashtag" name="hashtag"> -->
+				<!-- <input type="submit" onsubmit="formCheck()"> -->
+			</div>
+			
+		</form>
+		    
+       
+    	</section>
+
+   		<section id="content2">
        		<form id ="" method="" action="">
 			<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search">
 			<button class = "bt">s</button>
@@ -238,125 +163,73 @@ function readURL(input) {
 				<p>친구4</p>
 		
 				<p>그룹1</p>
-				<p>그룹2</p>						 		
-    	
-	</div>			
-</div>     
+				<p>그룹2</p>		
+    	</section>
+    	</div>			
 
-<div id="edit_bar" style="z-index:100; width: 50%;">
-	<div id="picture_add" style="background-image: url(../resources/image_mj/photo.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div>
-	<div id="text_add" style="background-image: url(../resources/image_mj/text.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div>
-	<div id="video_add" style="background-image: url(../resources/image_mj/Video-5-icon.png); width : 50px; height: 50px; z-index:99; float:left; width: 10%;"></div>
-	
-	<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="+" id="page_plus" name=""></div>
-</div>
-<div style="width : 50px; height: 50px; z-index:99; float:left; width: 10%;"><input type="button" value="저장" onClick="fileSubmit();"></div>
+			<footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft">
 
-<!-- 배경변경버튼 -->
-	<button onclick = "bgchange(0)">SAKURA</button>
-	<button onclick = "bgchange(1)">PINK</button>
-	<button onclick = "bgchange(2)">VINTAGAE</button> 
-	
-<div id="contents">
-	<div class="flipbook-viewport">
-		<div class="container">
-			<div class="flipbook" id="flipbook">
-				<div class="page1" id="page1">
-				 	 <input type="file" name="img1" accept="image/*" id="img1"> 
-				 </div>
-			</div>
+				<p>
+					&copy; 2018 <a href="https://uicookies.com/" target="_blank">COOING</a>
+					<br> All Rights Reserved.
+				</p>
+			</footer>
 		</div>
-	</div>
-</div>
+	</aside>
 
-<!-- 메인표지업로드 -->
- <script type="text/javascript">
- var file1 = document.querySelector('#img1');
-	file1.onchange = function () {
-	    var fileList = file1.files ;
-	    var reader = new FileReader();
-	    reader.readAsDataURL(fileList [0]);
-	    reader.onload = function  () {
-	        document.querySelector('#preview1').src = reader.result ;
-	    };
-	};	
-</script>
+	<!-- 메인 -->
+	<main role="main" class="probootstrap-main2 js-probootstrap-main">
+		<div class="probootstrap-bar">
+	
+			<a href="#" class="probootstrap-toggle js-probootstrap-toggle">
+				<span class="oi oi-menu"></span>
+			</a>
+			<div class="probootstrap-main-site-logo">
+				<a href="index.html">COOING</a>
+			</div>
+	
+		</div>
+	
+		<div class="container-fluid">
+			<div class="view_wrapper">
+	
+				<div class="col-xl-8 col-lg-12 top_bar">
+					<!-- 텍스트, 이미지 삽입 버튼 -->
+					<div class="tool text"><i class="fas fa-align-justify"></i></div>
+                	<div class="tool image"><i class="far fa-image"></i></div>
+                	
+					<!-- 배경변경버튼 -->
+					<form name="form" style = "float:right;">
+						<input type="radio" name="iCheck" class = "input"value="1" >Sakura
+						<input type="radio" name="iCheck" class = "input"value="2" >Pink
+						<input type="radio" name="iCheck" class = "input"value="3" checked>Vintage
+						<div style= "z-index:99; float:right; " onClick="checkRadioButton('iCheck')"><i class="far fa-check-circle"></i></div>
+					</form>
+	
+				</div>
+				
+				<!-- 앨범 영역 -->
+				<div class="album_wrapper" id="album_wrapper">
+					<div class="album" id="album"></div>
+				</div>
 
-<script>
+				<!-- 하단 바 영역 -->
+				<div class="under_bar">
+					<button>이전</button>
+					<button onclick="savePage()">저장</button>
+					<button onclick="addPage()">페이지 추가</button>
+					<button onclick="removePage()">페이지 삭제</button>
+					<button>다음</button>
+				</div>
+				
+			</div>
+			<!-- END row -->
+	
+		</div>
 
-var homePhoto = document.querySelector(".flipbook");
-
-							
-
-homePhoto.onchange = function(e) {
-
-var file = e.target.files[0];
-
-var reader = new FileReader();
-
-reader.addEventListener("load", function() {
-
-var container = e.target.parentNode;
-
-container.style.background = "url("+reader.result+") no-repeat center";container.style["background-size"] = "cover";
-
-}, false);
-
-if (file) {
-
-reader.readAsDataURL(file);
-
-}
-
-}
-
-</script> 
-			
-<script type="text/javascript">
-
-function loadApp() {
-
-	// Create the flipbook
-
-	$('.flipbook').turn({
-			// Width
-
-			width:1200,
-			
-			// Height
-
-			height:600,
-
-			// Elevation
-
-			elevation: 50,
-			
-			// Enable gradients
-
-			gradients: true,
-			
-			// Auto center this flipbook
-
-			autoCenter: true
-
-	});
-}
+	</main>
 
 
-
-// Load the HTML4 version if there's not CSS transform
-
-yepnope({
-	test : Modernizr.csstransforms,
-	yep: ['../resources/album_page_js/lib/turn.js'],
-	nope: ['../resources/album_page_js/lib/turn.html4.min.js'],
-	both: ['../resources/album_css/basic.css'],
-	complete: loadApp
-});
-
-</script>           
 
 </body>
 </html>
-
-  

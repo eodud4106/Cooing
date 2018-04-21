@@ -379,119 +379,13 @@ div {
 
 </style>
 <script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>" ></script>
+<script src="../resources/js/member_in.js"></script>
 <script>
 $(document).ready(function () {
 	initialize();
 	checkcount();
 });
-function readURL(input){ 
-	if(input.files[0]){
-		if(input.files[0].size < 3000000){
-			if ((/png|jpe?g|gif/i).test(input.files[0].name)) {
-				var reader = new FileReader();
-				reader.onload = function(e){			
-					$('#preview').attr('src' , e.target.result);
-				}
-				reader.readAsDataURL(input.files[0]);
-			}
-			else{
-				alert('png,jpg,gif만 가능합니다.');
-			}
-		}	
-		else{
-			alert('이미지의 용량은 3MB를 초과할 수 없습니다.');
-		}
-	}
-}
-function initialize(){
-	$('#idcheck').on('click' , idcheck);
-	$('#upload').on('change',function(){
-		readURL(this);
-	});
-}
 
-function idcheck(){
-	if($('#id').val().legnth == 0){
-		alert('ID를 입력해 주세요.');
-		return false;
-	}
-	
-	$.ajax({
-		url:'id_check',
-		type:'POST',		
-		data:{id:$('#id').val()},
-		dataType:'text',
-		success: function(a){
-			if(a == 'success'){
-				$('#join').on('click' , joinmember);
-				alert('사용 가능한 ID입니다.');
-			}
-			else{
-				alert('이미 사용중인 ID입니다.');
-			}		
-		},
-		error:function(e){alert(JSON.stringify(e));}		
-	});	
-}
-
-function joinmember(){
-	if(!member_check())
-		return false;
-	
-	var checkArr = new Array;
-	$('input[type="checkbox"]:checked').each(function(){
-	      checkArr.push($(this).val());
-	  });
-	
-	$.ajax({
-		url:'member_check',
-		type:'POST',		
-		data:{member_id:$('#id').val() , member_pw:$('#password').val()},
-		dataType:"text",
-		success: function(a){
-			if(a == 'success'){
-				$('#member_form').submit();
-			}
-			else{
-				alert('형식을 다시 한번 입력해 주세요.');
-			}		
-		},
-		error:function(e){alert(JSON.stringify(e));}		
-	});
-	
-}
-function checkcount(){
-	$('input[type="checkbox"]').on('click' , function(){
-		var count = 0;
-		$('input[type="checkbox"]:checked').each(function(){
-			count++;
-		});
-		if(count > 3){
-			$(this).prop('checked' , false);
-			alert('3개 이상 선택할 수 없습니다.'); 				
-		}			
-	});
-}
-function member_check(){	
-	if($('#id').val().legnth == 0){
-		alert('ID를 입력해 주세요.');
-		return false;
-	}
-	if($('#password').val().length == 0){
-		alert('비밀번호를 입력 해주세요.');
-		return false;
-	}
-	if($('#password2').val().length == 0){
-		alert('비밀번호를 입력 해주세요.');
-		return false;
-	}
-	if($('#password').val() != $('#password2').val()){
-		alert('비밀번호를 다르게 입력하셨습니다.');
-		return false;
-	}
-	
-	return true;
-}
 </script>
 </head>
 <body>

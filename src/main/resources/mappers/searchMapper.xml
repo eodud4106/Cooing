@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cooing.www.jinsu.dao.SearchMapper">
+
+	<insert id="insertHashTag" parameterType="tag">
+	insert into tag (tag_num,tag_albumnum,tag_content)
+		values (tag_seq.nextval,#{tag_albumnum},#{tag_content})
+	</insert>
+	
+	<select id="selectHashTag" resultType="tag" parameterType="String">
+		select * from tag where tag_content = #{search}
+	</select>
+	
+	<insert id="insertSearch" parameterType="search">
+	insert into search (search_num,search_word,search_date)
+		values (search_seq.nextval,#{search_word},sysdate)
+	</insert>
+	
+	<select id="selectDaySearch" resultType="Map" parameterType="String">
+		select search_word,count(search_word) as count from search 
+			where to_char(search_date,'yyyy-mm-dd') = #{date}
+			group by search_word
+	</select>
+	
+	<insert id="insertCategoryPop" parameterType="categorypop">
+	insert into category_pop (category_pop_num , category_pop_kind , category_pop_date)
+		values (category_pop_seq.nextval,#{category_pop_kind},sysdate)
+	</insert>
+	
+	<select id="selectDayCategory" resultType="Map" parameterType="String">
+		select category_pop_kind as kind,count(category_pop_kind) as count from category_pop
+			where to_char(category_pop_date,'yyyy-mm-dd') = #{date}
+			group by category_pop_kind
+	</select>
+	
+</mapper>

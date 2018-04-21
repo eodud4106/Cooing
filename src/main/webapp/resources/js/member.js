@@ -1,5 +1,5 @@
 /**
- * 회원 관련 메소드 모음
+ * 로그인 관련 메소드 모음
  */
 
 function loginmember(toRoot){

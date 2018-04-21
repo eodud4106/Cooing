@@ -41,6 +41,8 @@ body{
 	-ms-box-shadow:0 0 20px rgba(0,0,0,0.2);
 	-o-box-shadow:0 0 20px rgba(0,0,0,0.2);
 	box-shadow:0 0 20px rgba(0,0,0,0.2);
+	width : 50%;
+	height: 100%;
 }
 
 .flipbook-viewport .page img{

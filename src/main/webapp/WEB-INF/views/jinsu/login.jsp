@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="../resources/assets/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="../resources/assets/css/font-awesome.min.css">
-<link rel="stylesheet" href="../resources/style.css">
+<link rel="stylesheet" href="../resources/css/login.css">
 <link rel="stylesheet" href="../resources/assets/css/responsive.css">
 
 <!-- HTML5 shim and Respond.js IE9 support of HTML5 elements and media queries -->
@@ -50,6 +50,9 @@
 			if (evt.which == 13) {
 				loginmember('../');
 			}
+		});
+		$('#member').on('click' , function(){
+			location.href='./member_get';
 		});
 	}
 
@@ -114,6 +117,7 @@
 											<input type="button" id="join" value="로그인" class="button-login">
 											<input type="button" onclick="javascript:location.href='<c:url value="/"/>';"value="취소"
 											class="button-login">
+											<input type="button" id="member" value="회원가입" class="button-login">
 										</td>
 									</tr>
 								</table>

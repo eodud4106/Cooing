@@ -11,9 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cooing.www.dy.dao.AlbumDAO;
+import com.cooing.www.dy.vo.AlbumWriteVO;
+import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.Member;
+import com.cooing.www.jinsu.object.PageLimit;
 
 /**
  * Handles requests for the application home page.
@@ -25,15 +30,41 @@ public class MainController {
 	
 	@Autowired
 	RelationDAO relationDAO;
+	@Autowired
+	AlbumDAO albumDAO;
 
 
 	/**
-	 * 앨범뷰...?? 뭐지???
+	 * 앨범뷰... 앨범과 페이지 리스트를 갖고 albumView로 이동....
 	 */
 	@RequestMapping(value = "/albumView", method = RequestMethod.GET)
-	public String albumPage(Model model) {
+	public String albumPage(int album_num, Model model) {
 		
-		return "albumView";
+		try {
+			AlbumWriteVO album = albumDAO.searchAlbumNum(album_num);
+			if(album == null) return "redirect:/";
+			ArrayList<PageHtmlVO> arr_page = albumDAO.select_pages_by_album_num(album_num);
+			
+			model.addAttribute("album", album);
+			model.addAttribute("arr_page", arr_page);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "Album/albumView";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getMyAlbumRead", method = RequestMethod.POST)
+	public ArrayList<PageHtmlVO> getMyAlbumRead(String num) {
+		return  albumDAO.select_pages_by_album_num(Integer.parseInt(num));
+	}
+	
+	@RequestMapping(value = "/albumTestView", method = RequestMethod.GET)
+	public String albumTestPage() {
+		
+		return "albumTestView";
 	}
 	
 	//친구페이지
@@ -45,16 +76,28 @@ public class MainController {
 	
 	//마이페이지
 	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
-	public String myPage(){
-			
+	public String myPage(HttpSession session , Model model){
+		Member member = (Member)session.getAttribute("Member");
+		int totalpage = albumDAO.IDAlbumCount(member.getMember_id());
+		model.addAttribute("totalpage", (totalpage/10));		
 		return "myPage";
 	}
 	
-	//그룹페이지
-	/*@RequestMapping(value = "/groupPage", method = RequestMethod.GET)
-	public String groupPage(){
-			
-		return "groupPage";
-	}*/
+	// 책 목록 조회
+	@ResponseBody
+	@RequestMapping(value = "/getMyAlbumList", method= RequestMethod.POST)
+	public ArrayList<AlbumWriteVO> getMyAlbumList(HttpSession session , int pagenum) {
+		logger.info("myalbumlist_homecontroller_ljs");
+		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+		int totalnum = albumDAO.IDAlbumCount(album_writer);
+		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
+		return albumDAO.MyAlbumList(album_writer , pl.getStartBoard() , pl.getCountPage());
+	}
+	
+	//랭킹페이지
+	@RequestMapping(value = "/LankingPage", method = RequestMethod.GET)
+	public String LankingPage(){
+		return "LankingPage";
+	}
 	
 }

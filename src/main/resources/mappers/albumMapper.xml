@@ -4,5 +4,158 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cooing.www.dy.dao.AlbumMapper">
+	<insert id="personal_createAlbum" parameterType="albumwrite">
+		insert into ALBUMLIST (
+			ALBUM_NUM,
+			ALBUM_WRITER,
+			album_name,
+			ALBUM_OPENRANGE
+		)
+		values (
+			ALBUMLIST_SEQ.nextval,
+			#{album_writer},
+			#{album_name},
+			#{album_openrange}
+		)
+		<selectKey keyProperty="album_num" resultType="Integer" order="AFTER"> 
+			SELECT ALBUMLIST_SEQ.currval FROM dual
+		</selectKey>
+	</insert>
+	
+	<insert id="personal_insertAlbumOfPage" parameterType="page">
+		MERGE INTO page p1
+		USING
+		(
+			SELECT
+				#{album_num} as album_num
+				, #{page_num} as page_num
+			FROM
+				dual
+		) p2
+		ON ( p1.album_num = p2.album_num AND p1.page_num = p2.page_num)
+		WHEN MATCHED THEN
+			UPDATE
+			SET
+				page_html = 
+				<if test="#{page_html} != null">
+				#{page_html}
+				</if>
+				<if test="#{page_html} == null">
+				''
+				</if>
+		WHEN NOT MATCHED THEN
+			INSERT ( 
+				page_id
+				, album_num
+				, page_num
+				, page_html
+		     )
+			 VALUES (
+				page_seq.nextval
+				, #{album_num}
+				, #{page_num}
+				, 
+				<if test="#{page_html} != null">
+				#{page_html}
+				</if>
+				<if test="#{page_html} == null">
+				''
+				</if>
+			 )
+	</insert>
+	
+	<update id="personal_update_page1_Album" parameterType="albumwrite">
+		update albumlist set 
+			album_name = #{album_name},
+			album_contents = #{album_contents},
+			album_category = #{album_category},
+			album_openrange = #{album_openrange}
+		where
+			album_num = #{album_num}
+	</update>
+	
+	<update id="updateThumbnail" parameterType="map">
+		update albumlist set album_thumbnail = #{album_thumbnail}
+			where album_num = #{album_num}
+	</update>
+	
+	<select id="personal_selectAlbum_Num" parameterType="String" resultType="int">
+		select album_num from albumlist where ALBUM_IDENTIFIER = #{album_identifier}
+	</select>
+	
+	<select id="searchAlbum" parameterType="String" resultType="albumwrite">
+		select * from albumlist 
+			where album_writer like '%'||#{search}||'%'
+			or album_name like '%'||#{search}||'%'
+			or album_contents like '%'||#{search}||'%'
+	</select>
+	
+	<select id="searchCategory" parameterType="int" resultType="albumwrite">
+		select * from albumlist 
+			where album_category=#{album_category}
+	</select>
+	
+	<select id="searchAlbumNum" parameterType="int" resultType="albumwrite">
+		select * from albumlist	where album_num=#{searchnum}
+	</select>
+	
+	<select id="searchPage1" parameterType="int" resultType="page">
+		select * from page	where album_num=#{number} and page_num=1
+	</select>
+	
+	<delete id="deleteAlbum" parameterType="int">
+		delete	from albumlist where album_num=#{album_num}
+	</delete>	
+	
+	
+	<select id="TotalAlbumList" resultType="albumwrite">
+		select *  from ALBUMLIST order by Album_num desc
+	</select>
+	
+	<select id="TotalAlbumCount" resultType="int">
+		select count(*)  from albumlist
+	</select>
+	
+	<select id="SearchAlbumCount" parameterType="String" resultType="int">
+		select count(*) from albumlist 
+			where album_writer like '%'||#{search}||'%'
+			or album_name like '%'||#{search}||'%'
+			or album_contents like '%'||#{search}||'%'
+	</select>
+	
+	<select id="CategoryAlbumCount" parameterType="int">
+		select count(*)  from albumlist where album_category = #{album_category}
+	</select>
+	
+	<select id="MyAlbumList" parameterType="String" resultType="albumwrite">
+		select *
+	    from ALBUMLIST 
+	    where ALBUM_WRITER = #{ALBUM_WRITER} 
+	    order by Album_num desc
+	</select>
+	
+	<select id="IDAlbumCount" parameterType="String" resultType="int">
+		select count(*) from albumlist where album_writer = #{album_writer} order by album_num desc
+	</select>
+	
+	<!-- 앨범 넘버로 앨범 내 페이지 검색 -->
+	<select id="select_pages_by_album_num" parameterType="int" resultType="page">
+		SELECT
+			* 
+		FROM
+			page 
+		WHERE
+			album_num = #{album_num}
+		ORDER BY
+			page_num asc
+	</select>
+	
+	<!-- 앨범 넘버로 앨범 내 페이지 전체 삭제 -->
+	<delete id="delete_pages_by_album_num" parameterType="int">
+		DELETE
+			page 
+		WHERE
+			album_num = #{album_num}
+	</delete>
 	
 </mapper>

@@ -1,220 +1,332 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <title>My Page</title>
 <meta charset="utf-8" />
 
-<style>
-body {
-width:900px;
-margin:0 auto;
-}
-div {
-padding:20px;
-border:1px solid #ccc;
-}
-/* header */
-#header {
-margin:0 0 10px 0;
-padding:10px;
-width:900px;
-position: fixed;
-background-color:#FFB2F5;
-color: #F6F6F6;
-text-align: center;
+<script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
+
+ <link rel="stylesheet" href="<c:url value="/resources/css/myPage.css"/>">
+
+<link rel="stylesheet" href="<c:url value="/resources/aside_css/bootstrap.min.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/aside_css/open-iconic-bootstrap.min.css"/>">
+
+<link rel="stylesheet" href="<c:url value="/resources/aside_css/owl.carousel.min.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/aside_css/owl.theme.default.min.css"/>">
+
+<link rel="stylesheet" href="<c:url value="/resources/aside_css/icomoon.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/aside_css/animate.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/aside_css/style.css"/>">
+
+<script src="<c:url value="/resources/aside_js/popper.min.js"/>"></script>
+<script src="<c:url value="/resources/aside_js/bootstrap.min.js"/>"></script>
+<script src="<c:url value="/resources/aside_js/owl.carousel.min.js"/>"></script>
+<script src="<c:url value="/resources/aside_js/jquery.waypoints.min.js"/>"></script>
+<script src="<c:url value="/resources/aside_js/imagesloaded.pkgd.min.js"/>"></script>
+<script src="<c:url value="/resources/aside_js/main.js"/>"></script>
+<script src="<c:url value="/resources/js/search.js"/>"></script>
+
+
+<script>
+
+var pagenum = 0;
+var pagingcheck = false;
+$(window).scroll(function() {
+    if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
+    	if($('#totalpage').val() >= pagenum){
+    		getMyAlbumList(++pagenum);
+	    	pagingcheck = true;
+    	}
+    }
+});
+
+$(document).ready(function () {
+	
+	$('#friendsearchbt').on('click', function() {
+		searchfriend();
+	});
+	//초기 친구 찾을 때만 사용했었음
+	$('#friendsearch').keyup(function() {
+		searchword();
+	});
+	
+	$('#searchbt').on('click' , function(){
+		location.href = './search_other?search=' + $('#searchtx').val() + '';
+	});
+	
+	$('.category').on('click' , function(){
+		searchCategory($(this).attr('data'));
+		location.href = './category_other?categorynum=' + $(this).attr('data') + '';
+	});
+
+	getMyAlbumList(++pagenum);	
+});
+
+//앨범 리스트 Ajax로 받는 코드
+function getMyAlbumList(pagenum) {
+	$.ajax({
+		url: 'getMyAlbumList',
+		type: 'post',
+		data:{pagenum:pagenum},
+		dataType: 'json',
+		success: function(result) {
+				AlbumListPaging(true , result);
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
 }
 
-/* Content */
-#container {
-width:900px;
+/**
+ * 앨범 생성
+ */
+function create_personal_album() {
+	$.ajax({
+		url: 'albumEdit/create_personal_album',
+		type: 'post',
+		dataType: 'json',
+		success: function(result) {
+			if(result == 'user null') {
+				alert('로그인 정보 없음!');
+			} else if(result == 'fail') {
+				alert('오류 발생!!');
+			} else {
+				 //TODO 앨범 편집창으로 이동
+				 location.href="albumEdit/edit_album?album_num=" + result;
+			}
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
 }
-#content {
-float:left;
-padding:10px;
-width:520px;
-margin-left: 200px;
-margin-top:110px;	
-}
-/* Sidebar A */
-#sidebar_a {
-width: 150px;
-float: left;
-position: fixed; 				
-height: 100%; 
-margin-top:110px;		
-}
-/* Sidebar B */
-#sidebar_b {
-float:right;
-height : 100%;
-position: fixed; 	
-padding:10px;
-width:150px;
-margin-left: 750px;
-position: fixed;
-margin-top:110px;    			
-}
-
-/* Footer */
-#footer {
-clear:both;
-padding:10px;
-background-color:#CCC;
-width:778px;
-}
-
-img{
-	width : 50px;
-	height: 50px;
-}
-.img_1{
-	width : 150px;
-	height: 150px;
-}
-.img_2{
-	width : 30px;
-	height: 30px;
-}
-.search{
-	margin: auto;	
-}
-#albumList{
-	margin-top: 20px;
-}
-.search1 {
-	width: 110px;
-}
-.modal {
-    display: block;
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: none;
-	background-color: rgba(0, 0, 0, 0.7);
-}
-.close {
-    color: #aaa;
-    float: left;
-    font-size: 30px;
-    font-weight: bold;
-	position: fixed;
-	right: 16;
-	top: 0;
-	background-color: #f0f0f0;
- }
-.close:hover,
-.close:focus {
-   color: black;
-   text-decoration: none;
-   cursor: pointer;
-}
-</style>
-
+</script>
 </head>
 <body>
-	<div id="header">
-	<h1>COOING</h1>
-	</div>
 
-	<!-- 왼쪽 사이드바 -->
-	<div id="sidebar_a">
-		<p><img src = "./resources/image_mj/suji.jpg">suji</p>
-		<p>Profile</p>
-		<p></p>
-		<p></p>
-		<p>ALBUM</p>
-		<ul> 	
-		<li>앨범1</li>
-		<li>앨범2</li>						
-		</ul>
-		<p>+앨범추가		
+	<aside class="probootstrap-aside js-probootstrap-aside">
+		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
+			<span class="oi oi-arrow-left"></span> Close
+		</a>
+		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
+
+			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
+
+			<!-- 로그인되어있을 때 -->
+			<c:if test="${Member ne null}">
+				<p>
+					<img src="<c:url value="/jinsu/img" />" class="img1">${Member.getMember_id()}
+				</p>
+			</c:if>
+			<!-- 로그인 안되어있을 때 -->
+			<c:if test="${Member eq null}">
+				<p>
+					<img src="http://1.bp.blogspot.com/-t9dmAueNbW0/VQYvJX7kVrI/AAAAAAAAGYY/Ou05G2Vi2kw/s1600/1%2B(3).jpg">ID
+				</p>
+			</c:if>
+
+		</div>
+		<div class="probootstrap-overflow">
+			<nav class="probootstrap-nav">
+				<p>MYPAGE</p>
+				<p>오늘의 랭킹</p>
+				<p></p>
+				<p>CATEGORY</p>
+				<ul>
+
+					<li class="category" data="0">여행</li>
+					<li class="category" data="1">음식</li>
+					<li><a href="<c:url value ="/"/>">MainPage</a></li>
+					<li><a href="<c:url value ="/albumTestView"/>">albumView</a></li>
+					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
+					<li><a href="<c:url value ="/friendPage"/>">friendPage</a></li>
+					<li><a href="<c:url value ="/albumEdit/edit"/>">albumEdit</a></li>
+					<li><a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a></li>
+					<li><a href="<c:url value ="/jinsu/login_get"/>">로그인...</a></li>
+					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
+					<li><a href="javascript:create_personal_album()">앨범 만들기</a></li>
+					
+				</ul>
+			
+			</nav>
+			<br><br><br>
+
+		</div>
+
+		<form>
+			<div class="search">
+				 테스트<br /> 
+				 <input	type="button" id="myBtn" value="모달 열기">
+				<div id="myModal" class="modal">
+					<span id="myBtn_close" class="close">&times;</span>
+					<iframe src="albumView" allowTransparency='true' frameborder="0"
+						width=100% height="100%"></iframe>
+				</div>
+			</div>
+		</form>
+	</aside>
+
+
+	<main role="main" class="probootstrap-main js-probootstrap-main">
+	<div class="probootstrap-bar">
+		<a href="#" class="probootstrap-toggle js-probootstrap-toggle">
+			<span class="oi oi-menu"></span>
+		</a>
+		<div class="probootstrap-main-site-logo">
+			<a href="index.html">COOING</a>
+		</div>
+		<a href="#" class="probootstrap-toggle2 js-probootstrap-toggle2">
+			<span class="oi oi-menu"></span>
+		</a>	
+	
 	</div>	
 	
-	<!-- 앨범리스트 -->
-	<div id="content">
-	
-		<div id="albumLayout">
-		앨범 레이아웃
-		<p><button>앨범만들기</button>			
-		</div>
-					
-		<div id = "albumList">	
-		<!-- <button id="myBtn">모달 열기</button>
-
-		<div id="myModal" class="modal">
-                <span class="close">&times;</span>
-                <iframe src="albumView" allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
-        </div>
-				 -->	
-		<table>
-		<tr>	
-			<td><img src = "./resources/image_mj/suji.jpg"></td>	
-			<td>친구id</td>
-		</tr>				
-		</table>
-		<table id = "table1">
-		<tr>	
-			<td><img src = "./resources/image_mj/suji2.jpg" class = "img_1"></td>
-			<td></td>
-			<td><p>앨범제목dkfadfadkfasdkfadklsfaklsdfaklsddaf 
-				<p>앨범설명dfadafadfadfadfadfadfadfadfadfads
-				<p>해쉬태그dafdafadfadfadfadfadfadfadfad</td>													
-		</tr>
-		<tr>
-			<td><img src = "./resources/image_mj/comment.jpg" class = "img_2">20
-						    <img src = "./resources/image_mj/heart.png" class = "img_2">10</td>						
-		</tr>
-		</table>											
-		</div>			
-	</div>
-	
-	<!-- 오른쪽 사이드바 -->
-	<div id="sidebar_b">
-		<form id ="" method="" action="">
-		<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search1">
-		<button>s</button>
-		</form>		
-				
-		<div>				
-			<p>친구1</p>
-			<p>친구2</p>
-			<p>친구3</p>
-			<p>친구4</p>				
-		</div>
-		<div>
-		<p>그룹1</p>
-		<p>그룹2</p>
-		</div>
-	</div>
+		<div class ="search-bar">
+			<br>
+			<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}" style = "float : left; margin-left: 200px;">
+			<input type="button" value="검색" id="searchbt">
+			<div class = "search" style= "z-index:99; float:left; padding-left : 10px;" id="searchbt" onclick=""><i class="fas fa-search"></i></div>
 			
+			<!-- 정렬순 -->
+			<!-- <div class = "array" style= "z-index:99; float:right; padding-left : 10px;"><i class="fas fa-align-justify"></i></div>	
+			<div class = "array" style= "z-index:99; float:right; padding-left : 10px;"><i class="fas fa-align-justify"></i></div> -->
+			<select style = "float:right; padding-left : 10px;">
+			  <option selected >정렬순</option>
+			  <option>최신순</option>
+			  <option>인기순</option>
+			</select>
+			
+		</div>
+		<br>
+			
+	
+	
+	
+	<!-- 앨범 리스트 -->
+	<div class="card-columns" id="card-columns">
+	
+		<!--  -->
+		<div class="card">
+			<a href="single.html" >			
+				<img class="card-img-top probootstrap-animate" 
+				src="resources/aside_images/img_1.jpg" alt="Card image cap">
+			</a>
+			
+		</div>
+		<div class="card">
+			<a href="single.html">
+				<img class="card-img-top probootstrap-animate" 
+				src="resources/image_mj/a1.jpg" alt="Card image cap">
+				
+			</a>
+		</div>
 	</div>
-		
-	<script>
-          var modal = document.getElementById("myModal");
+	
+	
+	
+	
 
-          var btn = document.getElementById("myBtn");
+	<div class="container-fluid d-md-none">
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="list-unstyled d-flex probootstrap-aside-social">
+					<li><a href="#" class="p-2"><span class="icon-twitter"></span></a></li>
+					<li><a href="#" class="p-2"><span class="icon-instagram"></span></a></li>
+					<li><a href="#" class="p-2"><span class="icon-dribbble"></span></a></li>
+				</ul>
+				<p>
+					&copy; 2017 <a href="https://uicookies.com/" target="_blank">uiCookies:Aside</a>.
+					<br> All Rights Reserved. Designed by <a
+						href="https://uicookies.com/" target="_blank">uicookies.com</a>
+				</p>
+			</div>
+		</div>
+	</div>
 
-          var span = document.getElementsByClassName("close")[0];
+	</main>
 
-          btn.onclick = function() {
-              modal.style.display = "block";
-          }
+	<aside class="probootstrap-aside2 js-probootstrap-aside2">
+		<a href="#"
+			class="probootstrap-close-menu js-probootstrap-close-menu2 d-md-none">
+			<span class="oi oi-arrow-right"></span> Close
+		</a>
+		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
+			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING2</a>
+			<p class="mb-0">
+				Another free html5 bootstrap 4 template by
+				<a href="https://uicookies.com/" target="_blank">uiCookies</a>
+			</p>
+		</div>
+		<div class="probootstrap-overflow">
+			<div>
+				<form>
+					<input type="text" placeholder="친구검색" id="friendsearch" class="search1">
+					<input type="button" id="friendsearchbt" value="s">
+				</form>
 
-          span.onclick = function() {
-              modal.style.display = "none";
-          }
+				<c:if test="${Member ne null}">
+					<c:if test="${fn:length(friend) ne 0}">
+						<c:forEach var="arrf" items="${friend }">
+							<div name="friend">
+								<p onclick="openChat('1', '${arrf}', '')">${arrf}</p>
+							</div>
+						</c:forEach>
+					</c:if>
+				</c:if>
+			</div>
+			<div>
+				<c:if test="${Member ne null}">
+					<c:if test="${fn:length(group) ne 0}">
+						<c:forEach var="party" items="${group}">
+							<div name="group">
+								<p onclick="openGUpdate('${party.party_name}')"
+									partynum="${party.party_num}">${party.party_name}</p>
+								<input type="button" value="채팅"
+									onclick="openChat('0', '${party.party_num}', '')" />
+							</div>
+						</c:forEach>
+					</c:if>
+				</c:if>
+				<input type="button" value="그룹생성"
+					onclick="window.open('./groupcreate_get?','','width=300 height=400 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
+			</div>
+		</div>
 
-          window.onclick = function(event) {
-              if (event.target == modal) {
-                  modal.style.display = "none";
-              }
-          }
-      </script>
+	</aside>
 
+	<div id="div_chat" 
+		style="width: 500px; height: 500px; position: absolute; padding: 0px; opacity: 1; background-color: rgb(240, 240, 240); display: none;">
+		<p>
+			<button id="button_close" onclick="closePChat()">닫기</button>
+		</p>
+		<div id="data" 
+			style="height: 350px; width: 100%; overflow-y: scroll; margin: auto; display: block; padding: 0px"></div>
+
+		<div id="div_send">
+			<input type="text" id="message" autocomplete="off" />
+			<input type="button" id="sendBtn" value="전송" />
+			<input type="hidden" id="totalpage" value="${totalpage}">
+		</div>
+	</div>
+	
+	<div id="album_create_modal" class="modal">
+		<span id="createBtn_close" class="close">&times;</span>
+		<iframe id="album_create_frame" src="albumEdit/AlbumNameCreate"
+			allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
+	</div>
+
+	<script src="resources/aside_js/popper.min.js"></script>
+	<script src="resources/aside_js/bootstrap.min.js"></script>
+	<script src="resources/aside_js/owl.carousel.min.js"></script>
+	<script src="resources/aside_js/jquery.waypoints.min.js"></script>
+	<script src="resources/aside_js/imagesloaded.pkgd.min.js"></script>
+
+	<script src="resources/aside_js/main.js"></script>
 </body>
 </html>
