@@ -68,6 +68,12 @@ var PAGE_HEIGHT = 700;      // 페이지 당 높이
 
 var curr_page = 1;
 
+var arr_color = ["#FF0000", "#FF5E00", "#FFBB00", "#FFE400", "#ABF200",
+     "#1DDB16", "#00D8FF", "#0054FF", "#0100FF", "#5F00FF", "#FF00DD", 
+    "#FF007F", "#FFD9FA", "#B2CCFF", "#FFC6FF", "#D9E5FF", "#FAECC5", 
+    "#FFC19E", "#D5D5D5", "#000000", "#FFFFFF"];
+
+var arr_size = ["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"];
 
 
 
@@ -185,26 +191,7 @@ function ready_album(mode) {
 	        // 백스페이스 keyCode == 8
 	        if(e.keyCode == '8') {
 
-	            var id_index = arr_box_id.indexOf($('.onSelect').attr('id'));
-	            console.log(id_index);
-
-	            // onSelect인 박스일 경우만 삭제
-	            if($('.onSelect').remove()) {
-
-	                // 편집창 제거
-	                removeEdit();
-
-	                // arr_box_id 조정
-	                arr_box_id.splice(id_index, 1);
-
-	                // arr_box_id를 바탕으로 모든 박스의 z-index 조정
-	                for(var i = 0; i < arr_box_id.length; i++) {
-	                    $('#' + arr_box_id[i] + '').css({
-	                        "z-index": 500 + i
-	                    })
-	                }
-	                
-	            }
+	            remove_box();
 	        }
 	    })
 	} else {
@@ -388,7 +375,7 @@ function renderbox(event, ui, page) {
         "left": event.pageX - curr_page_left - 50
     }).appendTo($('#page' + page + ''));
 
-    apply_event_to_box($div_box);
+    apply_event_to_box($div_box, curr_page_top, curr_page_left);
 
 
 }
@@ -398,7 +385,7 @@ function renderbox(event, ui, page) {
  * [start] 박스에 이벤트 추가
  * @param $div_box
  */ 
-function apply_event_to_box($div_box) {
+function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
 	
     $arr_div_box.push($div_box);
 
@@ -508,95 +495,90 @@ function isTextboxHighlighted(e) {
 }
 
 // [start] 1단계 편집창 생성
-function createWholeEditor($elem) {
+function createWholeEditor($div_box) {
 
     var $arr_bt = [];
 
-    //if($elem.hasClass('imagebox')) {창
+    // 텍스트 박스 전용 버튼
+    if($div_box.hasClass('textbox')) {
+        // 글자 크기
+        $arr_bt.push($('<button />', {
+            "id": "bt_size",
+            "text": "글자크기"
+        }));
+        $arr_bt[$arr_bt.length - 1].mouseenter(function() {
+            if($('.div_fontsize').css('display') == 'none') {
+                $('.div_fontsize').css('display', 'block');
+            }   
+        });
         
-    // 사진 추가
-    $arr_bt.push($('<button />'));
-    var $i_plus = $('<i class="fas fa-plus"></i>');
-    $arr_bt[$arr_bt.length-1].append($i_plus).click(function() {
-        //TODO 이미지 추가, 편집
-    }).mouseenter(function(e) {
-        createTooltip($(this), '추가');
-    }).mouseleave(function(e) {
-        $('.tooltip').remove();
-    });
-    
-    // 사진 회전 (대영)
-    $arr_bt.push($('<button />', {
-        "id": "bt_rotate",
-        "text": "사진 회전"
-    }));
-    $arr_bt[$arr_bt.length - 1].mouseenter(function() {
-        if($('.div_picturerotate').css('display') == 'none') {
-            $('.div_picturerotate').css('display', 'block');
-        }   
-    });
-    
-    // 사진 필터 (대영)
-    $arr_bt.push($('<button />', {
-        "id": "bt_filter",
-        "text": "사진 필터"
-    }));
-    $arr_bt[$arr_bt.length - 1].mouseenter(function() {
-        if($('.div_picturefilter').css('display') == 'none') {
-            $('.div_picturefilter').css('display', 'block');
-        }   
-    });
-    
-    // 글자 크기
-    $arr_bt.push($('<button />', {
-        "id": "bt_size",
-        "text": "글자크기"
-    }));
-    $arr_bt[$arr_bt.length - 1].mouseenter(function() {
-        if($('.div_fontsize').css('display') == 'none') {
-            $('.div_fontsize').css('display', 'block');
-        }   
-    });
-    
-    // 글꼴
-    $arr_bt.push($('<button />', {
-        "id": "bt_font",
-        "text": "글꼴"
-    }));
-    $arr_bt[$arr_bt.length - 1].mouseenter(function() {
-        if($('.div_font').css('display') == 'none') {
-            $('.div_font').css('display', 'block');
-        }
-    });
-    
-    // 글자 색
-    $arr_bt.push($('<button />', {
-        "id": "bt_color",
-        "text": "글자색"
-    }));
-    $arr_bt[$arr_bt.length - 1].mouseenter(function() {
-        if($('.div_fontcolor').css('display') == 'none') {
-            $('.div_fontcolor').css('display', 'block');
-        } 
-    });
-    
-    // 배경 색
-    $arr_bt.push($('<button />', {
-        "id": "bt_Bcolor",
-        "text": "배경색"
-    }));
-    $arr_bt[$arr_bt.length - 1].mouseenter(function() {
-        if($('.div_backgroundcolor').css('display') == 'none') {
-            $('.div_backgroundcolor').css('display', 'block');
-        } 
-    });
+        // 글꼴
+        $arr_bt.push($('<button />', {
+            "id": "bt_font",
+            "text": "글꼴"
+        }));
+        $arr_bt[$arr_bt.length - 1].mouseenter(function() {
+            if($('.div_font').css('display') == 'none') {
+                $('.div_font').css('display', 'block');
+            }
+        });
+        
+        // 글자 색
+        $arr_bt.push($('<button />', {
+            "id": "bt_color",
+            "text": "글자색"
+        }));
+        
+        // 배경 색
+        $arr_bt.push($('<button />', {
+            "id": "bt_bcolor",
+            "text": "배경색"
+        }));
+    }
 
-
+    // 이미지 박스 전용 버튼
+    else if($div_box.hasClass('imagebox')) {
+        // 사진 추가
+        $arr_bt.push($('<button />'));
+        var $i_plus = $('<i class="fas fa-plus"></i>');
+        $arr_bt[$arr_bt.length-1].append($i_plus).click(function() {
+            //TODO 이미지 추가, 편집
+        }).mouseenter(function(e) {
+            createTooltip($(this), '추가');
+        }).mouseleave(function(e) {
+            $('.tooltip').remove();
+        });
+        
+        // 사진 회전 (대영)
+        $arr_bt.push($('<button />', {
+            "id": "bt_rotate",
+            "text": "회전"
+        }));
+        $arr_bt[$arr_bt.length - 1].mouseenter(function() {
+            if($('.div_picturerotate').css('display') == 'none') {
+                $('.div_picturerotate').css('display', 'block');
+            }   
+        });
+        
+        // 사진 필터 (대영)
+        $arr_bt.push($('<button />', {
+            "id": "bt_filter",
+            "text": "필터"
+        }));
+        $arr_bt[$arr_bt.length - 1].mouseenter(function() {
+            if($('.div_picturefilter').css('display') == 'none') {
+                $('.div_picturefilter').css('display', 'block');
+            }   
+        });
+    }
+        
+    
     // 삭제
     $arr_bt.push($('<button />'));
     var $i_delete = $('<i class="fas fa-times"></i>');
     $arr_bt[$arr_bt.length-1].append($i_delete).click(function() {
-        // TODO 삭제
+        remove_box();
+
     }).mouseenter(function(e) {
         createTooltip($(this), '삭제');
     }).mouseleave(function(e) {
@@ -634,9 +616,6 @@ function createWholeEditor($elem) {
     var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
 
 
-
-
-
     // onSelect가 속한 페이지 번호
     var pagenum = $('.onSelect').parent().attr('id').replace(/\D/g,'');
 
@@ -650,9 +629,6 @@ function createWholeEditor($elem) {
 
     console.log('onSelect top -> ' + $('.onSelect').position().top);
     console.log('onSelect left -> ' + $('.onSelect').position().left);
-
-
-
 
 
     // 1단계 편집창 div 생성
@@ -674,8 +650,6 @@ function createWholeEditor($elem) {
             //텍스트 부분
         	$('.div_fontsize').css('display', 'none'); 
             $('.div_font').css('display', 'none');
-            $('.div_fontcolor').css('display', 'none');
-            $('.div_backgroundcolor').css('display', 'none');
             //사진 부분(대영)
             $('.div_picturefilter').css('display', 'none');
             $('.div_picturerotate').css('display', 'none');
@@ -906,104 +880,39 @@ function createWholeEditor($elem) {
         
         // 글자 크기
         else if($arr_bt[i].attr('id') == "bt_size") {
-            var $innerDiv = $('<div />', {
-                "class": "div_fontsize"
+
+            $tmp_div.addClass('div_font_size');
+            $tmp_div.mouseenter(function(e) {
+                $('.inner_div_font_size').css("display", "block");
+            }).mouseleave(function(e) {
+                $('.inner_div_font_size').css("display", "none");
+            })
+
+            var $inner_div = $('<div />', {
+                "class": "inner_div_font_size"
+            }).css({
+                "display": "none"
             });
-            $innerDiv.css({
-                "display": "none", 
-                "z-index": "1000",
-                "width": "100px",
-                "margin-left": "-20px",
-                "text-align": "left"
-            });
-            
-            // 글자 크기    
-            var $arr_bt_size = [];
-            // 9pt
-            $arr_bt_size.push($('<button />', {
-                "class": "bt_size", 
-                "text": "9pt"
-            }));
-            $arr_bt_size[$arr_bt_size.length -1].css({
-                "font-size": "9pt"
-            }).click(function() {
-                $('.onSelect').css("font-size", "9pt");
-            });
-            // 10pt
-            $arr_bt_size.push($('<button />', {
-                "class": "bt_size", 
-                "text": "10pt"
-            }));
-            $arr_bt_size[$arr_bt_size.length -1].css({
-                "font-size": "10pt"
-            }).click(function() {
-                $('.onSelect').css("font-size", "10pt");
-            });
-            // 11pt
-            $arr_bt_size.push($('<button />', {
-                "class": "bt_size", 
-                "text": "11pt"
-            }));
-            $arr_bt_size[$arr_bt_size.length -1].css({
-                "font-size": "11pt"
-            }).click(function() {
-                $('.onSelect').css("font-size", "11pt");
-            });
-            // 12pt
-            $arr_bt_size.push($('<button />', {
-                "class": "bt_size", 
-                "text": "12pt"
-            }));
-            $arr_bt_size[$arr_bt_size.length -1].css({
-                "font-size": "12pt"
-            }).click(function() {
-                $('.onSelect').css("font-size", "12pt");
-            });
-            // 14pt
-            $arr_bt_size.push($('<button />', {
-                "class": "bt_size", 
-                "text": "14pt"
-            }));
-            $arr_bt_size[$arr_bt_size.length -1].css({
-                "font-size": "14pt"
-            }).click(function() {
-                $('.onSelect').css("font-size", "14pt");
-            });
-            // 18pt
-            $arr_bt_size.push($('<button />', {
-                "class": "bt_size", 
-                "text": "18pt"
-            }));
-            $arr_bt_size[$arr_bt_size.length -1].css({
-                "font-size": "18pt"
-            }).click(function() {
-                $('.onSelect').css("font-size", "18pt");
-            });
-            // 24pt
-            $arr_bt_size.push($('<button />', {
-                "class": "bt_size", 
-                "text": "24pt"
-            }));
-            $arr_bt_size[$arr_bt_size.length -1].css({
-                "font-size": "24pt"
-            }).click(function() {
-                $('.onSelect').css("font-size", "24pt");
-            });
-            // 36pt
-            $arr_bt_size.push($('<button />', {
-                "class": "bt_size", 
-                "text": "36pt"
-            }));
-            $arr_bt_size[$arr_bt_size.length -1].css({
-                "font-size": "36pt"
-            }).click(function() {
-                $('.onSelect').css("font-size", "36pt");
-            });       
-            for (var j = 0; j < $arr_bt_size.length; j++) {
-                $innerDiv.append($arr_bt_size[j])
+
+            for(var j = 0; j < arr_size.length; j++) {
+                var $bt = $('<button />', {
+                    "text": (j+1)
+                }).css({
+                    "font-size": arr_size[j],
+                    "background-color": "rgba(20, 20, 20, .7)",
+                    "color": "white"
+                }).click(function(e) {
+                    $('.onSelect').css({
+                        "font-size": $(this).css("font-size")
+                    })
+                })
+                $bt.appendTo($inner_div);
             }
-            $tmp_div.append($innerDiv);
+
+            $inner_div.appendTo($tmp_div);
+
         }
+
         // 글꼴
         else if($arr_bt[i].attr('id') == "bt_font") {
 
@@ -1092,416 +1001,65 @@ function createWholeEditor($elem) {
             }
             $tmp_div.append($innerDiv);
         }
+
        // 글자 색
        else if($arr_bt[i].attr('id') == "bt_color") {
-            var $innerDiv = $('<div />', {
-                "class": "div_fontcolor"
-            });
-            $innerDiv.css({
-                "display": "none", 
-                "z-index": "1000"
-            });
-         // 글자 색        
-            var $arr_bt_color = [];
-            // FF0000
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#FF0000"
-            }).click(function() {
-                $('.onSelect').css("color", "#FF0000");
-            });
-            // FF5E00
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#FF5E00"
-            }).click(function() {
-                $('.onSelect').css("color", "#FF5E00");
-            });
-            // FFBB00
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#FFBB00"
-            }).click(function() {
-                $('.onSelect').css("color", "#FFBB00");
-            });
-            // FFE400
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#FFE400"
-            }).click(function() {
-                $('.onSelect').css("color", "#FFE400");
-            });
-            // ABF200
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#ABF200"
-            }).click(function() {
-                $('.onSelect').css("color", "#ABF200");
-            });
-            // 1DDB16
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#1DDB16"
-            }).click(function() {
-                $('.onSelect').css("color", "#1DDB16");
-            });
-            // 00D8FF
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#00D8FF"
-            }).click(function() {
-                $('.onSelect').css("color", "#00D8FF");
-            });
-            // 0054FF
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#0054FF"
-            }).click(function() {
-                $('.onSelect').css("color", "#0054FF");
-            });
-            // 0100FF
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#0100FF"
-            }).click(function() {
-                $('.onSelect').css("color", "#0100FF");
-            });
-            // 5F00FF
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#5F00FF"
-            }).click(function() {
-                $('.onSelect').css("color", "#5F00FF");
-            });
-            // FF00DD
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#FF00DD"
-            }).click(function() {
-                $('.onSelect').css("color", "#FF00DD");
-            });
-            // FF007F
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#FF007F"
-            }).click(function() {
-                $('.onSelect').css("color", "#FF007F");
-            });
-            // FFD9FA
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#FFD9FA"
-            }).click(function() {
-                $('.onSelect').css("color", "#FFD9FA");
-            });
-            // B2CCFF
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#B2CCFF"
-            }).click(function() {
-                $('.onSelect').css("color", "#B2CCFF");
-            });
-            // FFC6FF
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#FFC6FF"
-            }).click(function() {
-                $('.onSelect').css("color", "#FFC6FF");
-            });
-            // D9E5FF
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#D9E5FF"
-            }).click(function() {
-                $('.onSelect').css("color", "#D9E5FF");
-            });
-            // FAECC5
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#FAECC5"
-            }).click(function() {
-                $('.onSelect').css("color", "#FAECC5");
-            });
-            // FFC19E
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#FFC19E"
-            }).click(function() {
-                $('.onSelect').css("color", "#FFC19E");
-            });
-            // D5D5D5
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#D5D5D5"
-            }).click(function() {
-                $('.onSelect').css("color", "#D5D5D5");
-            });
-            // 000000
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#000000"
-            }).click(function() {
-                $('.onSelect').css("color", "#000000");
-            });
-            // FFFFFF
-            $arr_bt_color.push($('<button />', {
-                "class": "bt_color"
-            }));
-            $arr_bt_color[$arr_bt_color.length -1].css({
-                "background-color": "#FFFFFF"
-            }).click(function() {
-                $('.onSelect').css("color", "#FFFFFF");
+            
+            $tmp_div.addClass('div_font_color');
+            $tmp_div.mouseenter(function(e) {
+                $('.inner_div_font_color').css("display", "block");
+            }).mouseleave(function(e) {
+                $('.inner_div_font_color').css("display", "none");
+            })
+
+            var $inner_div = $('<div />', {
+                "class": "inner_div_font_color"
+            }).css({
+                "display": "none"
             });
 
-            for (var j = 0; j < $arr_bt_color.length; j++) {
-                $innerDiv.append($arr_bt_color[j])
+            for(var j = 0; j < arr_color.length; j++) {
+                var $bt = $('<button />').css({
+                    "background-color": arr_color[j]
+                }).click(function(e) {
+                    $('.onSelect').css({
+                        "color": $(this).css("background-color")
+                    })
+                });
+                $bt.appendTo($inner_div);
             }
-            $tmp_div.append($innerDiv);
+
+            $inner_div.appendTo($tmp_div);
         }
+
         // 배경색
-        else if($arr_bt[i].attr('id') == "bt_Bcolor") {
-            var $innerDiv = $('<div />', {
-                "class": "div_backgroundcolor"
+        else if($arr_bt[i].attr('id') == "bt_bcolor") {
+
+            $tmp_div.addClass('div_font_bcolor');
+            $tmp_div.mouseenter(function(e) {
+                $('.inner_div_font_bcolor').css("display", "block");
+            }).mouseleave(function(e) {
+                $('.inner_div_font_bcolor').css("display", "none");
+            })
+
+            var $inner_div = $('<div />', {
+                "class": "inner_div_font_bcolor"
+            }).css({
+                "display": "none"
             });
-            $innerDiv.css({
-                "display": "none", 
-                "z-index": "1000"
-            });
-            // 배경색      
-            var $arr_bt_Bcolor = [];
-            // FF0000
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#FF0000"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#FF0000");
-            });
-            // FF5E00
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#FF5E00"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#FF5E00");
-            });
-            // FFBB00
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#FFBB00"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#FFBB00");
-            });
-            // FFE400
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#FFE400"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#FFE400");
-            });
-            // ABF200
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#ABF200"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#ABF200");
-            });
-            // 1DDB16
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#1DDB16"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#1DDB16");
-            });
-            // 00D8FF
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#00D8FF"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#00D8FF");
-            });
-            // 0054FF
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#0054FF"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#0054FF");
-            });
-            // 0100FF
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#0100FF"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#0100FF");
-            });
-            // 5F00FF
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#5F00FF"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#5F00FF");
-            });
-            // FF00DD
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#FF00DD"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#FF00DD");
-            });
-            // FF007F
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#FF007F"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#FF007F");
-            });
-            // FFD9FA
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#FFD9FA"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#FFD9FA");
-            });
-            // B2CCFF
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#B2CCFF"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#B2CCFF");
-            });
-            // FFC6FF
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#FFC6FF"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#FFC6FF");
-            });
-            // D9E5FF
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#D9E5FF"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#D9E5FF");
-            });
-            // FAECC5
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#FAECC5"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#FAECC5");
-            });
-            // FFC19E
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#FFC19E"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#FFC19E");
-            });
-            // D5D5D5
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#D5D5D5"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#D5D5D5");
-            });
-            // 000000
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#000000"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#000000");
-            });
-            // FFFFFF
-            $arr_bt_Bcolor.push($('<button />', {
-                "class": "bt_Bcolor"
-            }));
-            $arr_bt_Bcolor[$arr_bt_Bcolor.length -1].css({
-                "background-color": "#FFFFFF"
-            }).click(function() {
-                $('.onSelect').css("background-color", "#FFFFFF");
-            });
-            for (var j = 0; j < $arr_bt_Bcolor.length; j++) {
-                $innerDiv.append($arr_bt_Bcolor[j])
+
+            for(var j = 0; j < arr_color.length; j++) {
+                var $bt = $('<button />').css({
+                    "background-color": arr_color[j]
+                }).click(function(e) {
+                    $('.onSelect').css({
+                        "background-color": $(this).css("background-color")
+                    })
+                });
+                $bt.appendTo($inner_div);
             }
-            $tmp_div.append($innerDiv);
+
+            $inner_div.appendTo($tmp_div);
         }
         /**
          *  [end] div를 열어야 하는 경우
@@ -1596,17 +1154,19 @@ function createTextEditor(top, left) {
     });
 
     // 글자 색
-    $arr_bt.push($('<button />'));
+    $arr_bt.push($('<button />', {"class": "sel_font_color"}));
     var $i_font_white = $('<i class="fas fa-font"></i>');
     var $i_font_yellow = $('<i class="fas fa-font"></i>');
     $i_font_yellow.css('color', 'yellow');
-    $arr_bt[$arr_bt.length-1].append($i_font_white).append($i_font_yellow).click(function(e) {
+    $arr_bt[$arr_bt.length-1].append($i_font_white).append($i_font_yellow);
 
-        // TODO div 만들고 div 내에 색상 선택 옵션 보여주어야 함.
-
-        // 글자 색 바꾸는 예제
-        document.execCommand('foreColor', false, 'red');
+    // 글자 배경 색
+    $arr_bt.push($('<button />', {"class": "sel_font_bcolor"}));
+    var $i_font_white = $('<i class="fas fa-font"></i>').css({
+        'color': 'white',
+        'background-color': 'yellow'
     });
+    $arr_bt[$arr_bt.length-1].append($i_font_white);
 
 
     // 스크롤 보정을 위한 변수
@@ -1625,6 +1185,62 @@ function createTextEditor(top, left) {
     for(var i = 0; i < $arr_bt.length; i++) {
         var $tmp_div = $('<div />');
         $tmp_div.append($arr_bt[i]);
+
+        // 글자색 처리
+        if($arr_bt[i].hasClass('sel_font_color')) {
+            $tmp_div.addClass('div_sel_font_color');
+            $tmp_div.mouseenter(function(e) {
+                $('.inner_div_sel_font_color').css("display", "block");
+            }).mouseleave(function(e) {
+                $('.inner_div_sel_font_color').css("display", "none");
+            })
+
+            var $inner_div = $('<div />', {
+                "class": "inner_div_sel_font_color"
+            }).css({
+                "display": "none"
+            });
+
+            for(var j = 0; j < arr_color.length; j++) {
+                var $bt = $('<button />').css({
+                    "background-color": arr_color[j]
+                }).click(function(e) {
+                    document.execCommand('foreColor', false, $(this).css("background-color"));
+                });
+                $bt.appendTo($inner_div);
+            }
+
+            $inner_div.appendTo($tmp_div);
+        }
+
+        // 글자 배경색 처리
+        if($arr_bt[i].hasClass('sel_font_bcolor')) {
+            $tmp_div.addClass('div_sel_font_bcolor');
+            $tmp_div.mouseenter(function(e) {
+                $('.inner_div_sel_font_bcolor').css("display", "block");
+            }).mouseleave(function(e) {
+                $('.inner_div_sel_font_bcolor').css("display", "none");
+            })
+
+            var $inner_div = $('<div />', {
+                "class": "inner_div_sel_font_bcolor"
+            }).css({
+                "display": "none"
+            });
+
+            for(var j = 0; j < arr_color.length; j++) {
+                var $bt = $('<button />').css({
+                    "background-color": arr_color[j]
+                }).click(function(e) {
+                    document.execCommand('backColor', false, $(this).css("background-color"));
+                });
+                $bt.appendTo($inner_div);
+            }
+
+            $inner_div.appendTo($tmp_div);
+        }
+
+
         $div_selection_editor.append($tmp_div);
     }
 
@@ -1894,4 +1510,28 @@ function create_nav_bar(ui) {
 		$slider_popup.css("left", left - 20);
 	}
 	$slider_popup.appendTo('body')
+}
+
+function remove_box() {
+    var id_index = arr_box_id.indexOf($('.onSelect').attr('id'));
+
+    // onSelect인 박스일 경우만 삭제
+    if($('.onSelect').remove()) {
+
+        $('.tooltip').remove();
+
+        // 편집창 제거
+        removeEdit();
+
+        // arr_box_id 조정
+        arr_box_id.splice(id_index, 1);
+
+        // arr_box_id를 바탕으로 모든 박스의 z-index 조정
+        for(var i = 0; i < arr_box_id.length; i++) {
+            $('#' + arr_box_id[i] + '').css({
+                "z-index": 500 + i
+            })
+        }
+        
+    }
 }
