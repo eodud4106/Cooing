@@ -525,6 +525,17 @@ function createWholeEditor($elem) {
         $('.tooltip').remove();
     });
     
+    // 사진 필터
+    $arr_bt.push($('<button />', {
+        "id": "bt_filter",
+        "text": "사진 필터"
+    }));
+    $arr_bt[$arr_bt.length - 1].mouseenter(function() {
+        if($('.div_picturefilter').css('display') == 'none') {
+            $('.div_picturefilter').css('display', 'block');
+        }   
+    });
+    
     // 글자 크기
     $arr_bt.push($('<button />', {
         "id": "bt_size",
@@ -649,10 +660,13 @@ function createWholeEditor($elem) {
 
         // 항목에서 마우스 떼면 감추기
         $tmp_div.mouseleave(function() {
-            $('.div_fontsize').css('display', 'none'); 
+            //텍스트 부분
+        	$('.div_fontsize').css('display', 'none'); 
             $('.div_font').css('display', 'none');
             $('.div_fontcolor').css('display', 'none');
             $('.div_backgroundcolor').css('display', 'none');
+            //사진 부분
+            $('.div_picturefilter').css('display', 'none');
         });
 
 
@@ -660,7 +674,116 @@ function createWholeEditor($elem) {
          *  [start] div를 열어야 하는 경우
          */
         // 글자 크기
-        if($arr_bt[i].attr('id') == "bt_size") {
+        // 사진 필터
+        if($arr_bt[i].attr('id') == "bt_filter") {
+            var $innerDiv = $('<div />', {
+                "class": "div_picturefilter"
+            });
+            $innerDiv.css({
+                "display": "none", 
+                "z-index": "1000",
+                "width": "100px",
+                "margin-left": "-20px",
+                "text-align": "left"
+            });
+            
+            var $arr_bt_filter = [];
+            
+            //기본
+            $arr_bt_filter.push($('<button />', {
+                "class": "bt_filter", 
+                "text": "기본"
+            }));
+            $arr_bt_filter[$arr_bt_filter.length -1].css({
+                "font-size": "10pt"
+            }).click(function() {
+                $('.onSelect img').css("filter", "none");
+            });
+                     
+            //흑백
+            $arr_bt_filter.push($('<button />', {
+                "class": "bt_filter", 
+                "text": "흑백"
+            }));
+            $arr_bt_filter[$arr_bt_filter.length -1].css({
+                "font-size": "10pt"
+            }).click(function() {
+                $('.onSelect img').css("webkit-filter", "grayscale(100%)");
+            });
+            
+            //화사한
+            $arr_bt_filter.push($('<button />', {
+                "class": "bt_filter", 
+                "text": "화사한"
+            }));
+            $arr_bt_filter[$arr_bt_filter.length -1].css({
+                "font-size": "10pt"
+            }).click(function() {
+                $('.onSelect img').css("filter", "brightness(200%)");
+            });
+            
+            //명랑한
+            $arr_bt_filter.push($('<button />', {
+                "class": "bt_filter", 
+                "text": "명랑한"
+            }));
+            $arr_bt_filter[$arr_bt_filter.length -1].css({
+                "font-size": "10pt"
+            }).click(function() {
+                $('.onSelect img').css("filter", "contrast(200%)");
+            });
+            
+            //슈렉
+            $arr_bt_filter.push($('<button />', {
+                "class": "bt_filter", 
+                "text": "슈렉"
+            }));
+            $arr_bt_filter[$arr_bt_filter.length -1].css({
+                "font-size": "10pt"
+            }).click(function() {
+                $('.onSelect img').css("filter", "hue-rotate(90deg)");
+            });
+            
+            //유령
+            $arr_bt_filter.push($('<button />', {
+                "class": "bt_filter", 
+                "text": "유령"
+            }));
+            $arr_bt_filter[$arr_bt_filter.length -1].css({
+                "font-size": "10pt"
+            }).click(function() {
+                $('.onSelect img').css("filter", "invert(100%)");
+            });
+            
+            //투명한
+            $arr_bt_filter.push($('<button />', {
+                "class": "bt_filter", 
+                "text": "투명한"
+            }));
+            $arr_bt_filter[$arr_bt_filter.length -1].css({
+                "font-size": "10pt"
+            }).click(function() {
+                $('.onSelect img').css("filter", "opacity(30%)");
+            });
+            
+            //그림 같은
+            $arr_bt_filter.push($('<button />', {
+                "class": "bt_filter", 
+                "text": "그림 같은"
+            }));
+            $arr_bt_filter[$arr_bt_filter.length -1].css({
+                "font-size": "10pt"
+            }).click(function() {
+                $('.onSelect img').css("filter", "contrast(200%) brightness(150%)");
+            });
+
+            for (var j = 0; j < $arr_bt_filter.length; j++) {
+                $innerDiv.append($arr_bt_filter[j])
+            }
+            $tmp_div.append($innerDiv);
+        }
+        
+        else if($arr_bt[i].attr('id') == "bt_size") {
             var $innerDiv = $('<div />', {
                 "class": "div_fontsize"
             });
