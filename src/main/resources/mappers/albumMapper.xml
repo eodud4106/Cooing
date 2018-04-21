@@ -93,6 +93,7 @@
 	<select id="searchCategory" parameterType="int" resultType="albumwrite">
 		select * from albumlist 
 			where album_category=#{album_category}
+			order by album_num asc
 	</select>
 	
 	<select id="searchAlbumNum" parameterType="int" resultType="albumwrite">
@@ -106,7 +107,6 @@
 	<delete id="deleteAlbum" parameterType="int">
 		delete	from albumlist where album_num=#{album_num}
 	</delete>	
-	
 	
 	<select id="TotalAlbumList" resultType="albumwrite">
 		select *  from ALBUMLIST order by Album_num desc
@@ -123,7 +123,7 @@
 			or album_contents like '%'||#{search}||'%'
 	</select>
 	
-	<select id="CategoryAlbumCount" parameterType="int">
+	<select id="CategoryAlbumCount" parameterType="int" resultType="int">
 		select count(*)  from albumlist where album_category = #{album_category}
 	</select>
 	

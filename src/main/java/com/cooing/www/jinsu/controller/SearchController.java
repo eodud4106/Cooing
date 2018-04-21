@@ -36,7 +36,7 @@ public class SearchController {
 	@ResponseBody
 	@RequestMapping(value="/searchWord" , method = RequestMethod.POST)
 	public ArrayList<AlbumWriteVO> searchWord(String searchtext , int pagenum){
-		logger.info("search_word__jinsu");
+		logger.info(searchtext + "_search_word__jinsu");
 		//저장
 		searchDAO.insertSearch(new Search(0 , searchtext , "0"));
 		
@@ -52,14 +52,31 @@ public class SearchController {
 	@ResponseBody
 	@RequestMapping(value="/searchWordCount" , method = RequestMethod.POST)
 	public int searchWordCount(String searchtext){
-		logger.info("search_word_count__jinsu");
-		return searchDAO.searchAllAlbumCount(searchtext);		
+		logger.info(searchtext + "_search_word_count__jinsu");
+		//나누기를 하는 이유는 페이지 카운트로 들어갈 것이기 때문에 10개 씩 추가되기에 10으로 나눔
+		return searchDAO.searchAllAlbumCount(searchtext) / 10;		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/searchCategoryCount" , method = RequestMethod.POST)
+	public int searchCategoryCount(int searchtext){
+		logger.info(searchtext + "_search_category_count__jinsu");
+		//나누기를 하는 이유는 페이지 카운트로 들어갈 것이기 때문에 10개 씩 추가되기에 10으로 나눔
+		return albumDAO.CategoryAlbumCount(searchtext) / 10;		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/searchTotalCount" , method = RequestMethod.POST)
+	public int searchTotalCount(){
+		logger.info("search_total_count__jinsu");
+		//나누기를 하는 이유는 페이지 카운트로 들어갈 것이기 때문에 10개 씩 추가되기에 10으로 나눔
+		return albumDAO.TotalAlbumCount() / 10;		
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/searchCategory" , method = RequestMethod.POST)
 	public ArrayList<AlbumWriteVO> searchCategory(int searchtext , int pagenum ){
-		logger.info("search_Category__jinsu");		
+		logger.info(searchtext + "_search_Category__jinsu");		
 		
 		int totalnum = albumDAO.CategoryAlbumCount(searchtext);
 		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);

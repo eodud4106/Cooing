@@ -29,7 +29,7 @@
 	</select>
 	
 	<select id="searchAllAlbumCount" parameterType="String" resultType="int">
-		SELECT count(*) 
+		SELECT COUNT(*) 
 		FROM ALBUMLIST 
 		WHERE ALBUM_WRITER LIKE '%'||#{SEARCH}||'%'
 			OR ALBUM_NAME LIKE '%'||#{SEARCH}||'%'
@@ -40,6 +40,7 @@
 				WHERE TAG_CONTENT LIKE '%'||#{SEARCH}||'%'
 				GROUP BY TAG_ALBUMNUM
 			)
+		ORDER BY ALBUM_NUM asc
 	</select>
 	
 	<insert id="insertSearch" parameterType="search">
