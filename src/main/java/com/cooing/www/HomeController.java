@@ -52,6 +52,42 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/search_other", method = RequestMethod.GET)
+	public String search_other_home(Model model, HttpSession session , String search) {
+		Member personal = (Member)session.getAttribute("Member");
+		if(personal != null){
+			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
+			model.addAttribute("friend", arr_friend);
+			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
+			model.addAttribute("group", arraystrval);
+			int totalpage = albumDAO.SearchAlbumCount(search);
+			model.addAttribute("totalpage", (totalpage/10));			
+			//다른 곳에서 홈으로 검색을 통해 home으로 간다는 것을 알려준다.
+			model.addAttribute("search_other", 0);
+			//검색어
+			model.addAttribute("search" , search);			
+		}		
+		return "home";
+	}
+	
+	@RequestMapping(value = "/category_other", method = RequestMethod.GET)
+	public String category_other_home(Model model, HttpSession session , int categorynum) {
+		Member personal = (Member)session.getAttribute("Member");
+		if(personal != null){
+			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
+			model.addAttribute("friend", arr_friend);
+			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
+			model.addAttribute("group", arraystrval);
+			int totalpage = albumDAO.CategoryAlbumCount(categorynum);
+			model.addAttribute("totalpage", (totalpage/10));			
+			//다른 곳에서 홈으로 검색을 통해 home으로 간다는 것을 알려준다.
+			model.addAttribute("search_other", 1);
+			//검색어
+			model.addAttribute("categorynum" , categorynum);			
+		}		
+		return "home";
+	}
+	
 	
 	// 책 목록 조회
 	@ResponseBody

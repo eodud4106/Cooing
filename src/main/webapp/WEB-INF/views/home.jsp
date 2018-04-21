@@ -27,15 +27,30 @@
 <script src="<c:url value="/resources/js/home.js"/>"></script>
 <script src="<c:url value="/resources/js/search.js"/>"></script>
 <script src="resources/js/chat.js"></script>
+
 <script>
 var pagenum = 0;
 var pagingcheck = false;
+//이게 0번이면 검색어 1번이면 카테고리 2번이면 그냥 메인 으로 나눠서 페이징 가지고 오게 된다.
+var searchcheck = 0;
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
-    	if($('#totalpage').val() >= pagenum){
-	    	getTotalAlbumList(++pagenum);
-	    	pagingcheck = true;
-    	}
+    	if(searchcheck == 2){
+    		if($('#totalpage').val() >= pagenum){	
+       			getTotalAlbumList(++pagenum);
+        		pagingcheck = true;
+        	}
+    	}else if(searchcheck == 1){
+    		if($('#totalpage').val() >= pagenum){	
+       			getTotalAlbumList(++pagenum);
+        		pagingcheck = true;
+        	}
+    	}else if(searchcheck == 0){
+    		if($('#totalpage').val() >= pagenum){	
+       			getTotalAlbumList(++pagenum);
+        		pagingcheck = true;
+        	}
+    	}    	
     }
 });
 
@@ -62,8 +77,27 @@ $(document).ready(function () {
 		readyChat();
 		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
 	}	
-	
-	getTotalAlbumList(++pagenum);
+	//0번이면 검색으로 넘어온 경우 ,  1번이면 카테고리 눌러서 넘어온 경우 , 엘스는 그냥 홈에 온 경우 
+	if(${search_other == 0}){
+		searchcheck = 0;
+		pagenum = 0;
+		pagecheck = false;
+		$('#searchtx').val('${search}');
+		search();
+	}else if(${search_other == 1}){
+		searchcheck = 1;
+		pagenum = 0;
+		pagecheck = false;
+		searchCategory(${categorynum});
+		
+	}
+	else{
+		searchcheck = 2;
+		pagenum = 0;
+		pagecheck = false;
+		getTotalAlbumList(++pagenum);
+		
+	}
 });
 </script>
 

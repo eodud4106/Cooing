@@ -87,6 +87,7 @@ public class MainController {
 	@ResponseBody
 	@RequestMapping(value = "/getMyAlbumList", method= RequestMethod.POST)
 	public ArrayList<AlbumWriteVO> getMyAlbumList(HttpSession session , int pagenum) {
+		logger.info("myalbumlist_homecontroller_ljs");
 		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
 		int totalnum = albumDAO.IDAlbumCount(album_writer);
 		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);

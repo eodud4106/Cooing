@@ -56,11 +56,12 @@ $(document).ready(function () {
 	});
 	
 	$('#searchbt').on('click' , function(){
-		search();
+		location.href = './search_other?search=' + $('#searchtx').val() + '';
 	});
 	
 	$('.category').on('click' , function(){
 		searchCategory($(this).attr('data'));
+		location.href = './category_other?categorynum=' + $(this).attr('data') + '';
 	});
 
 	getMyAlbumList(++pagenum);	
@@ -74,27 +75,12 @@ function getMyAlbumList(pagenum) {
 		data:{pagenum:pagenum},
 		dataType: 'json',
 		success: function(result) {
-			myAlbumList(result);
+				AlbumListPaging(true , result);
 		},
 		error: function(e) {
 			alert(JSON.stringify(e));	
 		}
 	});
-}
-
-function myAlbumList(result) {
-	$(result).each(function(i, album) {	
-		var div_card = document.createElement('div'); //카드 클래스 div
-		var a_read_album = document.createElement('a'); //a태그
-		var img = document.createElement("img"); // 이미지 생성
-		$(img).attr('src' ,'./albumEdit/thumbnail?filePath='+album.album_thumbnail+'' );
-		$(img).attr('style' ,'width:100%;height:100%');
-		$(a_read_album).attr('href', 'albumView?album_num=' + album.album_num + '');
-		$(a_read_album).append(img);
-		$(div_card).addClass('card img-loaded').append(a_read_album);
-		//a태그 링크 걸어주기
-		$('.card-columns').append(div_card);				
-	});	
 }
 
 /**

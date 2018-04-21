@@ -35,7 +35,7 @@ public class SearchController {
 	@ResponseBody
 	@RequestMapping(value="/searchWord" , method = RequestMethod.POST)
 	public ArrayList<AlbumWriteVO> searchWord(String searchtext){
-		logger.info("search_word__jinsu");		
+		logger.info("search_word__jinsu");
 		//저장
 		searchDAO.insertSearch(new Search(0 , searchtext , "0"));
 		

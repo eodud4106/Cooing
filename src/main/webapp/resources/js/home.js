@@ -35,11 +35,40 @@ function getTotalAlbumList(pagenum) {
 		data:{pagenum:pagenum}, 
 		dataType: 'json',
 		success: function(result) {
-			totalAlbumList(false , result);
+			AlbumListPaging(false , result);
 		},
 		error: function(e) {
 			alert(JSON.stringify(e));	
 		}
+	});
+}
+
+function searchCategory(categorynum){
+	$.ajax({
+		url:'searchCategory',
+		type:'POST',		
+		data:{searchtext:categorynum},
+		dataType:'json',
+		success: function(list){
+			//list 받아오면 리스트 돌려서 처리할 부분
+			alert(JSON.stringify(list));
+		},
+		error:function(e){alert(JSON.stringify(e));}		
+	});
+}
+
+function search(){
+	var searchtext = $('#searchtx').val();
+	$.ajax({
+		url:'searchWord',
+		type:'POST',		
+		data:{searchtext:searchtext},
+		dataType:'json',
+		success: function(list){
+			//list 받아오면 리스트 돌려서 처리할 부분
+			AlbumListPaging(true , list);
+		},
+		error:function(e){alert(JSON.stringify(e));}		
 	});
 }
 

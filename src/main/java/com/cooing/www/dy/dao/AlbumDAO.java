@@ -152,8 +152,14 @@ public class AlbumDAO{
 	public int TotalAlbumCount(){
 		return sqlSession.getMapper(AlbumMapper.class).TotalAlbumCount();
 	}
-
-
+	
+	public int SearchAlbumCount(String search){
+		return sqlSession.getMapper(AlbumMapper.class).SearchAlbumCount(search);
+	}
+	
+	public int CategoryAlbumCount(int categorynum){
+		return sqlSession.getMapper(AlbumMapper.class).CategoryAlbumCount(categorynum);
+	}
 	
 	public int IDAlbumCount(String album_writer){
 		return sqlSession.getMapper(AlbumMapper.class).IDAlbumCount(album_writer);

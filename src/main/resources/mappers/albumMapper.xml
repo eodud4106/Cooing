@@ -116,6 +116,17 @@
 		select count(*)  from albumlist
 	</select>
 	
+	<select id="SearchAlbumCount" parameterType="String" resultType="int">
+		select count(*) from albumlist 
+			where album_writer like '%'||#{search}||'%'
+			or album_name like '%'||#{search}||'%'
+			or album_contents like '%'||#{search}||'%'
+	</select>
+	
+	<select id="CategoryAlbumCount" parameterType="int">
+		select count(*)  from albumlist where album_category = #{album_category}
+	</select>
+	
 	<select id="MyAlbumList" parameterType="String" resultType="albumwrite">
 		select *
 	    from ALBUMLIST 

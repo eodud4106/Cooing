@@ -3,7 +3,7 @@
  */
 
 //앨범 리스트 출력
-function totalAlbumList(check , result) {			
+function AlbumListPaging(check , result) {			
 	if(check)
 		$('.card-columns').html('');
 	$(result).each(function(i, album) {	
@@ -21,19 +21,9 @@ function totalAlbumList(check , result) {
 	pagingcheck = false;
 }
 
-function search(){
-	var searchtext = $('#searchtx').val();
-	$.ajax({
-		url:'searchWord',
-		type:'POST',		
-		data:{searchtext:searchtext},
-		dataType:'json',
-		success: function(list){
-			//list 받아오면 리스트 돌려서 처리할 부분
-			totalAlbumList(true , list);
-		},
-		error:function(e){alert(JSON.stringify(e));}		
-	});
+//home이 아닌곳에서 search를 할경우 메인으로 보내서 검색을 해야한다.
+function search_other(){
+	location.href('./search_other?search=' + $('#searchtx').val() + '');
 }
 
 function searchfriend(){
@@ -52,20 +42,6 @@ function searchfriend(){
 				$('#friendsearch').val('');
 				alert('찾으시는 친구 ID가 없습니다.');
 			}
-		},
-		error:function(e){alert(JSON.stringify(e));}		
-	});
-}
-
-function searchCategory(categorynum){
-	$.ajax({
-		url:'searchCategory',
-		type:'POST',		
-		data:{searchtext:categorynum},
-		dataType:'json',
-		success: function(list){
-			//list 받아오면 리스트 돌려서 처리할 부분
-			alert(JSON.stringify(list));
 		},
 		error:function(e){alert(JSON.stringify(e));}		
 	});
