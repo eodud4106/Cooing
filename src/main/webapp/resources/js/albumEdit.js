@@ -525,7 +525,18 @@ function createWholeEditor($elem) {
         $('.tooltip').remove();
     });
     
-    // 사진 필터
+    // 사진 회전 (대영)
+    $arr_bt.push($('<button />', {
+        "id": "bt_rotate",
+        "text": "사진 회전"
+    }));
+    $arr_bt[$arr_bt.length - 1].mouseenter(function() {
+        if($('.div_picturerotate').css('display') == 'none') {
+            $('.div_picturerotate').css('display', 'block');
+        }   
+    });
+    
+    // 사진 필터 (대영)
     $arr_bt.push($('<button />', {
         "id": "bt_filter",
         "text": "사진 필터"
@@ -665,17 +676,127 @@ function createWholeEditor($elem) {
             $('.div_font').css('display', 'none');
             $('.div_fontcolor').css('display', 'none');
             $('.div_backgroundcolor').css('display', 'none');
-            //사진 부분
+            //사진 부분(대영)
             $('.div_picturefilter').css('display', 'none');
+            $('.div_picturerotate').css('display', 'none');
         });
 
 
         /**
          *  [start] div를 열어야 하는 경우
          */
-        // 글자 크기
-        // 사진 필터
-        if($arr_bt[i].attr('id') == "bt_filter") {
+        
+        // 사진 회전 (대영)
+        if(($arr_bt[i].attr('id') == "bt_rotate")){
+        	 var $innerDiv = $('<div />', {
+                 "class": "div_picturerotate"
+             });
+             $innerDiv.css({
+                 "display": "none", 
+                 "z-index": "1000",
+                 "width": "100px",
+                 "margin-left": "-20px",
+                 "text-align": "left"
+             });
+             
+             var $arr_bt_rotate = [];
+             
+             //0도
+             $arr_bt_rotate.push($('<button />', {
+                 "class": "bt_rotate", 
+                 "text": "0도"
+             }));
+             $arr_bt_rotate[$arr_bt_rotate.length -1].css({
+                 "font-size": "10pt"
+             }).click(function() {
+                 $('.onSelect').css("transform", "rotateZ(0deg)");
+             });
+             
+             //45도
+             $arr_bt_rotate.push($('<button />', {
+                 "class": "bt_rotate", 
+                 "text": "45도"
+             }));
+             $arr_bt_rotate[$arr_bt_rotate.length -1].css({
+                 "font-size": "10pt"
+             }).click(function() {
+                 $('.onSelect').css("transform", "rotateZ(40deg)");
+             });
+             
+             //90도
+             $arr_bt_rotate.push($('<button />', {
+                 "class": "bt_rotate", 
+                 "text": "90도"
+             }));
+             $arr_bt_rotate[$arr_bt_rotate.length -1].css({
+                 "font-size": "10pt"
+             }).click(function() {
+                 $('.onSelect').css("transform", "rotateZ(90deg)");
+             });
+             
+             //135도
+             $arr_bt_rotate.push($('<button />', {
+                 "class": "bt_rotate", 
+                 "text": "135도"
+             }));
+             $arr_bt_rotate[$arr_bt_rotate.length -1].css({
+                 "font-size": "10pt"
+             }).click(function() {
+                 $('.onSelect').css("transform", "rotateZ(135deg)");
+             });
+             
+             //180도
+             $arr_bt_rotate.push($('<button />', {
+                 "class": "bt_rotate", 
+                 "text": "180도"
+             }));
+             $arr_bt_rotate[$arr_bt_rotate.length -1].css({
+                 "font-size": "10pt"
+             }).click(function() {
+                 $('.onSelect').css("transform", "rotateZ(180deg)");
+             });
+             
+             //225도
+             $arr_bt_rotate.push($('<button />', {
+                 "class": "bt_rotate", 
+                 "text": "225도"
+             }));
+             $arr_bt_rotate[$arr_bt_rotate.length -1].css({
+                 "font-size": "10pt"
+             }).click(function() {
+                 $('.onSelect').css("transform", "rotateZ(225deg)");
+             });
+             
+             //270도
+             $arr_bt_rotate.push($('<button />', {
+                 "class": "bt_rotate", 
+                 "text": "270도"
+             }));
+             $arr_bt_rotate[$arr_bt_rotate.length -1].css({
+                 "font-size": "10pt"
+             }).click(function() {
+                 $('.onSelect').css("transform", "rotateZ(270deg)");
+             });
+             
+             //315도
+             $arr_bt_rotate.push($('<button />', {
+                 "class": "bt_rotate", 
+                 "text": "315도"
+             }));
+             $arr_bt_rotate[$arr_bt_rotate.length -1].css({
+                 "font-size": "10pt"
+             }).click(function() {
+                 $('.onSelect').css("transform", "rotateZ(315deg)");
+             });
+             
+             for (var j = 0; j < $arr_bt_rotate.length; j++) {
+                 $innerDiv.append($arr_bt_rotate[j])
+             }
+             $tmp_div.append($innerDiv);
+        }
+
+        // 사진 필터 (대영)
+        else if($arr_bt[i].attr('id') == "bt_filter") {
             var $innerDiv = $('<div />', {
                 "class": "div_picturefilter"
             });
@@ -783,6 +904,7 @@ function createWholeEditor($elem) {
             $tmp_div.append($innerDiv);
         }
         
+        // 글자 크기
         else if($arr_bt[i].attr('id') == "bt_size") {
             var $innerDiv = $('<div />', {
                 "class": "div_fontsize"
