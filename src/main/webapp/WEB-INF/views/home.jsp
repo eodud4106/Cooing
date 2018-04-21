@@ -35,6 +35,7 @@ var pagingcheck = false;
 var searchcheck = 0;
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
+    	//메인으로 그냥 들어왔을 때 = 2 / 카테고리 눌러서 들어왔을 때  = 1 / 검색해서 들어왔을 때  = 0 
     	if(searchcheck == 2){
     		if($('#totalpage').val() >= pagenum){	
        			getTotalAlbumList(++pagenum);
@@ -42,12 +43,12 @@ $(window).scroll(function() {
         	}
     	}else if(searchcheck == 1){
     		if($('#totalpage').val() >= pagenum){	
-       			getTotalAlbumList(++pagenum);
+    			searchCategory(++pagenum);
         		pagingcheck = true;
         	}
     	}else if(searchcheck == 0){
     		if($('#totalpage').val() >= pagenum){	
-       			getTotalAlbumList(++pagenum);
+       			search(++pagenum);
         		pagingcheck = true;
         	}
     	}    	
@@ -83,20 +84,18 @@ $(document).ready(function () {
 		pagenum = 0;
 		pagecheck = false;
 		$('#searchtx').val('${search}');
-		search();
+		search(++pagenum);
 	}else if(${search_other == 1}){
 		searchcheck = 1;
 		pagenum = 0;
 		pagecheck = false;
-		searchCategory(${categorynum});
-		
-	}
-	else{
+		var number  = ${categorynum}+'';
+		searchCategory(number , ++pagenum);
+	}else{
 		searchcheck = 2;
 		pagenum = 0;
 		pagecheck = false;
-		getTotalAlbumList(++pagenum);
-		
+		getTotalAlbumList(++pagenum);		
 	}
 });
 </script>

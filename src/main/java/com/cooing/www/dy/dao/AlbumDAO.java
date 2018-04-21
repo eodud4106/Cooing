@@ -122,9 +122,10 @@ public class AlbumDAO{
 		return mapper.searchPage1(num);		
 	}
 	
-	public ArrayList<AlbumWriteVO> searchCategory(int icategorynum){
+	public ArrayList<AlbumWriteVO> searchCategory(int icategorynum , int startpl , int endpl){
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		return mapper.searchCategory(icategorynum);		
+		RowBounds rb = new RowBounds(startpl , endpl);
+		return mapper.searchCategory(rb , icategorynum);		
 	}	
 	
 	public int updateThumbnail(Map<String,String> map){
@@ -137,9 +138,9 @@ public class AlbumDAO{
 		return mapper.deleteAlbum(album_num);	
 	}
 	
-	public ArrayList<AlbumWriteVO> TotalAlbumList(int stratpl , int endpl){		
+	public ArrayList<AlbumWriteVO> TotalAlbumList(int startpl , int endpl){		
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		RowBounds rb = new RowBounds(stratpl , endpl);
+		RowBounds rb = new RowBounds(startpl , endpl);
 		return mapper.TotalAlbumList(rb);			
 	}
 	

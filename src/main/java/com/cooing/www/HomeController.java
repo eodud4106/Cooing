@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.jinsu.dao.RelationDAO;
+import com.cooing.www.jinsu.dao.SearchDAO;
 import com.cooing.www.jinsu.object.Member;
 import com.cooing.www.jinsu.object.PageLimit;
 import com.cooing.www.jinsu.object.Party;
@@ -33,6 +34,9 @@ public class HomeController {
 	RelationDAO relationDAO;
 	@Autowired
 	AlbumDAO albumDAO;
+	@Autowired
+	SearchDAO searchDAO;
+	
 	private Gson gson = new Gson();
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -60,7 +64,7 @@ public class HomeController {
 			model.addAttribute("friend", arr_friend);
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
 			model.addAttribute("group", arraystrval);
-			int totalpage = albumDAO.SearchAlbumCount(search);
+			int totalpage = searchDAO.searchAllAlbumCount(search);
 			model.addAttribute("totalpage", (totalpage/10));			
 			//다른 곳에서 홈으로 검색을 통해 home으로 간다는 것을 알려준다.
 			model.addAttribute("search_other", 0);

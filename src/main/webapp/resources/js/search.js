@@ -3,7 +3,7 @@
  */
 
 //앨범 리스트 출력
-function AlbumListPaging(check , result) {			
+function AlbumListPaging(check , result) {
 	if(check)
 		$('.card-columns').html('');
 	$(result).each(function(i, album) {	

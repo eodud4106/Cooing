@@ -19,6 +19,7 @@ import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.jinsu.dao.SearchDAO;
 import com.cooing.www.jinsu.object.CategoryPop;
 import com.cooing.www.jinsu.object.HashTag;
+import com.cooing.www.jinsu.object.PageLimit;
 import com.cooing.www.jinsu.object.Search;
 
 
@@ -34,29 +35,38 @@ public class SearchController {
 	
 	@ResponseBody
 	@RequestMapping(value="/searchWord" , method = RequestMethod.POST)
-	public ArrayList<AlbumWriteVO> searchWord(String searchtext){
+	public ArrayList<AlbumWriteVO> searchWord(String searchtext , int pagenum){
 		logger.info("search_word__jinsu");
 		//저장
 		searchDAO.insertSearch(new Search(0 , searchtext , "0"));
 		
+		int totalnum = albumDAO.SearchAlbumCount(searchtext);
+		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
+		
 		//검색어가 해쉬 태그 , 앨범 이름, 설명 , 앨범 만든 사람
-		ArrayList<AlbumWriteVO> arrayalbum = albumDAO.searchAlbum(searchtext);		
-		//해쉬태그 찾아야 된다. 찾았네..
-		ArrayList<HashTag> arraytag = searchDAO.selectHashTag(searchtext);
-		for(int i = 0; i < arraytag.size();i++){
-			arrayalbum.add(albumDAO.searchAlbumNum(arraytag.get(i).getTag_albumnum()));
-		}		
+		ArrayList<AlbumWriteVO> arrayalbum = searchDAO.searchAllAlbum(searchtext , pl.getStartBoard() , pl.getCountPage());
+		
 		return arrayalbum;		
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/searchWordCount" , method = RequestMethod.POST)
+	public int searchWordCount(String searchtext){
+		logger.info("search_word_count__jinsu");
+		return searchDAO.searchAllAlbumCount(searchtext);		
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/searchCategory" , method = RequestMethod.POST)
-	public ArrayList<AlbumWriteVO> searchCategory(int searchtext){
+	public ArrayList<AlbumWriteVO> searchCategory(int searchtext , int pagenum ){
 		logger.info("search_Category__jinsu");		
+		
+		int totalnum = albumDAO.CategoryAlbumCount(searchtext);
+		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
 		//저장
 		searchDAO.insertCategoryPop(new CategoryPop(0 , searchtext , "0"));
 		//카테고리 번호로 찾아온다.
-		ArrayList<AlbumWriteVO> arrayalbum = albumDAO.searchCategory(searchtext);						
+		ArrayList<AlbumWriteVO> arrayalbum = albumDAO.searchCategory(searchtext , pl.getStartBoard() , pl.getCountPage());
 		return arrayalbum;		
 	}
 	
