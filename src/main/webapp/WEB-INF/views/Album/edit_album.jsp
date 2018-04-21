@@ -392,7 +392,7 @@ html, body, main, .container-fluid {
 				<!-- 하단 바 영역 -->
 				<div class="under_bar">
 					<button>이전</button>
-					<button onclick="savePage()">저장</button>
+					<button onclick="savePage('all')">저장</button>
 					<button onclick="addPage()">페이지 추가</button>
 					<button onclick="removePage()">페이지 삭제</button>
 					<button>다음</button>

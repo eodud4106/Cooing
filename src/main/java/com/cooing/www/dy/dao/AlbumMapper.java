@@ -42,4 +42,6 @@ public interface AlbumMapper {
 	public int TotalAlbumCount();
 	
 	public int IDAlbumCount(String album_writer);
+	
+	public int delete_pages_by_album_num(int album_num);
 }

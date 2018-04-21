@@ -121,7 +121,7 @@ function ready_album(mode) {
 	                // onEdit, onSelect 상태인 박스가 있다면 클래스 삭제, 효과 초기화, z-index 조정
 	                clearOn();
 	                // page 저장
-	                savePage();
+	                savePage('curr');
 
 	            },
 	            turned: function(event, page, view) {
@@ -1437,47 +1437,76 @@ function createTooltip($elem, text) {
 /**
  *  [start] 현재 페이지 저장
  **/
-function savePage() {
+function savePage(mode) {
 
+    // 몇 페이지 저장할 것인지
     var count = 1;
-    
-    if(curr_page == 1){
-    	//page1ImageSave();
+    // 몇 페이지부터 저장할 것인지
+    var start = 1;
+
+    if(mode == 'all') {
+        // 앨범 전체 저장 모드
+        count = $('#album').turn('pages');
+
+    } else if(mode == 'curr') {
+
+        // 일반 저장일 경우 현재 페이지부터 저장
+
+        start = curr_page;
+        
+        if(curr_page == 1){
+            //앨범 표지 섬네일 생성
+        	//page1ImageSave();
+        }
+
+        if(curr_page != 1 && curr_page != $('#album').turn('pages')) {
+            // 현재 페이지가 싱글 페이지가 아니면 오른쪽 장도 저장해야 함.
+            count++;
+        }
+        
     }
 
-    if(curr_page != 1 && curr_page != $('#album').turn('pages')) {
-        // 현재 페이지가 싱글 페이지가 아니면 오른쪽 장도 저장해야 함.
-        count++;
-    }
+    console.log('세이브 시작할 페이지 -> ' + start)
+    console.log('세이브 할 페이지 수 -> ' + count)
 
-    for(var i = 0; i < count; i++) {
+    var arr_page = [];
 
-        var html = $('#page' + (curr_page + i) + '').html();
+    for(var i = start; i < start+count; i++) {
 
-        $page_clone = $('#page' + (curr_page + i) + '').clone();
+        var html = $('#page' + i + '').html();
+
+        $page_clone = $('#page' + i + '').clone();
 
         $boxs_clone = $page_clone.find('.div_box');
         $boxs_clone.each(function(j, div_box) {
             $(div_box).draggable().resizable().draggable('destroy').resizable('destroy').removeClass('ui-resizable-disabled');
         });
 
-        $.ajax({
-            url : '../albumEdit/save_page',
-            type : 'POST',
-            data : {
-            	album_num: $('#hidden_album_num').val(),
-                page_html : $page_clone.html(),
-                page_num : (curr_page + i)
-            },
-            dataType : 'text',
-            success : function(a) {
-                //console.log('저장된 앨범번호 -> ' + a);
-            },
-            error : function(e) {
-                alert(JSON.stringify(e));
-            }
-        });
+        arr_page[i-start] = {
+            "page_num": i,
+            "page_html": $page_clone.html()
+        }
+        console.log('변환한 것 ' + i + ' : ' + JSON.stringify(arr_page[i-start]));
+
     }
+
+
+    $.ajax({
+        url : '../albumEdit/save_page',
+        type : 'POST',
+        data : {
+            album_num: $('#hidden_album_num').val(),
+            arr_page: JSON.stringify(arr_page),
+            mode: mode
+        },
+        dataType : 'text',
+        success : function(a) {
+            //console.log('저장된 앨범번호 -> ' + a);
+        },
+        error : function(e) {
+            alert(JSON.stringify(e));
+        }
+    });
 
 }
 // [end] 현재 페이지 저장
@@ -1552,7 +1581,7 @@ function savePage() {
     }
 
     // id 수정
-    for(var i = curr_page + 2; i <= $('#album').turn('pages'); i++) {
+    for(var i = curr_page + 2; i <= total_page; i++) {
         $('#page' + i + '').attr('id', 'page' + (i - 2));
     }
 

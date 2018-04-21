@@ -139,4 +139,12 @@
 			page_num asc
 	</select>
 	
+	<!-- 앨범 넘버로 앨범 내 페이지 전체 삭제 -->
+	<delete id="delete_pages_by_album_num" parameterType="int">
+		DELETE
+			page 
+		WHERE
+			album_num = #{album_num}
+	</delete>
+	
 </mapper>

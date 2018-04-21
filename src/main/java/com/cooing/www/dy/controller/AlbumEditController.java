@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.jinsu.dao.SearchDAO;
 import com.cooing.www.jinsu.object.Member;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 @Controller
 @RequestMapping(value = "albumEdit")
@@ -143,15 +147,35 @@ public class AlbumEditController {
 	//앨범 페이지별 저장
 	@ResponseBody
 	@RequestMapping(value = "/save_page", method = RequestMethod.POST)
-	public String save_page(String album_num, String page_html, String page_num, HttpSession session){
-			
-		PageHtmlVO page = new PageHtmlVO(Integer.parseInt(album_num), Integer.parseInt(page_num), page_html);
+	public String save_page(String album_num, String arr_page, String mode, HttpSession session){
 		
-		//앨범 만들고 바로 앨범 넘버 받아서 page태그랑 연결해 주는 코드
-		if(albumDAO.personal_insertAlbumOfPage(page))
-			return "success";
+		int int_album_num = -1;
+		
+		try {
+			int_album_num = Integer.parseInt(album_num);
+			if (int_album_num == -1) new Exception();
+		} catch (Exception e) {
+			return "fail";
+		}
+		
+		
+		if(mode.equals("all")) {
+			// 앨범 전체 저장이므로 album_num으로 기존 페이지 모두 제거
+			albumDAO.delete_pages_by_album_num(Integer.parseInt(album_num));
+		}
+
+		JSONArray jo_arr_page = new JSONArray(arr_page);
+		Gson gson= new Gson();
+		
+		for (int i = 0; i < jo_arr_page.length(); i++) {
+			JSONObject jo_page = jo_arr_page.getJSONObject(i);
 			
-		return "fail";
+			PageHtmlVO page = gson.fromJson(jo_page.toString(), PageHtmlVO.class);
+			page.setAlbum_num(int_album_num);
+			albumDAO.personal_insertAlbumOfPage(page);
+		}
+		
+		return "saved";
 	}	
 	
 	@ResponseBody

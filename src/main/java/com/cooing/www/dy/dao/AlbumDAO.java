@@ -12,7 +12,7 @@ import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.dy.vo.PageHtmlVO;
 
 @Repository
-public class AlbumDAO {
+public class AlbumDAO{
 	@Autowired
 	private SqlSession sqlSession;
 	
@@ -53,6 +53,22 @@ public class AlbumDAO {
 		}
 		
 		return arr_page;
+	}
+	
+	/**
+	 *  앨범 넘버로 페이지 전체 삭제
+	 */
+	public int delete_pages_by_album_num(int album_num) {
+		
+		int result = 0;
+		
+		try {
+			result = sqlSession.getMapper(AlbumMapper.class).delete_pages_by_album_num(album_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		return result;
 	}
 	
 	public int personal_selectAlbum_Num(String album_identifier){
@@ -136,6 +152,8 @@ public class AlbumDAO {
 	public int TotalAlbumCount(){
 		return sqlSession.getMapper(AlbumMapper.class).TotalAlbumCount();
 	}
+
+
 	
 	public int IDAlbumCount(String album_writer){
 		return sqlSession.getMapper(AlbumMapper.class).IDAlbumCount(album_writer);
