@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.dy.dao.AlbumDAO;
@@ -19,6 +20,8 @@ import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.Member;
 import com.cooing.www.jinsu.object.PageLimit;
+import com.cooing.www.joon.dao.AlbumLikesDAO;
+import com.cooing.www.joon.vo.AlbumLikesVO;
 
 /**
  * Handles requests for the application home page.
@@ -32,7 +35,8 @@ public class MainController {
 	RelationDAO relationDAO;
 	@Autowired
 	AlbumDAO albumDAO;
-
+	@Autowired
+	AlbumLikesDAO albumlikesDAO;
 
 	/**
 	 * 앨범뷰... 앨범과 페이지 리스트를 갖고 albumView로 이동....
@@ -62,9 +66,23 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/albumTestView", method = RequestMethod.GET)
-	public String albumTestPage() {
+	public String albumTestPage(Model model, HttpSession session) {
 		
 		return "albumTestView";
+	}
+	//좋아요 체크
+	@ResponseBody
+	@RequestMapping(value = "/check_likes", method = RequestMethod.GET)
+	public String albumTestPage(@RequestParam int likeit_albumnum,
+			HttpSession session) {
+		
+		String likeit_memberid = ((Member) session.getAttribute("Member")).getMember_id();
+		System.out.println(likeit_albumnum);
+		AlbumLikesVO vo = new AlbumLikesVO(likeit_albumnum, likeit_memberid);
+		String check_isLike = null;
+		check_isLike = albumlikesDAO.confirm_Likes(vo);
+		
+		return check_isLike;
 	}
 	
 	//친구페이지

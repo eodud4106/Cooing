@@ -20,11 +20,15 @@
 	)
 </insert>
 <!-- 댓글 목록-->
-<select id = "selectReply" resultType = "albumreply">
-select * from reply order by reply_albumnum desc
+<select id = "listReply" resultType = "albumreply" parameterType="int">
+select * from reply where reply_albumnum = #{reply_albumnum} order by reply_num desc
+</select>
+<!-- 댓글 하나 가져옴 -->
+<select id = "getReply" resultType = "albumreply" parameterType="int">
+select * from reply where reply_num = #{reply_num}
 </select>
 <!-- 댓글 삭제 -->
 <delete id="replyDelete" parameterType="albumreply">
-delete from reply where reply_memberid = #{reply_memberid} and reply_albumnum = #{reply_albumnum}
+delete from reply where reply_memberid = #{reply_memberid} and reply_num = #{reply_num}
 </delete>
 </mapper>

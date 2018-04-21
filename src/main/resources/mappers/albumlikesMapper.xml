@@ -4,7 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cooing.www.joon.dao.AlbumLikesMapper">
-
 <!-- 앨범 좋아요 -->
 <insert id="addLikes" parameterType="albumlikes">
 	insert into likeit (
@@ -18,9 +17,26 @@
 		, #{likeit_memberid}
 	)
 </insert>
+<!-- 앨범 하나 가져옴 -->
+<select id = "getAlbum" resultType = "albumlikes" parameterType="int">
+select * from likeit where likeit_albumnum = #{likeit_albumnum}
+</select>
 <!-- 좋아요 취소 -->
 <delete id="deleteLikes" parameterType="albumlikes">
 delete from likeit where likeit_memberid = #{likeit_memberid} and likeit_albumnum = #{likeit_albumnum}
 </delete>
-
+<!-- 좋아요 목록-->
+<select id = "listLikes" resultType = "albumlikes" parameterType="int">
+select * from likeit where likeit_albumnum = #{likeit_albumnum} order by likeit_num desc
+</select>
+<select id="confirm_Likes" resultType = "String" parameterType="albumlikes">
+	select LIKEIT_MEMBERID
+		from
+	likeit
+		where
+	likeit_memberid = #{likeit_memberid}
+		and 
+	likeit_albumnum = #{likeit_albumnum}
+	 
+</select>
 </mapper>
