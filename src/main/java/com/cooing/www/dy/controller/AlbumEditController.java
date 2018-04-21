@@ -48,8 +48,8 @@ public class AlbumEditController {
 	
 	//private static String id = null; 
 	//private static String strFilePath = "/FileSave/upload/"+id+"/";
-	private static String strFilePath = "/FileSave/upload/";
-	private static String strFilePath_mac = "/Users/insect/hindoong_upload/";
+	private static String strFilePath = "/FileSave/upload/";					// windows
+	//private static String strFilePath = "/Users/insect/hindoong_upload/";		// mac
 	private static String strThumbnailPath = "/FileSave/thumbnail/";
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
@@ -361,7 +361,7 @@ public class AlbumEditController {
 		public String thumbnail(HttpServletResponse response , String filePath) {
 			logger.info("thumbnail__jinsu");
 			
-			String fullpath = strThumbnailPath + "/" + filePath;
+			String fullpath = strThumbnailPath + filePath;
 			if( filePath.length() != 0){
 				FileInputStream filein = null;
 				ServletOutputStream fileout = null;

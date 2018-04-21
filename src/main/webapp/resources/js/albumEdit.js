@@ -282,22 +282,6 @@ function renderbox(event, ui, page) {
     } else if(ui.helper.hasClass("image")) {
         // 이미지인 경우
 
-        var $input_file = $('<input />', {
-            "type": "file",
-            "accept": "image/*",
-            "id": "hidden_input",
-            "name": "hidden_input"
-        }).css({
-            "position": "absolute",
-            "top": "110px",
-            "left": "135px",
-            "width": "30px",
-            "height": "30px",
-            "margin": "auto",
-            "opacity": "0",
-            "overflow": "hidden"
-        });
-
         var $i_plus = $('<i />', {
             "class": "fas fa-plus",
             "position": "absolute",
@@ -318,54 +302,7 @@ function renderbox(event, ui, page) {
             "font-size": "xx-large",
             "text-align": "center",
             "line-height": "8"
-        }).append($i_plus).append($input_file).append($image);
-
-        $input_file.change(function() {
-            //alert('파일 업로드')
-            var $img = $('.onSelect img');
-            var file = document.querySelector('.onSelect input[type=file]').files[0];
-            
-            if (file) {
-                $('.onSelect svg').remove();
-            }   
-            
-            // formData 선언
-            var formData = new FormData();
-            
-            formData.append('file', file);
-            
-            $.ajax({
-                url : 'albumImageSave',
-                processData : false,
-                contentType : false,
-                type : 'POST',
-                data : formData,
-                dataType : 'text',
-                success : function(saved_name) {
-                    
-                    //saved_name을 받으면 이미지 src에 연결한다.
-
-                    // fail이 아닐 경우 -> 이미지 저장됨
-                    if (saved_name != 'fail') {
-                        
-                        $img.attr('src', 'img?filePath=' + saved_name).css({
-                            "display": "block"
-                        });
-                        
-                        
-
-                    } else {
-                        alert('업로드 실패');
-                    }
-                },
-                error : function(e) {
-                    alert('파일 업로드 실패');
-                }
-            });
-
-            
-  
-        });
+        }).append($i_plus).append($image);
 
     }
 
@@ -393,12 +330,16 @@ function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
     $div_box.draggable({
         // textbox 드래그 시 위치 이동 처리 (ui.helper는 이벤트의 대상)
         drag: function(event, ui) {
-
             $('.div_whole_editor').css({
+                "display": "none"
+            });
+        },
+        stop: function(event, ui) {
+            $('.div_whole_editor').css({
+                "display": "block",
                 "top": $('.onSelect').position().top + curr_page_top - 40,
                 "left": $('.onSelect').position().left + curr_page_left
             });
-            
         },
         containment: $div_box.parent()  // 캔버스 영역 밖으로 나가지 못하게 제한
 
@@ -534,6 +475,31 @@ function createWholeEditor($div_box) {
             "id": "bt_bcolor",
             "text": "배경색"
         }));
+
+        // 내부 효과 제거
+        $arr_bt.push($('<button />'));
+        var $i_ban = $('<i class="fas fa-ban"></i>');
+        $arr_bt[$arr_bt.length-1].append($i_ban).click(function() {
+            $('.onSelect').prop("contenteditable", true).css({
+                "-webkit-user-select": "text",
+                "user-select": "text"
+            }).focus();
+            document.execCommand('selectAll', false, null);
+            document.execCommand('removeFormat', false, null);
+            $('.onSelect').prop("contenteditable", false).css({
+                "-webkit-user-select": "",
+                "user-select": ""
+            })
+            $('.onSelect').css({
+                "font-size": "medium",
+                "color": "#859196",
+                "background-color": "rgba(255,255,255,0)"
+            })
+        }).mouseenter(function(e) {
+            createTooltip($(this), '효과제거');
+        }).mouseleave(function(e) {
+            $('.tooltip').remove();
+        });
     }
 
     // 이미지 박스 전용 버튼
@@ -541,9 +507,62 @@ function createWholeEditor($div_box) {
         // 사진 추가
         $arr_bt.push($('<button />'));
         var $i_plus = $('<i class="fas fa-plus"></i>');
-        $arr_bt[$arr_bt.length-1].append($i_plus).click(function() {
-            //TODO 이미지 추가, 편집
-        }).mouseenter(function(e) {
+        var $input_file = $('<input />', {
+            "type": "file",
+            "accept": "image/*",
+            "id": "hidden_input",
+            "name": "hidden_input"
+        }).css({
+            "position": "absolute",
+            "top": "0px",
+            "left": "0px",
+            "width": "50px",
+            "height": "40px",
+            "margin": "auto",
+            "opacity": "0",
+            "overflow": "hidden"
+        }).change(function() {
+            //alert('파일 업로드')
+            var $img = $('.onSelect img');
+            var file = this.files[0];
+            
+            if (file) {
+                $('.onSelect svg').remove();
+            }   
+            
+            // formData 선언
+            var formData = new FormData();
+            
+            formData.append('file', file);
+            
+            $.ajax({
+                url : 'albumImageSave',
+                processData : false,
+                contentType : false,
+                type : 'POST',
+                data : formData,
+                dataType : 'text',
+                success : function(saved_name) {
+                    
+                    //saved_name을 받으면 이미지 src에 연결한다.
+                    // fail이 아닐 경우 -> 이미지 저장됨
+                    if (saved_name != 'fail') {
+                        
+                        $img.attr('src', 'img?filePath=' + saved_name).css({
+                            "display": "block"
+                        });
+                        
+                    } else {
+                        alert('업로드 실패');
+                    }
+                },
+                error : function(e) {
+                    alert('파일 업로드 실패');
+                }
+            });
+
+        });
+        $arr_bt[$arr_bt.length-1].append($i_plus).append($input_file).mouseenter(function(e) {
             createTooltip($(this), '추가');
         }).mouseleave(function(e) {
             $('.tooltip').remove();
@@ -554,22 +573,26 @@ function createWholeEditor($div_box) {
             "id": "bt_rotate",
             "text": "회전"
         }));
-        $arr_bt[$arr_bt.length - 1].mouseenter(function() {
-            if($('.div_picturerotate').css('display') == 'none') {
-                $('.div_picturerotate').css('display', 'block');
-            }   
-        });
         
         // 사진 필터 (대영)
         $arr_bt.push($('<button />', {
             "id": "bt_filter",
             "text": "필터"
         }));
-        $arr_bt[$arr_bt.length - 1].mouseenter(function() {
-            if($('.div_picturefilter').css('display') == 'none') {
-                $('.div_picturefilter').css('display', 'block');
-            }   
-        });
+
+        // 현재 페이지 배경으로
+        $arr_bt.push($('<button />'));
+        $i_set_background = $('<i class="far fa-images"></i>');
+        $arr_bt[$arr_bt.length-1].append($i_set_background).click(function(e) {
+            var src = $('.onSelect img').attr('src');
+            $('.onSelect').parent('.page').css({
+                "background-image": "url(" + src + ")"
+            })
+        }).mouseenter(function(e) {
+            createTooltip($(this), '배경으로');
+        }).mouseleave(function(e) {
+            $('.tooltip').remove();
+        })
     }
         
     
@@ -578,12 +601,12 @@ function createWholeEditor($div_box) {
     var $i_delete = $('<i class="fas fa-times"></i>');
     $arr_bt[$arr_bt.length-1].append($i_delete).click(function() {
         remove_box();
-
     }).mouseenter(function(e) {
         createTooltip($(this), '삭제');
     }).mouseleave(function(e) {
         $('.tooltip').remove();
     });
+
 
     // 제일 위로
     $arr_bt.push($('<button />'));
@@ -648,11 +671,7 @@ function createWholeEditor($div_box) {
         // 항목에서 마우스 떼면 감추기
         $tmp_div.mouseleave(function() {
             //텍스트 부분
-        	$('.div_fontsize').css('display', 'none'); 
             $('.div_font').css('display', 'none');
-            //사진 부분(대영)
-            $('.div_picturefilter').css('display', 'none');
-            $('.div_picturerotate').css('display', 'none');
         });
 
 
@@ -662,15 +681,19 @@ function createWholeEditor($div_box) {
         
         // 사진 회전 (대영)
         if(($arr_bt[i].attr('id') == "bt_rotate")){
-        	 var $innerDiv = $('<div />', {
+
+            $tmp_div.mouseenter(function(e) {
+                $('.div_picturerotate').css("display", "block");
+            }).mouseleave(function(e) {
+                $('.div_picturerotate').css("display", "none");
+            })
+
+
+        	var $innerDiv = $('<div />', {
                  "class": "div_picturerotate"
-             });
-             $innerDiv.css({
-                 "display": "none", 
-                 "z-index": "1000",
-                 "width": "100px",
-                 "margin-left": "-20px",
-                 "text-align": "left"
+             }).css({
+                 "text-align": "left",
+                 "display": "none"
              });
              
              var $arr_bt_rotate = [];
@@ -771,15 +794,18 @@ function createWholeEditor($div_box) {
 
         // 사진 필터 (대영)
         else if($arr_bt[i].attr('id') == "bt_filter") {
+
+            $tmp_div.mouseenter(function(e) {
+                $('.div_picturefilter').css("display", "block");
+            }).mouseleave(function(e) {
+                $('.div_picturefilter').css("display", "none");
+            })
+
             var $innerDiv = $('<div />', {
                 "class": "div_picturefilter"
-            });
-            $innerDiv.css({
-                "display": "none", 
-                "z-index": "1000",
-                "width": "100px",
-                "margin-left": "-20px",
-                "text-align": "left"
+            }).css({
+                "text-align": "left",
+                "display": "none"
             });
             
             var $arr_bt_filter = [];
