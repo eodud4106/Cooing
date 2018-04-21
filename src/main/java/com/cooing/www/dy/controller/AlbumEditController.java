@@ -78,13 +78,13 @@ public class AlbumEditController {
 	
 	// 앨범 수정 창으로 이동
 	@RequestMapping(value = "/edit_album", method = RequestMethod.GET)
-	public String edit_album(String str_album_num, Model model, HttpSession session){
+	public String edit_album(String album_num, Model model, HttpSession session){
 		
 		int int_album_num = -1;
 		
 		// 숫자가 아니거나 -1 그대로인 경우 홈으로 리턴
 		try {
-			int_album_num = Integer.parseInt(str_album_num);
+			int_album_num = Integer.parseInt(album_num);
 			if(int_album_num == -1) {
 				new Exception();
 			}

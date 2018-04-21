@@ -107,6 +107,7 @@ label:hover {
 
 html, body, main, .container-fluid {
 	height: 100%;
+	width: 100%;
 }
 .container-fluid {
 	padding: 0;
@@ -114,12 +115,17 @@ html, body, main, .container-fluid {
 
 .view_wrapper {
 	margin: 0;
-	margin-left: 250px;
+	padding-left: 250px !important;
 	display: flex;
 	flex-wrap: wrap;
+	width: 100%;
 }
-.album_wrapper, .top_bar {
-	margin: auto !important;
+.album_wrapper {
+	width: 100%;
+}
+
+.album_wrapper, .top_bar, .under_bar, .album {
+	margin: auto;
 	display: block;
 }
 .checkbox {
@@ -277,19 +283,27 @@ html, body, main, .container-fluid {
 							<c:forEach items="${arr_page}" var="page">
 								<div id="page${page.page_num}" class="page hard">${page.page_html}</div>
 							</c:forEach>
-						</c:if>	
+						</c:if>
 					</div>
 				</div>
-
+				
 				<!-- 하단 바 영역 -->
 				<div class="under_bar">
+					<div id="slider-bar" class="turnjs-slider">
+						<div id="slider"></div>
+					</div>
 					<button>이전</button>
 					<button>다음</button>
+					<c:if test="${album.album_writer == sessionScope.Member.member_id }">
+						<button onclick="location.href='albumEdit/edit_album?album_num=${album.album_num}'">편집</button>
+					</c:if>
 				</div>
+				
 				
 			</div>
 			<!-- END row -->
-	
+			
+			
 		</div>
 
 	</main>

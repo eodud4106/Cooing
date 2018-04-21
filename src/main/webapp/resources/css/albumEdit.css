@@ -74,7 +74,7 @@ svg, path {
     animation: hindoong-tongtong .75s infinite;
 }
 
-.tooltip {
+.tooltip, .slider_popup {
     position: absolute;
     background-color: rgba(20, 20, 20, .7);
     border: none;
@@ -87,6 +87,7 @@ svg, path {
     display: block;
     opacity: 1;
     vertical-align: middle;
+    min-width: 30px;
 }
 
 #div_list_tools div {

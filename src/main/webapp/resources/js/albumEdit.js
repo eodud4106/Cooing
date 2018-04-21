@@ -211,7 +211,7 @@ function ready_album(mode) {
 		alert('설정 오류!');
 	}
 	
-    
+	slider();
 
 }
 // [end] 페이지 로딩 후 앨범 준비
@@ -1564,3 +1564,60 @@ function savePage() {
     alert('페이지가 삭제되었습니다!');
 
  }
+ 
+
+/*
+ * 슬라이더
+ */
+function slider() {
+	$('#slider').slider({
+		min: 1,
+		max: $('#album').turn('pages')/2 +1,
+		change: function(event, ui) {
+			//console.log(ui.value)
+		},
+		slide: function(event, ui) {
+			create_nav_bar(ui);
+		},
+		start: function(event, ui) {
+			create_nav_bar(ui);
+		},
+		stop: function() {
+			$('.slider_popup').remove();
+		}
+	});
+}
+
+function create_nav_bar(ui) {
+	var total_width = $('.ui-slider').width();
+	var scale = total_width / ($('#album').turn('pages')/2);
+	var curr_left = scale * (ui.value - 1);
+	var left = curr_left + $('#slider-bar').position().left;
+
+	var top = $('#slider-bar').position().top;
+	
+	$('.slider_popup').remove();
+	
+	var $slider_popup = $('<div />', {
+		"class": "slider_popup"
+	}).css({
+		"left": left,
+		"top": top - 50
+	});
+	
+	if(ui.value == 1) {
+		$('#album').turn('page', 1);
+	} else {
+		$('#album').turn('page', (ui.value-1)*2 );
+		
+	}
+
+	if(ui.value == 1 || ui.value == $('#album').turn('pages')/2 +1) {
+		$slider_popup.text(((ui.value-1)*2) == 0? 1: (ui.value-1)*2);
+		$slider_popup.css("left", left - 15);
+	} else {
+		$slider_popup.text((ui.value-1)*2 + " ~ " + ((ui.value-1)*2+1));
+		$slider_popup.css("left", left - 20);
+	}
+	$slider_popup.appendTo('body')
+}

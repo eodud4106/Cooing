@@ -19,9 +19,10 @@
 		<repository>
 			<id>oracle</id>
 			<name>ORACLE JDBC Repository</name>
-			<url>https://maven.atlassian.com/3rdparty</url>
+			<url>https://maven.atlassian.com/3rdparty/</url>
 		</repository>
 	</repositories>
+
 	
 	<dependencies>
 		<!-- Spring -->
@@ -182,7 +183,7 @@
 			<artifactId>ojdbc6</artifactId>
 			<version>12.1.0.1-atlassian-hosted</version>
 		</dependency>
-		        
+				        
 		<!-- 파일 업/다운을 위한 dependency 추가 -->
 		 <dependency>
 			<groupId>commons-io</groupId>
@@ -199,6 +200,7 @@
 		    <artifactId>commons-codec</artifactId>
 		    <version>1.10</version>
 		</dependency>
+		
 		
 	</dependencies>
     <build>
