@@ -34,7 +34,6 @@ import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.jinsu.dao.SearchDAO;
 import com.cooing.www.jinsu.object.Member;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 @Controller
@@ -48,9 +47,10 @@ public class AlbumEditController {
 	
 	//private static String id = null; 
 	//private static String strFilePath = "/FileSave/upload/"+id+"/";
-	private static String strFilePath = "/FileSave/upload/";					// windows
-	//private static String strFilePath = "/Users/insect/hindoong_upload/";		// mac
-	private static String strThumbnailPath = "/FileSave/thumbnail/";
+	//private static String strFilePath = "/FileSave/upload/";					// windows
+	private static String strFilePath = "/Users/insect/hindoong_upload/";		// mac
+	//private static String strThumbnailPath = "/FileSave/thumbnail/";			// windows
+	private static String strThumbnailPath = "/Users/insect/hindoong_upload/";	// mac
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
 	
