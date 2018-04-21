@@ -33,21 +33,23 @@ var pagenum = 0;
 var pagingcheck = false;
 //이게 0번이면 검색어 1번이면 카테고리 2번이면 그냥 메인 으로 나눠서 페이징 가지고 오게 된다.
 var searchcheck = 0;
+var categorynum = 0;
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
+    	//메인으로 그냥 들어왔을 때 = 2 / 카테고리 눌러서 들어왔을 때  = 1 / 검색해서 들어왔을 때  = 0 
     	if(searchcheck == 2){
     		if($('#totalpage').val() >= pagenum){	
-       			getTotalAlbumList(++pagenum);
+       			getTotalAlbumList();
         		pagingcheck = true;
         	}
     	}else if(searchcheck == 1){
     		if($('#totalpage').val() >= pagenum){	
-       			getTotalAlbumList(++pagenum);
+    			searchCategory(categorynum);
         		pagingcheck = true;
         	}
     	}else if(searchcheck == 0){
     		if($('#totalpage').val() >= pagenum){	
-       			getTotalAlbumList(++pagenum);
+       			search();
         		pagingcheck = true;
         	}
     	}    	
@@ -89,14 +91,11 @@ $(document).ready(function () {
 		pagenum = 0;
 		pagecheck = false;
 		searchCategory(${categorynum});
-		
-	}
-	else{
+	}else{
 		searchcheck = 2;
 		pagenum = 0;
 		pagecheck = false;
-		getTotalAlbumList(++pagenum);
-		
+		getTotalAlbumList();		
 	}
 });
 </script>

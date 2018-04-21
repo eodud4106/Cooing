@@ -23,7 +23,7 @@ public interface AlbumMapper {
 	
 	public ArrayList<AlbumWriteVO> searchAlbum(String searchtext);
 	
-	public ArrayList<AlbumWriteVO> searchCategory(int icategorynum);
+	public ArrayList<AlbumWriteVO> searchCategory(RowBounds rb , int icategorynum);
 	
 	public AlbumWriteVO searchAlbumNum(int num);
 	
