@@ -46,15 +46,18 @@ public class MainController {
 	 * 앨범뷰... 앨범과 페이지 리스트를 갖고 albumView로 이동....
 	 */
 	@RequestMapping(value = "/albumView", method = RequestMethod.GET)
-	public String albumPage(int album_num, Model model) {
+	public String albumPage(int album_num, Model model, AlbumLikesVO vo) {
 		
 		try {
 			AlbumWriteVO album = albumDAO.searchAlbumNum(album_num);
 			if(album == null) return "redirect:/";
 			ArrayList<PageHtmlVO> arr_page = albumDAO.select_pages_by_album_num(album_num);
 			
+			ArrayList<AlbumLikesVO> likes_list = albumlikesDAO.likesList(vo);
+			
 			model.addAttribute("album", album);
 			model.addAttribute("arr_page", arr_page);
+			model.addAttribute("like", likes_list);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

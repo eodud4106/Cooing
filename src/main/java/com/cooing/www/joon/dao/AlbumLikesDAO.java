@@ -27,15 +27,15 @@ public class AlbumLikesDAO {
 		AlbumLikesMapper albumlikesmapper = sqlSession.getMapper(AlbumLikesMapper.class);
 		return albumlikesmapper.getAlbum(likeit_albumnum);
 	}
-	// 좋아요 목록
-	public ArrayList<AlbumLikesVO> listLikes(int likeit_albumnum) {
-		AlbumLikesMapper albumlikesmapper = sqlSession.getMapper(AlbumLikesMapper.class);
-		return albumlikesmapper.listLikes(likeit_albumnum);
-	}
 
 	public String confirm_Likes(AlbumLikesVO vo) {
 		AlbumLikesMapper albumlikesmapper = sqlSession.getMapper(AlbumLikesMapper.class);
 		return albumlikesmapper.confirm_Likes(vo);
+	}
+	// 좋아요 목록
+	public ArrayList<AlbumLikesVO> likesList(AlbumLikesVO vo) {
+		AlbumLikesMapper albumlikesmapper = sqlSession.getMapper(AlbumLikesMapper.class);
+		return albumlikesmapper.likesList(vo);
 	}
 
 

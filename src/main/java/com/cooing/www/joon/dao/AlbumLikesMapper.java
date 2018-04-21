@@ -11,9 +11,9 @@ public interface AlbumLikesMapper {
 	public void deleteLikes(AlbumLikesVO vo);
 	// 앨범 하나 가져옴
 	public AlbumLikesVO getAlbum(int likeit_albumnum);
-	// 좋아요 목록
-	public ArrayList<AlbumLikesVO> listLikes(int likeit_albumnum);
-	
+	// 좋아요 확인
 	public String confirm_Likes(AlbumLikesVO vo);
+	// 좋아요 목록
+	public ArrayList<AlbumLikesVO> likesList(AlbumLikesVO vo);
 
 }
