@@ -1331,6 +1331,9 @@ function savePage(mode) {
     // 몇 페이지부터 저장할 것인지
     var start = 1;
 
+    // 표지 섬네일 저장
+    page1ImageSave();
+
     if(mode == 'all') {
         // 앨범 전체 저장 모드
         count = $('#album').turn('pages');
@@ -1340,11 +1343,6 @@ function savePage(mode) {
         // 일반 저장일 경우 현재 페이지부터 저장
 
         start = curr_page;
-        
-        if(curr_page == 1){
-            //앨범 표지 섬네일 생성
-        	page1ImageSave();
-        }
 
         if(curr_page != 1 && curr_page != $('#album').turn('pages')) {
             // 현재 페이지가 싱글 페이지가 아니면 오른쪽 장도 저장해야 함.
