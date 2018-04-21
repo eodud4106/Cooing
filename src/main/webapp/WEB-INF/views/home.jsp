@@ -25,8 +25,21 @@
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="<c:url value="/resources/js/home.js"/>"></script>
+<script src="<c:url value="/resources/js/search.js"/>"></script>
 <script src="resources/js/chat.js"></script>
 <script>
+var pagenum = 0;
+var pagingcheck = false;
+$(window).scroll(function() {
+    if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
+    	if($('#totalpage').val() >= pagenum){
+	    	getTotalAlbumList(++pagenum);
+	    	pagingcheck = true;
+    	}
+    }
+});
+
+
 $(document).ready(function () {
 	
 	initialize();	
@@ -48,10 +61,7 @@ $(document).ready(function () {
 	if (${sessionScope.Member != null}) {
 		readyChat();
 		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
-	}
-	
-	getTotalAlbumList();
-	
+	}	
 });
 </script>
 
@@ -288,6 +298,7 @@ $(document).ready(function () {
 		<div id="div_send">
 			<input type="text" id="message" autocomplete="off" />
 			<input type="button" id="sendBtn" value="전송" />
+			<input type="hidden" id="totalpage" value="${totalpage}">
 		</div>
 	</div>
 

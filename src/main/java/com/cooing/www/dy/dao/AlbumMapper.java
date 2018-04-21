@@ -3,6 +3,8 @@ package com.cooing.www.dy.dao;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
+
 import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.dy.vo.PageHtmlVO;
 
@@ -31,9 +33,11 @@ public interface AlbumMapper {
 	
 	public int deleteAlbum(int album_num);
 	
-	public ArrayList<AlbumWriteVO> TotalAlbumList();
+	public ArrayList<AlbumWriteVO> TotalAlbumList(RowBounds rb);
 	
 	public ArrayList<AlbumWriteVO> MyAlbumList(String album_writer);
 	
 	public ArrayList<PageHtmlVO> select_pages_by_album_num(int album_num);
+	
+	public int TotalAlbumCount();
 }

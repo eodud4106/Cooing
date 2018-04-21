@@ -17,6 +17,7 @@ import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.Member;
+import com.cooing.www.jinsu.object.PageLimit;
 import com.cooing.www.jinsu.object.Party;
 import com.google.gson.Gson;
 
@@ -44,6 +45,8 @@ public class HomeController {
 			model.addAttribute("friend", arr_friend);
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
 			model.addAttribute("group", arraystrval);
+			int totalpage = albumDAO.TotalAlbumCount();
+			model.addAttribute("totalpage", (totalpage/10));
 		}
 		
 		return "home";
@@ -53,8 +56,12 @@ public class HomeController {
 	// 책 목록 조회
 	@ResponseBody
 	@RequestMapping(value = "/getTotalAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumWriteVO> getMyAlbumList() {
-		return albumDAO.TotalAlbumList();
+	public ArrayList<AlbumWriteVO> getMyAlbumList(int pagenum) {
+		logger.info(pagenum + "_page_list ljs");
+		int totalnum = albumDAO.TotalAlbumCount();
+		logger.info(totalnum + "_page_total_count");
+		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
+		return albumDAO.TotalAlbumList(pagenum , pl.getStartBoard() , pl.getCountPage());
 	}
 	
 	

@@ -112,6 +112,10 @@
 		select *  from ALBUMLIST order by Album_num desc
 	</select>
 	
+	<select id="TotalAlbumCount" resultType="int">
+		select count(*)  from albumlist
+	</select>
+	
 	<select id="MyAlbumList" parameterType="String" resultType="albumwrite">
 		select *
 	    from ALBUMLIST 

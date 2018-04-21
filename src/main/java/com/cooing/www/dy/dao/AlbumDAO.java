@@ -3,6 +3,7 @@ package com.cooing.www.dy.dao;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -120,14 +121,19 @@ public class AlbumDAO {
 		return mapper.deleteAlbum(album_num);	
 	}
 	
-	public ArrayList<AlbumWriteVO> TotalAlbumList(){		
-		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);		
-		return mapper.TotalAlbumList();			
+	public ArrayList<AlbumWriteVO> TotalAlbumList(int pagenum , int stratpl , int endpl){		
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		RowBounds rb = new RowBounds(stratpl , endpl);
+		return mapper.TotalAlbumList(rb);			
 	}
 	
 	public ArrayList<AlbumWriteVO> MyAlbumList(String album_writer){
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		return mapper.MyAlbumList(album_writer);
+	}
+	
+	public int TotalAlbumCount(){
+		return sqlSession.getMapper(AlbumMapper.class).TotalAlbumCount();
 	}
 	
 }
