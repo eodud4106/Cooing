@@ -35,9 +35,11 @@ public interface AlbumMapper {
 	
 	public ArrayList<AlbumWriteVO> TotalAlbumList(RowBounds rb);
 	
-	public ArrayList<AlbumWriteVO> MyAlbumList(String album_writer);
+	public ArrayList<AlbumWriteVO> MyAlbumList(RowBounds rb , String album_writer);
 	
 	public ArrayList<PageHtmlVO> select_pages_by_album_num(int album_num);
 	
 	public int TotalAlbumCount();
+	
+	public int IDAlbumCount(String album_writer);
 }

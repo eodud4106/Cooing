@@ -121,19 +121,23 @@ public class AlbumDAO {
 		return mapper.deleteAlbum(album_num);	
 	}
 	
-	public ArrayList<AlbumWriteVO> TotalAlbumList(int pagenum , int stratpl , int endpl){		
+	public ArrayList<AlbumWriteVO> TotalAlbumList(int stratpl , int endpl){		
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		RowBounds rb = new RowBounds(stratpl , endpl);
 		return mapper.TotalAlbumList(rb);			
 	}
 	
-	public ArrayList<AlbumWriteVO> MyAlbumList(String album_writer){
+	public ArrayList<AlbumWriteVO> MyAlbumList(String album_writer , int stratpl , int endpl){
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		return mapper.MyAlbumList(album_writer);
+		RowBounds rb = new RowBounds(stratpl , endpl);
+		return mapper.MyAlbumList(rb,album_writer);
 	}
 	
 	public int TotalAlbumCount(){
 		return sqlSession.getMapper(AlbumMapper.class).TotalAlbumCount();
 	}
 	
+	public int IDAlbumCount(String album_writer){
+		return sqlSession.getMapper(AlbumMapper.class).IDAlbumCount(album_writer);
+	}
 }

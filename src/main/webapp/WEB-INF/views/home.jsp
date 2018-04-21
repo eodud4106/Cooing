@@ -62,6 +62,8 @@ $(document).ready(function () {
 		readyChat();
 		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
 	}	
+	
+	getTotalAlbumList(++pagenum);
 });
 </script>
 

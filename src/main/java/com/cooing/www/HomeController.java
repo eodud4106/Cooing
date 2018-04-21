@@ -59,9 +59,8 @@ public class HomeController {
 	public ArrayList<AlbumWriteVO> getMyAlbumList(int pagenum) {
 		logger.info(pagenum + "_page_list ljs");
 		int totalnum = albumDAO.TotalAlbumCount();
-		logger.info(totalnum + "_page_total_count");
 		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		return albumDAO.TotalAlbumList(pagenum , pl.getStartBoard() , pl.getCountPage());
+		return albumDAO.TotalAlbumList(pl.getStartBoard() , pl.getCountPage());
 	}
 	
 	
