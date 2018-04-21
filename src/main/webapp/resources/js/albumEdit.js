@@ -1,4 +1,4 @@
-// [start] 맵을 쓰기 위한 코드
+// [start] 맵을 쓰기 위한 코드 (올리기용...)
 Map = function(){
     this.map = new Object();
 };   
