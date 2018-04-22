@@ -33,7 +33,7 @@ public interface AlbumMapper {
 	
 	public int deleteAlbum(int album_num);
 	
-	public ArrayList<AlbumWriteVO> TotalAlbumList(RowBounds rb);
+	public ArrayList<AlbumWriteVO> TotalAlbumList(RowBounds rb , String album_writer);
 	
 	public ArrayList<AlbumWriteVO> IDAlbumList(RowBounds rb , String album_writer);
 	

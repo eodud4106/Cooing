@@ -108,8 +108,27 @@
 		delete	from albumlist where album_num=#{album_num}
 	</delete>	
 	
-	<select id="TotalAlbumList" resultType="albumwrite">
-		select *  from ALBUMLIST order by Album_num desc
+	<select id="TotalAlbumList" parameterType="String" resultType="albumwrite">
+		select *
+		from albumlist 
+		where album_openrange = 1
+		or album_writer = #{album_writer}
+		or album_num in(
+			select specific_albumnum as album_num
+			from specific
+			where specific_memberid = #{album_writer}
+		)		
+		or album_num in(
+			select album_num
+			from albumlist
+			where album_openrange = 2
+			and album_writer in(
+				select friend_id1 as album_writer
+				from friend
+				where friend_id2 = #{album_writer}
+			)
+		)
+		order by album_num desc
 	</select>
 	
 	<select id="TotalAlbumCount" resultType="int">
@@ -129,9 +148,24 @@
 	
 	<select id="IDAlbumList" parameterType="String" resultType="albumwrite">
 		select *
-	    from ALBUMLIST 
-	    where ALBUM_WRITER = #{ALBUM_WRITER} 
-	    order by Album_num desc
+	    from albumlist
+	    where album_writer = #{album_writer} 
+	    or album_num in(
+	    	select specific_albumnum as album_num
+			from specific
+			where specific_memberid = #{album_writer}	    	
+	    )
+	    or album_num in(
+			select album_num
+			from albumlist
+			where album_openrange = 2
+			and album_writer in(
+				select friend_id1 as album_writer
+				from friend
+				where friend_id2 = #{album_writer}
+			)
+		)	    
+	    order by album_num desc
 	</select>
 	
 	<select id="IDAlbumCount" parameterType="String" resultType="int">

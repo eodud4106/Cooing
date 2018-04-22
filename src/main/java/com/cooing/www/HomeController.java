@@ -96,11 +96,12 @@ public class HomeController {
 	// 책 목록 조회
 	@ResponseBody
 	@RequestMapping(value = "/getTotalAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumWriteVO> getMyAlbumList(int pagenum) {
+	public ArrayList<AlbumWriteVO> getMyAlbumList(int pagenum , HttpSession session) {
 		logger.info(pagenum + "_page_list ljs");
 		int totalnum = albumDAO.TotalAlbumCount();
 		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		return albumDAO.TotalAlbumList(pl.getStartBoard() , pl.getCountPage());
+		Member member = (Member)session.getAttribute("Member");
+		return albumDAO.TotalAlbumList(pl.getStartBoard() , pl.getCountPage() , member.getMember_id());
 	}
 	
 	

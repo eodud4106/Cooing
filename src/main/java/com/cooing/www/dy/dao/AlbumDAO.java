@@ -136,10 +136,10 @@ public class AlbumDAO{
 		return mapper.deleteAlbum(album_num);	
 	}
 	
-	public ArrayList<AlbumWriteVO> TotalAlbumList(int startpl , int endpl){		
+	public ArrayList<AlbumWriteVO> TotalAlbumList(int startpl , int endpl , String album_writer){		
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		RowBounds rb = new RowBounds(startpl , endpl);
-		return mapper.TotalAlbumList(rb);			
+		return mapper.TotalAlbumList(rb , album_writer);			
 	}
 	
 	public ArrayList<AlbumWriteVO> IDAlbumList(String album_writer , int stratpl , int endpl){
