@@ -28,9 +28,9 @@ public class AlbumLikesDAO {
 		return albumlikesmapper.getAlbum(likeit_albumnum);
 	}
 
-	public String confirm_Likes(AlbumLikesVO vo) {
+	public String check_Likes(AlbumLikesVO vo) {
 		AlbumLikesMapper albumlikesmapper = sqlSession.getMapper(AlbumLikesMapper.class);
-		return albumlikesmapper.confirm_Likes(vo);
+		return albumlikesmapper.check_Likes(vo);
 	}
 	// 좋아요 목록
 	public ArrayList<AlbumLikesVO> likesList(AlbumLikesVO vo) {

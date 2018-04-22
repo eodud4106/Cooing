@@ -147,11 +147,11 @@ html, body, main, .container-fluid {
 	
 	var selectcheck = true;
 
-
 	//라디오버튼
 	$(document).ready(function() {
 		replyList();
-		// alert(${album.album_num});	
+		check_likes();
+		
 		$('.input').iCheck({
 			radioClass : 'iradio_square-green',
 		// increaseArea: '20%' // optional
@@ -159,9 +159,7 @@ html, body, main, .container-fluid {
 		});
 		
 		ready_album('view');
-	
-		/* check_likes(); */
-		
+
 	});
 	// 좋아요 확인
 	function check_likes() {
@@ -176,7 +174,7 @@ html, body, main, .container-fluid {
 			},
 			dataType: 'text',
 			success: function(a){
-				alert(a);
+				
 			},
 			error:function(e){
 				alert(JSON.stringify(e));
@@ -427,10 +425,10 @@ html, body, main, .container-fluid {
 				<form id="testimg">
 					<input type="hidden" name="imgSrc" id="imgSrc" />
 				</form>	
-				<c:if test = "${check_isLike != Member.member_id}"> 
+				<c:if test = "${check_likeMember == likeit_memberid}"> 
 				<p><button type="button" onclick="likes()">좋아요!</button></p>
 				</c:if> 
-				<c:if test = "${check_isLike == Member.member_id}"> 
+				<c:if test = "${check_likeMember == likeit_memberid}"> 
 				<p><button type="button" onclick="deletelikes()">좋아요 취소!</button></p> 	
 				</c:if> 
 				<!-- 하단 바 영역 -->

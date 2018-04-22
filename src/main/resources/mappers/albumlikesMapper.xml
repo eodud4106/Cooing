@@ -29,7 +29,7 @@ delete from likeit where likeit_memberid = #{likeit_memberid} and likeit_albumnu
 <select id = "likesList" resultType = "albumlikes" parameterType="albumlikes">
 select * from likeit
 </select>
-<select id="confirm_Likes" resultType = "String" parameterType="albumlikes">
+<select id="check_Likes" resultType = "String" parameterType="albumlikes">
 	select LIKEIT_MEMBERID
 		from
 	likeit

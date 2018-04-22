@@ -86,10 +86,10 @@ public class MainController {
 		String likeit_memberid = ((Member) session.getAttribute("Member")).getMember_id();
 		System.out.println(likeit_albumnum);
 		AlbumLikesVO vo = new AlbumLikesVO(likeit_albumnum, likeit_memberid);
-		String check_isLike = null;
-		check_isLike = albumlikesDAO.confirm_Likes(vo);
+		String check_likeMember = null;
+		check_likeMember = albumlikesDAO.check_Likes(vo);
 		
-		return check_isLike;
+		return check_likeMember;
 	}
 	
 	//마이페이지
