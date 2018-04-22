@@ -29,7 +29,8 @@
 <script src="<c:url value="/resources/js/search.js"/>"></script>
 <script src="resources/js/chat.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
-
+<link rel="stylesheet" href="resources/skin_radio/green.css">
+<script src="resources/skin_radio/icheck.js"></script>
 <script>
 var pagenum = 0;
 var pagingcheck = false;
@@ -101,6 +102,16 @@ $(document).ready(function () {
 });
 </script>
 
+<!-- 정렬순 라디오버튼 -->
+<script>
+$(document).ready(function(){
+  $('input').iCheck({
+    checkboxClass: 'icheckbox_square-green',
+    radioClass: 'iradio_square-green',
+    increaseArea: '20%' // optional
+  });
+});
+</script>
 <style>
 .img1 {
 	width: 50px;
@@ -243,17 +254,14 @@ $(document).ready(function () {
                	 outline: none;
               	  width: 0px;
                	 transition: all 0.5s;" onkeydown="if(event.keyCode==13){searchfriend();}">
-  		<%-- 		 </div>
-		<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}" style = "float : left; margin-left: 200px;">
-		<input type="button" value="검색" id="searchbt"> --%>
-		<div class = "search" style= "z-index:99; float:left; padding-left : 10px;" id="searchbt" onclick=""><i class="fas fa-search"></i></div>
+  		
 			
 		<!-- 정렬순서 -->		
-		<select style = "float:right; padding-left : 10px;">
-		  <option selected >정렬순</option>
-		  <option>최신순</option>
-		  <option>인기순</option>
-		</select>	
+		<form style = "float:right; padding-left : 10px;">
+			<input type="radio" name="iCheck" class = "input"value="1" checked>최신순
+			<input type="radio" name="iCheck" class = "input"value="2" >인기순			
+			<div style= "z-index:99; float:right; " onClick="checkRadioButton('iCheck')"><i class="far fa-check-circle"></i></div>
+		</form>
 	</div>
 		<br>	
 	
