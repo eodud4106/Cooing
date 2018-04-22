@@ -127,7 +127,7 @@
 		select count(*)  from albumlist where album_category = #{album_category}
 	</select>
 	
-	<select id="MyAlbumList" parameterType="String" resultType="albumwrite">
+	<select id="IDAlbumList" parameterType="String" resultType="albumwrite">
 		select *
 	    from ALBUMLIST 
 	    where ALBUM_WRITER = #{ALBUM_WRITER} 

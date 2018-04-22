@@ -115,8 +115,6 @@ public class AlbumDAO{
 		return mapper.searchAlbum(searchtext);
 	}
 	
-
-	
 	public PageHtmlVO searchPage1(int num){
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		return mapper.searchPage1(num);		
@@ -144,10 +142,10 @@ public class AlbumDAO{
 		return mapper.TotalAlbumList(rb);			
 	}
 	
-	public ArrayList<AlbumWriteVO> MyAlbumList(String album_writer , int stratpl , int endpl){
+	public ArrayList<AlbumWriteVO> IDAlbumList(String album_writer , int stratpl , int endpl){
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		RowBounds rb = new RowBounds(stratpl , endpl);
-		return mapper.MyAlbumList(rb,album_writer);
+		return mapper.IDAlbumList(rb,album_writer);
 	}
 	
 	public int TotalAlbumCount(){

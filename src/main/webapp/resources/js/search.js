@@ -6,7 +6,7 @@
 function AlbumListPaging(check , result) {
 	if(check)
 		$('.card-columns').html('');
-	$(result).each(function(i, album) {	
+	$(result).each(function(i, album) {
 		var div_card = document.createElement('div'); //카드 클래스 div
 		var a_read_album = document.createElement('a'); //a태그
 		var img = document.createElement("img"); // 이미지 생성
@@ -27,8 +27,12 @@ function search_other(){
 }
 
 function searchfriend(){
-	//초기 친구찾아서 친구페이지 가는  코드 
 	var text = $('#friendsearch').val();
+	if('${Member.member_id}' == text){
+		location.href='./myPage';
+		return false;
+	}
+	//초기 친구찾아서 친구페이지 가는  코드 	
 	$.ajax({
 		url:'friend_check',
 		type:'POST',		

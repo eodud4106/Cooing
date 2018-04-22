@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.jinsu.dao.MemberDAO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.Member;
@@ -29,6 +30,8 @@ public class RelationController {
 	RelationDAO relationDAO;
 	@Autowired
 	MemberDAO memberDAO;
+	@Autowired
+	AlbumDAO albumDAO;
 	
 	//친구페이지
 	@RequestMapping(value="/friend_get" , method = RequestMethod.GET)
@@ -44,6 +47,8 @@ public class RelationController {
 				break;
 			}
 		}
+		int totalpage = albumDAO.IDAlbumCount(id);
+		model.addAttribute("totalpage", (totalpage/10));
 		return "friendPage";
 	}
 	

@@ -260,13 +260,49 @@ img{
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
-<script src="<c:url value="/resources/js/home.js"/>"></script>
 <script src="resources/js/chat.js"></script>
 <script src="<c:url value="/resources/js/friend.js"/>" ></script>
+<script src="<c:url value="/resources/js/search.js"/>" ></script>
 <script>
-$(document).ready(function () {
-	initialize();
+
+var pagenum = 0;
+var pagingcheck = false;
+$(window).scroll(function() {
+    if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
+    	if($('#totalpage').val() >= pagenum){
+    		getIDAlbumList();
+	    	pagingcheck = true;
+    	}
+    }
 });
+
+$(document).ready(function () {
+	if (${sessionScope.Member != null}) {
+		readyChat();
+		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
+	}
+	initialize();
+	getIDAlbumList();
+});
+
+//앨범 리스트 Ajax로 받는 코드
+function getIDAlbumList() {
+	var check  = false;
+	if(pagenum == 0)
+		check  = true;
+	$.ajax({
+		url: 'getIDAlbumList',
+		type: 'post',
+		data:{albumwriter:$('#friendid').text(),pagenum:++pagenum},
+		dataType: 'json',
+		success: function(result) {
+			AlbumListPaging(check , result);
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+}
 
 //모달
 var modal = document.getElementById("myModal");
@@ -289,102 +325,6 @@ window.onclick = function(event) {
     }
 }
 
-
-$(document).ready(function () {
-	
-	initialize();
-	
-	
-	$('window').click(function(event) {
-		if (event.target == $('#myModal')) {
-			$('#myModal').css('display', 'none');
-	    }
-	});
-	
-	$('#myBtn').click(function() {
-		$('#myModal').css('display', 'block');
-	});
-	
-	$('#myBtn_close').click(function() {
-		$('#myModal').css('display', 'none');
-	});
-	
-	$('#createBtn').click(function() {
-		$('#album_create_modal').css({
-			'display': 'block',
-			'z-index': '10000'
-		});
-	});
-	
-	$('#createBtn_close').click(function() {
-		$('#album_create_frame').attr('src', '/AlbumNameCreate');
-		$('#album_create_modal').css({
-			'display': 'none',
-			'z-index': '0'
-		});
-	});
-	
-	if (${sessionScope.Member != null}) {
-		readyChat();
-		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
-	}
-	
-	getTotalAlbumList();
-	
-});
-
-//앨범 리스트 Ajax로 받는 코드
-function getTotalAlbumList() {
-	$.ajax({
-		url: 'getTotalAlbumList',
-		type: 'post',
-		dataType: 'json',
-		success: function(result) {
-			totalAlbumList(result);
-		},
-		error: function(e) {
-			alert(JSON.stringify(e));	
-		}
-	});
-}
-
-//앨범 리스트 출력
-function totalAlbumList(result) {
-	
-	var album_num;
-	var album_html;
-	var sw = 0;
-	
-$(result).each(function(i, album) {
-		
-		album_num = album.album_num;
-		
-		for(var i=0; i<album.page_html.length; i++) {
-			
-			if(album.page_html[i] == '<' && sw == 0){
-				sw = 1;
-				album_html = album.page_html.substring(i, album.page_html.length);
-				
-				var div_card = document.createElement('div'); //카드 클래스 div
-				var div_page = document.createElement('div'); //a태그에 들어갈 div
-				var a_read_album = document.createElement('a'); //a태그
-				
-				$(div_page).addClass('page1').html(album_html);
-				a_read_album.append(div_page);
-				$(div_card).addClass('card img-loaded').append(a_read_album);
-				
-				//a태그 링크 걸어주기
-				$('.card-columns').append(div_card);
-				
-			}
-			
-		}
-		
-		sw = 0;
-		
-	});
-	
-}
 </script>
 
 <style>
@@ -460,7 +400,7 @@ select::-ms-expand { /* for IE 11 */
 
 			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
 
-			<p><img src = "<c:url value="/jinsu/memberimg?strurl=${friend_id.getMember_picture()}" />">${friend_id.getMember_id()}</p>
+			<p id="friendid"><img src = "<c:url value="/jinsu/memberimg?strurl=${friend_id.getMember_picture()}" />">${friend_id.getMember_id()}</p>
 		<p>
 			<c:if test="${check ne true }">
 				<input type="button" id="friendbt" value="친구추가" data="0">
@@ -637,6 +577,7 @@ select::-ms-expand { /* for IE 11 */
 		<div id="div_send">
 			<input type="text" id="message" autocomplete="off" />
 			<input type="button" id="sendBtn" value="전송" />
+			<input type="hidden" id="totalpage" value="${totalpage}">
 		</div>
 	</div>
 	

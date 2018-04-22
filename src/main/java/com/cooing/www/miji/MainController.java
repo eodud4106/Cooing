@@ -109,7 +109,16 @@ public class MainController {
 		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
 		int totalnum = albumDAO.IDAlbumCount(album_writer);
 		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		return albumDAO.MyAlbumList(album_writer , pl.getStartBoard() , pl.getCountPage());
+		return albumDAO.IDAlbumList(album_writer , pl.getStartBoard() , pl.getCountPage());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getIDAlbumList", method= RequestMethod.POST)
+	public ArrayList<AlbumWriteVO> getIDAlbumList(HttpSession session , String albumwriter , int pagenum) {
+		logger.info(albumwriter+"_IDalbumlist_homecontroller_ljs");
+		int totalnum = albumDAO.IDAlbumCount(albumwriter);
+		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
+		return albumDAO.IDAlbumList(albumwriter , pl.getStartBoard() , pl.getCountPage());
 	}
 	
 	//랭킹페이지

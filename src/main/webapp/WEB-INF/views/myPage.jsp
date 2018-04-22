@@ -29,6 +29,10 @@
 <script src="<c:url value="/resources/aside_js/jquery.waypoints.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/imagesloaded.pkgd.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/main.js"/>"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="resources/js/jquery-3.3.1.min.js"></script>
+<script src="resources/js/jquery-ui.min.js"></script>
 <script src="<c:url value="/resources/js/search.js"/>"></script>
 
 
@@ -39,7 +43,7 @@ var pagingcheck = false;
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
     	if($('#totalpage').val() >= pagenum){
-    		getMyAlbumList(++pagenum);
+    		getMyAlbumList();
 	    	pagingcheck = true;
     	}
     }
@@ -64,18 +68,21 @@ $(document).ready(function () {
 		location.href = './category_other?categorynum=' + $(this).attr('data') + '';
 	});
 
-	getMyAlbumList(++pagenum);	
+	getMyAlbumList();	
 });
 
 //앨범 리스트 Ajax로 받는 코드
-function getMyAlbumList(pagenum) {
+function getMyAlbumList() {
+	var check  = false;
+	if(pagenum == 0)
+		check  = true;
 	$.ajax({
 		url: 'getMyAlbumList',
 		type: 'post',
-		data:{pagenum:pagenum},
+		data:{pagenum:++pagenum},
 		dataType: 'json',
 		success: function(result) {
-				AlbumListPaging(true , result);
+				AlbumListPaging(check , result);
 		},
 		error: function(e) {
 			alert(JSON.stringify(e));	
