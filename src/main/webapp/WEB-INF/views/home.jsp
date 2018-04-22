@@ -318,7 +318,7 @@ $(document).ready(function () {
 					<c:if test="${fn:length(friend) ne 0}">
 						<c:forEach var="arrf" items="${friend }">
 							<div name="friend">
-								<p onclick="openChat('1', '${arrf}', '')">${arrf}</p>
+								<p onclick="openChat('1', '${arrf}')">${arrf}</p>
 							</div>
 						</c:forEach>
 					</c:if>

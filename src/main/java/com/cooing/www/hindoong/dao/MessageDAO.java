@@ -11,41 +11,39 @@ import org.springframework.stereotype.Repository;
 import com.cooing.www.hindoong.vo.MessageVO;
 
 @Repository
-public class MessageDAO implements MessageMapper {
+public class MessageDAO {
 	
 	@Inject
 	SqlSession session;
 
-	// 메세지 저장 후 메세지 번호 리턴
-	@Override
-	public int insertMessage(MessageVO message) {
-		
-		int result = 0;
+	// 메세지 저장 후 메세지id, 안 읽음 개수 업데이트해서 반환
+	public MessageVO insertMessage(MessageVO message) {
 		
 		try {
-			result = session.getMapper(MessageMapper.class).insertMessage(message);
+			session.getMapper(MessageMapper.class).insertMessage(message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return message.getMessage_num();
+		return message;
 	}
 
-	@Override
-	public int updateMessage(HashMap<String, String> map) {
-
-		int result = 0;
+	// 메세지를 읽은 사람을 확인하고... 처리...
+	public MessageVO updateMessage(MessageVO message) {
+		
+		System.out.println("읽음 요청 -> " + message);
 		
 		try {
-			result = session.getMapper(MessageMapper.class).updateMessage(map);
+			session.getMapper(MessageMapper.class).updateMessage(message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return result;
+		
+		System.out.println("읽음 처리 -> " + message);
+		
+		return message;
 	}
 
-	@Override
 	public ArrayList<MessageVO> selectMessage(HashMap<String, String> map) {
 		
 		ArrayList<MessageVO> mlist = new ArrayList<MessageVO>();

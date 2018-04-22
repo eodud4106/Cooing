@@ -138,6 +138,7 @@ function readyChat (userId, goRoot) {
 		"contentEditable": true
 	}).appendTo($div_chat_under_input).keydown(function(evt) {
 		if (evt.which == 13) {
+			console.log('엔터 눌림. 전송..');
 			sendMessage();
 			return;
 		}
@@ -165,12 +166,6 @@ function readyChat (userId, goRoot) {
 
 
 
-	// 테스트를 위한 코드...
-	$div_chat.css('display', 'block');
-
-
-
-
 	// // 채팅창이 꺼진 경우 세션 스토리지에서 채팅 상대를 제거한다.
  //   	if($('#div_chat').css('display') == 'none') {
  //   		sessionStorage.removeItem('counterpart');
@@ -185,7 +180,7 @@ function onOpen(evt) {
 	// 접속한 멤버의 아이디를 보낸다. 웹소켓 세션의 아이디와 1:1 매칭시키기 위함.
 	var sendMessage = {
 		type: "login",
-		id: userId
+		sender: userId
 	}
 	websocket.send(JSON.stringify(sendMessage));
 	console.log('웹소켓 연결됨..')
@@ -218,7 +213,6 @@ function openChat(is1to1, counterpart) {
 		dataType: 'text',
 		success: function(result) {
 			printChat(result);
-			readMessage();
 		},
 		error: function(e) {
 			alert('오류 발생, 코드 ->' + e.status);
@@ -245,18 +239,21 @@ function closeChat() {
 
 // 서버로 메시지 발신
 function sendMessage() {
+
+	// 빈 메세지는 보내지 않는다...
+	if($message.html() == '') return;
 	
     var sendMessage = {
-			type: "message",
-			from: userId,
-			to: counterpart,
-			is1to1: is1to1,
-			message: $message.val()
-		}
+		type: "message",
+		sender: userId,
+		addressee: counterpart,
+		is1to1: is1to1,
+		message: $message.text()
+	}
 
     websocket.send(JSON.stringify(sendMessage));
 
-    $message.val('').focus();
+    $message.html('').focus();
 
 }
 
@@ -265,27 +262,27 @@ function onMessage(evt) {
     
     var chatData = JSON.parse(evt.data);
     var is1to1 = chatData.is1to1;		// 1 = 1to1, 0 = 그룹
-    var from = chatData.message_from;
-    var to = chatData.message_to;
     
     // TODO	상대가 메시지를 읽었을 경우 채팅창에서 1을 지운다.
     if (chatData.type == 'read') {
-    	
-		$('.read').each(function(i, span) {
-			var read_count = $(span).html();
-			if (read_count != '') {
-				$(span).html(read_count-1);
-				if ($(span).html() < 1) {
-					$(span).html('');
-				}
-			}
-		});
+
+		//TODO
+
+		// $('.unread').each(function(i, unread) {
+		// 	var read_count = $(unread).html();
+		// 	if (read_count != '') {
+		// 		$(unread).html(read_count-1);
+		// 		if ($(unread).html() < 1) {
+		// 			$(unread).html('');
+		// 		}
+		// 	}
+		// });
 		return;
 	}
     
     // 메시지를 보낸 사람이 현재 대화 중인 상대 또는 자신인지 판별한다.
-    if (from == sessionStorage.getItem("counterpart") || from == sessionStorage.getItem("id")
-    		|| to == sessionStorage.getItem("counterpart")) {
+    if (chatData.sender == counterpart || chatData.sender == userId
+    		|| chatData.addressee == counterpart) {
 		// 현재 대화 중인 상대 또는 자신 -> 대화창에 메시지 출력
     		printChat(evt.data);	
     		
@@ -298,10 +295,10 @@ function onMessage(evt) {
 		// 알림2. 대화창 빨간색 표시
 		if (is1to1 == 1) {
 			// 1:1
-			$('p:contains(' + from + ')').css('color', 'red');
+			$('p:contains(' + sender + ')').css('color', 'red');
 		} else {
 			// 그룹
-			$('p[partynum = "' + to + '"]').css('color', 'red');
+			$('p[partynum = "' + addressee + '"]').css('color', 'red');
 		}
 	}
     
@@ -319,38 +316,38 @@ function printChat(chatData) {
 		var $div_message = $('<div />');
 		var html = "";
 		
-		if (chat.message_from == userId) {
+		if (chat.sender == userId) {
 			//자기가 보낸 메시지
 			$div_message.css('text-align', 'right');
-			if (chat.message_read > 0) {
+			if (chat.unread > 0) {
 				// 1. 읽지 않음이 있는 경우
-				html += "<span class='read' style='font-size: 6pt'>" + chat.message_read + "</span>";
+				html += "<span class='unread' style='font-size: 6pt'>" + chat.unread + "</span>";
 			}
-			html += chat.message_date.substring(0,16) + " / " + chat.message_message + " < <br>";
+			html += chat.send_date.substring(0,16) + " / " + chat.message + " < <br>";
 			$div_message.html(html);
 	
 		} else {
 			//받은 메시지
 			$div_message.css('text-align', 'left');
-			html += chat.message_from + " > " + chat.message_message + " / " + chat.message_date.substring(0,16);
-			if (chat.message_read > 0) {
+			html += chat.sender + " > " + chat.message + " / " + chat.send_date.substring(0,16);
+			if (chat.unread > 0) {
 				// 1. 읽지 않음이 있는 경우
 				if (chat.is1to1 == 0) {
-					html += "<span class='read' style='font-size: 6pt'>" + chat.message_read + "</span>";
+					html += "<span class='unread' style='font-size: 8pt'>" + chat.unread + "</span>";
 				}
 			}
 			html += "<br>";
 			$div_message.html(html);
 		}
 		
-		$message_list.append(div_message);
+		$message_list.append($div_message);
 		
 	});
 	
 	// 메시지를 읽었다고 알려준다..
 	readMessage();
 	
-	$("#data").scrollTop($("#data")[0].scrollHeight);
+	$message_list.scrollTop($message_list[0].scrollHeight);
 	
 }
 
@@ -367,9 +364,10 @@ function readMessage() {
     //웹소켓 서버로 메시지를 읽었다는 내용의 메시지를 전송
     var sendMessage = {
 		type: "read",
-		id: sessionStorage.getItem('id'),
-		counterpart: sessionStorage.getItem('counterpart'),
-		is1to1: sessionStorage.getItem('is1to1')
+		is1to1: is1to1,
+		sender: counterpart,
+		addressee: userId,
+		unread: userId
 	}
    	websocket.send(JSON.stringify(sendMessage));
 }

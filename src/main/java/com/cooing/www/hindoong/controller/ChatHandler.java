@@ -44,7 +44,6 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	
 	public ChatHandler() {
 		super();
-		this.logger.info("create SocketHandler instance!");
 	}
 
 	//웹소켓 연결이 닫혔을 때 호출
@@ -72,24 +71,24 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 		super.handleMessage(session, message);
 		
-		HashMap<String, String> map_message = new HashMap<String, String>();
-		MessageVO msg = new MessageVO();
+		// 메세지....
+		MessageVO msg = null;
 		
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			//사용자가 보낸 메세지는 message.getPayload에 담겨 있다.
-			map_message = mapper.readValue(message.getPayload().toString(), 
-					new TypeReference<HashMap<String, String>>(){});
+			msg = mapper.readValue(message.getPayload().toString(), 
+					new TypeReference<MessageVO>(){});
 			
 			// 메세지의 타입
-			String type = map_message.get("type");
+			String type = msg.getType();
 			
 			// 타입 별 처리
 			if(type.equals("login")) {
 				// 1. [홈페이지 접속]
 				// 실제 id와 웹소켓 세션 id를 key, value로 저장 
 				// (메시지 푸시 받을 id -> 웹소켓 세션 id -> 발송) 구조이기 때문.
-				hashmap_id.put(map_message.get("id"), session.getId());
+				hashmap_id.put(msg.getSender(), session.getId());
 				
 			} else if (type.equals("message")) {
 				// 2. [사용자가 보낸 메시지]
@@ -98,28 +97,16 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String message_date = sdf.format(new Date());
 				
-				msg.setMessage_from(map_message.get("from"));
-				msg.setMessage_to(map_message.get("to"));
-				msg.setMessage_message(map_message.get("message"));
-				msg.setIs1to1(Integer.parseInt(map_message.get("is1to1")));
-				msg.setMessage_date(message_date);
+				msg.setSend_date(message_date);
 				
-				if (msg.getIs1to1() == 1) {
-					msg.setMessage_read("1");
-				} else {
-					msg.setMessage_read(rDAO.searchPartyMember(Integer.parseInt(msg.getMessage_to())).size()-1+"");
-				}
+				MessageVO saved_msg = mDAO.insertMessage(msg);
 				
-				sendMessage(msg);
-				
-				//db에 넣는 작업에서 딜레이가 발생하기 때문에 푸시 후 db에 넣는다.
-				mDAO.insertMessage(msg);
+				sendMessage(saved_msg);
 				
 			} else if (type.equals("read")) {
 				// 3. [메시지 읽음]
-				if(mDAO.updateMessage(map_message) > 0) {
-					readMessage(map_message);
-				}
+				MessageVO m = mDAO.updateMessage(msg);
+				readMessage(m);
 			}
 		
 		} catch (Exception e) {
@@ -143,26 +130,26 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	}
 
 	// 대화 푸시
-	public void sendMessage(MessageVO message) {
+	public void sendMessage(MessageVO msg) {
 		
 		try {
 			
 			// 1:1 채팅 & 그룹채팅 여부에 따른 처리
-			if (message.getIs1to1() == 1) {
+			if (msg.getIs1to1() == 1) {
 			
 				for (WebSocketSession session : this.sessionSet) {
 					if (session.isOpen()) {
 						
 						// 1:1 채팅(가독성을 위해 1, 2로 나누어 작성)
 						// 1. 발신인이 웹소켓 세션에 있을 경우 메시지 푸시
-						if (hashmap_id.containsKey(message.getMessage_from())
-								&& hashmap_id.get(message.getMessage_from()).equals(session.getId())) {
-							session.sendMessage(new TextMessage(gson.toJson(message)));
+						if (hashmap_id.containsKey(msg.getSender())
+								&& hashmap_id.get(msg.getSender()).equals(session.getId())) {
+							session.sendMessage(new TextMessage(gson.toJson(msg)));
 						} 
 						// 2. 수신인이 웹소켓 세션에 있을 경우 메시지 푸시
-						else if (hashmap_id.containsKey(message.getMessage_to())
-								&& hashmap_id.get(message.getMessage_to()).equals(session.getId())) {
-							session.sendMessage(new TextMessage(gson.toJson(message)));
+						else if (hashmap_id.containsKey(msg.getAddressee())
+								&& hashmap_id.get(msg.getAddressee()).equals(session.getId())) {
+							session.sendMessage(new TextMessage(gson.toJson(msg)));
 						}
 					}
 				}
@@ -172,7 +159,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 
 				// 1. message_to(수신 대상 그룹)으로 그룹 멤버를 조회
 				ArrayList<PartyMember> arr_partymember = 
-						rDAO.searchPartyMember(Integer.parseInt(message.getMessage_to()));
+						rDAO.searchPartyMember(Integer.parseInt(msg.getAddressee()));
 				// 2. 조회한 그룹 멤버들의 id 중 현재 세션에 연결된 경우 메시지 발신
 				
 				for (PartyMember partyMember : arr_partymember) {
@@ -182,7 +169,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 						if (session.isOpen()) {
 							if (hashmap_id.containsKey(memberid)
 									&& hashmap_id.get(memberid).equals(session.getId())) {
-								session.sendMessage(new TextMessage(gson.toJson(message)));
+								session.sendMessage(new TextMessage(gson.toJson(msg)));
 							}
 						}
 					}
@@ -196,20 +183,20 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	}
 	
 	//읽음 처리
-	public void readMessage(HashMap<String, String> map) {
+	public void readMessage(MessageVO msg) {
 		
 		try {
 			
 			// 1:1 채팅 & 그룹채팅 여부에 따른 처리
-			if (map.get("is1to1").equals("1")) {
+			if (msg.getIs1to1() == 1) {
 			
 				for (WebSocketSession session : this.sessionSet) {
 					if (session.isOpen()) {
 						
 						// 1. 발신인이 웹소켓 세션에 있을 경우 읽음 푸시
-						if (hashmap_id.containsKey(map.get("counterpart"))
-								&& hashmap_id.get(map.get("counterpart")).equals(session.getId())) {
-							session.sendMessage(new TextMessage(gson.toJson(map)));
+						if (hashmap_id.containsKey(msg.getAddressee())
+								&& hashmap_id.get(msg.getAddressee()).equals(session.getId())) {
+							session.sendMessage(new TextMessage(gson.toJson(msg)));
 						}
 					}
 				}
@@ -219,7 +206,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 
 				// 1. message_to(수신 대상 그룹)으로 그룹 멤버를 조회
 				ArrayList<PartyMember> arr_partymember = 
-						rDAO.searchPartyMember(Integer.parseInt(map.get("counterpart")));
+						rDAO.searchPartyMember(Integer.parseInt(msg.getAddressee()));
 				// 2. 조회한 그룹 멤버들의 id 중 현재 세션에 연결된 경우 읽음 메시지 발신
 				
 				for (PartyMember partyMember : arr_partymember) {
@@ -228,7 +215,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 						if (session.isOpen()) {
 							if (hashmap_id.containsKey(memberid)
 									&& hashmap_id.get(memberid).equals(session.getId())) {
-								session.sendMessage(new TextMessage(gson.toJson(map)));
+								session.sendMessage(new TextMessage(gson.toJson(msg)));
 							}
 						}
 					}

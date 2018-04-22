@@ -375,7 +375,8 @@ public class AlbumEditController {
 					filein.close();
 					fileout.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					//오류 뜨는 게 보기 싫어 잠깐 끔...
+					//e.printStackTrace();
 				}
 			}
 			return null;

@@ -2,34 +2,38 @@ package com.cooing.www.hindoong.vo;
 
 public class MessageVO {
 	
-	private int message_num;
+	private int message_id;
 	private int is1to1;			// 1 = 1to1, 0 = 그룹
-	private String message_from;
-	private String message_to;
-	private String message_message;
-	private String message_read;
-	private String message_date;
+	private String sender;
+	private String addressee;
+	private String message;
+	private String unread;
+	private String send_date;
+	private String type;		// handler 처리 편의 변수
+	private String ids;			// 읽음 처리 편의 변수
 	
 	public MessageVO () {}
 
-	public MessageVO(int message_num, int is1to1, String message_from, String message_to, String message_message,
-			String message_read, String message_date) {
+	public MessageVO(int message_id, int is1to1, String sender, String addressee, String message, String unread,
+			String send_date, String type, String ids) {
 		super();
-		this.message_num = message_num;
+		this.message_id = message_id;
 		this.is1to1 = is1to1;
-		this.message_from = message_from;
-		this.message_to = message_to;
-		this.message_message = message_message;
-		this.message_read = message_read;
-		this.message_date = message_date;
+		this.sender = sender;
+		this.addressee = addressee;
+		this.message = message;
+		this.unread = unread;
+		this.send_date = send_date;
+		this.type = type;
+		this.ids = ids;
 	}
 
-	public int getMessage_num() {
-		return message_num;
+	public int getMessage_id() {
+		return message_id;
 	}
 
-	public void setMessage_num(int message_num) {
-		this.message_num = message_num;
+	public void setMessage_id(int message_id) {
+		this.message_id = message_id;
 	}
 
 	public int getIs1to1() {
@@ -40,51 +44,70 @@ public class MessageVO {
 		this.is1to1 = is1to1;
 	}
 
-	public String getMessage_from() {
-		return message_from;
+	public String getSender() {
+		return sender;
 	}
 
-	public void setMessage_from(String message_from) {
-		this.message_from = message_from;
+	public void setSender(String sender) {
+		this.sender = sender;
 	}
 
-	public String getMessage_to() {
-		return message_to;
+	public String getAddressee() {
+		return addressee;
 	}
 
-	public void setMessage_to(String message_to) {
-		this.message_to = message_to;
+	public void setAddressee(String addressee) {
+		this.addressee = addressee;
 	}
 
-	public String getMessage_message() {
-		return message_message;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setMessage_message(String message_message) {
-		this.message_message = message_message;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
-	public String getMessage_read() {
-		return message_read;
+	public String getUnread() {
+		return unread;
 	}
 
-	public void setMessage_read(String message_read) {
-		this.message_read = message_read;
+	public void setUnread(String unread) {
+		this.unread = unread;
 	}
 
-	public String getMessage_date() {
-		return message_date;
+	public String getSend_date() {
+		return send_date;
 	}
 
-	public void setMessage_date(String message_date) {
-		this.message_date = message_date;
+	public void setSend_date(String send_date) {
+		this.send_date = send_date;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
 	}
 
 	@Override
 	public String toString() {
-		return "MessageVO [message_num=" + message_num + ", is1to1=" + is1to1 + ", message_from=" + message_from
-				+ ", message_to=" + message_to + ", message_message=" + message_message + ", message_read="
-				+ message_read + ", message_date=" + message_date + "]";
+		return "MessageVO [message_id=" + message_id + ", is1to1=" + is1to1 + ", sender=" + sender + ", addressee="
+				+ addressee + ", message=" + message + ", unread=" + unread + ", send_date=" + send_date + ", type="
+				+ type + ", ids=" + ids + "]";
 	}
+
+	
+	
 
 }
