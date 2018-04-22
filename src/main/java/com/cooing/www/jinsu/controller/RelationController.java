@@ -73,7 +73,13 @@ public class RelationController {
 		map.put("person", personally.getMember_id());
 		map.put("friend", friend.getMember_id());				
 		if(relationDAO.insertFriend(map) == true){
-			return "success";
+			map.clear();
+			//서로 친구 추가 되게 늘렸으나 맞는지 모르겠어서 확인 해봐야 한다.
+			map.put("friend", personally.getMember_id());
+			map.put("person", friend.getMember_id());
+			if(relationDAO.insertFriend(map) == true){
+				return "success";
+			}
 		}
 		return "친구 추가를 실패 했습니다. 잠시 후 다시 시도해 주십시오.";
 	}

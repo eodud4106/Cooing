@@ -232,11 +232,15 @@
 		select *
 	    from albumlist
 	    where album_writer = #{album_writer} 
+	    and (album_openrange = 2 or album_openrange = 1)	    
 	    order by album_num desc
 	</select>
 	
 	<select id="IDAlbumCount" parameterType="String" resultType="int">
-		select count(*) from albumlist where album_writer = #{album_writer} order by album_num desc
+		select count(*) from albumlist 
+		where album_writer = #{album_writer} 
+		and (album_openrange = 2 or album_openrange = 1)
+		order by album_num desc
 	</select>
 	
 </mapper>
