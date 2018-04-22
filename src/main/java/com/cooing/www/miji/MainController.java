@@ -96,7 +96,7 @@ public class MainController {
 	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
 	public String myPage(HttpSession session , Model model){
 		Member member = (Member)session.getAttribute("Member");
-		int totalpage = albumDAO.IDAlbumCount(member.getMember_id());
+		int totalpage = albumDAO.MyAlbumCount(member.getMember_id());
 		model.addAttribute("totalpage", (totalpage/10));		
 		return "myPage";
 	}
@@ -107,9 +107,9 @@ public class MainController {
 	public ArrayList<AlbumWriteVO> getMyAlbumList(HttpSession session , int pagenum) {
 		logger.info("myalbumlist_homecontroller_ljs");
 		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-		int totalnum = albumDAO.IDAlbumCount(album_writer);
+		int totalnum = albumDAO.MyAlbumCount(album_writer);
 		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		return albumDAO.IDAlbumList(album_writer , pl.getStartBoard() , pl.getCountPage());
+		return albumDAO.MyAlbumList(album_writer , pl.getStartBoard() , pl.getCountPage());
 	}
 	
 	@ResponseBody

@@ -4,6 +4,8 @@ package com.cooing.www.jinsu.controller;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
-import com.cooing.www.dy.vo.PageHtmlVO;
 import com.cooing.www.jinsu.dao.SearchDAO;
 import com.cooing.www.jinsu.object.CategoryPop;
 import com.cooing.www.jinsu.object.HashTag;
+import com.cooing.www.jinsu.object.Member;
 import com.cooing.www.jinsu.object.PageLimit;
 import com.cooing.www.jinsu.object.Search;
 
@@ -67,10 +69,11 @@ public class SearchController {
 	
 	@ResponseBody
 	@RequestMapping(value="/searchTotalCount" , method = RequestMethod.POST)
-	public int searchTotalCount(){
+	public int searchTotalCount(HttpSession session){
 		logger.info("search_total_count__jinsu");
 		//나누기를 하는 이유는 페이지 카운트로 들어갈 것이기 때문에 10개 씩 추가되기에 10으로 나눔
-		return albumDAO.TotalAlbumCount() / 10;		
+		Member member = (Member)session.getAttribute("Member");
+		return albumDAO.TotalAlbumCount(member.getMember_id()) / 10;		
 	}
 	
 	@ResponseBody

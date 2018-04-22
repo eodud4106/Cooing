@@ -49,7 +49,7 @@ public class HomeController {
 			model.addAttribute("friend", arr_friend);
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
 			model.addAttribute("group", arraystrval);
-			int totalpage = albumDAO.TotalAlbumCount();
+			int totalpage = albumDAO.TotalAlbumCount(personal.getMember_id());
 			model.addAttribute("totalpage", (totalpage/10));
 		}
 		
@@ -98,9 +98,9 @@ public class HomeController {
 	@RequestMapping(value = "/getTotalAlbumList", method= RequestMethod.POST)
 	public ArrayList<AlbumWriteVO> getMyAlbumList(int pagenum , HttpSession session) {
 		logger.info(pagenum + "_page_list ljs");
-		int totalnum = albumDAO.TotalAlbumCount();
-		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
 		Member member = (Member)session.getAttribute("Member");
+		int totalnum = albumDAO.TotalAlbumCount(member.getMember_id());
+		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
 		return albumDAO.TotalAlbumList(pl.getStartBoard() , pl.getCountPage() , member.getMember_id());
 	}
 	
