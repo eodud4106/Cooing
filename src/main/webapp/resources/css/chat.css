@@ -9,9 +9,9 @@
 	z-index: 2000; /* 채팅창을 가장 위로!! */
 	padding: 0px;
 	opacity: 1;
-	background-color: rgb(240, 240, 240);
+	background-color: rgb(250, 250, 250);
 	display: none;
-	box-shadow: 3px 3px 6px rgba(0,0,0,.5);
+	box-shadow: 1px 1px 10px rgba(0,0,0,.5);
 }
 
 .div_chat_top, .div_chat_content, .div_chat_under {

@@ -13,41 +13,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- 기본 js -->
-<script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="resources/js/jquery-ui.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 
-<script src="../resources/aside_js/popper.min.js"></script>
-<script src="../resources/aside_js/owl.carousel.min.js"></script>
-<script src="../resources/aside_js/jquery.waypoints.min.js"></script>
-<script src="../resources/aside_js/imagesloaded.pkgd.min.js"></script>
-<script src="../resources/aside_js/main.js"></script>
+<script src="resources/aside_js/popper.min.js"></script>
+<script src="resources/aside_js/owl.carousel.min.js"></script>
+<script src="resources/aside_js/jquery.waypoints.min.js"></script>
+<script src="resources/aside_js/imagesloaded.pkgd.min.js"></script>
+<script src="resources/aside_js/main.js"></script>
 
-<script src="../resources/skin_radio/icheck.js"></script>
+<script src="resources/skin_radio/icheck.js"></script>
 
 <!-- 페이지 넘김 효과를 위한 js -->
-<script type="text/javascript" src="../resources/js/turn.js"></script>
+<script type="text/javascript" src="resources/js/turn.js"></script>
 
 <!-- albumEdit 용 js -->
-<script type="text/javascript" src="../resources/js/albumEdit.js"></script>
-<script type="text/javascript" src="../resources/js_js/html2canvas.min.js"></script>
+<script type="text/javascript" src="resources/js/albumEdit.js"></script>
+<script type="text/javascript" src="resources/js_js/html2canvas.min.js"></script>
 <!-- 기본 css -->
-<link rel="stylesheet" href="../resources/css/albumEdit.css">
-<link rel="stylesheet" href="../resources/css/jquery-ui.min.css">
+<link rel="stylesheet" href="resources/css/albumEdit.css">
+<link rel="stylesheet" href="resources/css/jquery-ui.min.css">
 
 <!-- 기타 css -->
-<link rel="stylesheet" href="../resources/album_css/album_edit_basic.css">
-<link rel="stylesheet" href="../resources/album_css/album_edit_drag_and_drop.css">
+<link rel="stylesheet" href="resources/album_css/album_edit_basic.css">
+<link rel="stylesheet" href="resources/album_css/album_edit_drag_and_drop.css">
 
-<link rel="stylesheet" href="../resources/aside_css/bootstrap.min.css">
-<link rel="stylesheet" href="../resources/aside_css/open-iconic-bootstrap.min.css">
-<link rel="stylesheet" href="../resources/aside_css/owl.carousel.min.css">
-<link rel="stylesheet" href="../resources/aside_css/owl.theme.default.min.css">
-<link rel="stylesheet" href="../resources/aside_css/icomoon.css">
-<link rel="stylesheet" href="../resources/aside_css/animate.css">
-<link rel="stylesheet" href="../resources/aside_css/style.css">
+<link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/aside_css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="resources/aside_css/owl.carousel.min.css">
+<link rel="stylesheet" href="resources/aside_css/owl.theme.default.min.css">
+<link rel="stylesheet" href="resources/aside_css/icomoon.css">
+<link rel="stylesheet" href="resources/aside_css/animate.css">
+<link rel="stylesheet" href="resources/aside_css/style.css">
 
-<link rel="stylesheet" href="../resources/skin_radio/green.css">
+<link rel="stylesheet" href="resources/skin_radio/green.css">
 
 <style type="text/css">
 

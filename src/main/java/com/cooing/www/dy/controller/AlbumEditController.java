@@ -110,7 +110,7 @@ public class AlbumEditController {
 		}
 		
 			
-		return "Album/edit_album";
+		return "album/edit_album";
 	}
 	
 
