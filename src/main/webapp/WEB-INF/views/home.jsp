@@ -134,7 +134,18 @@ $(document).ready(function () {
 	text-decoration: none;
 	cursor: pointer;
 }
-
+.friendList{
+	height: 300px;	
+	overflow : scroll;
+	overflow-x:hidden;
+	/* overflow-y:hidden; */
+}
+.groupList{
+	height: 200px;
+	overflow : scroll;
+	overflow-x:hidden;
+	/* overflow-y:hidden; */
+}
 
 </style>
 </head>
@@ -215,9 +226,25 @@ $(document).ready(function () {
 	</div>
 	
 	<div class ="search-bar">
-		<br>
+		<br><br>
+		<div align="center">
+       			 <img id='image_search' src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
+       			 height: 24px;margin-right: 5px;" onclick="var inputBox = document.getElementById('searchtx');
+       			 inputBox.style.width = '200px';
+        		 inputBox.style.paddingLeft='3px';
+       			 inputBox.value='';
+       			 inputBox.focus();">
+     			 <input id='searchtx' type="text" onblur="this.style.width='0px';
+             	  this.style.paddingLeft='0px';" style="  border: none;
+              	 background-color: rgba(0,0,0,0);
+              	 color: #666666;
+               	 border-bottom: solid 2px #333;
+               	 outline: none;
+              	  width: 0px;
+               	 transition: all 0.5s;" onkeydown="if(event.keyCode==13){searchfriend();}">
+  		<%-- 		 </div>
 		<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}" style = "float : left; margin-left: 200px;">
-		<input type="button" value="검색" id="searchbt">
+		<input type="button" value="검색" id="searchbt"> --%>
 		<div class = "search" style= "z-index:99; float:left; padding-left : 10px;" id="searchbt" onclick=""><i class="fas fa-search"></i></div>
 			
 		<!-- 정렬순서 -->		
@@ -279,19 +306,13 @@ $(document).ready(function () {
 			<span class="oi oi-arrow-right"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING2</a>
-			<p class="mb-0">
-				Another free html5 bootstrap 4 template by
-				<a href="https://uicookies.com/" target="_blank">uiCookies</a>
-			</p>
-		</div>
-		<div class="probootstrap-overflow">
-			<div>
-				<form>
-					<input type="text" placeholder="친구검색" id="friendsearch" class="search1">
+			<a href="" class="mb-2 d-block probootstrap-logo">MY FRIEND</a>			
+		</div>				
+				 <form>
+					<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
 					<input type="button" id="friendsearchbt" value="s">
 				</form>
-
+			<div class = "friendList">
 				<c:if test="${Member ne null}">
 					<c:if test="${fn:length(friend) ne 0}">
 						<c:forEach var="arrf" items="${friend }">
@@ -302,7 +323,14 @@ $(document).ready(function () {
 					</c:if>
 				</c:if>
 			</div>
-			<div>
+		
+		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
+			<a href="" class="mb-2 d-block probootstrap-logo">MY GROUP</a>				
+		</div>				
+		<!-- <div class="probootstrap-overflow"> -->
+		<input type="button" value="그룹생성"
+					onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
+			<div class = "groupList">
 				<c:if test="${Member ne null}">
 					<c:if test="${fn:length(group) ne 0}">
 						<c:forEach var="party" items="${group}">
@@ -314,10 +342,8 @@ $(document).ready(function () {
 							</div>
 						</c:forEach>
 					</c:if>
-				</c:if>
-				<input type="button" value="그룹생성"
-					onclick="window.open('./groupcreate_get?','','width=300 height=400 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
-			</div>
+				</c:if>				
+			<!-- </div> -->
 		</div>
 
 	</aside>

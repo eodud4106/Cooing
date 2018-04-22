@@ -7,7 +7,7 @@ function initialize(){
 	$('#groupid').keyup(searchword);
 	$('#groupname').keyup(searchgroupname);
 }
-function searchgroupname(){
+function searchgroupname(){	
 	var name = $('#groupname').val();
 	if(name.length > 0){
 		$.ajax({
@@ -19,11 +19,11 @@ function searchgroupname(){
 				if(a == 'success'){
 					$('#createbt').off();
 					$('#createbt').on('click' , creategroup);
-					$('#groupbody').css('background-color','#00ff00');
+					//$('#groupbody').css('background-color','#00ff00');
 				}
 				else{
 					$('#createbt').off();
-					$('#groupbody').css('background-color','#ff0000');														
+					//$('#groupbody').css('background-color','#ff0000');														
 				}
 			},
 			error:function(e){alert(JSON.stringify(e));}		
@@ -72,6 +72,7 @@ function creategroup(){
 		});
 	}	
 }
+
 function searchfriend(){
 	var text = $('#groupid').val();
 	var id = $('#searchidbt').attr('data');
