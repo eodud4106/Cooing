@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="resources/aside_css/icomoon.css">
 <link rel="stylesheet" href="resources/aside_css/animate.css">
 <link rel="stylesheet" href="resources/aside_css/style.css">
+<link rel="stylesheet" href="resources/css/chat.css">
 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="resources/js/jquery-3.3.1.min.js"></script>
@@ -27,6 +28,7 @@
 <script src="<c:url value="/resources/js/home.js"/>"></script>
 <script src="<c:url value="/resources/js/search.js"/>"></script>
 <script src="resources/js/chat.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 
 <script>
 var pagenum = 0;
@@ -76,8 +78,7 @@ $(document).ready(function () {
 	});
 	
 	if (${sessionScope.Member != null}) {
-		readyChat();
-		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
+		readyChat('${sessionScope.Member.member_id}', '');
 	}	
 	//0번이면 검색으로 넘어온 경우 ,  1번이면 카테고리 눌러서 넘어온 경우 , 엘스는 그냥 홈에 온 경우 
 	if(${search_other == 0}){
@@ -347,21 +348,6 @@ $(document).ready(function () {
 		</div>
 
 	</aside>
-
-	<div id="div_chat" 
-		style="width: 500px; height: 500px; position: absolute; padding: 0px; opacity: 1; background-color: rgb(240, 240, 240); display: none;">
-		<p>
-			<button id="button_close" onclick="closePChat()">닫기</button>
-		</p>
-		<div id="data" 
-			style="height: 350px; width: 100%; overflow-y: scroll; margin: auto; display: block; padding: 0px"></div>
-
-		<div id="div_send">
-			<input type="text" id="message" autocomplete="off" />
-			<input type="button" id="sendBtn" value="전송" />
-			<input type="hidden" id="totalpage" value="${totalpage}">
-		</div>
-	</div>
 
 	<script src="resources/aside_js/popper.min.js"></script>
 	<script src="resources/aside_js/bootstrap.min.js"></script>

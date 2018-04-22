@@ -16,6 +16,7 @@ public class MessageDAO implements MessageMapper {
 	@Inject
 	SqlSession session;
 
+	// 메세지 저장 후 메세지 번호 리턴
 	@Override
 	public int insertMessage(MessageVO message) {
 		
@@ -27,7 +28,7 @@ public class MessageDAO implements MessageMapper {
 			e.printStackTrace();
 		}
 		
-		return result;
+		return message.getMessage_num();
 	}
 
 	@Override

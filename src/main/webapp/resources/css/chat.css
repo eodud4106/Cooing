@@ -1,0 +1,82 @@
+/* 채팅 디자인.......... */
+
+.div_chat {
+	width: 400px;
+	height: 500px;
+	position: absolute;
+	left: 30%;
+	top: 30%;
+	z-index: 2000; /* 채팅창을 가장 위로!! */
+	padding: 0px;
+	opacity: 1;
+	background-color: rgb(240, 240, 240);
+	display: none;
+	box-shadow: 2px 2px 5px rgba(0,0,0,.5);
+}
+
+.div_chat_top, .div_chat_content, .div_chat_under {
+	width: 100%;
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+.div_chat_top {
+	height: 50px;
+	border-bottom: 1px solid black;
+}
+
+.div_chat_content {
+	height: 350px;
+	border-bottom: 1px solid black;
+}
+
+.div_chat_under {
+	height: 100px;	
+}
+
+.div_chat_top_title, .div_chat_top_close, .div_chat_under_input, .div_chat_under_send {
+	height: 100%;
+	display: inline-block;
+	float: left;
+}
+
+.div_chat_top_title {
+	width: 350px;
+}
+
+.div_chat_top_close {
+	width: 50px;
+	padding: 10px;
+}
+
+.div_chat_under_input {
+	width: 350px;
+	padding: 5px;
+}
+
+.div_chat_under_send {
+	width: 50px;
+	padding: 10px;
+}
+
+.div_chat_under_input_box {
+	height: 100%;
+	background-color: white;
+	padding: 5px;
+	word-wrap: break-word;
+	-webkit-nbsp-mode: space;
+	line-break: after-white-space;
+	-webkit-user-modify: read-write;
+}
+
+
+
+
+
+
+/* 효과 적용 */ 
+
+.div_chat_top_close:hover, .div_chat_under_send:hover {
+	cursor: pointer;
+}

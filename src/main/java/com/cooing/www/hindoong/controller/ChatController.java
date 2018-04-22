@@ -32,6 +32,8 @@ public class ChatController {
 	@RequestMapping(value = "/getChat", method = RequestMethod.POST)
 	public ArrayList<MessageVO> getChat(Model model, String counterpart, String is1to1, HttpSession session) {
 		
+		logger.debug("chatController -> 대화목록 불러오기");
+		
 		String id = ((Member) session.getAttribute("Member")).getMember_id();
 		HashMap<String, String> map_search = new HashMap<>();
 		

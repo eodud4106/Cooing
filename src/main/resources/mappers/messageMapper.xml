@@ -8,38 +8,41 @@
 
 	<!-- message 저장 -->
 	<insert id="insertMessage" parameterType="message">
-	INSERT INTO message (
-		message_num,
-		message_from,
-		message_to,
-		is1to1,
-		message_message,
-		message_read,
-		message_date
-	)
-	VALUES (
-		message_seq.nextval,
-		#{message_from},
-		#{message_to},
-		#{is1to1},
-		#{message_message},
-		<if test="is1to1 == 1">
-		CONCAT( (CONCAT('.', #{message_to})), '.'),
-		</if>
-		<if test="is1to1 == 0">
-		(
-		SELECT 
-			LISTAGG( CONCAT( (CONCAT('.', g_member_memberid)), '.'), '')
-			WITHIN GROUP (ORDER BY g_member_memberid)
-		FROM partymember
-		WHERE
-			g_member_memberid != #{message_from}
-			AND g_member_partynum = #{message_to}
-		GROUP BY g_member_partynum
-		),
-		</if>
-		sysdate
-	)
+		INSERT INTO message (
+			message_num,
+			message_from,
+			message_to,
+			is1to1,
+			message_message,
+			message_read,
+			message_date
+		)
+		VALUES (
+			message_seq.nextval,
+			#{message_from},
+			#{message_to},
+			#{is1to1},
+			#{message_message},
+			<if test="is1to1 == 1">
+			CONCAT( (CONCAT('.', #{message_to})), '.'),
+			</if>
+			<if test="is1to1 == 0">
+			(
+			SELECT 
+				LISTAGG( CONCAT( (CONCAT('.', g_member_memberid)), '.'), '')
+				WITHIN GROUP (ORDER BY g_member_memberid)
+			FROM partymember
+			WHERE
+				g_member_memberid != #{message_from}
+				AND g_member_partynum = #{message_to}
+			GROUP BY g_member_partynum
+			),
+			</if>
+			sysdate
+		)
+		<selectKey keyProperty="message_num" resultType="Integer" order="AFTER"> 
+			SELECT message_seq.currval FROM dual
+		</selectKey>
 	</insert>
 	
 	<!-- message 읽음 처리 -->

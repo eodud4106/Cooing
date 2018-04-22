@@ -1,52 +1,182 @@
 /**
  * 채팅 관련 메소드 모음
  */
+
+ // 채팅에 쓸 웹소켓과 위치
 var websocket;
 var wsUri = "ws://localhost:8888/www/chat/echo.do";
 
-// 로그인 상태일 경우 채팅 준비
-function readyChat () {
-	
-	// 채팅창을 드래그로 위치 이동가능하게 만듦
-	$('#div_chat').draggable();
-	
-	// 전송 버튼을 클릭할 경우 메시지 발송
- 	$("#sendBtn").on('click', function() {
-		sendMessage();
+var userId;
+var counterpart;
+var is1to1;
+var goRoot;
+
+// 자주 사용할 div들
+var $div_chat;
+var $title;
+var $message_list;
+var $message;
+
+/**
+ *	TODO
+ *	1. 모든 페이지에서 div_chat 기준으로 채팅창 열 수 있도록 js 내부에서 동적 생성
+ *	2. 스타일은 css로
+ *	3. 디자인 개선...
+ *	4. 창이 넘어갈 때는 채팅창 어떻게 할 것인지?
+ */
+
+/*
+ *	로그인 상태일 경우 채팅 준비
+ *	@param (로그인 아이디, chat창이 될 빈 div)
+ */ 
+function readyChat (userId, goRoot) {
+
+	console.log('채팅 준비!');
+
+	// 로그인 정보 확인 후 전역변수에 저장
+	if(userId == '') {
+		// 로그인 정보 없음
+		return;
+	} else {
+		this.userId = userId;
+	}
+
+	// 루트(홈)으로 가는 경로 저장...
+	this.goRoot = goRoot;
+
+	// 웹소켓 연결
+ 	websocket = new WebSocket(wsUri);
+ 	
+ 	// 웹소켓 이벤트 별 함수 연결
+
+ 	// 채팅 연결
+ 	websocket.onopen = function(evt) {
+   		onOpen(evt)
+   	};
+
+   	// 메세지 수신
+ 	websocket.onmessage = function(evt) {
+   		onMessage(evt)
+   	};
+
+   	// 에러 수신
+   	websocket.onerror = function(evt) {
+   		//onError(evt)
+   	};
+
+   	// 웹소켓 종료
+   	websocket.onclose = function(evt) {
+   		closeChat(evt)
+   	};
+
+   	// 채팅창 생성, 채팅창 스타일 적용, 드래그 온(window를 벗어나지 못하게 제한)
+   	$div_chat = $('<div />', {
+   		"id": "div_chat",
+   		"class": "div_chat"
+   	}).appendTo('body').draggable({
+		containment: "window",
+		cancel: '.div_chat_under'
+	})
+		
+
+
+	/*
+	 *	상단바 div 디자인
+	 */ 
+	// 전체 div
+	var $div_chat_top = $('<div />', {
+		"class": "div_chat_top"
 	});
- 	$("#message").keydown(function(evt) {
+	// 제목 부분
+	$title = $('<div />', {
+		"class": "div_chat_top_title"
+	})
+	// 닫기 부분
+	var $div_chat_top_close = $('<div />', {
+		"class": "div_chat_top_close"
+	}).click(function(e) {
+		// 버블 제거
+		e.stopPropagation();
+
+
+		// TODO 대화창 닫기 시 코드
+		// 대화창 안 보이게..
+		//$div_chat.css("display", "none");
+		closeChat();
+	})
+	// 닫기 버튼
+	var $bt_chat_top_close = $('<i class="fas fa-times"></i>').css({
+		"width": "100%",
+		"height": "100%"
+	}).appendTo($div_chat_top_close);
+
+	// 상단바 div 부착
+	$div_chat_top.append($title).append($div_chat_top_close);
+
+	/*
+	 *	채팅 내용 div 디자인
+	 */ 
+	// 전체 div
+	$message_list = $('<div />', {
+		"class": "div_chat_content"
+	});
+
+	/*
+	 *	메시지 입력 div 디자인
+	 */
+	// 전체 div
+	var $div_chat_under = $('<div />', {
+		"class": "div_chat_under"
+	});
+	// 입력 영역
+	var $div_chat_under_input = $('<div />', {
+		"class": "div_chat_under_input"
+	});
+	// 입력칸
+	$message = $('<div />', {
+		"class": "div_chat_under_input_box",
+		"contentEditable": true
+	}).appendTo($div_chat_under_input).keydown(function(evt) {
 		if (evt.which == 13) {
 			sendMessage();
 			return;
 		}
+	});;
+	// 전송 버튼 영역
+	var $div_chat_under_send = $('<div />', {
+		"class": "div_chat_under_send"
+	}).click(function(e) {
+		// 버블 제거
+		e.stopPropagation();
+
+		// TODO send....
+		sendMessage();
 	});
+	// 전송 버튼
+	var bt_chat_send = $('<i class="fas fa-paper-plane"></i>').css({
+		"width": "100%",
+		"height": "100%"
+	}).appendTo($div_chat_under_send);
+	$div_chat_under.append($div_chat_under_input).append($div_chat_under_send);
 
- 	// 채팅창 닫기 버튼 클릭 이벤트
- 	$('#button_close').on('click', function() {
- 		closePChat();
- 	});
- 	
-	// 채팅창이 꺼진 경우 세션 스토리지에서 채팅 상대를 제거한다.
-   	if($('#div_chat').css('display') == 'none') {
-   		sessionStorage.removeItem('counterpart');
-   	}
+	// div_chat에 각 부분 부착..
+	$div_chat.append($div_chat_top).append($message_list).append($div_chat_under);
 
-   	// 웹소켓 연결
- 	websocket = new WebSocket(wsUri);
- 	
- 	// 웹소켓 이벤트 별 함수 연결
- 	websocket.onopen = function(evt) {
-   		onOpen(evt)
-   	};
- 	websocket.onmessage = function(evt) {
-   		onMessage(evt)
-   	};
-   	websocket.onerror = function(evt) {
-   		//onError(evt)
-   	};
-   	websocket.onclose = function(evt) {
-   		closePChat(evt)
-   	};
+
+
+
+	// 테스트를 위한 코드...
+	$div_chat.css('display', 'block');
+
+
+
+
+	// // 채팅창이 꺼진 경우 세션 스토리지에서 채팅 상대를 제거한다.
+ //   	if($('#div_chat').css('display') == 'none') {
+ //   		sessionStorage.removeItem('counterpart');
+ //   	}
+
+   	
    	
 }
 
@@ -55,9 +185,10 @@ function onOpen(evt) {
 	// 접속한 멤버의 아이디를 보낸다. 웹소켓 세션의 아이디와 1:1 매칭시키기 위함.
 	var sendMessage = {
 		type: "login",
-		id: sessionStorage.getItem('id')
+		id: userId
 	}
 	websocket.send(JSON.stringify(sendMessage));
+	console.log('웹소켓 연결됨..')
 	
 }
 
@@ -65,27 +196,24 @@ function onOpen(evt) {
  * 채팅창 오픈
  * @param is1to1 1 = 1:1, 0 = 그룹
  * @param counterpart 상대
- * @param goRoot 최상위 디렉토리까지의 경로
  * @returns
  */
-function openChat(is1to1, counterpart, goRoot) {
+function openChat(is1to1, counterpart) {
 	
 	// 기존 채팅창이 열려 있는 경우 닫는다.
-	if ($('#div_chat').css('display') == 'block') {
-		closePChat();
-	}
+	closeChat();
 	
-	// session에 상대와 상대의 타입을 저장한다.
-	sessionStorage.setItem('counterpart', counterpart);
-	sessionStorage.setItem('is1to1', is1to1);
+	// 상대와 상대의 타입을 저장한다.
+	this.is1to1 = is1to1;
+	this.counterpart = counterpart;
     
 	// 채팅창을 열기 전 이전 대화 목록을 불러온다.
 	$.ajax({
 		url: goRoot + 'chat/getChat',
 		type: 'post',
 		data: {
-			counterpart: counterpart,
-			is1to1: is1to1
+			counterpart: this.counterpart,
+			is1to1: this.is1to1
 		},
 		dataType: 'text',
 		success: function(result) {
@@ -97,17 +225,22 @@ function openChat(is1to1, counterpart, goRoot) {
 		}
 	});
 	
-	$('#div_chat').css('display', 'block');
+
+	$div_chat.css('display', 'block');
 
 }
 
 //채팅창 닫힘
-function closePChat() {
+function closeChat() {
 	
-	$('#div_chat').css('display', 'none');
-	sessionStorage.removeItem('counterpart');
-	sessionStorage.removeItem('is1to1');
-	$('#data').html('');
+	$div_chat.css('display', 'none');
+	counterpart = '';
+	is1to1 = '';
+
+	// 이전 채팅창의 정보를 지운다..
+	$title.html('');
+	$message_list.html('');
+	$message.html('');
 }
 
 // 서버로 메시지 발신
@@ -115,14 +248,15 @@ function sendMessage() {
 	
     var sendMessage = {
 			type: "message",
-			from: sessionStorage.getItem('id'),
-			to: sessionStorage.getItem('counterpart'),
-			is1to1: sessionStorage.getItem('is1to1'),
-			message: $('#message').val()
+			from: userId,
+			to: counterpart,
+			is1to1: is1to1,
+			message: $message.val()
 		}
 
     websocket.send(JSON.stringify(sendMessage));
-    $('#message').val('').focus();
+
+    $message.val('').focus();
 
 }
 
@@ -176,26 +310,28 @@ function onMessage(evt) {
 // 메시지를 대화창에 출력
 function printChat(chatData) {
 	
+	// json 형식으로 받기 때문에... 일단 parse...
 	var arr_chat = JSON.parse(chatData);
 	
+	// parse 후 each...
 	$(arr_chat).each(function(i, chat) {
 		
-		var div_message = document.createElement('div');
+		var $div_message = $('<div />');
 		var html = "";
 		
-		if (chat.message_from == sessionStorage.getItem('id')) {
+		if (chat.message_from == userId) {
 			//자기가 보낸 메시지
-			$(div_message).css('text-align', 'right');
+			$div_message.css('text-align', 'right');
 			if (chat.message_read > 0) {
 				// 1. 읽지 않음이 있는 경우
 				html += "<span class='read' style='font-size: 6pt'>" + chat.message_read + "</span>";
 			}
 			html += chat.message_date.substring(0,16) + " / " + chat.message_message + " < <br>";
-			$(div_message).html(html);
+			$div_message.html(html);
 	
 		} else {
 			//받은 메시지
-			$(div_message).css('text-align', 'left');
+			$div_message.css('text-align', 'left');
 			html += chat.message_from + " > " + chat.message_message + " / " + chat.message_date.substring(0,16);
 			if (chat.message_read > 0) {
 				// 1. 읽지 않음이 있는 경우
@@ -204,13 +340,14 @@ function printChat(chatData) {
 				}
 			}
 			html += "<br>";
-			$(div_message).html(html);
+			$div_message.html(html);
 		}
 		
-		$("#data").append(div_message);
+		$message_list.append(div_message);
 		
 	});
 	
+	// 메시지를 읽었다고 알려준다..
 	readMessage();
 	
 	$("#data").scrollTop($("#data")[0].scrollHeight);
