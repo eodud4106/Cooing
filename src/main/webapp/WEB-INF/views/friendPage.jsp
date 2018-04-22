@@ -460,7 +460,7 @@ select::-ms-expand { /* for IE 11 */
 
 			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
 
-			<p><img src = "<c:url value="/jinsu/memberimg?strurl=${friend.getMember_picture()}" />">${friend.getMember_id()}</p>
+			<p><img src = "<c:url value="/jinsu/memberimg?strurl=${friend_id.getMember_picture()}" />">${friend_id.getMember_id()}</p>
 		<p>
 			<c:if test="${check ne true }">
 				<input type="button" id="friendbt" value="친구추가" data="0">
@@ -468,7 +468,7 @@ select::-ms-expand { /* for IE 11 */
 			<c:if test="${check eq true }">
 				<input type="button" id="friendbt" value="친구삭제" data="1">
 			</c:if>
-			<input type="hidden" value="${friend.getMember_id()}" id="friendid">
+			<input type="hidden" value="${friend_id.getMember_id()}" id="friendid">
 		</p>
 
 		</div>

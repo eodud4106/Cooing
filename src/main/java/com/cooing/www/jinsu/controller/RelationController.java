@@ -30,12 +30,13 @@ public class RelationController {
 	@Autowired
 	MemberDAO memberDAO;
 	
+	//친구페이지
 	@RequestMapping(value="/friend_get" , method = RequestMethod.GET)
 	public String friend_get(String id , Model model , HttpSession session){
 		logger.info("friend_get__jinsu");
 		Member personally = get_session(session);
 		Member friend= memberDAO.selectMember(id);
-		model.addAttribute("friend", friend);
+		model.addAttribute("friend_id", friend);
 		ArrayList<String> arrfriend = relationDAO.selectFriend(personally.getMember_id());
 		for(String s:arrfriend){
 			if(s.equals(friend.getMember_id())){

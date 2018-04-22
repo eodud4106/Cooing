@@ -92,23 +92,6 @@ public class MainController {
 		return check_isLike;
 	}
 	
-	//친구페이지
-	@RequestMapping(value = "/friendPage", method = RequestMethod.GET)
-	public String friendPage(String id , Model model , HttpSession session){
-		logger.info("friend_get__jinsu");
-		Member personally = (Member)session.getAttribute("Member");
-		Member friend= memberDAO.selectMember(id);
-		model.addAttribute("friend", friend);
-		ArrayList<String> arrfriend = relationDAO.selectFriend(personally.getMember_id());
-		for(String s:arrfriend){
-			if(s.equals(friend.getMember_id())){
-				model.addAttribute("check" , true);
-				break;
-			}
-		}
-		return "friendPage";
-	}
-	
 	//마이페이지
 	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
 	public String myPage(HttpSession session , Model model){
