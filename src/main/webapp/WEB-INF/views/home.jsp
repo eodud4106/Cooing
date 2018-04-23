@@ -124,7 +124,79 @@ $(document).ready(function(){
   });
 });
 </script>
+
+ <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
 <style>
+.button_container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 30%;
+}
+
+
+
+.btn {
+  border: none;
+  display: block; 
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: #bae5e1;
+  /* padding: 17px 60px; */
+  margin: 0 auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+}
+
+.btn span {
+  position: relative; 
+  z-index: 1;
+}
+
+.btn:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 490%;
+  width: 140%;
+  background: #78c7d2;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  transform: translateX(-98%) translateY(-25%) rotate(45deg);
+}
+
+.btn:hover:after {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+
+.link {
+  font-size: 20px;
+  margin-top: 30px;
+}
+
+.link a {
+  color: #000;
+  font-size: 25px; 
+}
 .img1 {
 	width: 50px;
 	height: 50px;
@@ -159,13 +231,13 @@ $(document).ready(function(){
 	cursor: pointer;
 }
 .friendList{
-	height: 300px;	
+	height: 250px;	
 	overflow : scroll;
 	overflow-x:hidden;
 	/* overflow-y:hidden; */
 }
 .groupList{
-	height: 200px;
+	height: 250px;
 	overflow : scroll;
 	overflow-x:hidden;
 	/* overflow-y:hidden; */
@@ -355,11 +427,16 @@ $(document).ready(function(){
 			</div>
 		
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="" class="mb-2 d-block probootstrap-logo">MY GROUP</a>				
-		</div>				
+			<a href="" class="mb-2 d-block probootstrap-logo" style = "margin-top: 100px;">MY GROUP</a>				
+						
 		<!-- <div class="probootstrap-overflow"> -->
-		<input type="button" value="그룹생성"
-					onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
+		
+		<!-- 그룹생성 -->
+		<div class="button_container">		
+		<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
+		</div>
+		<!-- <input type="button" value="그룹생성"
+					onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"> -->
 			<div class = "groupList">
 				<c:if test="${Member ne null}">
 					<c:if test="${fn:length(group) ne 0}">
