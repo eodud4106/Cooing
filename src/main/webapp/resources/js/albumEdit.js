@@ -1,4 +1,6 @@
-// [start] 맵을 쓰기 위한 코드 (올리기용...)
+
+
+// [start] 맵을 쓰기 위한 코드
 Map = function(){
     this.map = new Object();
 };   
@@ -435,6 +437,7 @@ function isTextboxHighlighted(e) {
     }
 }
 
+
 // [start] 1단계 편집창 생성
 function createWholeEditor($div_box) {
 
@@ -567,6 +570,17 @@ function createWholeEditor($div_box) {
         }).mouseleave(function(e) {
             $('.tooltip').remove();
         });
+            
+        // 사진 자르기 (대영)
+        $arr_bt.push($('<button />', {
+            "id": "bt_crop",
+            "text": "자르기"
+        }));
+        $arr_bt[$arr_bt.length-1].click(function() {
+        	//편집창 열기
+        	var settings ='width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes';
+        	var windowObj = window.open("crop_picture?url_picture=" + $('.onSelect img').attr('src') + "", "crop", settings);
+		});
         
         // 사진 회전 (대영)
         $arr_bt.push($('<button />', {

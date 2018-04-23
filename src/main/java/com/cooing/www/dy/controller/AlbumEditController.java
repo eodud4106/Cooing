@@ -382,6 +382,15 @@ public class AlbumEditController {
 			return null;
 		}
 		
+		@RequestMapping(value = "crop_picture", method = RequestMethod.GET)
+		public String crop_picture(Model model, String url_picture) {
+			
+			//자를 사진 저장한 모델
+			model.addAttribute("url_picture", url_picture);
+			
+			return "Album/crop_picture";
+		}
+		
 		
 	
 }
