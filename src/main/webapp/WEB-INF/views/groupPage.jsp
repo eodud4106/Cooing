@@ -397,6 +397,28 @@ $(result).each(function(i, album) {
 	});
 	
 }
+
+// 그룹 앨범 만드기...
+function create_group_album() {
+	$.ajax({
+		url: 'create_group_album',
+		type: 'post',
+		dataType: 'json',
+		success: function(result) {
+			if(result == 'user null') {
+				alert('로그인 정보 없음!');
+			} else if(result == 'fail') {
+				alert('오류 발생!!');
+			} else {
+				 //TODO 앨범 편집창으로 이동
+				 location.href="edit_album?album_num=" + result;
+			}
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+}
 </script>
 
 <style>
@@ -472,6 +494,7 @@ select::-ms-expand { /* for IE 11 */
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
 			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
+			<button onclick="createAlbum()">앨범 만들기</button>
 
 			<c:if test="${partyinfo ne null}">(GROUP_NAME)${partyinfo.getParty_name()}<input type="hidden" id="sessionid" data="${Member.getMember_id()}"></c:if>
 				<c:if test="${partyleader ne null}">
