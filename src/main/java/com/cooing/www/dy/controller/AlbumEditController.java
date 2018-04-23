@@ -136,11 +136,10 @@ public class AlbumEditController {
 	}
 
 	//앨범 정보 업데이트
+	@ResponseBody
 	@RequestMapping(value = "/update_albuminfo", method = RequestMethod.POST)
 	public String AlbumFirstCreate(HttpSession session, int album_num, String album_name, String album_contents,
 			int album_openrange, int album_category, String hashtag){
-		
-		
 		
 		AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_openrange, album_contents, album_category);
 		
@@ -154,7 +153,7 @@ public class AlbumEditController {
 //			searchDAO.insertHashTag(new HashTag(0 , ialbumnum , tags[i]));
 //		}
 				
-		return "redirect:/";
+		return update_check? "success":"fail";
 	}
 	
 	//앨범 페이지별 저장

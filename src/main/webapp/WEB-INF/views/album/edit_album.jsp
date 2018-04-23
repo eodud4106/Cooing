@@ -131,19 +131,6 @@ html, body, main, .container-fluid {
 .outer {
 	background-color: #aaa;
 }
-.input_album_info,.sel_album_info, .bt_album_info {
-	width: 180px;
-	margin-bottom: 10px;
-}
-.sel_album_info {
-	font-size: xx-large;
-}
-.bt_album_info {
-	font-size: large;
-} 
-.input_album_info_contents {
-	min-height: 100px;
-}
 </style>
 
 <script>
@@ -154,13 +141,12 @@ html, body, main, .container-fluid {
 	//페이지 로딩 후 초기화 내용
 	$(document).ready(function() {
 		
-		console.log(JSON.stringify('${album}'));
-		
 		// 앨범 로딩 시 카테고리 설정
 		var album_category = '${album.album_category}';
 		$("#album_category").val(album_category).prop("selected", true);
+		var album_openrange = '${album.album_openrange}';
+		$("#album_openrange").val(album_openrange).prop("selected", true);
 		
-
 		$('.input').iCheck({
 			radioClass : 'iradio_square-green',
 		// increaseArea: '20%' // optional
@@ -263,6 +249,41 @@ html, body, main, .container-fluid {
 	      });
 	}
 
+	// 앨범 정보 수정
+	function modifiy_AlbumInfomation() {
+		
+		if($('#album_name').val() == '') {
+			alert('앨범 이름을 입력해주세요.');
+			return;
+		}
+		
+		
+		$.ajax({ 
+			url: 'update_albuminfo',
+			type: 'POST',
+			data: {
+				album_num: '${album.album_num}',
+				album_name: $('#album_name').val(),
+				album_contents: $('#album_contents').val(),
+				album_category: $('#album_category').val(),
+				album_openrange: $('#album_openrange').val()
+			},
+			dataType: 'json',
+			success:function(e) {
+				if(e == 'success') alert('업데이트 되었습니다.')
+				else if(e == 'fail') alert('업데이트 중 문제 발생...')
+			},
+			error: function(e) {
+
+				if(e.responseText == 'success') {
+					alert('업데이트 되었습니다.')
+				} else {
+					alert(JSON.stringify(e));
+				}
+			}
+		}); 
+	}
+	
 </script>
 
 </head>
@@ -293,7 +314,7 @@ html, body, main, .container-fluid {
 				<h5 style="color: black;">앨범명</h5><input type="text" id="album_name" class="input_album_info" name="album_name" value="${album.album_name }">
 				<h5 style="color: black; ">앨범 내용</h5>
 				<textarea type="text" style = "height: 100px;"id="album_contents" class="input_album_info input_album_info_contents" 
-					name="album_contents" value="${album.album_contents }" placeholder="앨범에 대한 소개를 입력해보세요!"></textarea>
+					name="album_contents" value="${album.album_contents }" placeholder="앨범에 대한 소개를 입력해보세요!">${album.album_contents}</textarea>
 				<h5 style="color: black;">앨범 카테고리</h5>
 				<select name="album_category" id="album_category" class="sel_album_info">		
 					<option value="0">여행</option>
