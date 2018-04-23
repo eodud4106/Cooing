@@ -56,25 +56,39 @@ public class AlbumEditController {
 	
 	//앨범생성
 	@ResponseBody
-	@RequestMapping(value = "/create_personal_album", method = RequestMethod.POST)
-	public String personal_albumCreate(Model model, HttpSession session){
+	@RequestMapping(value = "/create_album", method = RequestMethod.POST)
+	public String personal_albumCreate(Model model, HttpSession session, Integer isPersonal, String party_name){
 		
 		String returnMessage = null;
 		
-		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+		String album_writer = "";
+		int openrange = 0;
+		
+		if(isPersonal == 1) {
+			// 개인 앨범
+			album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+			openrange = 1;
+		} else {
+			// 파티 앨범
+			album_writer = party_name;
+			openrange = 3;
+		}
+		
 		if (album_writer == null) returnMessage = "user null";
 		
-		AlbumWriteVO albumwrite = new AlbumWriteVO(-1, album_writer, "임시 앨범", 1);
+		// 앨범 이름 - 임시 앨범, 공개 범위 - 나만or그룹, 카테고리 - 기타로 설정
+		AlbumWriteVO albumwrite = new AlbumWriteVO(album_writer, "임시 앨범", openrange, 20, isPersonal);
 
 		//앨범 만들기
-		int created_album_num = albumDAO.personal_createAlbum(albumwrite);
-		
-		// created_album_num이 -1이면 앨범 제작 실패임
-		if(created_album_num == -1) {
+		int created_album_num = -1;
+		try {
+			created_album_num = albumDAO.personal_createAlbum(albumwrite);
+		} catch (Exception e) {
+			// 오류 발생이면 앨범 제작 실패임
 			returnMessage = "fail";
-		} else {
-			returnMessage = created_album_num + "";
 		}
+		
+		returnMessage = created_album_num + "";
 			
 		return returnMessage;
 	}
@@ -128,7 +142,7 @@ public class AlbumEditController {
 		
 		
 		
-		AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_contents, album_category, album_openrange);
+		AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_openrange, album_contents, album_category);
 		
 		boolean update_check = false;
 		update_check = albumDAO.personal_update_page1_Album(albumwrite);
@@ -347,7 +361,7 @@ public class AlbumEditController {
 		public String modifiy_AlbumInfomation(int album_num, String album_name, String album_contents,
 				int album_category, int album_openrange){
 			
-			AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_contents, album_category, album_openrange);
+			AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_openrange, album_contents, album_category);
 			boolean check_infomationUpdate = false;
 			check_infomationUpdate = albumDAO.personal_update_page1_Album(albumwrite);
 			

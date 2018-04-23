@@ -131,6 +131,19 @@ html, body, main, .container-fluid {
 .outer {
 	background-color: #aaa;
 }
+.input_album_info,.sel_album_info, .bt_album_info {
+	width: 180px;
+	margin-bottom: 10px;
+}
+.sel_album_info {
+	font-size: xx-large;
+}
+.bt_album_info {
+	font-size: large;
+} 
+.input_album_info_contents {
+	min-height: 100px;
+}
 </style>
 
 <script>
@@ -138,8 +151,15 @@ html, body, main, .container-fluid {
 	var selectcheck = true;
 
 
-	//라디오버튼
+	//페이지 로딩 후 초기화 내용
 	$(document).ready(function() {
+		
+		console.log(JSON.stringify('${album}'));
+		
+		// 앨범 로딩 시 카테고리 설정
+		var album_category = '${album.album_category}';
+		$("#album_category").val(album_category).prop("selected", true);
+		
 
 		$('.input').iCheck({
 			radioClass : 'iradio_square-green',
@@ -262,7 +282,7 @@ html, body, main, .container-fluid {
 		<div class="probootstrap-overflow">
 		<div class="main">
 		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
-		<label for="tab1">앨범생성</label>
+		<label for="tab1">앨범 정보</label>
 
   		<input class = "input1" id="tab2" type="radio" name="tabs">
     	<label for="tab2">채팅</label>   
@@ -270,11 +290,12 @@ html, body, main, .container-fluid {
     	<section id="content1"> 
     	<!-- 페이지 저장 -->		
 			<div id="entry">
-				<h5 style="color: black;">앨범명</h5><input type="text" id="album_name" name="album_name" value="앨범이름을 입력해주세요.">
+				<h5 style="color: black;">앨범명</h5><input type="text" id="album_name" class="input_album_info" name="album_name" value="${album.album_name }">
 				<h5 style="color: black; ">앨범 내용</h5>
-				<input type="text" style = "height: 100px;"id="album_contents" name="album_contents" value="앨범내용을 입력해주세요.">
+				<textarea type="text" style = "height: 100px;"id="album_contents" class="input_album_info input_album_info_contents" 
+					name="album_contents" value="${album.album_contents }" placeholder="앨범에 대한 소개를 입력해보세요!"></textarea>
 				<h5 style="color: black;">앨범 카테고리</h5>
-				<select name="album_category" id="album_category">		
+				<select name="album_category" id="album_category" class="sel_album_info">		
 					<option value="0">여행</option>
 				    <option value="1">스포츠/래저</option>
 				    <option value="2">동물</option>
@@ -298,13 +319,18 @@ html, body, main, .container-fluid {
 				    <option value="20" selected="selected">기타</option>
 				</select>
 				<h5 style="color: black;">앨범 공개범위</h5>
-				<select name="album_openrange" id="album_openrange">		
-					<option value="1" selected="selected">나만 보기</option>
-				    <option value="2">전체 공개</option>
-				    <option value="3">더 추가해서 ㄱㄱ</option>
+				<select name="album_openrange" id="album_openrange" class="sel_album_info">		
+				    <c:if test="${album.isPersonal == 1 }">
+					    <option value="1" selected="selected">나만 보기</option>
+					    <option value="2">친구 공개</option>
+				    </c:if>
+				    <c:if test="${album.isPersonal == 0 }">
+				    	<option value="3">그룹 공개</option>
+				    </c:if>
+				    <option value="4">전체 공개</option>
 				</select>
 				
-				<input type="button" value="앨범정보저장" onclick="modifiy_AlbumInfomation()">
+				<input type="button" class="bt_album_info" value="앨범정보저장" onclick="modifiy_AlbumInfomation()">
 				<br><br><br>
 				<!-- <input type="text" id="hashtagtx" placeholder="해쉬태그"><input type="button" id="hashtagbt" value="추가">--> 
 				<div id="hashtagvw"></div>

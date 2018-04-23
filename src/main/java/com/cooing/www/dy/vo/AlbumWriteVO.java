@@ -6,49 +6,48 @@ public class AlbumWriteVO {
 	private String album_name;	
 	private int album_openrange;		
 	private String album_contents;	
-	private String album_editor;	
 	private int album_category;
 	private String album_thumbnail;
+	private int isPersonal;
 	
 	public AlbumWriteVO() {
 		super();
 	}
 	
-	public AlbumWriteVO(int album_num, String album_writer, String album_name, int album_openrange){
-		this.album_num = album_num;
+	public AlbumWriteVO(String album_writer, String album_name, int album_openrange, int album_category,
+			int isPersonal) {
+		super();
 		this.album_writer = album_writer;
 		this.album_name = album_name;
 		this.album_openrange = album_openrange;
+		this.album_category = album_category;
+		this.isPersonal = isPersonal;
 	}
-	
-	public AlbumWriteVO(int album_num , String album_writer , String album_name , int album_openrange , String album_contents , String album_editor , int album_category , String album_identifier , String album_thumbnail){
-		this(album_num, album_writer, album_name, album_openrange);
-		this.album_name = album_name;
-		this.album_contents = album_contents;
-		this.album_editor = album_editor;
-		this.album_category = album_category;		
-		this.album_thumbnail = album_thumbnail;
-	}	
 
-	public AlbumWriteVO(int album_num, String album_name, String album_contents,
-			int album_category, int album_openrange) {
+	public AlbumWriteVO(int album_num, String album_name, int album_openrange, String album_contents,
+			int album_category) {
 		super();
 		this.album_num = album_num;
 		this.album_name = album_name;
+		this.album_openrange = album_openrange;
 		this.album_contents = album_contents;
 		this.album_category = album_category;
-		this.album_openrange = album_openrange;
 	}
-	
-	//추가 부분
-	public AlbumWriteVO(int album_num, String album_writer, String album_name, String album_contents,
-			String album_thumbnail) {
+
+
+
+
+	public AlbumWriteVO(int album_num, String album_writer, String album_name, int album_openrange,
+			String album_contents, int album_category, String album_thumbnail, int isPersonal) {
 		super();
 		this.album_num = album_num;
 		this.album_writer = album_writer;
 		this.album_name = album_name;
+		this.album_openrange = album_openrange;
 		this.album_contents = album_contents;
+		this.album_category = album_category;
 		this.album_thumbnail = album_thumbnail;
+		this.isPersonal = isPersonal;
 	}
 
 	public int getAlbum_num() {
@@ -91,14 +90,6 @@ public class AlbumWriteVO {
 		this.album_contents = album_contents;
 	}
 
-	public String getAlbum_editor() {
-		return album_editor;
-	}
-
-	public void setAlbum_editor(String album_editor) {
-		this.album_editor = album_editor;
-	}
-
 	public int getAlbum_category() {
 		return album_category;
 	}
@@ -106,7 +97,7 @@ public class AlbumWriteVO {
 	public void setAlbum_category(int album_category) {
 		this.album_category = album_category;
 	}
-	
+
 	public String getAlbum_thumbnail() {
 		return album_thumbnail;
 	}
@@ -115,10 +106,20 @@ public class AlbumWriteVO {
 		this.album_thumbnail = album_thumbnail;
 	}
 
+	public int getIsPersonal() {
+		return isPersonal;
+	}
+
+	public void setIsPersonal(int isPersonal) {
+		this.isPersonal = isPersonal;
+	}
+
 	@Override
 	public String toString() {
 		return "AlbumWriteVO [album_num=" + album_num + ", album_writer=" + album_writer + ", album_name=" + album_name
-				+ ", album_openrange=" + album_openrange + ", album_contents=" + album_contents + ", album_editor="
-				+ album_editor + ", album_category=" + album_category + ", album_thumbnail=" + album_thumbnail + "]";
+				+ ", album_openrange=" + album_openrange + ", album_contents=" + album_contents + ", album_category="
+				+ album_category + ", album_thumbnail=" + album_thumbnail + ", isPersonal=" + isPersonal + "]";
 	}
+	
+	
 }

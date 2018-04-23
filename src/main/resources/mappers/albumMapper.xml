@@ -9,13 +9,15 @@
 			ALBUM_NUM,
 			ALBUM_WRITER,
 			album_name,
-			ALBUM_OPENRANGE
+			ALBUM_OPENRANGE,
+			album_category
 		)
 		values (
 			ALBUMLIST_SEQ.nextval,
 			#{album_writer},
 			#{album_name},
-			#{album_openrange}
+			#{album_openrange},
+			#{album_category}
 		)
 		<selectKey keyProperty="album_num" resultType="Integer" order="AFTER"> 
 			SELECT ALBUMLIST_SEQ.currval FROM dual

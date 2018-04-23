@@ -17,7 +17,7 @@ public class AlbumDAO{
 	private SqlSession sqlSession;
 	
 	/**
-	 * 개인 앨범 생성 후 album_num 리턴
+	 *	앨범 생성 후 album_num 리턴
 	 */
 	public int personal_createAlbum(AlbumWriteVO albumwrite){
 		

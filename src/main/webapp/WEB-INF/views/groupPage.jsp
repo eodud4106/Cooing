@@ -401,8 +401,12 @@ $(result).each(function(i, album) {
 // 그룹 앨범 만드기...
 function create_group_album() {
 	$.ajax({
-		url: 'create_group_album',
+		url: 'create_album',
 		type: 'post',
+		data: {
+			party_name: '${partyinfo.party_name}',
+			isPersonal: 0
+		},
 		dataType: 'json',
 		success: function(result) {
 			if(result == 'user null') {
@@ -494,7 +498,7 @@ select::-ms-expand { /* for IE 11 */
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
 			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
-			<button onclick="createAlbum()">앨범 만들기</button>
+			<button onclick="create_group_album()">앨범 만들기</button>
 
 			<c:if test="${partyinfo ne null}">(GROUP_NAME)${partyinfo.getParty_name()}<input type="hidden" id="sessionid" data="${Member.getMember_id()}"></c:if>
 				<c:if test="${partyleader ne null}">
