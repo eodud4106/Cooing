@@ -325,10 +325,12 @@ $(document).ready(function(){
 				<c:if test="${Member ne null}">
 					<c:if test="${fn:length(friend) ne 0}">
 						<c:forEach var="arrf" items="${friend }">
-							<div name="friend">
-								<p onclick="openChat('1', '${arrf}')">${arrf}</p>
+							<div name="friend" id="friend">
+								<p onclick="openChat('1', '${arrf.member_id}')"><img src="./jinsu/memberimg?strurl=${arrf.member_picture}" style="width:40px;height:40px;">${arrf.member_id}</p>
 							</div>
 						</c:forEach>
+						<div name="user" id="user">
+						</div>												
 					</c:if>
 				</c:if>
 			</div>

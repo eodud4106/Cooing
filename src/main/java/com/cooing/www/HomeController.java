@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
+import com.cooing.www.jinsu.dao.MemberDAO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.dao.SearchDAO;
 import com.cooing.www.jinsu.object.Member;
@@ -36,6 +37,8 @@ public class HomeController {
 	AlbumDAO albumDAO;
 	@Autowired
 	SearchDAO searchDAO;
+	@Autowired
+	MemberDAO memberDAO;
 	
 	private Gson gson = new Gson();
 	/**
@@ -46,7 +49,11 @@ public class HomeController {
 		Member personal = (Member)session.getAttribute("Member");
 		if(personal != null){
 			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
-			model.addAttribute("friend", arr_friend);
+			ArrayList<Member> friendmember = new ArrayList<Member>();
+			for(String s : arr_friend){
+				friendmember.add(memberDAO.selectMember(s));
+			}
+			model.addAttribute("friend", friendmember);
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
 			model.addAttribute("group", arraystrval);
 			int totalpage = albumDAO.TotalAlbumCount(personal.getMember_id());

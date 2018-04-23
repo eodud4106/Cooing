@@ -51,14 +51,34 @@ $( function() {
     	 /* monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec" ] //바꿔봤지만 안이쁨*/
   	 });
 });
+
 $(document).ready(function() {
-	initialize();
+	categorysearch();
+	$('#datepicker').on('change' , function(){
+		if($('input[name=iCheck]:radio:checked').val() == 1){
+			categorysearch();
+		}else if($('input[name=iCheck]:radio:checked').val() == 2){
+			searchsearch();
+		}else if($('input[name=iCheck]:radio:checked').val() == 3){
+			
+		}
+	});
+	
+	$('input[name=iCheck]').change(function(){
+		if($(this).val() == 1){//카테고리순 정렬
+			categorysearch()
+		}else if($(this).val() == 2){//검색어 순
+			searchsearch();
+		}else if($(this).val() == 3){//좋아요 순
+			
+		}
+	});
 });
-function initialize(){
-	//밑 에 부분은 검색어에 관련된 부분 
-	/* $('#datepicker').on('change' , function(){
+function searchsearch(){
+//밑 에 부분은 검색어에 관련된 부분
+	if($('#datepicker').val() != null){
 		$.ajax({
-			url:'searchInfomation',
+			url:'searchInformation',
 			type:'POST',		
 			data:{searchdate:$('#datepicker').val()},
 			dataType:"json",
@@ -79,16 +99,22 @@ function initialize(){
 				$('#graphdiv').html('');
 				$('#graphdiv').jqBarGraph({ 
 					data: array,		
-					animate: false
+					animate: false,
+					width:900,
+					height:550,
+					sort:'desc',
+					barSpace : 20,
+					legend:true
 				});
 			},
 			error:function(e){alert(JSON.stringify(e));}		
 		});
-	}); */
-	
+	}
+}
+function categorysearch(){	
 	//밑에 부분은 카테고리 검색에 관한 부분
-	var vector = ['여행' , '음식'];
-	$('#datepicker').on('change' , function(){
+	if($('#datepicker').val() != null){
+		var vector = ['여행' , '음식'];
 		$.ajax({
 			url:'searchCategorypop',
 			type:'POST',		
@@ -112,12 +138,17 @@ function initialize(){
 				$('#graphdiv').html('');
 				$('#graphdiv').jqBarGraph({ 
 					data: array,		
-					animate: false
+					animate: false,
+					width:900,
+					height:550,
+					sort:'desc',
+					barSpace : 20,
+					legend:true
 				});
 			},
 			error:function(e){alert(JSON.stringify(e));}		
 		});
-	});
+	}
 }
 </script>
 <!-- 정렬순 라디오 버튼 -->
@@ -253,11 +284,10 @@ select::-ms-expand { /* for IE 11 */
 	<div align="center">
 		날 짜 선 택 : <input type="text" id="datepicker">
 		<!-- 정렬순서 -->		
-		<form style = "float:right; padding-left : 10px;">
-			<input type="radio" name="iCheck" class = "input"value="1" checked>최신순
-			<input type="radio" name="iCheck" class = "input"value="2" >인기순
-			<input type="radio" name="iCheck" class = "input"value="3" >카테고리			
-			<div style= "z-index:99; float:right; " onClick="checkRadioButton('iCheck')"><i class="far fa-check-circle"></i></div>
+		<form style = "float:right; padding-left : 10px;" id="radiobutton">
+			<input type="radio" name="iCheck" class="input"value="1" checked>카테고리순 
+			<input type="radio" name="iCheck" class="input"value="2" >검색어순
+			<input type="radio" name="iCheck" class="input"value="3" >좋아요순
 		</form>
 	</div>	
 		<!-- 그래프 출력될 곳 -->
