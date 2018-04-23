@@ -1,6 +1,7 @@
 package com.cooing.www.jinsu.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,19 @@ public class MemberDAO {
 		return mapper.selectMember(id);
 	}
 	
-	public ArrayList<String> searchId(String text){
+	public ArrayList<Member> searchId(Map<String,String> map){
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
-		return mapper.searchId(text);
+		return mapper.searchId(map);
+	}
+	
+	public ArrayList<Member> selectfriend(String myid){
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		return mapper.selectfriend(myid);
+	}
+	
+	public ArrayList<Member> searchUser(Map<String,String> map){
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		return mapper.searchUser(map);
 	}
 	
 	public boolean updateTimeMember(String id){

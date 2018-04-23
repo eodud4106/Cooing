@@ -15,8 +15,42 @@
 	select * from member where member_id = #{id}
 	</select>
 	
-	<select id="searchId" resultType="String" parameterType="String">
-	select member_id from member where member_id like '%'||#{id}||'%' 
+	<select id="selectfriend" resultType="member" parameterType="String">
+	select *
+	from member 
+	where 
+	member_id in(
+		select friend_id2 as member_id
+		from friend
+		where friend_id1 = #{myid} 
+	) 
+	and member_id != #{myid}
+	</select>
+	
+	<select id="searchId" resultType="member" parameterType="map">
+	select *
+	from member 
+	where member_id like '%'||#{friendid}||'%'
+	and member_id in(
+		select friend_id2 as member_id
+		from friend
+		where friend_id2 like '%'||#{friendid}||'%'
+		and friend_id1 = #{myid} 
+	)
+	and member_id != #{myid}
+	</select>
+	
+	<select id="searchUser" resultType="member" parameterType="map">
+	select *
+	from member 
+	where member_id like '%'||#{friendid}||'%'
+	and member_id not in(
+		select friend_id2 as member_id
+		from friend
+		where friend_id2 like '%'||#{friendid}||'%'
+		and friend_id1 = #{myid} 
+	) 
+	and member_id != #{myid}
 	</select>
 	
 	<update id="updateTimeMember" parameterType="String">

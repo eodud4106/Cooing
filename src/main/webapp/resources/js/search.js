@@ -56,6 +56,52 @@ function searchword(){
 	var text = $('#friendsearch').val();
 	if(text.length >= 2){
 		$.ajax({
+			url:'jinsu/search_friend_id',
+			type:'POST',		
+			data:{text:text},
+			dataType:'json',
+			success: function(array){
+				var str='';
+				$.each(array,function(i,data){
+					str+='<p onclick="openChat('+ 1 + ', '+ data.member_id +')"><img src="./jinsu/memberimg?strurl='+ data.member_picture +'" style="width:40px;height:40px;">'+data.member_id+'</p>';
+				});
+				$('#friend').html(str);
+			},
+			error:function(e){alert(JSON.stringify(e));}		
+		});
+		$.ajax({
+			url:'jinsu/search_user_id',
+			type:'POST',		
+			data:{text:text},
+			dataType:'json',
+			success: function(array){
+				var str='';
+				$.each(array,function(i,data){
+					str+='<p onclick="openChat('+ 1 + ', '+ data.member_id +')"><img src="./jinsu/memberimg?strurl='+ data.member_picture +'" style="width:40px;height:40px;">'+data.member_id+'</p>';
+				});
+				$('#user').html(str);
+			},
+			error:function(e){alert(JSON.stringify(e));}		
+		});
+	}else{
+		$.ajax({
+			url:'jinsu/select_friend',
+			type:'POST',		
+			dataType:'json',
+			success: function(array){
+				var str='';
+				$.each(array,function(i,data){
+					str+='<p onclick="openChat('+ 1 + ', '+ data.member_id +')"><img src="./jinsu/memberimg?strurl='+ data.member_picture +'" style="width:40px;height:40px;">'+data.member_id+'</p>';
+				});
+				$('#friend').html(str);
+				$('#user').html('');
+			},
+			error:function(e){alert(JSON.stringify(e));}		
+		});
+	}
+	/*var text = $('#friendsearch').val();
+	if(text.length >= 2){
+		$.ajax({
 			url:'jinsu/search_id',
 			type:'POST',		
 			data:{text:text},
@@ -67,7 +113,7 @@ function searchword(){
 			},
 			error:function(e){alert(JSON.stringify(e));}		
 		});
-	}
+	}*/
 }
 
 
