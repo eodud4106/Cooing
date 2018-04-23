@@ -8,13 +8,20 @@
 <html lang="en" >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>GroupCreate</title>
-
-<!-- <link href="resources/css/crop.css" rel="stylesheet" type="text/css" /> -->
+<title>사진 자르기</title>
 
 <script src="resources/js_js/jquery-3.2.1.min.js"></script>
-<!-- <script src="resources/js/crop_picture.js"></script> -->
+
 <script>
+
+//부모창으로 값 넘기는 함수
+function pass_parent() {
+    var chang_url = $('#crop_result').attr('src');
+    opener.document.getElementById('temp_id').src = chang_url;
+	window.close();
+}
+
+
 // variables
 var canvas, ctx;
 var image;
@@ -77,13 +84,15 @@ function drawScene() { // main drawScene function
 $(function(){
     // loading source image
     // 부모창에서 받은 이미지 url
-    var url_picture = '${url_picture}';
+    var url_picture = '${new_url_picture}';
     
     image = new Image();
     image.onload = function () {
     }
     image.src = '' + url_picture + '';
-
+	image.width = '800';
+	image.height = '800';
+    
 
     // creating canvas and context objects
     canvas = document.getElementById('panel');
@@ -228,8 +237,8 @@ function getResults() {
     var temp_ctx, temp_canvas;
     temp_canvas = document.createElement('canvas');
     temp_ctx = temp_canvas.getContext('2d');
-    temp_canvas.width = theSelection.w;
-    temp_canvas.height = theSelection.h;
+    temp_canvas.width = theSelection.w; //자른 이미지 넓이
+    temp_canvas.height = theSelection.h; //자른 이미지 높이
     temp_ctx.drawImage(image, theSelection.x, theSelection.y, theSelection.w, theSelection.h, 0, 0, theSelection.w, theSelection.h);
     var vData = temp_canvas.toDataURL();
     $('#crop_result').attr('src', vData);
@@ -238,7 +247,7 @@ function getResults() {
 
 </script>
 </head>
-    <body>
+    <body onunload="opener.child_close()">
         <header>
             <h2>HTML5 image crop tool</h2>
             <a href="http://www.script-tutorials.com/html5-image-crop-tool/" class="stuts">Back to original tutorial on <span>Script Tutorials</span></a>
@@ -247,11 +256,12 @@ function getResults() {
             <div class="contr">
                 <button onclick="getResults()">Crop</button>
             </div>
-            <canvas id="panel" width="300" height="300"></canvas>
+            <canvas id="panel" width="${picture_width}" height="${picture_height}"></canvas>
             <div id="results">
                 <h2>Please make selection for cropping and click 'Crop' button.</h2>
                 <img id="crop_result" />
             </div>
+            <input type="button" value="저장" onclick="pass_parent()">
         </div>
     </body>
 </html>

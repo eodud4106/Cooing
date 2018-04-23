@@ -1,5 +1,8 @@
 package com.cooing.www.dy.controller;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,13 +47,12 @@ public class AlbumEditController {
 	AlbumDAO albumDAO;
 	@Autowired
 	SearchDAO searchDAO;
-	
-	//private static String id = null; 
-	//private static String strFilePath = "/FileSave/upload/"+id+"/";
-	private static String strFilePath = "/FileSave/upload/";					// windows
-	//private static String strFilePath = "/Users/insect/hindoong_upload/";		// mac
-	private static String strThumbnailPath = "/FileSave/thumbnail/";			// windows
+
+	private static String strFilePath = "/FileSave/upload/";						// windows
+	//private static String strFilePath = "/Users/insect/hindoong_upload/";			// mac
+	private static String strThumbnailPath = "/FileSave/thumbnail/";				// windows
 	//private static String strThumbnailPath = "/Users/insect/hindoong_upload/";	// mac
+	private static String strTemp_PicturePath = "/FileSave/temp_picture/"; 			//사진 자를 때 필요한 경로
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
 	
@@ -321,89 +324,221 @@ public class AlbumEditController {
 	        return newFileName + ext;
 		}
 	
-		@ResponseBody
-		@RequestMapping(value = "/thumbnailPathSave", method = RequestMethod.POST)
-		public String thumbnailSave(String thumbnail , String albumnum){
-			Map<String , String> map = new HashMap<String,String>();
-			map.put("album_thumbnail", thumbnail);
-			map.put("album_num", albumnum);
-			logger.info(map.toString());
-			if(albumDAO.updateThumbnail(map) > 0)
-				return "success";
-			else 
-				return "fail";
-		}
+	@ResponseBody
+	@RequestMapping(value = "/thumbnailPathSave", method = RequestMethod.POST)
+	public String thumbnailSave(String thumbnail , String albumnum){
+		Map<String , String> map = new HashMap<String,String>();
+		map.put("album_thumbnail", thumbnail);
+		map.put("album_num", albumnum);
+		logger.info(map.toString());
+		if(albumDAO.updateThumbnail(map) > 0)
+			return "success";
+		else 
+			return "fail";
+	}
+	
+	@RequestMapping(value = "img", method = RequestMethod.GET)
+	public String img(HttpServletResponse response , HttpSession session , String filePath) {
+		logger.info("img__jinsu");
 		
-		@RequestMapping(value = "img", method = RequestMethod.GET)
-		public String img(HttpServletResponse response , HttpSession session , String filePath) {
-			logger.info("img__jinsu");
-			
-			String fullpath = strFilePath + filePath;
-			if( filePath.length() != 0){
-				FileInputStream filein = null;
-				ServletOutputStream fileout = null;
-				try {
-					filein = new FileInputStream(fullpath);
-					fileout = response.getOutputStream();
-					FileCopyUtils.copy(filein, fileout);			
-					filein.close();
-					fileout.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		String fullpath = strFilePath + filePath;
+		if( filePath.length() != 0){
+			FileInputStream filein = null;
+			ServletOutputStream fileout = null;
+			try {
+				filein = new FileInputStream(fullpath);
+				fileout = response.getOutputStream();
+				FileCopyUtils.copy(filein, fileout);			
+				filein.close();
+				fileout.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			return null;
+		}
+		return null;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/modifiy_AlbumInfomation", method = RequestMethod.POST)
+	public String modifiy_AlbumInfomation(int album_num, String album_name, String album_contents,
+			int album_category, int album_openrange){
+		
+		AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_openrange, album_contents, album_category);
+		boolean check_infomationUpdate = false;
+		check_infomationUpdate = albumDAO.personal_update_page1_Album(albumwrite);
+		
+		if(check_infomationUpdate == true) {
+			return "success";
+		}else{
+			return "fail";
 		}
 		
-		@ResponseBody
-		@RequestMapping(value = "/modifiy_AlbumInfomation", method = RequestMethod.POST)
-		public String modifiy_AlbumInfomation(int album_num, String album_name, String album_contents,
-				int album_category, int album_openrange){
-			
-			AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_openrange, album_contents, album_category);
-			boolean check_infomationUpdate = false;
-			check_infomationUpdate = albumDAO.personal_update_page1_Album(albumwrite);
-			
-			if(check_infomationUpdate == true) {
-				return "success";
-			}else{
-				return "fail";
+		
+	}
+	
+	@RequestMapping(value = "thumbnail", method = RequestMethod.GET)
+	public String thumbnail(HttpServletResponse response , String filePath) {
+		logger.info("thumbnail__jinsu");
+		
+		String fullpath = strThumbnailPath + filePath;
+		if( filePath.length() != 0){
+			FileInputStream filein = null;
+			ServletOutputStream fileout = null;
+			try {
+				filein = new FileInputStream(fullpath);
+				fileout = response.getOutputStream();
+				FileCopyUtils.copy(filein, fileout);			
+				filein.close();
+				fileout.close();
+			} catch (IOException e) {
+				//오류 뜨는 게 보기 싫어 잠깐 끔...
+				//e.printStackTrace();
 			}
-			
-			
 		}
-		
-		@RequestMapping(value = "thumbnail", method = RequestMethod.GET)
-		public String thumbnail(HttpServletResponse response , String filePath) {
-			logger.info("thumbnail__jinsu");
-			
-			String fullpath = strThumbnailPath + filePath;
-			if( filePath.length() != 0){
-				FileInputStream filein = null;
-				ServletOutputStream fileout = null;
-				try {
-					filein = new FileInputStream(fullpath);
-					fileout = response.getOutputStream();
-					FileCopyUtils.copy(filein, fileout);			
-					filein.close();
-					fileout.close();
-				} catch (IOException e) {
-					//오류 뜨는 게 보기 싫어 잠깐 끔...
-					//e.printStackTrace();
-				}
+		return null;
+	}
+	
+	//사진 자를 때 자르는 창에 맞게 사진 재조정
+	@RequestMapping(value = "crop_picture", method = RequestMethod.GET)
+	public String crop_picture(Model model, String url_picture) {
+				
+		String imgFormat; // 새 이미지 포맷. jpg, gif 등
+		int newWidth = 500; // 변경 할 넓이
+		int newHeight = 500;// 변경 할 높이
+			 
+		Image image;
+		int imageWidth;
+		int imageHeight;
+		double ratio;
+		int w = 0;
+		int h = 0;
+		int i = 0;
+		String picture_name; //사진 이름만 추출
+		//이미지 이름만 추출
+		while(true) {
+			if(url_picture.charAt(i) == '='){
+				picture_name = url_picture.substring(i+1, url_picture.length());
+				break;
 			}
-			return null;
+			i++;
+		}
+		i=0;
+		//사진 파일 확장자 추출
+		while(true) {
+			if(picture_name.charAt(i) == '.'){
+				imgFormat = picture_name.substring(i+1, picture_name.length());
+				break;
+			}
+			i++;
+		}		
+		try{
+		    // 원본 이미지 가져오기
+			image = ImageIO.read(new File(strFilePath + picture_name));
+		    // 원본 이미지 사이즈 가져오기
+		    imageWidth = image.getWidth(null);
+		    imageHeight = image.getHeight(null);
+		    
+		    //이미지 파일이 가로가 기냐 세로가 기냐 비교 코드
+		    if(imageWidth > imageHeight){
+		        ratio = (double)newWidth/(double)imageWidth;
+		        w = (int)(imageWidth * ratio);
+		        h = (int)(imageHeight * ratio);
+		    }
+		    else if(imageWidth < imageHeight){
+		        ratio = (double)newHeight/(double)imageHeight;
+		        w = (int)(imageWidth * ratio);
+		        h = (int)(imageHeight * ratio);
+		    } else{ //가로세로 같을때
+		                w = imageWidth;
+		                h = imageHeight;
+		            }
+		    // 이미지 리사이즈
+		    // Image.SCALE_DEFAULT : 기본 이미지 스케일링 알고리즘 사용
+		    // Image.SCALE_FAST    : 이미지 부드러움보다 속도 우선
+		    // Image.SCALE_REPLICATE : ReplicateScaleFilter 클래스로 구체화 된 이미지 크기 조절 알고리즘
+		    // Image.SCALE_SMOOTH  : 속도보다 이미지 부드러움을 우선
+		    // Image.SCALE_AREA_AVERAGING  : 평균 알고리즘 사용
+			    Image resizeImage = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+ 
+	            // 새 이미지  저장하기
+            BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+            Graphics g = newImage.getGraphics();
+            g.drawImage(resizeImage, 0, 0, null);
+            g.dispose();
+    	    
+            File fpath = new File(strTemp_PicturePath);
+    	    if(!fpath.isDirectory()){
+    			fpath.mkdirs();			
+    	    } 
+    	    ImageIO.write(newImage, imgFormat, new File(strTemp_PicturePath+picture_name));
+	        } catch (Exception e){
+	            e.printStackTrace();
+	        }
+		//자를 사진 저장한 모델
+		String new_url_picture = "img_picture?filePath="+picture_name;
+		model.addAttribute("new_url_picture", new_url_picture);
+		model.addAttribute("picture_width", w);
+		model.addAttribute("picture_height", h);
+		
+		return "album/crop_picture";
+	}
+				
+	//url 경로 불러오는 코드
+	@RequestMapping(value = "img_picture", method = RequestMethod.GET)
+	public String img(HttpServletResponse response , String filePath ) {
+	
+		String fullpath = strTemp_PicturePath + "/" + filePath;
+		if(!fullpath.isEmpty()){
+			FileInputStream filein = null;
+			ServletOutputStream fileout = null;
+			try {
+				filein = new FileInputStream(fullpath);
+				fileout = response.getOutputStream();
+				FileCopyUtils.copy(filein, fileout);			
+				filein.close();
+				fileout.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
-		@RequestMapping(value = "crop_picture", method = RequestMethod.GET)
-		public String crop_picture(Model model, String url_picture) {
-			
-			//자를 사진 저장한 모델
-			model.addAttribute("url_picture", url_picture);
-			
-			return "album/crop_picture";
-		}
-		
+		return null;
+	}
+				
+	//자른 사진 저장 코드
+	@ResponseBody
+	@RequestMapping(value = "/croped_picture_save", method = RequestMethod.POST)
+	public String croped_picture_save(HttpServletRequest request) throws Exception{
+
+		String binaryData = request.getParameter("imgUrl");
+		File fpath = new File(strFilePath);
+	    if(!fpath.isDirectory()){
+			fpath.mkdirs();			
+		}	
+        FileOutputStream stream = null;
+        String newFileName = "" + new Date().getTime();
+        try{
+            logger.info("binary file   "  + binaryData);
+            if(binaryData == null || binaryData=="") {
+                throw new Exception();    
+            }
+            newFileName = newFileName + new Date().getTime();
+            binaryData = binaryData.replaceAll("data:image/png;base64,", "");            
+            byte[] decode = Base64.decodeBase64(binaryData);
+            stream = new FileOutputStream(strFilePath+newFileName+".png");
+            stream.write(decode);
+            stream.close();
+            logger.info("파일 작성 완료");
+            
+        }catch(Exception e){
+        	logger.info("파일이 정상적으로 넘어오지 않았습니다.");
+            return "fail";
+        }finally{
+            stream.close();
+        }
+        return newFileName + ".png";		
+	}
+
 		
 	
 }
