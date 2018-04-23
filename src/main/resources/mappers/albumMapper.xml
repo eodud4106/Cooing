@@ -79,15 +79,30 @@
 			where album_num = #{album_num}
 	</update>
 	
-	<select id="personal_selectAlbum_Num" parameterType="String" resultType="int">
-		select album_num from albumlist where ALBUM_IDENTIFIER = #{album_identifier}
-	</select>
-	
 	<select id="searchAlbum" parameterType="String" resultType="albumwrite">
 		select * from albumlist 
 			where album_writer like '%'||#{search}||'%'
 			or album_name like '%'||#{search}||'%'
 			or album_contents like '%'||#{search}||'%'
+			or album_num in(
+				select tag_albumnum as album_num
+				from tag
+				where tag_content like '%'||#{search}||'%'
+			)		
+		order by album_num desc
+	</select>
+	
+	<select id="SearchAlbumCount" parameterType="String" resultType="int">
+		select count(*) from albumlist 
+			where album_writer like '%'||#{search}||'%'
+			or album_name like '%'||#{search}||'%'
+			or album_contents like '%'||#{search}||'%'
+			or album_num in(
+				select tag_albumnum as album_num
+				from tag
+				where tag_content like '%'||#{search}||'%'
+			)		
+		order by album_num desc
 	</select>
 	
 	<select id="searchCategory" parameterType="int" resultType="albumwrite">
@@ -152,13 +167,6 @@
 			)
 		)
 		order by album_num desc
-	</select>
-	
-	<select id="SearchAlbumCount" parameterType="String" resultType="int">
-		select count(*) from albumlist 
-			where album_writer like '%'||#{search}||'%'
-			or album_name like '%'||#{search}||'%'
-			or album_contents like '%'||#{search}||'%'
 	</select>
 	
 	<select id="CategoryAlbumCount" parameterType="int" resultType="int">

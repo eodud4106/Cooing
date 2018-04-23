@@ -8,7 +8,6 @@ public class AlbumWriteVO {
 	private String album_contents;	
 	private String album_editor;	
 	private int album_category;
-	private String album_identifier;
 	private String album_thumbnail;
 	
 	public AlbumWriteVO() {
@@ -107,15 +106,7 @@ public class AlbumWriteVO {
 	public void setAlbum_category(int album_category) {
 		this.album_category = album_category;
 	}
-
-	public String getAlbum_identifier() {
-		return album_identifier;
-	}
-
-	public void setAlbum_identifier(String album_identifier) {
-		this.album_identifier = album_identifier;
-	}
-
+	
 	public String getAlbum_thumbnail() {
 		return album_thumbnail;
 	}
@@ -128,7 +119,6 @@ public class AlbumWriteVO {
 	public String toString() {
 		return "AlbumWriteVO [album_num=" + album_num + ", album_writer=" + album_writer + ", album_name=" + album_name
 				+ ", album_openrange=" + album_openrange + ", album_contents=" + album_contents + ", album_editor="
-				+ album_editor + ", album_category=" + album_category + ", album_identifier=" + album_identifier
-				+ ", album_thumbnail=" + album_thumbnail + "]";
+				+ album_editor + ", album_category=" + album_category + ", album_thumbnail=" + album_thumbnail + "]";
 	}
 }

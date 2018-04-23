@@ -240,20 +240,20 @@ $(document).ready(function(){
 	<div class ="search-bar">
 		<br><br>
 		<div align="center">
-       			 <img id='image_search' src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
+       			 <img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
        			 height: 24px;margin-right: 5px;" onclick="var inputBox = document.getElementById('searchtx');
        			 inputBox.style.width = '200px';
         		 inputBox.style.paddingLeft='3px';
        			 inputBox.value='';
        			 inputBox.focus();">
-     			 <input id='searchtx' type="text" onblur="this.style.width='0px';
+     			 <input id="searchtx" type="text" onblur="this.style.width='0px';
              	  this.style.paddingLeft='0px';" style="  border: none;
               	 background-color: rgba(0,0,0,0);
               	 color: #666666;
                	 border-bottom: solid 2px #333;
                	 outline: none;
               	  width: 0px;
-               	 transition: all 0.5s;" onkeydown="if(event.keyCode==13){searchfriend();}">
+               	 transition: all 0.5s;">
   		
 			
 		<!-- 정렬순서 -->		
@@ -325,10 +325,12 @@ $(document).ready(function(){
 				<c:if test="${Member ne null}">
 					<c:if test="${fn:length(friend) ne 0}">
 						<c:forEach var="arrf" items="${friend }">
-							<div name="friend">
-								<p onclick="openChat('1', '${arrf}')">${arrf}</p>
+							<div name="friend" id="friend">
+								<p onclick="openChat('1', '${arrf.member_id}')"><img src="./jinsu/memberimg?strurl=${arrf.member_picture}" style="width:40px;height:40px;">${arrf.member_id}</p>
 							</div>
 						</c:forEach>
+						<div name="user" id="user">
+						</div>												
 					</c:if>
 				</c:if>
 			</div>

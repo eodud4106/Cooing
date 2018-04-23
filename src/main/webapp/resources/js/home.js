@@ -14,10 +14,12 @@ function initialize(){
 	$('#login').on('click', function() {
 		loginmember('');
 	});
-	$('#searchbt').on('click' , function(){
-		searchcheck = 99;
-		search();
-	});	
+	$('#searchtx').keydown(function(event){
+		if(event.keyCode == 13){
+			searchcheck = 99;
+			search();
+		}
+	});
 	$('.category').on('click' , function(){
 		searchCategory($(this).attr('data'));
 	});

@@ -71,11 +71,6 @@ public class AlbumDAO{
 		return result;
 	}
 	
-	public int personal_selectAlbum_Num(String album_identifier){
-		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		return mapper.personal_selectAlbum_Num(album_identifier);
-	}
-	
 	public boolean personal_insertAlbumOfPage(PageHtmlVO page){
 		
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);

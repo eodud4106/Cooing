@@ -14,10 +14,7 @@ public interface AlbumMapper {
 	
 	public int personal_insertAlbumOfPage(PageHtmlVO page);
 	
-	public int personal_selectAlbum_Num(String album_identifier);
-	
 	public int personal_update_page1_Album(AlbumWriteVO albumwrite);
-	
 	
 	public String MyAlbumListOutPut(String html);
 	
