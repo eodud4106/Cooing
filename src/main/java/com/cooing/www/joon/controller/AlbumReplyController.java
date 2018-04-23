@@ -29,8 +29,7 @@ public class AlbumReplyController {
 	// 댓글 작성
 	@ResponseBody
 	@RequestMapping(value = "/writeReply", method = RequestMethod.POST)
-	public String writeReply(Model model, @RequestParam int reply_albumnum, 
-			@RequestParam String reply_contents, HttpSession session) {
+	public String writeReply(Model model,int reply_albumnum, String reply_contents, HttpSession session) {
 		
 		String str = null;
 		
@@ -52,7 +51,7 @@ public class AlbumReplyController {
 	// 댓글 삭제
 	@ResponseBody
 	@RequestMapping(value = "/deleteReply", method = RequestMethod.POST)
-	public String deleteReply(Model model, @RequestParam int reply_num, HttpSession session) {
+	public String deleteReply(Model model, int reply_num, HttpSession session) {
 		
 		String str = null;
 		

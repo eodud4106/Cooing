@@ -95,8 +95,11 @@ function getMyAlbumList() {
  */
 function create_personal_album() {
 	$.ajax({
-		url: 'create_personal_album',
+		url: 'create_album',
 		type: 'post',
+		data: {
+			isPersonal: 1
+		},
 		dataType: 'json',
 		success: function(result) {
 			if(result == 'user null') {
