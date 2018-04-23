@@ -26,8 +26,8 @@ select * from likeit where likeit_albumnum = #{likeit_albumnum}
 delete from likeit where likeit_memberid = #{likeit_memberid} and likeit_albumnum = #{likeit_albumnum}
 </delete>
 <!-- 좋아요 목록-->
-<select id = "likesList" resultType = "albumlikes" parameterType="albumlikes">
-select * from likeit
+<select id = "listLikes" resultType = "albumlikes" parameterType="int">
+select * from likeit where likeit_albumnum = #{likeit_albumnum} order by likeit_num desc
 </select>
 <select id="check_Likes" resultType = "String" parameterType="albumlikes">
 	select LIKEIT_MEMBERID
