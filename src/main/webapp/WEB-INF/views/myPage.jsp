@@ -30,8 +30,13 @@
 <script src="<c:url value="/resources/aside_js/imagesloaded.pkgd.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/main.js"/>"></script>
 
+<link rel="stylesheet" href="resources/skin_radio/green.css">
+<script src="resources/skin_radio/icheck.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="resources/js/jquery-3.3.1.min.js"></script>
+
+<!-- 라디오버튼 -->
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
+
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="<c:url value="/resources/js/search.js"/>"></script>
 
@@ -117,6 +122,36 @@ function create_personal_album() {
 	});
 }
 </script>
+<!-- 정렬순 라디오 버튼 -->
+<script>
+$(document).ready(function(){
+  $('input').iCheck({
+    checkboxClass: 'icheckbox_square-green',
+    radioClass: 'iradio_square-green',
+    increaseArea: '20%' // optional
+  });
+});
+</script>
+
+<style>
+.img1{
+	width: 50px;
+	height: 50px;
+}
+.friendList{
+	height: 250px;	
+	overflow : scroll;
+	overflow-x:hidden;
+	/* overflow-y:hidden; */
+}
+.groupList{
+	height: 250px;
+	overflow : scroll;
+	overflow-x:hidden;
+	/* overflow-y:hidden; */
+}
+</style>
+
 </head>
 <body>
 
@@ -169,7 +204,7 @@ function create_personal_album() {
 
 		</div>
 
-		<form>
+		<!-- <form>
 			<div class="search">
 				 테스트<br /> 
 				 <input	type="button" id="myBtn" value="모달 열기">
@@ -179,7 +214,7 @@ function create_personal_album() {
 						width=100% height="100%"></iframe>
 				</div>
 			</div>
-		</form>
+		</form> -->
 	</aside>
 
 
@@ -198,22 +233,31 @@ function create_personal_album() {
 	</div>	
 	
 		<div class ="search-bar">
-			<br>
-			<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}" style = "float : left; margin-left: 200px;">
-			<input type="button" value="검색" id="searchbt">
-			<div class = "search" style= "z-index:99; float:left; padding-left : 10px;" id="searchbt" onclick=""><i class="fas fa-search"></i></div>
-			
-			<!-- 정렬순 -->
-			<!-- <div class = "array" style= "z-index:99; float:right; padding-left : 10px;"><i class="fas fa-align-justify"></i></div>	
-			<div class = "array" style= "z-index:99; float:right; padding-left : 10px;"><i class="fas fa-align-justify"></i></div> -->
-			<select style = "float:right; padding-left : 10px;">
-			  <option selected >정렬순</option>
-			  <option>최신순</option>
-			  <option>인기순</option>
-			</select>
-			
+		<br><br>
+		<div style = "margin-left: 20px;">
+       			 SEARCH &nbsp<img id='image_search' src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
+       			 height: 24px;margin-right: 5px;" onclick="var inputBox = document.getElementById('searchtx');
+       			 inputBox.style.width = '200px';
+        		 inputBox.style.paddingLeft='3px';
+       			 inputBox.value='';
+       			 inputBox.focus();">
+     			 <input id='searchtx' type="text" onblur="this.style.width='0px';
+             	  this.style.paddingLeft='0px';" style="  border: none;
+              	 background-color: rgba(0,0,0,0);
+              	 color: #666666;
+               	 border-bottom: solid 2px #333;
+               	 outline: none;
+              	  width: 0px;
+               	 transition: all 0.5s;" onkeydown="if(event.keyCode==13){searchfriend();}">		
+		
+		<form style = "float:right; padding-left : 10px;">
+			<input type="radio" name="iCheck" class = "input"value="1" checked>최신순
+			<input type="radio" name="iCheck" class = "input"value="2" >인기순			
+			<div style= "z-index:99; float:right; " onClick="checkRadioButton('iCheck')"><i class="far fa-check-circle"></i></div>
+		</form>
 		</div>
-		<br>
+		<br>	
+	</div>
 			
 	
 	
@@ -245,11 +289,7 @@ function create_personal_album() {
 	<div class="container-fluid d-md-none">
 		<div class="row">
 			<div class="col-md-12">
-				<ul class="list-unstyled d-flex probootstrap-aside-social">
-					<li><a href="#" class="p-2"><span class="icon-twitter"></span></a></li>
-					<li><a href="#" class="p-2"><span class="icon-instagram"></span></a></li>
-					<li><a href="#" class="p-2"><span class="icon-dribbble"></span></a></li>
-				</ul>
+				
 				<p>
 					&copy; 2017 <a href="https://uicookies.com/" target="_blank">uiCookies:Aside</a>.
 					<br> All Rights Reserved. Designed by <a
@@ -263,34 +303,37 @@ function create_personal_album() {
 
 	<aside class="probootstrap-aside2 js-probootstrap-aside2">
 		<a href="#"
-			class="probootstrap-close-menu js-probootstrap-close-menu2 d-md-none">
+			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-right"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING2</a>
-			<p class="mb-0">
-				Another free html5 bootstrap 4 template by
-				<a href="https://uicookies.com/" target="_blank">uiCookies</a>
-			</p>
-		</div>
-		<div class="probootstrap-overflow">
-			<div>
-				<form>
-					<input type="text" placeholder="친구검색" id="friendsearch" class="search1">
+			<a href="" class="mb-2 d-block probootstrap-logo">MY FRIEND</a>			
+		</div>				
+				 <form>
+					<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
 					<input type="button" id="friendsearchbt" value="s">
 				</form>
-
+			<div class = "friendList">
 				<c:if test="${Member ne null}">
 					<c:if test="${fn:length(friend) ne 0}">
 						<c:forEach var="arrf" items="${friend }">
-							<div name="friend">
-								<p onclick="openChat('1', '${arrf}', '')">${arrf}</p>
+							<div name="friend" id="friend">
+								<p onclick="openChat('1', '${arrf.member_id}')"><img src="./jinsu/memberimg?strurl=${arrf.member_picture}" style="width:40px;height:40px;">${arrf.member_id}</p>
 							</div>
 						</c:forEach>
+						<div name="user" id="user">
+						</div>												
 					</c:if>
 				</c:if>
 			</div>
-			<div>
+		
+		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
+			<a href="" class="mb-2 d-block probootstrap-logo">MY GROUP</a>				
+		</div>				
+		<!-- <div class="probootstrap-overflow"> -->
+		<input type="button" value="그룹생성"
+					onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
+			<div class = "groupList">
 				<c:if test="${Member ne null}">
 					<c:if test="${fn:length(group) ne 0}">
 						<c:forEach var="party" items="${group}">
@@ -302,10 +345,8 @@ function create_personal_album() {
 							</div>
 						</c:forEach>
 					</c:if>
-				</c:if>
-				<input type="button" value="그룹생성"
-					onclick="window.open('./groupcreate_get?','','width=300 height=400 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
-			</div>
+				</c:if>				
+			<!-- </div> -->
 		</div>
 
 	</aside>
