@@ -266,9 +266,9 @@ html, body, main, .container-fluid {
 		str += ' ' + vo.likeit_memberid;
 		str += '</td>';
 		str += '</tr>';
-		});
-		str += '</table>';
-		$("#resultLikes").html(str);
+	});
+	str += '</table>';
+	$("#resultLikes").html(str);
 	}
 	// 댓글 쓰기
 	function writereply(){
