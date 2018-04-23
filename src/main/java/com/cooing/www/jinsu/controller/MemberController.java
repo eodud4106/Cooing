@@ -4,6 +4,8 @@ package com.cooing.www.jinsu.controller;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -90,11 +92,39 @@ public class MemberController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/search_id" , method = RequestMethod.POST)
-	public ArrayList<String> search_id(String text){
-		logger.info("search_id__jinsu");
-		ArrayList<String> arr_memberid = memberDAO.searchId(text);	
-		return arr_memberid;				
+	@RequestMapping(value="/select_friend" , method = RequestMethod.POST)
+	public ArrayList<Member> select_friend(HttpSession session){
+		logger.info("select_friend__jinsu");
+		Member member = (Member)session.getAttribute("Member");
+		ArrayList<Member> arrfriend = memberDAO.selectfriend(member.getMember_id());		
+		logger.info(arrfriend.toString());
+		return arrfriend;				
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/search_friend_id" , method = RequestMethod.POST)
+	public ArrayList<Member> search_friend_id(String text , HttpSession session){
+		logger.info("search_friend_id__jinsu");
+		Member member = (Member)session.getAttribute("Member");
+		Map<String,String> map = new HashMap<String,String>(); 
+		map.put("friendid", text);
+		map.put("myid", member.getMember_id());
+		ArrayList<Member> arrfriendsearch = memberDAO.searchId(map);
+		logger.info(arrfriendsearch.toString());
+		return arrfriendsearch;				
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/search_user_id" , method = RequestMethod.POST)
+	public ArrayList<Member> search_user_id(String text ,  HttpSession session){
+		logger.info("search_user_id__jinsu");
+		Member member = (Member)session.getAttribute("Member");
+		Map<String,String> map = new HashMap<String,String>(); 
+		map.put("friendid", text);
+		map.put("myid", member.getMember_id());
+		ArrayList<Member> arruser = memberDAO.searchUser(map);
+		logger.info(arruser.toString());
+		return arruser;				
 	}
 	
 	@ResponseBody
