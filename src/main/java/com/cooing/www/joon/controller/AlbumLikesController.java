@@ -64,8 +64,6 @@ public class AlbumLikesController {
 				albumlikesDAO.deleteLikes(vo.get(i));
 				str = "success";
 			}
-			else{
-			}
 		}
 		return str;
 	}

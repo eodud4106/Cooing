@@ -138,7 +138,7 @@ html, body, main, .container-fluid {
 	background-color: #aaa;
 }
 .div_reply, .div_reply form, .div_reply form input,
-#resultDiv, #resultDiv table {
+#resultReply, #resultReply table {
 	position: relative;
 }
 </style>
@@ -259,13 +259,10 @@ html, body, main, .container-fluid {
 	function viewResult2(likesList){
 		var str = '';
 	
-		str += '<table>';
+
 		$(likesList).each(function(i, vo){
-		str += '<tr>';
-		str += '<td>';
-		str += ' ' + vo.likeit_memberid;
-		str += '</td>';
-		str += '</tr>';
+		str += vo.likeit_memberid + ' ';
+
 	});
 	str += '</table>';
 	$("#resultLikes").html(str);
@@ -478,18 +475,17 @@ html, body, main, .container-fluid {
 				</div>
 				<!-- 하단 바 영역 -->
 				<div class="div_reply">
-				<form>
-				댓글
-				<input type="text" id="contents" class ="reply">
-				<button type="button" onclick="writereply()">저장</button>
-				<input type="hidden" name="reply_albumnum">
-				</form>
-				<div id="resultReply">
+					<form>
+					댓글
+					<input type="text" id="contents" class ="reply">
+					<button type="button" onclick="writereply()">저장</button>
+					<input type="hidden" name="reply_albumnum">
+					</form>
+					<div id="resultReply">
 				
+					</div>
 				</div>
-				</div>
-				
-				
+							
     	</section>
     	</div>			
 
