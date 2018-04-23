@@ -30,6 +30,7 @@
 	height: 350px;
 	border-bottom: 1px solid black;
 	overflow-y: scroll;
+	background-color: #CEF6CE;
 }
 
 .div_chat_under {
@@ -44,6 +45,11 @@
 
 .div_chat_top_title {
 	width: 350px;
+	font-size: x-large;
+	text-align: center;
+	padding: 10px;
+	padding-left: 60px;
+	line-height: normal;
 }
 
 .div_chat_top_close {
@@ -70,6 +76,53 @@
 	line-break: after-white-space;
 	-webkit-user-modify: read-write;
 }
+
+.msg {
+	width: 100%;
+	display: block;
+	float: left;
+}
+
+.msg > * {
+	vertical-align: bottom !important;
+}
+
+.msg_user {
+	color: black;
+	width: 100%;
+	height: 30px;
+	padding-left: 10px;
+}
+
+.msg_text {
+	border-radius: 10px;
+	color: black;
+	padding: 10px;
+	max-width: 260px;
+	margin: 10px;
+	margin-top: 0px;
+	word-wrap: break-word;
+	display: inline-block;
+	height: 100%;
+}
+
+.msg_date {
+	display: block;
+	max-width: 80px;
+	word-wrap: break-word;
+	color: grey;
+	font-size: small;
+	line-height: normal;
+}
+
+.msg_unread {
+	display: block;
+	color: orange;
+	font-size: small;
+	line-height: normal;
+}
+
+
 
 
 

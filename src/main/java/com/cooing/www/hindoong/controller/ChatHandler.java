@@ -185,6 +185,8 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	//읽음 처리
 	public void readMessage(MessageVO msg) {
 		
+		System.out.println("읽음 메세지를 보냅니다 -> " + msg);
+		
 		try {
 			
 			// 1:1 채팅 & 그룹채팅 여부에 따른 처리
@@ -194,8 +196,8 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 					if (session.isOpen()) {
 						
 						// 1. 발신인이 웹소켓 세션에 있을 경우 읽음 푸시
-						if (hashmap_id.containsKey(msg.getAddressee())
-								&& hashmap_id.get(msg.getAddressee()).equals(session.getId())) {
+						if (hashmap_id.containsKey(msg.getSender())
+								&& hashmap_id.get(msg.getSender()).equals(session.getId())) {
 							session.sendMessage(new TextMessage(gson.toJson(msg)));
 						}
 					}

@@ -221,6 +221,8 @@ function openChat(is1to1, counterpart) {
 	
 
 	$div_chat.css('display', 'block');
+	$title.text(counterpart);
+	$message.focus();
 
 }
 
@@ -277,6 +279,24 @@ function onMessage(evt) {
 		// 		}
 		// 	}
 		// });
+
+		if(chatData.ids) {
+
+			var reg = /\d{1,10}/g;
+			var arr_id = chatData.ids.match(reg);
+			
+			for(var i = 0; i < arr_id.length; i++) {
+			
+				var id = arr_id[i];
+				var $unread = $('.msg[message_id=' + id + ']').find('.msg_unread');
+				$unread.text(($unread.text()-1));
+				if($unread.text() == 0) $unread.text('');
+
+			}
+		}
+
+		
+
 		return;
 	}
     
@@ -290,7 +310,7 @@ function onMessage(evt) {
 		// 대화 중인 상대가 아님 -> 수신 알림
 		
 		// 알림1. 팝업 알림
-		alert(from + '님으로부터 메시지가 왔습니다!');
+		alert(chatData.sender + '님으로부터 메시지가 왔습니다!');
 		
 		// 알림2. 대화창 빨간색 표시
 		if (is1to1 == 1) {
@@ -310,42 +330,90 @@ function printChat(chatData) {
 	// json 형식으로 받기 때문에... 일단 parse...
 	var arr_chat = JSON.parse(chatData);
 	
+	var isReceive = false;
+
 	// parse 후 each...
 	$(arr_chat).each(function(i, chat) {
 		
 		var $div_message = $('<div />');
-		var html = "";
+
+		var $msg = $('<div />', {
+			"class": "msg",
+			"message_id": chat.message_id
+		});
+
+		var $msg_user = $('<div />', {
+			"class": "msg_user"
+		});
+
+		var $msg_text = $('<div />', {
+			"class": "msg_text"
+		});
+
+		var $msg_date = $('<div />', {
+			"class": "msg_date"
+		})
+
+		var $msg_unread = $('<div />' , {
+			"class": "msg_unread"
+		})
+
+		if(chat.unread == 0) chat.unread = '';
 		
 		if (chat.sender == userId) {
 			//자기가 보낸 메시지
-			$div_message.css('text-align', 'right');
-			if (chat.unread > 0) {
-				// 1. 읽지 않음이 있는 경우
-				html += "<span class='unread' style='font-size: 6pt'>" + chat.unread + "</span>";
-			}
-			html += chat.send_date.substring(0,16) + " / " + chat.message + " < <br>";
-			$div_message.html(html);
+
+			$msg_text.text(chat.message).css({
+				"float": "right",
+				"background-color": "#81DAF5"
+			}).appendTo($msg);
+			$tmp_div = $('<div />').css({
+				'display': 'block',
+				'float': 'right'
+			});
+			$msg_date.text(chat.send_date.substring(5,16)).appendTo($tmp_div);
+			$msg_unread.text(chat.unread).css("float", "right").appendTo($tmp_div);
+
+			$tmp_div.appendTo($msg);
 	
 		} else {
+			// 상대가 보낸 메세지
+			isReceive = true;
+
+			// 일대일 대화라면 상대 메세지의 안 읽음은 당연히 0...
+			if(chat.is1to1 == 1) chat.unread = '';
+
+			$msg_user.text(chat.sender).css("float", "left").appendTo($msg);
+			$msg_text.text(chat.message).css({
+				"float": "left",
+				"background-color": "white"
+			}).appendTo($msg);
+			$tmp_div = $('<div />').css({
+				'display': 'block',
+				'float': "left"
+			});
+			$msg_date.text(chat.send_date.substring(5,16)).appendTo($tmp_div);
+			$msg_unread.text(chat.unread).css("float", "left").appendTo($tmp_div);
+
 			//받은 메시지
-			$div_message.css('text-align', 'left');
-			html += chat.sender + " > " + chat.message + " / " + chat.send_date.substring(0,16);
-			if (chat.unread > 0) {
-				// 1. 읽지 않음이 있는 경우
-				if (chat.is1to1 == 0) {
-					html += "<span class='unread' style='font-size: 8pt'>" + chat.unread + "</span>";
-				}
-			}
-			html += "<br>";
-			$div_message.html(html);
+			// $div_message.css('text-align', 'left');
+			// html += chat.sender + " > " + chat.message + " / " + chat.send_date.substring(0,16);
+			// if (chat.unread > 0) {
+			// 	// 1. 읽지 않음이 있는 경우
+			// 	if (chat.is1to1 == 0) {
+			// 		html += "<span class='unread' style='font-size: 8pt'>" + chat.unread + "</span>";
+			// 	}
+			// }
+			// html += "<br>";
+			// $div_message.html(html);
+			$tmp_div.appendTo($msg);
 		}
 		
-		$message_list.append($div_message);
+		$message_list.append($msg);
 		
 	});
-	
-	// 메시지를 읽었다고 알려준다..
-	readMessage();
+
+	if(isReceive) readMessage();
 	
 	$message_list.scrollTop($message_list[0].scrollHeight);
 	
