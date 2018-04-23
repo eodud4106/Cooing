@@ -398,7 +398,7 @@ html, body, main, .container-fluid {
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
+			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
 			<p class="mb-0"> 친구목록출력, 채팅기능
 				<a href="https://uicookies.com/" target="_blank">uiCookies</a>
 			</p>

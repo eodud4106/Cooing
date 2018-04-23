@@ -63,7 +63,7 @@ public class MainController {
 			e.printStackTrace();
 		}
 		
-		return "Album/albumView";
+		return "album/albumView";
 	}
 	
 	@ResponseBody

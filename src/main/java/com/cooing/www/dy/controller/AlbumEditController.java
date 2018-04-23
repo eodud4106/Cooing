@@ -388,7 +388,7 @@ public class AlbumEditController {
 			//자를 사진 저장한 모델
 			model.addAttribute("url_picture", url_picture);
 			
-			return "Album/crop_picture";
+			return "album/crop_picture";
 		}
 		
 		
