@@ -31,4 +31,8 @@ select * from reply where reply_num = #{reply_num}
 <delete id="replyDelete" parameterType="albumreply">
 delete from reply where reply_memberid = #{reply_memberid} and reply_num = #{reply_num}
 </delete>
+<!-- 해당 앨범의 댓글 갯수 -->
+<select id="getReplyTotal" parameterType="int" resultType="int">
+select count(*) from reply where reply_albumnum = #{reply_albumnum} order by reply_num desc
+</select>
 </mapper>

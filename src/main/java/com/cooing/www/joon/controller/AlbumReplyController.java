@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.jinsu.object.Member;
 import com.cooing.www.joon.dao.AlbumReplyDAO;
+import com.cooing.www.joon.util.PageNavigator;
 import com.cooing.www.joon.vo.AlbumReplyVO;
 
 @Controller
@@ -25,7 +26,11 @@ public class AlbumReplyController {
 	private static final Logger logger = LoggerFactory.getLogger(AlbumLikesController.class);
 	@Autowired
 	AlbumReplyDAO albumreplyDAO;
-
+	
+	// 한 페이지 당 글 개수
+	private static final int COUNT_PER_PAGE = 5;
+	// 페이지 그룹 개수
+	private static final int PAGE_PER_GROUP = 5;
 	// 댓글 작성
 	@ResponseBody
 	@RequestMapping(value = "/writeReply", method = RequestMethod.POST)
@@ -72,13 +77,22 @@ public class AlbumReplyController {
 		return str;
 	}
 	
-	// 댓글 리스트
+	// 댓글 목록
 	@ResponseBody
 	@RequestMapping(value = "/listReply", method = RequestMethod.GET)
-	public ArrayList<AlbumReplyVO> listReply(Model model, 
-			@RequestParam int reply_albumnum) {
+	public ArrayList<AlbumReplyVO> listReply(Model model, int reply_albumnum, @RequestParam(value="rep_page", defaultValue="1") int page) {
 		
-		ArrayList<AlbumReplyVO> replyList = albumreplyDAO.listReply(reply_albumnum);
+		int num = 0;
+		
+		num = reply_albumnum;
+		
+		// 댓글 페이징
+		int repTotal = albumreplyDAO.getReplyTotal(num);
+		PageNavigator RepNavi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, page, repTotal);
+		
+		ArrayList<AlbumReplyVO> replyList = albumreplyDAO.listReply(num, RepNavi.getStartRecord(), RepNavi.getCountPerPage());
+		
+		model.addAttribute("RepNavi", RepNavi);
 		
 		return replyList;
 	}

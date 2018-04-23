@@ -428,7 +428,13 @@ html, body, main, .container-fluid {
 			alert('체크된거없음');
 	   }	 
 	}
-
+	// 페이징
+	function pagingFormSubmit(num){
+		var pagingForm = document.getElementById('rep_pagingForm');
+		var page = document.getElementById('rep_page');
+		page.value = num; 		// 폼에 요청할 페이지번호 저장
+		pagingForm.submit(); 	// 폼 전송
+	}
 </script>
 
 </head>
@@ -484,6 +490,20 @@ html, body, main, .container-fluid {
 					<div id="resultReply">
 				
 					</div>
+					<!-- 페이지 이동 부분 -->                      
+					<a href="javascript:pagingFormSubmit(${RepNavi.currentPage - navi.pagePerGroup})">◁◁ </a> &nbsp;&nbsp;
+					<a href="javascript:pagingFormSubmit(${RepNavi.currentPage - 1})">◀</a> &nbsp;&nbsp;
+				
+					<c:forEach var="counter" begin="${RepNavi.startPageGroup}" end="${RepNavi.endPageGroup}"> 
+						<c:if test="${counter == navi.currentPage}"><b></c:if>
+							<a href="javascript:pagingFormSubmit(${counter})">${counter}</a>&nbsp;
+						<c:if test="${counter == navi.currentPage}"></b></c:if>
+					</c:forEach>
+					&nbsp;&nbsp;
+					<a href="javascript:pagingFormSubmit(${RepNavi.currentPage + 1})">▶</a> &nbsp;&nbsp;
+					<a href="javascript:pagingFormSubmit(${RepNavi.currentPage + RepNavi.pagePerGroup})">▷▷</a>
+				
+					<!-- /페이지 이동 끝 -->
 				</div>
 							
     	</section>

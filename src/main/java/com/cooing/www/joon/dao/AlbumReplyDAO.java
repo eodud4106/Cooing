@@ -24,14 +24,19 @@ public class AlbumReplyDAO {
 		albumreplymapper.replyDelete(vo);	
 	}
 	// 댓글 목록
-	public ArrayList<AlbumReplyVO> listReply(int reply_albumnum) {
+	public ArrayList<AlbumReplyVO> listReply(int num, int start, int countPerPage) {
+		RowBounds rb = new RowBounds(start, countPerPage);
 		AlbumReplyMapper albumreplymapper = sqlSession.getMapper(AlbumReplyMapper.class);
-		return albumreplymapper.listReply(reply_albumnum);
+		return albumreplymapper.listReply(num, rb);
 	}
 	// 댓글 하나 가져옴
 	public AlbumReplyVO getReply(int reply_num) {
 		AlbumReplyMapper albumreplymapper = sqlSession.getMapper(AlbumReplyMapper.class);
 		return albumreplymapper.getReply(reply_num);
 	}
-
+	// 댓글 수
+	public int getReplyTotal(int num) {
+		AlbumReplyMapper albumreplymapper = sqlSession.getMapper(AlbumReplyMapper.class);
+		return albumreplymapper.getReplyTotal(num);
+	}
 }
