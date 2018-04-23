@@ -41,7 +41,6 @@ public class MainController {
 	@Autowired
 	AlbumLikesDAO albumlikesDAO;
 
-
 	/**
 	 * 앨범뷰... 앨범과 페이지 리스트를 갖고 albumView로 이동....
 	 */
@@ -84,10 +83,12 @@ public class MainController {
 			HttpSession session) {
 		
 		String likeit_memberid = ((Member) session.getAttribute("Member")).getMember_id();
-		System.out.println(likeit_albumnum);
+	
 		AlbumLikesVO vo = new AlbumLikesVO(likeit_albumnum, likeit_memberid);
+		
 		String check_likeMember = null;
 		check_likeMember = albumlikesDAO.check_Likes(vo);
+		System.out.println(check_likeMember);
 		
 		return check_likeMember;
 	}

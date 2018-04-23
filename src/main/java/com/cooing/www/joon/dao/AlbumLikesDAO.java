@@ -27,7 +27,7 @@ public class AlbumLikesDAO {
 		AlbumLikesMapper albumlikesmapper = sqlSession.getMapper(AlbumLikesMapper.class);
 		return albumlikesmapper.getAlbum(likeit_albumnum);
 	}
-
+	// 좋아요 확인
 	public String check_Likes(AlbumLikesVO vo) {
 		AlbumLikesMapper albumlikesmapper = sqlSession.getMapper(AlbumLikesMapper.class);
 		return albumlikesmapper.check_Likes(vo);

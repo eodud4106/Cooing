@@ -149,6 +149,7 @@ html, body, main, .container-fluid {
 
 	//라디오버튼
 	$(document).ready(function() {
+		
 		replyList();
 		check_likes();
 		
@@ -174,7 +175,14 @@ html, body, main, .container-fluid {
 			},
 			dataType: 'text',
 			success: function(a){
-				
+				console.log('조회 결과 -> ' + JSON.stringify(a));
+				if (a != "") {
+					$('#likes').css('display', 'none');
+					
+				}	
+				if (a == "") { 
+					$('#deleteLikes').css('display', 'none');
+				}
 			},
 			error:function(e){
 				alert(JSON.stringify(e));
@@ -194,13 +202,7 @@ html, body, main, .container-fluid {
 			},
 			dataType: 'text',
 			success: function(a){
-				if(a == 'success'){
-					alert("좋아요!");	
-							
-				}
-				else{
-					alert("좋아요 실패!");
-				}
+				check_likes();
 			},
 			error:function(e){
 				alert(JSON.stringify(e));
@@ -220,13 +222,7 @@ html, body, main, .container-fluid {
 			},
 			dataType: 'text',
 			success: function(a){
-				if(a == 'success'){
-					alert("좋아요 취소");
-					
-				}
-				else{
-					alert("좋아요 취소 실패");
-				}
+				check_likes();
 			},
 			error:function(e){
 				alert(JSON.stringify(e));
@@ -237,15 +233,24 @@ html, body, main, .container-fluid {
 	// 댓글 쓰기
 	function writereply(){
 
-		var conents = $('#contents').val();
+		var contents = $('#contents').val();
 		var albumnum = ${album.album_num};
+		
+		if (contents == "") {
+			alert("댓글의 내용을 입력하세요.");
+			return;
+		}
+		if (contents.length > 15) {
+			alert("댓글은 15자 이내로 입력하세요.")
+			return;
+		}
 		
 		$.ajax({
 			url:'writeReply',
 			type: 'POST',		
 			data: {
 				"reply_albumnum": albumnum,
-				"reply_contents": conents 
+				"reply_contents": contents 
 				
 			},
 			dataType: 'text',
@@ -425,16 +430,20 @@ html, body, main, .container-fluid {
 				<form id="testimg">
 					<input type="hidden" name="imgSrc" id="imgSrc" />
 				</form>	
-				<c:if test = "${check_likeMember == likeit_memberid}"> 
-				<p><button type="button" onclick="likes()">좋아요!</button></p>
-				</c:if> 
-				<c:if test = "${check_likeMember == likeit_memberid}"> 
-				<p><button type="button" onclick="deletelikes()">좋아요 취소!</button></p> 	
-				</c:if> 
+				<p id = "likes"><button type="button" onclick="likes()">좋아요!</button></p>
+				<p id = "deleteLikes"><button type="button" onclick="deletelikes()">좋아요 취소!</button></p>
+				좋아요 한 사람들 
+				<p>	
+				<c:forEach items="${like }" var="l">
+				<tr>
+				<td>${l.likeit_memberid }</td>
+				</tr>
+				</c:forEach>
+				</p>
 				<!-- 하단 바 영역 -->
 				<div class="div_reply">
 				<form>
-				내용
+				댓글
 				<input type="text" id="contents" class ="reply">
 				<button type="button" onclick="writereply()">저장</button>
 				<input type="hidden" name="reply_albumnum">
