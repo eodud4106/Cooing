@@ -21,6 +21,8 @@
 <link rel="stylesheet" href="resources/aside_css/animate.css">
 <link rel="stylesheet" href="resources/aside_css/style.css">
 <link rel="stylesheet" href="resources/css/chat.css">
+<!-- 레이어 툴팁 -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="resources/js/jquery-3.3.1.min.js"></script>
@@ -70,6 +72,12 @@ $(document).ready(function () {
 	    }
 	});
 	
+	$(document).mouseup(function(e){
+		var container=$('.popuplayer');
+		if(container.has(e.target).length == 0)
+			container.hide();
+	});
+	
 	$('#myBtn').click(function() {
 		$('#myModal').css('display', 'block');
 	});
@@ -77,6 +85,8 @@ $(document).ready(function () {
 	$('#myBtn_close').click(function() {
 		$('#myModal').css('display', 'none');
 	});
+	
+	friendclickevent();
 	
 	if (${sessionScope.Member != null}) {
 		readyChat('${sessionScope.Member.member_id}', '');
@@ -100,6 +110,8 @@ $(document).ready(function () {
 		getTotalAlbumList();		
 	}
 });
+
+
 </script>
 
 <!-- 정렬순 라디오버튼 -->
@@ -157,6 +169,21 @@ $(document).ready(function(){
 	overflow : scroll;
 	overflow-x:hidden;
 	/* overflow-y:hidden; */
+}
+/* 포인터로 마우스 모양 바꿔주는곳 */
+.friendclick{
+	cursor:pointer;
+}
+/* 팝업창 꾸미는 곳 */
+.popuplayer{
+	position:absoulute;
+	display:none;
+	background-color:#e0e0e0;
+	border:solid 2px #d0d0d0.;
+	width:120px;
+	height:70px;
+	padding:10px;
+	
 }
 
 </style>
@@ -286,10 +313,6 @@ $(document).ready(function(){
 		</div>
 	</div>
 	
-	
-	
-	
-
 	<div class="container-fluid d-md-none">
 		<div class="row">
 			<div class="col-md-12">
@@ -324,15 +347,15 @@ $(document).ready(function(){
 			<div class = "friendList">
 				<c:if test="${Member ne null}">
 					<c:if test="${fn:length(friend) ne 0}">
-						<c:forEach var="arrf" items="${friend }">
-							<div name="friend" id="friend">
-								<p onclick="openChat('1', '${arrf.member_id}')"><img src="./jinsu/memberimg?strurl=${arrf.member_picture}" style="width:40px;height:40px;">${arrf.member_id}</p>
-							</div>
-						</c:forEach>
+					<div name="friend" id="friend">
+							<c:forEach var="arrf" items="${friend }">
+								<p class="friendclick" onClick="popupvalue('${arrf.member_id}')"><img src="./jinsu/memberimg?strurl=${arrf.member_picture}" style="width:40px;height:40px;">${arrf.member_id}</p>
+							</c:forEach>
+						</div>
 						<div name="user" id="user">
 						</div>												
 					</c:if>
-				</c:if>
+				</c:if>				
 			</div>
 		
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
@@ -358,6 +381,11 @@ $(document).ready(function(){
 		</div>
 
 	</aside>
+	
+	<div class="popuplayer">
+		<p onClick="friendpage()" style="font-size:8pt;color:#26afa1;">친구페이지</p>
+		<p onClick="chatpage()" style="font-size:8pt;color:#26afa1;">채팅</p>
+	</div>
 
 	<script src="resources/aside_js/popper.min.js"></script>
 	<script src="resources/aside_js/bootstrap.min.js"></script>
