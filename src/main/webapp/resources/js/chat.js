@@ -136,9 +136,8 @@ function readyChat (userId, goRoot) {
 	$message = $('<div />', {
 		"class": "div_chat_under_input_box",
 		"contentEditable": true
-	}).appendTo($div_chat_under_input).keydown(function(evt) {
+	}).appendTo($div_chat_under_input).keyup(function(evt) {
 		if (evt.which == 13) {
-			console.log('엔터 눌림. 전송..');
 			sendMessage();
 			return;
 		}
@@ -162,16 +161,6 @@ function readyChat (userId, goRoot) {
 
 	// div_chat에 각 부분 부착..
 	$div_chat.append($div_chat_top).append($message_list).append($div_chat_under);
-
-
-
-
-	// // 채팅창이 꺼진 경우 세션 스토리지에서 채팅 상대를 제거한다.
- //   	if($('#div_chat').css('display') == 'none') {
- //   		sessionStorage.removeItem('counterpart');
- //   	}
-
-   	
    	
 }
 
@@ -243,7 +232,9 @@ function closeChat() {
 function sendMessage() {
 
 	// 빈 메세지는 보내지 않는다...
-	if($message.html() == '') return;
+	if($message.text() == '') {
+		return;
+	}
 	
     var sendMessage = {
 		type: "message",
@@ -255,7 +246,7 @@ function sendMessage() {
 
     websocket.send(JSON.stringify(sendMessage));
 
-    $message.html('').focus();
+    $message.text('').focus();
 
 }
 
@@ -265,20 +256,7 @@ function onMessage(evt) {
     var chatData = JSON.parse(evt.data);
     var is1to1 = chatData.is1to1;		// 1 = 1to1, 0 = 그룹
     
-    // TODO	상대가 메시지를 읽었을 경우 채팅창에서 1을 지운다.
     if (chatData.type == 'read') {
-
-		//TODO
-
-		// $('.unread').each(function(i, unread) {
-		// 	var read_count = $(unread).html();
-		// 	if (read_count != '') {
-		// 		$(unread).html(read_count-1);
-		// 		if ($(unread).html() < 1) {
-		// 			$(unread).html('');
-		// 		}
-		// 	}
-		// });
 
 		if(chatData.ids) {
 
@@ -330,11 +308,15 @@ function printChat(chatData) {
 	// json 형식으로 받기 때문에... 일단 parse...
 	var arr_chat = JSON.parse(chatData);
 	
+	// 상대가 보낸 메세지인지 저장할 변수
 	var isReceive = false;
 
 	// parse 후 each...
 	$(arr_chat).each(function(i, chat) {
 		
+		/*
+		 *	메세지를 담을 div들...	
+		 */
 		var $div_message = $('<div />');
 
 		var $msg = $('<div />', {
@@ -358,8 +340,14 @@ function printChat(chatData) {
 			"class": "msg_unread"
 		})
 
+		var $date_unread_wrapper = $('<div />', {
+			"class": "date_unread_wrapper"
+		})
+
+		// unread가 0이면 쓰지 않는다..
 		if(chat.unread == 0) chat.unread = '';
 		
+		// 자기가 보낸 메세지
 		if (chat.sender == userId) {
 			//자기가 보낸 메시지
 
@@ -367,17 +355,19 @@ function printChat(chatData) {
 				"float": "right",
 				"background-color": "#81DAF5"
 			}).appendTo($msg);
-			$tmp_div = $('<div />').css({
-				'display': 'block',
-				'float': 'right'
+			$date_unread_wrapper.css({
+				"left": "-80px"
 			});
-			$msg_date.text(chat.send_date.substring(5,16)).appendTo($tmp_div);
-			$msg_unread.text(chat.unread).css("float", "right").appendTo($tmp_div);
+			$msg_unread.text(chat.unread).appendTo($date_unread_wrapper);
+			$msg_date.text(chat.send_date.substring(5,16)).appendTo($date_unread_wrapper);
+			
+			$date_unread_wrapper.appendTo($msg_text);
+		} 
 
-			$tmp_div.appendTo($msg);
-	
-		} else {
-			// 상대가 보낸 메세지
+		// 상대가 보낸 메세지
+		else {
+			
+			// 상대가 보냈음..
 			isReceive = true;
 
 			// 일대일 대화라면 상대 메세지의 안 읽음은 당연히 0...
@@ -388,33 +378,23 @@ function printChat(chatData) {
 				"float": "left",
 				"background-color": "white"
 			}).appendTo($msg);
-			$tmp_div = $('<div />').css({
-				'display': 'block',
-				'float': "left"
+			$date_unread_wrapper.css({
+				"right": "-80px"
 			});
-			$msg_date.text(chat.send_date.substring(5,16)).appendTo($tmp_div);
-			$msg_unread.text(chat.unread).css("float", "left").appendTo($tmp_div);
-
-			//받은 메시지
-			// $div_message.css('text-align', 'left');
-			// html += chat.sender + " > " + chat.message + " / " + chat.send_date.substring(0,16);
-			// if (chat.unread > 0) {
-			// 	// 1. 읽지 않음이 있는 경우
-			// 	if (chat.is1to1 == 0) {
-			// 		html += "<span class='unread' style='font-size: 8pt'>" + chat.unread + "</span>";
-			// 	}
-			// }
-			// html += "<br>";
-			// $div_message.html(html);
-			$tmp_div.appendTo($msg);
+			$msg_unread.text(chat.unread).appendTo($date_unread_wrapper);
+			$msg_date.text(chat.send_date.substring(5,16)).appendTo($date_unread_wrapper);
+			
+			$date_unread_wrapper.appendTo($msg_text);
 		}
 		
 		$message_list.append($msg);
 		
 	});
 
+	// 상대가 보낸 메세지일 경우는... 읽었다고 상대에게 알려주어야 한다...
 	if(isReceive) readMessage();
 	
+	// 가장 아래로 스크롤...
 	$message_list.scrollTop($message_list[0].scrollHeight);
 	
 }
