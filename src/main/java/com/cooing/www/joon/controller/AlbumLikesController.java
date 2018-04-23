@@ -27,7 +27,7 @@ public class AlbumLikesController {
 	// 좋아요
 	@ResponseBody
 	@RequestMapping(value = "/likes", method = RequestMethod.POST)
-	public String addLikes(Model model, @RequestParam int likeit_albumnum, HttpSession session) {
+	public String addLikes(Model model, int likeit_albumnum, HttpSession session) {
 		
 		String str = null;
 		
@@ -49,7 +49,7 @@ public class AlbumLikesController {
 	// 좋아요 취소
 	@ResponseBody
 	@RequestMapping(value = "/deleteLikes", method = RequestMethod.POST)
-	public String deleteLikes(Model model, @RequestParam int likeit_albumnum, HttpSession session) {
+	public String deleteLikes(Model model, int likeit_albumnum, HttpSession session) {
 		
 		String str = null;
 		
@@ -57,15 +57,16 @@ public class AlbumLikesController {
 
 		String memberid = ((Member) session.getAttribute("Member")).getMember_id();
 		 
-		AlbumLikesVO vo = albumlikesDAO.getAlbum(likeit_albumnum);
-		// id 비교함
-		if(vo.getLikeit_memberid().equals(memberid)){
-			albumlikesDAO.deleteLikes(vo);
-			str = "success";
+		ArrayList<AlbumLikesVO> vo = albumlikesDAO.getAlbum(likeit_albumnum);
+		// id 비교해서 좋아요 취소
+		for (int i = 0; i < vo.size(); i++) {
+			if(vo.get(i).getLikeit_memberid().equals(memberid)){
+				albumlikesDAO.deleteLikes(vo.get(i));
+				str = "success";
+			}
+			else{
+			}
 		}
-		else{
-		}
-
 		return str;
 	}
 	// 좋아요 목록

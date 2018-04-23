@@ -107,7 +107,6 @@ label:hover {
 
 html, body, main, .container-fluid {
 	height: 100%;
-	width: 100%;
 }
 .container-fluid {
 	padding: 0;
@@ -115,17 +114,12 @@ html, body, main, .container-fluid {
 
 .view_wrapper {
 	margin: 0;
-	padding-left: 250px !important;
+	margin-left: 250px;
 	display: flex;
 	flex-wrap: wrap;
-	width: 100%;
 }
-.album_wrapper {
-	width: 100%;
-}
-
-.album_wrapper, .top_bar, .under_bar, .album {
-	margin: auto;
+.album_wrapper, .top_bar {
+	margin: auto !important;
 	display: block;
 }
 .checkbox {
@@ -137,248 +131,25 @@ html, body, main, .container-fluid {
 .outer {
 	background-color: #aaa;
 }
-.div_reply, .div_reply form, .div_reply form input,
-#resultDiv, #resultDiv table {
-	position: relative;
-}
 </style>
 
 <script>
 	
 	var selectcheck = true;
 
+
 	//라디오버튼
 	$(document).ready(function() {
-		
-		replyList();
-		likesList();
-		check_likes();
-		
+
 		$('.input').iCheck({
 			radioClass : 'iradio_square-green',
 		// increaseArea: '20%' // optional
 
 		});
 		
-		ready_album('view');
+		ready_album('edit');
 
 	});
-	// 좋아요 확인
-	function check_likes() {
-		
-		var albumnum = ${album.album_num};
-		
-		$.ajax({
-			url:'check_likes',
-			type: 'GET',		
-			data: {
-				"likeit_albumnum": albumnum
-			},
-			dataType: 'text',
-			success: function(a){
-				console.log('조회 결과 -> ' + JSON.stringify(a));
-				// 좋아요 했을 때
-				if (a != "") {
-					$('#likes').css('display', 'none');
-				// 좋아요 안했을 때
-				}	
-				else { 
-					$('#deleteLikes').css('display', 'none');
-				}
-			},
-			error:function(e){
-				alert(JSON.stringify(e));
-			}		
-		});
-	}
-	// 좋아요
-	function likes() {
-		
-		var albumnum = ${album.album_num};
-				
-		$.ajax({
-			url:'likes',
-			type: 'POST',		
-			data: {
-				"likeit_albumnum": albumnum
-			},
-			dataType: 'text',
-			success: function(a){
-				likesList();
-				$('#likes').css('display', 'none');
-				$('#deleteLikes').css('display', 'block');
-			},
-			error:function(e){
-				alert(JSON.stringify(e));
-			}		
-		});
-	}
-	// 좋아요 취소
-	function deletelikes(){
-
-		var albumnum = ${album.album_num};
-		
-		$.ajax({
-			url:'deleteLikes',
-			type: 'POST',		
-			data: {
-				likeit_albumnum: albumnum
-			},
-			dataType: 'text',
-			success: function(a){
-				likesList();
-				$('#likes').css('display', 'block');
-				$('#deleteLikes').css('display', 'none');
-			},
-			error:function(e){
-				alert(JSON.stringify(e));
-			}		
-		});
-	}
-	// 좋아요 목록
-	function likesList(){
-		
-		var albumnum = ${album.album_num};
-		
-		$.ajax({
-			url:'listLikes',
-			type: 'get',		
-			data: {
-				"likeit_albumnum": albumnum		
-			},
-			dataType: 'json',
-			success: function(likesList){
-				viewResult2(likesList);
-			},
-			error:function(e){
-				alert(JSON.stringify(e));
-			}		
-		});
-	}
-	// 좋아요 목록
-	function viewResult2(likesList){
-		var str = '';
-	
-		str += '<table>';
-		$(likesList).each(function(i, vo){
-		str += '<tr>';
-		str += '<td>';
-		str += ' ' + vo.likeit_memberid;
-		str += '</td>';
-		str += '</tr>';
-	});
-	str += '</table>';
-	$("#resultLikes").html(str);
-	}
-	// 댓글 쓰기
-	function writereply(){
-
-		var contents = $('#contents').val();
-		var albumnum = ${album.album_num};
-		
-		if (contents == "") {
-			alert("댓글의 내용을 입력하세요.");
-			return;
-		}
-		if (contents.length > 15) {
-			alert("댓글은 15자 이내로 입력하세요.")
-			return;
-		}
-		
-		$.ajax({
-			url:'writeReply',
-			type: 'POST',		
-			data: {
-				"reply_albumnum": albumnum,
-				"reply_contents": contents 
-				
-			},
-			dataType: 'text',
-			success: function(a){
-				
-				if(a == 'success'){
-					// alert("댓글 등록");	
-					replyList();		
-				}
-				else{
-					alert('실패');
-				}
-			},
-			error:function(e){
-				alert(JSON.stringify(e));
-			}		
-		});
-	}
-	// 댓글 삭제
-	function deletereply(replynum){
-
-		// alert(replynum);
-		
-		if(confirm("댓글을 삭제 하시겠습니까?")){
-			 	
-			$.ajax({
-				url:'deleteReply',
-				type: 'POST',		
-				data: {
-					"reply_num": replynum
-				},
-				dataType: 'text',
-				success: function(a){
-					if(a == 'success'){
-						// alert("댓글 삭제");	
-						replyList();
-					}
-					else{
-						alert("본인 글이 아닙니다.");
-					}
-				},
-				error:function(e){
-					alert(JSON.stringify(e));
-				}		
-			});
-		} 
-	}
-	//댓글 목록
-	function replyList(){
-		
-		var albumnum = ${album.album_num};
-		
-		$.ajax({
-			url:'listReply',
-			type: 'get',		
-			data: {
-				"reply_albumnum": albumnum		
-			},
-			dataType: 'json',
-			success: function(replyList){
-				viewResult(replyList);
-			},
-			error:function(e){
-				alert(JSON.stringify(e));
-			}		
-		});
-	}
-	// 댓글 목록
-	function viewResult(replyList){
-		
-		var str = '';
-
-		str += '<table>';
-		$(replyList).each(function(i, vo){
-			str += '<tr>';
-			str += '<td>';
-			str += ' ' + vo.reply_memberid;
-			str += ' ' + vo.reply_contents;
-			/* str += ' ' + vo.reply_date; */
-			if (vo.reply_memberid == '${Member.member_id}') {
-			str += ' ' + "<input type='button' value='삭제' onclick='deletereply("+vo.reply_num+")'>";
-			}
-			str += '</td>';
-			str += '</tr>';
-		});
-		str += '</table>';
-		$("#resultReply").html(str);
-	}
 
 	function checkRadioButton(iCheck){   
 	   
@@ -431,6 +202,46 @@ html, body, main, .container-fluid {
 			alert('체크된거없음');
 	   }	 
 	}
+	
+	function page1ImageSave(){
+		var album_num = $('#hidden_album_num').val();
+		html2canvas($('#page1'), { 
+	          onrendered: function(canvas) {
+	              if (typeof FlashCanvas != "undefined") { 
+	                  FlashCanvas.initElement(canvas); 
+	              }
+	              //반전이라는데 확인은 못해봄 작동을 안해서리...
+	              canvas.scale(1,-1);
+	              $('#imgSrc').val(canvas.toDataURL('image/png'));
+	              $.ajax({ 
+	            url : 'page1ImageSave', 
+	            type : 'POST', 
+	            data : $('#testimg').serialize(), 
+	            dataType : 'text', 
+	            success : function(a) { 
+	              if (a != 'fail') { 
+	                $.ajax({ 
+	                  url : 'thumbnailPathSave', 
+	                  type : 'POST', 
+	                  data :{thumbnail:a , albumnum:album_num }, 
+	                  dataType : 'text', 
+	                  success : function(b) {
+	                  }, 
+	                  error : function(e) { 
+	                    alert(JSON.stringify(e)); 
+	                  } 
+	                });   
+	              } else { 
+	                alert(a); 
+	              } 
+	            }, 
+	            error : function(e) { 
+	              alert('파일 업로드 실패'); 
+	            } 
+	          }); 
+	          } 
+	      });
+	}
 
 </script>
 
@@ -450,9 +261,64 @@ html, body, main, .container-fluid {
 		</div>
 		<div class="probootstrap-overflow">
 		<div class="main">
+		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
+		<label for="tab1">앨범생성</label>
 
-  		<input class = "input1" id="tab2" type="radio" name="tabs" checked>
+  		<input class = "input1" id="tab2" type="radio" name="tabs">
     	<label for="tab2">채팅</label>   
+
+    	<section id="content1"> 
+    	<!-- 페이지 저장 -->		
+			<div id="entry">
+				<h5 style="color: black;">앨범명</h5><input type="text" id="album_name" name="album_name" value="앨범이름을 입력해주세요.">
+				<h5 style="color: black; ">앨범 내용</h5>
+				<input type="text" style = "height: 100px;"id="album_contents" name="album_contents" value="앨범내용을 입력해주세요.">
+				<h5 style="color: black;">앨범 카테고리</h5>
+				<select name="album_category" id="album_category">		
+					<option value="0">여행</option>
+				    <option value="1">스포츠/래저</option>
+				    <option value="2">동물</option>
+				    <option value="3">음악</option>
+				    <option value="4">요리/음식</option>
+				    <option value="5">패션/뷰티</option>
+				    <option value="6">연예/TV</option>
+				    <option value="7">게임</option>
+				    <option value="8">영화</option>
+				    <option value="9">도서</option>
+				    <option value="10">공연/전시</option>
+				    <option value="11">외국어</option>
+				    <option value="12">전문지식</option>
+				    <option value="13">수집/제작</option>
+				    <option value="14">자기계발</option>
+				    <option value="15">육아</option>
+				    <option value="16">일상생활</option>
+				    <option value="17">자동차</option>
+				    <option value="18">낚시</option>
+				    <option value="19">건강</option>
+				    <option value="20" selected="selected">기타</option>
+				</select>
+				<h5 style="color: black;">앨범 공개범위</h5>
+				<select name="album_openrange" id="album_openrange">		
+					<option value="1" selected="selected">나만 보기</option>
+				    <option value="2">전체 공개</option>
+				    <option value="3">더 추가해서 ㄱㄱ</option>
+				</select>
+				
+				<input type="button" value="앨범정보저장" onclick="modifiy_AlbumInfomation()">
+				<br><br><br>
+				<!-- <input type="text" id="hashtagtx" placeholder="해쉬태그"><input type="button" id="hashtagbt" value="추가">--> 
+				<div id="hashtagvw"></div>
+				<br><br>
+				<input type="button" id="hashtagbt" value="추가">
+				<input type="hidden" name="album_num" id="hidden_album_num" value="${album.album_num}">
+				
+				<br><br>
+				<!-- <input type="hidden" id="hashtag" name="hashtag"> -->
+				<!-- <input type="submit" onsubmit="formCheck()"> -->
+			</div>
+		    
+       
+    	</section>
 
    		<section id="content2">
        		<form id ="" method="" action="">
@@ -470,26 +336,6 @@ html, body, main, .container-fluid {
 				<form id="testimg">
 					<input type="hidden" name="imgSrc" id="imgSrc" />
 				</form>	
-				<p id = "likes"><button type="button" onclick="likes()">좋아요!</button></p>
-				<p id = "deleteLikes"><button type="button" onclick="deletelikes()">좋아요 취소!</button></p>
-				이 앨범을 좋아요 한 사람들
-				<div id="resultLikes">
-				
-				</div>
-				<!-- 하단 바 영역 -->
-				<div class="div_reply">
-				<form>
-				댓글
-				<input type="text" id="contents" class ="reply">
-				<button type="button" onclick="writereply()">저장</button>
-				<input type="hidden" name="reply_albumnum">
-				</form>
-				<div id="resultReply">
-				
-				</div>
-				</div>
-				
-				
     	</section>
     	</div>			
 
@@ -518,7 +364,22 @@ html, body, main, .container-fluid {
 	
 		<div class="container-fluid">
 			<div class="view_wrapper">
-			
+	
+				<div class="col-xl-8 col-lg-12 top_bar">
+					<!-- 텍스트, 이미지 삽입 버튼 -->
+					<div class="tool text"><i class="fas fa-align-justify"></i></div>
+                	<div class="tool image"><i class="far fa-image"></i></div>
+                	
+					<!-- 배경변경버튼 -->
+					<form name="form" style = "float:right;">
+						<input type="radio" name="iCheck" class = "input"value="1" >Sakura
+						<input type="radio" name="iCheck" class = "input"value="2" >Pink
+						<input type="radio" name="iCheck" class = "input"value="3" checked>Vintage
+						<div style= "z-index:99; float:right; " onClick="checkRadioButton('iCheck')"><i class="far fa-check-circle"></i></div>
+					</form>
+	
+				</div>
+				
 				<!-- 앨범 영역 -->
 				<div class="album_wrapper" id="album_wrapper">
 					<div class="album" id="album" style="display: none">
@@ -526,27 +387,22 @@ html, body, main, .container-fluid {
 							<c:forEach items="${arr_page}" var="page">
 								<div id="page${page.page_num}" class="page hard">${page.page_html}</div>
 							</c:forEach>
-						</c:if>
+						</c:if>	
 					</div>
 				</div>
-				
 
+				<!-- 하단 바 영역 -->
 				<div class="under_bar">
-					<div id="slider-bar" class="turnjs-slider">
-						<div id="slider"></div>
-					</div>
 					<button>이전</button>
+					<button onclick="savePage('all')">저장</button>
+					<button onclick="addPage()">페이지 추가</button>
+					<button onclick="removePage()">페이지 삭제</button>
 					<button>다음</button>
-					<c:if test="${album.album_writer == sessionScope.Member.member_id }">
-						<button onclick="location.href='/edit_album?album_num=${album.album_num}'">편집</button>
-					</c:if>
 				</div>
-				
 				
 			</div>
 			<!-- END row -->
-			
-			
+	
 		</div>
 
 	</main>

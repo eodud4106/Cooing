@@ -23,7 +23,7 @@ public class AlbumLikesDAO {
 		albumlikesmapper.deleteLikes(vo);
 	}
 	// 앨범 읽기
-	public AlbumLikesVO getAlbum(int likeit_albumnum) {
+	public ArrayList<AlbumLikesVO> getAlbum(int likeit_albumnum) {
 		AlbumLikesMapper albumlikesmapper = sqlSession.getMapper(AlbumLikesMapper.class);
 		return albumlikesmapper.getAlbum(likeit_albumnum);
 	}
@@ -37,6 +37,8 @@ public class AlbumLikesDAO {
 		AlbumLikesMapper albumlikesmapper = sqlSession.getMapper(AlbumLikesMapper.class);
 		return albumlikesmapper.listLikes(likeit_albumnum);
 	}
+
+
 
 
 }
