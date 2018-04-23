@@ -26,8 +26,12 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<link rel="stylesheet" href="http://www.workshop.rs/jqbargraph/styles.css" type="text/css" />
+<!-- <link rel="stylesheet" href="http://www.workshop.rs/jqbargraph/styles.css" type="text/css" /> -->
 <script type="text/javascript" src="http://www.workshop.rs/jqbargraph/jqBarGraph.js"></script>
+<link rel="stylesheet" href="resources/graph_css/graph.css">
+
+<link rel="stylesheet" href="resources/skin_radio/green.css">
+<script src="resources/skin_radio/icheck.js"></script>
 
 <script>
 $( function() {
@@ -116,7 +120,16 @@ function initialize(){
 	});
 }
 </script>
-
+<!-- 정렬순 라디오 버튼 -->
+<script>
+$(document).ready(function(){
+  $('input').iCheck({
+    checkboxClass: 'icheckbox_square-green',
+    radioClass: 'iradio_square-green',
+    increaseArea: '20%' // optional
+  });
+});
+</script>
 <style>
 .img1 {
 	width: 50px;
@@ -211,45 +224,63 @@ select::-ms-expand { /* for IE 11 */
 		<a href="#" class="probootstrap-toggle2 js-probootstrap-toggle2">
 			<span class="oi oi-menu"></span>
 		</a>	
-	
-	</div>	
-	
-		<div class ="search-bar">
-		<br>
-		<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}" style = "float : left; margin-left: 200px;">
-		<input type="button" value="검색" id="searchbt">
-		<div class = "search" style= "z-index:99; float:left; padding-left : 10px;" id="searchbt" onclick=""><i class="fas fa-search"></i></div>
-			
-		<!-- 정렬순서 -->		
-		<select style = "float:right; padding-left : 10px;">
-		  <option selected >정렬순</option>
-		  <option>최신순</option>
-		  <option>인기순</option>
-		</select>	
-	</div>
-		<br>
-	
-	
-	
-	
-	<!-- 진수가 필요하다고 한 공간 -->
-	<div class="card-columns" id="card-columns">
-		날 짜 선 택 : <input type="text" id="datepicker">
+	</div>		
 		
-		<div id="graphdiv" style="width:100%;height:100%">
+	<div class ="search-bar">
+		<br><br>
+		<div style = "margin-left: 20px;">
+       			 SEARCH &nbsp<img id='image_search' src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
+       			 height: 24px;margin-right: 5px;" onclick="var inputBox = document.getElementById('searchtx');
+       			 inputBox.style.width = '200px';
+        		 inputBox.style.paddingLeft='3px';
+       			 inputBox.value='';
+       			 inputBox.focus();">
+     			 <input id='searchtx' type="text" onblur="this.style.width='0px';
+             	  this.style.paddingLeft='0px';" style="  border: none;
+              	 background-color: rgba(0,0,0,0);
+              	 color: #666666;
+               	 border-bottom: solid 2px #333;
+               	 outline: none;
+              	  width: 0px;
+               	 transition: all 0.5s;" onkeydown="if(event.keyCode==13){searchfriend();}">		
+		
+	</div>
+		<br>	
+	
+	
+	<div class="card-columns" id="card-columns">
+	
+	<div align="center">
+		날 짜 선 택 : <input type="text" id="datepicker">
+		<!-- 정렬순서 -->		
+		<form style = "float:right; padding-left : 10px;">
+			<input type="radio" name="iCheck" class = "input"value="1" checked>최신순
+			<input type="radio" name="iCheck" class = "input"value="2" >인기순
+			<input type="radio" name="iCheck" class = "input"value="3" >카테고리			
+			<div style= "z-index:99; float:right; " onClick="checkRadioButton('iCheck')"><i class="far fa-check-circle"></i></div>
+		</form>
+	</div>	
+		<!-- 그래프 출력될 곳 -->
+		
+		<!-- <div id="graphdiv" style="width:100%;height:100%"></div>	 -->	
+	
 	</div>
 	
 	
 	
+	<div id="graphdiv" style="width:100%;height:100%"></div>
 	
 
 	<div class="container-fluid d-md-none">
+	
 		<div class="row">
+		
 			<div class="col-md-12">				
 				<p>
-					&copy; 2018<a href="https://uicookies.com/" target="_blank">COOING</a>.
+					<!-- &copy; 2018<a href="https://uicookies.com/" target="_blank">COOING</a>.
 					<br> All Rights Reserved. Designed by <a
-						href="https://uicookies.com/" target="_blank">COOING</a>
+						href="https://uicookies.com/" target="_blank">COOING</a> -->
+							
 				</p>
 			</div>
 		</div>
@@ -257,36 +288,38 @@ select::-ms-expand { /* for IE 11 */
 
 	</main>
 
+
 	<aside class="probootstrap-aside2 js-probootstrap-aside2">
 		<a href="#"
-			class="probootstrap-close-menu js-probootstrap-close-menu2 d-md-none">
+			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-right"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING2</a>
-			<p class="mb-0">
-				Another free html5 bootstrap 4 template by
-				<a href="https://uicookies.com/" target="_blank">uiCookies</a>
-			</p>
-		</div>
-		<div class="probootstrap-overflow">
-			<div>
-				<form>
-					<input type="text" placeholder="친구검색" id="friendsearch" class="search1">
+			<a href="" class="mb-2 d-block probootstrap-logo">MY FRIEND</a>			
+		</div>				
+				 <form>
+					<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
 					<input type="button" id="friendsearchbt" value="s">
 				</form>
-
+			<div class = "friendList">
 				<c:if test="${Member ne null}">
 					<c:if test="${fn:length(friend) ne 0}">
 						<c:forEach var="arrf" items="${friend }">
 							<div name="friend">
-								<p onclick="openChat('1', '${arrf}', '')">${arrf}</p>
+								<p onclick="openChat('1', '${arrf}')">${arrf}</p>
 							</div>
 						</c:forEach>
 					</c:if>
 				</c:if>
 			</div>
-			<div>
+		
+		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
+			<a href="" class="mb-2 d-block probootstrap-logo">MY GROUP</a>				
+		</div>				
+		<!-- <div class="probootstrap-overflow"> -->
+		<input type="button" value="그룹생성"
+					onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
+			<div class = "groupList">
 				<c:if test="${Member ne null}">
 					<c:if test="${fn:length(group) ne 0}">
 						<c:forEach var="party" items="${group}">
@@ -298,14 +331,11 @@ select::-ms-expand { /* for IE 11 */
 							</div>
 						</c:forEach>
 					</c:if>
-				</c:if>
-				<input type="button" value="그룹생성"
-					onclick="window.open('./groupcreate_get?','','width=300 height=400 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
-			</div>
+				</c:if>				
+			<!-- </div> -->
 		</div>
 
 	</aside>
-
 	<div id="div_chat" 
 		style="width: 500px; height: 500px; position: absolute; padding: 0px; opacity: 1; background-color: rgb(240, 240, 240); display: none;">
 		<p>
@@ -319,13 +349,13 @@ select::-ms-expand { /* for IE 11 */
 			<input type="button" id="sendBtn" value="전송" />
 		</div>
 	</div>
-	
+	<!-- 
 	<div id="album_create_modal" class="modal">
 		<span id="createBtn_close" class="close">&times;</span>
 		<iframe id="album_create_frame" src="/AlbumNameCreate"
 			allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
 	</div>
-
+ -->
 	<script src="resources/aside_js/popper.min.js"></script>
 	<script src="resources/aside_js/bootstrap.min.js"></script>
 	<script src="resources/aside_js/owl.carousel.min.js"></script>
