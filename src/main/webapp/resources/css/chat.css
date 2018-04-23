@@ -60,6 +60,7 @@
 .div_chat_under_input {
 	width: 350px;
 	padding: 5px;
+	overflow-y: scroll;
 }
 
 .div_chat_under_send {
@@ -83,10 +84,6 @@
 	float: left;
 }
 
-.msg > * {
-	vertical-align: bottom !important;
-}
-
 .msg_user {
 	color: black;
 	width: 100%;
@@ -104,6 +101,14 @@
 	word-wrap: break-word;
 	display: inline-block;
 	height: 100%;
+	position: relative;
+}
+
+.date_unread_wrapper {
+	display: block;
+	float: right;
+	position: absolute;
+	bottom: 0;
 }
 
 .msg_date {
@@ -120,6 +125,7 @@
 	color: orange;
 	font-size: small;
 	line-height: normal;
+	text-align: right;
 }
 
 
