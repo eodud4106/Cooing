@@ -79,10 +79,6 @@
 			where album_num = #{album_num}
 	</update>
 	
-	<select id="personal_selectAlbum_Num" parameterType="String" resultType="int">
-		select album_num from albumlist where ALBUM_IDENTIFIER = #{album_identifier}
-	</select>
-	
 	<select id="searchAlbum" parameterType="String" resultType="albumwrite">
 		select * from albumlist 
 			where album_writer like '%'||#{search}||'%'

@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
-<script src="resources/js/chat.js"></script>
+<!-- <script src="resources/js/chat.js"></script> -->
 <script src="<c:url value="/resources/js/friend.js"/>" ></script>
 <script src="<c:url value="/resources/js/search.js"/>" ></script>
 <script>
