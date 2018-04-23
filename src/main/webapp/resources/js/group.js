@@ -7,7 +7,9 @@ function initialize(){
 	$('#groupid').keyup(searchword);
 	$('#groupname').keyup(searchgroupname);
 }
-function searchgroupname(){	
+function searchgroupname(){
+	 var input = $('.validate-input .input100');
+	 var thisAlert = $(input).parent();
 	var name = $('#groupname').val();
 	if(name.length > 0){
 		$.ajax({
@@ -19,11 +21,14 @@ function searchgroupname(){
 				if(a == 'success'){
 					$('#createbt').off();
 					$('#createbt').on('click' , creategroup);
+					$(thisAlert).removeClass('alert-validate');
 					//$('#groupbody').css('background-color','#00ff00');
 				}
 				else{
 					$('#createbt').off();
-					//$('#groupbody').css('background-color','#ff0000');														
+					//$('#groupbody').css('background-color','#ff0000');	
+					 $(thisAlert).addClass('alert-validate');
+					 
 				}
 			},
 			error:function(e){alert(JSON.stringify(e));}		
@@ -85,7 +90,7 @@ function searchfriend(){
 			if(a=='success'){
 				var check = true;
 				var idlist = $('#idlist').html();
-				var strarray = idlist.split('<br>');
+				var strarray = idlist.split(' ');
 				for(var i = 0; i < strarray.length; i++){
 					if(strarray[i] == text){
 						check = false;
@@ -95,7 +100,7 @@ function searchfriend(){
 					check = false;
 				}
 				if(check){
-					$('#idlist').append(text + '<br>');
+					$('#idlist').append(text + ' ');
 					$('#groupid').val('');
 				}
 			}

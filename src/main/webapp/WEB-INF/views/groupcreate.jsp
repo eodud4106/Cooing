@@ -146,6 +146,8 @@ $(document).ready(function () {
 <script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>" ></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="<c:url value="/resources/js/group.js"/>" ></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
+
 <script>
 $(document).ready(function () {
 	initialize();
@@ -189,19 +191,28 @@ $(document).ready(function () {
 						GROUP CREATE
 					</span>
 					
-					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter groupname">
+					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "동일한 그룹명이 존재합니다">
 						<input id = "groupname" mexlength="10" class="input100" type="text" >
 						<span class="focus-input100" data-placeholder="GroupName"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input m-b-50" data-validate="No Member">
+					<div class="wrap-input100  m-b-50" >
 						<input id = "groupid" class="input100" type="text" >
+						
 						<span class="focus-input100" data-placeholder="Invite Member"></span>
-						<input type="button" id="searchidbt" value="Search ID" data="${Member.getMember_id()}">
-						<div id="idlist"></div>						
-					</div>
+						<%-- <input type="button" id="searchidbt" value="Search ID" data="${Member.getMember_id()}"> --%>
+						<div style= "z-index:99; float:right;" id="searchidbt" data="${Member.getMember_id()}">
+						<i class="fas fa-search" style = "margin-top: -25px;"></i></div>
+						<div id="idlist">
+						
+						</div>
+						
+						
+						
+					</div>	
+												
 					
-
+					
 					<div class="container-login100-form-btn">
 						 <!-- <input type="button" class="login100-form-btn" id="createbt"> 
 						

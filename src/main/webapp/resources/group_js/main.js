@@ -5,7 +5,7 @@
 
     /*==================================================================
     [ Focus input ]*/
-    $('.input100').each(function(){
+    $('#groupname').each(function(){
         $(this).on('blur', function(){
             if($(this).val().trim() != "") {
                 $(this).addClass('has-val');
@@ -62,7 +62,6 @@
 
     function hideValidate(input) {
         var thisAlert = $(input).parent();
-
         $(thisAlert).removeClass('alert-validate');
     }
     
