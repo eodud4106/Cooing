@@ -79,8 +79,8 @@ public class AlbumReplyController {
 	public ArrayList<AlbumReplyVO> listReply(Model model, 
 			@RequestParam int reply_albumnum) {
 		
-		ArrayList<AlbumReplyVO> list = albumreplyDAO.listReply(reply_albumnum);
+		ArrayList<AlbumReplyVO> replyList = albumreplyDAO.listReply(reply_albumnum);
 		
-		return list;
+		return replyList;
 	}
 }

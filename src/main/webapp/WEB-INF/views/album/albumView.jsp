@@ -151,6 +151,7 @@ html, body, main, .container-fluid {
 	$(document).ready(function() {
 		
 		replyList();
+		likesList();
 		check_likes();
 		
 		$('.input').iCheck({
@@ -176,11 +177,12 @@ html, body, main, .container-fluid {
 			dataType: 'text',
 			success: function(a){
 				console.log('조회 결과 -> ' + JSON.stringify(a));
+				// 좋아요 했을 때
 				if (a != "") {
 					$('#likes').css('display', 'none');
-					
+				// 좋아요 안했을 때
 				}	
-				if (a == "") { 
+				else { 
 					$('#deleteLikes').css('display', 'none');
 				}
 			},
@@ -202,7 +204,9 @@ html, body, main, .container-fluid {
 			},
 			dataType: 'text',
 			success: function(a){
-				check_likes();
+				likesList();
+				$('#likes').css('display', 'none');
+				$('#deleteLikes').css('display', 'block');
 			},
 			error:function(e){
 				alert(JSON.stringify(e));
@@ -222,14 +226,50 @@ html, body, main, .container-fluid {
 			},
 			dataType: 'text',
 			success: function(a){
-				check_likes();
+				likesList();
+				$('#likes').css('display', 'block');
+				$('#deleteLikes').css('display', 'none');
 			},
 			error:function(e){
 				alert(JSON.stringify(e));
 			}		
 		});
 	}
+	// 좋아요 목록
+	function likesList(){
+		
+		var albumnum = ${album.album_num};
+		
+		$.ajax({
+			url:'listLikes',
+			type: 'get',		
+			data: {
+				"likeit_albumnum": albumnum		
+			},
+			dataType: 'json',
+			success: function(likesList){
+				viewResult2(likesList);
+			},
+			error:function(e){
+				alert(JSON.stringify(e));
+			}		
+		});
+	}
+	// 좋아요 목록
+	function viewResult2(likesList){
+		var str = '';
 	
+		str += '<table>';
+		$(likesList).each(function(i, vo){
+		str += '<tr>';
+		str += '<td>';
+		str += ' ' + vo.likeit_memberid;
+		str += '</td>';
+		str += '</tr>';
+		});
+		str += '</table>';
+		$("#resultLikes").html(str);
+	}
 	// 댓글 쓰기
 	function writereply(){
 
@@ -269,48 +309,6 @@ html, body, main, .container-fluid {
 			}		
 		});
 	}
-	//댓글 목록
-	function replyList(){
-		
-		var albumnum = ${album.album_num};
-		
-		$.ajax({
-			url:'listReply',
-			type: 'get',		
-			data: {
-				"reply_albumnum": albumnum		
-			},
-			dataType: 'json',
-			success: function(list){
-				viewResult(list);
-			},
-			error:function(e){
-				alert(JSON.stringify(e));
-			}		
-		});
-	}
-	// 댓글 목록
-	function viewResult(list){
-		
-		var str = '';
-		
-		str += '<table>';
-		$(list).each(function(i, vo){
-			str += '<tr>';
-			str += '<td>';
-			str += ' ' + vo.reply_memberid;
-			str += ' ' + vo.reply_contents;
-			/* str += ' ' + vo.reply_date; */
-			if (vo.reply_memberid == '${Member.member_id}') {
-			str += ' ' + "<input type='button' value='삭제' onclick='deletereply("+vo.reply_num+")'>";
-			}
-			str += '</td>';
-			str += '</tr>';
-		});
-		str += '</table>';
-		$("#resultDiv").html(str);
-	}
-
 	// 댓글 삭제
 	function deletereply(replynum){
 
@@ -340,6 +338,48 @@ html, body, main, .container-fluid {
 			});
 		} 
 	}
+	//댓글 목록
+	function replyList(){
+		
+		var albumnum = ${album.album_num};
+		
+		$.ajax({
+			url:'listReply',
+			type: 'get',		
+			data: {
+				"reply_albumnum": albumnum		
+			},
+			dataType: 'json',
+			success: function(replyList){
+				viewResult(replyList);
+			},
+			error:function(e){
+				alert(JSON.stringify(e));
+			}		
+		});
+	}
+	// 댓글 목록
+	function viewResult(replyList){
+		
+		var str = '';
+
+		str += '<table>';
+		$(replyList).each(function(i, vo){
+			str += '<tr>';
+			str += '<td>';
+			str += ' ' + vo.reply_memberid;
+			str += ' ' + vo.reply_contents;
+			/* str += ' ' + vo.reply_date; */
+			if (vo.reply_memberid == '${Member.member_id}') {
+			str += ' ' + "<input type='button' value='삭제' onclick='deletereply("+vo.reply_num+")'>";
+			}
+			str += '</td>';
+			str += '</tr>';
+		});
+		str += '</table>';
+		$("#resultReply").html(str);
+	}
+
 	function checkRadioButton(iCheck){   
 	   
 	   var temp;
@@ -432,14 +472,10 @@ html, body, main, .container-fluid {
 				</form>	
 				<p id = "likes"><button type="button" onclick="likes()">좋아요!</button></p>
 				<p id = "deleteLikes"><button type="button" onclick="deletelikes()">좋아요 취소!</button></p>
-				좋아요 한 사람들 
-				<p>	
-				<c:forEach items="${like }" var="l">
-				<tr>
-				<td>${l.likeit_memberid }</td>
-				</tr>
-				</c:forEach>
-				</p>
+				이 앨범을 좋아요 한 사람들
+				<div id="resultLikes">
+				
+				</div>
 				<!-- 하단 바 영역 -->
 				<div class="div_reply">
 				<form>
@@ -448,7 +484,7 @@ html, body, main, .container-fluid {
 				<button type="button" onclick="writereply()">저장</button>
 				<input type="hidden" name="reply_albumnum">
 				</form>
-				<div id="resultDiv">
+				<div id="resultReply">
 				
 				</div>
 				</div>

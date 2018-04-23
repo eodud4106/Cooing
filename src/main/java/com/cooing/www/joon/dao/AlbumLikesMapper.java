@@ -14,6 +14,6 @@ public interface AlbumLikesMapper {
 	// 좋아요 확인
 	public String check_Likes(AlbumLikesVO vo);
 	// 좋아요 목록
-	public ArrayList<AlbumLikesVO> likesList(AlbumLikesVO vo);
+	public ArrayList<AlbumLikesVO> listLikes(int likeit_albumnum);
 
 }

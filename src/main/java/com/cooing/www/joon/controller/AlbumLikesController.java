@@ -1,5 +1,7 @@
 package com.cooing.www.joon.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cooing.www.jinsu.object.Member;
 import com.cooing.www.joon.dao.AlbumLikesDAO;
 import com.cooing.www.joon.vo.AlbumLikesVO;
+import com.cooing.www.joon.vo.AlbumReplyVO;
 
 @Controller
 public class AlbumLikesController {
@@ -67,6 +70,16 @@ public class AlbumLikesController {
 		}
 
 		return str;
+	}
+	// 좋아요 목록
+	@ResponseBody
+	@RequestMapping(value = "/listLikes", method = RequestMethod.GET)
+	public ArrayList<AlbumLikesVO> listLikes(Model model, 
+			@RequestParam int likeit_albumnum) {
+		
+		ArrayList<AlbumLikesVO> likesList = albumlikesDAO.listLikes(likeit_albumnum);
+		
+		return likesList;
 	}
 	
 }

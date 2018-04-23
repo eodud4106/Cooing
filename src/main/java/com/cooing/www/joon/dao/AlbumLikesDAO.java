@@ -33,9 +33,9 @@ public class AlbumLikesDAO {
 		return albumlikesmapper.check_Likes(vo);
 	}
 	// 좋아요 목록
-	public ArrayList<AlbumLikesVO> likesList(AlbumLikesVO vo) {
+	public ArrayList<AlbumLikesVO> listLikes(int likeit_albumnum) {
 		AlbumLikesMapper albumlikesmapper = sqlSession.getMapper(AlbumLikesMapper.class);
-		return albumlikesmapper.likesList(vo);
+		return albumlikesmapper.listLikes(likeit_albumnum);
 	}
 
 
