@@ -22,4 +22,6 @@ public interface SearchMapper {
 	
 	public int insertCategoryPop(CategoryPop categorypop);
 	public ArrayList<Map<String , Object>> selectDayCategory(String date);
+	
+	public ArrayList<Map<String , Object>> selectDayLike(String date);
 }

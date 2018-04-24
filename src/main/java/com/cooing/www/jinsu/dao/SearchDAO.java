@@ -61,6 +61,15 @@ public class SearchDAO {
 			return false;
 	}
 	
+	public ArrayList<Map<String , Object>> selectDayLike(String date){
+		SearchMapper mapper = sqlSession.getMapper(SearchMapper.class);
+		ArrayList<Map<String , Object>> map = mapper.selectDayLike(date);
+		for(Map<String , Object> m : map){
+			System.out.println(m.toString());
+		}
+		return map;
+	}
+	
 	public ArrayList<Map<String , Object>> selectDayCategory(String date){
 		SearchMapper mapper = sqlSession.getMapper(SearchMapper.class);
 		return mapper.selectDayCategory(date);

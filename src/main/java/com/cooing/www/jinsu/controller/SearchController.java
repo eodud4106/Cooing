@@ -2,6 +2,7 @@ package com.cooing.www.jinsu.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.dy.dao.AlbumDAO;
 import com.cooing.www.dy.vo.AlbumWriteVO;
+import com.cooing.www.jinsu.dao.MemberDAO;
 import com.cooing.www.jinsu.dao.SearchDAO;
 import com.cooing.www.jinsu.object.CategoryPop;
 import com.cooing.www.jinsu.object.HashTag;
@@ -34,6 +36,9 @@ public class SearchController {
 	
 	@Autowired
 	AlbumDAO albumDAO;
+	
+	@Autowired
+	MemberDAO memberDAO; 
 	
 	@ResponseBody
 	@RequestMapping(value="/searchWord" , method = RequestMethod.POST)
@@ -104,8 +109,22 @@ public class SearchController {
 	public ArrayList<Map<String , Object>> searchInfomation(String searchdate){
 		logger.info("searchInformation__jinsu");
 		ArrayList<Map<String , Object>> map = searchDAO.selectDaySearch(searchdate);		
-		return map;
-				
+		return map;	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/searchLike" , method = RequestMethod.POST)
+	public ArrayList<Map<String , Object>> searchLike(String searchdate){
+		logger.info("searchLike__jinsu");
+		ArrayList<Map<String , Object>> map = searchDAO.selectDayLike(searchdate);
+		return map;				
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/searchAlbumName" , method = RequestMethod.POST , produces="application/json; charset=utf8")
+	public String searchAlbum(String num){
+		logger.info("searchAlbumName__jinsu");
+		return albumDAO.searchAlbumNum(Integer.parseInt(num)).getAlbum_name();				
 	}
 	
 	@ResponseBody
@@ -113,8 +132,7 @@ public class SearchController {
 	public ArrayList<Map<String , Object>> searchCategorypop(String searchdate){
 		logger.info("searchCategorypop__jinsu");
 		ArrayList<Map<String , Object>> map = searchDAO.selectDayCategory(searchdate);		
-		return map;
-				
+		return map;				
 	}
 	
 	@RequestMapping(value = "/information", method = RequestMethod.GET)

@@ -54,6 +54,12 @@
 			group by search_word
 	</select>
 	
+	<select id="selectDayLike" resultType="Map" parameterType="String">
+		select likeit_albumnum,count(likeit_albumnum) as count from likeit 
+			where to_char(likeit_date,'yyyy-mm-dd') = #{date}
+			group by likeit_albumnum
+	</select>
+	
 	<insert id="insertCategoryPop" parameterType="categorypop">
 	insert into category_pop (category_pop_num , category_pop_kind , category_pop_date)
 		values (category_pop_seq.nextval,#{category_pop_kind},sysdate)

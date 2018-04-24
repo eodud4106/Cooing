@@ -26,7 +26,6 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<!-- <link rel="stylesheet" href="http://www.workshop.rs/jqbargraph/styles.css" type="text/css" /> -->
 <script type="text/javascript" src="http://www.workshop.rs/jqbargraph/jqBarGraph.js"></script>
 <link rel="stylesheet" href="resources/graph_css/graph.css">
 
@@ -53,29 +52,70 @@ $( function() {
 });
 
 $(document).ready(function() {
-	categorysearch();
-	$('#datepicker').on('change' , function(){
-		if($('input[name=iCheck]:radio:checked').val() == 1){
+	likesearch();
+	 $('#datepicker').on('change' , function(){
+		 likesearch();
+		/* if($('input[name=iCheck]:radio:checked').val() == 1){
 			categorysearch();
 		}else if($('input[name=iCheck]:radio:checked').val() == 2){
 			searchsearch();
 		}else if($('input[name=iCheck]:radio:checked').val() == 3){
-			
-		}
+			likesearch();
+		} */
 	});
 	
-	$('input[name=iCheck]').change(function(){
+	 /*$('input[name=iCheck]').change(function(){
 		if($(this).val() == 1){//카테고리순 정렬
 			categorysearch()
 		}else if($(this).val() == 2){//검색어 순
 			searchsearch();
 		}else if($(this).val() == 3){//좋아요 순
-			
+			likesearch();
 		}
-	});
+	});*/
 });
+
+function likesearch(){
+	//밑 에 부분은 좋아요에 관련된 부분
+	if($('#datepicker').val() != null){
+		$.ajax({
+			url:'searchLike',
+			type:'POST',		
+			data:{searchdate:$('#datepicker').val()},
+			dataType:"json",
+			success: function(list){
+				array = new Array();
+				$.each(list,function(i,data){
+					var count = 0;
+					var word = '';
+					var word2 = '';
+					$.each(data,function(key,value){
+						if(key == 'LIKEIT_ALBUMNUM'){
+							word = value;
+						}else if(key == 'COUNT'){
+							count = value;
+						}
+					});	
+					$.ajax({
+						url:'searchAlbumName',
+						type:'POST',		
+						data:{num:word},
+						dataType:'text',
+						success: function(name){
+							word2 = ''+name+'';
+						},
+						error:function(e){alert(JSON.stringify(e));}		
+					});	
+					array[i] = [count , word2 , '#f3f3f3'];
+				});
+				graphcreate(array);
+			},
+			error:function(e){alert(JSON.stringify(e));}		
+		});
+	}
+}
 function searchsearch(){
-//밑 에 부분은 검색어에 관련된 부분
+	//밑 에 부분은 검색어에 관련된 부분
 	if($('#datepicker').val() != null){
 		$.ajax({
 			url:'searchInformation',
@@ -96,16 +136,7 @@ function searchsearch(){
 					});	
 					array[i] = [count , word , '#f3f3f3'];		
 				});
-				$('#graphdiv').html('');
-				$('#graphdiv').jqBarGraph({ 
-					data: array,		
-					animate: false,
-					width:900,
-					height:550,
-					sort:'desc',
-					barSpace : 20,
-					legend:true
-				});
+				graphcreate(array);				
 			},
 			error:function(e){alert(JSON.stringify(e));}		
 		});
@@ -135,20 +166,24 @@ function categorysearch(){
 					
 					array[i] = [count ,vector[kind], '#f3f3f3'];		
 				});
-				$('#graphdiv').html('');
-				$('#graphdiv').jqBarGraph({ 
-					data: array,		
-					animate: false,
-					width:900,
-					height:550,
-					sort:'desc',
-					barSpace : 20,
-					legend:true
-				});
+				graphcreate(array);
 			},
 			error:function(e){alert(JSON.stringify(e));}		
 		});
 	}
+}
+
+function graphcreate(array){
+	$('#graphdiv').html('');
+	$('#graphdiv').jqBarGraph({ 
+		data: array,		
+		animate: false,
+		width:900,
+		height:550,
+		sort:'desc',
+		barSpace : 20,
+		legend:true
+	});
 }
 </script>
 <!-- 정렬순 라디오 버튼 -->
