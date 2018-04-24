@@ -28,7 +28,7 @@ public class AlbumReplyController {
 	AlbumReplyDAO albumreplyDAO;
 	
 	// 한 페이지 당 글 개수
-	private static final int COUNT_PER_PAGE = 5;
+	private static final int COUNT_PER_PAGE = 3;
 	// 페이지 그룹 개수
 	private static final int PAGE_PER_GROUP = 5;
 	// 댓글 작성
@@ -80,11 +80,11 @@ public class AlbumReplyController {
 	// 댓글 목록
 	@ResponseBody
 	@RequestMapping(value = "/listReply", method = RequestMethod.GET)
-	public ArrayList<AlbumReplyVO> listReply(Model model, int reply_albumnum, @RequestParam(value="rep_page", defaultValue="1") int page) {
+	public ArrayList<AlbumReplyVO> listReply(Model model, String reply_albumnum, @RequestParam(value="rep_page", defaultValue="1") int page) {
 		
 		int num = 0;
 		
-		num = reply_albumnum;
+		num = Integer.parseInt(reply_albumnum);
 		
 		// 댓글 페이징
 		int repTotal = albumreplyDAO.getReplyTotal(num);

@@ -248,7 +248,7 @@ html, body, main, .container-fluid {
 			},
 			dataType: 'json',
 			success: function(likesList){
-				viewResult2(likesList);
+				likeResult(likesList);
 			},
 			error:function(e){
 				alert(JSON.stringify(e));
@@ -256,7 +256,7 @@ html, body, main, .container-fluid {
 		});
 	}
 	// 좋아요 목록
-	function viewResult2(likesList){
+	function likeResult(likesList){
 		var str = '';
 	
 
@@ -348,7 +348,7 @@ html, body, main, .container-fluid {
 			},
 			dataType: 'json',
 			success: function(replyList){
-				viewResult(replyList);
+				replyResult(replyList);
 			},
 			error:function(e){
 				alert(JSON.stringify(e));
@@ -356,7 +356,7 @@ html, body, main, .container-fluid {
 		});
 	}
 	// 댓글 목록
-	function viewResult(replyList){
+	function replyResult(replyList){
 		
 		var str = '';
 
@@ -364,8 +364,9 @@ html, body, main, .container-fluid {
 		$(replyList).each(function(i, vo){
 			str += '<tr>';
 			str += '<td>';
-			str += ' ' + vo.reply_memberid;
 			str += ' ' + vo.reply_contents;
+			str += '<br>';
+			str += ' ' + vo.reply_memberid;
 			/* str += ' ' + vo.reply_date; */
 			if (vo.reply_memberid == '${Member.member_id}') {
 			str += ' ' + "<input type='button' value='삭제' onclick='deletereply("+vo.reply_num+")'>";
@@ -490,6 +491,11 @@ html, body, main, .container-fluid {
 					<div id="resultReply">
 				
 					</div>
+					<form id="rep_pagingForm" action="albumView">
+					<input type="hidden" value="${album.album_num }" name="album_num">
+					<input type="hidden" name="rep_page" id="rep_page">
+					<input type="hidden" name="block" value="yes">
+					<div id="navigator">
 					<!-- 페이지 이동 부분 -->                      
 					<a href="javascript:pagingFormSubmit(${RepNavi.currentPage - navi.pagePerGroup})">◁◁ </a> &nbsp;&nbsp;
 					<a href="javascript:pagingFormSubmit(${RepNavi.currentPage - 1})">◀</a> &nbsp;&nbsp;
@@ -504,6 +510,8 @@ html, body, main, .container-fluid {
 					<a href="javascript:pagingFormSubmit(${RepNavi.currentPage + RepNavi.pagePerGroup})">▷▷</a>
 				
 					<!-- /페이지 이동 끝 -->
+					</div>  
+					</form>
 				</div>
 							
     	</section>
