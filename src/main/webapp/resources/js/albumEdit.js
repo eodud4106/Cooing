@@ -89,8 +89,8 @@ function child_close() {
 			url: "croped_picture_save",
 			contentType: "application/x-www-form-urlencoded; charset=utf-8",
 			data: { "imgUrl": changedSrc },
-			success : function(a) {
-				alert('성공');
+			success : function(fath) {
+				$('.onSelect img').attr('src', 'img?filePath='+fath);
 	        }, 
 	        error : function(e) { 
 	            alert(JSON.stringify(e)); 
