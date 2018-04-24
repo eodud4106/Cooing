@@ -110,8 +110,6 @@ $(document).ready(function () {
 		getTotalAlbumList();		
 	}
 });
-
-
 </script>
 
 <!-- 정렬순 라디오버튼 -->

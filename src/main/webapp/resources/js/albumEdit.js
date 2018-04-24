@@ -603,15 +603,21 @@ function createWholeEditor($div_box) {
         }));
         $arr_bt[$arr_bt.length-1].click(function() {
         	
-        	if(isWindowOpen == false) {
-        		//편집창 열면서 사진url 넓이 높이 보내기
-            	var settings ='width=800, height=800, toolbar=no, menubar=no, scrollbars=no, resizable=yes';
-            	$('.onSelect img').attr('id', 'temp_id'); //임시 id값은 자식창에서 종료키 누르면 삭제됨
-            	var windowObj = window.open("crop_picture?url_picture=" + $('.onSelect img').attr('src') + "", "window_crop", settings);
-            	isWindowOpen = true;
-        	} else{
-        		alert('사용중이 편집창이 있습니다.');
-        	}
+        	var check_crop = $('.onSelect img').css('display');
+        	if(check_crop != 'none'){
+            	if(isWindowOpen == false) {
+            		//편집창 열면서 사진url 넓이 높이 보내기
+                	var settings ='width=800, height=800, toolbar=no, menubar=no, scrollbars=no, resizable=yes';
+                	$('.onSelect img').attr('id', 'temp_id'); //임시 id값은 자식창에서 종료키 누르면 삭제됨
+                	var windowObj = window.open("crop_picture?url_picture=" + $('.onSelect img').attr('src') + "", "window_crop", settings);
+                	isWindowOpen = true;
+            	} else{
+            		alert('사용중이 편집창이 있습니다.');
+            	}
+        	}else {
+        		alert('사진을 올리고 자르기를 클릭해주세요.');
+        	} 
+        	
         	
 		});
         
