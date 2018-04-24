@@ -22,93 +22,31 @@
 <link rel="stylesheet" href="resources/aside_css/animate.css">
 <link rel="stylesheet" href="resources/aside_css/style.css">
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="resources/css/jquery-ui.min.css">
+<link rel="stylesheet" href="resources/css/chat.css">
+
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/chat.js"></script>
-<script src="<c:url value="/resources/js/groupview.js"/>" ></script>
+<script src="resources/js/groupview.js"/></script>
+<script src="resources/js/search.js"></script>
 <script>
+
 $(document).ready(function () {
 	initialize();
 });
 
-//모달
-var modal = document.getElementById("myModal");
-
-var btn = document.getElementById("myBtn");
-
-var span = document.getElementsByClassName("close")[0];
-
-btn.onclick = function() {
-    modal.style.display = "block";
-}
-
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-
-
 $(document).ready(function () {
 	initialize();
-	
-	$('window').click(function(event) {
-		if (event.target == $('#myModal')) {
-			$('#myModal').css('display', 'none');
-	    }
-	});
-	
-	$('#myBtn').click(function() {
-		$('#myModal').css('display', 'block');
-	});
-	
-	$('#myBtn_close').click(function() {
-		$('#myModal').css('display', 'none');
-	});
-	
-	$('#createBtn').click(function() {
-		$('#album_create_modal').css({
-			'display': 'block',
-			'z-index': '10000'
-		});
-	});
-	
-	$('#createBtn_close').click(function() {
-		$('#album_create_frame').attr('src', '/AlbumNameCreate');
-		$('#album_create_modal').css({
-			'display': 'none',
-			'z-index': '0'
-		});
-	});
 	
 	if (${sessionScope.Member != null}) {
 		readyChat();
 		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
 	}
 	
-	getTotalAlbumList();
+	getPartyAlbumList(0);
 	
 });
-
-//앨범 리스트 Ajax로 받는 코드
-function getTotalAlbumList() {
-	$.ajax({
-		url: 'getTotalAlbumList',
-		type: 'post',
-		dataType: 'json',
-		success: function(result) {
-			totalAlbumList(result);
-		},
-		error: function(e) {
-			alert(JSON.stringify(e));	
-		}
-	});
-}
 
 //앨범 리스트 출력
 function totalAlbumList(result) {
@@ -117,7 +55,7 @@ function totalAlbumList(result) {
 	var album_html;
 	var sw = 0;
 	
-$(result).each(function(i, album) {
+	$(result).each(function(i, album) {
 		
 		album_num = album.album_num;
 		
@@ -245,9 +183,11 @@ select::-ms-expand { /* for IE 11 */
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
 			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
+			<div id="party_name" class="mb-2 d-block probootstrap-logo">${partyinfo.getParty_name()}</div>
+			
 			<button onclick="create_group_album()">앨범 만들기</button>
-
-			<c:if test="${partyinfo ne null}">(GROUP_NAME)${partyinfo.getParty_name()}<input type="hidden" id="sessionid" data="${Member.getMember_id()}"></c:if>
+			
+			<input type="hidden" id="sessionid" data="${Member.getMember_id()}">
 				<c:if test="${partyleader ne null}">
 				<p><img class = "img1" src = "<c:url value="/jinsu/memberimg?strurl=${partyleader.getMember_picture()}"/>">
 				<c:if test="${partyleader ne null}">${partyleader.getMember_id()}(Leader)</c:if></p>
@@ -316,20 +256,7 @@ select::-ms-expand { /* for IE 11 */
 	
 	
 	<!-- 앨범 리스트 -->
-	<div class="card-columns" id="card-columns">	
-		<!--  -->
-		<div class="card">
-			<a href="single.html" >			
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/aside_images/img_1.jpg" alt="Card image cap">
-			</a>			
-		</div>
-		<div class="card">
-			<a href="single.html">
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/image_mj/a1.jpg" alt="Card image cap">				
-			</a>
-		</div>
+	<div class="card-columns" id="card-columns">
 	</div>	
 	
 	
@@ -412,10 +339,6 @@ select::-ms-expand { /* for IE 11 */
 			<input type="text" id="message" autocomplete="off" />
 			<input type="button" id="sendBtn" value="전송" />
 		</div>
-	</div>
-	
-	<div id="album_create_modal" class="modal">
-		<span id="createBtn_close" class="close">&times;</span>
 	</div>
 
 	<script src="resources/aside_js/popper.min.js"></script>

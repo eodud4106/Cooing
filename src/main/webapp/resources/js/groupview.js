@@ -2,6 +2,12 @@
  * 그룹 페이지 관련 js
  */
 
+// 그룹 앨범리스트 받을 때 사용
+var pagenum = 0;
+var pagingcheck = false;
+//이게 0번이면 검색어 1번이면 카테고리 2번이면 그냥 메인 으로 나눠서 페이징 가지고 오게 된다.
+var searchcheck = 0;
+
 function initialize(){
 	$('#findid').keyup(searchword);
 	$('#gmemberplus').on('click',memberplus);
@@ -111,4 +117,44 @@ function searchword(){
 			error:function(e){alert(JSON.stringify(e));}		
 		});
 	}
+}
+
+//앨범 리스트 Ajax로 받는 코드
+function getPartyAlbumList() {
+	var check  = false;
+	if(searchcheck != 2){
+		searchcheck = 2;
+		pagenum = 0;
+	}
+	if(pagenum == 0)
+		check  = true;
+	$.ajax({
+		url: 'album/getPartyAlbumList',
+		type: 'post',
+		data:{
+			pagenum: ++pagenum,
+			party_name: $('#party_name').text()
+		}, 
+		dataType: 'json',
+		success: function(result) {
+			console.log('안 -> ' + JSON.stringify(result));
+			AlbumListPaging(check , result);
+			if(check){
+				$.ajax({
+					url:'searchTotalCount',
+					type:'POST',		
+					dataType:'text',
+					success: function(list){
+						//list 받아오면 리스트 돌려서 처리할 부분
+						console.log("list -> " + list)
+						$('#totalpage').val(list);
+					},
+					error:function(e){alert(JSON.stringify(e));}		
+				});
+			}			
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
 }

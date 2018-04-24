@@ -94,7 +94,7 @@ public class HomeController {
 	}
 	
 	
-	// 책 목록 조회
+	// 개인 앨범 조회
 	@ResponseBody
 	@RequestMapping(value = "/getTotalAlbumList", method= RequestMethod.POST)
 	public ArrayList<AlbumWriteVO> getMyAlbumList(int pagenum , HttpSession session) {

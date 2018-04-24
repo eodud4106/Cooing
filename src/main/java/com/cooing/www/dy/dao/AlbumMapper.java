@@ -53,4 +53,7 @@ public interface AlbumMapper {
 	public ArrayList<AlbumWriteVO> LikeAlbumList(RowBounds rb , String album_writer);
 	
 	public int LikeAlbumCount(String album_writer);
+	
+	// 검색 조건으로 앨범 리스트를 검색
+	public ArrayList<AlbumWriteVO> select_album(RowBounds rb, AlbumWriteVO album);
 }

@@ -1,6 +1,7 @@
 package com.cooing.www.dy.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
@@ -177,5 +178,10 @@ public class AlbumDAO{
 	
 	public int IDAlbumCount(String album_writer){
 		return sqlSession.getMapper(AlbumMapper.class).IDAlbumCount(album_writer);
+	}
+	
+	public ArrayList<AlbumWriteVO> select_album(RowBounds rb, AlbumWriteVO album) {
+	
+		return sqlSession.getMapper(AlbumMapper.class).select_album(rb, album);
 	}
 }

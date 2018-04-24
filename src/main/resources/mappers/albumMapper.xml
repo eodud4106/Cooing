@@ -309,4 +309,14 @@
 		order by album_num desc
 	</select>
 	
+	<!-- 앨범을 검색함... -->
+	<select id="select_album" resultType="albumwrite" parameterType="albumwrite">
+		SELECT *
+		FROM albumlist
+		WHERE
+			album_writer = #{album_writer}
+			AND
+			isPersonal = #{isPersonal}
+	</select>
+	
 </mapper>
