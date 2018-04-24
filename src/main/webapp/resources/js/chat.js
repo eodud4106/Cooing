@@ -182,7 +182,7 @@ function onOpen(evt) {
  * @param counterpart 상대
  * @returns
  */
-function openChat(is1to1, counterpart) {
+function openChat(is1to1, counterpart, party_name) {
 	
 	// 기존 채팅창이 열려 있는 경우 닫는다.
 	closeChat();
@@ -210,7 +210,15 @@ function openChat(is1to1, counterpart) {
 	
 
 	$div_chat.css('display', 'block');
-	$title.text(counterpart);
+	
+	if(is1to1 == 1) {
+		// 1 대 1 대화이면 상대방 아이디를 제목으로
+		$title.text(counterpart);	
+	} else {
+		// 그룹 대화면 그룹 이름을 제목으로
+		$title.text('그룹)' + party_name);
+	}
+	
 	$message.focus();
 
 }
@@ -293,10 +301,10 @@ function onMessage(evt) {
 		// 알림2. 대화창 빨간색 표시
 		if (is1to1 == 1) {
 			// 1:1
-			$('p:contains(' + sender + ')').css('color', 'red');
+			
 		} else {
 			// 그룹
-			$('p[partynum = "' + addressee + '"]').css('color', 'red');
+			
 		}
 	}
     

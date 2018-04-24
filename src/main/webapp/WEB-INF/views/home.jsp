@@ -428,8 +428,6 @@ $(document).ready(function(){
 		<div class="button_container">		
 		<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
 		</div>
-		<!-- <input type="button" value="그룹생성"
-					onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"> -->
 			<div class = "groupList">
 				<c:if test="${Member ne null}">
 					<c:if test="${fn:length(group) ne 0}">
@@ -438,7 +436,7 @@ $(document).ready(function(){
 								<p onclick="openGUpdate('${party.party_name}')"
 									partynum="${party.party_num}">${party.party_name}</p>
 								<input type="button" value="채팅"
-									onclick="openChat('0', '${party.party_num}', '')" />
+									onclick="openChat('0', '${party.party_num}', '${party.party_name}')" />
 							</div>
 						</c:forEach>
 					</c:if>

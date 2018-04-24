@@ -7,6 +7,7 @@ function initialize(){
 	$('#groupid').keyup(searchword);
 	$('#groupname').keyup(searchgroupname);
 }
+
 function searchgroupname(){
 	 var input = $('.validate-input .input100');
 	 var thisAlert = $(input).parent();
@@ -31,10 +32,13 @@ function searchgroupname(){
 					 
 				}
 			},
-			error:function(e){alert(JSON.stringify(e));}		
+			error:function(e){
+				alert(JSON.stringify(e));
+			}		
 		});
 	}	
 }
+
 function creategroup(){
 	var name = $('#groupname').val();
 	if(name.length > 0){
@@ -115,7 +119,7 @@ function searchword(){
 	var text = $('#groupid').val();
 	if(text.length >= 1){
 		$.ajax({
-			url:'jinsu/search_id',
+			url:'jinsu/search_user_id',
 			type:'POST',		
 			data:{text:text},
 			dataType:'json',
