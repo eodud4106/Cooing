@@ -215,7 +215,8 @@ function create_group_album() {
       padding: 30px 15px; 
       padding-top: 30px;
 	  padding-bottom: 30px;
-      } }
+    }
+}
 
 
 select {
@@ -279,11 +280,6 @@ select::-ms-expand { /* for IE 11 */
 			</nav>
 		</div>
 
-		<form>		
-				<div id="myModal" class="modal">
-					<span id="myBtn_close" class="close">&times;</span>
-				</div>			
-		</form>
 	</aside>
 
 
@@ -308,7 +304,7 @@ select::-ms-expand { /* for IE 11 */
 		<div class = "search" style= "z-index:99; float:left; padding-left : 10px;" id="searchbt" onclick=""><i class="fas fa-search"></i></div>
 			
 		<!-- 정렬순서 -->
-		<select style = "float:right; padding-left : 10px;">
+		<select style="float:right; padding-left: 10px;">
 		  <option selected >정렬순</option>
 		  <option>최신순</option>
 		  <option>인기순</option>

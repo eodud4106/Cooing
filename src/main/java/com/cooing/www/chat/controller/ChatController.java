@@ -1,4 +1,4 @@
-package com.cooing.www.hindoong.controller;
+package com.cooing.www.chat.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cooing.www.hindoong.dao.MessageDAO;
-import com.cooing.www.hindoong.vo.MessageVO;
+import com.cooing.www.chat.dao.MessageDAO;
+import com.cooing.www.chat.vo.MessageVO;
 import com.cooing.www.jinsu.object.Member;
 
 @Controller

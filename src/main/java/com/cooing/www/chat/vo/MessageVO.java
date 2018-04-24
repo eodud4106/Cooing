@@ -1,4 +1,4 @@
-package com.cooing.www.hindoong.vo;
+package com.cooing.www.chat.vo;
 
 public class MessageVO {
 	

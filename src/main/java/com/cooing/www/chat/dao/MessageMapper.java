@@ -1,9 +1,9 @@
-package com.cooing.www.hindoong.dao;
+package com.cooing.www.chat.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.cooing.www.hindoong.vo.MessageVO;
+import com.cooing.www.chat.vo.MessageVO;
 
 public interface MessageMapper {
 

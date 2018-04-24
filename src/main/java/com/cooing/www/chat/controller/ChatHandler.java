@@ -1,4 +1,4 @@
-package com.cooing.www.hindoong.controller;
+package com.cooing.www.chat.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,8 +18,8 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.cooing.www.hindoong.dao.MessageDAO;
-import com.cooing.www.hindoong.vo.MessageVO;
+import com.cooing.www.chat.dao.MessageDAO;
+import com.cooing.www.chat.vo.MessageVO;
 import com.cooing.www.jinsu.dao.RelationDAO;
 import com.cooing.www.jinsu.object.PartyMember;
 import com.fasterxml.jackson.core.type.TypeReference;
