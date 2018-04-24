@@ -12,13 +12,27 @@
 
 <script src="resources/js_js/jquery-3.2.1.min.js"></script>
 
-<script>
+<style>
 
+</style>
+
+<script>
 //부모창으로 값 넘기는 함수
 function pass_parent() {
-    var chang_url = $('#crop_result').attr('src');
-    opener.document.getElementById('temp_id').src = chang_url;
-	window.close();
+	
+	var isDidCrop = $('#crop_result').width();
+	var change_url;
+	
+	if(isDidCrop != 0){
+	    change_url = $('#crop_result').attr('src');
+	    opener.document.getElementById('temp_id').src = change_url;
+		window.close();
+		return true;
+	} else {
+		alert('자른 사진을 저장해주세요.');
+		return false;
+	}
+
 }
 
 
@@ -249,8 +263,7 @@ function getResults() {
 </head>
     <body onunload="opener.child_close()">
         <header>
-            <h2>HTML5 image crop tool</h2>
-            <a href="http://www.script-tutorials.com/html5-image-crop-tool/" class="stuts">Back to original tutorial on <span>Script Tutorials</span></a>
+            <h2>[Cooing] crop페이지</h2>
         </header>
         <div class="container">
             <div class="contr">
@@ -259,9 +272,9 @@ function getResults() {
             <canvas id="panel" width="${picture_width}" height="${picture_height}"></canvas>
             <div id="results">
                 <h2>Please make selection for cropping and click 'Crop' button.</h2>
-                <img id="crop_result" />
+                <img id="crop_result"/>
             </div>
-            <input type="button" value="저장" onclick="pass_parent()">
+            <input type="button" value="저장" onclick="return pass_parent()">
         </div>
     </body>
 </html>
