@@ -49,4 +49,8 @@ public interface AlbumMapper {
 	public ArrayList<AlbumWriteVO> IDAlbumList(RowBounds rb , String album_writer);
 	
 	public int IDAlbumCount(String album_writer);
+	
+	public ArrayList<AlbumWriteVO> LikeAlbumList(RowBounds rb , String album_writer);
+	
+	public int LikeAlbumCount(String album_writer);
 }

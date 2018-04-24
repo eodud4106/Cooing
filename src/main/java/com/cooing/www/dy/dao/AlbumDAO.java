@@ -137,6 +137,12 @@ public class AlbumDAO{
 		return mapper.TotalAlbumList(rb , album_writer);			
 	}
 	
+	public ArrayList<AlbumWriteVO> LikeAlbumList(int startpl , int endpl , String album_writer){		
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		RowBounds rb = new RowBounds(startpl , endpl);
+		return mapper.LikeAlbumList(rb , album_writer);			
+	}
+	
 	public ArrayList<AlbumWriteVO> MyAlbumList(String album_writer , int stratpl , int endpl){
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		RowBounds rb = new RowBounds(stratpl , endpl);
@@ -159,6 +165,10 @@ public class AlbumDAO{
 	
 	public int CategoryAlbumCount(int categorynum){
 		return sqlSession.getMapper(AlbumMapper.class).CategoryAlbumCount(categorynum);
+	}
+	
+	public int LikeAlbumCount(String album_writer){
+		return sqlSession.getMapper(AlbumMapper.class).LikeAlbumCount(album_writer);
 	}
 	
 	public int MyAlbumCount(String album_writer){

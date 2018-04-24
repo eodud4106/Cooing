@@ -65,6 +65,40 @@ function getTotalAlbumList() {
 	});
 }
 
+function getLikeAlbumList() {
+	var check  = false;
+	if(searchcheck != 4){
+		searchcheck = 4;
+		pagenum = 0;
+	}
+	if(pagenum == 0)
+		check  = true;
+	$.ajax({
+		url: 'getLikeAlbumList',
+		type: 'post',
+		data:{pagenum:++pagenum}, 
+		dataType: 'json',
+		success: function(result) {
+			AlbumListPaging(check , result);
+			if(check){
+				$.ajax({
+					url:'searchLikeCount',
+					type:'POST',		
+					dataType:'text',
+					success: function(list){
+						//list 받아오면 리스트 돌려서 처리할 부분
+						$('#totalpage').val(list);
+					},
+					error:function(e){alert(JSON.stringify(e));}		
+				});
+			}			
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+}
+
 function searchCategory(categorynumber){
 	$('#searchtx').val('');
 	var check  = false;

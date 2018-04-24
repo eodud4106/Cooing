@@ -77,6 +77,15 @@ public class SearchController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/searchLikeCount" , method = RequestMethod.POST)
+	public int searchLikeCount(HttpSession session){
+		logger.info("search_like_count__jinsu");
+		//나누기를 하는 이유는 페이지 카운트로 들어갈 것이기 때문에 10개 씩 추가되기에 10으로 나눔
+		Member member = (Member)session.getAttribute("Member");
+		return albumDAO.LikeAlbumCount(member.getMember_id()) / 10;		
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/searchCategory" , method = RequestMethod.POST)
 	public ArrayList<AlbumWriteVO> searchCategory(int searchtext , int pagenum ){
 		logger.info(searchtext + "_search_Category__jinsu");		

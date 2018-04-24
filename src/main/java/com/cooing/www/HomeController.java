@@ -105,5 +105,14 @@ public class HomeController {
 		return albumDAO.TotalAlbumList(pl.getStartBoard() , pl.getCountPage() , member.getMember_id());
 	}
 	
-	
+	// 좋아요 목록 조회
+	@ResponseBody
+	@RequestMapping(value = "/getLikeAlbumList", method= RequestMethod.POST)
+	public ArrayList<AlbumWriteVO> getLikeAlbumList(int pagenum , HttpSession session) {
+		logger.info(pagenum + "_like_page_list ljs");
+		Member member = (Member)session.getAttribute("Member");
+		int totalnum = albumDAO.TotalAlbumCount(member.getMember_id());
+		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
+		return albumDAO.LikeAlbumList(pl.getStartBoard() , pl.getCountPage() , member.getMember_id());
+	}	
 }
