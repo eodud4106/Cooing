@@ -16,6 +16,7 @@ function initialize(){
 }
 function deleteparty(){
 	
+	//그룹 탈퇴 확인창
 	var isWithdrawal_group = confirm('그룹탈퇴를 하시겠습니까?');
 	
 	if(isWithdrawal_group == false) {

@@ -12,10 +12,6 @@
 
 <script src="resources/js_js/jquery-3.2.1.min.js"></script>
 
-<style>
-
-</style>
-
 <script>
 //부모창으로 값 넘기는 함수
 function pass_parent() {
@@ -32,7 +28,7 @@ function pass_parent() {
 		alert('자른 사진을 저장해주세요.');
 		return false;
 	}
-
+	//저장버튼 pass_parent
 }
 
 
@@ -96,6 +92,14 @@ function drawScene() { // main drawScene function
 }
 
 $(function(){
+	
+	$('#crop_button').click(function() {
+		var save_button_html = '<input type="button" id="save_button" value="저장 버튼" onclick="pass_parent()">';
+		$('body').append(save_button_html);
+	    $('canvas').remove();
+	    $('#crop_button').remove();
+		
+	});
     // loading source image
     // 부모창에서 받은 이미지 url
     var url_picture = '${new_url_picture}';
@@ -256,25 +260,30 @@ function getResults() {
     temp_ctx.drawImage(image, theSelection.x, theSelection.y, theSelection.w, theSelection.h, 0, 0, theSelection.w, theSelection.h);
     var vData = temp_canvas.toDataURL();
     $('#crop_result').attr('src', vData);
-    $('#results h2').text('Well done, we have prepared our cropped image, now you can save it if you wish');
 }
 
 </script>
+
+<style>
+body{margin-left: auto;}
+#container{}
+#results{}
+#crop_button{}
+h2{text-align: center;}
+</style>
+
 </head>
     <body onunload="opener.child_close()">
         <header>
             <h2>[Cooing] crop페이지</h2>
         </header>
         <div class="container">
-            <div class="contr">
-                <button onclick="getResults()">Crop</button>
-            </div>
             <canvas id="panel" width="${picture_width}" height="${picture_height}"></canvas>
             <div id="results">
-                <h2>Please make selection for cropping and click 'Crop' button.</h2>
                 <img id="crop_result"/>
             </div>
-            <input type="button" value="저장" onclick="return pass_parent()">
         </div>
+        <br><br>
+        <input type="button" onclick="getResults()" id="crop_button" value="사진 자르기 실행!!">
     </body>
 </html>

@@ -607,7 +607,7 @@ function createWholeEditor($div_box) {
         	if(check_crop != 'none'){
             	if(isWindowOpen == false) {
             		//편집창 열면서 사진url 넓이 높이 보내기
-                	var settings ='width=800, height=800, toolbar=no, menubar=no, scrollbars=no, resizable=yes';
+                	var settings ='width=600, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes';
                 	$('.onSelect img').attr('id', 'temp_id'); //임시 id값은 자식창에서 종료키 누르면 삭제됨
                 	var windowObj = window.open("crop_picture?url_picture=" + $('.onSelect img').attr('src') + "", "window_crop", settings);
                 	isWindowOpen = true;
