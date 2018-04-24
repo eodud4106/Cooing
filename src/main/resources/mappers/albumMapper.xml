@@ -153,7 +153,7 @@
         order by l.count desc
 	</select>
 	
-	<select id="LikeAlbumCount" parameterType="String" resultType="albumwrite">
+	<select id="LikeAlbumCount" parameterType="String" resultType="int">
 		select count(l.count)
 		from albumlist a , (
 			select likeit_albumnum as album_num , count(*) as count

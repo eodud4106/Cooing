@@ -107,7 +107,7 @@ $(document).ready(function () {
 		searchcheck = 2;
 		pagenum = 0;
 		pagecheck = false;
-		getTotalAlbumList();		
+		getLikeAlbumList();		
 	}
 });
 </script>
