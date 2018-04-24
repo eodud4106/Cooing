@@ -1439,6 +1439,8 @@ function savePage(mode) {
             alert(JSON.stringify(e));
         }
     });
+    
+    alert('저장되었습니다.');
 
 }
 // [end] 현재 페이지 저장

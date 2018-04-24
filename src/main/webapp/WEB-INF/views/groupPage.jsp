@@ -244,7 +244,7 @@ select::-ms-expand { /* for IE 11 */
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
-			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
+			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
 			<button onclick="create_group_album()">앨범 만들기</button>
 
 			<c:if test="${partyinfo ne null}">(GROUP_NAME)${partyinfo.getParty_name()}<input type="hidden" id="sessionid" data="${Member.getMember_id()}"></c:if>

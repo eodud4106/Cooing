@@ -136,7 +136,16 @@ html, body, main, .container-fluid {
 <script>
 	
 	var selectcheck = true;
-
+	
+	//홈버튼 눌렀을 때 confirm
+	function really_back_home() {
+		var return_home = confirm('저장버튼이나 페이지를 넘기지 않으면 저장되지 않습니다. 정말 홈으로 돌아가시겠습니까?');
+		
+		if(return_home == false) {
+			return false;
+		}
+		
+	}
 
 	//페이지 로딩 후 초기화 내용
 	$(document).ready(function() {
@@ -295,7 +304,7 @@ html, body, main, .container-fluid {
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
+			<a href="/www" class="mb-2 d-block probootstrap-logo" id="home_button" onclick="return really_back_home()">COOING</a>
 			<p class="mb-0"> 친구목록출력, 채팅기능
 				<a href="https://uicookies.com/" target="_blank">uiCookies</a>
 			</p>
@@ -404,7 +413,7 @@ html, body, main, .container-fluid {
 				<span class="oi oi-menu"></span>
 			</a>
 			<div class="probootstrap-main-site-logo">
-				<a href="index.html">COOING</a>
+				<a href="/www">COOING</a>
 			</div>
 	
 		</div>
