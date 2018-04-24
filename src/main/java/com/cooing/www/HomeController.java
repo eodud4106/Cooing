@@ -48,12 +48,6 @@ public class HomeController {
 	public String home(Model model, HttpSession session) {
 		Member personal = (Member)session.getAttribute("Member");
 		if(personal != null){
-			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
-			ArrayList<Member> friendmember = new ArrayList<Member>();
-			for(String s : arr_friend){
-				friendmember.add(memberDAO.selectMember(s));
-			}
-			model.addAttribute("friend", friendmember);
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
 			model.addAttribute("group", arraystrval);
 			int totalpage = albumDAO.TotalAlbumCount(personal.getMember_id());
