@@ -35,6 +35,10 @@
 <link rel="stylesheet" href="resources/css/albumEdit.css">
 <link rel="stylesheet" href="resources/css/jquery-ui.min.css">
 
+<!-- 기타 css -->
+<link rel="stylesheet" href="resources/album_css/album_edit_basic.css">
+<link rel="stylesheet" href="resources/album_css/album_edit_drag_and_drop.css">
+
 <link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
 <link rel="stylesheet" href="resources/aside_css/open-iconic-bootstrap.min.css">
 <link rel="stylesheet" href="resources/aside_css/owl.carousel.min.css">
@@ -122,7 +126,8 @@ html, body, main, .container-fluid {
 	font-size: 20px;
 }
 .page {
-	background-color: #eee;
+	background-color: black;
+	
 }
 .outer {
 	background-color: #aaa;
@@ -300,18 +305,15 @@ html, body, main, .container-fluid {
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="/www" class="mb-2 d-block probootstrap-logo" id="home_button" onclick="return really_back_home()">COOING</a>
-			<p class="mb-0"> 친구목록출력, 채팅기능
-				<a href="https://uicookies.com/" target="_blank">uiCookies</a>
-			</p>
+			<a href="/www" class="mb-2 d-block probootstrap-logo" id="home_button" onclick="return really_back_home()">COOING</a>			
 		</div>
 		<div class="probootstrap-overflow">
 		<div class="main">
 		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
-		<label for="tab1">앨범 정보</label>
+		<label for="tab1">Album</label>
 
   		<input class = "input1" id="tab2" type="radio" name="tabs">
-    	<label for="tab2">채팅</label>   
+    	<label for="tab2">Chat</label>   
 
     	<section id="content1"> 
     	<!-- 페이지 저장 -->		
@@ -389,15 +391,8 @@ html, body, main, .container-fluid {
 					<input type="hidden" name="imgSrc" id="imgSrc" />
 				</form>	
     	</section>
-    	</div>			
-
-			<footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft">
-
-				<p>
-					&copy; 2018 <a href="https://uicookies.com/" target="_blank">COOING</a>
-					<br> All Rights Reserved.
-				</p>
-			</footer>
+    	</div>		
+			
 		</div>
 	</aside>
 
@@ -443,17 +438,25 @@ html, body, main, .container-fluid {
 					</div>
 				</div>
 
-				<!-- 하단 바 영역 -->
-				<div class="under_bar">
-					<button>이전</button>
-					<button onclick="savePage('all')">저장</button>
-					<button onclick="addPage()">페이지 추가</button>
-					<button onclick="removePage()">페이지 삭제</button>
-					<button>다음</button>
-				</div>
+				
 				
 			</div>
 			<!-- END row -->
+			<!-- 하단 바 영역 -->
+				<div class="under_bar " align="right" style = "margin-right: 100px;">
+					
+					<div style= "z-index:99; float:right; padding-left: 10px;"onclick=""><i style = "width: 30px; height: 30px; margin: 10px;"class="fas fa-forward"></i></div>					
+					<div style= "z-index:99; float:right; padding-left: 10px;" onclick="addPage()"><i style = "width: 30px; height: 30px; margin: 10px;"class="far fa-plus-square"></i></div>
+					<div style= "z-index:99; float:right; padding-left: 10px;" onclick="removePage()"><i style = "width: 30px; height: 30px;margin: 10px;"class="far fa-trash-alt"></i></div>
+					<div style= "z-index:99; float:right; padding-left: 10px;" onclick="savePage('all')"><i style = "width: 30px; height: 30px;margin: 10px;"class="fas fa-check"></i></div>					
+					<div style= "z-index:99; float:right; padding-left: 10px; "onclick=""><i style = "width: 30px; height: 30px;margin: 10px;" class="fas fa-backward"></i></div>		
+					
+					<!-- <button>이전</button>
+					<button onclick="savePage('all')">저장</button>
+					<button onclick="addPage()">페이지 추가</button>
+					<button onclick="removePage()">페이지 삭제</button>
+					<button>다음</button> -->
+				</div>
 	
 		</div>
 
