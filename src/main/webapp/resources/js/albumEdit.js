@@ -1390,6 +1390,7 @@ function savePage(mode) {
     if(mode == 'all') {
         // 앨범 전체 저장 모드
         count = $('#album').turn('pages');
+        alert('전체 페이지가 저장 되었습니다.');
 
     } else if(mode == 'curr') {
 
@@ -1445,8 +1446,6 @@ function savePage(mode) {
             alert(JSON.stringify(e));
         }
     });
-    
-    alert('저장되었습니다.');
 
 }
 // [end] 현재 페이지 저장

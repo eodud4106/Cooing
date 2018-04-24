@@ -40,6 +40,12 @@ function searchgroupname(){
 }
 
 function creategroup(){
+	var create_group = confirm('그룹을 생성하시겠습니까?');
+	
+	if(create_group == false) {
+		return false;
+	}
+	
 	var name = $('#groupname').val();
 	if(name.length > 0){
 		$.ajax({
@@ -59,6 +65,7 @@ function creategroup(){
 							success: function(a){
 								if(a=='success'){									
 									opener.location.href="./groupPage?group_name="+name;
+									alert('그룹이 생성되었습니다. 그룹창으로 이동합니다.');
 									window.close();
 								}
 								else{

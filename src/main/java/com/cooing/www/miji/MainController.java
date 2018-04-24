@@ -67,12 +67,7 @@ public class MainController {
 	public ArrayList<PageHtmlVO> getMyAlbumRead(String num) {
 		return  albumDAO.select_pages_by_album_num(Integer.parseInt(num));
 	}
-	
-	@RequestMapping(value = "/albumTestView", method = RequestMethod.GET)
-	public String albumTestPage(Model model, HttpSession session) {
-		
-		return "albumTestView";
-	}
+
 	//좋아요 체크
 	@ResponseBody
 	@RequestMapping(value = "/check_likes", method = RequestMethod.GET)
