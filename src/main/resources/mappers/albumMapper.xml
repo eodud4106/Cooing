@@ -92,7 +92,7 @@
 				where tag_content like '%'||#{search}||'%'
 			)		
 		order by album_num desc
-	</select>
+	</select>	
 	
 	<select id="SearchAlbumCount" parameterType="String" resultType="int">
 		select count(*) from albumlist 

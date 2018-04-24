@@ -116,7 +116,7 @@ public class RelationController {
 	@RequestMapping(value="/party_member_create" , method = RequestMethod.POST,produces = "application/text; charset=utf8")
 	public String party_member_create(int partynum , String groupmember , HttpSession session){
 		logger.info("party_member_create__jinsu");
-		String[] arr_str_member = groupmember.split("<br>");
+		String[] arr_str_member = groupmember.split(" ");		
 		Member smember = get_session(session);
 		if(arr_str_member.length > 7){
 			return "그룹은 8명을 초과할 수 없습니다.";			

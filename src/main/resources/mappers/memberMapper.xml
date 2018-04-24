@@ -27,6 +27,12 @@
 	and member_id != #{myid}
 	</select>
 	
+	<select id="searchallId" parameterType="String" resultType="String">
+		select member_id 
+		from member
+		where member_id like '%'||#{search}||'%'
+	</select>
+	
 	<select id="searchId" resultType="member" parameterType="map">
 	select *
 	from member 

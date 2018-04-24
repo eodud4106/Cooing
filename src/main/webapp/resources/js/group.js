@@ -3,7 +3,7 @@
  */
 
 function initialize(){
-	$('#searchidbt').on('click' ,searchfriend);
+	$('#searchidbt').on('click' ,searchgroupfriend);
 	$('#groupid').keyup(searchword);
 	$('#groupname').keyup(searchgroupname);
 }
@@ -49,7 +49,7 @@ function creategroup(){
 			dataType:'text',
 			success: function(a){
 				if(a != '-1'){
-					var idlist = $('#idlist').html();
+					var idlist = $('#idlist').text();
 					if(idlist.length > 0){
 						$.ajax({
 							url:'party_member_create',
@@ -82,7 +82,7 @@ function creategroup(){
 	}	
 }
 
-function searchfriend(){
+function searchgroupfriend(){
 	var text = $('#groupid').val();
 	var id = $('#searchidbt').attr('data');
 	$.ajax({
@@ -114,12 +114,13 @@ function searchfriend(){
 		},
 		error:function(e){alert(JSON.stringify(e));}		
 	});
+	$('#groupid').val('');
 }
 function searchword(){
 	var text = $('#groupid').val();
 	if(text.length >= 1){
 		$.ajax({
-			url:'jinsu/search_user_id',
+			url:'jinsu/search_allid',
 			type:'POST',		
 			data:{text:text},
 			dataType:'json',

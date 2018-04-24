@@ -28,6 +28,11 @@ public class MemberDAO {
 		return mapper.selectMember(id);
 	}
 	
+	public ArrayList<String> searchallId(String all){
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		return mapper.searchallId(all);
+	}
+	
 	public ArrayList<Member> searchId(Map<String,String> map){
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
 		return mapper.searchId(map);

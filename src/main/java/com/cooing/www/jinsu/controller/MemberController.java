@@ -115,6 +115,14 @@ public class MemberController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/search_allid" , method = RequestMethod.POST)
+	public ArrayList<String> search_id(String text , HttpSession session){
+		logger.info("search_id__jinsu");
+		ArrayList<String> arrfriendsearch = memberDAO.searchallId(text);
+		return arrfriendsearch;				
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/search_user_id" , method = RequestMethod.POST)
 	public ArrayList<Member> search_user_id(String text ,  HttpSession session){
 		logger.info("search_user_id__jinsu");

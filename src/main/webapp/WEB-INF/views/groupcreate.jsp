@@ -71,9 +71,7 @@ $(document).ready(function () {
 						<%-- <input type="button" id="searchidbt" value="Search ID" data="${Member.getMember_id()}"> --%>
 						<div style= "z-index:99; float:right;" id="searchidbt" data="${Member.getMember_id()}">
 						<i class="fas fa-search" style = "margin-top: -25px;"></i></div>
-						<div id="idlist">
-						
-						</div>
+						<div id="idlist"></div>
 						
 						
 						
