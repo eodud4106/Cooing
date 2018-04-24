@@ -248,25 +248,21 @@ html, body, main, .container-fluid {
 			},
 			dataType: 'json',
 			success: function(likesList){
-				likeResult(likesList);
+				var str = '';
+				
+				$(likesList).each(function(i, vo){
+				str += vo.likeit_memberid + ' ';
+
+				});
+				str += '</table>';
+				$("#resultLikes").html(str);
 			},
 			error:function(e){
 				alert(JSON.stringify(e));
 			}		
 		});
 	}
-	// 좋아요 목록
-	function likeResult(likesList){
-		var str = '';
-	
 
-		$(likesList).each(function(i, vo){
-		str += vo.likeit_memberid + ' ';
-
-	});
-	str += '</table>';
-	$("#resultLikes").html(str);
-	}
 	// 댓글 쓰기
 	function writereply(){
 
@@ -348,34 +344,29 @@ html, body, main, .container-fluid {
 			},
 			dataType: 'json',
 			success: function(replyList){
-				replyResult(replyList);
+				var str = '';
+
+				str += '<table>';
+				$(replyList).each(function(i, vo){
+					str += '<tr>';
+					str += '<td>';
+					str += ' ' + vo.reply_contents;
+					str += '<br>';
+					str += ' ' + vo.reply_memberid;
+					/* str += ' ' + vo.reply_date; */
+					if (vo.reply_memberid == '${Member.member_id}') {
+					str += ' ' + "<input type='button' value='삭제' onclick='deletereply("+vo.reply_num+")'>";
+					}
+					str += '</td>';
+					str += '</tr>';
+				});
+				str += '</table>';
+				$("#resultReply").html(str);
 			},
 			error:function(e){
 				alert(JSON.stringify(e));
 			}		
 		});
-	}
-	// 댓글 목록
-	function replyResult(replyList){
-		
-		var str = '';
-
-		str += '<table>';
-		$(replyList).each(function(i, vo){
-			str += '<tr>';
-			str += '<td>';
-			str += ' ' + vo.reply_contents;
-			str += '<br>';
-			str += ' ' + vo.reply_memberid;
-			/* str += ' ' + vo.reply_date; */
-			if (vo.reply_memberid == '${Member.member_id}') {
-			str += ' ' + "<input type='button' value='삭제' onclick='deletereply("+vo.reply_num+")'>";
-			}
-			str += '</td>';
-			str += '</tr>';
-		});
-		str += '</table>';
-		$("#resultReply").html(str);
 	}
 
 	function checkRadioButton(iCheck){   
