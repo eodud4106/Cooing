@@ -231,15 +231,11 @@ $(document).ready(function(){
 	cursor: pointer;
 }
 .friendList{
-	height: 250px;	
-	overflow : scroll;
-	overflow-x:hidden;
+	height: 250px;		
 	/* overflow-y:hidden; */
 }
 .groupList{
-	height: 250px;
-	overflow : scroll;
-	overflow-x:hidden;
+	height: 250px;	
 	/* overflow-y:hidden; */
 }
 /* 포인터로 마우스 모양 바꿔주는곳 */
@@ -409,8 +405,10 @@ $(document).ready(function(){
 			<a href="" class="mb-2 d-block probootstrap-logo">MY FRIEND</a>			
 		</div>				
 				 <form>
-					<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
-					<input type="button" id="friendsearchbt" value="s">
+					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
+					<div>
+       			  <img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
+       			 height: 24px;margin-left: 205px; margin-top: -50px;">
 				</form>
 			<div class = "friendList">
 				<div name="friend" id="friend">
