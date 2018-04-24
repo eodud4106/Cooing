@@ -264,7 +264,7 @@ $(document).ready(function(){
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
-			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
+			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
 
 			<!-- 로그인되어있을 때 -->
 			<c:if test="${Member ne null}">
@@ -291,11 +291,8 @@ $(document).ready(function(){
 					<li class="category" data="0">여행</li>
 					
 					<li><a href="<c:url value ="/"/>">MainPage</a></li>
-					<li><a href="<c:url value ="/albumTestView"/>">albumView</a></li>
-					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
-					<li><a href="<c:url value ="/friendPage"/>">friendPage</a></li>		
+					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>	
 					<li><a href="<c:url value ="/LankingPage"/>">LankingPage</a></li>				 		
-					<li><a href="<c:url value ="/edit"/>">albumEdit</a></li>
 					<li><a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a></li>
 					<li><a href="<c:url value ="/jinsu/login_get"/>">로그인...</a></li>
 					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
@@ -325,7 +322,7 @@ $(document).ready(function(){
 			<span class="oi oi-menu"></span>
 		</a>
 		<div class="probootstrap-main-site-logo">
-			<a href="index.html">COOING</a>
+			<a href="/www">COOING</a>
 		</div>
 		<a href="#" class="probootstrap-toggle2 js-probootstrap-toggle2">
 			<span class="oi oi-menu"></span>
