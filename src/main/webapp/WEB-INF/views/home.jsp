@@ -86,7 +86,7 @@ $(document).ready(function () {
 		$('#myModal').css('display', 'none');
 	});
 	
-	friendclickevent();
+	searchword();
 	
 	if (${sessionScope.Member != null}) {
 		readyChat('${sessionScope.Member.member_id}', '');
@@ -413,17 +413,10 @@ $(document).ready(function(){
 					<input type="button" id="friendsearchbt" value="s">
 				</form>
 			<div class = "friendList">
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(friend) ne 0}">
-					<div name="friend" id="friend">
-							<c:forEach var="arrf" items="${friend }">
-								<p class="friendclick" onClick="popupvalue('${arrf.member_id}')"><img src="./jinsu/memberimg?strurl=${arrf.member_picture}" style="width:40px;height:40px;">${arrf.member_id}</p>
-							</c:forEach>
-						</div>
-						<div name="user" id="user">
-						</div>												
-					</c:if>
-				</c:if>				
+				<div name="friend" id="friend">
+				</div>
+				<div name="user" id="user">
+				</div>
 			</div>
 		
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
