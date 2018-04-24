@@ -67,24 +67,11 @@ function searchword() {
 			dataType : 'json',
 			success : function(array) {
 				$('#friend').html('');
-				/*var str = '';*/
+				var str = '';
 				$.each(array, function(i, data) {
-					/*str += '<p class="friendclick"  onClick="popupvalue(\'' + data.member_id + '\')"><img src="./jinsu/memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';*/
-					/*var p_tag = document.createElement('p');
-					$(p_tag).click(popupvalue(data.member_id));
-					$(p_tag).attr('class' , 'friendclick');
-					$(p_tag).append('<img src="./jinsu/memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">');
-					$(p_tag).append(data.member_id);*/
-					var $p = $('<p />',{
-						"class": "friendclick"
-					}).click(function(e) {
-						popupvalue(data.member_id);
-					});
-					$p.append('<img src="./jinsu/memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">');
-					$p.append(data.member_id);		
-					$('#friend').append($p);
+					str += '<p class="friendclick" id="'+data.member_id+'" onClick="popupvalue(\'' + data.member_id + '\')"><img src="./jinsu/memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
 				});
-				/*$('#friend').html(str);*/
+				$('#friend').html(str);
 			},
 			error : function(e) {
 				alert(JSON.stringify(e));
@@ -100,8 +87,7 @@ function searchword() {
 			success : function(array) {
 				var str = '';
 				$.each(array, function(i, data) {
-					
-					str += '<p class="friendclick" onClick="popupvalue(\'' + data.member_id + '\')"><img src="./jinsu/memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
+					str += '<p class="friendclick" id="'+data.member_id+'" onClick="popupvalue(\'' + data.member_id + '\')"><img src="./jinsu/memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
 				});
 				$('#user').html(str);
 			},
@@ -117,7 +103,7 @@ function searchword() {
 			success : function(array) {
 				var str = '';
 				$.each(array, function(i, data) {
-					str += '<p class="friendclick" onClick="popupvalue(\'' + data.member_id + '\')"><img src="./jinsu/memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
+					str += '<p class="friendclick" id="'+data.member_id+'" onClick="popupvalue(\'' + data.member_id + '\')"><img src="./jinsu/memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
 				});
 				$('#friend').html(str);
 				$('#user').html('');
@@ -127,10 +113,13 @@ function searchword() {
 			}
 		});
 	}
-	friendclickevent();
+	$(document).on('click' , '.friendclick' , function(e){
+		friendclickevent();
+		popupvalue($(this).attr('id') , e);
+	});
 }
 
-function friendclickevent() {
+function friendclickevent(){
 	/* 클릭 클릭시 클릭을 클릭한 위치 근처에 레이어 생성. */
 	$('.friendclick').click(function(e) {
 		var sWidth = window.innerWidth;
@@ -164,7 +153,7 @@ function friendclickevent() {
 	});
 }
 
-function popupvalue(click) {
+function popupvalue(click , e) {
 	$('.popuplayer').val(click);
 }
 
