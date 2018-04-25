@@ -1315,7 +1315,7 @@ textarea {
 
 .probootstrap-animate {
   opacity: 0;
-  visibility: hidden; }
+  /* visibility: hidden; */ }
 
 #probootstrap-loader {
   position: fixed;
