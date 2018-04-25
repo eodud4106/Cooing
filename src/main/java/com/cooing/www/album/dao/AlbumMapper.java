@@ -18,6 +18,10 @@ public interface AlbumMapper {
 	
 	public String MyAlbumListOutPut(String html);
 	
+	public ArrayList<AlbumWriteVO> total_album_list(RowBounds rb , Map<String,String> map);
+	
+	public int total_album_count(Map<String,String> map);
+	
 	public ArrayList<AlbumWriteVO> searchAlbum(String searchtext);
 	
 	public ArrayList<AlbumWriteVO> searchCategory(RowBounds rb , int icategorynum);

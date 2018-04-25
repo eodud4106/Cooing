@@ -14,35 +14,6 @@
 		select * from tag where tag_content = #{search}
 	</select>
 	
-	<select id="searchAllAlbum" parameterType="String" resultType="albumwrite">
-		SELECT * 
-		FROM ALBUMLIST 
-		WHERE ALBUM_WRITER LIKE '%'||#{SEARCH}||'%'
-			OR ALBUM_NAME LIKE '%'||#{SEARCH}||'%'
-			OR ALBUM_CONTENTS LIKE '%'||#{SEARCH}||'%'
-			OR ALBUM_NUM IN(
-				SELECT TAG_ALBUMNUM AS ALBUM_NUM
-				FROM TAG
-				WHERE TAG_CONTENT LIKE '%'||#{SEARCH}||'%'
-				GROUP BY TAG_ALBUMNUM
-			)
-	</select>
-	
-	<select id="searchAllAlbumCount" parameterType="String" resultType="int">
-		SELECT COUNT(*) 
-		FROM ALBUMLIST 
-		WHERE ALBUM_WRITER LIKE '%'||#{SEARCH}||'%'
-			OR ALBUM_NAME LIKE '%'||#{SEARCH}||'%'
-			OR ALBUM_CONTENTS LIKE '%'||#{SEARCH}||'%'
-			OR ALBUM_NUM IN(
-				SELECT TAG_ALBUMNUM AS ALBUM_NUM
-				FROM TAG
-				WHERE TAG_CONTENT LIKE '%'||#{SEARCH}||'%'
-				GROUP BY TAG_ALBUMNUM
-			)
-		ORDER BY ALBUM_NUM DESC
-	</select>
-	
 	<insert id="insertSearch" parameterType="search">
 	insert into search (search_num,search_word,search_date)
 		values (search_seq.nextval,#{search_word},sysdate)
