@@ -117,7 +117,18 @@ public class SearchController {
 	public ArrayList<Map<String , Object>> searchLike(String searchdate){
 		logger.info("searchLike__jinsu");
 		ArrayList<Map<String , Object>> map = searchDAO.selectDayLike(searchdate);
-		return map;				
+		ArrayList<Map<String , Object>> map2 = new ArrayList<Map<String , Object>>();
+
+		for(Map<String , Object> m : map){
+			//밖에서 생성하면 maap이 map2에 들어간 상태로 계속적으로 바뀌기 때문에 새로 만듬
+			Map<String , Object> maap = new HashMap<String, Object>();
+			//맵에 있는 아이는 바로 넘겨서 보내면 에러가 나기에 걸렀다 감
+			String albumnum = String.valueOf(m.get("LIKEIT_ALBUMNUM"));
+			maap.put("COUNT", m.get("COUNT"));
+			maap.put("LIKEIT_ALBUMNUM", albumDAO.searchAlbumNum(Integer.parseInt(albumnum)).getAlbum_name());
+			map2.add(maap);
+		}
+		return map2;				
 	}
 	
 	@ResponseBody
