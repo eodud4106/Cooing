@@ -46,7 +46,6 @@
 <link rel="stylesheet" href="resources/skin_radio/green.css">
 
 <style type="text/css">
-
 .main {
     min-width: 200px;
     max-width: 200px;
@@ -136,6 +135,26 @@ html, body, main, .container-fluid {
 .div_reply, .div_reply form, .div_reply form input,
 #resultReply, #resultReply table {
 	position: relative;
+}
+.deleteLikes:after{
+	font-size: 20px;
+	height: 30px;	
+}
+.deleteLikes:after{
+	content: "❤";
+	left: 21px;
+	top: 21px;
+	color:#FF0000;
+}
+.likes:after{
+	font-size: 20px;
+	height: 30px;	
+}
+.likes:after{
+	content: "❤";
+	left: 21px;
+	top: 21px;
+	color:#D5D5D5;
 }
 </style>
 
@@ -461,8 +480,13 @@ html, body, main, .container-fluid {
 				<form id="testimg">
 					<input type="hidden" name="imgSrc" id="imgSrc" />
 				</form>	
-				<p id = "likes"><button type="button" onclick="likes()">좋아요!</button></p>
-				<p id = "deleteLikes"><button type="button" onclick="deletelikes()">좋아요 취소!</button></p>
+				<div class="buttonHolder" id = "likes" onclick="likes()">
+  					<a href="#" class="likes"></a>
+				</div>
+				<div class="buttonHolder" id = "deleteLikes" onclick="deletelikes()">
+  					<a href="#" class="deleteLikes"></a>
+				</div>
+				
 				이 앨범을 좋아요 한 사람들
 				<div id="resultLikes">
 				
@@ -475,6 +499,7 @@ html, body, main, .container-fluid {
 					<button type="button" onclick="writereply()">저장</button>
 					<input type="hidden" name="reply_albumnum">
 					</form>
+					
 					<div id="resultReply">
 				
 					</div>
