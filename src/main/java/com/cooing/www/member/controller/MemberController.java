@@ -29,7 +29,6 @@ import com.cooing.www.member.vo.Member;
 
 
 @Controller
-@RequestMapping("/jinsu")
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class); 
 	private static final String strpath = "jinsu";
