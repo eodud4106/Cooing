@@ -189,13 +189,13 @@ select::-ms-expand { /* for IE 11 */
 			
 			<input type="hidden" id="sessionid" data="${Member.getMember_id()}">
 				<c:if test="${partyleader ne null}">
-				<p><img class = "img1" src = "<c:url value="/jinsu/memberimg?strurl=${partyleader.getMember_picture()}"/>">
+				<p><img class = "img1" src = "<c:url value="/memberimg?strurl=${partyleader.getMember_picture()}"/>">
 				<c:if test="${partyleader ne null}">${partyleader.getMember_id()}(Leader)</c:if></p>
 			</c:if>	
 		<div id="memberdiv">
 		<c:if test="${fn:length(memberinfo) ne 0}">
 			<c:forEach var="arrmi" items="${memberinfo}">
-				<p><img class = "img1" src = "<c:url value="/jinsu/memberimg?strurl=${arrmi.getMember_picture()}"/>"></p><p>${arrmi.getMember_id()}
+				<p><img class = "img1" src = "<c:url value="/memberimg?strurl=${arrmi.getMember_picture()}"/>"></p><p>${arrmi.getMember_id()}
 				<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id() and partyinfo.getParty_leader() ne arrmi.getMember_id()}">
 					<img src = "./resources/image_mj/remove.png" class = "img_3" data="${arrmi.getMember_id()}" data2="${partyinfo.getParty_num()}">
 				</c:if>

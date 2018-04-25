@@ -267,7 +267,7 @@ select::-ms-expand { /* for IE 11 */
 			<!-- 로그인되어있을 때 -->
 			<c:if test="${Member ne null}">
 				<p>
-					<img src="<c:url value="/jinsu/img" />" class="img1">${Member.getMember_id()}
+					<img src="<c:url value="/img_member" />" class="img1">${Member.getMember_id()}
 				</p>
 			</c:if>
 			<!-- 로그인 안되어있을 때 -->
