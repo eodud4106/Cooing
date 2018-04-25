@@ -519,3 +519,15 @@ canvas {
 .count-particles { 
     border-radius: 0 0 3px 3px; 
 }
+
+html, body {
+    height: 100%;
+}
+
+#home {
+    top: 30%;
+}
+
+.main-content {
+    padding: 20px 60px; 
+}
