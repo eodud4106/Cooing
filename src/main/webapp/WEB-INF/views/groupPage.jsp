@@ -211,7 +211,7 @@ select::-ms-expand { /* for IE 11 */
 				<div>
 					<p>멤버 추가</p>
 					<p>	<input type="text" id="findid" placeholder="Member Id 검색" size="10">
-					<input type="button" id="gmemberplus" value="추가" data="${partyinfo.getParty_num()}"></p>			
+					<input type="button" id="gmemberplus" value="추가"></p>			
 				</div>
 				<div>
 					<p><input type="button" id="desolve" value="그룹해체" data="${partyinfo.getParty_num()}"></p>
