@@ -51,17 +51,23 @@
 				, album_num
 				, page_num
 				, page_html
+				, page_attr
 		     )
 			 VALUES (
 				page_seq.nextval
 				, #{album_num}
 				, #{page_num}
-				, 
 				<if test="#{page_html} != null">
-				#{page_html}
+				, #{page_html}
 				</if>
 				<if test="#{page_html} == null">
-				''
+				, ''
+				</if>
+				<if test="#{page_attr} != null">
+				, #{page_attr}
+				</if>
+				<if test="#{page_attr} == null">
+				, ''
 				</if>
 			 )
 	</insert>

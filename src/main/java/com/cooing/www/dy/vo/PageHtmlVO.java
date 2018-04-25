@@ -5,6 +5,7 @@ public class PageHtmlVO {
 	private int album_num;
 	private int page_num;
 	private String page_html;
+	private String page_attr;
 	
 	public PageHtmlVO() {}
 	
@@ -15,12 +16,13 @@ public class PageHtmlVO {
 		this.page_html = page_html;
 	}
 
-	public PageHtmlVO(int page_id, int album_num, int page_num, String page_html) {
+	public PageHtmlVO(int page_id, int album_num, int page_num, String page_html, String page_attr) {
 		super();
 		this.page_id = page_id;
 		this.album_num = album_num;
 		this.page_num = page_num;
 		this.page_html = page_html;
+		this.page_attr = page_attr;
 	}
 
 	public int getPage_id() {
@@ -55,11 +57,21 @@ public class PageHtmlVO {
 		this.page_html = page_html;
 	}
 
+	public String getPage_attr() {
+		return page_attr;
+	}
+
+	public void setPage_attr(String page_attr) {
+		this.page_attr = page_attr;
+	}
+
 	@Override
 	public String toString() {
 		return "PageHtmlVO [page_id=" + page_id + ", album_num=" + album_num + ", page_num=" + page_num + ", page_html="
-				+ page_html + "]";
+				+ page_html + ", page_attr=" + page_attr + "]";
 	}
+
+	
 	
 	
 }

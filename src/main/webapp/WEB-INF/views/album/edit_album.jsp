@@ -428,7 +428,7 @@ html, body, main, .container-fluid {
 					<div class="album" id="album" style="display: none">
 						<c:if test="${arr_page.size() > 0 }">
 							<c:forEach items="${arr_page}" var="page">
-								<div id="page${page.page_num}" class="page hard">${page.page_html}</div>
+								<div id="page${page.page_num}" class="page hard" style="background-image: ${page.page_attr}">${page.page_html}</div>
 							</c:forEach>
 						</c:if>	
 					</div>

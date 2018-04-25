@@ -641,6 +641,8 @@ function createWholeEditor($div_box) {
             $('.onSelect').parent('.page').css({
                 "background-image": "url(" + src + ")"
             })
+            $('.onSelect').remove();
+            removeEdit();
         }).mouseenter(function(e) {
             createTooltip($(this), '배경으로');
         }).mouseleave(function(e) {
@@ -1335,6 +1337,7 @@ function createTextEditor(top, left) {
 function removeEdit() {
     $('.div_selection_editor').remove();
     $('.div_whole_editor').remove();
+    $('.tooltip').remove();
 }
 
 // onSelect, onEdit 상태 해제
@@ -1421,7 +1424,7 @@ function savePage(mode) {
         arr_page[i-start] = {
             "page_num": i,
             "page_html": $page_clone.html(),
-            "page_attr": $page_clone.css('backgroud-image')
+            "page_attr": $page_clone.css('background-image')
         }
         console.log('변환한 것 ' + i + ' : ' + JSON.stringify(arr_page[i-start]));
 
