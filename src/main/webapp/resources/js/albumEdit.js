@@ -70,7 +70,7 @@ var curr_page = 1;
 
 var arr_color = ["#FF0000", "#FF5E00", "#FFBB00", "#FFE400", "#ABF200",
      "#1DDB16", "#00D8FF", "#0054FF", "#0100FF", "#5F00FF", "#FF00DD", 
-    "#FF007F", "#FFD9FA", "#B2CCFF", "#FFC6FF", "#D9E5FF", "#FAECC5", 
+     "#FFD9FA", "#B2CCFF", "#FFC6FF", "#D9E5FF", "#FAECC5", 
     "#FFC19E", "#D5D5D5", "#000000", "#FFFFFF"];
 
 var arr_size = ["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"];
@@ -475,11 +475,6 @@ function createWholeEditor($div_box) {
             "id": "bt_size",
             "text": "글자크기"
         }));
-        $arr_bt[$arr_bt.length - 1].mouseenter(function() {
-            if($('.div_fontsize').css('display') == 'none') {
-                $('.div_fontsize').css('display', 'block');
-            }   
-        });
         
         // 글꼴
         $arr_bt.push($('<button />', {
@@ -721,6 +716,8 @@ function createWholeEditor($div_box) {
     for(var i = 0; i < $arr_bt.length; i++) {
         var $tmp_div = $('<div />');
         $tmp_div.append($arr_bt[i]);
+
+        $arr_bt[i].addClass('div_bt');
 
 
         // 항목에서 마우스 떼면 감추기
@@ -977,10 +974,10 @@ function createWholeEditor($div_box) {
 
             for(var j = 0; j < arr_size.length; j++) {
                 var $bt = $('<button />', {
-                    "text": (j+1)
+                    "text": (j+1),
+                    "class": "div_div_button"
                 }).css({
                     "font-size": arr_size[j],
-                    "background-color": "rgba(20, 20, 20, .7)",
                     "color": "white"
                 }).click(function(e) {
                     $('.onSelect').css({
@@ -989,6 +986,8 @@ function createWholeEditor($div_box) {
                 })
                 $bt.appendTo($inner_div);
             }
+            var $bt1 = $('<button />').appendTo($inner_div);
+            var $bt2 = $('<button />').appendTo($inner_div);
 
             $inner_div.appendTo($tmp_div);
 
@@ -1078,7 +1077,7 @@ function createWholeEditor($div_box) {
                 $('.onSelect').css("font-family", "Hi Melody, cursive");
             });
             for (var j = 0; j < $arr_bt_font.length; j++) {
-                $innerDiv.append($arr_bt_font[j])
+                $innerDiv.append($arr_bt_font[j].addClass('div_div_button'))
             }
             $tmp_div.append($innerDiv);
         }
@@ -1100,7 +1099,9 @@ function createWholeEditor($div_box) {
             });
 
             for(var j = 0; j < arr_color.length; j++) {
-                var $bt = $('<button />').css({
+                var $bt = $('<button />', {
+                    "class": "div_div_button"
+                }).css({
                     "background-color": arr_color[j]
                 }).click(function(e) {
                     $('.onSelect').css({
@@ -1130,7 +1131,9 @@ function createWholeEditor($div_box) {
             });
 
             for(var j = 0; j < arr_color.length; j++) {
-                var $bt = $('<button />').css({
+                var $bt = $('<button />', {
+                    "class": "div_div_button"
+                }).css({
                     "background-color": arr_color[j]
                 }).click(function(e) {
                     $('.onSelect').css({
@@ -1266,6 +1269,7 @@ function createTextEditor(top, left) {
     for(var i = 0; i < $arr_bt.length; i++) {
         var $tmp_div = $('<div />');
         $tmp_div.append($arr_bt[i]);
+        $arr_bt[i].addClass('div_bt');
 
         // 글자색 처리
         if($arr_bt[i].hasClass('sel_font_color')) {
@@ -1283,7 +1287,9 @@ function createTextEditor(top, left) {
             });
 
             for(var j = 0; j < arr_color.length; j++) {
-                var $bt = $('<button />').css({
+                var $bt = $('<button />', {
+                    "class": "div_div_button"
+                }).css({
                     "background-color": arr_color[j]
                 }).click(function(e) {
                     document.execCommand('foreColor', false, $(this).css("background-color"));
@@ -1310,7 +1316,9 @@ function createTextEditor(top, left) {
             });
 
             for(var j = 0; j < arr_color.length; j++) {
-                var $bt = $('<button />').css({
+                var $bt = $('<button />', {
+                    "class": "div_div_button"
+                }).css({
                     "background-color": arr_color[j]
                 }).click(function(e) {
                     document.execCommand('backColor', false, $(this).css("background-color"));

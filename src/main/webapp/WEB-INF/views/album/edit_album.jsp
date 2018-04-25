@@ -440,18 +440,12 @@ html, body, main, .container-fluid {
 			<!-- END row -->
 			<!-- 하단 바 영역 -->
 				<div class="under_bar " align="right" style = "margin-right: 100px;">
-					
+					<button onclick="location.href='albumView?album_num=${album.album_num}'">편집 끝내기(디자인 수정해야 함!)</button>
 					<div style= "z-index:99; float:right; padding-left: 10px;"onclick=""><i style = "width: 30px; height: 30px; margin: 10px;"class="fas fa-forward"></i></div>					
 					<div style= "z-index:99; float:right; padding-left: 10px;" onclick="addPage()"><i style = "width: 30px; height: 30px; margin: 10px;"class="far fa-plus-square"></i></div>
 					<div style= "z-index:99; float:right; padding-left: 10px;" onclick="removePage()"><i style = "width: 30px; height: 30px;margin: 10px;"class="far fa-trash-alt"></i></div>
 					<div style= "z-index:99; float:right; padding-left: 10px;" onclick="savePage('all')"><i style = "width: 30px; height: 30px;margin: 10px;"class="fas fa-check"></i></div>					
 					<div style= "z-index:99; float:right; padding-left: 10px; "onclick=""><i style = "width: 30px; height: 30px;margin: 10px;" class="fas fa-backward"></i></div>		
-					
-					<!-- <button>이전</button>
-					<button onclick="savePage('all')">저장</button>
-					<button onclick="addPage()">페이지 추가</button>
-					<button onclick="removePage()">페이지 삭제</button>
-					<button>다음</button> -->
 				</div>
 	
 		</div>
