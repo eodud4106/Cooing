@@ -11,6 +11,7 @@ function readURL(input){
 					$('#preview').attr('src' , e.target.result);
 				}
 				reader.readAsDataURL(input.files[0]);
+				
 			}
 			else{
 				alert('png,jpg,gif만 가능합니다.');
