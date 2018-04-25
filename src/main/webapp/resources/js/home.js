@@ -106,8 +106,6 @@ function getTotalAlbumList() {
 }
 
 function getLikeAlbumList() {
-	
-	alert('??');
 	var check  = false;
 	if(searchcheck != 4){
 		searchcheck = 4;
