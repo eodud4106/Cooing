@@ -4,7 +4,7 @@
 
 function initialize(){
 	$('#searchidbt').on('click' ,searchgroupfriend);
-	$('#groupid').keyup(searchword);
+	$('#groupid').keyup(searchgroupid);
 	$('#groupname').keyup(searchgroupname);
 }
 
@@ -123,7 +123,7 @@ function searchgroupfriend(){
 	});
 	$('#groupid').val('');
 }
-function searchword(){
+function searchgroupid(){
 	var text = $('#groupid').val();
 	if(text.length >= 1){
 		$.ajax({
