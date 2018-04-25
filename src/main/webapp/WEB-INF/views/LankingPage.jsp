@@ -51,28 +51,54 @@ $( function() {
   	 });
 });
 
+
+function checkRadio(){
+   var temp;   
+   var radioObj = document.all('iCheck');   
+   var isChecked;
+   if(radioObj.length == null)
+   { 
+	   // 라디오버튼이 같은 name 으로 하나밖에 없다면
+	   isChecked = radioObj.checked;
+   }
+   else
+   { // 라디오 버튼이 같은 name 으로 여러개 있다면
+      for(var i=0; i<radioObj.length; i++)
+      {
+         if(radioObj[i].checked)
+         {
+            isChecked = true;
+            break;
+         }
+      }
+   }
+
+   if(isChecked){
+	   temp = radioObj[i].value; 	   
+	   //value값
+	   switch (temp) {
+	      case '1':
+	    	 categorysearch(); 
+	         break;
+	      case '2':
+	    	  searchsearch();
+	         break;
+	      case '3':
+	    	 likesearch();
+	         break;    
+	   }
+   }else{
+   }	 
+}
+
 $(document).ready(function() {
-	likesearch();
 	 $('#datepicker').on('change' , function(){
-		 likesearch();
-		/* if($('input[name=iCheck]:radio:checked').val() == 1){
-			categorysearch();
-		}else if($('input[name=iCheck]:radio:checked').val() == 2){
-			searchsearch();
-		}else if($('input[name=iCheck]:radio:checked').val() == 3){
-			likesearch();
-		} */
+		 checkRadio();
 	});
 	
-	 /*$('input[name=iCheck]').change(function(){
-		if($(this).val() == 1){//카테고리순 정렬
-			categorysearch()
-		}else if($(this).val() == 2){//검색어 순
-			searchsearch();
-		}else if($(this).val() == 3){//좋아요 순
-			likesearch();
-		}
-	});*/
+	 $('.input').on('ifChanged' , function(){
+		  checkRadio(); 
+	 });
 });
 
 function likesearch(){
@@ -87,27 +113,15 @@ function likesearch(){
 				array = new Array();
 				$.each(list,function(i,data){
 					var count = 0;
-					var word = '';
-					var word2 = '';
+					var word = '';	
 					$.each(data,function(key,value){
 						if(key == 'LIKEIT_ALBUMNUM'){
 							word = value;
 						}else if(key == 'COUNT'){
 							count = value;
 						}
-					});	
-					$.ajax({
-						url:'searchAlbumName',
-						type:'POST',		
-						data:{num:word},
-						dataType:'text',
-						success: function(name){
-							word2 = ''+name+'';
-						},
-						error:function(e){alert(JSON.stringify(e));}		
-					});	
-					alert(word2);
-					array[i] = [count , word2 , '#f3f3f3'];
+					});
+					array[i] = [count , word , '#f3f3f3'];						
 				});
 				graphcreate(array);
 			},
@@ -194,7 +208,7 @@ $(document).ready(function(){
     checkboxClass: 'icheckbox_square-green',
     radioClass: 'iradio_square-green',
     increaseArea: '20%' // optional
-  });
+  }); 
 });
 </script>
 <style>
@@ -319,8 +333,8 @@ select::-ms-expand { /* for IE 11 */
 		<!-- 정렬순서 -->		
 		<form style = "float:right; padding-left : 10px;" id="radiobutton">
 			<input type="radio" name="iCheck" class="input"value="1" checked>카테고리순 
-			<input type="radio" name="iCheck" class="input"value="2" >검색어순
-			<input type="radio" name="iCheck" class="input"value="3" >좋아요순
+			<input type="radio" name="iCheck" class="input"value="2">검색어순
+			<input type="radio" name="iCheck" class="input"value="3">좋아요순
 		</form>
 	</div>	
 		<!-- 그래프 출력될 곳 -->
