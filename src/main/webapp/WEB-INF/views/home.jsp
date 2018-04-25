@@ -9,30 +9,32 @@
 <title>COOING</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans">
 
-<link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
-<link rel="stylesheet" href="resources/aside_css/open-iconic-bootstrap.min.css">
-
-<link rel="stylesheet" href="resources/aside_css/owl.carousel.min.css">
-<link rel="stylesheet" href="resources/aside_css/owl.theme.default.min.css">
-
-<link rel="stylesheet" href="resources/aside_css/icomoon.css">
-<link rel="stylesheet" href="resources/aside_css/animate.css">
-<link rel="stylesheet" href="resources/aside_css/style.css">
+<link rel="stylesheet" href="resources/css/jquery-ui.min.css">
+<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="resources/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="resources/css/icomoon.css">
+<link rel="stylesheet" href="resources/css/animate.css">
+<link rel="stylesheet" href="resources/css/style.css">
 <link rel="stylesheet" href="resources/css/chat.css">
-<!-- 레이어 툴팁 -->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" href="resources/css/green.css">
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
-<script src="<c:url value="/resources/js/home.js"/>"></script>
-<script src="./resources/js/search.js"></script>
+<script src="resources/js/home.js"></script>
+<script src="resources/js/search.js"></script>
 <script src="resources/js/chat.js"></script>
+<script src="resources/js/icheck.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
-<link rel="stylesheet" href="resources/skin_radio/green.css">
-<script src="resources/skin_radio/icheck.js"></script>
+<script src="resources/js/popper.min.js"></script>
+<script src="resources/js/bootstrap.min.js"></script>
+<script src="resources/js/owl.carousel.min.js"></script>
+<script src="resources/js/jquery.waypoints.min.js"></script>
+<script src="resources/js/imagesloaded.pkgd.min.js"></script>
+<script src="resources/js/main.js"></script>
+
 <script>
 var pagenum = 0;
 var pagingcheck = false;
@@ -439,12 +441,5 @@ $(document).ready(function(){
 		<p onClick="chatpage()" style="font-size:8pt;color:#26afa1;">채팅</p>
 	</div>
 
-	<script src="resources/aside_js/popper.min.js"></script>
-	<script src="resources/aside_js/bootstrap.min.js"></script>
-	<script src="resources/aside_js/owl.carousel.min.js"></script>
-	<script src="resources/aside_js/jquery.waypoints.min.js"></script>
-	<script src="resources/aside_js/imagesloaded.pkgd.min.js"></script>
-
-	<script src="resources/aside_js/main.js"></script>
 </body>
 </html>
