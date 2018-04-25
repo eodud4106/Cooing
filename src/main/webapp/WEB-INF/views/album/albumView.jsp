@@ -355,15 +355,17 @@ html, body, main, .container-fluid {
 		} 
 	}
 	//댓글 목록
-	function replyList(){
+	function replyList(p){
 		
+		var rep_page = p;
 		var albumnum = ${album.album_num};
 		
 		$.ajax({
 			url:'listReply',
 			type: 'get',		
 			data: {
-				"reply_albumnum": albumnum		
+				"reply_albumnum": albumnum,
+				"rep_page" : rep_page
 			},
 			dataType: 'json',
 			success: function(replyList){
@@ -378,14 +380,61 @@ html, body, main, .container-fluid {
 					str += ' ' + vo.reply_memberid;
 					/* str += ' ' + vo.reply_date; */
 					if (vo.reply_memberid == '${Member.member_id}') {
-						str += ' ' + "<button class='delete-button' onclick='deletereply("+vo.reply_num+")'>x</button>";
+					str += ' ' + "<input type='button' value='삭제' onclick='deletereply("+vo.reply_num+")'>";
 					}
-					
 					str += '</td>';
 					str += '</tr>';
 				});
 				str += '</table>';
+				$("#resultReply").html('');
 				$("#resultReply").html(str);
+				
+				$("#reply_page").html('');
+				pageReply(p);//리스트 뿌려질 때 페이징도 같이 뿌려주기
+			},
+			error:function(e){
+				alert(JSON.stringify(e));
+			}		
+		});
+	}
+	
+	// 페이징
+	function pageReply(p){
+		
+		var albumnum = ${album.album_num};
+		var rep_page = p;
+		alert('p값 : ' + p);
+		
+		$.ajax({
+			url:'pageReply',
+			type: 'get',		
+			data: {
+				"reply_albumnum": albumnum,
+				"rep_page" : rep_page
+			},
+			dataType: 'json',
+			success: function(navi){
+				
+				alert('현재 페이지 : ' + navi.currentPage);
+				
+				var html = '';
+				html += '<a href="javascript:replyList(' + (navi.currentPage - navi.pagePerGroup) + ')" style="color: navy;">◁◁ </a> &nbsp;&nbsp;';
+				html += '<a href="javascript:replyList(' + (navi.currentPage - 1) + ')" style="color: navy;">◀</a> &nbsp;&nbsp;';
+				
+				for(var i=navi.startPageGroup; i<navi.endPageGroup; i++) {
+					if(i == navi.currentPage){
+						html += '<a href="javascript:replyList('+ i +')" style="color: navy;"><b>' + i + '</b></a>&nbsp;';
+					}
+					else{
+						html += '<a href="javascript:replyList('+ i +')" style="color: navy;">' + i + '</a>&nbsp;';
+					}
+				}
+				
+				html += '<a href="javascript:replyList(' + (navi.currentPage + 1) + ')" style="color: navy;">▶</a> &nbsp;&nbsp;'
+				html += '<a href="javascript:replyList(' + (navi.currentPage + navi.pagePerGroup) + ')" style="color: navy;">▷▷</a>';
+				
+				$('#reply_page').html('');
+				$('#reply_page').append(html);
 			},
 			error:function(e){
 				alert(JSON.stringify(e));
@@ -501,38 +550,21 @@ html, body, main, .container-fluid {
 				
 				</div>
 				<!-- 하단 바 영역 -->
-				<div class="div_reply">
+				<div class="reply_page_div" id="reply_page_div">
 					<form>
 					댓글
-					<input type="text" id="contents" class ="reply">
-					<button type="button" onclick="writereply()">저장</button>
-					<input type="hidden" name="reply_albumnum">
+						<input type="text" id="contents" class ="reply">
+						<button type="button" onclick="writereply()">저장</button>
+						<input type="hidden" name="reply_albumnum">
 					</form>
 					
-					<div id="resultReply">
-				
+					<div id="resultReply"><!-- 댓글리스트 출력 -->
+					
 					</div>
-					<form id="rep_pagingForm" action="albumView">
-					<input type="hidden" value="${album.album_num }" name="album_num">
-					<input type="hidden" name="rep_page" id="rep_page">
-					<input type="hidden" name="block" value="yes">
-					<div id="navigator">
-					<!-- 페이지 이동 부분 -->                      
-					<a href="javascript:pagingFormSubmit(${RepNavi.currentPage - navi.pagePerGroup})">◁◁ </a> &nbsp;&nbsp;
-					<a href="javascript:pagingFormSubmit(${RepNavi.currentPage - 1})">◀</a> &nbsp;&nbsp;
-				
-					<c:forEach var="counter" begin="${RepNavi.startPageGroup}" end="${RepNavi.endPageGroup}"> 
-						<c:if test="${counter == navi.currentPage}"><b></c:if>
-							<a href="javascript:pagingFormSubmit(${counter})">${counter}</a>&nbsp;
-						<c:if test="${counter == navi.currentPage}"></b></c:if>
-					</c:forEach>
-					&nbsp;&nbsp;
-					<a href="javascript:pagingFormSubmit(${RepNavi.currentPage + 1})">▶</a> &nbsp;&nbsp;
-					<a href="javascript:pagingFormSubmit(${RepNavi.currentPage + RepNavi.pagePerGroup})">▷▷</a>
-				
-					<!-- /페이지 이동 끝 -->
-					</div>  
-					</form>
+					
+					<div id="reply_page"> <!-- 댓글 페이지 -->
+					</div>
+
 				</div>
 							
     	</section>

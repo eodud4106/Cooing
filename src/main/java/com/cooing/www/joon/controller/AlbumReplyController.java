@@ -77,23 +77,52 @@ public class AlbumReplyController {
 		return str;
 	}
 	
+	
 	// 댓글 목록
 	@ResponseBody
 	@RequestMapping(value = "/listReply", method = RequestMethod.GET)
-	public ArrayList<AlbumReplyVO> listReply(Model model, String reply_albumnum, @RequestParam(value="rep_page", defaultValue="1") int page) {
+	public ArrayList<AlbumReplyVO> listReply(Model model, String reply_albumnum, String rep_page) {
 		
 		int num = 0;
-		
 		num = Integer.parseInt(reply_albumnum);
+		
+		int i_rep_page = 0;
+		try {
+			i_rep_page = Integer.parseInt(rep_page);
+		} catch (Exception e) {
+			i_rep_page = 1;
+		}
+		
 		
 		// 댓글 페이징
 		int repTotal = albumreplyDAO.getReplyTotal(num);
-		PageNavigator RepNavi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, page, repTotal);
-		
+		PageNavigator RepNavi = new PageNavigator(3, 4, i_rep_page, repTotal);
 		ArrayList<AlbumReplyVO> replyList = albumreplyDAO.listReply(num, RepNavi.getStartRecord(), RepNavi.getCountPerPage());
 		
-		model.addAttribute("RepNavi", RepNavi);
-		
 		return replyList;
+	}
+	
+	// 댓글 페이징
+	@ResponseBody
+	@RequestMapping(value = "/pageReply", method = RequestMethod.GET)
+	public PageNavigator pageReply(String reply_albumnum, String rep_page) {
+		
+		int i_rep_page = 0;
+		try {
+			i_rep_page = Integer.parseInt(rep_page);
+		} catch (Exception e) {
+			i_rep_page = 1;
+		}
+		
+		int num = 0;
+		num = Integer.parseInt(reply_albumnum);
+		System.out.println("page : " + i_rep_page);
+		// 댓글 페이징
+		int repTotal = albumreplyDAO.getReplyTotal(num);
+		//가져 갈 요소들
+		PageNavigator navi = new PageNavigator(3, 4, i_rep_page, repTotal);
+		
+		
+		return navi;
 	}
 }
