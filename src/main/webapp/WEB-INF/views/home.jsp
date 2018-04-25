@@ -107,7 +107,7 @@ $(document).ready(function () {
 		searchcheck = 2;
 		pagenum = 0;
 		pagecheck = false;
-		getLikeAlbumList();		
+		getTotalAlbumList();		
 	}
 });
 </script>
@@ -141,8 +141,6 @@ $(document).ready(function(){
   right: 0;
   top: 30%;
 }
-
-
 
 .btn {
   border: none;

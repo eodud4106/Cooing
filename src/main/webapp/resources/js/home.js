@@ -23,7 +23,47 @@ function initialize(){
 	$('.category').on('click' , function(){
 		searchCategory($(this).attr('data'));
 	});
+	
+	$('.input').on('ifChanged' , function(){
+		checkRadioPaging(); 
+	 });	
 }
+
+function checkRadioPaging(){
+	   var temp;   
+	   var radioObj = document.all('iCheck');   
+	   var isChecked;
+	   if(radioObj.length == null)
+	   { 
+		   // 라디오버튼이 같은 name 으로 하나밖에 없다면
+		   isChecked = radioObj.checked;
+	   }
+	   else
+	   { // 라디오 버튼이 같은 name 으로 여러개 있다면
+	      for(var i=0; i<radioObj.length; i++)
+	      {
+	         if(radioObj[i].checked)
+	         {
+	            isChecked = true;
+	            break;
+	         }
+	      }
+	   }
+	   searchcheck = 99;
+	   if(isChecked){
+		   temp = radioObj[i].value; 	   
+		   //value값
+		   switch (temp) {
+		      case '1':
+		    	  getTotalAlbumList(); 
+		         break;
+		      case '2':
+		    	  getLikeAlbumList();
+		         break;  
+		   }
+	   }else{
+	   }	 
+	}
 
 function openGUpdate(group_name) {
 	var url = "groupPage?group_name=" + group_name;  
@@ -66,6 +106,8 @@ function getTotalAlbumList() {
 }
 
 function getLikeAlbumList() {
+	
+	alert('??');
 	var check  = false;
 	if(searchcheck != 4){
 		searchcheck = 4;
