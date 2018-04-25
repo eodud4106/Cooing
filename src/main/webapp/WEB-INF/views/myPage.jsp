@@ -166,7 +166,7 @@ $(document).ready(function(){
 			<!-- 로그인되어있을 때 -->
 			<c:if test="${Member ne null}">
 				<p>
-					<img src="<c:url value="/jinsu/img" />" class="img1">${Member.getMember_id()}
+					<img src="<c:url value="/img_member" />" class="img1">${Member.getMember_id()}
 				</p>
 			</c:if>
 			<!-- 로그인 안되어있을 때 -->
@@ -359,12 +359,6 @@ $(document).ready(function(){
 			<input type="button" id="sendBtn" value="전송" />
 			<input type="hidden" id="totalpage" value="${totalpage}">
 		</div>
-	</div>
-	
-	<div id="album_create_modal" class="modal">
-		<span id="createBtn_close" class="close">&times;</span>
-		<iframe id="album_create_frame" src="AlbumNameCreate"
-			allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
 	</div>
 
 	<script src="resources/aside_js/popper.min.js"></script>

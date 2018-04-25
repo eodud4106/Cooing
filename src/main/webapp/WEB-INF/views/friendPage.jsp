@@ -165,7 +165,7 @@ select::-ms-expand { /* for IE 11 */
 
 			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
 
-			<p id="friendid"><img src = "<c:url value="/jinsu/memberimg?strurl=${friend_id.getMember_picture()}" />">${friend_id.getMember_id()}</p>
+			<p id="friendid"><img src="<c:url value="/memberimg?strurl=${friend_id.getMember_picture()}"/>">${friend_id.getMember_id()}</p>
 		<p>
 			<c:if test="${check ne true }">
 				<input type="button" id="friendbt" value="친구추가" data="0">
@@ -194,15 +194,6 @@ select::-ms-expand { /* for IE 11 */
 			</nav>
 
 		</div>
-
-		<form>			
-				 <input	type="button" id="myBtn" value="모달 열기">
-				<div id="myModal" class="modal">
-					<span id="myBtn_close" class="close">&times;</span>
-					<iframe src="albumView" allowTransparency='true' frameborder="0"
-						width=100% height="100%"></iframe>
-				</div>			
-		</form>
 	</aside>
 
 
@@ -339,12 +330,6 @@ select::-ms-expand { /* for IE 11 */
 			<input type="button" id="sendBtn" value="전송" />
 			<input type="hidden" id="totalpage" value="${totalpage}">
 		</div>
-	</div>
-	
-	<div id="album_create_modal" class="modal">
-		<span id="createBtn_close" class="close">&times;</span>
-		<iframe id="album_create_frame" src="/AlbumNameCreate"
-			allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
 	</div>
 
 	<script src="resources/aside_js/popper.min.js"></script>
