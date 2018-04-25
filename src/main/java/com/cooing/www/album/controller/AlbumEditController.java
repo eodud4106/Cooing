@@ -338,7 +338,7 @@ public class AlbumEditController {
 			return "fail";
 	}
 	
-	@RequestMapping(value = "img", method = RequestMethod.GET)
+	@RequestMapping(value = "img_album", method = RequestMethod.GET)
 	public String img(HttpServletResponse response , HttpSession session , String filePath) {
 		logger.info("img__jinsu");
 		

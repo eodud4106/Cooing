@@ -31,7 +31,6 @@ import com.cooing.www.member.vo.Member;
 @Controller
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class); 
-	private static final String strpath = "jinsu";
 	private static String strFilePath = "/FileSave";
 	
 	@Autowired
@@ -40,7 +39,7 @@ public class MemberController {
 	@RequestMapping(value="/member_get" , method = RequestMethod.GET)
 	public String member_get(){		
 		logger.info("member_get__jinsu");
-		return strpath + "/member";
+		return "/member";
 	}
 	@RequestMapping(value="/member_post" , method = RequestMethod.POST)
 	public String member_post(Member member , @RequestParam(value="hobby" , required =false) String[] hobby
@@ -148,7 +147,7 @@ public class MemberController {
 	@RequestMapping(value="/login_get" , method = RequestMethod.GET)
 	public String login_get(){		
 		logger.info("login_get__jinsu");
-		return strpath + "/login";
+		return "/login";
 	}
 	
 	@RequestMapping(value="/logout_get" , method = RequestMethod.GET)
@@ -182,7 +181,7 @@ public class MemberController {
 		}				
 	}
 	
-	@RequestMapping(value = "img", method = RequestMethod.GET)
+	@RequestMapping(value = "img_member", method = RequestMethod.GET)
 	public String img(HttpServletResponse response , HttpSession session ) {
 		logger.info("img__jinsu");
 		Member member = (Member)session.getAttribute("Member");

@@ -6,7 +6,7 @@ function loginmember(toRoot){
 	if(!member_check()) return false;
 	
 	$.ajax({
-		url: toRoot + 'jinsu/login_post',
+		url: toRoot + 'login_post',
 		type:'POST',		
 		data:{
 			member_id: $('#id').val(),

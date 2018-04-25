@@ -44,10 +44,10 @@
 	<beans:bean id="loginInterceptor" class="com.cooing.www.interceptor.LoginInterceptor"></beans:bean>
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/jinsu/groupview_get" />
-			<mvc:mapping path="/jinsu/groupcreate_get" />
-			<mvc:mapping path="/jinsu/groupview_get" />
-			<mvc:mapping path="/jinsu/groupupdate_get" />
+			<mvc:mapping path="/groupview_get" />
+			<mvc:mapping path="/groupcreate_get" />
+			<mvc:mapping path="/groupview_get" />
+			<mvc:mapping path="/groupupdate_get" />
 			<mvc:mapping path="/albumList" />
 			<mvc:mapping path="/albumView" />
 			<mvc:mapping path="/myPage" />

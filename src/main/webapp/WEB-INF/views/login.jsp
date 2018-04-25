@@ -15,20 +15,19 @@
 <link rel="shortcut icon"
 	href="./resources/assets/images/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144"
-	href="../resources/assets/images/ico/apple-icon-144x144.png">
+	href="./resources/assets/images/ico/apple-icon-144x144.png">
 <link rel="apple-touch-icon-precomposed" sizes="114x114"
-	href="../resources/assets/images/ico/apple-icon-114x114.png">
+	href="./resources/assets/images/ico/apple-icon-114x114.png">
 <link rel="apple-touch-icon-precomposed" sizes="72x72"
-	href="../resources/assets/images/ico/apple-icon-72x72.png">
+	href="./resources/assets/images/ico/apple-icon-72x72.png">
 <link rel="apple-touch-icon-precomposed" sizes="57x57"
-	href="../resources/assets/images/ico/apple-icon-57x57.png">
+	href="./resources/assets/images/ico/apple-icon-57x57.png">
 
 <!-- common css -->
-<link rel="stylesheet" href="../resources/assets/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="../resources/assets/css/font-awesome.min.css">
-<link rel="stylesheet" href="../resources/css/login.css">
-<link rel="stylesheet" href="../resources/assets/css/responsive.css">
+<link rel="stylesheet" href="./resources/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="./resources/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="./resources/css/login.css">
+<link rel="stylesheet" href="./resources/assets/css/responsive.css">
 
 <!-- HTML5 shim and Respond.js IE9 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -36,19 +35,19 @@
     <script src="assets/js/respond.js"></script>
     <![endif]-->
 
-<script src="<c:url value="../resources/js_js/jquery-3.2.1.min.js"/>"></script>
-<script src="../resources/js/member.js"></script>
+<script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>"></script>
+<script src="./resources/js/member.js"></script>
 <script>
 	$(document).ready(function() {
 		initialize();
 	});
 	function initialize() {
 		$('#join').on('click', function () {
-			loginmember('../');
+			loginmember('./');
 		});
 		$('#id').keydown(function (evt) {
 			if (evt.which == 13) {
-				loginmember('../');
+				loginmember('./');
 			}
 		});
 		$('#member').on('click' , function(){
