@@ -127,7 +127,7 @@ function searchgroupid(){
 	var text = $('#groupid').val();
 	if(text.length >= 1){
 		$.ajax({
-			url:'jinsu/search_allid',
+			url:'search_allid',
 			type:'POST',		
 			data:{text:text},
 			dataType:'json',

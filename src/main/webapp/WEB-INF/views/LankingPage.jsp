@@ -267,7 +267,7 @@ select::-ms-expand { /* for IE 11 */
 			<!-- 로그인되어있을 때 -->
 			<c:if test="${Member ne null}">
 				<p>
-					<img src="<c:url value="/jinsu/img" />" class="img1">${Member.getMember_id()}
+					<img src="<c:url value="/img_member" />" class="img1">${Member.getMember_id()}
 				</p>
 			</c:if>
 			<!-- 로그인 안되어있을 때 -->
@@ -290,9 +290,9 @@ select::-ms-expand { /* for IE 11 */
 					<li class="category" data="1">음식</li>
 					<li><a href="<c:url value ="/"/>">MainPage</a></li>
 					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
-					<li><a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a></li>
-					<li><a href="<c:url value ="/jinsu/login_get"/>">로그인...</a></li>
-					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
+					<li><a href="<c:url value ="/member_get"/>">회원가입...</a></li>
+					<li><a href="<c:url value ="/login_get"/>">로그인...</a></li>
+					<li><a href="<c:url value ="/logout_get"/>">로그아웃</a></li>
 					
 				</ul>				
 				

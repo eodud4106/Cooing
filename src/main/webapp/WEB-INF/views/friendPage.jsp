@@ -68,28 +68,6 @@ function getIDAlbumList() {
 		}
 	});
 }
-
-//모달
-var modal = document.getElementById("myModal");
-
-var btn = document.getElementById("myBtn");
-
-var span = document.getElementsByClassName("close")[0];
-
-btn.onclick = function() {
-    modal.style.display = "block";
-}
-
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-
 </script>
 
 <style>
@@ -165,7 +143,7 @@ select::-ms-expand { /* for IE 11 */
 
 			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
 
-			<p id="friendid"><img src = "<c:url value="/jinsu/memberimg?strurl=${friend_id.getMember_picture()}" />">${friend_id.getMember_id()}</p>
+			<p id="friendid"><img src="<c:url value="/memberimg?strurl=${friend_id.getMember_picture()}"/>">${friend_id.getMember_id()}</p>
 		<p>
 			<c:if test="${check ne true }">
 				<input type="button" id="friendbt" value="친구추가" data="0">
@@ -188,21 +166,12 @@ select::-ms-expand { /* for IE 11 */
 					<li class="category" data="1">음식</li>
 					<li><a href="<c:url value ="/"/>">MainPage</a></li>
 					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
-					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
+					<li><a href="<c:url value ="/logout_get"/>">로그아웃</a></li>
 					
 				</ul>
 			</nav>
 
 		</div>
-
-		<form>			
-				 <input	type="button" id="myBtn" value="모달 열기">
-				<div id="myModal" class="modal">
-					<span id="myBtn_close" class="close">&times;</span>
-					<iframe src="albumView" allowTransparency='true' frameborder="0"
-						width=100% height="100%"></iframe>
-				</div>			
-		</form>
 	</aside>
 
 
@@ -339,12 +308,6 @@ select::-ms-expand { /* for IE 11 */
 			<input type="button" id="sendBtn" value="전송" />
 			<input type="hidden" id="totalpage" value="${totalpage}">
 		</div>
-	</div>
-	
-	<div id="album_create_modal" class="modal">
-		<span id="createBtn_close" class="close">&times;</span>
-		<iframe id="album_create_frame" src="/AlbumNameCreate"
-			allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
 	</div>
 
 	<script src="resources/aside_js/popper.min.js"></script>

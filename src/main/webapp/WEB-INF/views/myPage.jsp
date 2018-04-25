@@ -166,7 +166,7 @@ $(document).ready(function(){
 			<!-- 로그인되어있을 때 -->
 			<c:if test="${Member ne null}">
 				<p>
-					<img src="<c:url value="/jinsu/img" />" class="img1">${Member.getMember_id()}
+					<img src="<c:url value="/img_member" />" class="img1">${Member.getMember_id()}
 				</p>
 			</c:if>
 			<!-- 로그인 안되어있을 때 -->
@@ -189,7 +189,7 @@ $(document).ready(function(){
 					<li class="category" data="1">음식</li>
 					<li><a href="<c:url value ="/"/>">MainPage</a></li>
 					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
-					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
+					<li><a href="<c:url value ="/logout_get"/>">로그아웃</a></li>
 					<li><a href="javascript:create_personal_album()">앨범 만들기</a></li>
 					
 				</ul>
@@ -313,7 +313,7 @@ $(document).ready(function(){
 					<c:if test="${fn:length(friend) ne 0}">
 						<c:forEach var="arrf" items="${friend }">
 							<div name="friend" id="friend">
-								<p onclick="openChat('1', '${arrf.member_id}')"><img src="./jinsu/memberimg?strurl=${arrf.member_picture}" style="width:40px;height:40px;">${arrf.member_id}</p>
+								<p onclick="openChat('1', '${arrf.member_id}')"><img src="./memberimg?strurl=${arrf.member_picture}" style="width:40px;height:40px;">${arrf.member_id}</p>
 							</div>
 						</c:forEach>
 						<div name="user" id="user">
@@ -359,12 +359,6 @@ $(document).ready(function(){
 			<input type="button" id="sendBtn" value="전송" />
 			<input type="hidden" id="totalpage" value="${totalpage}">
 		</div>
-	</div>
-	
-	<div id="album_create_modal" class="modal">
-		<span id="createBtn_close" class="close">&times;</span>
-		<iframe id="album_create_frame" src="AlbumNameCreate"
-			allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
 	</div>
 
 	<script src="resources/aside_js/popper.min.js"></script>

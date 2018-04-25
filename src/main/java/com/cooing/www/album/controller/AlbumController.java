@@ -1,8 +1,6 @@
 package com.cooing.www.album.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -11,17 +9,14 @@ import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.album.dao.AlbumDAO;
 import com.cooing.www.album.vo.AlbumWriteVO;
-import com.cooing.www.chat.dao.MessageDAO;
-import com.cooing.www.chat.vo.MessageVO;
 import com.cooing.www.common.vo.PageLimit;
-import com.cooing.www.member.vo.Member;
+
 
 @Controller
 @RequestMapping(value = "album")
