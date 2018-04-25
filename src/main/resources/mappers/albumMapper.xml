@@ -133,13 +133,13 @@
 	
 	<select id="LikeAlbumList" parameterType="String" resultType="albumwrite">
 		select a.*
-		from albumlist a , (
+		from albumlist a left outer join (
 			select likeit_albumnum as album_num , count(*) as count
 			from likeit
 			group by likeit_albumnum	
 		) l 
-		where a.album_num = l.album_num 
-        and (a.album_openrange = 1
+		on a.album_num = l.album_num
+		where a.album_openrange = 4
 		or a.album_writer = #{album_writer}
 		or a.album_num in(
 			select specific_albumnum as album_num
@@ -155,19 +155,19 @@
 				from friend
 				where friend_id2 = #{album_writer}
 			)
-		))
+		)
         order by l.count desc
 	</select>
 	
 	<select id="LikeAlbumCount" parameterType="String" resultType="int">
-		select count(l.count)
-		from albumlist a , (
+		select count(*)
+		from albumlist a left outer join (
 			select likeit_albumnum as album_num , count(*) as count
 			from likeit
 			group by likeit_albumnum	
 		) l 
-		where a.album_num = l.album_num 
-        and (a.album_openrange = 1
+		on a.album_num = l.album_num
+		where a.album_openrange = 4
 		or a.album_writer = #{album_writer}
 		or a.album_num in(
 			select specific_albumnum as album_num
@@ -183,14 +183,14 @@
 				from friend
 				where friend_id2 = #{album_writer}
 			)
-		))
+		)
         order by l.count desc
 	</select>
 	
 	<select id="TotalAlbumList" parameterType="String" resultType="albumwrite">
 		select *
 		from albumlist 
-		where album_openrange = 1
+		where album_openrange = 4
 		or album_writer = #{album_writer}
 		or album_num in(
 			select specific_albumnum as album_num
@@ -213,7 +213,7 @@
 	<select id="TotalAlbumCount" parameterType="String" resultType="int">
 		select count(*)
 		from albumlist 
-		where album_openrange = 1
+		where album_openrange = 4
 		or album_writer = #{album_writer}
 		or album_num in(
 			select specific_albumnum as album_num
@@ -304,14 +304,14 @@
 		select *
 	    from albumlist
 	    where album_writer = #{album_writer} 
-	    and (album_openrange = 2 or album_openrange = 1)	    
+	    and (album_openrange = 2 or album_openrange = 4)	    
 	    order by album_num desc
 	</select>
 	
 	<select id="IDAlbumCount" parameterType="String" resultType="int">
 		select count(*) from albumlist 
 		where album_writer = #{album_writer} 
-		and (album_openrange = 2 or album_openrange = 1)
+		and (album_openrange = 2 or album_openrange = 4)
 		order by album_num desc
 	</select>
 	

@@ -113,6 +113,8 @@ public class HomeController {
 		Member member = (Member)session.getAttribute("Member");
 		int totalnum = albumDAO.TotalAlbumCount(member.getMember_id());
 		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		return albumDAO.LikeAlbumList(pl.getStartBoard() , pl.getCountPage() , member.getMember_id());
+		ArrayList<AlbumWriteVO> vo = albumDAO.LikeAlbumList(pl.getStartBoard() , pl.getCountPage() , member.getMember_id());
+		logger.info(vo.toString());
+		return vo;
 	}	
 }

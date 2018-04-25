@@ -95,13 +95,12 @@ $(document).ready(function() {
 	 $('#datepicker').on('change' , function(){
 		 checkRadio();
 	});
-	
 	 $('.input').on('ifChanged' , function(){
 		  checkRadio(); 
 	 });
 });
-
 function likesearch(){
+	var num = 0;
 	//밑 에 부분은 좋아요에 관련된 부분
 	if($('#datepicker').val() != null){
 		$.ajax({
@@ -121,15 +120,17 @@ function likesearch(){
 							count = value;
 						}
 					});
+					num++;
 					array[i] = [count , word , '#f3f3f3'];						
 				});
-				graphcreate(array);
+				graphcreate(array , num);
 			},
 			error:function(e){alert(JSON.stringify(e));}		
 		});
 	}
 }
 function searchsearch(){
+	var num = 0;
 	//밑 에 부분은 검색어에 관련된 부분
 	if($('#datepicker').val() != null){
 		$.ajax({
@@ -149,15 +150,17 @@ function searchsearch(){
 							count = value;
 						}
 					});	
+					num++;
 					array[i] = [count , word , '#f3f3f3'];		
 				});
-				graphcreate(array);				
+				graphcreate(array,num);				
 			},
 			error:function(e){alert(JSON.stringify(e));}		
 		});
 	}
 }
 function categorysearch(){	
+	var num = 0;
 	//밑에 부분은 카테고리 검색에 관한 부분
 	if($('#datepicker').val() != null){
 		var vector = ['여행' , '음식'];
@@ -178,26 +181,31 @@ function categorysearch(){
 							count = value;
 						}
 					});	
-					
+					num++;
 					array[i] = [count ,vector[kind], '#f3f3f3'];		
 				});
-				graphcreate(array);
+				graphcreate(array , num);
 			},
 			error:function(e){alert(JSON.stringify(e));}		
 		});
 	}
 }
 
-function graphcreate(array){
+function graphcreate(array , num){
 	$('#graphdiv').html('');
+	var width = 100 * num;
+	if(width > 1000){
+		width = 1000
+	}else if(width < 150){
+		width = 150;
+	}
 	$('#graphdiv').jqBarGraph({ 
-		data: array,		
+		data: array,
 		animate: false,
-		width:900,
+		width:width,
 		height:550,
 		sort:'desc',
-		barSpace : 20,
-		legend:true
+		barSpace : 10
 	});
 }
 </script>
@@ -345,7 +353,7 @@ select::-ms-expand { /* for IE 11 */
 	
 	
 	
-	<div id="graphdiv" style="width:100%;height:100%"></div>
+	<div id="graphdiv" style="width:100%;height:100%;margin:0 auto;"></div>
 	
 
 	<div class="container-fluid d-md-none">

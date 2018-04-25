@@ -735,7 +735,7 @@ h1, h2, h3, h4, h5,
   top: 0;
   float: left;
   min-height: 500px;
-  overflow-y: scroll;
+  /*  overflow-y: scroll;  */
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
   transition: .3s all ease;
@@ -1315,7 +1315,7 @@ textarea {
 
 .probootstrap-animate {
   opacity: 0;
-  visibility: hidden; }
+  /* visibility: hidden; */ }
 
 #probootstrap-loader {
   position: fixed;

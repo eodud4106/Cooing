@@ -45,6 +45,27 @@
 
 <link rel="stylesheet" href="resources/skin_radio/green.css">
 
+<!--앨범 생성하기 =======================================================================================-->
+	<link rel="icon" type="image/png" href="resources/album_create/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/album_create/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/album_create/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/album_create/vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/album_create/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/album_create/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/album_create/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/album_create/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/album_create/css/util.css">
+	<link rel="stylesheet" type="text/css" href="resources/album_create/css/main.css">
+<!--===============================================================================================-->
+
 <style type="text/css">
 
 .main {
@@ -165,7 +186,7 @@ html, body, main, .container-fluid {
 
 	function checkRadioButton(iCheck){   
 	   
-	   var temp;
+	   var temp  ;
 	   
 	   var radioObj = document.all(iCheck);
 	   
@@ -313,15 +334,28 @@ html, body, main, .container-fluid {
 
     	<section id="content1"> 
     	<!-- 페이지 저장 -->		
-			<div id="entry">
-				<h5 style="color: black;">앨범명</h5><input type="text" id="album_name" class="input_album_info" name="album_name" value="${album.album_name }">
-				<h5 style="color: black; ">앨범 내용</h5>
-				<textarea type="text" style = "height: 100px;"id="album_contents" class="input_album_info input_album_info_contents" 
-					name="album_contents" value="${album.album_contents }" placeholder="앨범에 대한 소개를 입력해보세요!">${album.album_contents}</textarea>
-				<h5 style="color: black;">앨범 카테고리</h5>
-				<select name="album_category" id="album_category" class="sel_album_info">		
-					<option value="0">여행</option>
-				    <option value="1">스포츠/래저</option>
+			<form class="contact100-form validate-form" id="entry">
+				<span class="contact100-form-title">
+					ALBUM
+				</span>
+
+				<div class="wrap-input100 validate-input" data-validate="Name is required">
+					<span class="label-input100">Album Name</span>
+					<input class="input100" type="text" name="album_name" id="album_name" class="input_album_info" value="${album.album_name }" >
+					<span class="focus-input100"></span>
+				</div>
+				
+				<div class="wrap-input100 validate-input" data-validate = "Message is required">
+					<span class="label-input100">Content</span>
+					<textarea class="input100" name="album_contents" id="album_contents" class="input_album_info input_album_info_contents" value="${album.album_contents }"placeholder="your message here...">${album.album_contents}</textarea>
+					<span class="focus-input100"></span>
+				</div>
+				
+				<div class="wrap-input100 input100-select">
+					<span class="label-input100">Category</span>
+					<div>
+					<select id="album_category"  class="selection-2" name="album_category">
+					<option value="1">스포츠/래저</option>
 				    <option value="2">동물</option>
 				    <option value="3">음악</option>
 				    <option value="4">요리/음식</option>
@@ -341,10 +375,16 @@ html, body, main, .container-fluid {
 				    <option value="18">낚시</option>
 				    <option value="19">건강</option>
 				    <option value="20" selected="selected">기타</option>
-				</select>
-				<h5 style="color: black;">앨범 공개범위</h5>
-				<select name="album_openrange" id="album_openrange" class="sel_album_info">		
-				    <c:if test="${album.isPersonal == 1 }">
+					</select>
+					</div>
+					<span class="focus-input100"></span>
+				</div>				
+
+				<div class="wrap-input100 input100-select">
+					<span class="label-input100">공개범위</span>
+					<div>
+						<select class="selection-2" name="album_openrange" id="album_openrange" >
+							<c:if test="${album.isPersonal == 1 }">
 					    <option value="1" selected="selected">나만 보기</option>
 					    <option value="2">친구 공개</option>
 				    </c:if>
@@ -352,20 +392,26 @@ html, body, main, .container-fluid {
 				    	<option value="3">그룹 공개</option>
 				    </c:if>
 				    <option value="4">전체 공개</option>
-				</select>
+						</select>
+					</div>
+					<span class="focus-input100"></span>
+				</div>
 				
-				<input type="button" class="bt_album_info" value="앨범정보저장" onclick="modifiy_AlbumInfomation()">
-				<br><br><br>
-				<!-- <input type="text" id="hashtagtx" placeholder="해쉬태그"><input type="button" id="hashtagbt" value="추가">--> 
-				<div id="hashtagvw"></div>
-				<br><br>
-				<input type="button" id="hashtagbt" value="추가">
-				<input type="hidden" name="album_num" id="hidden_album_num" value="${album.album_num}">
-				
-				<br><br>
-				<!-- <input type="hidden" id="hashtag" name="hashtag"> -->
-				<!-- <input type="submit" onsubmit="formCheck()"> -->
-			</div>
+
+				<div class="container-contact100-form-btn">
+					<div class="wrap-contact100-form-btn">
+						<div class="contact100-form-bgbtn"></div>
+						<button class="contact100-form-btn" onclick="modifiy_AlbumInfomation()" class="bt_album_info">
+							<span>
+								Submit
+								<i class="fa fa-long-arrow-right m-l-7"  aria-hidden="true"></i>
+							</span>
+						</button>
+					</div>
+				</div>
+			</form>		
+
+	<div id="dropDownSelect1"></div>    
 		    
        
     	</section>
@@ -439,18 +485,48 @@ html, body, main, .container-fluid {
 			</div>
 			<!-- END row -->
 			<!-- 하단 바 영역 -->
-				<div class="under_bar " align="right" style = "margin-right: 100px;">
-					<button onclick="location.href='albumView?album_num=${album.album_num}'">편집 끝내기(디자인 수정해야 함!)</button>
+				<div class="under_bar " align="right" style = "margin-right: 100px;">					
 					<div style= "z-index:99; float:right; padding-left: 10px;"onclick=""><i style = "width: 30px; height: 30px; margin: 10px;"class="fas fa-forward"></i></div>					
 					<div style= "z-index:99; float:right; padding-left: 10px;" onclick="addPage()"><i style = "width: 30px; height: 30px; margin: 10px;"class="far fa-plus-square"></i></div>
 					<div style= "z-index:99; float:right; padding-left: 10px;" onclick="removePage()"><i style = "width: 30px; height: 30px;margin: 10px;"class="far fa-trash-alt"></i></div>
 					<div style= "z-index:99; float:right; padding-left: 10px;" onclick="savePage('all')"><i style = "width: 30px; height: 30px;margin: 10px;"class="fas fa-check"></i></div>					
 					<div style= "z-index:99; float:right; padding-left: 10px; "onclick=""><i style = "width: 30px; height: 30px;margin: 10px;" class="fas fa-backward"></i></div>		
+					<div style= "z-index:99; float:right; padding-left: 10px;"onclick="location.href='albumView?album_num=${album.album_num}'"><i style = "width: 30px; height: 30px;margin: 10px;"class="fas fa-sign-out-alt"></i></div>
 				</div>
 	
 		</div>
 
 	</main>
+	<script src="resources/album_create/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="resources/album_create/vendor/bootstrap/js/popper.js"></script>
+	<script src="resources/album_create/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="resources/album_create/vendor/select2/select2.min.js"></script>
+	<script>
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="resources/album_create/vendor/daterangepicker/moment.min.js"></script>
+	<script src="resources/album_create/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="resources/album_create/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="resources/album_create/js/main.js"></script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-23581568-13');
+</script>
+	
 
 </body>
 </html>
