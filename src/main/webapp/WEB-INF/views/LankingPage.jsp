@@ -9,28 +9,30 @@
 <title>LankingPage</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans">
-
-<link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
-<link rel="stylesheet" href="resources/aside_css/open-iconic-bootstrap.min.css">
-
-<link rel="stylesheet" href="resources/aside_css/owl.carousel.min.css">
-<link rel="stylesheet" href="resources/aside_css/owl.theme.default.min.css">
-<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
-
-<link rel="stylesheet" href="resources/aside_css/icomoon.css">
-<link rel="stylesheet" href="resources/aside_css/animate.css">
-<link rel="stylesheet" href="resources/aside_css/style.css">
-
+<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="resources/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="resources/css/graph.css">
+<link rel="stylesheet" href="resources/css/green.css">
+<link rel="stylesheet" href="resources/css/icomoon.css">
+<link rel="stylesheet" href="resources/css/animate.css">
+<link rel="stylesheet" href="resources/css/style.css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<script src="resources/js/jquery-3.3.1.min.js"></script>
+<script src="resources/js/jquery-ui.min.js"></script>
+<script src="resources/js/popper.min.js"></script>
+<script src="resources/js/bootstrap.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 <script type="text/javascript" src="http://www.workshop.rs/jqbargraph/jqBarGraph.js"></script>
-<link rel="stylesheet" href="resources/graph_css/graph.css">
-
-<link rel="stylesheet" href="resources/skin_radio/green.css">
-<script src="resources/skin_radio/icheck.js"></script>
+<script src="resources/js/icheck.js"></script>
+<script src="resources/js/owl.carousel.min.js"></script>
+<script src="resources/js/jquery.waypoints.min.js"></script>
+<script src="resources/js/imagesloaded.pkgd.min.js"></script>
+<script src="resources/js/main.js"></script>
 
 <script>
 $( function() {
@@ -434,19 +436,6 @@ select::-ms-expand { /* for IE 11 */
 			<input type="button" id="sendBtn" value="전송" />
 		</div>
 	</div>
-	<!-- 
-	<div id="album_create_modal" class="modal">
-		<span id="createBtn_close" class="close">&times;</span>
-		<iframe id="album_create_frame" src="/AlbumNameCreate"
-			allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
-	</div>
- -->
-	<script src="resources/aside_js/popper.min.js"></script>
-	<script src="resources/aside_js/bootstrap.min.js"></script>
-	<script src="resources/aside_js/owl.carousel.min.js"></script>
-	<script src="resources/aside_js/jquery.waypoints.min.js"></script>
-	<script src="resources/aside_js/imagesloaded.pkgd.min.js"></script>
 
-	<script src="resources/aside_js/main.js"></script>
 </body>
 </html>
