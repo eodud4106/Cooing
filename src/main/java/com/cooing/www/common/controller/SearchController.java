@@ -146,7 +146,7 @@ public class SearchController {
 		logger.info("information__jinsu");
 		return "information";
 	}
-	
+	//다시 만들어야 됨 
 	@RequestMapping(value = "/searchHashTag", method = RequestMethod.GET)
 	public String searchHashTag(Model model, String hashTag) {
 		logger.info("searchHashTag__jinsu");

@@ -167,6 +167,29 @@ html, body, main, .container-fluid {
 </style>
 
 <script>
+
+
+	function hashtagCheck(){
+		//일단 ' '로 나누고 맨 앞이 #인 문자를 찾아서 a태그를 앞뒤로 붙여서 더해서 다시 넣어준다
+		//SearchController에 searchHashTag를 좀 고쳐야 된다.
+		//일단 정보 창이 뜨면 해쉬태그를 달 예정 
+		var strhashtag = $('#album_contents').val();
+		
+		var splitedArray = strhashtag.split(' '); 
+		var filter = /#[^#\s,;]+/gm;
+		var linkedContent = '';
+		for(var word in splitedArray)
+		{
+		  word = splitedArray[word];
+			// # 문자를 찾는다.
+		   if(word.match(filter) && word.charAt(0) == '#'){
+			   var hashword = word.substring(1,word.length);
+			   word = '<a href="../searchHashTag?hashTag='+ hashword+'">' + word + '</a>'; 
+		   }
+		   linkedContent += word+' ';
+		}
+		$('#hashtagvw').html(linkedContent);
+	}
 	
 	var selectcheck = true;
 
