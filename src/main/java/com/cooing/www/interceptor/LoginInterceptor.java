@@ -21,7 +21,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		Member member = (Member)session.getAttribute("Member");
 		if(member == null){
-			response.sendRedirect(request.getContextPath() + "/jinsu/login_get");
+			response.sendRedirect(request.getContextPath() + "/login_get");
 			return false;
 		}
 				
