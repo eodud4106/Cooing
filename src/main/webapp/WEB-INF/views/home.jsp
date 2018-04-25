@@ -228,10 +228,11 @@ $(document).ready(function(){
 }
 .friendList{
 	height: 250px;		
-	/* overflow-y:hidden; */
+	overflow-y : scroll;
 }
 .groupList{
 	height: 250px;	
+	overflow-y : scroll;
 	/* overflow-y:hidden; */
 }
 /* 포인터로 마우스 모양 바꿔주는곳 */
@@ -345,12 +346,10 @@ $(document).ready(function(){
 		<!-- 정렬순서 -->		
 		<form style = "float:right; padding-left : 10px;">
 			<input type="radio" name="iCheck" class = "input"value="1" checked>최신순
-			<input type="radio" name="iCheck" class = "input"value="2" >인기순			
-			<div style= "z-index:99; float:right; " onClick="checkRadioButton('iCheck')"><i class="far fa-check-circle"></i></div>
+			<input type="radio" name="iCheck" class = "input"value="2" >인기순				
 		</form>
 	</div>
-		<br>	
-	
+		<br>
 	
 	
 	
