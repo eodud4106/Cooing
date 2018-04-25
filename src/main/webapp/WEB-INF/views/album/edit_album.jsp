@@ -35,10 +35,6 @@
 <link rel="stylesheet" href="resources/css/albumEdit.css">
 <link rel="stylesheet" href="resources/css/jquery-ui.min.css">
 
-<!-- 기타 css -->
-<link rel="stylesheet" href="resources/album_css/album_edit_basic.css">
-<link rel="stylesheet" href="resources/album_css/album_edit_drag_and_drop.css">
-
 <link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
 <link rel="stylesheet" href="resources/aside_css/open-iconic-bootstrap.min.css">
 <link rel="stylesheet" href="resources/aside_css/owl.carousel.min.css">

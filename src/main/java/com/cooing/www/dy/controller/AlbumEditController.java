@@ -48,11 +48,12 @@ public class AlbumEditController {
 	@Autowired
 	SearchDAO searchDAO;
 
-	private static String strFilePath = "/FileSave/upload/";						// windows
-	//private static String strFilePath = "/Users/insect/hindoong_upload/";			// mac
-	private static String strThumbnailPath = "/FileSave/thumbnail/";				// windows
-	//private static String strThumbnailPath = "/Users/insect/hindoong_upload/";	// mac
-	private static String strTemp_PicturePath = "/FileSave/temp_picture/"; 			//사진 자를 때 필요한 경로
+	//private final String strFilePath = "/FileSave/upload/";						// windows
+	private static String strFilePath = "/Users/insect/hindoong_upload/";			// mac
+	//private final String strThumbnailPath = "/FileSave/thumbnail/";				// windows
+	private static String strThumbnailPath = "/Users/insect/hindoong_upload/";	// mac
+	//private final String strTemp_PicturePath = "/FileSave/temp_picture/"; 			//사진 자를 때 필요한 경로
+	private static String strTemp_PicturePath = "/Users/insect/hindoong_upload/";	// mac
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
 	

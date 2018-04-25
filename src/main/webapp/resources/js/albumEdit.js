@@ -1375,7 +1375,7 @@ function createTooltip($elem, text) {
 
 
 /**
- *  [start] 현재 페이지 저장
+ *  [start] 페이지 저장(페이지 div의 css:backgroud-image 속성도 저장한다.)
  **/
 function savePage(mode) {
 
@@ -1405,9 +1405,6 @@ function savePage(mode) {
         
     }
 
-    console.log('세이브 시작할 페이지 -> ' + start)
-    console.log('세이브 할 페이지 수 -> ' + count)
-
     var arr_page = [];
 
     for(var i = start; i < start+count; i++) {
@@ -1423,7 +1420,8 @@ function savePage(mode) {
 
         arr_page[i-start] = {
             "page_num": i,
-            "page_html": $page_clone.html()
+            "page_html": $page_clone.html(),
+            "page_attr": $page_clone.css('backgroud-image')
         }
         console.log('변환한 것 ' + i + ' : ' + JSON.stringify(arr_page[i-start]));
 
@@ -1448,7 +1446,7 @@ function savePage(mode) {
     });
 
 }
-// [end] 현재 페이지 저장
+// [end] 페이지 저장
 
 /**
  *  페이지 추가
