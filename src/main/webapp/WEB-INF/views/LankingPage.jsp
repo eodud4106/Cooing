@@ -106,6 +106,7 @@ function likesearch(){
 						},
 						error:function(e){alert(JSON.stringify(e));}		
 					});	
+					alert(word2);
 					array[i] = [count , word2 , '#f3f3f3'];
 				});
 				graphcreate(array);

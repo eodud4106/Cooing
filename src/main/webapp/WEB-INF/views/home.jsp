@@ -28,7 +28,7 @@
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="<c:url value="/resources/js/home.js"/>"></script>
-<script src="/resources/js/search.js"></script>
+<script src="./resources/js/search.js"></script>
 <script src="resources/js/chat.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 <link rel="stylesheet" href="resources/skin_radio/green.css">
