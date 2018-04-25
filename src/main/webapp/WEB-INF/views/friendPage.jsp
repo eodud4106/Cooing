@@ -188,7 +188,7 @@ select::-ms-expand { /* for IE 11 */
 					<li class="category" data="1">음식</li>
 					<li><a href="<c:url value ="/"/>">MainPage</a></li>
 					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
-					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
+					<li><a href="<c:url value ="/logout_get"/>">로그아웃</a></li>
 					
 				</ul>
 			</nav>

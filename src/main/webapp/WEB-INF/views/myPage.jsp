@@ -189,7 +189,7 @@ $(document).ready(function(){
 					<li class="category" data="1">음식</li>
 					<li><a href="<c:url value ="/"/>">MainPage</a></li>
 					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
-					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
+					<li><a href="<c:url value ="/logout_get"/>">로그아웃</a></li>
 					<li><a href="javascript:create_personal_album()">앨범 만들기</a></li>
 					
 				</ul>
@@ -313,7 +313,7 @@ $(document).ready(function(){
 					<c:if test="${fn:length(friend) ne 0}">
 						<c:forEach var="arrf" items="${friend }">
 							<div name="friend" id="friend">
-								<p onclick="openChat('1', '${arrf.member_id}')"><img src="./jinsu/memberimg?strurl=${arrf.member_picture}" style="width:40px;height:40px;">${arrf.member_id}</p>
+								<p onclick="openChat('1', '${arrf.member_id}')"><img src="./memberimg?strurl=${arrf.member_picture}" style="width:40px;height:40px;">${arrf.member_id}</p>
 							</div>
 						</c:forEach>
 						<div name="user" id="user">
