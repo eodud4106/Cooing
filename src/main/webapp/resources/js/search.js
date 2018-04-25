@@ -59,7 +59,7 @@ function searchword() {
 	var text = $('#friendsearch').val();
 	if (text.length >= 2) {
 		$.ajax({
-			url : 'jinsu/search_friend_id',
+			url : 'search_friend_id',
 			type : 'POST',
 			data : {
 				text : text
@@ -69,7 +69,7 @@ function searchword() {
 				$('#friend').html('');
 				var str = '';
 				$.each(array, function(i, data) {
-					str += '<p class="friendclick" id="'+data.member_id+'" onClick="popupvalue(\'' + data.member_id + '\')"><img src="./jinsu/memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
+					str += '<p class="friendclick" id="'+data.member_id+'" onClick="popupvalue(\'' + data.member_id + '\')"><img src="./memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
 				});
 				$('#friend').html(str);
 			},
@@ -78,7 +78,7 @@ function searchword() {
 			}
 		});
 		$.ajax({
-			url : 'jinsu/search_user_id',
+			url : 'search_user_id',
 			type : 'POST',
 			data : {
 				text : text
@@ -87,7 +87,7 @@ function searchword() {
 			success : function(array) {
 				var str = '';
 				$.each(array, function(i, data) {
-					str += '<p class="friendclick" id="'+data.member_id+'" onClick="popupvalue(\'' + data.member_id + '\')"><img src="./jinsu/memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
+					str += '<p class="friendclick" id="'+data.member_id+'" onClick="popupvalue(\'' + data.member_id + '\')"><img src="./memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
 				});
 				$('#user').html(str);
 			},
@@ -97,13 +97,13 @@ function searchword() {
 		});
 	} else {
 		$.ajax({
-			url : 'jinsu/select_friend',
+			url : 'select_friend',
 			type : 'POST',
 			dataType : 'json',
 			success : function(array) {
 				var str = '';
 				$.each(array, function(i, data) {
-					str += '<p class="friendclick" id="'+data.member_id+'" onClick="popupvalue(\'' + data.member_id + '\')"><img src="./jinsu/memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
+					str += '<p class="friendclick" id="'+data.member_id+'" onClick="popupvalue(\'' + data.member_id + '\')"><img src="./memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
 				});
 				$('#friend').html(str);
 				$('#user').html('');
