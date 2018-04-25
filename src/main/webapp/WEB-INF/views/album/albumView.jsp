@@ -156,6 +156,14 @@ html, body, main, .container-fluid {
 	top: 21px;
 	color:#D5D5D5;
 }
+.delete-button{
+  background: red;
+  border: none;
+  border-radius: 80px;
+  color: #FFF;
+  font-size: 15px;
+  cursor:pointer;
+}
 </style>
 
 <script>
@@ -370,8 +378,9 @@ html, body, main, .container-fluid {
 					str += ' ' + vo.reply_memberid;
 					/* str += ' ' + vo.reply_date; */
 					if (vo.reply_memberid == '${Member.member_id}') {
-					str += ' ' + "<input type='button' value='삭제' onclick='deletereply("+vo.reply_num+")'>";
+						str += ' ' + "<button class='delete-button' onclick='deletereply("+vo.reply_num+")'>x</button>";
 					}
+					
 					str += '</td>';
 					str += '</tr>';
 				});
