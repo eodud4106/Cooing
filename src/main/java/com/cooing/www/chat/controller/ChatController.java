@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.chat.dao.MessageDAO;
 import com.cooing.www.chat.vo.MessageVO;
-import com.cooing.www.jinsu.object.Member;
+import com.cooing.www.member.vo.Member;
 
 @Controller
 @RequestMapping(value = "chat")

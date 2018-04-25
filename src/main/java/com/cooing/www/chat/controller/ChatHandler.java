@@ -20,8 +20,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.cooing.www.chat.dao.MessageDAO;
 import com.cooing.www.chat.vo.MessageVO;
-import com.cooing.www.jinsu.dao.RelationDAO;
-import com.cooing.www.jinsu.object.PartyMember;
+import com.cooing.www.member.dao.RelationDAO;
+import com.cooing.www.member.vo.PartyMember;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;

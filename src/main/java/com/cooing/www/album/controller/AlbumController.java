@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cooing.www.album.dao.AlbumDAO;
+import com.cooing.www.album.vo.AlbumWriteVO;
 import com.cooing.www.chat.dao.MessageDAO;
 import com.cooing.www.chat.vo.MessageVO;
-import com.cooing.www.dy.dao.AlbumDAO;
-import com.cooing.www.dy.vo.AlbumWriteVO;
-import com.cooing.www.jinsu.object.Member;
-import com.cooing.www.jinsu.object.PageLimit;
+import com.cooing.www.common.vo.PageLimit;
+import com.cooing.www.member.vo.Member;
 
 @Controller
 @RequestMapping(value = "album")

@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cooing.www.joon.dao.AlbumLikesMapper">
+<mapper namespace="com.cooing.www.album.dao.AlbumLikesMapper">
 <!-- 앨범 좋아요 -->
 <insert id="addLikes" parameterType="albumlikes">
 	insert into likeit (

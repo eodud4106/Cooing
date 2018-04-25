@@ -5,17 +5,17 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.cooing.www.chat.vo.MessageVO" alias="message"/>
-		<typeAlias type="com.cooing.www.jinsu.object.Member" alias="member"/>
-		<typeAlias type="com.cooing.www.jinsu.object.Category" alias="category"/>
-		<typeAlias type="com.cooing.www.jinsu.object.Party" alias="party"/>
-		<typeAlias type="com.cooing.www.jinsu.object.PartyMember" alias="partymember"/>
-		<typeAlias type="com.cooing.www.dy.vo.AlbumWriteVO" alias="albumwrite"/>
-		<typeAlias type="com.cooing.www.dy.vo.PageHtmlVO" alias="page"/>
-		<typeAlias type="com.cooing.www.jinsu.object.HashTag" alias="tag"/>
-		<typeAlias type="com.cooing.www.jinsu.object.Search" alias="search"/>
-		<typeAlias type="com.cooing.www.jinsu.object.CategoryPop" alias="categorypop"/>
-		<typeAlias type="com.cooing.www.joon.vo.AlbumLikesVO" alias="albumlikes"/>
-		<typeAlias type="com.cooing.www.joon.vo.AlbumReplyVO" alias="albumreply"/>
+		<typeAlias type="com.cooing.www.member.vo.Member" alias="member"/>
+		<typeAlias type="com.cooing.www.album.vo.Category" alias="category"/>
+		<typeAlias type="com.cooing.www.member.vo.Party" alias="party"/>
+		<typeAlias type="com.cooing.www.member.vo.PartyMember" alias="partymember"/>
+		<typeAlias type="com.cooing.www.album.vo.AlbumWriteVO" alias="albumwrite"/>
+		<typeAlias type="com.cooing.www.album.vo.PageHtmlVO" alias="page"/>
+		<typeAlias type="com.cooing.www.album.vo.HashTag" alias="tag"/>
+		<typeAlias type="com.cooing.www.common.vo.Search" alias="search"/>
+		<typeAlias type="com.cooing.www.album.vo.CategoryPop" alias="categorypop"/>
+		<typeAlias type="com.cooing.www.album.vo.AlbumLikesVO" alias="albumlikes"/>
+		<typeAlias type="com.cooing.www.album.vo.AlbumReplyVO" alias="albumreply"/>
 	</typeAliases>
  	<mappers>
 		<mapper resource="mappers/messageMapper.xml"/>

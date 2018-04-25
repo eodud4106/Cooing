@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cooing.www.dy.dao.AlbumMapper">
+<mapper namespace="com.cooing.www.album.dao.AlbumMapper">
 	<insert id="personal_createAlbum" parameterType="albumwrite">
 		insert into ALBUMLIST (
 			ALBUM_NUM,
