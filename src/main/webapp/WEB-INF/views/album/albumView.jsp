@@ -330,7 +330,6 @@ html, body, main, .container-fluid {
 			data: {
 				"reply_albumnum": albumnum,
 				"reply_contents": contents 
-				
 			},
 			dataType: 'text',
 			success: function(a){
@@ -582,7 +581,6 @@ html, body, main, .container-fluid {
 					</form>
 					
 					<div id="resultReply"><!-- 댓글리스트 출력 -->
-					
 					</div>
 					
 					<div id="reply_page"> <!-- 댓글 페이지 -->

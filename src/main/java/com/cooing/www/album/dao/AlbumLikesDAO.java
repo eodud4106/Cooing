@@ -12,12 +12,12 @@ import com.cooing.www.album.vo.AlbumLikesVO;
 public class AlbumLikesDAO {
 	@Autowired
 	SqlSession sqlSession;
-
+	// 좋아요
 	public void addLikes(AlbumLikesVO vo) {
 		AlbumLikesMapper albumlikesmapper = sqlSession.getMapper(AlbumLikesMapper.class);
 		albumlikesmapper.addLikes(vo);
 	}
-
+	// 좋아요 취소
 	public void deleteLikes(AlbumLikesVO vo) {
 		AlbumLikesMapper albumlikesmapper = sqlSession.getMapper(AlbumLikesMapper.class);
 		albumlikesmapper.deleteLikes(vo);
