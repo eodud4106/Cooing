@@ -143,7 +143,7 @@ html, body, main, .container-fluid {
 	font-size: 20px;
 }
 .page {
-	background-color: black;
+	background-color: #A4A4A4;
 	
 }
 .outer {
@@ -237,14 +237,14 @@ html, body, main, .container-fluid {
 	}
 	
 	function page1ImageSave(){
-		var album_num = $('#hidden_album_num').val();
+		
 		html2canvas($('#page1'), { 
 	          onrendered: function(canvas) {
 	              if (typeof FlashCanvas != "undefined") { 
 	                  FlashCanvas.initElement(canvas); 
 	              }
 	              //반전이라는데 확인은 못해봄 작동을 안해서리...
-	              canvas.scale(1,-1);
+	              //canvas.scale(1,-1);
 	              $('#imgSrc').val(canvas.toDataURL('image/png'));
 	              $.ajax({ 
 	            url : 'page1ImageSave', 
@@ -256,7 +256,10 @@ html, body, main, .container-fluid {
 	                $.ajax({ 
 	                  url : 'thumbnailPathSave', 
 	                  type : 'POST', 
-	                  data :{thumbnail:a , albumnum:album_num }, 
+	                  data :{
+						thumbnail:a,
+						albumnum:'${album.album_num}'
+	               	  }, 
 	                  dataType : 'text', 
 	                  success : function(b) {
 	                  }, 
@@ -454,12 +457,12 @@ html, body, main, .container-fluid {
 		<div class="container-fluid">
 			<div class="view_wrapper">
 	
-				<div class="col-xl-8 col-lg-12 top_bar">
-					<!-- 텍스트, 이미지 삽입 버튼 -->
+				<!-- <div class="col-xl-8 col-lg-12 top_bar">
+					텍스트, 이미지 삽입 버튼
 					<div class="tool text"><i class="fas fa-align-justify"></i></div>
                 	<div class="tool image"><i class="far fa-image"></i></div>
                 	
-					<!-- 배경변경버튼 -->
+					배경변경버튼
 					<form name="form" style = "float:right;">
 						<input type="radio" name="iCheck" class = "input"value="1" >Sakura
 						<input type="radio" name="iCheck" class = "input"value="2" >Pink
@@ -467,7 +470,7 @@ html, body, main, .container-fluid {
 						<div style= "z-index:99; float:right; " onClick="checkRadioButton('iCheck')"><i class="far fa-check-circle"></i></div>
 					</form>
 	
-				</div>
+				</div> -->
 				
 				<!-- 앨범 영역 -->
 				<div class="album_wrapper" id="album_wrapper">
@@ -485,7 +488,12 @@ html, body, main, .container-fluid {
 			</div>
 			<!-- END row -->
 			<!-- 하단 바 영역 -->
-				<div class="under_bar " align="right" style = "margin-right: 100px;">					
+				<div class="under_bar " align="right">
+					<!-- 텍스트, 이미지 삽입 버튼 -->
+					<div class="tool text"><i class="fas fa-align-justify"></i></div>
+                	<div class="tool image"><i class="far fa-image"></i></div>
+                	<!-- 각종 버튼 -->
+					<div style= "z-index:99; float:right; padding-left: 10px;"onclick=""><i style = "width: 30px; height: 30px; margin: 10px;" class="fas fa-paint-brush"></i></div>
 					<div style= "z-index:99; float:right; padding-left: 10px;"onclick=""><i style = "width: 30px; height: 30px; margin: 10px;"class="fas fa-forward"></i></div>					
 					<div style= "z-index:99; float:right; padding-left: 10px;" onclick="addPage()"><i style = "width: 30px; height: 30px; margin: 10px;"class="far fa-plus-square"></i></div>
 					<div style= "z-index:99; float:right; padding-left: 10px;" onclick="removePage()"><i style = "width: 30px; height: 30px;margin: 10px;"class="far fa-trash-alt"></i></div>

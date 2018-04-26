@@ -304,7 +304,11 @@ function renderbox(event, ui, page) {
     // node의 타입별 textfield 기본 폰트 크기 지정
     if(ui.helper.hasClass("text")) {
         // 텍스트 박스인 경우
-        $div_box.addClass('textbox').text('입력하세요.....!');
+        $div_box.addClass('textbox').text('입력하세요.....!').css({
+            "position": "absolute",
+            "top": event.pageY - curr_page_top - 30,
+            "left": event.pageX - curr_page_left - 50
+        });
 
     } else if(ui.helper.hasClass("image")) {
         // 이미지인 경우
@@ -329,15 +333,15 @@ function renderbox(event, ui, page) {
             "font-size": "xx-large",
             "text-align": "center",
             "line-height": "8"
-        }).append($i_plus).append($image);
+        }).append($i_plus).append($image).css({
+            "position": "absolute",
+            "top": event.pageY - curr_page_top - 130,
+            "left": event.pageX - curr_page_left - 150
+        });
 
     }
 
-    $div_box.css({
-        "position": "absolute",
-        "top": event.pageY - curr_page_top - 30,
-        "left": event.pageX - curr_page_left - 50
-    }).appendTo($('#page' + page + ''));
+    $div_box.appendTo($('#page' + page + ''));
 
     apply_event_to_box($div_box, curr_page_top, curr_page_left);
 
@@ -364,7 +368,7 @@ function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
         stop: function(event, ui) {
             $('.div_whole_editor').css({
                 "display": "block",
-                "top": $('.onSelect').position().top + curr_page_top - 40,
+                "top": $('.onSelect').position().top + curr_page_top - 50,
                 "left": $('.onSelect').position().left + curr_page_left
             });
         },
@@ -708,7 +712,7 @@ function createWholeEditor($div_box) {
     var $div_whole_editor = $('<div />');
     $div_whole_editor.addClass('edit').addClass('div_whole_editor').css({
         "position": "absolute",
-        "top": $('.onSelect').position().top + curr_page_top - 40,
+        "top": $('.onSelect').position().top + curr_page_top - 50,
         "left": $('.onSelect').position().left + curr_page_left
     }).prop("contenteditable", false);
 

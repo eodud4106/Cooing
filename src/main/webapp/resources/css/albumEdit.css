@@ -189,6 +189,16 @@ svg, path {
     left: 350px;
 }
 
+.under_bar {
+	height: 60px;
+	width: 800px;
+	margin: 0 auto;
+}
+
+.under_bar_left {
+	float: left;
+}
+
 
 
 
