@@ -34,7 +34,7 @@
 <script src="resources/js/jquery.waypoints.min.js"></script>
 <script src="resources/js/imagesloaded.pkgd.min.js"></script>
 <script src="resources/js/main.js"></script>
-
+<!-- 폰트 -->
 <link href="https://fonts.googleapis.com/css?family=Gaegu" rel="stylesheet">
 
 <script>
