@@ -276,7 +276,7 @@ $(document).ready(function(){
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
-			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
+			<a href="/www" class="mb-2 d-block probootstrap-logo" style = "font-size: 30px;">COOING</a>
 
 			<!-- 로그인되어있을 때 -->
 			<c:if test="${Member ne null}">
