@@ -167,7 +167,8 @@ html, body, main, .container-fluid {
 </style>
 
 <script>
-
+	
+	var p; //페이징 용 변수
 
 	function hashtagCheck(){
 		//일단 ' '로 나누고 맨 앞이 #인 문자를 찾아서 a태그를 앞뒤로 붙여서 더해서 다시 넣어준다
@@ -394,7 +395,13 @@ html, body, main, .container-fluid {
 				var str = '';
 
 				str += '<table>';
+				
 				$(replyList).each(function(i, vo){
+					
+					if(i < 0){
+						p = vo.currentPage;
+					}
+					
 					str += '<tr>';
 					str += '<td>';
 					str += ' ' + vo.reply_contents;
@@ -412,6 +419,11 @@ html, body, main, .container-fluid {
 				$("#resultReply").html(str);
 				
 				$("#reply_page").html('');
+				
+				if(typeof p == "undefined") {
+					p = 1;
+				}
+				
 				pageReply(p);//리스트 뿌려질 때 페이징도 같이 뿌려주기
 			},
 			error:function(e){
@@ -425,7 +437,6 @@ html, body, main, .container-fluid {
 		
 		var albumnum = ${album.album_num};
 		var rep_page = p;
-		alert('p값 : ' + p);
 		
 		$.ajax({
 			url:'pageReply',
@@ -437,13 +448,11 @@ html, body, main, .container-fluid {
 			dataType: 'json',
 			success: function(navi){
 				
-				alert('현재 페이지 : ' + navi.currentPage);
-				
 				var html = '';
 				html += '<a href="javascript:replyList(' + (navi.currentPage - navi.pagePerGroup) + ')" style="color: navy;">◁◁ </a> &nbsp;&nbsp;';
 				html += '<a href="javascript:replyList(' + (navi.currentPage - 1) + ')" style="color: navy;">◀</a> &nbsp;&nbsp;';
-				
-				for(var i=navi.startPageGroup; i<navi.endPageGroup; i++) {
+
+				for(var i=navi.startPageGroup; i<=navi.endPageGroup; i++) {
 					if(i == navi.currentPage){
 						html += '<a href="javascript:replyList('+ i +')" style="color: navy;"><b>' + i + '</b></a>&nbsp;';
 					}
@@ -514,13 +523,6 @@ html, body, main, .container-fluid {
 	   }else{
 			alert('체크된거없음');
 	   }	 
-	}
-	// 페이징
-	function pagingFormSubmit(num){
-		var pagingForm = document.getElementById('rep_pagingForm');
-		var page = document.getElementById('rep_page');
-		page.value = num; 		// 폼에 요청할 페이지번호 저장
-		pagingForm.submit(); 	// 폼 전송
 	}
 </script>
 
