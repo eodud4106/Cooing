@@ -72,7 +72,7 @@ public class HomeController {
 			model.addAttribute("friend", arr_friend);
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
 			model.addAttribute("group", arraystrval);
-			int totalpage = searchDAO.searchAllAlbumCount(search);
+			int totalpage = albumDAO.total_album_count(search,"3");
 			model.addAttribute("totalpage", (totalpage/10));			
 			//다른 곳에서 홈으로 검색을 통해 home으로 간다는 것을 알려준다.
 			model.addAttribute("search_other", 0);
