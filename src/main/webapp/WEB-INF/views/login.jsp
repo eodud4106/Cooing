@@ -29,12 +29,6 @@
 <link rel="stylesheet" href="resources/css/login.css"> 
 <link rel="stylesheet" href="resources/assets/css/responsive.css"> 
  
-<!-- HTML5 shim and Respond.js IE9 support of HTML5 elements and media queries --> 
-<!--[if lt IE 9]> 
-    <script src="assets/js/html5shiv.js"></script> 
-    <script src="assets/js/respond.js"></script> 
-    <![endif]--> 
- 
 <script src="resources/js_js/jquery-3.2.1.min.js"></script> 
 <script src="resources/js/member.js"></script> 
 <script>
