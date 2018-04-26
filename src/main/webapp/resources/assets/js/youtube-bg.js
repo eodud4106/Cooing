@@ -22,7 +22,7 @@ $(document).ready(function () {
     var player;
 	
 	// Default value 
-	var embedId = "";
+	//var embedId = "";
 	var starttime = 0; 
 	var endtime = 0;
 	var setvolume = "0";

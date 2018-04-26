@@ -11,33 +11,35 @@
 
 <title>Login</title>
 
-<!-- favicon icon -->
-<link rel="shortcut icon" href="resources/img/ico/favicon.ico">
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="resources/img/ico/apple-icon-144x144.png">
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="resources/img/ico/apple-icon-114x114.png">
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="resources/img/ico/apple-icon-72x72.png">
-<link rel="apple-touch-icon-precomposed" sizes="57x57" href="resources/img/ico/apple-icon-57x57.png">
+<!-- favicon icon --> 
+<link rel="shortcut icon" 
+  href="resources/assets/images/ico/favicon.ico"> 
+<link rel="apple-touch-icon-precomposed" sizes="144x144" 
+  href="resources/assets/images/ico/apple-icon-144x144.png"> 
+<link rel="apple-touch-icon-precomposed" sizes="114x114" 
+  href="resources/assets/images/ico/apple-icon-114x114.png"> 
+<link rel="apple-touch-icon-precomposed" sizes="72x72" 
+  href="resources/assets/images/ico/apple-icon-72x72.png"> 
+<link rel="apple-touch-icon-precomposed" sizes="57x57" 
+  href="resources/assets/images/ico/apple-icon-57x57.png"> 
 
 <!-- common css -->
-<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="resources/css/font-awesome.min.css">
-<link rel="stylesheet" href="resources/css/login.css">
-<link rel="stylesheet" href="resources/css/responsive.css">
-
-<script src="resources/js/jquery-3.3.1.min.js"/></script>
-<script src="resources/js/jquery-ui.min.js"/></script>
-
-
-<script src="resources/js/member.js"></script>
-<script type="text/javascript" src="resources/js/popper.js"></script>
-<script type="text/javascript" src="resources/js/bootstrap.js"></script>
-<script type="text/javascript" src="resources/js/jquery.ajaxchimp.js"></script>
-<script type="text/javascript" src="resources/js/pulgins.js"></script>
-<script type="text/javascript" src="resources/js/scripts.js"></script>
+<link rel="stylesheet" href="resources/assets/css/bootstrap.min.css"> 
+<link rel="stylesheet" href="resources/assets/css/font-awesome.min.css"> 
+<link rel="stylesheet" href="resources/css/login.css"> 
+<link rel="stylesheet" href="resources/assets/css/responsive.css"> 
+ 
+<!-- HTML5 shim and Respond.js IE9 support of HTML5 elements and media queries --> 
+<!--[if lt IE 9]> 
+    <script src="assets/js/html5shiv.js"></script> 
+    <script src="assets/js/respond.js"></script> 
+    <![endif]--> 
+ 
+<script src="resources/js_js/jquery-3.2.1.min.js"></script> 
+<script src="resources/js/member.js"></script> 
 <script>
 	$(document).ready(function() {
 		initialize();
-		set_bg();
 	});
 	function initialize() {
 		$('#join').on('click', function () {
@@ -65,10 +67,6 @@
 
 		return true;
 	}
-	
-	function set_bg() {
-		
-	}
 </script>
 <style>
 .tb1 {
@@ -78,15 +76,6 @@
 .button-login {
 	margin: 10px;
 	background-color: rgba(0,0,0,.2);
-}
-body {
-	background-image: url(resources/img/travel1.jpg);
-	background-repeat: no-repeat;
-	background-size: cover;
-}
-
-.button-login {
-	color: white;
 }
 </style>
 
@@ -128,6 +117,7 @@ body {
 										</td>
 									</tr>
 								</table>
+								<p></p> 
 							</div>
 							<div class="footer">
 
@@ -143,7 +133,17 @@ body {
 			</div>
 		</div>
 	</section>
-
+  <!-- js files --> 
+  <script type="text/javascript" 
+    src="resources/assets/js/jquery-1.11.3.min.js"></script> 
+  <script type="text/javascript" 
+    src="resources/assets/js/bootstrap.js"></script> 
+  <script type="text/javascript" 
+    src="resources/assets/js/jquery.ajaxchimp.js"></script> 
+  <script type="text/javascript" src="resources/assets/js/pulgins.js"></script> 
+  <script type="text/javascript" 
+    src="resources/assets/js/youtube-bg.js"></script> 
+  <script type="text/javascript" src="resources/assets/js/scripts.js"></script> 
 
 
 </body>

@@ -59,9 +59,9 @@
         $(document).ready(function () {
             // backstretch
             $("body").backstretch([
-                "../resources/assets/images/travel1.jpg",
-                "../resources/assets/images/travel2.jpg",
-                "../resources/assets/images/travel3.jpg"
+                "resources/assets/images/travel1.jpg",
+                "resources/assets/images/travel2.jpg",
+                "resources/assets/images/travel3.jpg"
             ], {duration: 3000, fade: 750});
         });
     }

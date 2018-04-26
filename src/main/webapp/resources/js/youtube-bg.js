@@ -29,7 +29,7 @@ $(document).ready(function () {
 	
 	
 	function ytbg(url, start, end, vol){
-		embedId = url;
+		//embedId = url;
 		starttime = start;
 		endtime = end;
 		setvolume = vol;
