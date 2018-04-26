@@ -35,6 +35,8 @@
 <script src="resources/js/imagesloaded.pkgd.min.js"></script>
 <script src="resources/js/main.js"></script>
 
+<link href="https://fonts.googleapis.com/css?family=Gaegu" rel="stylesheet">
+
 <script>
 var pagenum = 0;
 var pagingcheck = false;
@@ -141,7 +143,7 @@ $(document).ready(function(){
   position: absolute;
   left: 0;
   right: 0;
-  top: 30%;
+ /*  top: 50%; */
 }
 
 .btn {
@@ -231,11 +233,22 @@ $(document).ready(function(){
 .friendList{
 	height: 250px;		
 	overflow-y : scroll;
+	padding-left: 30px;
+	background-color : aliceblue;
+	font-family: 'Gaegu', cursive;
+    font-size: 18px;
+    cursor: pointer;
 }
 .groupList{
 	height: 250px;	
 	overflow-y : scroll;
+	padding-left: 30px;
 	/* overflow-y:hidden; */
+	background-color : aliceblue;
+	font-family: 'Gaegu', cursive;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 50px;
 }
 /* 포인터로 마우스 모양 바꿔주는곳 */
 .friendclick{
@@ -255,7 +268,7 @@ $(document).ready(function(){
 
 </style>
 </head>
-<body>
+<body style="font-family: 'Gaegu', cursive;">
 
 	<aside class="probootstrap-aside js-probootstrap-aside">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
@@ -394,13 +407,13 @@ $(document).ready(function(){
 			<span class="oi oi-arrow-right"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="" class="mb-2 d-block probootstrap-logo">MY FRIEND</a>			
+			<a href="" class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY FRIEND</a>			
 		</div>				
 				 <form>
 					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
 					<div>
        			  <img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
-       			 height: 24px;margin-left: 205px; margin-top: -50px;">
+       			 height: 24px;margin-left: 215px; margin-top: -50px;">
 				</form>
 			<div class = "friendList">
 				<div name="friend" id="friend">
@@ -410,7 +423,7 @@ $(document).ready(function(){
 			</div>
 		
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="" class="mb-2 d-block probootstrap-logo" style = "margin-top: 100px;">MY GROUP</a>				
+			<a href="" class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY GROUP</a>				
 						
 		<!-- <div class="probootstrap-overflow"> -->
 		
