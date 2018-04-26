@@ -368,9 +368,9 @@ function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
                 "top": $('.onSelect').position().top + curr_page_top - 50,
                 "left": $('.onSelect').position().left + curr_page_left
             });
-            console.log($('.onSelect').css('right').replace('px', ''))
-            if($('.onSelect').css('right').replace('px', '') < 200) {
-            	$('.div_whole_editor').css('left', $('.onSelect').position().left + curr_page_left - 200)
+            var over_left = $(window).width() - Number($('.div_whole_editor').css('left').replace('px', '')) - 350;
+            if(over_left < 0) {
+            	$('.div_whole_editor').css('left', $('.onSelect').position().left + curr_page_left + over_left)
             }
         },
         containment: $div_box.parent()  // 캔버스 영역 밖으로 나가지 못하게 제한
@@ -714,8 +714,9 @@ function createWholeEditor($div_box) {
         "left": $('.onSelect').position().left + curr_page_left
     }).prop("contenteditable", false).appendTo('body');
    
-    if($('.onSelect').css('right').replace('px', '') < 200) {
-    	$('.div_whole_editor').css('left', $('.onSelect').position().left + curr_page_left - 200)
+    var over_left = $(window).width() - Number($('.div_whole_editor').css('left').replace('px', '')) - 350;
+    if(over_left < 0) {
+    	$('.div_whole_editor').css('left', $('.onSelect').position().left + curr_page_left + over_left)
     }
     
     // div append
@@ -1200,6 +1201,21 @@ function createTextEditor(top, left) {
     $arr_bt[$arr_bt.length-1].append($i_align_right).click(function() {
         document.execCommand('justifyRight', false, null);
     });
+    
+    // 글자 색
+    $arr_bt.push($('<button />', {"class": "sel_font_color"}));
+    var $i_font_white = $('<i class="fas fa-font"></i>');
+    var $i_font_yellow = $('<i class="fas fa-font"></i>');
+    $i_font_yellow.css('color', 'yellow');
+    $arr_bt[$arr_bt.length-1].append($i_font_white).append($i_font_yellow);
+
+    // 글자 배경 색
+    $arr_bt.push($('<button />', {"class": "sel_font_bcolor"}));
+    var $i_font_white = $('<i class="fas fa-font"></i>').css({
+        'color': 'white',
+        'background-color': 'yellow'
+    });
+    $arr_bt[$arr_bt.length-1].append($i_font_white);
 
     // 볼드
     $arr_bt.push($('<button />'));
@@ -1243,21 +1259,6 @@ function createTextEditor(top, left) {
         document.execCommand('fontSize', false, Number(curr_font_size) - 1);
     });
 
-    // 글자 색
-    $arr_bt.push($('<button />', {"class": "sel_font_color"}));
-    var $i_font_white = $('<i class="fas fa-font"></i>');
-    var $i_font_yellow = $('<i class="fas fa-font"></i>');
-    $i_font_yellow.css('color', 'yellow');
-    $arr_bt[$arr_bt.length-1].append($i_font_white).append($i_font_yellow);
-
-    // 글자 배경 색
-    $arr_bt.push($('<button />', {"class": "sel_font_bcolor"}));
-    var $i_font_white = $('<i class="fas fa-font"></i>').css({
-        'color': 'white',
-        'background-color': 'yellow'
-    });
-    $arr_bt[$arr_bt.length-1].append($i_font_white);
-
 
     // 스크롤 보정을 위한 변수
     var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -1269,7 +1270,12 @@ function createTextEditor(top, left) {
         "position": "absolute",
         "top": top + scrollTop - 65,
         "left": left + scrollLeft - 225
-    }).prop("contenteditable", false);
+    }).prop("contenteditable", false).appendTo('body');
+    
+    var over_left = $(window).width() - Number($('.div_selection_editor').css('left').replace('px', '')) - 500;
+    if(over_left < 0) {
+    	$('.div_selection_editor').css('left', $('.div_selection_editor').position().left + over_left)
+    }
 
     // 효과 버튼 append
     for(var i = 0; i < $arr_bt.length; i++) {
@@ -1338,8 +1344,6 @@ function createTextEditor(top, left) {
 
         $div_selection_editor.append($tmp_div);
     }
-
-    $('body').append($div_selection_editor);
     
     // 공통 클래스 적용.....
     $div_selection_editor.contents().addClass('edit');
