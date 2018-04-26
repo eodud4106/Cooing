@@ -493,13 +493,13 @@ html, body, main, .container-fluid {
 					<div class="tool text"><i class="fas fa-align-justify"></i></div>
                 	<div class="tool image"><i class="far fa-image"></i></div>
                 	<!-- 각종 버튼 -->
-					<div style= "z-index:99; float:right; padding-left: 10px;"onclick=""><i style = "width: 30px; height: 30px; margin: 10px;" class="fas fa-paint-brush"></i></div>
-					<div style= "z-index:99; float:right; padding-left: 10px;"onclick=""><i style = "width: 30px; height: 30px; margin: 10px;"class="fas fa-forward"></i></div>					
-					<div style= "z-index:99; float:right; padding-left: 10px;" onclick="addPage()"><i style = "width: 30px; height: 30px; margin: 10px;"class="far fa-plus-square"></i></div>
-					<div style= "z-index:99; float:right; padding-left: 10px;" onclick="removePage()"><i style = "width: 30px; height: 30px;margin: 10px;"class="far fa-trash-alt"></i></div>
-					<div style= "z-index:99; float:right; padding-left: 10px;" onclick="savePage('all')"><i style = "width: 30px; height: 30px;margin: 10px;"class="fas fa-check"></i></div>					
-					<div style= "z-index:99; float:right; padding-left: 10px; "onclick=""><i style = "width: 30px; height: 30px;margin: 10px;" class="fas fa-backward"></i></div>		
-					<div style= "z-index:99; float:right; padding-left: 10px;"onclick="location.href='albumView?album_num=${album.album_num}'"><i style = "width: 30px; height: 30px;margin: 10px;"class="fas fa-sign-out-alt"></i></div>
+					<div id="i_brush" style= "z-index:99; float:left; padding-left: 10px;" onclick=""><i style = "width: 30px; height: 30px; margin: 10px;" class="fas fa-paint-brush"></i></div>
+					<div id="i_brush" style= "z-index:99; float:left; padding-left: 10px;" onclick=""><i style = "width: 30px; height: 30px; margin: 10px;"class="fas fa-forward"></i></div>					
+					<div id="i_brush" style= "z-index:99; float:left; padding-left: 10px;" onclick="addPage()"><i style = "width: 30px; height: 30px; margin: 10px;"class="far fa-plus-square"></i></div>
+					<div id="i_brush" style= "z-index:99; float:left; padding-left: 10px;" onclick="removePage()"><i style = "width: 30px; height: 30px;margin: 10px;"class="far fa-trash-alt"></i></div>
+					<div id="i_brush" style= "z-index:99; float:left; padding-left: 10px;" onclick="savePage('all')"><i style = "width: 30px; height: 30px;margin: 10px;"class="fas fa-check"></i></div>					
+					<div id="i_brush" style= "z-index:99; float:left; padding-left: 10px;" onclick=""><i style = "width: 30px; height: 30px;margin: 10px;" class="fas fa-backward"></i></div>		
+					<div id="i_brush" style= "z-index:99; float:left; padding-left: 10px;" onclick="location.href='albumView?album_num=${album.album_num}'"><i style = "width: 30px; height: 30px;margin: 10px;"class="fas fa-sign-out-alt"></i></div>
 				</div>
 	
 		</div>

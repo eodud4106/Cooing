@@ -21,6 +21,7 @@ svg, path {
     line-height: 0;
     padding: 5px;
     z-index: 1;
+    float: left;
 }
 .tools {
     float: left;

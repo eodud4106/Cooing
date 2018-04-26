@@ -90,7 +90,7 @@ function child_close() {
 			contentType: "application/x-www-form-urlencoded; charset=utf-8",
 			data: { "imgUrl": changedSrc },
 			success : function(fath) {
-				$('.onSelect img').attr('src', 'img?filePath='+fath);
+				$('.onSelect img').attr('src', 'img_album?filePath='+fath);
 	        }, 
 	        error : function(e) { 
 	            alert(JSON.stringify(e)); 
@@ -576,7 +576,7 @@ function createWholeEditor($div_box) {
                     // fail이 아닐 경우 -> 이미지 저장됨
                     if (saved_name != 'fail') {
                         
-                        $img.attr('src', 'img?filePath=' + saved_name).css({
+                        $img.attr('src', 'img_album?filePath=' + saved_name).css({
                             "display": "block"
                         });
                         
