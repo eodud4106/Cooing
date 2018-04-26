@@ -8,7 +8,7 @@
 
 <html>
 <head>
-<title>AlbumEdit</title>
+<title>AlbumView</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -533,34 +533,17 @@ html, body, main, .container-fluid {
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
-			<p class="mb-0"> 친구목록출력, 채팅기능
-				<a href="https://uicookies.com/" target="_blank">uiCookies</a>
-			</p>
+			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>			
 		</div>
 		<div class="probootstrap-overflow">
 		<div class="main">
+		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
+		<label for="tab1">Comment</label>
 
-  		<input class = "input1" id="tab2" type="radio" name="tabs" checked>
-    	<label for="tab2">채팅</label>   
-
-   		<section id="content2">
-       		<form id ="" method="" action="">
-			<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search">
-			<button class = "bt">s</button>
-			</form>					
-				<p></p>			
-				<p>친구1</p>
-				<p>친구2</p>
-				<p>친구3</p>
-				<p>친구4</p>
-		
-				<p>그룹1</p>
-				<p>그룹2</p>	
-				<form id="testimg">
-					<input type="hidden" name="imgSrc" id="imgSrc" />
-				</form>	
-				<div class="buttonHolder" id = "likes" onclick="likes()">
+  		<input class = "input1" id="tab2" type="radio" name="tabs" >
+    	<label for="tab2">Chat</label>   
+    	<section id="content1"> 
+    	<div class="buttonHolder" id = "likes" onclick="likes()">
   					<a href="#" class="likes"></a>
 				</div>
 				<div class="buttonHolder" id = "deleteLikes" onclick="deletelikes()">
@@ -587,6 +570,25 @@ html, body, main, .container-fluid {
 					</div>
 
 				</div>
+		</section>
+		
+   		<section id="content2">
+       		<form id ="" method="" action="">
+			<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search">
+			<button class = "bt">s</button>
+			</form>					
+				<p></p>			
+				<p>친구1</p>
+				<p>친구2</p>
+				<p>친구3</p>
+				<p>친구4</p>
+		
+				<p>그룹1</p>
+				<p>그룹2</p>	
+				<form id="testimg">
+					<input type="hidden" name="imgSrc" id="imgSrc" />
+				</form>	
+				
 							
     	</section>
     	</div>			
@@ -619,6 +621,7 @@ html, body, main, .container-fluid {
 			
 				<!-- 앨범 영역 -->
 				<div class="album_wrapper" id="album_wrapper">
+				<button>책갈피</button>
 					<div class="album" id="album" style="display: none">
 						<c:if test="${arr_page.size() > 0 }">
 							<c:forEach items="${arr_page}" var="page">
