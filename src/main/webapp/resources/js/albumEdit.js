@@ -284,8 +284,6 @@ function initpage($page) {
  **/
 function renderbox(event, ui, page) {
 
-    console.log('render 호출');
-
     // 클릭한 페이지의 위치 확인
     var curr_page_top = album_top;
     var curr_page_left = album_left;
@@ -312,9 +310,8 @@ function renderbox(event, ui, page) {
 
     } else if(ui.helper.hasClass("image")) {
         // 이미지인 경우
-
         var $i_plus = $('<i />', {
-            "class": "fas fa-plus",
+            "class": "fas fa-image",
             "position": "absolute",
             "top": "140px",
             "left": "140px"
@@ -371,6 +368,10 @@ function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
                 "top": $('.onSelect').position().top + curr_page_top - 50,
                 "left": $('.onSelect').position().left + curr_page_left
             });
+            console.log($('.onSelect').css('right').replace('px', ''))
+            if($('.onSelect').css('right').replace('px', '') < 200) {
+            	$('.div_whole_editor').css('left', $('.onSelect').position().left + curr_page_left - 200)
+            }
         },
         containment: $div_box.parent()  // 캔버스 영역 밖으로 나가지 못하게 제한
 
@@ -704,9 +705,6 @@ function createWholeEditor($div_box) {
         curr_page_left += PAGE_WIDTH; 
     }
 
-    console.log('onSelect top -> ' + $('.onSelect').position().top);
-    console.log('onSelect left -> ' + $('.onSelect').position().left);
-
 
     // 1단계 편집창 div 생성
     var $div_whole_editor = $('<div />');
@@ -714,8 +712,12 @@ function createWholeEditor($div_box) {
         "position": "absolute",
         "top": $('.onSelect').position().top + curr_page_top - 50,
         "left": $('.onSelect').position().left + curr_page_left
-    }).prop("contenteditable", false);
-
+    }).prop("contenteditable", false).appendTo('body');
+   
+    if($('.onSelect').css('right').replace('px', '') < 200) {
+    	$('.div_whole_editor').css('left', $('.onSelect').position().left + curr_page_left - 200)
+    }
+    
     // div append
     for(var i = 0; i < $arr_bt.length; i++) {
         var $tmp_div = $('<div />');
@@ -1158,7 +1160,7 @@ function createWholeEditor($div_box) {
 
 
 
-    $('body').append($div_whole_editor);
+    
 
     // $arr_bt[$arr_bt.length-1].parent().mouseenter(function(e) {
     //     createTooltip($(this), '가장 위로');
@@ -1438,7 +1440,6 @@ function savePage(mode) {
             "page_html": $page_clone.html(),
             "page_attr": $page_clone.css('background-image')
         }
-        console.log('변환한 것 ' + i + ' : ' + JSON.stringify(arr_page[i-start]));
 
     }
 
@@ -1484,9 +1485,7 @@ function savePage(mode) {
 
         //뒷 커버를 추가
         $('#album').turn('addPage', $page, (total_page+1+i));
-        console.log('totla_page 1 -> ' + total_page);
         apply_page_droppable($('#page' + (total_page+1+i) + ''))
-        console.log('totla_page 2 -> ' + total_page);
     }
 
     //기존 페이지의 아이디와 innerHTML을 두 페이지 씩 뒤로 이동
