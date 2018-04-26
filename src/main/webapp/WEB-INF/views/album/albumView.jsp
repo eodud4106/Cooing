@@ -201,6 +201,14 @@ html, body, main, .container-fluid {
 		likesList();
 		check_likes();
 		
+		$('#bookmarkButton').on('click' , function(){
+			if($('#bookmarkButton').attr('data') == 1){
+				bookmark_delete();
+			}else{
+				bookmark_create();
+			}
+		});
+		
 		$('.input').iCheck({
 			radioClass : 'iradio_square-green',
 		// increaseArea: '20%' // optional
@@ -210,6 +218,100 @@ html, body, main, .container-fluid {
 		ready_album('view');
 
 	});
+	//현재 페이지의 북마크가 있는지 검색 
+	function bookmark_check(){
+		var albumnum = ${album.album_num};
+		var pagenum = $('#album').turn('page');
+		if(pagenum != null){
+			pagenum = (pagenum==1?1:(pagenum%2==0?pagenum:pagenum-1));
+			$.ajax({
+				url:'bookmark_check',
+				type: 'POST',		
+				data: {
+					bookmark_albumnum:albumnum,
+					bookmark_page:pagenum
+				},
+				dataType: 'text',
+				success: function(a){
+					//성공이면 있는 거 책갈피가  data 가 1일때는 있는거 
+					if(a == 'success'){
+						//data값을 넣어서 data값으로 확인
+						$('#bookmarkButton').attr('data' , 1);
+						//책갈피 해제 이미지가 바뀐다면 여기 밑에 text를 없애고 사용
+						$('#bookmarkButton').text('책갈피 해제');
+					}
+					//fail이면 없는 거 책갈피가 
+					else{
+						//data값을 넣어서 data값으로 확인
+						$('#bookmarkButton').attr('data' , 0);
+						//책갈피 해제 이미지가 바뀐다면 여기 밑에 text를 없애고 사용
+						$('#bookmarkButton').text('책갈피');
+					}					
+				},
+				error:function(e){
+					alert(JSON.stringify(e));
+				}		
+			});		
+		}
+	}
+	//책갈피
+	function bookmark_create(){
+		var albumnum = ${album.album_num};
+		var pagenum = $('#album').turn('page');
+		if(pagenum != null){
+			pagenum = (pagenum==1?1:(pagenum%2==0?pagenum:pagenum-1));
+			$.ajax({
+				url:'bookmark_create',
+				type: 'POST',		
+				data: {
+					bookmark_albumnum:albumnum,
+					bookmark_page:pagenum
+				},
+				dataType: 'text',
+				success: function(a){
+					if(a == 'success'){
+						//data값을 넣어서 data값으로 확인
+						$('#bookmarkButton').attr('data' , 1);
+						//책갈피 해제 이미지가 바뀐다면 여기 밑에 text를 없애고 사용
+						$('#bookmarkButton').text('책갈피 해제');						
+					}
+				},
+				error:function(e){
+					alert(JSON.stringify(e));
+				}		
+			});		
+		}
+	}
+	
+	//책갈피삭제
+	function bookmark_delete(){
+		var albumnum = ${album.album_num};
+		var pagenum = $('#album').turn('page');
+		if(pagenum != null){
+			pagenum = (pagenum==1?1:(pagenum%2==0?pagenum:pagenum-1));
+			$.ajax({
+				url:'bookmark_delete',
+				type: 'POST',		
+				data: {
+					bookmark_albumnum:albumnum,
+					bookmark_page:pagenum
+				},
+				dataType: 'text',
+				success: function(a){
+					if(a == 'success'){
+						//data값을 넣어서 data값으로 확인
+						$('#bookmarkButton').attr('data' , 0);
+						//책갈피 이미지가 바뀐다면 여기 밑에 text를 없애고 사용
+						$('#bookmarkButton').text('책갈피');						
+					}
+				},
+				error:function(e){
+					alert(JSON.stringify(e));
+				}		
+			});		
+		}
+	}
+	
 	// 좋아요 확인
 	function check_likes() {
 		
@@ -349,12 +451,8 @@ html, body, main, .container-fluid {
 		});
 	}
 	// 댓글 삭제
-	function deletereply(replynum){
-
-		// alert(replynum);
-		
-		if(confirm("댓글을 삭제 하시겠습니까?")){
-			 	
+	function deletereply(replynum){		
+		if(confirm("댓글을 삭제 하시겠습니까?")){			 	
 			$.ajax({
 				url:'deleteReply',
 				type: 'POST',		
@@ -623,7 +721,16 @@ html, body, main, .container-fluid {
 			
 				<!-- 앨범 영역 -->
 				<div class="album_wrapper" id="album_wrapper">
-				<button>책갈피</button>
+				<c:if test="${check ne 2}">
+					<button id="bookmarkButton" data="${check}">
+						<c:if test="${check eq 1}">	
+							책갈피 해제
+						</c:if>
+						<c:if test="${check eq 0}">	
+							책갈피
+						</c:if>
+					</button>
+				</c:if>
 					<div class="album" id="album" style="display: none">
 						<c:if test="${arr_page.size() > 0 }">
 							<c:forEach items="${arr_page}" var="page">

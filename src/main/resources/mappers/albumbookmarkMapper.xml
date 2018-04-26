@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cooing.www.album.dao.AlbumBookMarkMapper">
+	<insert id="bookmark_create" parameterType="bookmark">
+		insert into bookmark (bookmark_num, bookmark_albumnum, bookmark_memberid, bookmark_page) 
+		values (bookmark_seq.nextval, #{bookmark_albumnum}, #{bookmark_memberid}, #{bookmark_page})
+	</insert>
+	
+	<select id="bookmark_check" parameterType="bookmark" resultType="bookmark">
+		select * from bookmark where 
+			bookmark_albumnum = #{bookmark_albumnum} and
+			bookmark_memberid = #{bookmark_memberid} and
+			bookmark_page = #{bookmark_page}
+	</select>
+	
+	<delete id="bookmark_delete" parameterType="bookmark">
+		delete from bookmark where 
+			bookmark_albumnum = #{bookmark_albumnum} and
+			bookmark_memberid = #{bookmark_memberid} and
+			bookmark_page = #{bookmark_page}
+	</delete>
+	
+</mapper>

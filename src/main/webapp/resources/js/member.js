@@ -19,7 +19,7 @@ function loginmember(toRoot){
 				location.href=toRoot;
 			}
 			else{
-				alert('ID 혹은 비밀버호가 틀렸습니다.');
+				alert('ID 혹은 비밀번호가 틀렸습니다.');
 			}		
 		},
 		error:function(e){alert(JSON.stringify(e));}		

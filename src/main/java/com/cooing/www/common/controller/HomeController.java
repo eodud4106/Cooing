@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cooing.www.album.dao.AlbumBookMarkDAO;
 import com.cooing.www.album.dao.AlbumDAO;
 import com.cooing.www.album.dao.AlbumLikesDAO;
 import com.cooing.www.album.vo.AlbumLikesVO;
 import com.cooing.www.album.vo.AlbumWriteVO;
+import com.cooing.www.album.vo.BookMark;
 import com.cooing.www.album.vo.PageHtmlVO;
 import com.cooing.www.common.dao.SearchDAO;
 import com.cooing.www.common.vo.PageLimit;
@@ -46,6 +48,8 @@ public class HomeController {
 	AlbumLikesDAO albumlikesDAO;
 	@Autowired
 	SearchDAO searchDAO;
+	@Autowired
+	AlbumBookMarkDAO albumbookmarkDAO;
 	
 	private Gson gson = new Gson();
 	/**
@@ -128,13 +132,23 @@ public class HomeController {
 	 * 앨범뷰... 앨범과 페이지 리스트를 갖고 albumView로 이동....
 	 */
 	@RequestMapping(value = "/albumView", method = RequestMethod.GET)
-	public String albumPage(int album_num, Model model) {
-		
+	public String albumPage(int album_num, Model model , HttpSession session) {
+		Member member = (Member)session.getAttribute("Member");
 		try {
 			AlbumWriteVO album = albumDAO.searchAlbumNum(album_num);
 			if(album == null) return "redirect:/";
 			ArrayList<PageHtmlVO> arr_page = albumDAO.select_pages_by_album_num(album_num);
-			
+			//페이지 사이즈가 없으면 2로 책갈피를 없애주고
+			if(arr_page.size() > 0){
+				if(albumbookmarkDAO.bookmark_check(new BookMark(0,album_num,member.getMember_id(),1))){
+					//페이지가 있으면 1로 페이지가 있다고 알려주고
+					model.addAttribute("check", 1);
+				}else{
+					model.addAttribute("check", 0);
+				}
+			}else{
+				model.addAttribute("check", 2);
+			}
 			model.addAttribute("album", album);
 			model.addAttribute("arr_page", arr_page);
 			

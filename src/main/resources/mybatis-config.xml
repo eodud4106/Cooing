@@ -16,6 +16,7 @@
 		<typeAlias type="com.cooing.www.album.vo.CategoryPop" alias="categorypop"/>
 		<typeAlias type="com.cooing.www.album.vo.AlbumLikesVO" alias="albumlikes"/>
 		<typeAlias type="com.cooing.www.album.vo.AlbumReplyVO" alias="albumreply"/>
+		<typeAlias type="com.cooing.www.album.vo.BookMark" alias="bookmark"/>	
 	</typeAliases>
  	<mappers>
 		<mapper resource="mappers/messageMapper.xml"/>
@@ -25,5 +26,6 @@
 		<mapper resource="mappers/searchMapper.xml"/>
 		<mapper resource="mappers/albumlikesMapper.xml"/>
 		<mapper resource="mappers/albumreplyMapper.xml"/>
+		<mapper resource="mappers/albumbookmarkMapper.xml"/>
 	</mappers>
 </configuration>

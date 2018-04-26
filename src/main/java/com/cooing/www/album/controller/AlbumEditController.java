@@ -33,8 +33,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.cooing.www.album.dao.AlbumBookMarkDAO;
 import com.cooing.www.album.dao.AlbumDAO;
 import com.cooing.www.album.vo.AlbumWriteVO;
+import com.cooing.www.album.vo.BookMark;
 import com.cooing.www.album.vo.PageHtmlVO;
 import com.cooing.www.common.dao.SearchDAO;
 import com.cooing.www.member.vo.Member;
@@ -47,13 +49,15 @@ public class AlbumEditController {
 	AlbumDAO albumDAO;
 	@Autowired
 	SearchDAO searchDAO;
+	@Autowired
+	AlbumBookMarkDAO albumbookmarkDAO;
 
-	//private final String strFilePath = "/FileSave/upload/";						// windows
-	private static String strFilePath = "/Users/insect/hindoong_upload/";			// mac
-	//private final String strThumbnailPath = "/FileSave/thumbnail/";				// windows
-	private static String strThumbnailPath = "/Users/insect/hindoong_upload/";	// mac
-	//private final String strTemp_PicturePath = "/FileSave/temp_picture/"; 			//사진 자를 때 필요한 경로
-	private static String strTemp_PicturePath = "/Users/insect/hindoong_upload/";	// mac
+	private final String strFilePath = "/FileSave/upload/";						// windows
+	//private static String strFilePath = "/Users/insect/hindoong_upload/";			// mac
+	private final String strThumbnailPath = "/FileSave/thumbnail/";				// windows
+	//private static String strThumbnailPath = "/Users/insect/hindoong_upload/";	// mac
+	private final String strTemp_PicturePath = "/FileSave/temp_picture/"; 			//사진 자를 때 필요한 경로
+	//private static String strTemp_PicturePath = "/Users/insect/hindoong_upload/";	// mac
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
 	
@@ -539,7 +543,49 @@ public class AlbumEditController {
         }
         return newFileName + ".png";		
 	}
-
-		
 	
+	@ResponseBody
+	@RequestMapping(value = "/bookmark_create", method = RequestMethod.POST)
+	public String bookmark_create(HttpSession session, BookMark bookmark){
+		logger.info("bookmark_create_ljs : " +  bookmark.toString());
+		
+		Member member = (Member)session.getAttribute("Member");
+		bookmark.setBookmark_memberid(member.getMember_id());
+		
+		if(albumbookmarkDAO.bookmark_create(bookmark)){
+			return "success";
+		}else{
+			return "false";
+		}	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/bookmark_delete", method = RequestMethod.POST)
+	public String bookmark_delete(HttpSession session, BookMark bookmark){
+		logger.info("bookmark_delete_ljs : " +  bookmark.toString());
+		
+		Member member = (Member)session.getAttribute("Member");
+		bookmark.setBookmark_memberid(member.getMember_id());
+		
+		if(albumbookmarkDAO.bookmark_delete(bookmark)){
+			return "success";
+		}else{
+			return "false";
+		}	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/bookmark_check", method = RequestMethod.POST)
+	public String bookmark_check(HttpSession session, BookMark bookmark){
+		logger.info("bookmark_check_ljs : " +  bookmark.toString());
+		
+		Member member = (Member)session.getAttribute("Member");
+		bookmark.setBookmark_memberid(member.getMember_id());
+				
+		if(albumbookmarkDAO.bookmark_check(bookmark)){
+			return "success";
+		}else{
+			return "false";
+		}	
+	}
 }
