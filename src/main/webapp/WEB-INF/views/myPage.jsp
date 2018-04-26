@@ -73,7 +73,8 @@ $(document).ready(function () {
 		location.href = './category_other?categorynum=' + $(this).attr('data') + '';
 	});
 
-	getMyAlbumList();	
+	getMyAlbumList();
+	list_infomation();
 });
 
 //앨범 리스트 Ajax로 받는 코드
@@ -115,6 +116,22 @@ function create_personal_album() {
 				 //TODO 앨범 편집창으로 이동
 				 location.href="edit_album?album_num=" + result;
 			}
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+}
+
+function list_infomation() {
+	$.ajax({
+		url: 'getMyAlbumInfomation',
+		type: 'post',
+		dataType: 'json',
+		success: function(albuminfolist) {
+			$(albuminfolist).each(function(i, vo){
+				//alert(vo.album_num);
+			});
 		},
 		error: function(e) {
 			alert(JSON.stringify(e));	

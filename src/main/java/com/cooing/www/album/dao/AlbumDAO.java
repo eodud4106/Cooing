@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cooing.www.album.vo.AlbumListInfomation;
 import com.cooing.www.album.vo.AlbumWriteVO;
 import com.cooing.www.album.vo.PageHtmlVO;
 
@@ -143,7 +144,9 @@ public class AlbumDAO{
 	}
 	
 	public ArrayList<AlbumWriteVO> select_album(RowBounds rb, AlbumWriteVO album) {
-	
 		return sqlSession.getMapper(AlbumMapper.class).select_album(rb, album);
+	}
+	public ArrayList<AlbumListInfomation> getMyAlbumInfomation(String album_writer) {
+		return sqlSession.getMapper(AlbumMapper.class).getMyAlbumInfomation(album_writer);
 	}
 }
