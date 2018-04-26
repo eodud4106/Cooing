@@ -209,6 +209,10 @@ html, body, main, .container-fluid {
 			}
 		});
 		
+		 $('#album').on('change' , function(){
+			alert('test');
+		 });
+		
 		$('.input').iCheck({
 			radioClass : 'iradio_square-green',
 		// increaseArea: '20%' // optional
