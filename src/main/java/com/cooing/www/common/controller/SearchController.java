@@ -147,7 +147,7 @@ public class SearchController {
 		return "information";
 	}
 	//다시 만들어야 됨 
-	@RequestMapping(value = "/searchHashTag", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/searchHashTag", method = RequestMethod.GET)
 	public String searchHashTag(Model model, String hashTag) {
 		logger.info("searchHashTag__jinsu");
 		model.addAttribute("searchWord", hashTag);
@@ -155,7 +155,7 @@ public class SearchController {
 		hashTag = hashTag.substring(1, hashTag.length());
 		searchDAO.insertSearch(new Search(0 , hashTag , "0"));
 		//검색어가 해쉬 태그 , 앨범 이름, 설명 , 앨범 만든 사람
-		ArrayList<AlbumWriteVO> arrayalbum = albumDAO.searchAlbum(hashTag);		
+		ArrayList<AlbumWriteVO> arrayalbum = albumDAO.total_album_list(hashTag,"");		
 		ArrayList<HashTag> arraytag = searchDAO.selectHashTag(hashTag);
 		for(int i = 0; i < arraytag.size();i++){
 			arrayalbum.add(albumDAO.searchAlbumNum(arraytag.get(i).getTag_albumnum()));
@@ -164,5 +164,5 @@ public class SearchController {
 		model.addAttribute("listalbum", arrayalbum.toString());	
 		
 		return "home";
-	}
+	}*/
 }

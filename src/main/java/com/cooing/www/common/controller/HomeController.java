@@ -57,13 +57,13 @@ public class HomeController {
 		if(personal != null){
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
 			model.addAttribute("group", arraystrval);
-			int totalpage = albumDAO.TotalAlbumCount(personal.getMember_id());
+			int totalpage = albumDAO.total_album_count(personal.getMember_id(),"3");
 			model.addAttribute("totalpage", (totalpage/10));
 		}
 		
 		return "home";
 	}
-	
+	//검색을 ㄷ른곳에서 해서 홈으로 가는 경우
 	@RequestMapping(value = "/search_other", method = RequestMethod.GET)
 	public String search_other_home(Model model, HttpSession session , String search) {
 		Member personal = (Member)session.getAttribute("Member");
@@ -81,7 +81,7 @@ public class HomeController {
 		}		
 		return "home";
 	}
-	
+	//다른곳에서 카테고리 눌렀을 경우 홈으로 이동 후 검색
 	@RequestMapping(value = "/category_other", method = RequestMethod.GET)
 	public String category_other_home(Model model, HttpSession session , int categorynum) {
 		Member personal = (Member)session.getAttribute("Member");
@@ -107,9 +107,9 @@ public class HomeController {
 	public ArrayList<AlbumWriteVO> getMyAlbumList(int pagenum , HttpSession session) {
 		logger.info(pagenum + "_page_list ljs");
 		Member member = (Member)session.getAttribute("Member");
-		int totalnum = albumDAO.TotalAlbumCount(member.getMember_id());
+		int totalnum = albumDAO.total_album_count(member.getMember_id() , "3");
 		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		return albumDAO.TotalAlbumList(pl.getStartBoard() , pl.getCountPage() , member.getMember_id());
+		return albumDAO.total_album_list( member.getMember_id() , "3" , pl.getStartBoard() , pl.getCountPage() );
 	}
 	
 	// 좋아요 목록 조회
@@ -118,11 +118,9 @@ public class HomeController {
 	public ArrayList<AlbumWriteVO> getLikeAlbumList(int pagenum , HttpSession session) {
 		logger.info(pagenum + "_like_page_list ljs");
 		Member member = (Member)session.getAttribute("Member");
-		int totalnum = albumDAO.TotalAlbumCount(member.getMember_id());
+		int totalnum = albumDAO.total_album_count(member.getMember_id() , "2");
 		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		ArrayList<AlbumWriteVO> vo = albumDAO.LikeAlbumList(pl.getStartBoard() , pl.getCountPage() , member.getMember_id());
-		logger.info(vo.toString());
-		return vo;
+		return albumDAO.total_album_list( member.getMember_id() , "2" , pl.getStartBoard() , pl.getCountPage());
 	}	
 
 
@@ -174,7 +172,7 @@ public class HomeController {
 	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
 	public String myPage(HttpSession session , Model model){
 		Member member = (Member)session.getAttribute("Member");
-		int totalpage = albumDAO.MyAlbumCount(member.getMember_id());
+		int totalpage = albumDAO.total_album_count(member.getMember_id(),"4");
 		model.addAttribute("totalpage", (totalpage/10));		
 		return "myPage";
 	}
@@ -185,18 +183,18 @@ public class HomeController {
 	public ArrayList<AlbumWriteVO> getMyAlbumList(HttpSession session , int pagenum) {
 		logger.info("myalbumlist_homecontroller_ljs");
 		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-		int totalnum = albumDAO.MyAlbumCount(album_writer);
+		int totalnum = albumDAO.total_album_count(album_writer,"4");
 		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		return albumDAO.MyAlbumList(album_writer , pl.getStartBoard() , pl.getCountPage());
+		return albumDAO.total_album_list(album_writer , "4" , pl.getStartBoard() , pl.getCountPage());
 	}
-	
+	//친구 목록 조회
 	@ResponseBody
 	@RequestMapping(value = "/getIDAlbumList", method= RequestMethod.POST)
 	public ArrayList<AlbumWriteVO> getIDAlbumList(HttpSession session , String albumwriter , int pagenum) {
 		logger.info(albumwriter+"_IDalbumlist_homecontroller_ljs");
-		int totalnum = albumDAO.IDAlbumCount(albumwriter);
+		int totalnum = albumDAO.total_album_count(albumwriter , "5");
 		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		return albumDAO.IDAlbumList(albumwriter , pl.getStartBoard() , pl.getCountPage());
+		return albumDAO.total_album_list(albumwriter , "5" , pl.getStartBoard() , pl.getCountPage());
 	}
 	
 	//랭킹페이지

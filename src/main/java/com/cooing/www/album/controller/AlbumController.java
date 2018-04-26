@@ -34,7 +34,7 @@ public class AlbumController {
 		logger.info(party_name + "_page_list ljs");
 		
 		// 파티는 파티 이름이 유니크. 그래서 파티 이름으로 총 파티 앨범 개수를 구한다.
-		int totalnum = albumDAO.TotalAlbumCount(party_name);
+		int totalnum = albumDAO.total_album_count(party_name,"3");
 		
 		PageLimit pl = new PageLimit(10, 5, pagenum, totalnum);
 		//pl.getStartBoard(), pl.getCountPage();

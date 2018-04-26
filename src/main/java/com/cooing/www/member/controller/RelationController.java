@@ -47,7 +47,7 @@ public class RelationController {
 				break;
 			}
 		}
-		int totalpage = albumDAO.IDAlbumCount(id);
+		int totalpage = albumDAO.total_album_count(id,"5");
 		model.addAttribute("totalpage", (totalpage/10));
 		return "friendPage";
 	}

@@ -91,6 +91,7 @@ public class AlbumDAO{
 	}
 	//1번 검색 2번 좋아요리스트 3번 토탈 앨범 4번 내 앨범 5번 ID로 앨범찾기
 	public ArrayList<AlbumWriteVO> total_album_list(String search , String check , int startpl , int endpl ){
+		System.out.println("total_album_list : " + search+"_search , " + check + "_check");
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		RowBounds rb = new RowBounds(startpl , endpl);
 		Map<String,String> map = new HashMap<String,String>();
@@ -99,6 +100,7 @@ public class AlbumDAO{
 		return mapper.total_album_list(rb , map);
 	}
 	public int total_album_count(String search , String check){
+		System.out.println("total_album_count : " + search+"_search , " + check + "_check");
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("check", check);
 		map.put("search_writer", search);
@@ -113,17 +115,6 @@ public class AlbumDAO{
 		} else {
 			return false;
 		}
-	}
-	
-	public String MyAlbumListOutPut(String html){
-		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		return mapper.MyAlbumListOutPut(html);
-		
-	}
-	
-	public ArrayList<AlbumWriteVO> searchAlbum(String searchtext){
-		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		return mapper.searchAlbum(searchtext);
 	}
 	
 	public PageHtmlVO searchPage1(int num){
@@ -147,52 +138,8 @@ public class AlbumDAO{
 		return mapper.deleteAlbum(album_num);	
 	}
 	
-	public ArrayList<AlbumWriteVO> TotalAlbumList(int startpl , int endpl , String album_writer){		
-		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		RowBounds rb = new RowBounds(startpl , endpl);
-		return mapper.TotalAlbumList(rb , album_writer);			
-	}
-	
-	public ArrayList<AlbumWriteVO> LikeAlbumList(int startpl , int endpl , String album_writer){		
-		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		RowBounds rb = new RowBounds(startpl , endpl);
-		return mapper.LikeAlbumList(rb , album_writer);			
-	}
-	
-	public ArrayList<AlbumWriteVO> MyAlbumList(String album_writer , int stratpl , int endpl){
-		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		RowBounds rb = new RowBounds(stratpl , endpl);
-		return mapper.MyAlbumList(rb,album_writer);
-	}
-	
-	public ArrayList<AlbumWriteVO> IDAlbumList(String album_writer , int stratpl , int endpl){
-		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		RowBounds rb = new RowBounds(stratpl , endpl);
-		return mapper.IDAlbumList(rb,album_writer);
-	}
-	
-	public int TotalAlbumCount(String album_writer){
-		return sqlSession.getMapper(AlbumMapper.class).TotalAlbumCount(album_writer);
-	}
-	
-	public int SearchAlbumCount(String search){
-		return sqlSession.getMapper(AlbumMapper.class).SearchAlbumCount(search);
-	}
-	
 	public int CategoryAlbumCount(int categorynum){
 		return sqlSession.getMapper(AlbumMapper.class).CategoryAlbumCount(categorynum);
-	}
-	
-	public int LikeAlbumCount(String album_writer){
-		return sqlSession.getMapper(AlbumMapper.class).LikeAlbumCount(album_writer);
-	}
-	
-	public int MyAlbumCount(String album_writer){
-		return sqlSession.getMapper(AlbumMapper.class).MyAlbumCount(album_writer);
-	}
-	
-	public int IDAlbumCount(String album_writer){
-		return sqlSession.getMapper(AlbumMapper.class).IDAlbumCount(album_writer);
 	}
 	
 	public ArrayList<AlbumWriteVO> select_album(RowBounds rb, AlbumWriteVO album) {
