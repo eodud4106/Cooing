@@ -90,7 +90,7 @@ $(document).ready(function () {
 	
 	searchword();
 	
-	if (${sessionScope.Member != null}) {
+	if ('${sessionScope.Member}' != null) {
 		readyChat('${sessionScope.Member.member_id}', '');
 	}	
 	//0번이면 검색으로 넘어온 경우 ,  1번이면 카테고리 눌러서 넘어온 경우 , 엘스는 그냥 홈에 온 경우 
@@ -423,10 +423,7 @@ $(document).ready(function(){
 					<c:if test="${fn:length(group) ne 0}">
 						<c:forEach var="party" items="${group}">
 							<div name="group">
-								<p onclick="openGUpdate('${party.party_name}')"
-									partynum="${party.party_num}">${party.party_name}</p>
-								<input type="button" value="채팅"
-									onclick="openChat('0', '${party.party_num}', '${party.party_name}')" />
+								<p class="arr_party" partynum="${party.party_num}">${party.party_name}</p>
 							</div>
 						</c:forEach>
 					</c:if>
