@@ -1446,8 +1446,9 @@ function savePage(mode) {
         }
 
     }
-
-
+    console.log('album_num -> ' + $('#hidden_album_num').val())
+    console.log('page-> ' + JSON.stringify(arr_page))
+    
     $.ajax({
         url : 'save_page',
         type : 'POST',

@@ -346,6 +346,7 @@ html, body, main, .container-fluid {
 					<span class="label-input100">Album Name</span>
 					<input class="input100" type="text" name="album_name" id="album_name" class="input_album_info" value="${album.album_name }" >
 					<span class="focus-input100"></span>
+					<input hidden="hidden" id="hidden_album_num" value="${album.album_num }">
 				</div>
 				
 				<div class="wrap-input100 validate-input" data-validate = "Message is required">
