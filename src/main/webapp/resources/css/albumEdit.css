@@ -75,7 +75,7 @@ svg, path {
     animation: hindoong-tongtong .75s infinite;
 }
 
-.tooltip, .slider_popup {
+.tooltip, .slider_popup, .tooltip_under_bar {
     position: absolute;
     background-color: rgba(20, 20, 20, .7);
     border: none;
@@ -200,7 +200,11 @@ svg, path {
 	float: left;
 }
 
-
+.under_tool {
+	z-index:99;
+	float:left;
+	padding-left: 10px;
+}
 
 
 

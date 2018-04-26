@@ -491,16 +491,16 @@ html, body, main, .container-fluid {
 			<!-- 하단 바 영역 -->
 				<div class="under_bar " align="right">
 					<!-- 텍스트, 이미지 삽입 버튼 -->
-					<div class="tool text"><i class="fas fa-align-justify"></i></div>
-                	<div class="tool image"><i class="far fa-image"></i></div>
+					<div id="i_text" class="tool text under_tool"><i class="fas fa-align-justify"></i></div>
+                	<div id="i_image" class="tool image under_tool"><i class="far fa-image"></i></div>
                 	<!-- 각종 버튼 -->
-					<div id="i_brush" style= "z-index:99; float:left; padding-left: 10px;" onclick=""><i style = "width: 30px; height: 30px; margin: 10px;" class="fas fa-paint-brush"></i></div>
-					<div id="i_brush" style= "z-index:99; float:left; padding-left: 10px;" onclick=""><i style = "width: 30px; height: 30px; margin: 10px;"class="fas fa-forward"></i></div>					
-					<div id="i_brush" style= "z-index:99; float:left; padding-left: 10px;" onclick="addPage()"><i style = "width: 30px; height: 30px; margin: 10px;"class="far fa-plus-square"></i></div>
-					<div id="i_brush" style= "z-index:99; float:left; padding-left: 10px;" onclick="removePage()"><i style = "width: 30px; height: 30px;margin: 10px;"class="far fa-trash-alt"></i></div>
-					<div id="i_brush" style= "z-index:99; float:left; padding-left: 10px;" onclick="savePage('all')"><i style = "width: 30px; height: 30px;margin: 10px;"class="fas fa-check"></i></div>					
-					<div id="i_brush" style= "z-index:99; float:left; padding-left: 10px;" onclick=""><i style = "width: 30px; height: 30px;margin: 10px;" class="fas fa-backward"></i></div>		
-					<div id="i_brush" style= "z-index:99; float:left; padding-left: 10px;" onclick="location.href='albumView?album_num=${album.album_num}'"><i style = "width: 30px; height: 30px;margin: 10px;"class="fas fa-sign-out-alt"></i></div>
+					<div id="i_brush" class="under_tool" onclick=""><i style = "width: 30px; height: 30px; margin: 10px;" class="fas fa-paint-brush"></i></div>
+					<div id="i_end" class="under_tool" onclick=""><i style = "width: 30px; height: 30px; margin: 10px;"class="fas fa-forward"></i></div>					
+					<div id="i_add" class="under_tool" onclick="addPage()"><i style = "width: 30px; height: 30px; margin: 10px;"class="far fa-plus-square"></i></div>
+					<div id="i_remove" class="under_tool" onclick="removePage()"><i style = "width: 30px; height: 30px;margin: 10px;"class="far fa-trash-alt"></i></div>
+					<div id="i_save" class="under_tool" onclick="savePage('all')"><i style = "width: 30px; height: 30px;margin: 10px;"class="fas fa-check"></i></div>					
+					<div id="i_start" class="under_tool" onclick=""><i style = "width: 30px; height: 30px;margin: 10px;" class="fas fa-backward"></i></div>		
+					<div id="i_exit" class="under_tool" onclick="location.href='albumView?album_num=${album.album_num}'"><i style = "width: 30px; height: 30px;margin: 10px;"class="fas fa-sign-out-alt"></i></div>
 				</div>
 	
 		</div>

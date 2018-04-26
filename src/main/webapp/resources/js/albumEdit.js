@@ -226,6 +226,8 @@ function ready_album(mode) {
 	}
 	
 	slider();
+	
+	create_tooltip_of_under_tool();
 
 }
 // [end] 페이지 로딩 후 앨범 준비
@@ -1374,22 +1376,28 @@ function clearOn() {
 function createTooltip($elem, text) {
 
     // 스크롤 보정을 위한 변수
-    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+    var scrollTop = $(document).scrollTop();
+    var scrollLeft = $(document).scrollLeft();
 
     var $editor = $('.div_whole_editor') || $('.div_selection_editor');
 
     // 도움말
     var $div_tooltip = $('<div />');
-    $div_tooltip.addClass('tooltip').html(text);
+    $div_tooltip.html(text);
 
-    $('body').append($div_tooltip);
+    
 
-    $div_tooltip.css({
-        "top": $editor.position().top + scrollTop + 45,
-        "left": $editor.position().left + $elem.parent().position().left + 20 + scrollLeft 
-            - $div_tooltip.width()/2
-    })
+    if(!$elem.hasClass('under_tool')) {
+    	$div_tooltip.addClass('tooltip').appendTo('body').css({
+	        "top": $editor.position().top - 40,
+	        "left": $editor.position().left + $elem.parent().position().left + 20 - $div_tooltip.width()/2
+	    })
+	} else {
+		$div_tooltip.addClass('tooltip_under_bar').appendTo($elem.parent()).css({
+			"top": $elem.position().top - 40,
+	        "left": $elem.position().left + 30 - $div_tooltip.width()/2
+	    })
+	}
 
 }
 // [end] 도움말 생성
@@ -1446,9 +1454,6 @@ function savePage(mode) {
         }
 
     }
-    console.log('album_num -> ' + $('#hidden_album_num').val())
-    console.log('page-> ' + JSON.stringify(arr_page))
-    
     $.ajax({
         url : 'save_page',
         type : 'POST',
@@ -1629,4 +1634,35 @@ function remove_box() {
         }
         
     }
+}
+
+function create_tooltip_of_under_tool() {
+	$('.under_tool').mouseenter(function(e) {
+		var msg = '';
+		var id = $(this).attr('id');
+		if(id == 'i_text') {
+			msg = '텍스트 추가';
+		} else if(id == 'i_image') {
+			msg = '사진 추가';
+		} else if(id == 'i_brush') {
+			msg = '속지 변경';
+		} else if(id == 'i_start') {
+			msg = '첫 페이지로';
+		} else if(id == 'i_end') {
+			msg = '마지막 페이지로';
+		} else if(id == 'i_add') {
+			msg = '페이지 추가';
+		} else if(id == 'i_remove') {
+			msg = '페이지 삭제';
+		} else if(id == 'i_save') {
+			msg = '전체 저장';
+		} else if(id == 'i_exit') {
+			msg = '편집 종료';
+		}
+			
+		createTooltip($(this), msg);
+		
+	}).mouseleave(function(e) {
+		$('.tooltip_under_bar').remove();
+	})
 }
