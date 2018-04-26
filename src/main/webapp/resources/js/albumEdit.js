@@ -180,6 +180,10 @@ function ready_album(mode) {
 	                if(arr_single_page.indexOf(curr_page) == -1) {
 	                    $('#page' + (curr_page + 1) + '').droppable("enable");
 	                }
+	                
+	                if(mode == 'view') {
+	                	bookmark_check();
+	                }
 	            }
 	        } 
 	    });
