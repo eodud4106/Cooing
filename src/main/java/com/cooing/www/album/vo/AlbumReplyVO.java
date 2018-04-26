@@ -6,17 +6,31 @@ public class AlbumReplyVO {
 	private String reply_memberid;
 	private String reply_contents;
 	private String reply_date;
+	private int currentPage; //페이징 처리에 필요한 현재 페이지
 	
 	public AlbumReplyVO() {
 	}
+	
+	
 
 	public AlbumReplyVO(int reply_num, int reply_albumnum, String reply_memberid, String reply_contents,
 			String reply_date) {
+		super();
 		this.reply_num = reply_num;
 		this.reply_albumnum = reply_albumnum;
 		this.reply_memberid = reply_memberid;
 		this.reply_contents = reply_contents;
 		this.reply_date = reply_date;
+	}
+	
+	public AlbumReplyVO(int reply_num, int reply_albumnum, String reply_memberid, String reply_contents,
+			String reply_date, int currentPage) {
+		this.reply_num = reply_num;
+		this.reply_albumnum = reply_albumnum;
+		this.reply_memberid = reply_memberid;
+		this.reply_contents = reply_contents;
+		this.reply_date = reply_date;
+		this.currentPage = currentPage;
 	}
 
 	public int getReply_num() {
@@ -58,6 +72,16 @@ public class AlbumReplyVO {
 	public void setReply_date(String reply_date) {
 		this.reply_date = reply_date;
 	}
+
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+
+
 
 	@Override
 	public String toString() {
