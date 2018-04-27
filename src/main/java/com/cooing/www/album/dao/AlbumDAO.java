@@ -109,7 +109,7 @@ public class AlbumDAO{
 	public boolean personal_update_page1_Album(AlbumWriteVO albumwrite){
 		
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
-		if( mapper.personal_update_page1_Album(albumwrite) > 0) {
+		if(mapper.personal_update_page1_Album(albumwrite) > 0) {
 			return true;
 		} else {
 			return false;

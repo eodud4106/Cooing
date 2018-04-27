@@ -167,13 +167,17 @@ html, body, main, .container-fluid {
 
 	//페이지 로딩 후 초기화 내용
 	$(document).ready(function() {
-		
+
 		// 앨범 로딩 시 카테고리 설정
-		var album_category = '${album.album_category}';
-		$("#album_category").val(album_category).prop("selected", true);
 		var album_openrange = '${album.album_openrange}';
-		$("#album_openrange").val(album_openrange).prop("selected", true);
+		var album_category = '${album.album_category}';
 		
+		$("#album_openrange").val(album_openrange).prop("selected", true);
+		$("#album_category").val(album_category).prop("selected", true);
+		
+		alert('앨범 값 있니? : ' + album_openrange);
+		alert('카테고리 값 있니? : ' + album_category);
+	
 		$('.input').iCheck({
 			radioClass : 'iradio_square-green',
 		// increaseArea: '20%' // optional
@@ -286,11 +290,11 @@ html, body, main, .container-fluid {
 	// 앨범 정보 수정
 	function modifiy_AlbumInfomation() {
 		
-		if($('#album_name').val() == '') {
-			alert('앨범 이름을 입력해주세요.');
-			return;
-		}
-		
+		alert(${album.album_num});
+		alert($('#album_name').val());
+		alert($('#album_contents').val());
+		alert($('#album_category').val());
+		alert($('#album_openrange').val());
 		
 		$.ajax({ 
 			url: 'update_albuminfo',
@@ -307,9 +311,10 @@ html, body, main, .container-fluid {
 				alert(e);
 			},
 			error: function(e) {
-				console.log('에러 발생.' + e)
+				console.log('에러 발생.' + e);
 			}
-		}); 
+		}); 		
+
 	}
 	
 </script>
@@ -339,7 +344,9 @@ html, body, main, .container-fluid {
 				<span class="contact100-form-title">
 					ALBUM
 				</span>
-
+			</form>		
+				
+				<!-- 앨범 정보 -->
 				<div class="wrap-input100 validate-input" data-validate="Name is required">
 					<span class="label-input100">Album Name</span>
 					<input class="input100" type="text" name="album_name" id="album_name" class="input_album_info" value="${album.album_name }" >
@@ -376,7 +383,7 @@ html, body, main, .container-fluid {
 				    <option value="17">자동차</option>
 				    <option value="18">낚시</option>
 				    <option value="19">건강</option>
-				    <option value="20" selected="selected">기타</option>
+				    <option value="20">기타</option>
 					</select>
 					</div>
 					<span class="focus-input100"></span>
@@ -386,14 +393,10 @@ html, body, main, .container-fluid {
 					<span class="label-input100">공개범위</span>
 					<div>
 						<select class="selection-2" name="album_openrange" id="album_openrange" >
-							<c:if test="${album.isPersonal == 1}">
-					    <option value="1" selected="selected">나만 보기</option>
-					    <option value="2">친구 공개</option>
-				    </c:if>
-				    <c:if test="${album.isPersonal == 0}">
-				    	<option value="3">그룹 공개</option>
-				    </c:if>
-				    <option value="4">전체 공개</option>
+						    <option value="1">나만 보기</option>
+						    <option value="2">친구 공개</option>
+					    	<option value="3">그룹 공개</option>
+					    	<option value="4">전체 공개</option>
 						</select>
 					</div>
 					<span class="focus-input100"></span>
@@ -411,7 +414,7 @@ html, body, main, .container-fluid {
 						</button>
 					</div>
 				</div>
-			</form>		
+				
 
 	<div id="dropDownSelect1"></div>    
 		    

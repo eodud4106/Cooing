@@ -13,7 +13,15 @@ public class AlbumWriteVO {
 	public AlbumWriteVO() {
 		super();
 	}
-	
+
+	public AlbumWriteVO(String album_name, String album_contents, int album_category, int album_openrange) {
+		super();
+		this.album_name = album_name;
+		this.album_contents = album_contents;
+		this.album_category = album_category;
+		this.album_openrange = album_openrange;
+	}
+
 	public AlbumWriteVO(String album_writer, String album_name, int album_openrange, int album_category,
 			String isPersonal) {
 		super();
@@ -33,10 +41,8 @@ public class AlbumWriteVO {
 		this.album_contents = album_contents;
 		this.album_category = album_category;
 	}
-
-
-
-
+	
+	
 	public AlbumWriteVO(int album_num, String album_writer, String album_name, int album_openrange,
 			String album_contents, int album_category, String album_thumbnail, String isPersonal) {
 		super();

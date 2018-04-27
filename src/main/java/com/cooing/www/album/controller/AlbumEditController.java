@@ -123,7 +123,6 @@ public class AlbumEditController {
 			if(album == null) return "redirect:./";
 			//TODO 앨범 넘버로 페이지 배열로 받아와 모델에 담기
 			ArrayList<PageHtmlVO> arr_page = albumDAO.select_pages_by_album_num(int_album_num);
-			
 			model.addAttribute("album", album);
 			model.addAttribute("arr_page", arr_page);
 			
@@ -149,7 +148,7 @@ public class AlbumEditController {
 	public String AlbumFirstCreate(HttpSession session, int album_num, String album_name, String album_contents,
 			int album_openrange, int album_category, String hashtag){
 		
-		
+		System.out.println("@@@@@@@@@@@@@@@@@@@제발 들어와라");
 		
 		AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_openrange, album_contents, album_category);
 		boolean update_check = false;
@@ -368,24 +367,6 @@ public class AlbumEditController {
 			}
 		}
 		return null;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/modifiy_AlbumInfomation", method = RequestMethod.POST)
-	public String modifiy_AlbumInfomation(int album_num, String album_name, String album_contents,
-			int album_category, int album_openrange){
-		
-		AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_openrange, album_contents, album_category);
-		boolean check_infomationUpdate = false;
-		check_infomationUpdate = albumDAO.personal_update_page1_Album(albumwrite);
-		
-		if(check_infomationUpdate == true) {
-			return "success";
-		}else{
-			return "fail";
-		}
-		
-		
 	}
 	
 	@RequestMapping(value = "thumbnail", method = RequestMethod.GET)
