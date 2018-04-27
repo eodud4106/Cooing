@@ -1685,6 +1685,7 @@ function nav_page(location) {
 function open_background() {
 	
 	$('.tooltip_under_bar').remove();
+	$('#div_select_bg').remove();
 	
 	var $div = $('<div />', {
 		"id": "div_select_bg",
@@ -1692,7 +1693,7 @@ function open_background() {
 		
 	}).css({
 		"left": $('#i_brush').position().left - 20,
-		"top": $('#i_brush').position().top - 150
+		"top": $('#i_brush').position().top - 160
 	}).appendTo('body');
 	
 	var $osirase = $('<p />', {
@@ -1712,10 +1713,15 @@ function open_background() {
 			$('.page').css({
 				"background-color": $(this).css("background-color") 
 			});
-			$('#div_select_bg').remove();
 		}).appendTo($div);
 	}
 	
+	
+	$(document).click(function(e) {
+		if(!$(e.target).parent().parent().hasClass('i_brush') && !$(e.target).parent().hasClass('i_brush')) {
+			$('#div_select_bg').remove();
+		}
+	});
 	
 }
 
