@@ -8,90 +8,14 @@
 <head>
 <title>My Page</title>
 <meta charset="utf-8" />
-<style>
-.button_container {
-  position: absolute;
-  left: 0;
-  right: 0;
- /*  top: 50%; */
-}
 
-.btn {
-  border: none;
-  display: block; 
-  text-align: center;
-  cursor: pointer;
-  text-transform: uppercase;
-  outline: none;
-  overflow: hidden;
-  position: relative;
-  color: #fff;
-  font-weight: 700;
-  font-size: 15px;
-  background-color: #bae5e1;
-  /* padding: 17px 60px; */
-  margin: 0 auto;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
-}
-
-.btn span {
-  position: relative; 
-  z-index: 1;
-}
-
-.btn:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 490%;
-  width: 140%;
-  background: #78c7d2;
-  -webkit-transition: all .5s ease-in-out;
-  transition: all .5s ease-in-out;
-  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
-  transform: translateX(-98%) translateY(-25%) rotate(45deg);
-}
-
-.btn:hover:after {
-  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
-  transform: translateX(-9%) translateY(-25%) rotate(45deg);
-}
-
-.link {
-  font-size: 20px;
-  margin-top: 30px;
-}
-
-.link a {
-  color: #000;
-  font-size: 25px; 
-}
-.friendList{
-	height: 250px;		
-	overflow-y : scroll;
-	padding-left: 30px;
-	background-color : aliceblue;
-	font-family: 'Gaegu', cursive;
-    font-size: 18px;
-    cursor: pointer;
-}
-.groupList{
-	height: 250px;	
-	overflow-y : scroll;
-	padding-left: 30px;
-	/* overflow-y:hidden; */
-	background-color : aliceblue;
-	font-family: 'Gaegu', cursive;
-    font-size: 18px;
-    cursor: pointer;
-    margin-top: 50px;
-}
-</style>
 
 <script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
 <!-- 폰트 -->
-<link href="https://fonts.googleapis.com/css?family=Gaegu" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=McLaren" rel="stylesheet">
+<!-- 친구 그룹목록 출력-->
+<link rel="stylesheet" href="resources/css/friend_list.css">
+
  <link rel="stylesheet" href="<c:url value="/resources/css/myPage.css"/>">
 
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/bootstrap.min.css"/>">
@@ -104,9 +28,6 @@
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/animate.css"/>">
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/style.css"/>">
 
-<!-- 앨범리스트 출력할 때 앨범사진위에 앨범 정보 출력하기 -->
-<link rel="stylesheet" href="<c:url value="/resources/photoview_css/style.css"/>">
-<link rel="stylesheet" href="<c:url value="/resources/photoview_css/base.css"/>">
 
 <script src="<c:url value="/resources/aside_js/popper.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/bootstrap.min.js"/>"></script>
@@ -124,7 +45,6 @@
 
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="<c:url value="/resources/js/search.js"/>"></script>
-
 
 <script>
 
@@ -213,53 +133,9 @@ function create_personal_album() {
 	});
 }
 </script>
-<!-- 정렬순 라디오 버튼 -->
-<script>
-$(document).ready(function(){
-  $('input').iCheck({
-    checkboxClass: 'icheckbox_square-green',
-    radioClass: 'iradio_square-green',
-    increaseArea: '20%' // optional
-  });
-});
-</script>
 
-<style>
-.img1{
-	width: 50px;
-	height: 50px;
-}
-.friendList{
-	height: 250px;	
-	overflow : scroll;
-	overflow-x:hidden;
-	/* overflow-y:hidden; */
-}
-.groupList{
-	height: 250px;
-	overflow : scroll;
-	overflow-x:hidden;
-	/* overflow-y:hidden; */
-}
-/* 포인터로 마우스 모양 바꿔주는곳 */
-.friendclick{
-	cursor:pointer;
-}
-/* 팝업창 꾸미는 곳 */
-.popuplayer{
-	position:absoulute;
-	display:none;
-	background-color:#e0e0e0;
-	border:solid 2px #d0d0d0.;
-	width:120px;
-	height:50px;
-	padding:10px;
-	
-}
-</style>
-
-</head>
-<body>
+</head >
+<body style ="font-family: 'McLaren', cursive;">
 
 	<aside class="probootstrap-aside js-probootstrap-aside">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
@@ -304,18 +180,6 @@ $(document).ready(function(){
 			<br><br><br>
 
 		</div>
-
-		<!-- <form>
-			<div class="search">
-				 테스트<br /> 
-				 <input	type="button" id="myBtn" value="모달 열기">
-				<div id="myModal" class="modal">
-					<span id="myBtn_close" class="close">&times;</span>
-					<iframe src="albumView" allowTransparency='true' frameborder="0"
-						width=100% height="100%"></iframe>
-				</div>
-			</div>
-		</form> -->
 	</aside>
 
 
@@ -333,7 +197,7 @@ $(document).ready(function(){
 	
 	</div>	
 	
-		<div class ="search-bar">
+	<div class ="search-bar">
 		<br><br>
 		<div style = "margin-left: 20px;">
        			 SEARCH &nbsp<img id='image_search' src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
@@ -349,7 +213,7 @@ $(document).ready(function(){
                	 border-bottom: solid 2px #333;
                	 outline: none;
               	  width: 0px;
-               	 transition: all 0.5s;" onkeydown="if(event.keyCode==13){search_other();}">		
+               	 transition: all 0.5s;" onkeydown="if(event.keyCode==13){searchfriend();}">		
 				
 		</div>
 		<br>	
@@ -425,7 +289,7 @@ $(document).ready(function(){
 			<div class="col-md-12">
 				
 				<p>
-					&copy; 2017 <a href="https://uicookies.com/" target="_blank">uiCookies:Aside</a>.
+					&copy; 2018 <a href="https://uicookies.com/" target="_blank">uiCookies:Aside</a>.
 					<br> All Rights Reserved. Designed by <a
 						href="https://uicookies.com/" target="_blank">uicookies.com</a>
 				</p>
@@ -435,70 +299,7 @@ $(document).ready(function(){
 
 	</main>
 
-	<%-- <aside class="probootstrap-aside2 js-probootstrap-aside2">
-		<a href="#"
-			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
-			<span class="oi oi-arrow-right"></span> Close
-		</a>
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="" class="mb-2 d-block probootstrap-logo">MY FRIEND</a>			
-		</div>				
-				 <form>
-					<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
-					<input type="button" id="friendsearchbt" value="s">
-				</form>
-			<div class = "friendList">
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(friend) ne 0}">
-						<c:forEach var="arrf" items="${friend }">
-							<div name="friend" id="friend">
-								<p onclick="openChat('1', '${arrf.member_id}')"><img src="./memberimg?strurl=${arrf.member_picture}" style="width:40px;height:40px;">${arrf.member_id}</p>
-							</div>
-						</c:forEach>
-						<div name="user" id="user">
-						</div>												
-					</c:if>
-				</c:if>
-			</div>
-		
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="" class="mb-2 d-block probootstrap-logo">MY GROUP</a>				
-		</div>				
-		<!-- <div class="probootstrap-overflow"> -->
-		<input type="button" value="그룹생성"
-					onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
-			<div class = "groupList">
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(group) ne 0}">
-						<c:forEach var="party" items="${group}">
-							<div name="group">
-								<p onclick="openGUpdate('${party.party_name}')"
-									partynum="${party.party_num}">${party.party_name}</p>
-								<input type="button" value="채팅"
-									onclick="openChat('0', '${party.party_num}', '')" />
-							</div>
-						</c:forEach>
-					</c:if>
-				</c:if>				
-			<!-- </div> -->
-		</div>
 
-	</aside>
-
-	<div id="div_chat" 
-		style="width: 500px; height: 500px; position: absolute; padding: 0px; opacity: 1; background-color: rgb(240, 240, 240); display: none;">
-		<p>
-			<button id="button_close" onclick="closePChat()">닫기</button>
-		</p>
-		<div id="data" 
-			style="height: 350px; width: 100%; overflow-y: scroll; margin: auto; display: block; padding: 0px"></div>
-
-		<div id="div_send">
-			<input type="text" id="message" autocomplete="off" />
-			<input type="button" id="sendBtn" value="전송" />
-			<input type="hidden" id="totalpage" value="${totalpage}">
-		</div>
-	</div> --%>
 	
 	<aside class="probootstrap-aside2 js-probootstrap-aside2">
 		<a href="#"
@@ -509,7 +310,7 @@ $(document).ready(function(){
 			<a href="" class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY FRIEND</a>			
 		</div>				
 				 <form>
-					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
+					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" >
 					<div>
        			  <img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
        			 height: 24px;margin-left: 215px; margin-top: -50px;">
@@ -548,8 +349,7 @@ $(document).ready(function(){
 	<div class="popuplayer">
 		<p onClick="friendpage()" style="font-size:8pt;color:#26afa1;">친구페이지</p>
 		<p onClick="chatpage()" style="font-size:8pt;color:#26afa1;">채팅</p>
-	</div>
-	
+	</div>	
 
 	<script src="resources/aside_js/popper.min.js"></script>
 	<script src="resources/aside_js/bootstrap.min.js"></script>

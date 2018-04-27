@@ -42,10 +42,11 @@
 <link rel="stylesheet" href="resources/aside_css/icomoon.css">
 <link rel="stylesheet" href="resources/aside_css/animate.css">
 <link rel="stylesheet" href="resources/aside_css/style.css">
-아이콘
+<!-- 아이콘 -->
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 <!-- 폰트 -->
-<link href="https://fonts.googleapis.com/css?family=Gaegu" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Gaegu" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
 
 
 <style type="text/css">
@@ -673,7 +674,7 @@ html, body, main, .container-fluid {
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>			
+			<a href="/www" class="mb-2 d-block probootstrap-logo" style = "font-family: 'Orbitron', sans-serif;">COOING</a>			
 		</div>
 		<div class="probootstrap-overflow">
 		<div class="main">

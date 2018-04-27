@@ -33,7 +33,8 @@ function createPartyPopup(e, elem) {
 		"height": "60px",
 		"background-color": "#A9E2F3",
 		"z-index": "1000",
-		"color": "black"
+		"color": "black",
+		"cursor" : "pointer"
 	}).appendTo($('body'));
 
 	var $div_go_party_page = $('<div />', {

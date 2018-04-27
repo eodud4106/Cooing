@@ -31,19 +31,19 @@ function AlbumListPaging(check, result) {
 		}).appendTo($div_card);
 		
 		var $p_name = $('<p />', {
-			"text": "제목: " + album.album_name,
+			"text": /*"ALBUM " +*/ album.album_name,
 			"class": "card_album_name"
 		}).appendTo($info_div);
 		var $p_writer = $('<p />', {
-			"text": "지은이: " + album.album_writer,
+			"text": /*"ID: " + */album.album_writer,
 			"class": "card_album_writer"
 		}).appendTo($info_div);
 		var $p_contents = $('<p />', {
-			"html": "<내용><br>" + album.album_contents + "<br>",
+			"html": /*"<CONTENT><br>" +*/ album.album_contents + "<br>",
 			"class": "card_album_contents"
 		}).appendTo($info_div);
 		if(album.album_contents == null) {
-			$p_contents.html("<내용><br>없음<br>")
+			$p_contents.html("<CONTENT><br>없음<br>")
 		}		
 		var $span_like = $('<sapn />', {
 			"html": "❤",

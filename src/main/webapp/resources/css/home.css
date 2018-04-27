@@ -33,11 +33,34 @@
     padding: 10px;
     position: fixed;
     display: block;
-   	background-color: rgba(255,255,255, 0.9);
+   	background-color: rgba(255,255,255, 0.5);
    	text-align: center;  	
    	overflow : hidden;
 }
 
 .hidden_info{
 	display: none;
+	color :  black;
 }
+
+.card_album_name{
+	font-size: 30px;
+	font-family: font-family: 'Black Han Sans', sans-seri.f;
+	
+}
+
+.card_album_writer{
+	float : right;
+}
+
+.card_album_contents{
+	
+}
+.card_album_likes{
+	float: right;	
+}
+.card_album_contents{
+	float : right;s
+}
+
+

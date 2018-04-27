@@ -37,8 +37,8 @@
 <script src="resources/js/main.js"></script>
 <script src="resources/js/popup.js"></script>
 <!-- 폰트 -->
-<link href="https://fonts.googleapis.com/css?family=Gaegu" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Black+Han+Sans" rel="stylesheet">
 <script>
 var pagenum = 0;
 var pagingcheck = false;
@@ -249,7 +249,6 @@ $(document).ready(function(){
 	overflow-y : scroll;
 	padding-left: 30px;
 	background-color : aliceblue;
-	font-family: 'Gaegu', cursive;
     font-size: 18px;
     cursor: pointer;
     margin-top: -15px;
@@ -260,10 +259,9 @@ $(document).ready(function(){
 	padding-left: 30px;
 	/* overflow-y:hidden; */
 	background-color : aliceblue;
-	font-family: 'Gaegu', cursive;
     font-size: 18px;
     cursor: pointer;
-    margin-top: 30px;
+    margin-top: 70px;
 }
 /* 포인터로 마우스 모양 바꿔주는곳 */
 .friendclick{
@@ -279,11 +277,12 @@ $(document).ready(function(){
 	height:70px;
 	padding:10px;
 	
+	
 }
 
 </style>
 </head>
-<body style="font-family: 'Gaegu', cursive;">
+<body>
 
 	<aside class="probootstrap-aside js-probootstrap-aside">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
