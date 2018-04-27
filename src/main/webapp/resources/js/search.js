@@ -57,7 +57,7 @@ function AlbumListPaging(check, result) {
 			"class": "card_album_likes"
 		}).appendTo($info_div);
 		
-		var $span_reply = $('<span />', {
+		var $p_reply = $('<p />', {
 			"html": "댓글 :" + replycount(album.album_num),
 			"class": "card_album_contents"
 		}).appendTo($info_div);
