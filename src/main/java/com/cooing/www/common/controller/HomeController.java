@@ -18,6 +18,7 @@ import com.cooing.www.album.dao.AlbumBookMarkDAO;
 import com.cooing.www.album.dao.AlbumDAO;
 import com.cooing.www.album.dao.AlbumLikesDAO;
 import com.cooing.www.album.vo.AlbumLikesVO;
+import com.cooing.www.album.vo.AlbumListInfomation;
 import com.cooing.www.album.vo.AlbumWriteVO;
 import com.cooing.www.album.vo.BookMark;
 import com.cooing.www.album.vo.PageHtmlVO;
@@ -215,5 +216,13 @@ public class HomeController {
 	@RequestMapping(value = "/LankingPage", method = RequestMethod.GET)
 	public String LankingPage(){
 		return "LankingPage";
+	}
+	
+	// 마이페이지 앨범 정보 불러오기
+	@ResponseBody
+	@RequestMapping(value = "/getMyAlbumInfomation", method= RequestMethod.POST)
+	public ArrayList<AlbumListInfomation> getMyAlbumInfomation(HttpSession session) {
+		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+		return albumDAO.getMyAlbumInfomation(album_writer);
 	}
 }
