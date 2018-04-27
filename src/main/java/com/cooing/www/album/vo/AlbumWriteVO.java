@@ -8,14 +8,14 @@ public class AlbumWriteVO {
 	private String album_contents;	
 	private int album_category;
 	private String album_thumbnail;
-	private int isPersonal;
+	private String isPersonal;
 	
 	public AlbumWriteVO() {
 		super();
 	}
 	
 	public AlbumWriteVO(String album_writer, String album_name, int album_openrange, int album_category,
-			int isPersonal) {
+			String isPersonal) {
 		super();
 		this.album_writer = album_writer;
 		this.album_name = album_name;
@@ -38,7 +38,7 @@ public class AlbumWriteVO {
 
 
 	public AlbumWriteVO(int album_num, String album_writer, String album_name, int album_openrange,
-			String album_contents, int album_category, String album_thumbnail, int isPersonal) {
+			String album_contents, int album_category, String album_thumbnail, String isPersonal) {
 		super();
 		this.album_num = album_num;
 		this.album_writer = album_writer;
@@ -106,11 +106,11 @@ public class AlbumWriteVO {
 		this.album_thumbnail = album_thumbnail;
 	}
 
-	public int getIsPersonal() {
+	public String getIsPersonal() {
 		return isPersonal;
 	}
 
-	public void setIsPersonal(int isPersonal) {
+	public void setIsPersonal(String isPersonal) {
 		this.isPersonal = isPersonal;
 	}
 

@@ -181,6 +181,10 @@ html, body, main, .container-fluid {
 		});
 		
 		ready_album('edit');
+		
+		$('html').click(function(e) {
+			$('#home_button').text(e.target.nodeName);
+		})
 
 	});
 
@@ -298,18 +302,12 @@ html, body, main, .container-fluid {
 				album_category: $('#album_category').val(),
 				album_openrange: $('#album_openrange').val()
 			},
-			dataType: 'json',
+			dataType: 'text',
 			success:function(e) {
-				if(e == 'success') alert('업데이트 되었습니다.')
-				else if(e == 'fail') alert('업데이트 중 문제 발생...')
+				alert(e);
 			},
 			error: function(e) {
-
-				if(e.responseText == 'success') {
-					alert('업데이트 되었습니다.')
-				} else {
-					alert(JSON.stringify(e));
-				}
+				console.log('에러 발생.' + e)
 			}
 		}); 
 	}
@@ -388,11 +386,11 @@ html, body, main, .container-fluid {
 					<span class="label-input100">공개범위</span>
 					<div>
 						<select class="selection-2" name="album_openrange" id="album_openrange" >
-							<c:if test="${album.isPersonal == 1 }">
+							<c:if test="${album.isPersonal == 1}">
 					    <option value="1" selected="selected">나만 보기</option>
 					    <option value="2">친구 공개</option>
 				    </c:if>
-				    <c:if test="${album.isPersonal == 0 }">
+				    <c:if test="${album.isPersonal == 0}">
 				    	<option value="3">그룹 공개</option>
 				    </c:if>
 				    <option value="4">전체 공개</option>
@@ -405,7 +403,7 @@ html, body, main, .container-fluid {
 				<div class="container-contact100-form-btn">
 					<div class="wrap-contact100-form-btn">
 						<div class="contact100-form-bgbtn"></div>
-						<button class="contact100-form-btn" onclick="modifiy_AlbumInfomation()" class="bt_album_info">
+						<button class="contact100-form-btn bt_album_info" onclick="modifiy_AlbumInfomation()" >
 							<span>
 								Submit
 								<i class="fa fa-long-arrow-right m-l-7"  aria-hidden="true"></i>

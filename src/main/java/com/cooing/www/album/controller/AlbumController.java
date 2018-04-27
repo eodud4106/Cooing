@@ -42,7 +42,7 @@ public class AlbumController {
 		
 		AlbumWriteVO album = new AlbumWriteVO();
 		album.setAlbum_writer(party_name);
-		album.setIsPersonal(0);
+		album.setIsPersonal("0");
 		
 		ArrayList<AlbumWriteVO> arr_album = null;
 		

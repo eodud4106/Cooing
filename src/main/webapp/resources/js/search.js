@@ -84,7 +84,7 @@ function searchword() {
 				$('#friend').html('');
 				var str = '';
 				$.each(array, function(i, data) {
-					str += '<p class="friendclick" id="'+data.member_id+'" onClick="popupvalue(\'' + data.member_id + '\')"><img src="./memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
+					str += '<p class="friendclick" id="'+data.member_id+'" ><img src="./memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
 				});
 				$('#friend').html(str);
 			},
@@ -102,7 +102,7 @@ function searchword() {
 			success : function(array) {
 				var str = '';
 				$.each(array, function(i, data) {
-					str += '<p class="friendclick" id="'+data.member_id+'" onClick="popupvalue(\'' + data.member_id + '\')"><img src="./memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
+					str += '<p class="friendclick" id="'+data.member_id+'" ><img src="./memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
 				});
 				$('#user').html(str);
 			},
@@ -118,7 +118,7 @@ function searchword() {
 			success : function(array) {
 				var str = '';
 				$.each(array, function(i, data) {
-					str += '<p class="friendclick" id="'+data.member_id+'" onClick="popupvalue(\'' + data.member_id + '\')"><img src="./memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
+					str += '<p class="friendclick" id="'+data.member_id+'" ><img src="./memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
 				});
 				$('#friend').html(str);
 				$('#user').html('');
@@ -128,10 +128,6 @@ function searchword() {
 			}
 		});
 	}
-	$(document).on('click' , '.friendclick' , function(e){
-		friendclickevent();
-		popupvalue($(this).attr('id') , e);
-	});
 }
 
 function friendclickevent(){
@@ -166,14 +162,6 @@ function friendclickevent(){
 			"position" : "absolute"
 		}).show();
 	});
-}
-
-function popupvalue(click , e) {
-	$('.popuplayer').val(click);
-}
-
-function friendpage() {
-	location.href = './friend_get?id=' + $('.popuplayer').val() + '';
 }
 
 function chatpage() {

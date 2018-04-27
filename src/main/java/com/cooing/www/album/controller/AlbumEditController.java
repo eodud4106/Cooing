@@ -52,12 +52,12 @@ public class AlbumEditController {
 	@Autowired
 	AlbumBookMarkDAO albumbookmarkDAO;
 
-	private final String strFilePath = "/FileSave/upload/";						// windows
-	//private static String strFilePath = "/Users/insect/hindoong_upload/";			// mac
-	private final String strThumbnailPath = "/FileSave/thumbnail/";				// windows
-	//private static String strThumbnailPath = "/Users/insect/hindoong_upload/";	// mac
-	private final String strTemp_PicturePath = "/FileSave/temp_picture/"; 			//사진 자를 때 필요한 경로
-	//private static String strTemp_PicturePath = "/Users/insect/hindoong_upload/";	// mac
+	//private final String strFilePath = "/FileSave/upload/";						// windows
+	private static String strFilePath = "/Users/insect/hindoong_upload/";			// mac
+	//private final String strThumbnailPath = "/FileSave/thumbnail/";				// windows
+	private static String strThumbnailPath = "/Users/insect/hindoong_upload/";	// mac
+	//private final String strTemp_PicturePath = "/FileSave/temp_picture/"; 			//사진 자를 때 필요한 경로
+	private static String strTemp_PicturePath = "/Users/insect/hindoong_upload/";	// mac
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
 	
@@ -65,14 +65,14 @@ public class AlbumEditController {
 	//앨범생성
 	@ResponseBody
 	@RequestMapping(value = "/create_album", method = RequestMethod.POST)
-	public String personal_albumCreate(Model model, HttpSession session, Integer isPersonal, String party_name){
+	public String personal_albumCreate(Model model, HttpSession session, String isPersonal, String party_name){
 		
 		String returnMessage = null;
 		
 		String album_writer = "";
 		int openrange = 0;
 		
-		if(isPersonal == 1) {
+		if(isPersonal.equals("1")) {
 			// 개인 앨범
 			album_writer = ((Member) session.getAttribute("Member")).getMember_id();
 			openrange = 1;
@@ -114,7 +114,7 @@ public class AlbumEditController {
 				new Exception();
 			}
 		} catch (Exception e) {
-			return "redirect:./";
+			//return "redirect:./";
 		}
 		
 		try {
@@ -149,8 +149,9 @@ public class AlbumEditController {
 	public String AlbumFirstCreate(HttpSession session, int album_num, String album_name, String album_contents,
 			int album_openrange, int album_category, String hashtag){
 		
-		AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_openrange, album_contents, album_category);
 		
+		
+		AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_openrange, album_contents, album_category);
 		boolean update_check = false;
 		update_check = albumDAO.personal_update_page1_Album(albumwrite);
 		
@@ -160,8 +161,14 @@ public class AlbumEditController {
 //		for(int i = 0; i < tags.length; i++){
 //			searchDAO.insertHashTag(new HashTag(0 , ialbumnum , tags[i]));
 //		}
-				
-		return update_check? "success":"fail";
+		System.out.println("메세지는... -> " + update_check);
+		String msg = "";
+		if(update_check) {
+			msg = "success";
+		} else {
+			msg = "fail";
+		}
+		return msg;
 	}
 	
 	//앨범 페이지별 저장

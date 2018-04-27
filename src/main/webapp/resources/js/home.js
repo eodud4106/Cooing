@@ -29,7 +29,7 @@ function initialize(){
 		checkRadioPaging(); 
 	 });
 
-	$('html').click(function (e) {
+	$(document).click(function (e) {
 
 		e.stopPropagation()
 
