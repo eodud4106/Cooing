@@ -16,19 +16,6 @@ public class SearchDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public boolean insertHashTag(HashTag tag){
-		SearchMapper mapper = sqlSession.getMapper(SearchMapper.class);
-		if(mapper.insertHashTag(tag) > 0)
-			return true;
-		else 
-			return false;
-	}
-	
-	public ArrayList<HashTag> selectHashTag(String search){
-		SearchMapper mapper = sqlSession.getMapper(SearchMapper.class);
-		return mapper.selectHashTag(search);
-	}
-	
 	public boolean insertSearch(Search search){
 		SearchMapper mapper = sqlSession.getMapper(SearchMapper.class);
 		if(mapper.insertSearch(search) > 0)

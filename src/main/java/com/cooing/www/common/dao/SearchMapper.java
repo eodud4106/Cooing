@@ -11,9 +11,6 @@ import com.cooing.www.album.vo.HashTag;
 import com.cooing.www.common.vo.Search;
 
 public interface SearchMapper {
-	public int insertHashTag(HashTag tag);
-	public ArrayList<HashTag> selectHashTag(String search);
-	
 	public int insertSearch(Search search);
 	public ArrayList<Map<String , Object>> selectDaySearch(String date);
 	

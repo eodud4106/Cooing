@@ -40,4 +40,8 @@
 		likeit_albumnum = #{likeit_albumnum}
 		 
 	</select>
+	<!-- 좋아요 갯수 -->
+	<select id="countLikes" resultType="int" parameterType="int">
+		select count(*) from likeit where likeit_albumnum = #{likeit_albumnum}
+	</select>
 </mapper>

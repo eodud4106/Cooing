@@ -3,16 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cooing.www.common.dao.SearchMapper">
-
-	<insert id="insertHashTag" parameterType="tag">
-	insert into tag (tag_num,tag_albumnum,tag_content)
-		values (tag_seq.nextval,#{tag_albumnum},#{tag_content})
-	</insert>
-	
-	<select id="selectHashTag" resultType="tag" parameterType="String">
-		select * from tag where tag_content = #{search}
-	</select>
+<mapper namespace="com.cooing.www.common.dao.SearchMapper">	
 	
 	<insert id="insertSearch" parameterType="search">
 	insert into search (search_num,search_word,search_date)
