@@ -8,19 +8,34 @@ function AlbumListPaging(check, result) {
 		$('.card-columns').html('');
 	$(result).each(function(i, album) {
 		var div_card = document.createElement('div'); //카드 클래스 div
+		var ul_card = document.createElement('ul');
+		var li_card = document.createElement('li');
+		var div_inner = document.createElement('div');
 		var a_read_album = document.createElement('a'); //a태그
 		var img = document.createElement("img"); // 이미지 생성
+		var p_tag = document.createElement("p"); // p태그
+		
+		//여기에 추가해서 정보 넣어주면 됨
+		var album_infomation_html = '앨범 번호 : ' + album.album_num + '';
+				
 		$(img).attr('src', './thumbnail?filePath=' + album.album_thumbnail + '');
 		$(img).attr('style', 'width:100%;height:100%');
 		$(a_read_album).attr('href', 'albumView?album_num=' + album.album_num + '');
-		$(a_read_album).append(img);
-		$(div_card).addClass('card img-loaded').append(a_read_album);
+		//a태그 사이에 p태그를 넣어주기
+		$(p_tag).html(album_infomation_html);
+		$(a_read_album).append(p_tag);
+		
+		$(div_inner).append(a_read_album);
+		$(div_inner).append(img);
+		$(li_card).append(div_inner);
+		$(ul_card).append(li_card);
+
+		$(div_card).addClass('card img-loaded').append(ul_card);
 		//a태그 링크 걸어주기
 		$('.card-columns').append(div_card);
 	});
 	pagingcheck = false;
 }
-
 //home이 아닌곳에서 search를 할경우 메인으로 보내서 검색을 해야한다.
 function search_other() {
 	location.href('./search_other?search=' + $('#searchtx').val() + '');

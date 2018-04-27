@@ -292,18 +292,4 @@
 			isPersonal = #{isPersonal}
 	</select>
 	
-	<select id="getMyAlbumInfomation" parameterType="String" resultType="albuminfo">
-		select 
-			A.ALBUM_NUM, 
-			A.ALBUM_WRITER,
-			A.ALBUM_NAME,
-			A.ALBUM_CONTENTS,
-			A.ALBUM_CATEGORY, 
-			(SELECT COUNT(*) FROM LIKEIT L WHERE L.LIKEIT_ALBUMNUM = A.ALBUM_NUM) AS LIKEIT_COUNT
-		FROM 
-			ALBUMLIST A 
-		where 
-			A.ALBUM_WRITER = #{album_writer}
-	</select>
-	
 </mapper>
