@@ -238,6 +238,7 @@ $(document).ready(function(){
 	font-family: 'Gaegu', cursive;
     font-size: 18px;
     cursor: pointer;
+    margin-top: -15px;
 }
 .groupList{
 	height: 250px;	
@@ -248,7 +249,7 @@ $(document).ready(function(){
 	font-family: 'Gaegu', cursive;
     font-size: 18px;
     cursor: pointer;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 /* 포인터로 마우스 모양 바꿔주는곳 */
 .friendclick{
@@ -407,7 +408,7 @@ $(document).ready(function(){
 			<span class="oi oi-arrow-right"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="" class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY FRIEND</a>			
+			<p class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY FRIEND</p>			
 		</div>				
 				 <form>
 					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
@@ -423,7 +424,7 @@ $(document).ready(function(){
 			</div>
 		
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="" class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY GROUP</a>				
+			<p class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY GROUP</p>				
 						
 		<!-- <div class="probootstrap-overflow"> -->
 		
