@@ -123,7 +123,7 @@ function likesearch(){
 						}
 					});
 					num++;
-					array[i] = [count , word , '#f3f3f3'];						
+					array[i] = [count , word];						
 				});
 				graphcreate(array , num);
 			},
@@ -153,7 +153,7 @@ function searchsearch(){
 						}
 					});	
 					num++;
-					array[i] = [count , word , '#f3f3f3'];		
+					array[i] = [count , word];		
 				});
 				graphcreate(array,num);				
 			},
@@ -165,7 +165,8 @@ function categorysearch(){
 	var num = 0;
 	//밑에 부분은 카테고리 검색에 관한 부분
 	if($('#datepicker').val() != null){
-		var vector = ['여행' , '음식'];
+		var vector = ['여행' , '스포츠' , '동물' , '음악' , '음식' , '패션' , '연예' , '게임' , '영화' , '도서'
+			, '공연' , '외국어' , '전문지식' , '수집' , '자기계발' , '육아' , '일상생활' , '자동차' , '낚시' , '건강'];
 		$.ajax({
 			url:'searchCategorypop',
 			type:'POST',		
@@ -184,7 +185,7 @@ function categorysearch(){
 						}
 					});	
 					num++;
-					array[i] = [count ,vector[kind], '#f3f3f3'];		
+					array[i] = [count ,vector[kind]];		
 				});
 				graphcreate(array , num);
 			},
@@ -194,6 +195,7 @@ function categorysearch(){
 }
 
 function graphcreate(array , num){
+	var color = ['#f06292' , '#7986cd' , '#4dd0e1' , '#aed581' , '#ffd54f' , '#a1887f' , '#78909c' , '#9575cd' , '#37474f' , '#e51c23']
 	$('#graphdiv').html('');
 	var width = 100 * num;
 	if(width > 1000){
@@ -207,7 +209,8 @@ function graphcreate(array , num){
 		width:width,
 		height:550,
 		sort:'desc',
-		barSpace : 10
+		barSpace : 10,
+		colors:color
 	});
 }
 </script>
