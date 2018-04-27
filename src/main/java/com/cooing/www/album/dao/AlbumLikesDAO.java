@@ -37,8 +37,9 @@ public class AlbumLikesDAO {
 		AlbumLikesMapper albumlikesmapper = sqlSession.getMapper(AlbumLikesMapper.class);
 		return albumlikesmapper.listLikes(likeit_albumnum);
 	}
-
-
-
-
+	//좋아요 갯수
+	public int countLikes(int likeit_albumnum) {
+		AlbumLikesMapper albumlikesmapper = sqlSession.getMapper(AlbumLikesMapper.class);
+		return albumlikesmapper.countLikes(likeit_albumnum);
+	}
 }

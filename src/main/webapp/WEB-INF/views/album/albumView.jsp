@@ -170,6 +170,10 @@ html, body, main, .container-fluid {
 .buttonHolder{
 	float : left;
 }
+.img1{
+	width:30px;
+	height:30px;
+}
 </style>
 
 <script>
@@ -370,6 +374,25 @@ html, body, main, .container-fluid {
 				likesList();
 				$('#likes').css('display', 'none');
 				$('#deleteLikes').css('display', 'block');
+				checklikes();
+			},
+			error:function(e){
+				alert(JSON.stringify(e));
+			}		
+		});		
+	}
+	//좋아요 갯수 최신화
+	function checklikes(){
+		var albumnum = ${album.album_num};
+		$.ajax({
+			url:'count_like',
+			type: 'POST',		
+			data: {
+				"likeit_albumnum": albumnum
+			},
+			dataType: 'text',
+			success: function(a){
+				$('#likecount').text(a);
 			},
 			error:function(e){
 				alert(JSON.stringify(e));
@@ -392,11 +415,12 @@ html, body, main, .container-fluid {
 				likesList();
 				$('#likes').css('display', 'block');
 				$('#deleteLikes').css('display', 'none');
+				checklikes();
 			},
 			error:function(e){
 				alert(JSON.stringify(e));
 			}		
-		});
+		});		
 	}
 	// 좋아요 목록
 	function likesList(){
@@ -453,6 +477,7 @@ html, body, main, .container-fluid {
 				
 				if(a == 'success'){
 					// alert("댓글 등록");	
+					$('#contents').val('');
 					replyList();		
 				}
 				else{
@@ -561,9 +586,10 @@ html, body, main, .container-fluid {
 			success: function(navi){
 				
 				var html = '';
-				html += '<a href="javascript:replyList(' + (navi.currentPage - navi.pagePerGroup) + ')" style="color: navy;">◁◁ </a> &nbsp;&nbsp;';
-				html += '<a href="javascript:replyList(' + (navi.currentPage - 1) + ')" style="color: navy;">◀</a> &nbsp;&nbsp;';
-
+				if(navi.endPageGroup > 1){
+					html += '<a href="javascript:replyList(' + (navi.currentPage - navi.pagePerGroup) + ')" style="color: navy;">◁◁ </a>&nbsp;';
+					html += '<a href="javascript:replyList(' + (navi.currentPage - 1) + ')" style="color: navy;">◀</a>&nbsp;';
+				}
 				for(var i=navi.startPageGroup; i<=navi.endPageGroup; i++) {
 					if(i == navi.currentPage){
 						html += '<a href="javascript:replyList('+ i +')" style="color: navy;"><b>' + i + '</b></a>&nbsp;';
@@ -572,10 +598,10 @@ html, body, main, .container-fluid {
 						html += '<a href="javascript:replyList('+ i +')" style="color: navy;">' + i + '</a>&nbsp;';
 					}
 				}
-				
-				html += '<a href="javascript:replyList(' + (navi.currentPage + 1) + ')" style="color: navy;">▶</a> &nbsp;&nbsp;'
-				html += '<a href="javascript:replyList(' + (navi.currentPage + navi.pagePerGroup) + ')" style="color: navy;">▷▷</a>';
-				
+				if(navi.endPageGroup > 1){
+					html += '<a href="javascript:replyList(' + (navi.currentPage + 1) + ')" style="color: navy;">▶</a>&nbsp;';
+					html += '<a href="javascript:replyList(' + (navi.currentPage + navi.pagePerGroup) + ')" style="color: navy;">▷▷</a>';
+				}
 				$('#reply_page').html('');
 				$('#reply_page').append(html);
 			},
@@ -660,7 +686,7 @@ html, body, main, .container-fluid {
     	
     	<div>
     	<!-- 앨범 만든사람 아이디와 프로필사진 -->    	
-    	<img src="<c:url value="/" />" class="img1">ID
+    	<img src="<c:url value="/memberimg?strurl=${albumwrite.member_picture}" />" class="img1">${albumwrite.member_id}
     	<!-- 앨범제목, 앨범내용, 태그 -->
     	<div class = "album_content" style = "height:150px;">
     		<table>
@@ -676,21 +702,21 @@ html, body, main, .container-fluid {
 		<div class="buttonHolder" id = "deleteLikes" onclick="deletelikes()">
   			<a href="#" class="deleteLikes"></a>
 		</div>				
-		좋아요 카운트 "명"
+		<span id="likecount">${likecount}</span>명
 		<!-- <div id="resultLikes">	
 		</div> -->
 		<!-- 하단 바 영역 -->
 		<div class="reply_page_div" id="reply_page_div" style = "float : left;">
 			<form>		
 			<!-- 로그인한 사람 프로필 사진만 -->
-				<img src="<c:url value="/" />" class="img1">	
+				<img src="<c:url value="/img_member" />" class="img1">	
 				<input type="text" id="contents" class ="reply" style ="width: 130px;"placeholder="comment...">
 				<div style= "z-index:99; float:right; " onClick="writereply()"><i class="far fa-check-circle" ></i></div>
 				<!-- <button type="button" onclick="writereply()">저장</button> -->
 				<input type="hidden" name="reply_albumnum">
 			</form>
 			
-			<div id="resultReply" style = "height: 200px;"><!-- 댓글리스트 출력 -->
+			<div id="resultReply" style = "height: 150px;"><!-- 댓글리스트 출력 -->
 			</div>
 			
 			<div id="reply_page"> <!-- 댓글 페이지 -->

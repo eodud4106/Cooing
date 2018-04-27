@@ -77,5 +77,12 @@ public class AlbumLikesController {
 		
 		return likesList;
 	}
+	//좋아요 갯수 
+	@ResponseBody
+	@RequestMapping(value = "/count_like", method = RequestMethod.POST)
+	public int count_like(Model model, int likeit_albumnum) {
+		logger.info("count_like_ljs__album_num:" + likeit_albumnum);
+		return albumlikesDAO.countLikes(likeit_albumnum);
+	}
 	
 }

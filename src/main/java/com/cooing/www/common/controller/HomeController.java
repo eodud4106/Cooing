@@ -167,8 +167,10 @@ public class HomeController {
 			}else{
 				model.addAttribute("check", 2);
 			}
+			model.addAttribute("albumwrite", memberDAO.selectMember(album.getAlbum_writer()));
 			model.addAttribute("album", album);
 			model.addAttribute("arr_page", arr_page);
+			model.addAttribute("likecount", albumlikesDAO.countLikes(album.getAlbum_num()));
 			
 		} catch (Exception e) {
 			e.printStackTrace();
