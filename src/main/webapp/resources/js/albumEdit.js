@@ -117,7 +117,12 @@ function ready_album(mode) {
 	        display: 'double',  // 한 번에 보여줄 페이지
 	        inclination: 50,    // 페이지 넘김 효과 시의 경사도
 	        width: PAGE_WIDTH * 2,
-	        height: PAGE_HEIGHT
+	        height: PAGE_HEIGHT,
+	        when:{
+	        	turned: function(event, page, view) {
+	        		bookmark_check();
+	        	}
+	        }
 	    });
 		
 	} else if (mode == 'edit') {
@@ -181,9 +186,6 @@ function ready_album(mode) {
 	                    $('#page' + (curr_page + 1) + '').droppable("enable");
 	                }
 	                
-	                if(mode == 'view') {
-	                	bookmark_check();
-	                }
 	            }
 	        } 
 	    });
