@@ -492,9 +492,9 @@ html, body, main, .container-fluid {
 					<div id="i_text" class="tool text under_tool"><i class="fas fa-align-justify"></i></div>
                 	<div id="i_image" class="tool image under_tool"><i class="far fa-image"></i></div>
                 	<!-- 각종 버튼 -->
-					<div id="i_brush" class="under_tool" onclick=""><i style = "width: 30px; height: 30px; margin: 10px;" class="fas fa-paint-brush"></i></div>
-					<div id="i_start" class="under_tool" onclick=""><i style = "width: 30px; height: 30px;margin: 10px;" class="fas fa-backward"></i></div>
-					<div id="i_end" class="under_tool" onclick=""><i style = "width: 30px; height: 30px; margin: 10px;"class="fas fa-forward"></i></div>					
+					<div id="i_brush" class="under_tool" onclick="open_background()"><i style = "width: 30px; height: 30px; margin: 10px;" class="fas fa-paint-brush"></i></div>
+					<div id="i_start" class="under_tool" onclick="nav_page('start')"><i style = "width: 30px; height: 30px;margin: 10px;" class="fas fa-backward"></i></div>
+					<div id="i_end" class="under_tool" onclick="nav_page('end')"><i style = "width: 30px; height: 30px; margin: 10px;"class="fas fa-forward"></i></div>					
 					<div id="i_add" class="under_tool" onclick="addPage()"><i style = "width: 30px; height: 30px; margin: 10px;"class="far fa-plus-square"></i></div>
 					<div id="i_remove" class="under_tool" onclick="removePage()"><i style = "width: 30px; height: 30px;margin: 10px;"class="far fa-trash-alt"></i></div>
 					<div id="i_save" class="under_tool" onclick="savePage('all')"><i style = "width: 30px; height: 30px;margin: 10px;"class="fas fa-check"></i></div>							

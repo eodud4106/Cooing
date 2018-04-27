@@ -1673,6 +1673,52 @@ function create_tooltip_of_under_tool() {
 	})
 }
 
-function open_() {
+function nav_page(location) {
+	if(location == 'start') {
+		$('#album').turn('page', 1);
+	} else {
+		$('#album').turn('page', $('#album').turn('pages'));
+	}
+}
+
+// 속지 선택 div 팝업
+function open_background() {
+	
+	$('.tooltip_under_bar').remove();
+	
+	var $div = $('<div />', {
+		"id": "div_select_bg",
+		"class": "div_select_bg"
+		
+	}).css({
+		"left": $('#i_brush').position().left - 20,
+		"top": $('#i_brush').position().top - 150
+	}).appendTo('body');
+	
+	var $osirase = $('<p />', {
+		"text" : "속지 색 변경"
+	}).css({
+		"text-align": "center",
+		"text-size": "large",
+		"color": "white"
+	}).appendTo($div);
+	
+	for(var i = 0; i < arr_color.length; i++) {
+		var $bt = $('<button />', {
+			"class": "bt_select_bg"
+		}).css({
+			"background-color": arr_color[i] 
+		}).click(function(e) {
+			$('.page').css({
+				"background-color": $(this).css("background-color") 
+			});
+			$('#div_select_bg').remove();
+		}).appendTo($div);
+	}
+	
+	
+}
+
+function alter_background() {
 	
 }

@@ -208,6 +208,20 @@ svg, path {
 	width: 10%;
 }
 
+.div_select_bg {
+	position: absolute;
+	z-index: 1100;
+	background-color: rgba(20, 20, 20, .8);
+	width:170px;
+	padding: 10px;
+	border-radius: 5px;
+}
+.bt_select_bg {
+	width: 30px;
+	height: 30px;
+	float: left;
+}
+
 
 
 .div_box:focus {
