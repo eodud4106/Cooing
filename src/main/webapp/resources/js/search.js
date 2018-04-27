@@ -10,38 +10,61 @@ function AlbumListPaging(check, result) {
 		
 		console.log(JSON.stringify(album))
 		
-		var div_card = document.createElement('div'); //카드 클래스 div
-		var ul_card = document.createElement('ul');
-		var li_card = document.createElement('li');
-		var div_inner = document.createElement('div');
-		var a_read_album = document.createElement('a'); //a태그
-		var p_tag = document.createElement("p"); // p태그
-		
+		var $div_card = $('<div />', {
+			"class":'card img-loaded div_card',
+			"album_num": album.album_num
+		}); //카드 클래스 div
+
 		var $img = $('<img />', {
 			"src": 'thumbnail?filePath=' + album.album_thumbnail,
-			"class": "card-img-top probootstrap-animate"
+			"class": "card-img-top probootstrap-animate div_card",
+			"album_num": album.album_num
 		}).css({
 			"width": "100%",
-			"height": "100%"
+			"height": "100%",
+			"opacity": "1"
+		}).appendTo($div_card);
+		
+		var $info_div = $('<div />', {
+			"class": "div_info hidden_info div_card",
+			"album_num": album.album_num
+		}).appendTo($div_card);
+		
+		var $p_name = $('<p />', {
+			"text": "제목: " + album.album_name,
+			"class": "card_album_name"
+		}).appendTo($info_div);
+		var $p_writer = $('<p />', {
+			"text": "지은이: " + album.album_writer,
+			"class": "card_album_writer"
+		}).appendTo($info_div);
+		var $p_contents = $('<p />', {
+			"html": "<내용><br>" + album.album_contents,
+			"class": "card_album_contents"
+		}).appendTo($info_div);
+		if(album.album_contents == null) {
+			$p_contents.html("<내용><br>없음")
+		}
+		
+		
+		// 마우스 엔터
+		$div_card.mouseenter(function(e) {
+			var $div_overlay = $('<div />', {
+				"class": "go_back"
+			}).appendTo($(this));
+			$info_div.removeClass('hidden_info').addClass('go_front');
+		}).mouseleave(function(e) {
+			$('.go_back').remove();
+			$info_div.removeClass('go_front').addClass('hidden_info');
 		})
 		
-		//여기에 추가해서 정보 넣어주면 됨
-		var album_infomation_html = '앨범 번호 : ' + album.album_num + '';
-
-		$(a_read_album).attr('href', 'albumView?album_num=' + album.album_num + '');
-		//a태그 사이에 p태그를 넣어주기
-		$(p_tag).html(album_infomation_html);
-		$(a_read_album).append(p_tag);
-		
-		$(div_inner).addClass('inner').append(a_read_album);
-		$(div_inner).append($img);
-		$(li_card).append(div_inner);
-		$(ul_card).append(li_card);
-
-		$(div_card).addClass('card img-loaded').append(ul_card);
-		//a태그 링크 걸어주기
-		$('.card-columns').append(div_card);
+		$('.card-columns').append($div_card);
 	});
+	
+	$('.div_card').click(function(e) {
+		location.href = 'albumView?album_num='+$(this).attr('album_num');
+	})
+	
 	pagingcheck = false;
 }
 //home이 아닌곳에서 search를 할경우 메인으로 보내서 검색을 해야한다.
