@@ -20,12 +20,13 @@ function AlbumListPaging(check, result) {
 				
 		$(img).attr('src', './thumbnail?filePath=' + album.album_thumbnail + '');
 		$(img).attr('style', 'width:100%;height:100%');
+		$(img).addClass('card-img-top probootstrap-animate');
 		$(a_read_album).attr('href', 'albumView?album_num=' + album.album_num + '');
 		//a태그 사이에 p태그를 넣어주기
 		$(p_tag).html(album_infomation_html);
 		$(a_read_album).append(p_tag);
 		
-		$(div_inner).append(a_read_album);
+		$(div_inner).addClass('inner').append(a_read_album);
 		$(div_inner).append(img);
 		$(li_card).append(div_inner);
 		$(ul_card).append(li_card);
