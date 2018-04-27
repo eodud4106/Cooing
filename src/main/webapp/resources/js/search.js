@@ -39,7 +39,7 @@ function AlbumListPaging(check, result) {
 }
 //home이 아닌곳에서 search를 할경우 메인으로 보내서 검색을 해야한다.
 function search_other() {
-	location.href('./search_other?search=' + $('#searchtx').val() + '');
+	location.href='./search_other?search=' + $('#searchtx').val() + '';
 }
 
 function searchfriend() {

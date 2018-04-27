@@ -177,12 +177,13 @@ html, body, main, .container-fluid {
 	var p; //페이징 용 변수
 
 	function hashtagCheck(){
+		var title = '${album.album_name}';
+		var content = '${album.album_contents}';
 		//일단 ' '로 나누고 맨 앞이 #인 문자를 찾아서 a태그를 앞뒤로 붙여서 더해서 다시 넣어준다
 		//SearchController에 searchHashTag를 좀 고쳐야 된다.
 		//일단 정보 창이 뜨면 해쉬태그를 달 예정 
-		var strhashtag = $('#album_contents').val();
 		
-		var splitedArray = strhashtag.split(' '); 
+		var splitedArray = content.split(' '); 
 		var filter = /#[^#\s,;]+/gm;
 		var linkedContent = '';
 		for(var word in splitedArray)
@@ -191,11 +192,12 @@ html, body, main, .container-fluid {
 			// # 문자를 찾는다.
 		   if(word.match(filter) && word.charAt(0) == '#'){
 			   var hashword = word.substring(1,word.length);
-			   word = '<a href="../searchHashTag?hashTag='+ hashword+'">' + word + '</a>'; 
+			   word = '<a href="./hashtag_other?search='+ hashword+'">' + word + '</a>'; 
 		   }
 		   linkedContent += word+' ';
 		}
-		$('#hashtagvw').html(linkedContent);
+		$('#title').html(title);
+		$('#content').html(linkedContent);
 	}
 	
 	var selectcheck = true;
@@ -206,6 +208,8 @@ html, body, main, .container-fluid {
 		replyList();
 		likesList();
 		check_likes();
+		
+		hashtagCheck();
 		
 		$('#bookmarkButton').on('click' , function(){
 			if($('#bookmarkButton').attr('data') == 1){
@@ -660,9 +664,8 @@ html, body, main, .container-fluid {
     	<!-- 앨범제목, 앨범내용, 태그 -->
     	<div class = "album_content" style = "height:150px;">
     		<table>
-    		<tr><th>앨범제목</th></tr>
-    		<tr><td>앨범내용</td></tr>
-    		<tr><td>해쉬태그</td></tr>
+    		<tr><th id="title">앨범제목</th></tr>
+    		<tr><td id="content">앨범내용</td></tr>
     		</table>
     	</div>
     	

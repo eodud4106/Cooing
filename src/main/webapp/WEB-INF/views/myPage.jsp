@@ -349,7 +349,7 @@ $(document).ready(function(){
                	 border-bottom: solid 2px #333;
                	 outline: none;
               	  width: 0px;
-               	 transition: all 0.5s;" onkeydown="if(event.keyCode==13){searchfriend();}">		
+               	 transition: all 0.5s;" onkeydown="if(event.keyCode==13){search_other();}">		
 				
 		</div>
 		<br>	
