@@ -4,15 +4,12 @@
 
 // 그룹 앨범리스트 받을 때 사용
 var pagenum = 0;
-var pagingcheck = false;
-//이게 0번이면 검색어 1번이면 카테고리 2번이면 그냥 메인 으로 나눠서 페이징 가지고 오게 된다.
-var searchcheck = 0;
 
 function initialize(){
-	$('#findid').keyup(searchword());
-	$('#gmemberplus').on('click',memberplus());
-	$('.img_3').on('click',memberdelete());
-	$('#desolve').on('click',deleteparty());
+	$('#findid').keyup(searchgroupmember);
+	$('#gmemberplus').on('click',memberplus);
+	$('.img_3').on('click',memberdelete);
+	$('#desolve').on('click',deleteparty);
 }
 
 function confirmcheck(strque){
@@ -22,11 +19,12 @@ function confirmcheck(strque){
 	else
 		return false;
 }
+
 function deleteparty(){
-	//그룹 탈퇴 확인	
 	if(confirmcheck('그룹탈퇴를 하시겠습니까?') == false) {
 		return false;
-	}	
+	}
+	//그룹 탈퇴 확인		
 	var party_num = $('#desolve').attr('data');
 	$.ajax({
 		url:'delete_party',
@@ -43,7 +41,8 @@ function deleteparty(){
 		error:function(e){alert(JSON.stringify(e));}		
 	});
 }
-function memberdelete(){
+
+function memberdelete(){	
 	if(confirmcheck('그룹 멤버를 삭제 하시겠습니까?') == false) {
 		return false;
 	}
@@ -116,11 +115,11 @@ function memberplus(){
 		error:function(e){alert(JSON.stringify(e));}		
 	});
 }
-function searchword(){
+function searchgroupmember(){
 	var text = $('#findid').val();
 	if(text.length >= 1){
 		$.ajax({
-			url:'search_id',
+			url:'search_id_check',
 			type:'POST',		
 			data:{text:text},
 			dataType:'json',
@@ -137,10 +136,6 @@ function searchword(){
 //앨범 리스트 Ajax로 받는 코드
 function getPartyAlbumList() {
 	var check  = false;
-	if(searchcheck != 2){
-		searchcheck = 2;
-		pagenum = 0;
-	}
 	if(pagenum == 0)
 		check  = true;
 	$.ajax({
@@ -172,4 +167,30 @@ function getPartyAlbumList() {
 			alert(JSON.stringify(e));	
 		}
 	});
+	
+	// 그룹 앨범 만드기...
+	function create_group_album() {
+		$.ajax({
+			url: 'create_album',
+			type: 'post',
+			data: {
+				party_name: '${partyinfo.party_name}',
+				isPersonal: 0
+			},
+			dataType: 'json',
+			success: function(result) {
+				if(result == 'user null') {
+					alert('로그인 정보 없음!');
+				} else if(result == 'fail') {
+					alert('오류 발생!!');
+				} else {
+					 //TODO 앨범 편집창으로 이동
+					 location.href="edit_album?album_num=" + result;
+				}
+			},
+			error: function(e) {
+				alert(JSON.stringify(e));	
+			}
+		});
+	}
 }

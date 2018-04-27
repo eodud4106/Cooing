@@ -21,4 +21,6 @@ public interface SearchMapper {
 	public ArrayList<Map<String , Object>> selectDayCategory(String date);
 	
 	public ArrayList<Map<String , Object>> selectDayLike(String date);
+	
+	public ArrayList<String> search_id_check(String search);
 }

@@ -42,4 +42,8 @@
 			group by category_pop_kind
 	</select>
 	
+	<select id="search_id_check" resultType="String" parameterType="String">
+		select member_id from member where member_id like '%'||#{search}||'%'
+	</select>
+	
 </mapper>

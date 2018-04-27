@@ -136,9 +136,15 @@ public class SearchController {
 	@ResponseBody
 	@RequestMapping(value="/searchCategorypop" , method = RequestMethod.POST)
 	public ArrayList<Map<String , Object>> searchCategorypop(String searchdate){
-		logger.info("searchCategorypop__jinsu");
-		ArrayList<Map<String , Object>> map = searchDAO.selectDayCategory(searchdate);		
-		return map;				
+		logger.info("searchCategorypop__jinsu");		
+		return searchDAO.selectDayCategory(searchdate);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/search_id_check" , method = RequestMethod.POST)
+	public ArrayList<String> search_id_check(String text){
+		logger.info("search_id_check_groupview__jinsu");		
+		return  searchDAO.search_id_check(text);
 	}
 	
 	@RequestMapping(value = "/information", method = RequestMethod.GET)

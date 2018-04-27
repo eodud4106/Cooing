@@ -34,10 +34,6 @@
 
 $(document).ready(function () {
 	initialize();
-});
-
-$(document).ready(function () {
-	initialize();
 	
 	if (${sessionScope.Member != null}) {
 		readyChat();
@@ -45,68 +41,7 @@ $(document).ready(function () {
 	}
 	
 	getPartyAlbumList(0);
-	
 });
-
-//앨범 리스트 출력
-function totalAlbumList(result) {
-	
-	var album_num;
-	var album_html;
-	var sw = 0;
-	
-	$(result).each(function(i, album) {
-		
-		album_num = album.album_num;
-		
-		for(var i=0; i<album.page_html.length; i++) {
-			
-			if(album.page_html[i] == '<' && sw == 0){
-				sw = 1;
-				album_html = album.page_html.substring(i, album.page_html.length);
-				
-				var div_card = document.createElement('div'); //카드 클래스 div
-				var div_page = document.createElement('div'); //a태그에 들어갈 div
-				var a_read_album = document.createElement('a'); //a태그
-				
-				$(div_page).addClass('page1').html(album_html);
-				a_read_album.append(div_page);
-				$(div_card).addClass('card img-loaded').append(a_read_album);
-				
-				//a태그 링크 걸어주기
-				$('.card-columns').append(div_card);				
-			}			
-		}
-		sw = 0;		
-	});
-	
-}
-
-// 그룹 앨범 만드기...
-function create_group_album() {
-	$.ajax({
-		url: 'create_album',
-		type: 'post',
-		data: {
-			party_name: '${partyinfo.party_name}',
-			isPersonal: 0
-		},
-		dataType: 'json',
-		success: function(result) {
-			if(result == 'user null') {
-				alert('로그인 정보 없음!');
-			} else if(result == 'fail') {
-				alert('오류 발생!!');
-			} else {
-				 //TODO 앨범 편집창으로 이동
-				 location.href="edit_album?album_num=" + result;
-			}
-		},
-		error: function(e) {
-			alert(JSON.stringify(e));	
-		}
-	});
-}
 </script>
 
 <style>
@@ -197,7 +132,7 @@ select::-ms-expand { /* for IE 11 */
 			<c:forEach var="arrmi" items="${memberinfo}">
 				<p><img class = "img1" src = "<c:url value="/memberimg?strurl=${arrmi.getMember_picture()}"/>"></p><p>${arrmi.getMember_id()}
 				<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id() and partyinfo.getParty_leader() ne arrmi.getMember_id()}">
-					<img src = "./resources/image_mj/remove.png" class = "img_3" data="${arrmi.getMember_id()}" data2="${partyinfo.getParty_num()}">
+					<img src = "./resources/image_mj/remove.png" class="img_3" data="${arrmi.getMember_id()}" data2="${partyinfo.getParty_num()}">
 				</c:if>
 				</p>
 			</c:forEach>
