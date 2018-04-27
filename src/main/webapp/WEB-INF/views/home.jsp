@@ -100,7 +100,11 @@ $(document).ready(function () {
 		searchcheck = 0;
 		pagenum = 0;
 		pagecheck = false;
-		$('#searchtx').val('${search}');
+		var inputBox = document.getElementById('searchtx');
+		inputBox.value='${search}';	 
+		inputBox.style.width = '200px';
+		inputBox.style.paddingLeft='3px'; 
+		inputBox.focus();
 		search();
 	}else if(${search_other == 1}){
 		searchcheck = 1;
@@ -114,6 +118,14 @@ $(document).ready(function () {
 		getTotalAlbumList();		
 	}
 });
+
+function inputbox_focus(){
+	var inputBox = document.getElementById('searchtx');
+	inputBox.value='';	 
+	inputBox.style.width = '200px';
+	inputBox.style.paddingLeft='3px'; 
+	inputBox.focus();
+}
 </script>
 
 <!-- 정렬순 라디오버튼 -->
@@ -344,11 +356,7 @@ $(document).ready(function(){
 		<br><br>
 		<div align="margin-left: 20px;">
        			 SEARCH &nbsp<img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
-       			 height: 24px;margin-right: 5px;" onclick="var inputBox = document.getElementById('searchtx');
-       			 inputBox.style.width = '200px';
-        		 inputBox.style.paddingLeft='3px';
-       			 inputBox.value='';
-       			 inputBox.focus();">
+       			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">
      			 <input id="searchtx" type="text" onblur="this.style.width='0px';
              	  this.style.paddingLeft='0px';" style="  border: none;
               	 background-color: rgba(0,0,0,0);
@@ -356,7 +364,8 @@ $(document).ready(function(){
                	 border-bottom: solid 2px #333;
                	 outline: none;
               	  width: 0px;
-               	 transition: all 0.5s;">
+               	 transition: all 0.5s;"
+               	 >
   		
 			
 		<!-- 정렬순서 -->		

@@ -76,7 +76,25 @@ public class HomeController {
 			model.addAttribute("friend", arr_friend);
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
 			model.addAttribute("group", arraystrval);
-			int totalpage = albumDAO.total_album_count(search,"3");
+			int totalpage = albumDAO.total_album_count(search,"1");
+			model.addAttribute("totalpage", (totalpage/10));			
+			//다른 곳에서 홈으로 검색을 통해 home으로 간다는 것을 알려준다.
+			model.addAttribute("search_other", 0);
+			//검색어
+			model.addAttribute("search" , search);			
+		}		
+		return "home";
+	}
+	//해쉬태그 클릭을 ㄷ른곳에서 해서 홈으로 가는 경우
+	@RequestMapping(value = "/hashtag_other", method = RequestMethod.GET)
+	public String hashtag_other_home(Model model, HttpSession session , String search) {
+		Member personal = (Member)session.getAttribute("Member");
+		if(personal != null){
+			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
+			model.addAttribute("friend", arr_friend);
+			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
+			model.addAttribute("group", arraystrval);
+			int totalpage = albumDAO.total_album_count(search,"1");
 			model.addAttribute("totalpage", (totalpage/10));			
 			//다른 곳에서 홈으로 검색을 통해 home으로 간다는 것을 알려준다.
 			model.addAttribute("search_other", 0);
