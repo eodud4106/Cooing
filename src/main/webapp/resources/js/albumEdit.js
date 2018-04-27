@@ -1724,7 +1724,3 @@ function open_background() {
 	});
 	
 }
-
-function alter_background() {
-	
-}

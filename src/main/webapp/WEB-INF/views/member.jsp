@@ -11,8 +11,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-<script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>" ></script>
-<script src="../resources/js/member_in.js"></script>
+<script src="resources/js/jquery-3.3.1.min.js"/></script>
+<script src="resources/js/member_in.js"></script>
 <script src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 <script>
 $(document).ready(function () {
@@ -22,28 +22,28 @@ checkcount();
 
 </script>
 <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="../resources/group_images/icons/favicon.ico"/>
+	<link rel="icon" type="image/png" href="resources/group_images/icons/favicon.ico"/>
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="../resources/group_vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="resources/group_vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="../resources/group_fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="resources/group_fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="../resources/group_fonts/iconic/css/material-design-iconic-font.min.css">
+	<link rel="stylesheet" type="text/css" href="resources/group_fonts/iconic/css/material-design-iconic-font.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="../resources/group_vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="resources/group_vendor/animate/animate.css">
 <!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="../resources/group_vendor/css-hamburgers/hamburgers.min.css">
+	<link rel="stylesheet" type="text/css" href="resources/group_vendor/css-hamburgers/hamburgers.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="../resources/group_vendor/animsition/css/animsition.min.css">
+	<link rel="stylesheet" type="text/css" href="resources/group_vendor/animsition/css/animsition.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="../resources/group_vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="resources/group_vendor/select2/select2.min.css">
 <!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="../resources/group_vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="resources/group_vendor/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="../resources/group_css/util.css">
-	<link rel="stylesheet" type="text/css" href="../resources/group_css/main.css">
+	<link rel="stylesheet" type="text/css" href="resources/group_css/util.css">
+	<link rel="stylesheet" type="text/css" href="resources/group_css/main.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="../resources/css/join.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/join.css">
 </head>
 <body>
 	
@@ -126,19 +126,19 @@ checkcount();
 
 	<div id="dropDownSelect1"></div>
 	
-	<script src="../resources/group_vendor/animsition/js/animsition.min.js"></script>
+	<script src="resources/group_vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->
-	<script src="../resources/group_vendor/bootstrap/js/popper.js"></script>
-	<script src="../resources/group_vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="resources/group_vendor/bootstrap/js/popper.js"></script>
+	<script src="resources/group_vendor/bootstrap/js/bootstrap.min.js"></script>
 <!--===============================================================================================-->
-	<script src="../resources/group_vendor/select2/select2.min.js"></script>
+	<script src="resources/group_vendor/select2/select2.min.js"></script>
 <!--===============================================================================================-->
-	<script src="../resources/group_vendor/daterangepicker/moment.min.js"></script>
-	<script src="../resources/group_vendor/daterangepicker/daterangepicker.js"></script>
+	<script src="resources/group_vendor/daterangepicker/moment.min.js"></script>
+	<script src="resources/group_vendor/daterangepicker/daterangepicker.js"></script>
 <!--===============================================================================================-->
-	<script src="../resources/group_vendor/countdowntime/countdowntime.js"></script>
+	<script src="resources/group_vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
-	<script src="../resources/group_js/main.js"></script>
+	<script src="resources/group_js/main.js"></script>
 	
 
 </body>
