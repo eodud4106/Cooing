@@ -521,7 +521,7 @@ html, body, main, .container-fluid {
 					str += ' ' + vo.reply_memberid;
 					/* str += ' ' + vo.reply_date; */
 					if (vo.reply_memberid == '${Member.member_id}') {
-					str += ' ' + "<input type='button' value='X' class= 'delete-button' onclick='deletereply("+vo.reply_num+")'>";
+					str += ' ' + "<i onclick='deletereply("+vo.reply_num+")' style = 'width: 15px; height: 15px;' class='far fa-trash-alt'></i>";
 					}
 					str += '</td>';
 					str += '</tr>';
@@ -695,7 +695,7 @@ html, body, main, .container-fluid {
 			
 			<div id="reply_page"> <!-- 댓글 페이지 -->
 			</div>
-
+	
 		</div>
 		</section>
 		
