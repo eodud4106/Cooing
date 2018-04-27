@@ -8,90 +8,9 @@
 <head>
 <title>My Page</title>
 <meta charset="utf-8" />
-<style>
-.button_container {
-  position: absolute;
-  left: 0;
-  right: 0;
- /*  top: 50%; */
-}
-
-.btn {
-  border: none;
-  display: block; 
-  text-align: center;
-  cursor: pointer;
-  text-transform: uppercase;
-  outline: none;
-  overflow: hidden;
-  position: relative;
-  color: #fff;
-  font-weight: 700;
-  font-size: 15px;
-  background-color: #bae5e1;
-  /* padding: 17px 60px; */
-  margin: 0 auto;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
-}
-
-.btn span {
-  position: relative; 
-  z-index: 1;
-}
-
-.btn:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 490%;
-  width: 140%;
-  background: #78c7d2;
-  -webkit-transition: all .5s ease-in-out;
-  transition: all .5s ease-in-out;
-  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
-  transform: translateX(-98%) translateY(-25%) rotate(45deg);
-}
-
-.btn:hover:after {
-  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
-  transform: translateX(-9%) translateY(-25%) rotate(45deg);
-}
-
-.link {
-  font-size: 20px;
-  margin-top: 30px;
-}
-
-.link a {
-  color: #000;
-  font-size: 25px; 
-}
-.friendList{
-	height: 250px;		
-	overflow-y : scroll;
-	padding-left: 30px;
-	background-color : aliceblue;
-	font-family: 'Gaegu', cursive;
-    font-size: 18px;
-    cursor: pointer;
-}
-.groupList{
-	height: 250px;	
-	overflow-y : scroll;
-	padding-left: 30px;
-	/* overflow-y:hidden; */
-	background-color : aliceblue;
-	font-family: 'Gaegu', cursive;
-    font-size: 18px;
-    cursor: pointer;
-    margin-top: 50px;
-}
-</style>
 
 <script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
-<!-- 폰트 -->
-<link href="https://fonts.googleapis.com/css?family=Gaegu" rel="stylesheet">
+
  <link rel="stylesheet" href="<c:url value="/resources/css/myPage.css"/>">
 
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/bootstrap.min.css"/>">
@@ -103,10 +22,6 @@
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/icomoon.css"/>">
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/animate.css"/>">
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/style.css"/>">
-
-<!-- 앨범리스트 출력할 때 앨범사진위에 앨범 정보 출력하기 -->
-<link rel="stylesheet" href="<c:url value="/resources/photoview_css/style.css"/>">
-<link rel="stylesheet" href="<c:url value="/resources/photoview_css/base.css"/>">
 
 <script src="<c:url value="/resources/aside_js/popper.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/bootstrap.min.js"/>"></script>
@@ -159,13 +74,6 @@ $(document).ready(function () {
 	});
 
 	getMyAlbumList();
-	list_infomation();
-	
-	$(document).mouseup(function(e){
-		var container=$('.popuplayer');
-		if(container.has(e.target).length == 0)
-			container.hide();
-	});
 });
 
 //앨범 리스트 Ajax로 받는 코드
@@ -213,22 +121,6 @@ function create_personal_album() {
 		}
 	});
 }
-
-function list_infomation() {
-	$.ajax({
-		url: 'getMyAlbumInfomation',
-		type: 'post',
-		dataType: 'json',
-		success: function(albuminfolist) {
-			$(albuminfolist).each(function(i, vo){
-				//alert(vo.album_num);
-			});
-		},
-		error: function(e) {
-			alert(JSON.stringify(e));	
-		}
-	});
-}
 </script>
 <!-- 정렬순 라디오 버튼 -->
 <script>
@@ -257,21 +149,6 @@ $(document).ready(function(){
 	overflow : scroll;
 	overflow-x:hidden;
 	/* overflow-y:hidden; */
-}
-/* 포인터로 마우스 모양 바꿔주는곳 */
-.friendclick{
-	cursor:pointer;
-}
-/* 팝업창 꾸미는 곳 */
-.popuplayer{
-	position:absoulute;
-	display:none;
-	background-color:#e0e0e0;
-	border:solid 2px #d0d0d0.;
-	width:120px;
-	height:50px;
-	padding:10px;
-	
 }
 </style>
 
@@ -367,7 +244,12 @@ $(document).ready(function(){
                	 outline: none;
               	  width: 0px;
                	 transition: all 0.5s;" onkeydown="if(event.keyCode==13){searchfriend();}">		
-				
+		
+		<form style = "float:right; padding-left : 10px;">
+			<input type="radio" name="iCheck" class = "input"value="1" checked>최신순
+			<input type="radio" name="iCheck" class = "input"value="2" >인기순			
+			<div style= "z-index:99; float:right; " onClick="checkRadioButton('iCheck')"><i class="far fa-check-circle"></i></div>
+		</form>
 		</div>
 		<br>	
 	</div>
@@ -376,8 +258,9 @@ $(document).ready(function(){
 	
 	
 	<!-- 앨범 리스트 -->
-	<!-- <div class="card-columns" id="card-columns">
+	<div class="card-columns" id="card-columns">
 	
+		<!--  -->
 		<div class="card">
 			<a href="single.html" >			
 				<img class="card-img-top probootstrap-animate" 
@@ -392,46 +275,7 @@ $(document).ready(function(){
 				
 			</a>
 		</div>
-	</div> -->
-	
-	<div class="card-columns" id="card-columns">
-			<div class="card">
-			<ul>
-				<li><div class="inner"><a href="single.html" ><p><strong>출력고고?</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/aside_images/img_1.jpg" alt="Card image cap"/>						
-				</div></li>		
-			</ul></div>
-			
-			<div class="card">
-				<ul><li><div class="inner"><a href="single.html"><p><strong>출력고고?dsf2</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/image_mj/a1.jpg" alt="Card image cap"/>
-				</div></li>
-			</ul></div>
-			
-			<div class="card">
-				<ul><li><div class="inner"><a href="single.html"><p><strong>출력고고?dsf2</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/image_mj/a2.jpg" alt="Card image cap"/>
-				</div></li>
-			</ul></div>		
-			
-			<div class="card">
-				<ul><li><div class="inner"><a href="single.html"><p><strong>출력고고?dsf2</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/image_mj/a3.jpg" alt="Card image cap"/>
-				</div></li>
-			</ul></div>	
-			
-			<div class="card">
-				<ul><li><div class="inner"><a href="single.html"><p><strong>출력고고?dsf2</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/image_mj/a4.jpg" alt="Card image cap"/>
-				</div></li>
-			</ul></div>					
 	</div>
-	
 	
 	
 	
@@ -452,7 +296,7 @@ $(document).ready(function(){
 
 	</main>
 
-	<%-- <aside class="probootstrap-aside2 js-probootstrap-aside2">
+	<aside class="probootstrap-aside2 js-probootstrap-aside2">
 		<a href="#"
 			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-right"></span> Close
@@ -515,58 +359,7 @@ $(document).ready(function(){
 			<input type="button" id="sendBtn" value="전송" />
 			<input type="hidden" id="totalpage" value="${totalpage}">
 		</div>
-	</div> --%>
-	
-	<aside class="probootstrap-aside2 js-probootstrap-aside2">
-		<a href="#"
-			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
-			<span class="oi oi-arrow-right"></span> Close
-		</a>
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="" class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY FRIEND</a>			
-		</div>				
-				 <form>
-					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
-					<div>
-       			  <img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
-       			 height: 24px;margin-left: 215px; margin-top: -50px;">
-				</form>
-			<div class = "friendList">
-				<div name="friend" id="friend">
-				</div>
-				<div name="user" id="user">
-				</div>
-			</div>
-		
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="" class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY GROUP</a>				
-						
-		<!-- <div class="probootstrap-overflow"> -->
-		
-		<!-- 그룹생성 -->
-		<div class="button_container">		
-		<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
-		</div>
-			<div class = "groupList">
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(group) ne 0}">
-						<c:forEach var="party" items="${group}">
-							<div name="group">
-								<p class="arr_party" partynum="${party.party_num}">${party.party_name}</p>
-							</div>
-						</c:forEach>
-					</c:if>
-				</c:if>				
-			<!-- </div> -->
-		</div>
-
-	</aside>
-	
-	<div class="popuplayer">
-		<p onClick="friendpage()" style="font-size:8pt;color:#26afa1;">친구페이지</p>
-		<p onClick="chatpage()" style="font-size:8pt;color:#26afa1;">채팅</p>
 	</div>
-	
 
 	<script src="resources/aside_js/popper.min.js"></script>
 	<script src="resources/aside_js/bootstrap.min.js"></script>

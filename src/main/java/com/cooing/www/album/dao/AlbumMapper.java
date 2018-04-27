@@ -1,11 +1,9 @@
 package com.cooing.www.album.dao;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
-
-import com.cooing.www.album.vo.AlbumListInfomation;
 import com.cooing.www.album.vo.AlbumWriteVO;
 import com.cooing.www.album.vo.PageHtmlVO;
 
@@ -38,6 +36,4 @@ public interface AlbumMapper {
 	public int delete_pages_by_album_num(int album_num);
 	// 검색 조건으로 앨범 리스트를 검색
 	public ArrayList<AlbumWriteVO> select_album(RowBounds rb, AlbumWriteVO album);
-	
-	public ArrayList<AlbumListInfomation> getMyAlbumInfomation(String album_writer);
 }
