@@ -12,12 +12,11 @@ import com.cooing.www.common.vo.Search;
 
 public interface SearchMapper {
 	public int insertSearch(Search search);
-	public ArrayList<Map<String , Object>> selectDaySearch(String date);
-	
 	public int insertCategoryPop(CategoryPop categorypop);
-	public ArrayList<Map<String , Object>> selectDayCategory(String date);
 	
-	public ArrayList<Map<String , Object>> selectDayLike(String date);
+	public ArrayList<Map<String , Object>> selectDayCategory(RowBounds rb , String date);
+	public ArrayList<Map<String , Object>> selectDaySearch(RowBounds rb , String date);
+	public ArrayList<Map<String , Object>> selectDayLike(RowBounds rb , String date);
 	
 	public ArrayList<String> search_id_check(String search);
 }

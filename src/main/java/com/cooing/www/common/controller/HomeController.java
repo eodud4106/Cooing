@@ -20,9 +20,11 @@ import com.cooing.www.album.dao.AlbumLikesDAO;
 import com.cooing.www.album.vo.AlbumLikesVO;
 import com.cooing.www.album.vo.AlbumWriteVO;
 import com.cooing.www.album.vo.BookMark;
+import com.cooing.www.album.vo.CategoryPop;
 import com.cooing.www.album.vo.PageHtmlVO;
 import com.cooing.www.common.dao.SearchDAO;
 import com.cooing.www.common.vo.PageLimit;
+import com.cooing.www.common.vo.Search;
 import com.cooing.www.member.dao.MemberDAO;
 import com.cooing.www.member.dao.RelationDAO;
 import com.cooing.www.member.vo.Member;
@@ -72,6 +74,7 @@ public class HomeController {
 	public String search_other_home(Model model, HttpSession session , String search) {
 		Member personal = (Member)session.getAttribute("Member");
 		if(personal != null){
+			searchDAO.insertSearch(new Search(0 , search , "0"));
 			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
 			model.addAttribute("friend", arr_friend);
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
@@ -90,6 +93,7 @@ public class HomeController {
 	public String hashtag_other_home(Model model, HttpSession session , String search) {
 		Member personal = (Member)session.getAttribute("Member");
 		if(personal != null){
+			searchDAO.insertSearch(new Search(0 , search , "0"));
 			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
 			model.addAttribute("friend", arr_friend);
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
@@ -108,6 +112,7 @@ public class HomeController {
 	public String category_other_home(Model model, HttpSession session , int categorynum) {
 		Member personal = (Member)session.getAttribute("Member");
 		if(personal != null){
+			searchDAO.insertCategoryPop(new CategoryPop(0 , categorynum , "0"));
 			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
 			model.addAttribute("friend", arr_friend);
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
