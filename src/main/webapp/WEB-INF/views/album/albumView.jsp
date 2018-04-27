@@ -42,8 +42,11 @@
 <link rel="stylesheet" href="resources/aside_css/icomoon.css">
 <link rel="stylesheet" href="resources/aside_css/animate.css">
 <link rel="stylesheet" href="resources/aside_css/style.css">
+아이콘
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
+<!-- 폰트 -->
+<link href="https://fonts.googleapis.com/css?family=Gaegu" rel="stylesheet">
 
-<link rel="stylesheet" href="resources/skin_radio/green.css">
 
 <style type="text/css">
 .main {
@@ -163,6 +166,9 @@ html, body, main, .container-fluid {
   color: #FFF;
   font-size: 8px;
   cursor:pointer;
+}
+.buttonHolder{
+	float : left;
 }
 </style>
 
@@ -647,33 +653,47 @@ html, body, main, .container-fluid {
   		<input class = "input1" id="tab2" type="radio" name="tabs" >
     	<label for="tab2">Chat</label>   
     	<section id="content1"> 
+    	
+    	<div>
+    	<!-- 앨범 만든사람 아이디와 프로필사진 -->    	
+    	<img src="<c:url value="/" />" class="img1">ID
+    	<!-- 앨범제목, 앨범내용, 태그 -->
+    	<div class = "album_content" style = "height:150px;">
+    		<table>
+    		<tr><th>앨범제목</th></tr>
+    		<tr><td>앨범내용</td></tr>
+    		<tr><td>해쉬태그</td></tr>
+    		</table>
+    	</div>
+    	
+    	</div>
     	<div class="buttonHolder" id = "likes" onclick="likes()">
-  					<a href="#" class="likes"></a>
-				</div>
-				<div class="buttonHolder" id = "deleteLikes" onclick="deletelikes()">
-  					<a href="#" class="deleteLikes"></a>
-				</div>
-				
-				이 앨범을 좋아요 한 사람들
-				<div id="resultLikes">
-				
-				</div>
-				<!-- 하단 바 영역 -->
-				<div class="reply_page_div" id="reply_page_div">
-					<form>
-					댓글
-						<input type="text" id="contents" class ="reply">
-						<button type="button" onclick="writereply()">저장</button>
-						<input type="hidden" name="reply_albumnum">
-					</form>
-					
-					<div id="resultReply"><!-- 댓글리스트 출력 -->
-					</div>
-					
-					<div id="reply_page"> <!-- 댓글 페이지 -->
-					</div>
+  			<a href="#" class="likes"></a>
+		</div>
+		<div class="buttonHolder" id = "deleteLikes" onclick="deletelikes()">
+  			<a href="#" class="deleteLikes"></a>
+		</div>				
+		좋아요 카운트 "명"
+		<!-- <div id="resultLikes">	
+		</div> -->
+		<!-- 하단 바 영역 -->
+		<div class="reply_page_div" id="reply_page_div" style = "float : left;">
+			<form>		
+			<!-- 로그인한 사람 프로필 사진만 -->
+				<img src="<c:url value="/" />" class="img1">	
+				<input type="text" id="contents" class ="reply" style ="width: 130px;"placeholder="comment...">
+				<div style= "z-index:99; float:right; " onClick="writereply()"><i class="far fa-check-circle" ></i></div>
+				<!-- <button type="button" onclick="writereply()">저장</button> -->
+				<input type="hidden" name="reply_albumnum">
+			</form>
+			
+			<div id="resultReply" style = "height: 200px;"><!-- 댓글리스트 출력 -->
+			</div>
+			
+			<div id="reply_page"> <!-- 댓글 페이지 -->
+			</div>
 
-				</div>
+		</div>
 		</section>
 		
    		<section id="content2">

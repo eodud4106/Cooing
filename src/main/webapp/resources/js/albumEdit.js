@@ -64,7 +64,7 @@ var album_top = 0;          //앨범의 top
 var album_left = 0;         //앨범의 left
 
 var PAGE_WIDTH = 600;       // 페이지 당 너비
-var PAGE_HEIGHT = 600;      // 페이지 당 높이
+var PAGE_HEIGHT = 700;      // 페이지 당 높이
 
 var curr_page = 1;
 
@@ -1401,7 +1401,7 @@ function createTooltip($elem, text) {
 	} else {
 		$div_tooltip.addClass('tooltip_under_bar').appendTo($elem.parent()).css({
 			"top": $elem.position().top - 40,
-	        "left": $elem.position().left + 30 - $div_tooltip.width()/2
+	        "left": $elem.position().left + 40 - $div_tooltip.width()/2
 	    })
 	}
 
@@ -1671,4 +1671,8 @@ function create_tooltip_of_under_tool() {
 	}).mouseleave(function(e) {
 		$('.tooltip_under_bar').remove();
 	})
+}
+
+function open_() {
+	
 }

@@ -193,7 +193,8 @@ svg, path {
 .under_bar {
 	height: 60px;
 	width: 800px;
-	margin: 0 auto;
+	margin-top: 20px;
+	margin-left: 35%;
 }
 
 .under_bar_left {
@@ -204,6 +205,7 @@ svg, path {
 	z-index:99;
 	float:left;
 	padding-left: 10px;
+	width: 10%;
 }
 
 
@@ -235,6 +237,9 @@ svg, path {
 .div_selection_editor div div .div_div_button:hover {
     background-color: rgba(255, 200, 100, 0.5);
     cursor: pointer;
+}
+.under_tool:hover {
+	cursor: pointer;
 }
 
 
