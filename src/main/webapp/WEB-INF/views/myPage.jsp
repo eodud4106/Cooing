@@ -160,6 +160,12 @@ $(document).ready(function () {
 
 	getMyAlbumList();
 	list_infomation();
+	
+	$(document).mouseup(function(e){
+		var container=$('.popuplayer');
+		if(container.has(e.target).length == 0)
+			container.hide();
+	});
 });
 
 //앨범 리스트 Ajax로 받는 코드
@@ -251,6 +257,21 @@ $(document).ready(function(){
 	overflow : scroll;
 	overflow-x:hidden;
 	/* overflow-y:hidden; */
+}
+/* 포인터로 마우스 모양 바꿔주는곳 */
+.friendclick{
+	cursor:pointer;
+}
+/* 팝업창 꾸미는 곳 */
+.popuplayer{
+	position:absoulute;
+	display:none;
+	background-color:#e0e0e0;
+	border:solid 2px #d0d0d0.;
+	width:120px;
+	height:50px;
+	padding:10px;
+	
 }
 </style>
 
