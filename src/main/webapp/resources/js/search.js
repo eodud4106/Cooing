@@ -7,27 +7,34 @@ function AlbumListPaging(check, result) {
 	if (check)
 		$('.card-columns').html('');
 	$(result).each(function(i, album) {
+		
+		console.log(JSON.stringify(album))
+		
 		var div_card = document.createElement('div'); //카드 클래스 div
 		var ul_card = document.createElement('ul');
 		var li_card = document.createElement('li');
 		var div_inner = document.createElement('div');
 		var a_read_album = document.createElement('a'); //a태그
-		var img = document.createElement("img"); // 이미지 생성
 		var p_tag = document.createElement("p"); // p태그
+		
+		var $img = $('<img />', {
+			"src": 'thumbnail?filePath=' + album.album_thumbnail,
+			"class": "card-img-top probootstrap-animate"
+		}).css({
+			"width": "100%",
+			"height": "100%"
+		})
 		
 		//여기에 추가해서 정보 넣어주면 됨
 		var album_infomation_html = '앨범 번호 : ' + album.album_num + '';
-				
-		$(img).attr('src', './thumbnail?filePath=' + album.album_thumbnail + '');
-		$(img).attr('style', 'width:100%;height:100%');
-		$(img).addClass('card-img-top probootstrap-animate');
+
 		$(a_read_album).attr('href', 'albumView?album_num=' + album.album_num + '');
 		//a태그 사이에 p태그를 넣어주기
 		$(p_tag).html(album_infomation_html);
 		$(a_read_album).append(p_tag);
 		
 		$(div_inner).addClass('inner').append(a_read_album);
-		$(div_inner).append(img);
+		$(div_inner).append($img);
 		$(li_card).append(div_inner);
 		$(ul_card).append(li_card);
 
@@ -83,11 +90,8 @@ function searchword() {
 			dataType : 'json',
 			success : function(array) {
 				$('#friend').html('');
-				var str = '';
-				$.each(array, function(i, data) {
-					str += '<p class="friendclick" id="'+data.member_id+'" ><img src="./memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
-				});
-				$('#friend').html(str);
+				$('#friend').text('<친구들>');
+				print_search_result(array, $('#friend'), 'friend');
 			},
 			error : function(e) {
 				alert(JSON.stringify(e));
@@ -101,11 +105,9 @@ function searchword() {
 			},
 			dataType : 'json',
 			success : function(array) {
-				var str = '';
-				$.each(array, function(i, data) {
-					str += '<p class="friendclick" id="'+data.member_id+'" ><img src="./memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
-				});
-				$('#user').html(str);
+				$('#user').html('');
+				$('#user').text('<유저>');
+				print_search_result(array, $('#user'), 'user');
 			},
 			error : function(e) {
 				alert(JSON.stringify(e));
@@ -117,12 +119,10 @@ function searchword() {
 			type : 'POST',
 			dataType : 'json',
 			success : function(array) {
-				var str = '';
-				$.each(array, function(i, data) {
-					str += '<p class="friendclick" id="'+data.member_id+'" ><img src="./memberimg?strurl=' + data.member_picture + '" style="width:40px;height:40px;">' + data.member_id + '</p>';
-				});
-				$('#friend').html(str);
-				$('#user').html('');
+				$('#friend').html('')
+				$('#user').html('')
+				$('#friend').text('친구들')
+				print_search_result(array, $('#friend'), 'friend');
 			},
 			error : function(e) {
 				alert(JSON.stringify(e));
@@ -165,7 +165,67 @@ function friendclickevent(){
 	});
 }
 
-function chatpage() {
-	$('.popuplayer').hide();
-	openChat(1, $('.popuplayer').val());
+// 검색 결과 출력하는 함수
+function print_search_result(result, $destination, type) {
+	
+	if(type == 'friend') {
+	
+		$(result).each(function(i, data) {
+			
+			// 검색 결과를 각각 감쌀 div
+			var $div_wrapper = $('<div />', {
+				"class": "div_search_result arr_friend",
+				"friend_id": data.member_id
+			}).appendTo($destination);
+			
+			// 프로필 사진..
+			var $img_profile = $('<img />', {
+				"class": "img_profile arr_friend",
+				"src": "./memberimg?strurl=" + data.member_picture,
+				"friend_id": data.member_id
+			}).css({
+				"width": "40px",
+				"height": "40px"
+			}).appendTo($div_wrapper);
+			
+			// 친구 아이디
+			var $friend_id = $('<span />', {
+				"class": "span_friend_id arr_friend",
+				"text": data.member_id,
+				"friend_id": data.member_id
+			}).appendTo($div_wrapper);
+			
+		})
+		
+	} else if (type == 'user') {
+		
+		$(result).each(function(i, data) {
+			
+			// 검색 결과를 각각 감쌀 div
+			var $div_wrapper = $('<div />', {
+				"class": "div_search_result arr_user",
+				"user_id": data.member_id
+			}).appendTo($destination);
+			
+			// 프로필 사진..
+			var $img_profile = $('<img />', {
+				"class": "img_profile arr_user",
+				"src": "./memberimg?strurl=" + data.member_picture,
+				"user_id": data.member_id
+			}).css({
+				"width": "40px",
+				"height": "40px"
+			}).appendTo($div_wrapper);
+			
+			// 친구 아이디
+			var $user_id = $('<span />', {
+				"class": "span_friend_id arr_user",
+				"text": data.member_id,
+				"user_id": data.member_id
+			}).appendTo($div_wrapper);
+			
+		})
+	}
+	
+	
 }

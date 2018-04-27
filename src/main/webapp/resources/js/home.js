@@ -29,25 +29,6 @@ function initialize(){
 		checkRadioPaging(); 
 	 });
 
-	$(document).click(function (e) {
-
-		e.stopPropagation()
-
-		$('.div_party_popup').remove();
-		$('.div_friend_popup').remove();
-		
-		
-		if($(e.target).hasClass('arr_party')) {
-			console.log('클릭은 -> ' + e.target.nodeName);
-			console.log('클래스는 -> ' + $(e.target).attr('class'));
-			createPartyPopup(e, e.target);
-		} else if($(e.target).hasClass('friendclick')) {
-			console.log('클릭은 -> ' + e.target.nodeName);
-			console.log('클래스는 -> ' + $(e.target).attr('class'));
-			//TODO  친구 팝업창 띄우기
-			createFriendPopup(e, e.target);
-		}
-	});
 }
 
 function checkRadioPaging(){
@@ -237,94 +218,6 @@ function search(){
 	});
 }
 
-function createPartyPopup(e, elem) {
-
-	var $div_party_popup = $('<div />', {
-		"class": "div_party_popup"
-	}).css({
-		"position": "absolute",
-		"left": e.clientX,
-		"top": e.clientY,
-		"width": "100px",
-		"height": "60px",
-		"background-color": "#A9E2F3",
-		"z-index": "1000",
-		"color": "black"
-	}).appendTo($('body'));
-
-	var $div_go_party_page = $('<div />', {
-		"class": "div_go_party_page",
-		"party_name": $(elem).text(),
-		"text": "그룹페이지"
-	}).css({
-		"width": "100%",
-		"height": "50%",
-		"display": "block",
-		"float": "left"
-	}).click(function(e) {
-		location.href = "groupPage?group_name=" + $(this).attr('party_name');
-	}).appendTo($div_party_popup);
-
-	var $div_go_party_chat = $('<div />', {
-		"class": "div_go_party_chat",
-		"party_name": $(elem).text(),
-		"text": "채팅",
-		"party_num": $(elem).attr('partynum')
-	}).css({
-		"width": "100%",
-		"height": "50%",
-		"display": "block",
-		"float": "left"
-	}).click(function(e) {
-		openChat(0, $(this).attr('party_num'), $(this).attr('party_name'));
-	}).appendTo($div_party_popup);
-
-
-}
-
-function createFriendPopup(e, elem) {
-
-	var $div_friend_popup = $('<div />', {
-		"class": "div_friend_popup"
-	}).css({
-		"position": "absolute",
-		"left": e.clientX,
-		"top": e.clientY,
-		"width": "100px",
-		"height": "60px",
-		"background-color": "#A9E2F3",
-		"z-index": "1000",
-		"color": "black"
-	}).appendTo($('body'));
-
-	var $div_go_friend_page = $('<div />', {
-		"class": "div_go_friend_page",
-		"friend_id": $(elem).attr('id'),
-		"text": "친구페이지"
-	}).css({
-		"width": "100%",
-		"height": "50%",
-		"display": "block",
-		"float": "left"
-	}).click(function(e) {
-		location.href = "friend_get?id=" + $(this).attr('friend_id');
-	}).appendTo($div_friend_popup);
-
-	var $div_go_party_chat = $('<div />', {
-		"class": "div_go_friend_chat",
-		"friend_id": $(elem).attr('id'),
-		"text": "채팅"
-	}).css({
-		"width": "100%",
-		"height": "50%",
-		"display": "block",
-		"float": "left"
-	}).click(function(e) {
-		openChat(0, $(this).attr('friend_id'), '');
-	}).appendTo($div_friend_popup);
-
-
-}
 
 
 
