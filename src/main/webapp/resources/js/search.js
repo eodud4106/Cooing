@@ -39,13 +39,28 @@ function AlbumListPaging(check, result) {
 			"class": "card_album_writer"
 		}).appendTo($info_div);
 		var $p_contents = $('<p />', {
-			"html": "<내용><br>" + album.album_contents,
+			"html": "<내용><br>" + album.album_contents + "<br>",
 			"class": "card_album_contents"
 		}).appendTo($info_div);
 		if(album.album_contents == null) {
-			$p_contents.html("<내용><br>없음")
-		}
+			$p_contents.html("<내용><br>없음<br>")
+		}		
+		var $span_like = $('<sapn />', {
+			"html": "❤",
+			"class": "card_album_likes"
+		}).css({
+			"color":"#FF0000"			
+		}).appendTo($info_div);
 		
+		var $span_likecount = $('<sapn />', {
+			"html": likecount(album.album_num) + "<br>",
+			"class": "card_album_likes"
+		}).appendTo($info_div);
+		
+		var $span_reply = $('<span />', {
+			"html": "댓글 :" + replycount(album.album_num),
+			"class": "card_album_contents"
+		}).appendTo($info_div);
 		
 		// 마우스 엔터
 		$div_card.mouseenter(function(e) {
@@ -67,6 +82,47 @@ function AlbumListPaging(check, result) {
 	
 	pagingcheck = false;
 }
+
+function likecount(albumnum){
+	var count = 0;
+	$.ajax({
+		url : 'count_like',
+		type : 'POST',
+		async:false,
+		data : {
+			likeit_albumnum : albumnum
+		},
+		dataType : 'text',
+		success : function(a) {
+			count = a;
+		},
+		error : function(e) {
+			alert(JSON.stringify(e));
+		}
+	});
+	return count;
+}
+
+function replycount(albumnum){
+	var count = 0;
+	$.ajax({
+		url : 'countReply',
+		type : 'POST',
+		async:false,
+		data : {
+			reply_albumnum : albumnum
+		},
+		dataType : 'text',
+		success : function(a) {
+			count = a;
+		},
+		error : function(e) {
+			alert(JSON.stringify(e));
+		}
+	});
+	return count;
+}
+
 //home이 아닌곳에서 search를 할경우 메인으로 보내서 검색을 해야한다.
 function search_other() {
 	location.href='./search_other?search=' + $('#searchtx').val() + '';

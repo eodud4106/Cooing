@@ -141,4 +141,11 @@ public class AlbumReplyController {
 		
 		return navi;
 	}
+	
+	//댓글 갯수 
+	@ResponseBody
+	@RequestMapping(value = "/countReply", method = RequestMethod.POST)
+	public int countReply(int reply_albumnum) {
+		return albumreplyDAO.getReplyTotal(reply_albumnum);
+	}
 }
