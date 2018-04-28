@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>My Page</title>
+<title>BookMark</title>
 <meta charset="utf-8" />
 
 
@@ -48,25 +48,111 @@
 
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="<c:url value="/resources/js/search.js"/>"></script>
-<script src="<c:url value="/resources/js/mypage.js"/>"></script>
 
 <script>
-
-var pagenum = 0;
-var pagingcheck = false;
-$(window).scroll(function() {
-    if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
-    	if($('#totalpage').val() >= pagenum){
-    		getMyAlbumList();
-	    	pagingcheck = true;
-    	}
-    }
-});
-
 $(document).ready(function () {
-	initialize();
+	
+	//북마크 리스트
+	bookmark_list();
+	
+	$('#friendsearchbt').on('click', function() {
+		searchfriend();
+	});
+	//초기 친구 찾을 때만 사용했었음
+	$('#friendsearch').keyup(function() {
+		searchword();
+	});
+	
+	$('#searchbt').on('click' , function(){
+		location.href = './search_other?search=' + $('#searchtx').val() + '';
+	});
+	
+	$('.category').on('click' , function(){
+		searchCategory($(this).attr('data'));
+		location.href = './category_other?categorynum=' + $(this).attr('data') + '';
+	});
+	
+	$(document).mouseup(function(e){
+		var container=$('.popuplayer');
+		if(container.has(e.target).length == 0)
+			container.hide();
+	});
 });
+
+/**
+ * 앨범 생성
+ */
+function create_personal_album() {
+	$.ajax({
+		url: 'create_album',
+		type: 'post',
+		data: {
+			isPersonal: 1
+		},
+		dataType: 'json',
+		success: function(result) {
+			if(result == 'user null') {
+				alert('로그인 정보 없음!');
+			} else if(result == 'fail') {
+				alert('오류 발생!!');
+			} else {
+				 //TODO 앨범 편집창으로 이동
+				 location.href="edit_album?album_num=" + result;
+			}
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+}
+//북마크 리스트
+function bookmark_list() {
+	$.ajax({
+		url: 'bookmark_list',
+		type: 'post',
+		dataType: 'json',
+		success: function(bookmark_info) {
+			$(bookmark_info).each(function(i, vo){
+				var bookmark_page_div = document.createElement('div');
+				var bookmark_info_div = document.createElement('div');
+				
+				var a_bookmark = document.createElement('a');
+				$(a_bookmark).attr('href', 'albumView?album_num='+ vo.bookmark_albumnum + '');
+				
+				var bookmark_img_thumbnail = document.createElement('img');
+				$(bookmark_img_thumbnail).attr('src', ''+ vo.album_thumbnail +'');
+				
+				$(a_bookmark).append(bookmark_img_thumbnail);
+				$(bookmark_page_div).addClass('bookmark_page_div').append(a_bookmark);
+	
+				var bookmark_info_div_html = '';
+					bookmark_info_div_html += '<p> 앨범 이름 : ' + vo.album_name + '</p>';
+					bookmark_info_div_html += '<p> 작성자 : ' + vo.album_writer + '</p>';
+					bookmark_info_div_html += '<p> 앨범내용 : ' + vo.album_contents + '</p>';
+					bookmark_info_div_html += '<p> 앨범카테고리 : ' + vo.album_category + '</p>';
+					bookmark_info_div_html += '<input type="hidden" id="bookmark_num" name="bookmark_num" value="' + vo.bookmark_num + '">';
+				
+				$(bookmark_info_div).addClass('bookmark_info_div').append(bookmark_info_div_html);
+				
+				$('#bookmark').append(bookmark_page_div);
+				$('#bookmark').append(bookmark_info_div);
+
+			});
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+}
 </script>
+
+<style>
+	.bookmark_page_div {float: left; width: 50%; height: 400px; margin: auto;}
+	.bookmark_info_div {float: right; width: 50%; height: 400px; margin: auto;}
+	.bookmark{width:70%; margin-left: 250px;}
+	.bookmark_page_div img {width: 80%;}
+	.bookmark_page_div a {display: block;}
+</style>
 
 </head >
 <body style ="font-family: 'Nanum Gothic Coding', monospace;">
@@ -136,81 +222,33 @@ $(document).ready(function () {
 		<br><br>
 		<div style = "margin-left: 20px;">
        			 SEARCH &nbsp<img id='image_search' src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
-       			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">
-     			 <input id='searchtx' type="text" onblur="search_bar(this)" style="  border: none;
+       			 height: 24px;margin-right: 5px;" onclick="var inputBox = document.getElementById('searchtx');
+       			 inputBox.style.width = '200px';
+        		 inputBox.style.paddingLeft='3px';
+       			 inputBox.value='';
+       			 inputBox.focus();">
+     			 <input id='searchtx' type="text" onblur="this.style.width='0px';
+             	  this.style.paddingLeft='0px';" style="  border: none;
               	 background-color: rgba(0,0,0,0);
               	 color: #666666;
                	 border-bottom: solid 2px #333;
                	 outline: none;
               	  width: 0px;
-               	 transition: all 0.5s;">		
+               	 transition: all 0.5s;" onkeydown="if(event.keyCode==13){searchfriend();}">		
 				
 		</div>
-		<input type="hidden" id="totalpage" value="${totalpage }">
 		<br>	
 	</div>
-			
 	
-	
-	
-	<!-- 앨범 리스트 -->
-	<!-- <div class="card-columns" id="card-columns">
-	
-		<div class="card">
-			<a href="single.html" >			
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/aside_images/img_1.jpg" alt="Card image cap">
-			</a>
-			
+	<div class="bookmark" id="bookmark">
+		<!-- 이 div들을 계속 생성해주기 
+		<div class="bookmark_page_div" id="bookmark_page_div1" style="border-style: solid;">
 		</div>
-		<div class="card">
-			<a href="single.html">
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/image_mj/a1.jpg" alt="Card image cap">
-				
-			</a>
+		
+		<div class="bookmark_info_div" id="bookmark_info_div1" style="border-style: solid;">
 		</div>
-	</div> -->
-	
-	<div class="card-columns" id="card-columns">
-			<div class="card">
-			<ul>
-				<li><div class="inner"><a href="single.html" ><p><strong>출력고고?</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/aside_images/img_1.jpg" alt="Card image cap"/>						
-				</div></li>		
-			</ul></div>
-			
-			<div class="card">
-				<ul><li><div class="inner"><a href="single.html"><p><strong>출력고고?dsf2</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/image_mj/a1.jpg" alt="Card image cap"/>
-				</div></li>
-			</ul></div>
-			
-			<div class="card">
-				<ul><li><div class="inner"><a href="single.html"><p><strong>출력고고?dsf2</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/image_mj/a2.jpg" alt="Card image cap"/>
-				</div></li>
-			</ul></div>		
-			
-			<div class="card">
-				<ul><li><div class="inner"><a href="single.html"><p><strong>출력고고?dsf2</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/image_mj/a3.jpg" alt="Card image cap"/>
-				</div></li>
-			</ul></div>	
-			
-			<div class="card">
-				<ul><li><div class="inner"><a href="single.html"><p><strong>출력고고?dsf2</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/image_mj/a4.jpg" alt="Card image cap"/>
-				</div></li>
-			</ul></div>					
+		-->
 	</div>
-	
-	
 	
 	
 	

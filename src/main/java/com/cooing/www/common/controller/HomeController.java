@@ -1,7 +1,11 @@
 package com.cooing.www.common.controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -9,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,7 +46,8 @@ import com.google.gson.Gson;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+	private final String strThumbnailPath = "/FileSave/thumbnail/";				// windows
+	//private static String strThumbnailPath = "/Users/insect/hindoong_upload/";	// mac
 	
 	@Autowired
 	RelationDAO relationDAO;
@@ -201,5 +207,45 @@ public class HomeController {
 		int totalpage = albumDAO.friend_album_count("" , friend.getMember_id() , personally.getMember_id(),"5");
 		model.addAttribute("totalpage", (totalpage/10));
 		return "friendPage";
+	}
+	
+	//책갈피페이지
+	@RequestMapping(value = "/bookmark", method = RequestMethod.GET)
+	public String bookmark(HttpSession session , Model model){
+		return "album/bookmark";
+	}
+	
+	//책갈피 리스트
+	@ResponseBody
+	@RequestMapping(value = "/bookmark_list", method = RequestMethod.POST)
+	public ArrayList<BookMark> bookmark_list(HttpSession session){
+		String bookmark_memberid = ((Member) session.getAttribute("Member")).getMember_id();
+		ArrayList<BookMark> list = albumbookmarkDAO.bookmark_list(bookmark_memberid);
+		for(int i=0; i<list.size(); i++){
+			String temp_thumbnail = "home_thumbnail?filePath=" + list.get(i).getAlbum_thumbnail();
+			list.get(i).setAlbum_thumbnail(temp_thumbnail);
+		}
+		return list;
+	}
+	@RequestMapping(value = "home_thumbnail", method = RequestMethod.GET)
+	public String thumbnail(HttpServletResponse response , String filePath) {
+		//logger.info("thumbnail__jinsu");
+		
+		String fullpath = strThumbnailPath + filePath;
+		if( filePath.length() != 0){
+			FileInputStream filein = null;
+			ServletOutputStream fileout = null;
+			try {
+				filein = new FileInputStream(fullpath);
+				fileout = response.getOutputStream();
+				FileCopyUtils.copy(filein, fileout);			
+				filein.close();
+				fileout.close();
+			} catch (IOException e) {
+				//오류 뜨는 게 보기 싫어 잠깐 끔...
+				//e.printStackTrace();
+			}
+		}
+		return null;
 	}
 }

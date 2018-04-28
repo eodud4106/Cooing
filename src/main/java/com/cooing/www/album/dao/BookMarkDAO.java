@@ -1,5 +1,6 @@
 package com.cooing.www.album.dao;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -35,6 +36,11 @@ public class BookMarkDAO {
 			return true;
 		}		
 		return false; 
+	}
+	
+	public ArrayList<BookMark> bookmark_list(String bookmark_memberid){
+		BookMarkMapper mapper = sqlSession.getMapper(BookMarkMapper.class);
+		return mapper.bookmark_list(bookmark_memberid);
 	}
 
 }

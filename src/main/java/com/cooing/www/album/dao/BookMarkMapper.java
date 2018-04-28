@@ -1,5 +1,7 @@
 package com.cooing.www.album.dao;
 
+import java.util.ArrayList;
+
 import com.cooing.www.album.vo.BookMark;
 
 public interface BookMarkMapper {
@@ -9,4 +11,6 @@ public interface BookMarkMapper {
 	public int bookmark_delete(BookMark bookmark);
 	
 	public BookMark bookmark_check(BookMark bookmark);
+	
+	public ArrayList<BookMark> bookmark_list(String bookmark_memberid);
 }

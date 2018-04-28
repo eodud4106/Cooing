@@ -23,4 +23,25 @@
 			bookmark_page = #{bookmark_page}
 	</delete>
 	
+	<select id="bookmark_list" parameterType="String" resultType="bookmark">
+		SELECT
+			B.BOOKMARK_NUM,
+			B.BOOKMARK_ALBUMNUM,
+			B.BOOKMARK_MEMBERID,
+			B.BOOKMARK_PAGE,
+			A.ALBUM_WRITER,
+			A.ALBUM_NAME, 
+			A.ALBUM_CONTENTS,
+			A.ALBUM_CATEGORY,
+			A.ALBUM_THUMBNAIL
+		FROM
+			BOOKMARK B, 
+			ALBUMLIST A 
+		WHERE 
+			B.BOOKMARK_ALBUMNUM = A.ALBUM_NUM
+		AND 
+			B.BOOKMARK_MEMBERID = #{bookmark_memberid}
+		ORDER BY BOOKMARK_NUM ASC
+	</select>
+	
 </mapper>
