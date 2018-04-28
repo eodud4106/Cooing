@@ -36,16 +36,10 @@ public class MemberController {
 	@Autowired
 	MemberDAO memberDAO;
 	
-	@RequestMapping(value="/member_get" , method = RequestMethod.GET)
-	public String member_get(){		
-		logger.info("member_get__jinsu");
-		return "/member";
-	}
 	@RequestMapping(value="/member_post" , method = RequestMethod.POST)
 	public String member_post(Member member , @RequestParam(value="hobby" , required =false) String[] hobby
 			,MultipartFile upload , HttpSession session){	
 		logger.info("member_post__jinsu");
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@몇번오니?(멤버 컨트롤러)");
 		if(upload != null && !upload.isEmpty()){
 			String savefile = FileLimit.FileSave(upload, strFilePath);
 			member.setMember_picture(savefile);
@@ -97,9 +91,7 @@ public class MemberController {
 	public ArrayList<Member> select_friend(HttpSession session){
 		logger.info("select_friend__jinsu");
 		Member member = (Member)session.getAttribute("Member");
-		ArrayList<Member> arrfriend = memberDAO.selectfriend(member.getMember_id());		
-		logger.info(arrfriend.toString());
-		return arrfriend;				
+		return memberDAO.selectfriend(member.getMember_id());
 	}
 	
 	@ResponseBody
@@ -110,17 +102,14 @@ public class MemberController {
 		Map<String,String> map = new HashMap<String,String>(); 
 		map.put("friendid", text);
 		map.put("myid", member.getMember_id());
-		ArrayList<Member> arrfriendsearch = memberDAO.searchId(map);
-		logger.info(arrfriendsearch.toString());
-		return arrfriendsearch;				
+		return memberDAO.searchId(map);				
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/search_allid" , method = RequestMethod.POST)
 	public ArrayList<String> search_id(String text , HttpSession session){
 		logger.info("search_id__jinsu");
-		ArrayList<String> arrfriendsearch = memberDAO.searchallId(text);
-		return arrfriendsearch;				
+		return memberDAO.searchallId(text);				
 	}
 	
 	@ResponseBody
@@ -131,9 +120,7 @@ public class MemberController {
 		Map<String,String> map = new HashMap<String,String>(); 
 		map.put("friendid", text);
 		map.put("myid", member.getMember_id());
-		ArrayList<Member> arruser = memberDAO.searchUser(map);
-		logger.info(arruser.toString());
-		return arruser;				
+		return  memberDAO.searchUser(map);			
 	}
 	
 	@ResponseBody

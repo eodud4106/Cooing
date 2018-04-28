@@ -118,7 +118,9 @@ public class AlbumDAO{
 		map.put("search_writer", writer);
 		map.put("search", search);
 		map.put("self_id", myid);
-		return mapper.total_album_list(rb , map);
+		ArrayList<AlbumVO> arra = mapper.total_album_list(rb , map);
+		System.out.println(arra.toString());
+		return arra;
 	}
 	
 	public int friend_album_count(String search , String writer , String myid , String check){

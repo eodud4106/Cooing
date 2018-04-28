@@ -1,6 +1,26 @@
 /**
  * 
  */
+//검색창 줄였다 늘렸다 
+function inputbox_focus(){
+	if($('#searchtx').css('width') == '0px'){
+		$('#searchtx').val('');
+		$('#searchtx').css('width' , '200px');
+		$('#searchtx').css('paddingLeft' , '3px');
+		$('#searchtx').focus();
+	}else if($('#searchtx').css('width') == '200px'){
+		$('#searchtx').val('');
+		$('#searchtx').css('width' , '0px');
+		$('#searchtx').css('paddingLeft' , '0px');
+	}
+}
+
+function search_bar(search){
+	if($('#searchtx').val() == 0){
+		$(search).css('width' , '0px');
+		$(search).css('paddingLeft' , '0px');
+	}
+}
 
 //앨범 리스트 출력
 function AlbumListPaging(check, result) {

@@ -57,44 +57,6 @@ $(document).ready(function () {
 	initialize();
 	getIDAlbumList();
 });
-
-//앨범 리스트 Ajax로 받는 코드
-function getIDAlbumList() {
-	var check  = false;
-	if(pagenum == 0)
-		check  = true;
-	var searchtx = $('#searchtx').val();
-	$.ajax({
-		url: 'album/getIDAlbumList',
-		type: 'post',
-		data:{albumwriter:$('#friendid').text(),
-				pagenum:++pagenum,
-				search:searchtx
-				},
-		dataType: 'json',
-		success: function(result) {
-			AlbumListPaging(check , result);
-			$.ajax({
-				url: 'album/getIDAlbumCount',
-				type: 'post',
-				data:{albumwriter:$('#friendid').text(),
-						search:searchtx
-						},
-				dataType: 'text',
-				success: function(count) {
-					//total count 변경 부분
-					$('#totalpage').val(count);
-				},
-				error: function(e) {
-					alert(JSON.stringify(e));	
-				}
-			});
-		},
-		error: function(e) {
-			alert(JSON.stringify(e));	
-		}
-	});
-}
 </script>
 
 <style>
@@ -161,7 +123,7 @@ select::-ms-expand { /* for IE 11 */
 					</div>
 				</c:if>
 				<input type="hidden" value="${friend_id.getMember_id()}"
-					id="friendid">
+					id="friendidval">
 			</p>
 
 
@@ -206,16 +168,10 @@ select::-ms-expand { /* for IE 11 */
 			SEARCH &nbsp<img id='image_search'
 				src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png"
 				style="width: 24px; height: 24px; margin-right: 5px;"
-				onclick="var inputBox = document.getElementById('searchtx');
-       			 inputBox.style.width = '200px';
-        		 inputBox.style.paddingLeft='3px';
-       			 inputBox.value='';
-       			 inputBox.focus();">
+				onclick="inputbox_focus()">
 			<input id='searchtx' type="text"
-				onblur="this.style.width='0px';
-             	  this.style.paddingLeft='0px';"
-				style="border: none; background-color: rgba(0, 0, 0, 0); color: #666666; border-bottom: solid 2px #333; outline: none; width: 0px; transition: all 0.5s;"
-				onkeydown="if(event.keyCode==13){searchfriend();}">
+				onblur="search_bar(this)"
+				style="border: none; background-color: rgba(0, 0, 0, 0); color: #666666; border-bottom: solid 2px #333; outline: none; width: 0px; transition: all 0.5s;">
 
 		</div>
 		<input type="hidden" id="totalpage" value="${totalpage }"> <br>
