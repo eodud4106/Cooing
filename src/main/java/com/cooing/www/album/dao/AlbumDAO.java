@@ -78,9 +78,8 @@ public class AlbumDAO{
 		try {
 			cnt = mapper.personal_insertAlbumOfPage(page);
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
-		
 		
 		if(cnt > 0) {
 			return true;

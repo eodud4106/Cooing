@@ -40,44 +40,25 @@
 		WHEN MATCHED THEN
 			UPDATE
 			SET
-				page_html = 
-				<if test="#{page_html} != null">
-				#{page_html}
-				</if>
-				<if test="#{page_html} == null">
-				''
-				</if>
+				page_html = #{page_html}
+				, page_background = #{page_background}
+				, page_color = #{page_color}
 		WHEN NOT MATCHED THEN
 			INSERT ( 
 				page_id
 				, album_num
 				, page_num
 				, page_html
-				, page_background,
+				, page_background
 				, page_color
 		     )
 			 VALUES (
 				page_seq.nextval
 				, #{album_num}
 				, #{page_num}
-				<if test="#{page_html} != null">
 				, #{page_html}
-				</if>
-				<if test="#{page_html} == null">
-				, ''
-				</if>
-				<if test="#{page_background} != null">
 				, #{page_background}
-				</if>
-				<if test="#{page_background} == null">
-				, ''
-				</if>
-				<if test="#{page_color} != null">
 				, #{page_color}
-				</if>
-				<if test="#{page_color} == null">
-				, ''
-				</if>
 			 )
 	</insert>
 	

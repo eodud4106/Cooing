@@ -1456,7 +1456,7 @@ function savePage(mode) {
             "page_num": i,
             "page_html": $page_clone.html(),
             "page_background": $page_clone.css('background-image'),
-            "page_color": $page_clone.css('background-color'),
+            "page_color": $page_clone.css('background-color')
         }
 
     }
