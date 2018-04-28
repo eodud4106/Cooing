@@ -415,19 +415,7 @@ html, body, main, .container-fluid {
     	</section>
 
    		<section id="content2">
-       		<!-- <form id ="" method="" action="">
-			<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search">
-			<button class = "bt">s</button>
-			</form>					
-				<p></p>			
-				<p>친구1</p>
-				<p>친구2</p>
-				<p>친구3</p>
-				<p>친구4</p>
-		
-				<p>그룹1</p>
-				<p>그룹2</p>		 -->
-				<form id="testimg">
+       			<form id="testimg">
 					<input type="hidden" name="imgSrc" id="imgSrc" />
 				</form>				
 			

@@ -120,7 +120,7 @@ select::-ms-expand { /* for IE 11 */
 			
 			<input type="hidden" id="sessionid" data="${Member.getMember_id()}">
 				<c:if test="${partyleader ne null}">
-				<p><img  class="img-responsive img-circle" style =" border-radius: 80%; display: inline-block;; width: 100% \9;
+				<p><img  class="img-circle" style =" border-radius: 80%; display: inline-block;; width: 100% \9;
     				max-width: 25%; height: auto;"src = "<c:url value="/memberimg?strurl=${partyleader.getMember_picture()}"/>">&nbsp
 				<c:if test="${partyleader ne null}">${partyleader.getMember_id()}(Leader)</c:if></p>
 			</c:if>	
