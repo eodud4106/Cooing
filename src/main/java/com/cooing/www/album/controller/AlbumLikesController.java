@@ -85,4 +85,22 @@ public class AlbumLikesController {
 		return albumlikesDAO.countLikes(likeit_albumnum);
 	}
 	
+	/*
+	 * 좋아요
+	 * 앨범 번호와 유저의 아이디를 가지고
+	 * 1. 기존에 좋아요 한 이력이 있는지 확인
+	 * 2. 없을 경우 좋아요 추가 후 새로 조회한 좋아요 개수 반환
+	 * 3. 있을 경우 좋아요 취소 후 새로 조회한 좋아요 개수 반환
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/addLike", method = RequestMethod.POST)
+	public LikesVO addLike(Model model, int album_num, HttpSession session) {
+		
+		String user_id = ((Member) session.getAttribute("Member")).getMember_id();
+		LikesVO like = new LikesVO(album_num, user_id);
+		albumlikesDAO.addLike(like);
+		
+		return albumlikesDAO.selelct_like(like);
+	}
+	
 }

@@ -44,4 +44,62 @@
 	<select id="countLikes" resultType="int" parameterType="int">
 		select count(*) from likeit where likeit_albumnum = #{likeit_albumnum}
 	</select>
+	
+	<!-- 좋아요 -->
+	<insert id="addLike" parameterType="likes">
+		MERGE INTO likeit l1
+		USING
+		(
+			SELECT
+				#{likeit_albumnum} as likeit_albumnum
+				, #{likeit_memberid} as likeit_memberid
+			FROM
+				dual
+		) l2
+		ON ( l1.likeit_albumnum = l2.likeit_albumnum AND l1.likeit_memberid = l2.likeit_memberid)
+		WHEN MATCHED THEN
+			UPDATE SET l1.likeit_date = sysdate
+			DELETE WHERE
+				likeit_albumnum = #{likeit_albumnum}
+				AND
+				likeit_memberid = #{likeit_memberid}
+		WHEN NOT MATCHED THEN
+			INSERT (
+				likeit_num, 
+				likeit_albumnum,
+				likeit_memberid
+		     )
+			 VALUES (
+				likeit_seq.nextval
+				, #{likeit_albumnum}
+				, #{likeit_memberid}
+			 )
+	</insert>
+	
+	<!-- 좋아요 총 개수와 좋아요 했는지 담아서 리턴 -->
+	<select id="select_like" parameterType="likes" resultType="likes">
+		SELECT
+			totalLike,
+			isLike
+		FROM
+			(
+			SELECT
+				NVL(count(*), 0) as totalLike
+			FROM
+				likeit
+			WHERE
+				likeit_albumnum = #{likeit_albumnum}
+			) l1
+		NATURAL JOIN
+			(
+			SELECT
+				NVL(count(*), 0) as isLike
+			FROM
+				likeit
+			WHERE
+				likeit_albumnum = #{likeit_albumnum}
+				AND
+				likeit_memberid = #{likeit_memberid}
+			) l2
+	</select>
 </mapper>

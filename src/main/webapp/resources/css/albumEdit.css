@@ -129,7 +129,9 @@ svg, path {
 
 .input_album_info,.sel_album_info, .bt_album_info {
 	width: 180px;
-	margin-bottom: 10px;
+}
+.bt_hindoong {
+	margin-bottom: 10px !important;
 }
 .sel_album_info {
 	font-size: xx-large;

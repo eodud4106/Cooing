@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cooing.www.album.dao.BookMarkDAO;
 import com.cooing.www.album.dao.AlbumDAO;
 import com.cooing.www.album.dao.LikesDAO;
+import com.cooing.www.album.dao.ReplyDAO;
 import com.cooing.www.album.vo.LikesVO;
 import com.cooing.www.album.vo.AlbumVO;
 import com.cooing.www.album.vo.BookMark;
 import com.cooing.www.album.vo.CategoryPop;
 import com.cooing.www.album.vo.PageVO;
+import com.cooing.www.album.vo.ReplyVO;
 import com.cooing.www.common.dao.SearchDAO;
 import com.cooing.www.common.vo.PageLimit;
 import com.cooing.www.common.vo.Search;
@@ -52,6 +54,8 @@ public class HomeController {
 	SearchDAO searchDAO;
 	@Autowired
 	BookMarkDAO albumbookmarkDAO;
+	@Autowired
+	ReplyDAO replyDAO;
 	
 	private Gson gson = new Gson();
 	/**
@@ -172,10 +176,20 @@ public class HomeController {
 			}else{
 				model.addAttribute("check", 2);
 			}
+			
+			// 조회할 like vo
+			LikesVO like = new LikesVO(album_num, member.getMember_id());
+			LikesVO result_like = albumlikesDAO.selelct_like(like);
+			
+			// 조회할 reply vo
+			ArrayList<ReplyVO> arr_reply = replyDAO.listReply(album_num, 1, 3);
+			
+			
 			model.addAttribute("albumwrite", memberDAO.selectMember(album.getAlbum_writer()));
 			model.addAttribute("album", album);
 			model.addAttribute("arr_page", arr_page);
-			model.addAttribute("likecount", albumlikesDAO.countLikes(album.getAlbum_num()));
+			model.addAttribute("like", result_like);
+			model.addAttribute("arr_reply", arr_reply);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

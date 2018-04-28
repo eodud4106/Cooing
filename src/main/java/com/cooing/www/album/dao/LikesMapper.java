@@ -17,4 +17,11 @@ public interface LikesMapper {
 	public ArrayList<LikesVO> listLikes(int likeit_albumnum);
 	//좋아요 갯수
 	public int countLikes(int likeit_albumnum);
+	
+	
+	// 좋아요 추가 또는 삭제
+	public int addLike(LikesVO vo);
+	
+	// 좋아요 종합 조회
+	public LikesVO select_like(LikesVO vo);
 }

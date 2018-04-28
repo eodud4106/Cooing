@@ -227,51 +227,47 @@ html, body, main, .container-fluid {
 
 <script>
 	var p; //페이징 용 변수
-	var albumnum = '${album.album_num}';
+	var album_num = '${album.album_num}';
 
-	function hashtagCheck() {
+	function hashtagCheck(){
 		var title = '${album.album_name}';
-		var content = $('#content').html();
+		var content = $('#album_contents').html();
 		//일단 ' '로 나누고 맨 앞이 #인 문자를 찾아서 a태그를 앞뒤로 붙여서 더해서 다시 넣어준다
 		//SearchController에 searchHashTag를 좀 고쳐야 된다.
-		//일단 정보 창이 뜨면 해쉬태그를 달 예정 
-
-		var splitedArray = content.split(' ');
+		//일단 정보 창이 뜨면 해쉬태그를 달 예정 \
+		var splitedArray = content.split('#'); 
 		var filter = /#[^#\s,;]+/gm;
-		var linkedContent = '';
-		for ( var word in splitedArray) {
-			word = splitedArray[word];
-			// # 문자를 찾는다.
-			if (word.match(filter) && word.charAt(0) == '#') {
-				var count = 1;
-				var tmp = word.replace(/\s|　/gi, ' ');
-				for (var i = 0; i < tmp.length; i++) {
-					if (tmp.charAt(i) != '\r\n' && tmp.charAt(i) != ' '
-							&& tmp.charAt(i) != '\t' && tmp.charAt(i) != '\n'
-							&& tmp.charAt(i) != '<')
-						count++;
-					else
-						break;
-				}
-				var hashword = word.substring(1, count - 1);
-				var hashwordother = word.substring(count - 1, word.length);
-				word = '<a href="./hashtag_other?search=' + hashword + '">#'
-						+ hashword + '</a>' + hashwordother;
-			}
-			linkedContent += word + ' ';
+		var linkedContent = splitedArray[0];
+		for(var i = 1; i < splitedArray.length; i++)
+		{
+			var word = splitedArray[i];
+		 	// # 문자를 찾는다.
+		   	var end = 0;
+		   	for(var j = 0; j < word.length; j++){
+			   if(end == 0 && (word.charAt(j) == ' '||  word.charAt(j) == '<' || word.charAt(j)=='\n' || word.charAt(j)=='\r\n')){
+				   end = j;
+			   }
+		   	}
+		   	var hashword_be = word.substring(0,end);
+		   	var hashword_af = word.substring(end,word.length);
+		   	if(end == 0){
+		   		hashword_be = word.substring(0,word.length);
+		   		hashword_af = '';
+		   	}
+		   	word ='<a href="./hashtag_other?search='+ hashword_be+'">#' + hashword_be + '</a>' + hashword_af;
+		   
+		   	linkedContent += word+' ';
 		}
 		$('#title').html(title);
 		$('#content').html(linkedContent);
 	}
-
+	
 	var selectcheck = true;
 
 	//라디오버튼
 	$(document).ready(function() {
 
 		replyList();
-		likesList();
-		check_likes();
 
 		hashtagCheck();
 
@@ -307,7 +303,7 @@ html, body, main, .container-fluid {
 				url : 'bookmark_check',
 				type : 'POST',
 				data : {
-					bookmark_albumnum : albumnum,
+					bookmark_albumnum : album_num,
 					bookmark_page : pagenum
 				},
 				dataType : 'text',
@@ -343,7 +339,7 @@ html, body, main, .container-fluid {
 				url : 'bookmark_create',
 				type : 'POST',
 				data : {
-					bookmark_albumnum : albumnum,
+					bookmark_albumnum : album_num,
 					bookmark_page : pagenum
 				},
 				dataType : 'text',
@@ -372,7 +368,7 @@ html, body, main, .container-fluid {
 				url : 'bookmark_delete',
 				type : 'POST',
 				data : {
-					bookmark_albumnum : albumnum,
+					bookmark_albumnum : album_num,
 					bookmark_page : pagenum
 				},
 				dataType : 'text',
@@ -390,109 +386,23 @@ html, body, main, .container-fluid {
 			});
 		}
 	}
-
-	// 좋아요 확인
-	function check_likes() {
-
+	
+	// 좋아요...??
+	function addLike() {
 		$.ajax({
-			url : 'check_likes',
-			type : 'GET',
-			data : {
-				"likeit_albumnum" : albumnum
-			},
-			dataType : 'text',
-			success : function(a) {
-				console.log('조회 결과 -> ' + JSON.stringify(a));
-				// 좋아요 했을 때
-				if (a != "") {
-					$('#likes').css('display', 'none');
-					// 좋아요 안했을 때
-				} else {
-					$('#deleteLikes').css('display', 'none');
-				}
-			},
-			error : function(e) {
-				alert(JSON.stringify(e));
-			}
-		});
-	}
-	// 좋아요
-	function likes() {
-
-		$.ajax({
-			url : 'likes',
+			url : 'addLike',
 			type : 'POST',
 			data : {
-				"likeit_albumnum" : albumnum
-			},
-			dataType : 'text',
-			success : function(a) {
-				likesList();
-				$('#likes').css('display', 'none');
-				$('#deleteLikes').css('display', 'block');
-				checklikes();
-			},
-			error : function(e) {
-				alert(JSON.stringify(e));
-			}
-		});
-	}
-	//좋아요 갯수 최신화
-	function checklikes() {
-		$.ajax({
-			url : 'count_like',
-			type : 'POST',
-			data : {
-				"likeit_albumnum" : albumnum
-			},
-			dataType : 'text',
-			success : function(a) {
-				$('#likecount').text(a);
-			},
-			error : function(e) {
-				alert(JSON.stringify(e));
-			}
-		});
-	}
-	// 좋아요 취소
-	function deletelikes() {
-		$.ajax({
-			url : 'deleteLikes',
-			type : 'POST',
-			data : {
-				likeit_albumnum : albumnum
-			},
-			dataType : 'text',
-			success : function(a) {
-				likesList();
-				$('#likes').css('display', 'block');
-				$('#deleteLikes').css('display', 'none');
-				checklikes();
-			},
-			error : function(e) {
-				alert(JSON.stringify(e));
-			}
-		});
-	}
-	// 좋아요 목록
-	function likesList() {
-
-		$.ajax({
-			url : 'listLikes',
-			type : 'get',
-			data : {
-				"likeit_albumnum" : albumnum
+				"album_num" : album_num
 			},
 			dataType : 'json',
-			success : function(likesList) {
-				var str = '';
-
-				$(likesList).each(function(i, vo) {
-					str += vo.likeit_memberid + ' ';
-
-				});
-				str += '</table>';
-				$("#resultLikes").html(str);
+			success : function(result) {
+				$('#curr_like').text(' ' + result.totalLike);
+				if(result.isLike == 1) {
+					$('#isLike').text('♥');
+				} else {
+					$('#isLike').text('♡');
+				}
 			},
 			error : function(e) {
 				alert(JSON.stringify(e));
@@ -518,7 +428,7 @@ html, body, main, .container-fluid {
 			url : 'writeReply',
 			type : 'POST',
 			data : {
-				"reply_albumnum" : albumnum,
+				"reply_albumnum" : album_num,
 				"reply_contents" : contents
 			},
 			dataType : 'text',
@@ -569,7 +479,7 @@ html, body, main, .container-fluid {
 			url : 'listReply',
 			type : 'get',
 			data : {
-				"reply_albumnum" : albumnum,
+				"reply_albumnum" : album_num,
 				"rep_page" : rep_page
 			},
 			dataType : 'json',
@@ -630,7 +540,7 @@ html, body, main, .container-fluid {
 			url : 'pageReply',
 			type : 'get',
 			data : {
-				"reply_albumnum" : albumnum,
+				"reply_albumnum" : album_num,
 				"rep_page" : rep_page
 			},
 			dataType : 'json',
@@ -817,24 +727,48 @@ html, body, main, .container-fluid {
 						<span class="focus-input100"></span>
 					</div>
 					
+					<!-- 좋아요 -->
+					<div class="wrap-contact100-form-btn bt_hindoong">
+						<div class="contact100-form-bgbtn"></div>
+						<button class="contact100-form-btn bt_album_info"
+							onclick="addLike()">
+							<span>
+								좋아요
+								<span id="isLike">
+									<c:if test="${like.isLike == 1 }">
+									♥
+									</c:if>
+									<c:if test="${like.isLike == 0 }">
+									♡
+									</c:if>
+								</span>
+								<span id="curr_like"> ${like.totalLike }</span>
+							</span>
+						</button>
+					</div>
+				
+					<!--  댓글 영역 -->
 					<div class="wrap-input100 validate-input">
 						<span class="label-input100">댓글</span>
+						
+						<!-- 불러온 댓글 보여줄 영역 -->
+						<div id="div_reply_list"></div>
+						<!-- 페이징 버튼 영역 -->
+						<div id="div_reply_paging"></div>
 						<textarea class="input100" id="input_reply"
 							class="input_album_info input_album_info_contents"
 							style="min-height: 30px"></textarea>
 						<span class="focus-input100"></span>
 					</div>
 
-					<div class="container-contact100-form-btn">
-						<div class="wrap-contact100-form-btn">
-							<div class="contact100-form-bgbtn"></div>
-							<button class="contact100-form-btn bt_album_info"
-								onclick="modifiy_AlbumInfomation()">
-								<span>
-									등록 <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
-								</span>
-							</button>
-						</div>
+					<div class="wrap-contact100-form-btn">
+						<div class="contact100-form-bgbtn"></div>
+						<button class="contact100-form-btn bt_album_info"
+							onclick="">
+							<span>
+								등록 <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+							</span>
+						</button>
 					</div>
 
 				</section>
