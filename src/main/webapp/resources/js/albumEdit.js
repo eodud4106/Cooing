@@ -1644,29 +1644,8 @@ function remove_box() {
 
 function create_tooltip_of_under_tool() {
 	$('.under_tool').mouseenter(function(e) {
-		var msg = '';
-		var id = $(this).attr('id');
-		if(id == 'i_text') {
-			msg = '텍스트 추가';
-		} else if(id == 'i_image') {
-			msg = '사진 추가';
-		} else if(id == 'i_brush') {
-			msg = '속지 변경';
-		} else if(id == 'i_start') {
-			msg = '첫 페이지로';
-		} else if(id == 'i_end') {
-			msg = '마지막 페이지로';
-		} else if(id == 'i_add') {
-			msg = '페이지 추가';
-		} else if(id == 'i_remove') {
-			msg = '페이지 삭제';
-		} else if(id == 'i_save') {
-			msg = '전체 저장';
-		} else if(id == 'i_exit') {
-			msg = '편집 종료';
-		}
 			
-		createTooltip($(this), msg);
+		createTooltip($(this), $(this).attr('role'));
 		
 	}).mouseleave(function(e) {
 		$('.tooltip_under_bar').remove();
@@ -1723,4 +1702,17 @@ function open_background() {
 		}
 	});
 	
+}
+
+// 페이지 이동
+function go_page(index) {
+	if(index == 'first') {
+		$('#album').turn('page', 1);
+	} else if (index == 'before') {
+		$('#album').turn('previous');
+	} else if (index == 'next') {
+		$('#album').turn('next');
+	} else if (index == 'end') {
+		$('#album').turn('page', $('#album').turn('pages'));
+	}
 }

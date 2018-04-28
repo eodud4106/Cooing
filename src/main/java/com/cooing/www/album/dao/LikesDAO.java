@@ -42,4 +42,32 @@ public class LikesDAO {
 		LikesMapper albumlikesmapper = sqlSession.getMapper(LikesMapper.class);
 		return albumlikesmapper.countLikes(likeit_albumnum);
 	}
+	
+	//좋아요 추가 또는 삭제
+	public int addLike(LikesVO vo) {
+		
+		int result = 0;
+		
+		try {
+			result = sqlSession.getMapper(LikesMapper.class).addLike(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	//좋아요 카운트와 좋아요 했는지 담아서 리턴
+	public LikesVO selelct_like(LikesVO vo) {
+		
+		LikesVO result_like = new LikesVO();
+		
+		try {
+			result_like = sqlSession.getMapper(LikesMapper.class).select_like(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result_like;
+	}
 }
