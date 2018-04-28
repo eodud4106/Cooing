@@ -76,35 +76,6 @@ function getIDAlbumList() {
 	height: 50px;
 }
 
-.modal {
-	display: none;
-	position: absolute;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: none;
-	background-color: rgba(0, 0, 0, 0.7);
-}
-
-.close {
-	color: #aaa;
-	float: left;
-	font-size: 30px;
-	font-weight: bold;
-	position: fixed;
-	right: 16;
-	top: 0;
-	background-color: #f0f0f0;
-}
-
-.close:hover, .close:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
-}
-
 
  @media screen and (max-width: 768px) {
    .probootstrap-main .search-bar{
@@ -133,7 +104,7 @@ select::-ms-expand { /* for IE 11 */
 
 </style>
 </head>
-<body>
+<body style ="font-family: 'Nanum Gothic Coding', monospace;">
 
 	<aside class="probootstrap-aside js-probootstrap-aside">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
@@ -190,19 +161,27 @@ select::-ms-expand { /* for IE 11 */
 	</div>	
 	
 	<div class ="search-bar">
-		<br>
-		<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}" style = "float : left; margin-left: 200px;">
-		<input type="button" value="검색" id="searchbt">
-		<div class = "search" style= "z-index:99; float:left; padding-left : 10px;" id="searchbt" onclick=""><i class="fas fa-search"></i></div>
-			
-		<!-- 정렬순서 -->		
-		<select style = "float:right; padding-left : 10px;">
-		  <option selected >정렬순</option>
-		  <option>최신순</option>
-		  <option>인기순</option>
-		</select>	
-	</div>
+		<br><br>
+		<div style = "margin-left: 20px;">
+       			 SEARCH &nbsp<img id='image_search' src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
+       			 height: 24px;margin-right: 5px;" onclick="var inputBox = document.getElementById('searchtx');
+       			 inputBox.style.width = '200px';
+        		 inputBox.style.paddingLeft='3px';
+       			 inputBox.value='';
+       			 inputBox.focus();">
+     			 <input id='searchtx' type="text" onblur="this.style.width='0px';
+             	  this.style.paddingLeft='0px';" style="  border: none;
+              	 background-color: rgba(0,0,0,0);
+              	 color: #666666;
+               	 border-bottom: solid 2px #333;
+               	 outline: none;
+              	  width: 0px;
+               	 transition: all 0.5s;" onkeydown="if(event.keyCode==13){searchfriend();}">		
+				
+		</div>
 		<br>	
+	</div>
+			
 	
 	
 	<!-- 앨범 리스트 -->
@@ -230,11 +209,7 @@ select::-ms-expand { /* for IE 11 */
 	<div class="container-fluid d-md-none">
 		<div class="row">
 			<div class="col-md-12">
-				<ul class="list-unstyled d-flex probootstrap-aside-social">
-					<li><a href="#" class="p-2"><span class="icon-twitter"></span></a></li>
-					<li><a href="#" class="p-2"><span class="icon-instagram"></span></a></li>
-					<li><a href="#" class="p-2"><span class="icon-dribbble"></span></a></li>
-				</ul>
+				
 				<p>
 					&copy; 2018 <a href="https://uicookies.com/" target="_blank">COOING</a>.
 					<br> All Rights Reserved. Designed by <a
@@ -248,66 +223,52 @@ select::-ms-expand { /* for IE 11 */
 
 	<aside class="probootstrap-aside2 js-probootstrap-aside2">
 		<a href="#"
-			class="probootstrap-close-menu js-probootstrap-close-menu2 d-md-none">
+			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-right"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING2</a>
-			<p class="mb-0">
-				Another free html5 bootstrap 4 template by
-				<a href="https://uicookies.com/" target="_blank">uiCookies</a>
-			</p>
-		</div>
-		<div class="probootstrap-overflow">
-			<div>
-				<form>
-					<input type="text" placeholder="친구검색" id="friendsearch" class="search1">
-					<input type="button" id="friendsearchbt" value="s">
+			<p class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY FRIEND</p>			
+		</div>				
+				 <form>
+					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
+					<div>
+       			  <img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
+       			 height: 24px;margin-left: 215px; margin-top: -50px;">
 				</form>
-
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(friend) ne 0}">
-						<c:forEach var="arrf" items="${friend }">
-							<div name="friend">
-								<p onclick="openChat('1', '${arrf}', '')">${arrf}</p>
-							</div>
-						</c:forEach>
-					</c:if>
-				</c:if>
+			<div class = "friendList">
+				<div name="friend" id="friend">
+				</div>
+				<div name="user" id="user">
+				</div>
 			</div>
-			<div>
+		
+		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
+			<p class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY GROUP</p>				
+						
+		<!-- <div class="probootstrap-overflow"> -->
+		
+		<!-- 그룹생성 -->
+		<div class="button_container">		
+		<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
+		</div>
+			<div class = "groupList">
 				<c:if test="${Member ne null}">
 					<c:if test="${fn:length(group) ne 0}">
 						<c:forEach var="party" items="${group}">
 							<div name="group">
-								<p onclick="openGUpdate('${party.party_name}')"
-									partynum="${party.party_num}">${party.party_name}</p>
-								<input type="button" value="채팅"
-									onclick="openChat('0', '${party.party_num}', '')" />
+								<p class="arr_party" partynum="${party.party_num}">${party.party_name}</p>
 							</div>
 						</c:forEach>
 					</c:if>
-				</c:if>
-				<input type="button" value="그룹생성"
-					onclick="window.open('./groupcreate_get?','','width=300 height=400 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
-			</div>
+				</c:if>				
+			<!-- </div> -->
 		</div>
 
 	</aside>
-
-	<div id="div_chat" 
-		style="width: 500px; height: 500px; position: absolute; padding: 0px; opacity: 1; background-color: rgb(240, 240, 240); display: none;">
-		<p>
-			<button id="button_close" onclick="closePChat()">닫기</button>
-		</p>
-		<div id="data" 
-			style="height: 350px; width: 100%; overflow-y: scroll; margin: auto; display: block; padding: 0px"></div>
-
-		<div id="div_send">
-			<input type="text" id="message" autocomplete="off" />
-			<input type="button" id="sendBtn" value="전송" />
-			<input type="hidden" id="totalpage" value="${totalpage}">
-		</div>
+	
+	<div class="popuplayer">
+		<p onClick="friendpage()" style="font-size:8pt;color:#26afa1;">친구페이지</p>
+		<p onClick="chatpage()" style="font-size:8pt;color:#26afa1;">채팅</p>
 	</div>
 
 	<script src="resources/aside_js/popper.min.js"></script>
