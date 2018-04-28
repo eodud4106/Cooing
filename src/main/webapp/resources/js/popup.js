@@ -83,8 +83,7 @@ function createFriendPopup(e, elem, type) {
 	}).appendTo($('body'));
 
 	var $div_go_friend_page = $('<div />', {
-		"class": "div_go_friend_page",
-		"friend_id": $(elem).attr('friend_id')
+		"class": "div_go_friend_page"
 	}).css({
 		"width": "100%",
 		"height": "50%",
@@ -92,12 +91,18 @@ function createFriendPopup(e, elem, type) {
 		"float": "left"
 	}).appendTo($div_friend_popup);
 	
+	
+	
 	if(type == 'friend') {
-		$div_go_friend_page.text('친구페이지').click(function(e) {
+		$div_go_friend_page.attr({
+			"friend_id": $(elem).attr('friend_id')
+		}).text('친구페이지').click(function(e) {
 			location.href = "friend_get?id=" + $(this).attr('friend_id');
 		})
 	} else if (type == 'user') {
-		$div_go_friend_page.text('유저페이지');
+		$div_go_friend_page.attr({
+			"user_id": $(elem).attr('user_id')
+		}).text('유저페이지');
 		$div_go_friend_page.click(function(e) {
 			location.href = "friend_get?id=" + $(this).attr('user_id');
 		})
