@@ -287,14 +287,15 @@ html, body, main, .container-fluid {
 
 	// 앨범 정보 수정
 	function modifiy_AlbumInfomation() {
-		
+		var content = $('#album_contents').val().replace(/(?:\r\n|\r|\n)/g,'<br>');
+		alert(content);
 		$.ajax({ 
 			url: 'update_albuminfo',
 			type: 'POST',
 			data: {
 				album_num: '${album.album_num}',
 				album_name: $('#album_name').val(),
-				album_contents: $('#album_contents').val(),
+				album_contents: content,
 				album_category: $('#album_category').val(),
 				album_openrange: $('#album_openrange').val()
 			},

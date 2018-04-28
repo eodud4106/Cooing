@@ -191,12 +191,12 @@ html, body, main, .container-fluid {
 			   var tmp = word.replace(/\s|　/gi, ' ');
 			   for(var i = 0; i < tmp.length; i++){
 				   if(tmp.charAt(i)!='\r\n' && tmp.charAt(i) != ' ' && tmp.charAt(i)!='\t' && tmp.charAt(i)!='\n' && tmp.charAt(i)!='<')
-				   		count++
+					   count++;
 				   else
 					   	break;
 			   }
-			   var hashword = word.substring(1,count);
-			   var hashwordother = word.substring(count,word.length);
+			   var hashword = word.substring(1,count-1);
+			   var hashwordother = word.substring(count-1,word.length);
 			   word = '<a href="./hashtag_other?search='+ hashword+'">#' + hashword + '</a>' + hashwordother; 
 		   }
 		   linkedContent += word+' ';
