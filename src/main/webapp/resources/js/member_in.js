@@ -2,6 +2,8 @@
  *  회원가입 관련 
  */
 
+
+
 function readURL(input){ 
 	if(input.files[0]){
 		if(input.files[0].size < 3000000){
@@ -22,6 +24,8 @@ function readURL(input){
 		}
 	}
 }
+
+//아마 사진 때문에 오류인듯...
 function initialize(){
 	$('#idcheck').on('click' , idcheck);
 	$('#upload').on('change',function(){
@@ -34,6 +38,7 @@ function idcheck(){
 		alert('ID를 입력해 주세요.');
 		return false;
 	}
+	
 	$.ajax({
 		url:'id_check',
 		type:'POST',		
@@ -45,7 +50,7 @@ function idcheck(){
 				alert('사용 가능한 ID입니다.');
 			}
 			else{
-				alert('이미 사용중인 ID입니다.');
+				alert('이미 사용중인 ID입니다.');				
 			}		
 		},
 		error:function(e){alert(JSON.stringify(e));}		
@@ -53,13 +58,13 @@ function idcheck(){
 }
 
 function joinmember(){
-	if(!member_check())
-		return false;
 	
 	var checkArr = new Array;
 	$('input[type="checkbox"]:checked').each(function(){
 	      checkArr.push($(this).val());
-	  });
+	});
+	
+	if(member_check() == false) {return false;}
 	
 	$.ajax({
 		url:'member_check',
@@ -68,10 +73,11 @@ function joinmember(){
 		dataType:"text",
 		success: function(a){
 			if(a == 'success'){
+				alert('회원가입에 성공하였습니다. 로그인 창으로 이동합니다.');
 				$('#member_form').submit();
 			}
 			else{
-				alert('형식을 다시 한번 입력해 주세요.');
+				alert('회원가입 형식을 위배하였습니다. 다시 확인해주세요.');
 			}		
 		},
 		error:function(e){alert(JSON.stringify(e));}		
@@ -91,20 +97,16 @@ function checkcount(){
 	});
 }
 function member_check(){	
-	if($('#id').val().legnth == 0){
-		alert('ID를 입력해 주세요.');
+	if($('#id').val().length < 5 || $('#id').val().length > 12){
+		alert('※아이디는 5~12글자 /, &, \<, >, | 를 제외한 문자 사용 가능합니다.');
 		return false;
 	}
-	if($('#password').val().length == 0){
-		alert('비밀번호를 입력 해주세요.');
-		return false;
-	}
-	if($('#password2').val().length == 0){
-		alert('비밀번호를 입력 해주세요.');
+	if($('#password').val().length < 6 || $('#password').val().length > 12){
+		alert('※비밀번호는 6~12글자 /, &, \<, >, | 를 제외한 문자 사용 가능합니다.');
 		return false;
 	}
 	if($('#password').val() != $('#password2').val()){
-		alert('비밀번호를 다르게 입력하셨습니다.');
+		alert('입력하신 비밀번호가 다릅니다. 다시 입력해주세요.');
 		return false;
 	}
 	

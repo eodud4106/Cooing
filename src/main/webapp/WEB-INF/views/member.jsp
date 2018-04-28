@@ -53,7 +53,6 @@ checkcount();
 				<form class="login100-form validate-form" action ="member_post" method = "POST" id="member_form" enctype = "multipart/form-data">
 					<span class="login100-form-title p-b-70">
 						JOIN
-					
 					</span>
 					<div class="div_profile_image">
 						프로필 사진 등록

@@ -36,7 +36,6 @@ public class MemberController {
 	@Autowired
 	MemberDAO memberDAO;
 	
-	
 	@RequestMapping(value="/member_get" , method = RequestMethod.GET)
 	public String member_get(){		
 		logger.info("member_get__jinsu");
@@ -45,10 +44,13 @@ public class MemberController {
 	@RequestMapping(value="/member_post" , method = RequestMethod.POST)
 	public String member_post(Member member , @RequestParam(value="hobby" , required =false) String[] hobby
 			,MultipartFile upload , HttpSession session){	
-		logger.info("member_post__jinsu");		
+		logger.info("member_post__jinsu");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@몇번오니?(멤버 컨트롤러)");
 		if(upload != null && !upload.isEmpty()){
 			String savefile = FileLimit.FileSave(upload, strFilePath);
 			member.setMember_picture(savefile);
+		} else {
+			member.setMember_picture("default_person.png");
 		}
 		if(memberDAO.insertMember(member)){
 			if(hobby != null && hobby.length != 0){
