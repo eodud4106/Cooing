@@ -46,7 +46,6 @@ $(window).scroll(function() {
 
 $(document).ready(function () {
 	if (${sessionScope.Member != null}) {
-		readyChat();
 		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
 	}
 	initialize();
@@ -115,7 +114,7 @@ select::-ms-expand { /* for IE 11 */
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
-			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
+			<a href="./" class="mb-2 d-block probootstrap-logo">COOING</a>
 
 			<p id="friendid"><img src="<c:url value="/memberimg?strurl=${friend_id.getMember_picture()}"/>">${friend_id.getMember_id()}</p>
 		<p>

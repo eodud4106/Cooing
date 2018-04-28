@@ -53,7 +53,7 @@ function initialize(){
 }
 
 function fiendplus(){
-	var friendid = $('#friendid').val();
+	var friendid = $('#friendid').text();
 	var data = $('#friendbt').attr('data');
 	if(data == 0){
 		$.ajax({
