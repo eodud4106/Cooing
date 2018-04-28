@@ -1,6 +1,6 @@
 package com.cooing.www.album.vo;
 
-public class AlbumWriteVO {	
+public class AlbumVO {	
 	private int album_num;
 	private String album_writer;	
 	private String album_name;	
@@ -10,11 +10,11 @@ public class AlbumWriteVO {
 	private String album_thumbnail;
 	private String isPersonal;
 	
-	public AlbumWriteVO() {
+	public AlbumVO() {
 		super();
 	}
 
-	public AlbumWriteVO(String album_name, String album_contents, int album_category, int album_openrange) {
+	public AlbumVO(String album_name, String album_contents, int album_category, int album_openrange) {
 		super();
 		this.album_name = album_name;
 		this.album_contents = album_contents;
@@ -22,7 +22,7 @@ public class AlbumWriteVO {
 		this.album_openrange = album_openrange;
 	}
 
-	public AlbumWriteVO(String album_writer, String album_name, int album_openrange, int album_category,
+	public AlbumVO(String album_writer, String album_name, int album_openrange, int album_category,
 			String isPersonal) {
 		super();
 		this.album_writer = album_writer;
@@ -32,7 +32,7 @@ public class AlbumWriteVO {
 		this.isPersonal = isPersonal;
 	}
 
-	public AlbumWriteVO(int album_num, String album_name, int album_openrange, String album_contents,
+	public AlbumVO(int album_num, String album_name, int album_openrange, String album_contents,
 			int album_category) {
 		super();
 		this.album_num = album_num;
@@ -43,7 +43,7 @@ public class AlbumWriteVO {
 	}
 	
 	
-	public AlbumWriteVO(int album_num, String album_writer, String album_name, int album_openrange,
+	public AlbumVO(int album_num, String album_writer, String album_name, int album_openrange,
 			String album_contents, int album_category, String album_thumbnail, String isPersonal) {
 		super();
 		this.album_num = album_num;

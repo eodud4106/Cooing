@@ -3,9 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cooing.www.album.dao.AlbumLikesMapper">
+<mapper namespace="com.cooing.www.album.dao.LikesMapper">
 	<!-- 앨범 좋아요 -->
-	<insert id="addLikes" parameterType="albumlikes">
+	<insert id="addLikes" parameterType="likes">
 		insert into likeit (
 			likeit_num
 			, likeit_albumnum
@@ -18,19 +18,19 @@
 		)
 	</insert>
 	<!-- 앨범 하나 가져옴 -->
-	<select id = "getAlbum" resultType = "albumlikes" parameterType="int">
+	<select id = "getAlbum" resultType = "likes" parameterType="int">
 		select * from likeit where likeit_albumnum = #{likeit_albumnum}
 	</select>
 	<!-- 좋아요 취소 -->
-	<delete id="deleteLikes" parameterType="albumlikes">
+	<delete id="deleteLikes" parameterType="likes">
 		delete from likeit where likeit_memberid = #{likeit_memberid} and likeit_albumnum = #{likeit_albumnum}
 	</delete>
 	<!-- 좋아요 목록-->
-	<select id = "listLikes" resultType = "albumlikes" parameterType="int">
+	<select id = "listLikes" resultType = "likes" parameterType="int">
 		select * from likeit where likeit_albumnum = #{likeit_albumnum} order by likeit_num desc
 	</select>
 	<!-- 좋아요 확인 -->
-	<select id="check_Likes" resultType = "String" parameterType="albumlikes">
+	<select id="check_Likes" resultType = "String" parameterType="likes">
 		select LIKEIT_MEMBERID
 			from
 		likeit

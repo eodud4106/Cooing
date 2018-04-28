@@ -1,17 +1,17 @@
 package com.cooing.www.album.vo;
 
-public class AlbumLikesVO {
+public class LikesVO {
 	private int likeit_num;
 	private int likeit_albumnum;
 	private String likeit_memberid;	
 	private String likeit_date;
 	
-	public AlbumLikesVO() {
+	public LikesVO() {
 	}
 	
 	
 
-	public AlbumLikesVO(int likeit_albumnum, String likeit_memberid) {
+	public LikesVO(int likeit_albumnum, String likeit_memberid) {
 		super();
 		this.likeit_albumnum = likeit_albumnum;
 		this.likeit_memberid = likeit_memberid;
@@ -19,7 +19,7 @@ public class AlbumLikesVO {
 
 
 
-	public AlbumLikesVO(int likeit_num, int likeit_albumnum, String likeit_memberid, String likeit_date) {
+	public LikesVO(int likeit_num, int likeit_albumnum, String likeit_memberid, String likeit_date) {
 		this.likeit_num = likeit_num;
 		this.likeit_albumnum = likeit_albumnum;
 		this.likeit_memberid = likeit_memberid;

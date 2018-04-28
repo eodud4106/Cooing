@@ -9,12 +9,12 @@ import org.springframework.stereotype.Repository;
 import com.cooing.www.album.vo.BookMark;
 
 @Repository
-public class AlbumBookMarkDAO {
+public class BookMarkDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
 	public boolean bookmark_create(BookMark bookmark){
-		AlbumBookMarkMapper mapper = sqlSession.getMapper(AlbumBookMarkMapper.class);
+		BookMarkMapper mapper = sqlSession.getMapper(BookMarkMapper.class);
 		if(mapper.bookmark_create(bookmark) > 0){
 			return true;
 		}		
@@ -22,7 +22,7 @@ public class AlbumBookMarkDAO {
 	}
 	
 	public boolean bookmark_delete(BookMark bookmark){
-		AlbumBookMarkMapper mapper = sqlSession.getMapper(AlbumBookMarkMapper.class);
+		BookMarkMapper mapper = sqlSession.getMapper(BookMarkMapper.class);
 		if(mapper.bookmark_delete(bookmark) > 0){
 			return true;
 		}		
@@ -30,7 +30,7 @@ public class AlbumBookMarkDAO {
 	}
 	
 	public boolean bookmark_check(BookMark bookmark){
-		AlbumBookMarkMapper mapper = sqlSession.getMapper(AlbumBookMarkMapper.class);
+		BookMarkMapper mapper = sqlSession.getMapper(BookMarkMapper.class);
 		if(mapper.bookmark_check(bookmark) != null){
 			return true;
 		}		

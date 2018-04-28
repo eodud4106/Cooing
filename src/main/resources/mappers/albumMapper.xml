@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cooing.www.album.dao.AlbumMapper">
-	<insert id="personal_createAlbum" parameterType="albumwrite">
+	<insert id="personal_createAlbum" parameterType="album">
 		insert into ALBUMLIST (
 			ALBUM_NUM,
 			ALBUM_WRITER,
@@ -53,7 +53,8 @@
 				, album_num
 				, page_num
 				, page_html
-				, page_attr
+				, page_background,
+				, page_color
 		     )
 			 VALUES (
 				page_seq.nextval
@@ -65,16 +66,22 @@
 				<if test="#{page_html} == null">
 				, ''
 				</if>
-				<if test="#{page_attr} != null">
-				, #{page_attr}
+				<if test="#{page_background} != null">
+				, #{page_background}
 				</if>
-				<if test="#{page_attr} == null">
+				<if test="#{page_background} == null">
+				, ''
+				</if>
+				<if test="#{page_color} != null">
+				, #{page_color}
+				</if>
+				<if test="#{page_color} == null">
 				, ''
 				</if>
 			 )
 	</insert>
 	
-	<select id="total_album_list" parameterType="Map" resultType="albumwrite">
+	<select id="total_album_list" parameterType="Map" resultType="album">
 			<if test="check == 2">
 			select a.*
 				from albumlist a left outer join (
@@ -227,7 +234,7 @@
 			</if>
 	</select>
 	
-	<update id="personal_update_page1_Album" parameterType="albumwrite">
+	<update id="personal_update_page1_Album" parameterType="album">
 		update albumlist set 
 			album_name = #{album_name},
 			album_contents = #{album_contents},
@@ -242,13 +249,13 @@
 			where album_num = #{album_num}
 	</update>
 	
-	<select id="searchCategory" parameterType="int" resultType="albumwrite">
+	<select id="searchCategory" parameterType="int" resultType="album">
 		select * from albumlist 
 			where album_category=#{album_category}
 			order by album_num desc
 	</select>
 	
-	<select id="searchAlbumNum" parameterType="int" resultType="albumwrite">
+	<select id="searchAlbumNum" parameterType="int" resultType="album">
 		select * from albumlist	where album_num=#{searchnum}
 	</select>
 	
@@ -285,7 +292,7 @@
 	</delete>
 	
 	<!-- 앨범을 검색함... -->
-	<select id="select_album" resultType="albumwrite" parameterType="albumwrite">
+	<select id="select_album" resultType="album" parameterType="album">
 		SELECT *
 		FROM albumlist
 		WHERE

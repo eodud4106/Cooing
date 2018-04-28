@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.cooing.www.album.vo.AlbumWriteVO;
+import com.cooing.www.album.vo.AlbumVO;
 import com.cooing.www.album.vo.CategoryPop;
 import com.cooing.www.album.vo.HashTag;
 import com.cooing.www.common.vo.Search;

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cooing.www.album.dao.AlbumReplyDAO;
-import com.cooing.www.album.vo.AlbumReplyVO;
+import com.cooing.www.album.dao.ReplyDAO;
+import com.cooing.www.album.vo.ReplyVO;
 import com.cooing.www.member.vo.Member;
 import com.cooing.www.util.PageNavigator;
 
@@ -23,7 +23,7 @@ public class AlbumReplyController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumLikesController.class);
 	@Autowired
-	AlbumReplyDAO albumreplyDAO;
+	ReplyDAO albumreplyDAO;
 	
 	// 한 페이지 당 글 개수
 	private static final int COUNT_PER_PAGE = 3;
@@ -40,7 +40,7 @@ public class AlbumReplyController {
 
 		String memberid = ((Member) session.getAttribute("Member")).getMember_id();
 		 
-		AlbumReplyVO vo = new AlbumReplyVO();
+		ReplyVO vo = new ReplyVO();
 		vo.setReply_memberid(memberid);
 		vo.setReply_albumnum(reply_albumnum);
 		vo.setReply_contents(reply_contents);
@@ -63,7 +63,7 @@ public class AlbumReplyController {
 		String memberid = ((Member) session.getAttribute("Member")).getMember_id();
 
 		// 넘어온 댓글 번호로 댓글 꺼내옴
-		AlbumReplyVO vo = albumreplyDAO.getReply(reply_num);
+		ReplyVO vo = albumreplyDAO.getReply(reply_num);
 		// id 비교
 		if(vo.getReply_memberid().equals(memberid)){
 			albumreplyDAO.replyDelete(vo);
@@ -79,7 +79,7 @@ public class AlbumReplyController {
 	// 댓글 목록
 	@ResponseBody
 	@RequestMapping(value = "/listReply", method = RequestMethod.GET)
-	public ArrayList<AlbumReplyVO> listReply(Model model, String reply_albumnum, String rep_page) {
+	public ArrayList<ReplyVO> listReply(Model model, String reply_albumnum, String rep_page) {
 		
 		int num = 0;
 		num = Integer.parseInt(reply_albumnum);
@@ -99,7 +99,7 @@ public class AlbumReplyController {
 		// 댓글 페이징
 		int repTotal = albumreplyDAO.getReplyTotal(num);
 		PageNavigator RepNavi = new PageNavigator(3, 3, i_rep_page, repTotal);
-		ArrayList<AlbumReplyVO> replyList = albumreplyDAO.listReply(num, RepNavi.getStartRecord(), RepNavi.getCountPerPage());
+		ArrayList<ReplyVO> replyList = albumreplyDAO.listReply(num, RepNavi.getStartRecord(), RepNavi.getCountPerPage());
 		PageNavigator navi = new PageNavigator(3, 3, i_rep_page, repTotal);
 
 		if(replyList.isEmpty() == false) {

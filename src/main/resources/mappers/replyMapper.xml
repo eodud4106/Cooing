@@ -3,9 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cooing.www.album.dao.AlbumReplyMapper">
+<mapper namespace="com.cooing.www.album.dao.ReplyMapper">
 <!-- 댓글 작성 -->
-<insert id="replyWrite" parameterType="albumreply">
+<insert id="replyWrite" parameterType="reply">
 	insert into reply (
 		reply_num
 		, reply_albumnum
@@ -20,15 +20,15 @@
 	)
 </insert>
 <!-- 댓글 목록-->
-<select id = "listReply" resultType = "albumreply" parameterType="int">
+<select id = "listReply" resultType = "reply" parameterType="int">
 select * from reply where reply_albumnum = #{reply_albumnum} order by reply_num desc
 </select>
 <!-- 댓글 하나 가져옴 -->
-<select id = "getReply" resultType = "albumreply" parameterType="int">
+<select id = "getReply" resultType = "reply" parameterType="int">
 select * from reply where reply_num = #{reply_num}
 </select>
 <!-- 댓글 삭제 -->
-<delete id="replyDelete" parameterType="albumreply">
+<delete id="replyDelete" parameterType="reply">
 delete from reply where reply_memberid = #{reply_memberid} and reply_num = #{reply_num}
 </delete>
 <!-- 해당 앨범의 댓글 갯수 -->

@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cooing.www.album.dao.AlbumBookMarkDAO;
+import com.cooing.www.album.dao.BookMarkDAO;
 import com.cooing.www.album.dao.AlbumDAO;
-import com.cooing.www.album.dao.AlbumLikesDAO;
-import com.cooing.www.album.vo.AlbumLikesVO;
-import com.cooing.www.album.vo.AlbumWriteVO;
+import com.cooing.www.album.dao.LikesDAO;
+import com.cooing.www.album.vo.LikesVO;
+import com.cooing.www.album.vo.AlbumVO;
 import com.cooing.www.album.vo.BookMark;
 import com.cooing.www.album.vo.CategoryPop;
-import com.cooing.www.album.vo.PageHtmlVO;
+import com.cooing.www.album.vo.PageVO;
 import com.cooing.www.common.dao.SearchDAO;
 import com.cooing.www.common.vo.PageLimit;
 import com.cooing.www.common.vo.Search;
@@ -47,11 +47,11 @@ public class HomeController {
 	@Autowired
 	MemberDAO memberDAO;
 	@Autowired
-	AlbumLikesDAO albumlikesDAO;
+	LikesDAO albumlikesDAO;
 	@Autowired
 	SearchDAO searchDAO;
 	@Autowired
-	AlbumBookMarkDAO albumbookmarkDAO;
+	BookMarkDAO albumbookmarkDAO;
 	
 	private Gson gson = new Gson();
 	/**
@@ -131,7 +131,7 @@ public class HomeController {
 	// 개인 앨범 조회
 	@ResponseBody
 	@RequestMapping(value = "/getTotalAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumWriteVO> getMyAlbumList(int pagenum , HttpSession session) {
+	public ArrayList<AlbumVO> getMyAlbumList(int pagenum , HttpSession session) {
 		logger.info(pagenum + "_page_list ljs");
 		Member member = (Member)session.getAttribute("Member");
 		int totalnum = albumDAO.total_album_count(member.getMember_id() , "3");
@@ -142,7 +142,7 @@ public class HomeController {
 	// 좋아요 목록 조회
 	@ResponseBody
 	@RequestMapping(value = "/getLikeAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumWriteVO> getLikeAlbumList(int pagenum , HttpSession session) {
+	public ArrayList<AlbumVO> getLikeAlbumList(int pagenum , HttpSession session) {
 		logger.info(pagenum + "_like_page_list ljs");
 		Member member = (Member)session.getAttribute("Member");
 		int totalnum = albumDAO.total_album_count(member.getMember_id() , "2");
@@ -158,9 +158,9 @@ public class HomeController {
 	public String albumPage(int album_num, Model model , HttpSession session) {
 		Member member = (Member)session.getAttribute("Member");
 		try {
-			AlbumWriteVO album = albumDAO.searchAlbumNum(album_num);
+			AlbumVO album = albumDAO.searchAlbumNum(album_num);
 			if(album == null) return "redirect:/";
-			ArrayList<PageHtmlVO> arr_page = albumDAO.select_pages_by_album_num(album_num);
+			ArrayList<PageVO> arr_page = albumDAO.select_pages_by_album_num(album_num);
 			//페이지 사이즈가 없으면 2로 책갈피를 없애주고
 			if(arr_page.size() > 0){
 				if(albumbookmarkDAO.bookmark_check(new BookMark(0,album_num,member.getMember_id(),1))){
@@ -186,7 +186,7 @@ public class HomeController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/getMyAlbumRead", method = RequestMethod.POST)
-	public ArrayList<PageHtmlVO> getMyAlbumRead(String num) {
+	public ArrayList<PageVO> getMyAlbumRead(String num) {
 		return  albumDAO.select_pages_by_album_num(Integer.parseInt(num));
 	}
 
@@ -198,7 +198,7 @@ public class HomeController {
 		
 		String likeit_memberid = ((Member) session.getAttribute("Member")).getMember_id();
 	
-		AlbumLikesVO vo = new AlbumLikesVO(likeit_albumnum, likeit_memberid);
+		LikesVO vo = new LikesVO(likeit_albumnum, likeit_memberid);
 		
 		String check_likeMember = null;
 		check_likeMember = albumlikesDAO.check_Likes(vo);
@@ -219,7 +219,7 @@ public class HomeController {
 	// 책 목록 조회
 	@ResponseBody
 	@RequestMapping(value = "/getMyAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumWriteVO> getMyAlbumList(HttpSession session , int pagenum) {
+	public ArrayList<AlbumVO> getMyAlbumList(HttpSession session , int pagenum) {
 		logger.info("myalbumlist_homecontroller_ljs");
 		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
 		int totalnum = albumDAO.total_album_count(album_writer,"4");
@@ -229,7 +229,7 @@ public class HomeController {
 	//친구 목록 조회
 	@ResponseBody
 	@RequestMapping(value = "/getIDAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumWriteVO> getIDAlbumList(HttpSession session , String albumwriter , int pagenum) {
+	public ArrayList<AlbumVO> getIDAlbumList(HttpSession session , String albumwriter , int pagenum) {
 		logger.info(albumwriter+"_IDalbumlist_homecontroller_ljs");
 		int totalnum = albumDAO.total_album_count(albumwriter , "5");
 		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);

@@ -2,7 +2,7 @@ package com.cooing.www.album.dao;
 
 import com.cooing.www.album.vo.BookMark;
 
-public interface AlbumBookMarkMapper {
+public interface BookMarkMapper {
 	// 책갈피
 	public int bookmark_create(BookMark bookmark);
 	

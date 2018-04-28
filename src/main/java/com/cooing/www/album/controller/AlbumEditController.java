@@ -33,11 +33,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.cooing.www.album.dao.AlbumBookMarkDAO;
+import com.cooing.www.album.dao.BookMarkDAO;
 import com.cooing.www.album.dao.AlbumDAO;
-import com.cooing.www.album.vo.AlbumWriteVO;
+import com.cooing.www.album.vo.AlbumVO;
 import com.cooing.www.album.vo.BookMark;
-import com.cooing.www.album.vo.PageHtmlVO;
+import com.cooing.www.album.vo.PageVO;
 import com.cooing.www.common.dao.SearchDAO;
 import com.cooing.www.member.vo.Member;
 import com.google.gson.Gson;
@@ -50,7 +50,7 @@ public class AlbumEditController {
 	@Autowired
 	SearchDAO searchDAO;
 	@Autowired
-	AlbumBookMarkDAO albumbookmarkDAO;
+	BookMarkDAO albumbookmarkDAO;
 
 	private final String strFilePath = "/FileSave/upload/";						// windows
 	//private static String strFilePath = "/Users/insect/hindoong_upload/";			// mac
@@ -85,7 +85,7 @@ public class AlbumEditController {
 		if (album_writer == null) returnMessage = "user null";
 		
 		// 앨범 이름 - 임시 앨범, 공개 범위 - 나만or그룹, 카테고리 - 기타로 설정
-		AlbumWriteVO albumwrite = new AlbumWriteVO(album_writer, "Enter album name", openrange, 20, isPersonal);
+		AlbumVO albumwrite = new AlbumVO(album_writer, "Enter album name", openrange, 20, isPersonal);
 
 		//앨범 만들기
 		int created_album_num = -1;
@@ -119,10 +119,10 @@ public class AlbumEditController {
 		
 		try {
 			//TODO 앨범 넘버로 앨범 정보 가져와 모델에 담기
-			AlbumWriteVO album = albumDAO.searchAlbumNum(int_album_num);
+			AlbumVO album = albumDAO.searchAlbumNum(int_album_num);
 			if(album == null) return "redirect:./";
 			//TODO 앨범 넘버로 페이지 배열로 받아와 모델에 담기
-			ArrayList<PageHtmlVO> arr_page = albumDAO.select_pages_by_album_num(int_album_num);
+			ArrayList<PageVO> arr_page = albumDAO.select_pages_by_album_num(int_album_num);
 			model.addAttribute("album", album);
 			model.addAttribute("arr_page", arr_page);
 			
@@ -150,7 +150,7 @@ public class AlbumEditController {
 		
 		System.out.println("@@@@@@@@@@@@@@@@@@@제발 들어와라");
 		
-		AlbumWriteVO albumwrite = new AlbumWriteVO(album_num, album_name, album_openrange, album_contents, album_category);
+		AlbumVO albumwrite = new AlbumVO(album_num, album_name, album_openrange, album_contents, album_category);
 		boolean update_check = false;
 		update_check = albumDAO.personal_update_page1_Album(albumwrite);
 		
@@ -196,7 +196,7 @@ public class AlbumEditController {
 		for (int i = 0; i < jo_arr_page.length(); i++) {
 			JSONObject jo_page = jo_arr_page.getJSONObject(i);
 			
-			PageHtmlVO page = gson.fromJson(jo_page.toString(), PageHtmlVO.class);
+			PageVO page = gson.fromJson(jo_page.toString(), PageVO.class);
 			page.setAlbum_num(int_album_num);
 			albumDAO.personal_insertAlbumOfPage(page);
 		}

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cooing.www.album.dao.AlbumLikesDAO;
-import com.cooing.www.album.vo.AlbumLikesVO;
+import com.cooing.www.album.dao.LikesDAO;
+import com.cooing.www.album.vo.LikesVO;
 import com.cooing.www.member.vo.Member;
 
 @Controller
@@ -23,7 +23,7 @@ public class AlbumLikesController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumLikesController.class);
 	@Autowired
-	AlbumLikesDAO albumlikesDAO;
+	LikesDAO albumlikesDAO;
 	// 좋아요
 	@ResponseBody
 	@RequestMapping(value = "/likes", method = RequestMethod.POST)
@@ -35,7 +35,7 @@ public class AlbumLikesController {
 
 		String memberid = ((Member) session.getAttribute("Member")).getMember_id();
 		 
-		AlbumLikesVO vo = new AlbumLikesVO();
+		LikesVO vo = new LikesVO();
 		
 		vo.setLikeit_memberid(memberid);
 		vo.setLikeit_albumnum(likeit_albumnum);
@@ -57,7 +57,7 @@ public class AlbumLikesController {
 
 		String memberid = ((Member) session.getAttribute("Member")).getMember_id();
 		 
-		ArrayList<AlbumLikesVO> vo = albumlikesDAO.getAlbum(likeit_albumnum);
+		ArrayList<LikesVO> vo = albumlikesDAO.getAlbum(likeit_albumnum);
 		// id 비교해서 좋아요 취소
 		for (int i = 0; i < vo.size(); i++) {
 			if(vo.get(i).getLikeit_memberid().equals(memberid)){
@@ -70,10 +70,10 @@ public class AlbumLikesController {
 	// 좋아요 목록
 	@ResponseBody
 	@RequestMapping(value = "/listLikes", method = RequestMethod.GET)
-	public ArrayList<AlbumLikesVO> listLikes(Model model, 
+	public ArrayList<LikesVO> listLikes(Model model, 
 			@RequestParam int likeit_albumnum) {
 		
-		ArrayList<AlbumLikesVO> likesList = albumlikesDAO.listLikes(likeit_albumnum);
+		ArrayList<LikesVO> likesList = albumlikesDAO.listLikes(likeit_albumnum);
 		
 		return likesList;
 	}

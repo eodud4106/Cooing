@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.album.dao.AlbumDAO;
-import com.cooing.www.album.vo.AlbumWriteVO;
+import com.cooing.www.album.vo.AlbumVO;
 import com.cooing.www.album.vo.CategoryPop;
 import com.cooing.www.album.vo.HashTag;
 import com.cooing.www.common.dao.SearchDAO;
@@ -42,7 +42,7 @@ public class SearchController {
 	
 	@ResponseBody
 	@RequestMapping(value="/searchWord" , method = RequestMethod.POST)
-	public ArrayList<AlbumWriteVO> searchWord(String searchtext , int pagenum){
+	public ArrayList<AlbumVO> searchWord(String searchtext , int pagenum){
 		logger.info(searchtext + "_search_word__jinsu");
 		//저장
 		searchDAO.insertSearch(new Search(0 , searchtext , "0"));
@@ -88,7 +88,7 @@ public class SearchController {
 	
 	@ResponseBody
 	@RequestMapping(value="/searchCategory" , method = RequestMethod.POST)
-	public ArrayList<AlbumWriteVO> searchCategory(int searchtext , int pagenum ){
+	public ArrayList<AlbumVO> searchCategory(int searchtext , int pagenum ){
 		logger.info(searchtext + "_search_Category__jinsu");		
 		
 		int totalnum = albumDAO.CategoryAlbumCount(searchtext);
@@ -96,7 +96,7 @@ public class SearchController {
 		//저장
 		searchDAO.insertCategoryPop(new CategoryPop(0 , searchtext , "0"));
 		//카테고리 번호로 찾아온다.
-		ArrayList<AlbumWriteVO> arrayalbum = albumDAO.searchCategory(searchtext , pl.getStartBoard() , pl.getCountPage());
+		ArrayList<AlbumVO> arrayalbum = albumDAO.searchCategory(searchtext , pl.getStartBoard() , pl.getCountPage());
 		return arrayalbum;		
 	}
 	

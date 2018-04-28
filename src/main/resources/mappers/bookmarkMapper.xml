@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cooing.www.album.dao.AlbumBookMarkMapper">
+<mapper namespace="com.cooing.www.album.dao.BookMarkMapper">
 	<insert id="bookmark_create" parameterType="bookmark">
 		insert into bookmark (bookmark_num, bookmark_albumnum, bookmark_memberid, bookmark_page) 
 		values (bookmark_seq.nextval, #{bookmark_albumnum}, #{bookmark_memberid}, #{bookmark_page})

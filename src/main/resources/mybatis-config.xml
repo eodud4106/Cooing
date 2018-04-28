@@ -9,13 +9,13 @@
 		<typeAlias type="com.cooing.www.album.vo.Category" alias="category"/>
 		<typeAlias type="com.cooing.www.member.vo.Party" alias="party"/>
 		<typeAlias type="com.cooing.www.member.vo.PartyMember" alias="partymember"/>
-		<typeAlias type="com.cooing.www.album.vo.AlbumWriteVO" alias="albumwrite"/>
-		<typeAlias type="com.cooing.www.album.vo.PageHtmlVO" alias="page"/>
+		<typeAlias type="com.cooing.www.album.vo.AlbumVO" alias="album"/>
+		<typeAlias type="com.cooing.www.album.vo.PageVO" alias="page"/>
 		<typeAlias type="com.cooing.www.album.vo.HashTag" alias="tag"/>
 		<typeAlias type="com.cooing.www.common.vo.Search" alias="search"/>
 		<typeAlias type="com.cooing.www.album.vo.CategoryPop" alias="categorypop"/>
-		<typeAlias type="com.cooing.www.album.vo.AlbumLikesVO" alias="albumlikes"/>
-		<typeAlias type="com.cooing.www.album.vo.AlbumReplyVO" alias="albumreply"/>
+		<typeAlias type="com.cooing.www.album.vo.LikesVO" alias="likes"/>
+		<typeAlias type="com.cooing.www.album.vo.ReplyVO" alias="reply"/>
 		<typeAlias type="com.cooing.www.album.vo.BookMark" alias="bookmark"/>
 	</typeAliases>
  	<mappers>
@@ -24,8 +24,8 @@
 		<mapper resource="mappers/relationMapper.xml"/>
 		<mapper resource="mappers/albumMapper.xml"/>
 		<mapper resource="mappers/searchMapper.xml"/>
-		<mapper resource="mappers/albumlikesMapper.xml"/>
-		<mapper resource="mappers/albumreplyMapper.xml"/>
-		<mapper resource="mappers/albumbookmarkMapper.xml"/>
+		<mapper resource="mappers/likesMapper.xml"/>
+		<mapper resource="mappers/replyMapper.xml"/>
+		<mapper resource="mappers/bookmarkMapper.xml"/>
 	</mappers>
 </configuration>

@@ -64,7 +64,7 @@ var album_top = 0;          //앨범의 top
 var album_left = 0;         //앨범의 left
 
 var PAGE_WIDTH = 600;       // 페이지 당 너비
-var PAGE_HEIGHT = 700;      // 페이지 당 높이
+var PAGE_HEIGHT = 650;      // 페이지 당 높이
 
 var curr_page = 1;
 
@@ -251,8 +251,7 @@ function createNewAlbum() {
     for(var i = 1; i <= init_page; i++) {
         var $page = $('<div />', {
             'id': 'page' + i,
-            'class': 'page hard',
-            'text': i
+            'class': 'page hard'
         });
 
         $page.appendTo('#album');
@@ -1456,7 +1455,8 @@ function savePage(mode) {
         arr_page[i-start] = {
             "page_num": i,
             "page_html": $page_clone.html(),
-            "page_attr": $page_clone.css('background-image')
+            "page_background": $page_clone.css('background-image'),
+            "page_color": $page_clone.css('background-color'),
         }
 
     }

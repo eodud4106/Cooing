@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.album.dao.AlbumDAO;
-import com.cooing.www.album.vo.AlbumWriteVO;
+import com.cooing.www.album.vo.AlbumVO;
 import com.cooing.www.common.vo.PageLimit;
 
 
@@ -30,7 +30,7 @@ public class AlbumController {
 	//파티 앨범 리스트 조회
 	@ResponseBody
 	@RequestMapping(value = "/getPartyAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumWriteVO> getPartyAlbumList(String party_name, int pagenum, HttpSession session) {
+	public ArrayList<AlbumVO> getPartyAlbumList(String party_name, int pagenum, HttpSession session) {
 		logger.info(party_name + "_page_list ljs");
 		
 		// 파티는 파티 이름이 유니크. 그래서 파티 이름으로 총 파티 앨범 개수를 구한다.
@@ -40,11 +40,11 @@ public class AlbumController {
 		//pl.getStartBoard(), pl.getCountPage();
 		RowBounds rb = new RowBounds(pl.getStartBoard(), pl.getCountPage());
 		
-		AlbumWriteVO album = new AlbumWriteVO();
+		AlbumVO album = new AlbumVO();
 		album.setAlbum_writer(party_name);
 		album.setIsPersonal("0");
 		
-		ArrayList<AlbumWriteVO> arr_album = null;
+		ArrayList<AlbumVO> arr_album = null;
 		
 		try {
 			arr_album = albumDAO.select_album(rb, album);
