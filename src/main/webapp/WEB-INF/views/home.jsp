@@ -60,10 +60,10 @@ var searchcheck = 0;
 var categorynum = 0;
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
-    	//메인으로 그냥 들어왔을 때 = 2 / 카테고리 눌러서 들어왔을 때  = 1 / 검색해서 들어왔을 때  = 0 
-    	if(searchcheck == 2){
+    	//메인으로 그냥 들어왔을 때 와 검색해서 들어왔을 때 = 0 / 카테고리 눌러서 들어왔을 때  = 1 
+    	if(searchcheck == 0){
     		if($('#totalpage').val() >= pagenum){	
-       			getTotalAlbumList();
+    			getTotalAlbumList("3");
         		pagingcheck = true;
         	}
     	}else if(searchcheck == 1){
@@ -71,79 +71,27 @@ $(window).scroll(function() {
     			searchCategory(categorynum);
         		pagingcheck = true;
         	}
-    	}else if(searchcheck == 0){
-    		if($('#totalpage').val() >= pagenum){	
-       			search();
-        		pagingcheck = true;
-        	}
-    	}    	
+    	}   	
     }
 });
-
 
 $(document).ready(function () {
 	
 	initialize();	
 	
-	$('window').click(function(event) {
-		if (event.target == $('#myModal')) {
-			$('#myModal').css('display', 'none');
-	    }
-	});
-	
-	$('#myBtn').click(function() {
-		$('#myModal').css('display', 'block');
-	});
-	
-	$('#myBtn_close').click(function() {
-		$('#myModal').css('display', 'none');
-	});
-	
-	searchword();
-	
-	if ('${sessionScope.Member}' != null) {
-		readyChat('${sessionScope.Member.member_id}', '');
-	}	
-	//0번이면 검색으로 넘어온 경우 ,  1번이면 카테고리 눌러서 넘어온 경우 , 엘스는 그냥 홈에 온 경우 
-	if(${search_other == 0}){
-		searchcheck = 0;
-		pagenum = 0;
-		pagecheck = false;
-		inputbox_focus();
-		$('#searchtx').val('${searcj}');
-		search();
-	}else if(${search_other == 1}){
+	//1번이면 카테고리 눌러서 넘어온 경우 , 엘스는 그냥 홈에 온 경우 혹은 검색으로 온 경우 
+	if(${search_other == 1}){
 		searchcheck = 1;
 		pagenum = 0;
-		pagecheck = false;
+		pagingcheck = false;
 		searchCategory(${categorynum});
 	}else{
-		searchcheck = 2;
+		searchcheck = 0;
 		pagenum = 0;
-		pagecheck = false;
-		getTotalAlbumList();		
+		pagingcheck = false;
+		getTotalAlbumList("3");		
 	}
 });
-
-function inputbox_focus(){
-	if($('#searchtx').css('width') == '0px'){
-		$('#searchtx').val('');
-		$('#searchtx').css('width' , '200px');
-		$('#searchtx').css('paddingLeft' , '3px');
-		$('#searchtx').focus();
-	}else if($('#searchtx').css('width') == '200px'){
-		$('#searchtx').val('');
-		$('#searchtx').css('width' , '0px');
-		$('#searchtx').css('paddingLeft' , '0px');
-	}
-}
-
-function search_bar(search){
-	if($('#searchtx').val() == 0){
-		$(search).css('width' , '0px');
-		$(search).css('paddingLeft' , '0px');
-	}
-}
 </script>
 
 <!-- 정렬순 라디오버튼 -->
@@ -436,13 +384,16 @@ html, body, main, .container-fluid {
                	 border-bottom: solid 2px #333;
                	 outline: none;
               	  width: 0px;
-               	 transition: all 0.5s;" >  		
+               	 transition: all 0.5s;"
+               	 value="${search }"
+               	 >  		
 			
 			<!-- 정렬순서 -->		
 			<form style = "float:right; padding-left : 10px;">
 				<input type="radio" name="iCheck" class = "input"value="1" checked>최신순
 				<input type="radio" name="iCheck" class = "input"value="2" >인기순				
 			</form>
+			<input type="hidden" id="totalpage" value="${totalpage }">
 		</div>
 	</div>
 	<br>
@@ -570,14 +521,7 @@ html, body, main, .container-fluid {
 				</c:if>
 			</c:if>				
 		</div>
-	</section>
-	
-	<div class="popuplayer">
-		<p onClick="friendpage()" style="font-size:8pt;color:#26afa1;">친구페이지</p>
-		<p onClick="chatpage()" style="font-size:8pt;color:#26afa1;">채팅</p>
-	</div>
-				
-   
+	</section>   
    </div>
    </div>
 	</aside>
