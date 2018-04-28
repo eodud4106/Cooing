@@ -916,6 +916,7 @@ h1, h2, h3, h4, h5,
           width: 100%; }
   .probootstrap-aside2 .probootstrap-overflow {
     height: 500px;
+    margin-top:30px;
     padding-left: 20px; }
   .probootstrap-aside2 .probootstrap-aside-footer {
     font-size: 14px;

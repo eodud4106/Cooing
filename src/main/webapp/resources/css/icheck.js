@@ -34,7 +34,7 @@
   $.fn[_iCheck] = function(options, fire) {
 
     // Walker
-    var handle = 'input[type="' + _checkbox + '"], input[type="' + _radio + '"]',
+    var handle = 'input[type="' + _checkbox + '"], .input[type="' + _radio + '"]',
       stack = $(),
       walker = function(object) {
         object.each(function() {

@@ -84,7 +84,7 @@ ul, li {
 
 /*---------------------------------------------*/
 input {
-	outline: none;
+	/* outline: none; */
 	/* border: none; */
 }
 
@@ -189,6 +189,7 @@ iframe {
   line-height: 1.2;
   text-align: center;
   padding-bottom: 30px;
+  margin-top: -50px;
 }
 
 
