@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="resources/css/animate.css">
 <link rel="stylesheet" href="resources/css/style.css">
 <link rel="stylesheet" href="resources/css/chat.css">
-<link rel="stylesheet" href="resources/css/green.css">
+<link rel="stylesheet" href="resources/css/green.css">  
 <link rel="stylesheet" href="resources/css/home.css">
 
 <script src="resources/js/jquery-3.3.1.min.js"></script>
@@ -27,7 +27,7 @@
 <script src="resources/js/home.js"></script>
 <script src="resources/js/search.js"></script>
 <script src="resources/js/chat.js"></script>
-<script src="resources/js/icheck.js"></script>
+<script src="resources/js/icheck.js"></script> 
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 <script src="resources/js/popper.min.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
@@ -36,9 +36,22 @@
 <script src="resources/js/imagesloaded.pkgd.min.js"></script>
 <script src="resources/js/main.js"></script>
 <script src="resources/js/popup.js"></script>
+
+<!-- 탭나누는 사이드바 -->
+<link rel="stylesheet" type="text/css" href="resources/album_create/css/util.css">
+<link rel="stylesheet" type="text/css" href="resources/album_create/css/main.css">
+<link rel="stylesheet" href="resources/css/albumEdit.css">
+<script type="text/javascript" src="resources/js/albumEdit.js"></script>
+
+<script type="text/javascript" src="resources/js_js/html2canvas.min.js"></script>
 <!-- 폰트 -->
 <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans" rel="stylesheet">
+
+<!-- 채팅목록 -->
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<script src="https://use.fontawesome.com/1c6f725ec5.js"></script>
+
 <script>
 var pagenum = 0;
 var pagingcheck = false;
@@ -47,10 +60,10 @@ var searchcheck = 0;
 var categorynum = 0;
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
-    	//메인으로 그냥 들어왔을 때 와 검색해서 들어왔을 때 = 0 / 카테고리 눌러서 들어왔을 때  = 1 
-    	if(searchcheck == 0){
+    	//메인으로 그냥 들어왔을 때 = 2 / 카테고리 눌러서 들어왔을 때  = 1 / 검색해서 들어왔을 때  = 0 
+    	if(searchcheck == 2){
     		if($('#totalpage').val() >= pagenum){	
-    			getTotalAlbumList("3");
+       			getTotalAlbumList();
         		pagingcheck = true;
         	}
     	}else if(searchcheck == 1){
@@ -58,7 +71,12 @@ $(window).scroll(function() {
     			searchCategory(categorynum);
         		pagingcheck = true;
         	}
-    	}   	
+    	}else if(searchcheck == 0){
+    		if($('#totalpage').val() >= pagenum){	
+       			search();
+        		pagingcheck = true;
+        	}
+    	}    	
     }
 });
 
@@ -67,25 +85,71 @@ $(document).ready(function () {
 	
 	initialize();	
 	
-	//1번이면 카테고리 눌러서 넘어온 경우 , 엘스는 그냥 홈에 온 경우 혹은 검색으로 온 경우 
-	if(${search_other == 1}){
-		searchcheck = 1;
-		pagenum = 0;
-		pagingcheck = false;
-		searchCategory(${categorynum});
-	}else{
+	$('window').click(function(event) {
+		if (event.target == $('#myModal')) {
+			$('#myModal').css('display', 'none');
+	    }
+	});
+	
+	$('#myBtn').click(function() {
+		$('#myModal').css('display', 'block');
+	});
+	
+	$('#myBtn_close').click(function() {
+		$('#myModal').css('display', 'none');
+	});
+	
+	searchword();
+	
+	if ('${sessionScope.Member}' != null) {
+		readyChat('${sessionScope.Member.member_id}', '');
+	}	
+	//0번이면 검색으로 넘어온 경우 ,  1번이면 카테고리 눌러서 넘어온 경우 , 엘스는 그냥 홈에 온 경우 
+	if(${search_other == 0}){
 		searchcheck = 0;
 		pagenum = 0;
-		pagingcheck = false;
-		getTotalAlbumList("3");		
+		pagecheck = false;
+		inputbox_focus();
+		$('#searchtx').val('${searcj}');
+		search();
+	}else if(${search_other == 1}){
+		searchcheck = 1;
+		pagenum = 0;
+		pagecheck = false;
+		searchCategory(${categorynum});
+	}else{
+		searchcheck = 2;
+		pagenum = 0;
+		pagecheck = false;
+		getTotalAlbumList();		
 	}
 });
+
+function inputbox_focus(){
+	if($('#searchtx').css('width') == '0px'){
+		$('#searchtx').val('');
+		$('#searchtx').css('width' , '200px');
+		$('#searchtx').css('paddingLeft' , '3px');
+		$('#searchtx').focus();
+	}else if($('#searchtx').css('width') == '200px'){
+		$('#searchtx').val('');
+		$('#searchtx').css('width' , '0px');
+		$('#searchtx').css('paddingLeft' , '0px');
+	}
+}
+
+function search_bar(search){
+	if($('#searchtx').val() == 0){
+		$(search).css('width' , '0px');
+		$(search).css('paddingLeft' , '0px');
+	}
+}
 </script>
 
 <!-- 정렬순 라디오버튼 -->
 <script>
 $(document).ready(function(){
-  $('input').iCheck({
+  $('.input').iCheck({
     checkboxClass: 'icheckbox_square-green',
     radioClass: 'iradio_square-green',
     increaseArea: '20%' // optional
@@ -95,16 +159,96 @@ $(document).ready(function(){
 
  <script>
   window.console = window.console || function(t) {};
-</script>
-
-  
+</script>  
   
   <script>
   if (document.location.search.match(/type=embed/gi)) {
     window.parent.postMessage("resize", "*");
   }
 </script>
-<style>
+
+<style type="text/css">
+#main {
+    min-width: 200px;
+    max-width: 200px;
+    margin-top : 30px;
+    padding: 10px;
+    margin: 0 auto;
+    background: #ffffff;}
+section {
+    display: none;
+    padding: 20px 0 0;    
+    font-size : 14px;        
+    border-top: 1px solid #ddd;}
+/*라디오버튼 숨김*/
+#tab1,#tab2 {
+      display: none;}
+
+label {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 5px 10px;
+    font-weight: 600;
+    text-align: center;
+    color: #bbb;
+    border: 1px solid transparent;
+    font-size: 15px;}
+
+label:hover {
+    color: #2e9cdf;
+    cursor: pointer;}
+
+/*input 클릭시, label 스타일*/
+#tab1:checked + label,#tab2:checked + label {
+      color: #555;
+      border: 1px solid #ddd;
+      border-top: 2px solid #2e9cdf;
+      border-bottom: 1px solid #ffffff;}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2{
+    display: block;}
+
+.search{	
+	width: 120px;
+	display:block;
+	position: absolute;	
+}
+.bt{
+	position: absolute;
+	right: 40px;
+}
+.tb1{
+	padding-top: 20px;
+}	    
+
+html, body, main, .container-fluid {
+	height: 100%;
+}
+.container-fluid {
+	padding: 0;
+}
+
+.view_wrapper {
+	margin: 0;
+	margin-left: 250px;
+	display: flex;
+	flex-wrap: wrap;
+}
+.album_wrapper, .top_bar {
+	margin: auto !important;
+	display: block;
+}
+.checkbox {
+	font-size: 20px;
+}
+.page {
+	background-color: #A4A4A4;
+	
+}
+.outer {
+	background-color: #aaa;
+}
 .button_container {
   position: absolute;
   left: 0;
@@ -168,7 +312,7 @@ $(document).ready(function(){
 	height: 50px;
 }
 
-.modal {
+/* .modal {
 	display: none;
 	position: absolute;
 	z-index: 1;
@@ -195,28 +339,32 @@ $(document).ready(function(){
 	color: black;
 	text-decoration: none;
 	cursor: pointer;
-}
+} */
 .friendList{
-	height: 250px;		
+	height: 600px;		
 	overflow-y : scroll;
-	padding-left: 30px;
-	background-color : aliceblue;
+	padding-left: 30px;	
     font-size: 18px;
     cursor: pointer;
     margin-top: -15px;
 }
 .groupList{
-	height: 250px;	
+	height: 600px;	
 	overflow-y : scroll;
 	padding-left: 30px;
 	/* overflow-y:hidden; */
-	background-color : aliceblue;
+	/* background-color : aliceblue; */
     font-size: 18px;
     cursor: pointer;
-    margin-top: 70px;
+    margin-top: 100px;
+    
 }
 
 </style>
+
+
+
+
 </head>
 <body>
 
@@ -288,25 +436,20 @@ $(document).ready(function(){
                	 border-bottom: solid 2px #333;
                	 outline: none;
               	  width: 0px;
-               	 transition: all 0.5s;"
-               	 value="${search }"
-               	 >
-  		
+               	 transition: all 0.5s;" >  		
 			
-		<!-- 정렬순서 -->		
-		<form style = "float:right; padding-left : 10px;">
-			<input type="radio" name="iCheck" class = "input"value="1" checked>최신순
-			<input type="radio" name="iCheck" class = "input"value="2" >인기순				
-		</form>
-		<input type="hidden" id="totalpage" value="${totalpage }">
+			<!-- 정렬순서 -->		
+			<form style = "float:right; padding-left : 10px;">
+				<input type="radio" name="iCheck" class = "input"value="1" checked>최신순
+				<input type="radio" name="iCheck" class = "input"value="2" >인기순				
+			</form>
+		</div>
 	</div>
-	
 	<br>
 	
 	<!-- 앨범 리스트 -->
 	<div class="card-columns" id="card-columns">
-	
-		<!--  -->
+			
 		<div class="card">
 			<a href="single.html" id="test1">
 				<img class="card-img-top probootstrap-animate" 
@@ -324,19 +467,16 @@ $(document).ready(function(){
 	<div class="container-fluid d-md-none">
 		<div class="row">
 			<div class="col-md-12">
-				
-				<p>
-					&copy; 2018 <a href="https://uicookies.com/" target="_blank">uiCookies:Aside</a>.
-					<br> All Rights Reserved. Designed by <a
-						href="https://uicookies.com/" target="_blank">uicookies.com</a>
+				<p>&copy; 2018 <a href="https://uicookies.com/" target="_blank">uiCookies:Aside</a>.
+					<br> All Rights Reserved. Designed by 
+					<a href="https://uicookies.com/" target="_blank">uicookies.com</a>
 				</p>
 			</div>
 		</div>
 	</div>
-
 	</main>
 
-	<aside class="probootstrap-aside2 js-probootstrap-aside2">
+	<%--  <aside class="probootstrap-aside2 js-probootstrap-aside2">
 		<a href="#"
 			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-right"></span> Close
@@ -379,6 +519,68 @@ $(document).ready(function(){
 			<!-- </div> -->
 		</div>
 
+	</aside>  --%>
+	<aside class="probootstrap-aside2 js-probootstrap-aside2">
+		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
+		
+			<span class="oi oi-arrow-right"></span> Close
+		</a>
+		
+		<div class="probootstrap-overflow">
+		<div id="main">
+		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
+		<label for="tab1">FRIEND</label>
+
+  		<input class = "input1" id="tab2" type="radio" name="tabs">
+    	<label for="tab2">GROUP</label>   
+
+    	<section id="content1"> 
+    	<!-- 페이지 저장 -->		
+			<form class="contact100-form validate-form" id="entry">
+				<span class="contact100-form-title">
+					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
+				</span>
+			</form>		
+				
+				<div class = "friendList" style = "width: 200px;">
+					<div name="friend" id="friend"></div>
+					<div name="user" id="user"></div>
+				</div>			
+
+	<div id="dropDownSelect1"></div>    	    
+       
+    	</section>
+	<form id="testimg">
+		<input type="hidden" name="imgSrc" id="imgSrc" />
+	</form>	
+   	
+   	<section id ="content2">       					
+		<div class="button_container">		
+			<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
+		</div>		
+		
+		<div class = "groupList" style= "margin-top: 70px; width: 200px;">
+			<c:if test="${Member ne null}">
+				<c:if test="${fn:length(group) ne 0}">
+					<c:forEach var="party" items="${group}">
+						<div name="group">
+							<p class="arr_party" partynum="${party.party_num}">${party.party_name}</p>
+						</div>
+					</c:forEach>
+				</c:if>
+			</c:if>				
+		</div>
+	</section>
+	
+	<div class="popuplayer">
+		<p onClick="friendpage()" style="font-size:8pt;color:#26afa1;">친구페이지</p>
+		<p onClick="chatpage()" style="font-size:8pt;color:#26afa1;">채팅</p>
+	</div>
+				
+   
+   </div>
+   </div>
 	</aside>
+	
 </body>
 </html>
