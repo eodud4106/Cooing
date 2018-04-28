@@ -42,6 +42,7 @@
 <link rel="stylesheet" href="resources/aside_css/icomoon.css">
 <link rel="stylesheet" href="resources/aside_css/animate.css">
 <link rel="stylesheet" href="resources/aside_css/style.css">
+<link rel="stylesheet" href="resources/css/albumEdit.css">
 <!-- 아이콘 -->
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 <!-- 친구 그룹 리스트 출력 -->
@@ -825,7 +826,7 @@ html, body, main, .container-fluid {
 					<div class="album" id="album" style="display: none">
 						<c:if test="${arr_page.size() > 0 }">
 							<c:forEach items="${arr_page}" var="page">
-								<div id="page${page.page_num}" class="page hard" style="background-image: ${page.page_background}">${page.page_html}</div>
+								<div id="page${page.page_num}" class="page hard" style="background-image: ${page.page_background}; background-color: ${page.page_color}">${page.page_html}</div>
 							</c:forEach>
 						</c:if>
 					</div>
