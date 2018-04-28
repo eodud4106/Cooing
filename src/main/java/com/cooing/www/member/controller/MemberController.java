@@ -31,7 +31,7 @@ import com.cooing.www.member.vo.Member;
 @Controller
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class); 
-	private static String strFilePath = "/FileSave";
+	private static String strFilePath = "/FileSave/Member";
 	
 	@Autowired
 	MemberDAO memberDAO;
