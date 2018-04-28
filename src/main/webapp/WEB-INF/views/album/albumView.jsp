@@ -547,7 +547,8 @@ html, body, main, .container-fluid {
 					str += ' ' + vo.reply_memberid;
 					/* str += ' ' + vo.reply_date; */
 					if (vo.reply_memberid == '${Member.member_id}') {
-					str += ' ' + "<i onclick='deletereply("+vo.reply_num+")' style = 'width: 15px; height: 15px; cursor:pointer;' class='far fa-trash-alt'></i>";
+						str += ' ' + "<i onclick='updatereply("+vo.reply_num+")' style = 'width: 15px; height: 15px; cursor:pointer;' class='far fa-check-circle'></i>";
+						str += ' ' + "<i onclick='deletereply("+vo.reply_num+")' style = 'width: 15px; height: 15px; cursor:pointer;' class='far fa-trash-alt'></i>";
 					}
 					str += '</td>';
 					str += '</tr>';
