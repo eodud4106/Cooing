@@ -58,53 +58,18 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model, HttpSession session) {
+	public String home(String search , Model model, HttpSession session) {
 		Member personal = (Member)session.getAttribute("Member");
 		if(personal != null){
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
 			model.addAttribute("group", arraystrval);
-			int totalpage = albumDAO.total_album_count(personal.getMember_id(),"3");
+			int totalpage = albumDAO.total_album_count("",personal.getMember_id(),"3");
 			model.addAttribute("totalpage", (totalpage/10));
+			if(search != null){
+				searchDAO.insertSearch(new Search(0 , search , "0"));
+				model.addAttribute("search" , search);
+			}
 		}
-		
-		return "home";
-	}
-	//검색을 ㄷ른곳에서 해서 홈으로 가는 경우
-	@RequestMapping(value = "/search_other", method = RequestMethod.GET)
-	public String search_other_home(Model model, HttpSession session , String search) {
-		Member personal = (Member)session.getAttribute("Member");
-		if(personal != null){
-			searchDAO.insertSearch(new Search(0 , search , "0"));
-			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
-			model.addAttribute("friend", arr_friend);
-			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
-			model.addAttribute("group", arraystrval);
-			int totalpage = albumDAO.total_album_count(search,"1");
-			model.addAttribute("totalpage", (totalpage/10));			
-			//다른 곳에서 홈으로 검색을 통해 home으로 간다는 것을 알려준다.
-			model.addAttribute("search_other", 0);
-			//검색어
-			model.addAttribute("search" , search);			
-		}		
-		return "home";
-	}
-	//해쉬태그 클릭을 ㄷ른곳에서 해서 홈으로 가는 경우
-	@RequestMapping(value = "/hashtag_other", method = RequestMethod.GET)
-	public String hashtag_other_home(Model model, HttpSession session , String search) {
-		Member personal = (Member)session.getAttribute("Member");
-		if(personal != null){
-			searchDAO.insertSearch(new Search(0 , search , "0"));
-			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
-			model.addAttribute("friend", arr_friend);
-			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
-			model.addAttribute("group", arraystrval);
-			int totalpage = albumDAO.total_album_count(search,"1");
-			model.addAttribute("totalpage", (totalpage/10));			
-			//다른 곳에서 홈으로 검색을 통해 home으로 간다는 것을 알려준다.
-			model.addAttribute("search_other", 0);
-			//검색어
-			model.addAttribute("search" , search);			
-		}		
 		return "home";
 	}
 	//다른곳에서 카테고리 눌렀을 경우 홈으로 이동 후 검색
@@ -113,8 +78,6 @@ public class HomeController {
 		Member personal = (Member)session.getAttribute("Member");
 		if(personal != null){
 			searchDAO.insertCategoryPop(new CategoryPop(0 , categorynum , "0"));
-			ArrayList<String> arr_friend = relationDAO.selectFriend(personal.getMember_id());
-			model.addAttribute("friend", arr_friend);
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
 			model.addAttribute("group", arraystrval);
 			int totalpage = albumDAO.CategoryAlbumCount(categorynum);
@@ -127,30 +90,6 @@ public class HomeController {
 		return "home";
 	}
 	
-	
-	// 개인 앨범 조회
-	@ResponseBody
-	@RequestMapping(value = "/getTotalAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumVO> getMyAlbumList(int pagenum , HttpSession session) {
-		logger.info(pagenum + "_page_list ljs");
-		Member member = (Member)session.getAttribute("Member");
-		int totalnum = albumDAO.total_album_count(member.getMember_id() , "3");
-		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		return albumDAO.total_album_list( member.getMember_id() , "3" , pl.getStartBoard() , pl.getCountPage() );
-	}
-	
-	// 좋아요 목록 조회
-	@ResponseBody
-	@RequestMapping(value = "/getLikeAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumVO> getLikeAlbumList(int pagenum , HttpSession session) {
-		logger.info(pagenum + "_like_page_list ljs");
-		Member member = (Member)session.getAttribute("Member");
-		int totalnum = albumDAO.total_album_count(member.getMember_id() , "2");
-		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		return albumDAO.total_album_list( member.getMember_id() , "2" , pl.getStartBoard() , pl.getCountPage());
-	}	
-
-
 	/**
 	 * 앨범뷰... 앨범과 페이지 리스트를 갖고 albumView로 이동....
 	 */
@@ -202,7 +141,6 @@ public class HomeController {
 		
 		String check_likeMember = null;
 		check_likeMember = albumlikesDAO.check_Likes(vo);
-		System.out.println(check_likeMember);
 		
 		return check_likeMember;
 	}
@@ -211,34 +149,40 @@ public class HomeController {
 	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
 	public String myPage(HttpSession session , Model model){
 		Member member = (Member)session.getAttribute("Member");
-		int totalpage = albumDAO.total_album_count(member.getMember_id(),"4");
+		int totalpage = albumDAO.total_album_count("" , member.getMember_id(),"4");
 		model.addAttribute("totalpage", (totalpage/10));		
 		return "myPage";
-	}
-	
-	// 책 목록 조회
-	@ResponseBody
-	@RequestMapping(value = "/getMyAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumVO> getMyAlbumList(HttpSession session , int pagenum) {
-		logger.info("myalbumlist_homecontroller_ljs");
-		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-		int totalnum = albumDAO.total_album_count(album_writer,"4");
-		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		return albumDAO.total_album_list(album_writer , "4" , pl.getStartBoard() , pl.getCountPage());
-	}
-	//친구 목록 조회
-	@ResponseBody
-	@RequestMapping(value = "/getIDAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumVO> getIDAlbumList(HttpSession session , String albumwriter , int pagenum) {
-		logger.info(albumwriter+"_IDalbumlist_homecontroller_ljs");
-		int totalnum = albumDAO.total_album_count(albumwriter , "5");
-		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		return albumDAO.total_album_list(albumwriter , "5" , pl.getStartBoard() , pl.getCountPage());
 	}
 	
 	//랭킹페이지
 	@RequestMapping(value = "/LankingPage", method = RequestMethod.GET)
 	public String LankingPage(){
 		return "LankingPage";
+	}
+	
+	//회원가입 페이지
+	@RequestMapping(value="/member_get" , method = RequestMethod.GET)
+	public String member_get(){		
+		logger.info("member_get__jinsu");
+		return "/member";
+	}
+	
+	//친구페이지
+	@RequestMapping(value="/friend_get" , method = RequestMethod.GET)
+	public String friend_get(String id , Model model , HttpSession session){
+		logger.info("friend_get__jinsu");
+		Member personally = (Member)session.getAttribute("Member");
+		Member friend= memberDAO.selectMember(id);
+		model.addAttribute("friend_id", friend);
+		ArrayList<String> arrfriend = relationDAO.selectFriend(personally.getMember_id());
+		for(String s:arrfriend){
+			if(s.equals(friend.getMember_id())){
+				model.addAttribute("check" , true);
+				break;
+			}
+		}
+		int totalpage = albumDAO.friend_album_count("" , friend.getMember_id() , personally.getMember_id(),"5");
+		model.addAttribute("totalpage", (totalpage/10));
+		return "friendPage";
 	}
 }

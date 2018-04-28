@@ -87,22 +87,49 @@ public class AlbumDAO{
 			return false;
 		}
 	}
-	//1번 검색 2번 좋아요리스트 3번 토탈 앨범 4번 내 앨범 5번 ID로 앨범찾기
-	public ArrayList<AlbumVO> total_album_list(String search , String check , int startpl , int endpl ){
-		System.out.println("total_album_list : " + search+"_search , " + check + "_check");
+	
+	//2번 좋아요리스트 3번 토탈 앨범 4번 내 앨범 5번 ID로 앨범찾기
+	public ArrayList<AlbumVO> total_album_list(String search , String writer , String check , int startpl , int endpl ){
+		System.out.println("total_album_list : " + search+"_search , " + writer + "_writer" + check + "_check");
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		RowBounds rb = new RowBounds(startpl , endpl);
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("check", check);
-		map.put("search_writer", search);
+		map.put("search_writer", writer);
+		map.put("search", search);
 		return mapper.total_album_list(rb , map);
 	}
-	public int total_album_count(String search , String check){
-		System.out.println("total_album_count : " + search+"_search , " + check + "_check");
+	
+	public int total_album_count(String search , String writer , String check){
+		System.out.println("total_album_count : " + search + "_search , " + writer + "_writer" + check + "_check");
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("check", check);
-		map.put("search_writer", search);
+		map.put("search_writer", writer);
+		map.put("search", search);
 		return sqlSession.getMapper(AlbumMapper.class).total_album_count(map);
+	}
+	
+	public ArrayList<AlbumVO> friend_album_list(String search , String writer , String myid , String check , int startpl , int endpl ){
+		System.out.println("friend_album_list : " + search+"_search , " + writer + "_writer" + myid + "_myid" + check + "_check");
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		RowBounds rb = new RowBounds(startpl , endpl);
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("check", check);
+		map.put("search_writer", writer);
+		map.put("search", search);
+		map.put("self_id", myid);
+		return mapper.total_album_list(rb , map);
+	}
+	
+	public int friend_album_count(String search , String writer , String myid , String check){
+		System.out.println("friend_album_count : " + search+"_search , " + writer + "_writer" + myid + "_myid" + check + "_check");
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("check", check);
+		map.put("search_writer", writer);
+		map.put("search", search);
+		map.put("self_id", myid);
+		return mapper.total_album_count(map);
 	}
 	
 	public boolean personal_update_page1_Album(AlbumVO albumwrite){
@@ -142,5 +169,9 @@ public class AlbumDAO{
 	
 	public ArrayList<AlbumVO> select_album(RowBounds rb, AlbumVO album) {
 		return sqlSession.getMapper(AlbumMapper.class).select_album(rb, album);
+	}
+	
+	public int select_album_count(AlbumVO album) {
+		return sqlSession.getMapper(AlbumMapper.class).select_album_count(album);
 	}
 }

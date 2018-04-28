@@ -53,8 +53,9 @@ function initialize(){
 }
 
 function fiendplus(){
-	var friendid = $('#friendid').text();
+	var friendid = $('#friendid').val();
 	var data = $('#friendbt').attr('data');
+	alert(friendid +  ',' + data);
 	if(data == 0){
 		$.ajax({
 			url:'friend_plus',
@@ -63,7 +64,7 @@ function fiendplus(){
 			dataType:'text',
 			success: function(a){
 				if(a=='success'){
-					$('#friendbt').val('친구삭제');
+					$('#friendbt').html('<i class="fas fa-user-times"></i>');
 					$('#friendbt').attr('data' , '1');
 				}
 				else{
@@ -80,7 +81,7 @@ function fiendplus(){
 			dataType:'text',
 			success: function(a){
 				if(a=='success'){
-					$('#friendbt').val('친구추가');
+					$('#friendbt').html('<i class="fas fa-user-plus"></i>');
 					$('#friendbt').attr('data' , '0');
 				}
 				else{

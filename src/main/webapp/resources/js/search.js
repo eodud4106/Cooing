@@ -78,8 +78,7 @@ function AlbumListPaging(check, result) {
 	
 	$('.div_card').click(function(e) {
 		location.href = 'albumView?album_num='+$(this).attr('album_num');
-	})
-	
+	});
 	pagingcheck = false;
 }
 

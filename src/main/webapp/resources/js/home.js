@@ -3,7 +3,7 @@
  * 
  */
 
-function initialize(){
+function initialize(){	
 	$('#friendsearchbt').on('click', function() {
 		searchfriend();
 	});
@@ -17,7 +17,7 @@ function initialize(){
 	$('#searchtx').keydown(function(event){
 		if(event.keyCode == 13){
 			searchcheck = 99;
-			search();
+			getTotalAlbumList("3");
 		}
 	});
 	$('.category').on('click' , function(){
@@ -28,7 +28,46 @@ function initialize(){
 	$('.input').on('ifChanged' , function(){
 		checkRadioPaging(); 
 	 });
+	
+	$('window').click(function(event) {
+		if (event.target == $('#myModal')) {
+			$('#myModal').css('display', 'none');
+	    }
+	});
+	
+	$('#myBtn').click(function() {
+		$('#myModal').css('display', 'block');
+	});
+	
+	$('#myBtn_close').click(function() {
+		$('#myModal').css('display', 'none');
+	});
+	
+	if ('${sessionScope.Member}' != null) {
+		readyChat('${sessionScope.Member.member_id}', '');
+	}	
+	searchword();
 
+}
+
+function inputbox_focus(){
+	if($('#searchtx').css('width') == '0px'){
+		$('#searchtx').val('');
+		$('#searchtx').css('width' , '200px');
+		$('#searchtx').css('paddingLeft' , '3px');
+		$('#searchtx').focus();
+	}else if($('#searchtx').css('width') == '200px'){
+		$('#searchtx').val('');
+		$('#searchtx').css('width' , '0px');
+		$('#searchtx').css('paddingLeft' , '0px');
+	}
+}
+
+function search_bar(search){
+	if($('#searchtx').val() == 0){
+		$(search).css('width' , '0px');
+		$(search).css('paddingLeft' , '0px');
+	}
 }
 
 function checkRadioPaging(){
@@ -57,10 +96,10 @@ function checkRadioPaging(){
 		   //value값
 		   switch (temp) {
 		      case '1':
-		    	  getTotalAlbumList(); 
+		    	  getTotalAlbumList("3"); 
 		         break;
 		      case '2':
-		    	  getLikeAlbumList();
+		    	  getTotalAlbumList("2");
 		         break;  
 		   }
 	   }else{
@@ -73,7 +112,7 @@ function openGUpdate(group_name) {
 }
 
 //앨범 리스트 Ajax로 받는 코드
-function getTotalAlbumList() {
+function getTotalAlbumList(checknum) {
 	var check  = false;
 	if(searchcheck != 2){
 		searchcheck = 2;
@@ -81,54 +120,23 @@ function getTotalAlbumList() {
 	}
 	if(pagenum == 0)
 		check  = true;
+	var searchtext = $('#searchtx').val();
 	$.ajax({
-		url: 'getTotalAlbumList',
+		url: 'searchTotalAlbumList',
 		type: 'post',
-		data:{pagenum:++pagenum}, 
+		data:{pagenum:++pagenum , checknum:checknum , searchtext:searchtext}, 
 		dataType: 'json',
 		success: function(result) {
+			//list 받아오면 리스트 돌려서 처리할 부분
 			AlbumListPaging(check , result);
 			if(check){
 				$.ajax({
 					url:'searchTotalCount',
 					type:'POST',		
+					data:{checknum:checknum}, 
 					dataType:'text',
 					success: function(list){
-						//list 받아오면 리스트 돌려서 처리할 부분
-						$('#totalpage').val(list);
-					},
-					error:function(e){alert(JSON.stringify(e));}		
-				});
-			}			
-		},
-		error: function(e) {
-			alert(JSON.stringify(e));	
-		}
-	});
-}
-
-function getLikeAlbumList() {
-	var check  = false;
-	if(searchcheck != 4){
-		searchcheck = 4;
-		pagenum = 0;
-	}
-	if(pagenum == 0)
-		check  = true;
-	$.ajax({
-		url: 'getLikeAlbumList',
-		type: 'post',
-		data:{pagenum:++pagenum}, 
-		dataType: 'json',
-		success: function(result) {
-			AlbumListPaging(check , result);
-			if(check){
-				$.ajax({
-					url:'searchLikeCount',
-					type:'POST',		
-					dataType:'text',
-					success: function(list){
-						//list 받아오면 리스트 돌려서 처리할 부분
+						//total count 변경 부분
 						$('#totalpage').val(list);
 					},
 					error:function(e){alert(JSON.stringify(e));}		
@@ -166,7 +174,7 @@ function searchCategory(categorynumber){
 					data:{searchtext:categorynum},
 					dataType:'text',
 					success: function(list){
-						//list 받아오면 리스트 돌려서 처리할 부분
+						//total count 변경 부분
 						$('#totalpage').val(list);
 					},
 					error:function(e){alert(JSON.stringify(e));}		
@@ -176,48 +184,3 @@ function searchCategory(categorynumber){
 		error:function(e){alert(JSON.stringify(e));}		
 	});
 }
-
-function search(){
-	var check  = false;
-	if(searchcheck != 0){
-		searchcheck = 0;
-		pagenum = 0;
-	}	
-	if(pagenum == 0)
-		check  = true;
-	
-	var searchtext = $('#searchtx').val();
-	if(searchtext.length <= 0){
-		searchcheck = 99;
-		getTotalAlbumList();
-		return false;
-	}
-	$.ajax({
-		url:'searchWord',
-		type:'POST',		
-		data:{searchtext:searchtext, pagenum:++pagenum},
-		dataType:'json',
-		success: function(list){
-			//list 받아오면 리스트 돌려서 처리할 부분
-			AlbumListPaging(check , list);
-			if(check){
-				$.ajax({
-					url:'searchWordCount',
-					type:'POST',		
-					data:{searchtext:searchtext},
-					dataType:'text',
-					success: function(list){
-						//리스트 숫자를 불러와서 넘겨줘야 한다.
-						$('#totalpage').val(list);
-					},
-					error:function(e){alert(JSON.stringify(e));}		
-				});				
-			}
-		},
-		error:function(e){alert(JSON.stringify(e));}		
-	});
-}
-
-
-
-

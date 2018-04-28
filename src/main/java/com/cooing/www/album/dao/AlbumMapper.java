@@ -35,4 +35,6 @@ public interface AlbumMapper {
 	public int delete_pages_by_album_num(int album_num);
 	// 검색 조건으로 앨범 리스트를 검색
 	public ArrayList<AlbumVO> select_album(RowBounds rb, AlbumVO album);
+	// 검색 조건으로 앨범 리스트의 개수를 검색
+	public int select_album_count(AlbumVO album);
 }

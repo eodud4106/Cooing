@@ -76,58 +76,91 @@
 			select * from albumlist 
 			</if>			
 			where 				
-			<!-- 1번은 검색 -->
-			<if test="check == 1 ">			
-				album_writer like '%'||#{search_writer}||'%'
-				or album_name like '%'||#{search_writer}||'%'
-				or album_contents like '%'||#{search_writer}||'%'
-			</if>
 			<!-- 2번은 좋아요 리스트 조인이라 a가 붙어서 합칠수 없음 -->
 			<if test="check == 2 ">
-				a.album_openrange = 4
-				or a.album_writer = #{search_writer}
-				or a.album_num in(
-					select specific_albumnum as album_num
-					from specific
-					where specific_memberid = #{search_writer}
-				)		
-				or a.album_num in(
-					select album_num
-					from albumlist
-					where album_openrange = 2
-					and album_writer in(
-						select friend_id1 as album_writer
-						from friend
-						where friend_id2 = #{search_writer}
-					)
-				)
+				(
+					<if test="search != null">
+				    ( a.album_contents like '%'||#{search}||'%'
+				        or a.album_name like '%'||#{search}||'%'
+				        or a.album_writer like '%'||#{search}||'%'
+				    )and
+				    </if>
+				    (a.album_writer = #{search_writer}
+				        or a.album_openrange = 4
+				        or a.album_num in(
+				            select specific_albumnum as album_num
+				            from specific
+				            where specific_memberid = #{search_writer}
+				        )		
+				        or a.album_num in(
+				            select album_num
+				            from albumlist
+				            where album_openrange = 2
+				            and album_writer in(
+				                select friend_id1 as album_writer
+				                from friend
+				                where friend_id2 = #{search_writer}
+				            )
+				        )
+			        )
+			    )
 			</if>
-			<!-- 3번은 총합 앨범리스트 , 4번은 없지만 내 리스트 -->
-			<if test="check != 1 and check != 2 and check != 5">
-				<if test="check == 3">
-					album_openrange = 4 or
-				</if>
-				album_writer = #{search_writer}
-				or album_num in(
-					select specific_albumnum as album_num
-					from specific
-					where specific_memberid = #{search_writer}
-				)		
-				or album_num in(
-					select album_num
-					from albumlist
-					where album_openrange = 2
-					and album_writer in(
-						select friend_id1 as album_writer
-						from friend
-						where friend_id2 = #{search_writer}
+			<!-- 3번은 총합 앨범리스트 , 4번은 없지만 내 리스트  어느때든 검사하기에 1번 검색 기능은 딱히 필요 없을 듯 -->
+			<if test="check != 2 and check != 5">
+				(
+					<if test="search != null">
+					   	( album_contents like '%'||#{search}||'%'
+					        or album_name like '%'||#{search}||'%'
+					        or album_writer like '%'||#{search}||'%'
+					    )and
+					</if>
+					(
+						<if test="check == 3">
+							album_openrange = 4 or
+						</if>
+						album_writer = #{search_writer}
+						or album_num in(
+							select specific_albumnum as album_num
+							from specific
+							where specific_memberid = #{search_writer}
+						)		
+						or album_num in(
+							select album_num
+							from albumlist
+							where album_openrange = 2
+							and album_writer in(
+								select friend_id1 as album_writer
+								from friend
+								where friend_id2 = #{search_writer}
+							)
+						)	
 					)
-				)			
+				)		
 			</if>
-			<!-- 5번은 ID로 찾기 -->
+			<!-- 5번은 친구든 모르는 사람이든 페이지  -->
 			<if test="check == 5">
-				album_writer = #{search_writer} 
-	   			and (album_openrange = 2 or album_openrange = 4)	    
+				<if test="search != null">
+					( album_contents like '%'||#{search}||'%'
+					        or album_name like '%'||#{search}||'%'
+					        or album_writer like '%'||#{search}||'%'
+					 )and
+				</if>
+				(
+					album_writer = #{search_writer} 
+					and(
+						album_num in(
+							select album_num
+							from albumlist
+							where album_openrange = 2
+							and album_writer in(
+								select friend_id1 as album_writer
+								from friend
+								where friend_id2 = #{self_id}
+							)
+                        or album_openrange = 4
+                        )
+					)
+				)	    
 			</if>
 			<if test="check != 2">
 				order by album_num desc
@@ -175,31 +208,61 @@
 				)
 			</if>
 			<!-- 3번은 총합 앨범리스트 , 4번은 없지만 내 리스트 -->
-			<if test="check != 1 and check != 2 and check != 5">
-				<if test="check == 3">
-					album_openrange = 4 or
-				</if>
-				album_writer = #{search_writer}
-				or album_num in(
-					select specific_albumnum as album_num
-					from specific
-					where specific_memberid = #{search_writer}
-				)		
-				or album_num in(
-					select album_num
-					from albumlist
-					where album_openrange = 2
-					and album_writer in(
-						select friend_id1 as album_writer
-						from friend
-						where friend_id2 = #{search_writer}
+			<if test="check != 2 and check != 5">
+				(
+					<if test="search != null">
+					   	( album_contents like '%'||#{search}||'%'
+					        or album_name like '%'||#{search}||'%'
+					        or album_writer like '%'||#{search}||'%'
+					    )and
+					</if>
+					(
+						<if test="check == 3">
+							album_openrange = 4 or
+						</if>
+						album_writer = #{search_writer}
+						or album_num in(
+							select specific_albumnum as album_num
+							from specific
+							where specific_memberid = #{search_writer}
+						)		
+						or album_num in(
+							select album_num
+							from albumlist
+							where album_openrange = 2
+							and album_writer in(
+								select friend_id1 as album_writer
+								from friend
+								where friend_id2 = #{search_writer}
+							)
+						)	
 					)
-				)			
+				)		
 			</if>
 			<!-- 5번은 ID로 찾기 -->
 			<if test="check == 5">
-				album_writer = #{search_writer} 
-	   			and (album_openrange = 2 or album_openrange = 4)	    
+				<if test="search != null">
+					( album_contents like '%'||#{search}||'%'
+					        or album_name like '%'||#{search}||'%'
+					        or album_writer like '%'||#{search}||'%'
+					 )and
+				</if>
+				(
+					album_writer = #{search_writer} 
+					and(
+						album_num in(
+							select album_num
+							from albumlist
+							where album_openrange = 2
+							and album_writer in(
+								select friend_id1 as album_writer
+								from friend
+								where friend_id2 = #{self_id}
+							)
+                        or album_openrange = 4
+                        )
+					)
+				)	    
 			</if>
 	</select>
 	
@@ -263,6 +326,15 @@
 	<!-- 앨범을 검색함... -->
 	<select id="select_album" resultType="album" parameterType="album">
 		SELECT *
+		FROM albumlist
+		WHERE
+			album_writer = #{album_writer}
+			AND
+			isPersonal = #{isPersonal}
+	</select>
+	
+	<select id="select_album_count" resultType="album" parameterType="int">
+		SELECT count(*)
 		FROM albumlist
 		WHERE
 			album_writer = #{album_writer}

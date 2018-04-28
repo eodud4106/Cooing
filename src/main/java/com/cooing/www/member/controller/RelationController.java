@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.album.dao.AlbumDAO;
+import com.cooing.www.album.vo.AlbumVO;
+import com.cooing.www.common.vo.PageLimit;
 import com.cooing.www.member.dao.MemberDAO;
 import com.cooing.www.member.dao.RelationDAO;
 import com.cooing.www.member.vo.Member;
@@ -32,25 +34,6 @@ public class RelationController {
 	MemberDAO memberDAO;
 	@Autowired
 	AlbumDAO albumDAO;
-	
-	//친구페이지
-	@RequestMapping(value="/friend_get" , method = RequestMethod.GET)
-	public String friend_get(String id , Model model , HttpSession session){
-		logger.info("friend_get__jinsu");
-		Member personally = get_session(session);
-		Member friend= memberDAO.selectMember(id);
-		model.addAttribute("friend_id", friend);
-		ArrayList<String> arrfriend = relationDAO.selectFriend(personally.getMember_id());
-		for(String s:arrfriend){
-			if(s.equals(friend.getMember_id())){
-				model.addAttribute("check" , true);
-				break;
-			}
-		}
-		int totalpage = albumDAO.total_album_count(id,"5");
-		model.addAttribute("totalpage", (totalpage/10));
-		return "friendPage";
-	}
 	
 	@ResponseBody
 	@RequestMapping(value="/friend_check" , method = RequestMethod.POST,produces = "application/text; charset=utf8")
@@ -257,6 +240,8 @@ public class RelationController {
 		}		
 	}
 	
+	
+
 	
 	private Member get_session(HttpSession session){
 		return (Member)session.getAttribute("Member");

@@ -40,24 +40,24 @@ public class SearchController {
 	@Autowired
 	MemberDAO memberDAO; 
 	
+	// 개인 앨범 조회
 	@ResponseBody
-	@RequestMapping(value="/searchWord" , method = RequestMethod.POST)
-	public ArrayList<AlbumVO> searchWord(String searchtext , int pagenum){
-		logger.info(searchtext + "_search_word__jinsu");
-		//저장
-		searchDAO.insertSearch(new Search(0 , searchtext , "0"));
-		int totalnum = albumDAO.total_album_count(searchtext ,  "1");
+	@RequestMapping(value = "/searchTotalAlbumList", method= RequestMethod.POST)
+	public ArrayList<AlbumVO> getMyAlbumList(int pagenum , String searchword  , String checknum, HttpSession session) {
+		System.out.println(pagenum + "_page " + searchword + "_search " + checknum + "check_list ljs");
+		Member member = (Member)session.getAttribute("Member");
+		int totalnum = albumDAO.total_album_count(searchword , member.getMember_id() , checknum);
 		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		//검색어가 해쉬 태그 , 앨범 이름, 설명 , 앨범 만든 사람		
-		return albumDAO.total_album_list(searchtext , "1" , pl.getStartBoard() , pl.getCountPage());		
+		return albumDAO.total_album_list(searchword , member.getMember_id() , checknum , pl.getStartBoard() , pl.getCountPage() );
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/searchWordCount" , method = RequestMethod.POST)
-	public int searchWordCount(String searchtext){
-		logger.info(searchtext + "_search_word_count__jinsu");
+	@RequestMapping(value="/searchTotalCount" , method = RequestMethod.POST)
+	public int searchTotalCount(String searchword , String checknum , HttpSession session){
+		logger.info("search_total_count__jinsu");
 		//나누기를 하는 이유는 페이지 카운트로 들어갈 것이기 때문에 10개 씩 추가되기에 10으로 나눔
-		return albumDAO.total_album_count(searchtext , "1") / 10;		
+		Member member = (Member)session.getAttribute("Member");
+		return albumDAO.total_album_count( searchword, member.getMember_id() , checknum) / 10;		
 	}
 	
 	@ResponseBody
@@ -66,24 +66,6 @@ public class SearchController {
 		logger.info(searchtext + "_search_category_count__jinsu");
 		//나누기를 하는 이유는 페이지 카운트로 들어갈 것이기 때문에 10개 씩 추가되기에 10으로 나눔
 		return albumDAO.CategoryAlbumCount(searchtext) / 10;		
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/searchTotalCount" , method = RequestMethod.POST)
-	public int searchTotalCount(HttpSession session){
-		logger.info("search_total_count__jinsu");
-		//나누기를 하는 이유는 페이지 카운트로 들어갈 것이기 때문에 10개 씩 추가되기에 10으로 나눔
-		Member member = (Member)session.getAttribute("Member");
-		return albumDAO.total_album_count(member.getMember_id() , "3") / 10;		
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/searchLikeCount" , method = RequestMethod.POST)
-	public int searchLikeCount(HttpSession session){
-		logger.info("search_like_count__jinsu");
-		//나누기를 하는 이유는 페이지 카운트로 들어갈 것이기 때문에 10개 씩 추가되기에 10으로 나눔
-		Member member = (Member)session.getAttribute("Member");
-		return albumDAO.total_album_count(member.getMember_id() , "2") / 10;		
 	}
 	
 	@ResponseBody
