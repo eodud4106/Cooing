@@ -160,14 +160,6 @@ html, body, main, .container-fluid {
 	top: 21px;
 	color:#D5D5D5;
 }
-.delete-button{
-  background: red;
-  border: none;
-  border-radius: 50px;
-  color: #FFF;
-  font-size: 8px;
-  cursor:pointer;
-}
 .buttonHolder{
 	float : left;
 }
@@ -547,7 +539,7 @@ html, body, main, .container-fluid {
 					str += ' ' + vo.reply_memberid;
 					/* str += ' ' + vo.reply_date; */
 					if (vo.reply_memberid == '${Member.member_id}') {
-					str += ' ' + "<i onclick='deletereply("+vo.reply_num+")' style = 'width: 15px; height: 15px;' class='far fa-trash-alt'></i>";
+					str += ' ' + "<i onclick='deletereply("+vo.reply_num+")' style = 'width: 15px; height: 15px; cursor:pointer;' class='far fa-trash-alt'></i>";
 					}
 					str += '</td>';
 					str += '</tr>';
