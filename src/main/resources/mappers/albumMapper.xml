@@ -81,12 +81,6 @@
 				album_writer like '%'||#{search_writer}||'%'
 				or album_name like '%'||#{search_writer}||'%'
 				or album_contents like '%'||#{search_writer}||'%'
-				or album_num in(
-					select tag_albumnum as album_num
-					from tag
-					where tag_content like '%'||#{search_writer}||'%'
-					group by tag_albumnum
-				)
 			</if>
 			<!-- 2번은 좋아요 리스트 조인이라 a가 붙어서 합칠수 없음 -->
 			<if test="check == 2 ">
@@ -159,12 +153,6 @@
 				album_writer like '%'||#{search_writer}||'%'
 				or album_name like '%'||#{search_writer}||'%'
 				or album_contents like '%'||#{search_writer}||'%'
-				or album_num in(
-					select tag_albumnum as album_num
-					from tag
-					where tag_content like '%'||#{search_writer}||'%'
-					group by tag_albumnum
-				)
 			</if>
 			<!-- 2번은 좋아요 리스트 조인이라 a가 붙어서 합칠수 없음 -->
 			<if test="check == 2 ">
