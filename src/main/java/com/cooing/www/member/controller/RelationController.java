@@ -66,12 +66,11 @@ public class RelationController {
 	@ResponseBody
 	@RequestMapping(value="/friend_plus" , method = RequestMethod.POST,produces = "application/text; charset=utf8")
 	public String friend_plus(String friendid , HttpSession session){
-		logger.info("friend_plus__jinsu");
+		logger.info(friendid +"_friend_plus__jinsu");
 		Member personally = get_session(session);
-		Member friend= memberDAO.selectMember(friendid);
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("person", personally.getMember_id());
-		map.put("friend", friend.getMember_id());				
+		map.put("friend", friendid);				
 		if(relationDAO.insertFriend(map) == true){
 			return "success";
 		}
@@ -80,12 +79,11 @@ public class RelationController {
 	@ResponseBody
 	@RequestMapping(value="/friend_delete" , method = RequestMethod.POST ,produces = "application/text; charset=utf8")
 	public String friend_delete(String friendid , HttpSession session){
-		logger.info("friend_delete__jinsu");
+		logger.info(friendid + "_friend_delete__jinsu");
 		Member personally = get_session(session);
-		Member friend= memberDAO.selectMember(friendid);
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("person", personally.getMember_id());
-		map.put("friend", friend.getMember_id());				
+		map.put("friend", friendid);				
 		if(relationDAO.deleteFriend(map) == true){
 			return "success";
 		}
