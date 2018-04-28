@@ -153,8 +153,6 @@ html, body, main, .container-fluid {
 
 <script>
 	
-	var selectcheck = true;
-	
 	//홈버튼 눌렀을 때 confirm
 	function really_back_home() {
 		var return_home = confirm('저장버튼이나 페이지를 넘기지 않으면 저장되지 않습니다. 정말 홈으로 돌아가시겠습니까?');
@@ -167,16 +165,6 @@ html, body, main, .container-fluid {
 
 	//페이지 로딩 후 초기화 내용
 	$(document).ready(function() {
-
-		// 앨범 로딩 시 카테고리 설정
-		var album_openrange = '${album.album_openrange}';
-		var album_category = '${album.album_category}';
-		
-		$("#album_openrange").val(album_openrange).prop("selected", true);
-		$("#album_category").val(album_category).prop("selected", true);
-		
-		alert('앨범 값 있니? : ' + album_openrange);
-		alert('카테고리 값 있니? : ' + album_category);
 	
 		$('.input').iCheck({
 			radioClass : 'iradio_square-green',
@@ -189,6 +177,13 @@ html, body, main, .container-fluid {
 		$('html').click(function(e) {
 			$('#home_button').text(e.target.nodeName);
 		})
+		
+		// 앨범 로딩 시 카테고리 설정
+		var album_openrange = '${album.album_openrange}';
+		var album_category = '${album.album_category}';
+		
+		$("#album_openrange").val(album_openrange).prop("selected", true).trigger('change');
+		$("#album_category").val(album_category).prop("selected", true).trigger('change');
 
 	});
 
@@ -290,12 +285,6 @@ html, body, main, .container-fluid {
 	// 앨범 정보 수정
 	function modifiy_AlbumInfomation() {
 		
-		alert(${album.album_num});
-		alert($('#album_name').val());
-		alert($('#album_contents').val());
-		alert($('#album_category').val());
-		alert($('#album_openrange').val());
-		
 		$.ajax({ 
 			url: 'update_albuminfo',
 			type: 'POST',
@@ -362,37 +351,37 @@ html, body, main, .container-fluid {
 				
 				<div class="wrap-input100 input100-select">
 					<span class="label-input100">Category</span>
-					<div>
-					<select id="album_category"  class="selection-2" name="album_category">
-					<option value="1">스포츠/래저</option>
-				    <option value="2">동물</option>
-				    <option value="3">음악</option>
-				    <option value="4">요리/음식</option>
-				    <option value="5">패션/뷰티</option>
-				    <option value="6">연예/TV</option>
-				    <option value="7">게임</option>
-				    <option value="8">영화</option>
-				    <option value="9">도서</option>
-				    <option value="10">공연/전시</option>
-				    <option value="11">외국어</option>
-				    <option value="12">전문지식</option>
-				    <option value="13">수집/제작</option>
-				    <option value="14">자기계발</option>
-				    <option value="15">육아</option>
-				    <option value="16">일상생활</option>
-				    <option value="17">자동차</option>
-				    <option value="18">낚시</option>
-				    <option value="19">건강</option>
-				    <option value="20">기타</option>
-					</select>
-					</div>
+						<div>
+							<select id="album_category"  class="selection-2" name="album_category">
+								<option value="1">스포츠/래저</option>
+							    <option value="2">동물</option>
+							    <option value="3">음악</option>
+							    <option value="4">요리/음식</option>
+							    <option value="5">패션/뷰티</option>
+							    <option value="6">연예/TV</option>
+							    <option value="7">게임</option>
+							    <option value="8">영화</option>
+							    <option value="9">도서</option>
+							    <option value="10">공연/전시</option>
+							    <option value="11">외국어</option>
+							    <option value="12">전문지식</option>
+							    <option value="13">수집/제작</option>
+							    <option value="14">자기계발</option>
+							    <option value="15">육아</option>
+							    <option value="16">일상생활</option>
+							    <option value="17">자동차</option>
+							    <option value="18">낚시</option>
+							    <option value="19">건강</option>
+							    <option value="20">기타</option>
+							</select>
+						</div>
 					<span class="focus-input100"></span>
 				</div>				
 
 				<div class="wrap-input100 input100-select">
 					<span class="label-input100">공개범위</span>
 					<div>
-						<select class="selection-2" name="album_openrange" id="album_openrange" >
+						<select class="selection-2" name="album_openrange" id="album_openrange">
 						    <option value="1">나만 보기</option>
 						    <option value="2">친구 공개</option>
 					    	<option value="3">그룹 공개</option>
