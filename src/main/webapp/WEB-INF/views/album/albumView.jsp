@@ -175,7 +175,7 @@ html, body, main, .container-fluid {
 
 	function hashtagCheck(){
 		var title = '${album.album_name}';
-		var content = '${album.album_contents}';
+		var content = $('#content').html();
 		//일단 ' '로 나누고 맨 앞이 #인 문자를 찾아서 a태그를 앞뒤로 붙여서 더해서 다시 넣어준다
 		//SearchController에 searchHashTag를 좀 고쳐야 된다.
 		//일단 정보 창이 뜨면 해쉬태그를 달 예정 
@@ -185,11 +185,20 @@ html, body, main, .container-fluid {
 		var linkedContent = '';
 		for(var word in splitedArray)
 		{
-		  word = splitedArray[word];
+		   word = splitedArray[word];
 			// # 문자를 찾는다.
 		   if(word.match(filter) && word.charAt(0) == '#'){
-			   var hashword = word.substring(1,word.length);
-			   word = '<a href="./hashtag_other?search='+ hashword+'">' + word + '</a>'; 
+			   var count = 1;
+			   var tmp = word.replace(/\s|　/gi, ' ');
+			   for(var i = 0; i < tmp.length; i++){
+				   if(tmp.charAt(i)!='\r\n' && tmp.charAt(i) != ' ' && tmp.charAt(i)!='\t' && tmp.charAt(i)!='\n')
+				   		count++
+				   else
+					   	break;
+			   }
+			   var hashword = word.substring(0,count);
+			   var hashwordother = word.substring(count,word.length);
+			   word = '<a href="./hashtag_other?search='+ hashword+'">' + hashword + '</a>' + hashwordother; 
 		   }
 		   linkedContent += word+' ';
 		}

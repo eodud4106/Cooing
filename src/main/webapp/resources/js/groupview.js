@@ -21,7 +21,7 @@ function confirmcheck(strque){
 }
 
 function deleteparty(){
-	if(confirmcheck('그룹탈퇴를 하시겠습니까?') == false) {
+	if(confirmcheck('그룹을 삭제 하시겠습니까?') == false) {
 		return false;
 	}
 	//그룹 탈퇴 확인		
@@ -63,9 +63,9 @@ function memberdelete(){
 					success: function(list){
 						var strmember='';
 						$.each(list,function(i,data){
-							strmember += '<p><img class = "img1" src = "./memberimg?strurl='+(data.member_picture==null?'':data.member_picture)	+'"></p><p>'+ data.member_id;
+							strmember += '<p><img class = "img-responsive img-circle" style =" border-radius: 80%; display: inline-block;; width: 100% \9;max-width: 25%; height: auto;" src = "./memberimg?strurl='+(data.member_picture==null?'':data.member_picture)	+'">'+ data.member_id;
 							if(data.member_id  != $('#sessionid').attr('data') )
-								strmember +='<img src = "./resources/image_mj/remove.png" class = "img_3" data="'+data.member_id+'" data2="'+party_num+'">';	
+								strmember +='<div style= "z-index:99; float:right;margin-top: -29px; " class = "img_3" data="'+data.member_id+'" data2="'+party_num+'"> <i class="fas fa-user-times" ></i></div>';	
 						});
 						$('#memberdiv').html(strmember);
 						$('#findid').val('');
@@ -83,6 +83,9 @@ function memberdelete(){
 function memberplus(){
 	var member_id = $('#findid').val();
 	var party_num = $('#desolve').attr('data');
+	if(confirmcheck(member_id + '를 그룹 멤버로 초대 하시겠습니까?') == false) {
+		return false;
+	}
 	$.ajax({
 		url:'party_member_input',
 		type:'POST',		
@@ -98,9 +101,9 @@ function memberplus(){
 					success: function(list){
 						var strmember='';
 						$.each(list,function(i,data){
-							strmember += '<p><img class = "img1" src = "./memberimg?strurl='+(data.member_picture==null?'':data.member_picture)	+'"></p><p>'+ data.member_id;
+							strmember += '<p><img class = "img-responsive img-circle" style =" border-radius: 80%; display: inline-block;; width: 100% \9;max-width: 25%; height: auto;" src = "./memberimg?strurl='+(data.member_picture==null?'':data.member_picture)	+'">'+ data.member_id;
 							if(data.member_id  != $('#sessionid').attr('data') )
-								strmember +='<img src = "./resources/image_mj/remove.png" class = "img_3" data="'+data.member_id+'" data2="'+party_num+'">';	
+								strmember +='<div style= "z-index:99; float:right;margin-top: -29px; " class = "img_3" data="'+data.member_id+'" data2="'+party_num+'"> <i class="fas fa-user-times" ></i></div>';	
 						});
 						$('#memberdiv').html(strmember);
 						$('#findid').val('');
