@@ -646,9 +646,9 @@ html, body, main, .container-fluid {
 				<section id="content1">
 
 					<!-- 페이지 저장 -->
-					<form class="contact100-form validate-form" id="entry">
-						<span class="contact100-form-title" style="font-size: 20pt"> ${album.album_name } </span>
-					</form>
+					<div class="contact100-form validate-form" id="entry">
+						<span class="contact100-form-title" style="font-size: 20pt; margin-top: 0px"> ${album.album_name } </span>
+					</div>
 
 					<!-- 앨범 정보 -->
 					<div class="wrap-input100 validate-input">
