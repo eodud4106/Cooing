@@ -52,12 +52,12 @@ public class AlbumEditController {
 	@Autowired
 	BookMarkDAO albumbookmarkDAO;
 
-	private final String strFilePath = "/FileSave/upload/";						// windows
-	//private static String strFilePath = "/Users/insect/hindoong_upload/";			// mac
-	private final String strThumbnailPath = "/FileSave/thumbnail/";				// windows
-	//private static String strThumbnailPath = "/Users/insect/hindoong_upload/";	// mac
-	private final String strTemp_PicturePath = "/FileSave/temp_picture/"; 			//사진 자를 때 필요한 경로
-	//private static String strTemp_PicturePath = "/Users/insect/hindoong_upload/";	// mac
+	//private final String strFilePath = "/FileSave/upload/";						// windows
+	private static String strFilePath = "/Users/insect/hindoong_upload/";			// mac
+	//private final String strThumbnailPath = "/FileSave/thumbnail/";				// windows
+	private static String strThumbnailPath = "/Users/insect/hindoong_upload/";	// mac
+	//private final String strTemp_PicturePath = "/FileSave/temp_picture/"; 			//사진 자를 때 필요한 경로
+	private static String strTemp_PicturePath = "/Users/insect/hindoong_upload/";	// mac
 	
 	private static final Logger logger = LoggerFactory.getLogger(AlbumEditController.class);
 	
@@ -207,7 +207,7 @@ public class AlbumEditController {
 	@ResponseBody
 	@RequestMapping(value = "/deleteAlbum", method = RequestMethod.POST)
 	public String deleteAlbum(int albumnum){
-		logger.info("deleteAlbum_LJS");
+		////logger.info("deleteAlbum_LJS");
 		if(albumDAO.deleteAlbum(albumnum) > 0)
 			return "success";
 		
@@ -217,7 +217,7 @@ public class AlbumEditController {
 	@ResponseBody
 	@RequestMapping(value = "/page1ImageSave", method = RequestMethod.POST)
 	public String page1ImageSave(HttpServletRequest request) throws Exception{
-		logger.info("page1 Image Save _ ljs");
+		////logger.info("page1 Image Save _ ljs");
 		String binaryData = request.getParameter("imgSrc");
 		File fpath = new File(strThumbnailPath);
 	    if(!fpath.isDirectory()){
@@ -226,7 +226,7 @@ public class AlbumEditController {
         FileOutputStream stream = null;
         String newFileName = "" + new Date().getTime();
         try{
-            logger.info("binary file   "  + binaryData);
+            ////logger.info("binary file   "  + binaryData);
             if(binaryData == null || binaryData=="") {
                 throw new Exception();    
             }
@@ -236,7 +236,7 @@ public class AlbumEditController {
             stream = new FileOutputStream(strThumbnailPath+newFileName+".png");
             stream.write(decode);
             stream.close();
-            logger.info("파일 작성 완료");
+            ////logger.info("파일 작성 완료");
             
         }catch(Exception e){
         	logger.info("파일이 정상적으로 넘어오지 않았습니다.");
@@ -260,7 +260,7 @@ public class AlbumEditController {
 		}	        
 	    String ext="";
 	    Map<String, MultipartFile> fileMap = multi.getFileMap();
-	    logger.info(fileMap.toString());
+	    //logger.info(fileMap.toString());
 	    
 	    for(MultipartFile multipartfile:fileMap.values()){
 	    	int lastIndex = multipartfile.getOriginalFilename().lastIndexOf('.');
@@ -342,7 +342,7 @@ public class AlbumEditController {
 		Map<String , String> map = new HashMap<String,String>();
 		map.put("album_thumbnail", thumbnail);
 		map.put("album_num", albumnum);
-		logger.info(map.toString());
+		//logger.info(map.toString());
 		if(albumDAO.updateThumbnail(map) > 0)
 			return "success";
 		else 
@@ -351,7 +351,7 @@ public class AlbumEditController {
 	
 	@RequestMapping(value = "img_album", method = RequestMethod.GET)
 	public String img(HttpServletResponse response , HttpSession session , String filePath) {
-		logger.info("img__jinsu");
+		//logger.info("img__jinsu");
 		
 		String fullpath = strFilePath + filePath;
 		if( filePath.length() != 0){
@@ -372,7 +372,7 @@ public class AlbumEditController {
 	
 	@RequestMapping(value = "thumbnail", method = RequestMethod.GET)
 	public String thumbnail(HttpServletResponse response , String filePath) {
-		logger.info("thumbnail__jinsu");
+		//logger.info("thumbnail__jinsu");
 		
 		String fullpath = strThumbnailPath + filePath;
 		if( filePath.length() != 0){
@@ -512,7 +512,7 @@ public class AlbumEditController {
         FileOutputStream stream = null;
         String newFileName = "" + new Date().getTime();
         try{
-            logger.info("binary file   "  + binaryData);
+            //logger.info("binary file   "  + binaryData);
             if(binaryData == null || binaryData=="") {
                 throw new Exception();    
             }
@@ -522,10 +522,10 @@ public class AlbumEditController {
             stream = new FileOutputStream(strFilePath+newFileName+".png");
             stream.write(decode);
             stream.close();
-            logger.info("파일 작성 완료");
+            //logger.info("파일 작성 완료");
             
         }catch(Exception e){
-        	logger.info("파일이 정상적으로 넘어오지 않았습니다.");
+        	//logger.info("파일이 정상적으로 넘어오지 않았습니다.");
             return "fail";
         }finally{
             stream.close();
@@ -536,7 +536,7 @@ public class AlbumEditController {
 	@ResponseBody
 	@RequestMapping(value = "/bookmark_create", method = RequestMethod.POST)
 	public String bookmark_create(HttpSession session, BookMark bookmark){
-		logger.info("bookmark_create_ljs : " +  bookmark.toString());
+		//logger.info("bookmark_create_ljs : " +  bookmark.toString());
 		
 		Member member = (Member)session.getAttribute("Member");
 		bookmark.setBookmark_memberid(member.getMember_id());
@@ -551,7 +551,7 @@ public class AlbumEditController {
 	@ResponseBody
 	@RequestMapping(value = "/bookmark_delete", method = RequestMethod.POST)
 	public String bookmark_delete(HttpSession session, BookMark bookmark){
-		logger.info("bookmark_delete_ljs : " +  bookmark.toString());
+		//logger.info("bookmark_delete_ljs : " +  bookmark.toString());
 		
 		Member member = (Member)session.getAttribute("Member");
 		bookmark.setBookmark_memberid(member.getMember_id());
@@ -566,7 +566,7 @@ public class AlbumEditController {
 	@ResponseBody
 	@RequestMapping(value = "/bookmark_check", method = RequestMethod.POST)
 	public String bookmark_check(HttpSession session, BookMark bookmark){
-		logger.info("bookmark_check_ljs : " +  bookmark.toString());
+		//logger.info("bookmark_check_ljs : " +  bookmark.toString());
 		
 		Member member = (Member)session.getAttribute("Member");
 		bookmark.setBookmark_memberid(member.getMember_id());
