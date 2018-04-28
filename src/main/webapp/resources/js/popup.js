@@ -90,14 +90,17 @@ function createFriendPopup(e, elem, type) {
 		"height": "50%",
 		"display": "block",
 		"float": "left"
-	}).click(function(e) {
-		location.href = "friend_get?id=" + $(this).attr('friend_id');
 	}).appendTo($div_friend_popup);
 	
 	if(type == 'friend') {
-		$div_go_friend_page.text('친구페이지');
+		$div_go_friend_page.text('친구페이지').click(function(e) {
+			location.href = "friend_get?id=" + $(this).attr('friend_id');
+		})
 	} else if (type == 'user') {
 		$div_go_friend_page.text('유저페이지');
+		$div_go_friend_page.click(function(e) {
+			location.href = "friend_get?id=" + $(this).attr('user_id');
+		})
 	}
 
 	var $div_go_friend_chat = $('<div />', {
