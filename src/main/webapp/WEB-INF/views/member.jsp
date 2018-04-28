@@ -15,6 +15,7 @@
 <script src="resources/js/member_in.js"></script>
 <script src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 <script>
+var isDuplicated; //지우지마...
 $(document).ready(function () {
 initialize();
 checkcount();
@@ -111,14 +112,15 @@ checkcount();
 				</td></tr>
 			<tr><td height="5" colspan="2"><font size="1px"><span style="color:red;">※</span>최대 3개까지만 선택</font></td></tr>
                   </table>  </p>
+            </form>
 					
 
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" id = join>
-							JOIN
-						</button>
-					</div>					
-				</form>
+			<div class="container-login100-form-btn">
+				<button class="login100-form-btn" id="join" onclick="return joinmember();">
+					JOIN
+				</button>
+			</div>					
+
 			</div>
 		</div>
 	</div>

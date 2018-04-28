@@ -46,11 +46,14 @@ function idcheck(){
 		dataType:'text',
 		success: function(a){
 			if(a == 'success'){
-				$('#join').on('click' , joinmember);
+				//$('#join').on('click' , joinmember);
 				alert('사용 가능한 ID입니다.');
+				isDuplicated = true;
 			}
 			else{
-				alert('이미 사용중인 ID입니다.');				
+				alert('이미 사용중인 ID입니다.');
+				isDuplicated = false;
+				
 			}		
 		},
 		error:function(e){alert(JSON.stringify(e));}		
@@ -58,13 +61,12 @@ function idcheck(){
 }
 
 function joinmember(){
+	if(member_check() == false) {return false;}
 	
 	var checkArr = new Array;
 	$('input[type="checkbox"]:checked').each(function(){
 	      checkArr.push($(this).val());
 	});
-	
-	if(member_check() == false) {return false;}
 	
 	$.ajax({
 		url:'member_check',
@@ -73,7 +75,6 @@ function joinmember(){
 		dataType:"text",
 		success: function(a){
 			if(a == 'success'){
-				alert('회원가입에 성공하였습니다. 로그인 창으로 이동합니다.');
 				$('#member_form').submit();
 			}
 			else{
@@ -101,7 +102,15 @@ function member_check(){
 		alert('※아이디는 5~12글자 /, &, \<, >, | 를 제외한 문자 사용 가능합니다.');
 		return false;
 	}
+	if(isDuplicated == false || isDuplicated == null){
+		alert('아이디 중복검사를 완료해세요.');
+		return false;
+	}
 	if($('#password').val().length < 6 || $('#password').val().length > 12){
+		alert('※비밀번호는 6~12글자 /, &, \<, >, | 를 제외한 문자 사용 가능합니다.');
+		return false;
+	}
+	if($('#password2').val().length < 6 || $('#password2').val().length > 12){
 		alert('※비밀번호는 6~12글자 /, &, \<, >, | 를 제외한 문자 사용 가능합니다.');
 		return false;
 	}
