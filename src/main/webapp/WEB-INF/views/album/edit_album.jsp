@@ -520,40 +520,40 @@ html, body, main, .container-fluid {
 		<!-- 하단 바 영역 -->
 		<div class="under_bar " align="right">
 			<!-- 텍스트, 이미지 삽입 버튼 -->
-			<div id="i_text" class="tool text under_tool">
+			<div id="i_text" class="tool text under_tool" role="글상자 추가">
 				<i class="fas fa-align-justify"></i>
 			</div>
-			<div id="i_image" class="tool image under_tool">
+			<div id="i_image" class="tool image under_tool" role="사진 추가">
 				<i class="far fa-image"></i>
 			</div>
 			<!-- 각종 버튼 -->
 			<div id="i_brush" class="under_tool i_brush"
-				onclick="open_background()">
+				onclick="open_background()" role="속지 변경">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-paint-brush"></i>
 			</div>
-			<div id="i_start" class="under_tool" onclick="nav_page('start')">
+			<div id="i_start" class="under_tool" onclick="nav_page('start')" role="첫 페이지로">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-backward"></i>
 			</div>
-			<div id="i_end" class="under_tool" onclick="nav_page('end')">
+			<div id="i_end" class="under_tool" onclick="nav_page('end')" role="마지막 페이지로">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-forward"></i>
 			</div>
-			<div id="i_add" class="under_tool" onclick="addPage()">
+			<div id="i_add" class="under_tool" onclick="addPage()" role="페이지 추가">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="far fa-plus-square"></i>
 			</div>
-			<div id="i_remove" class="under_tool" onclick="removePage()">
+			<div id="i_remove" class="under_tool" onclick="removePage()" role="페이지 삭제">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="far fa-trash-alt"></i>
 			</div>
-			<div id="i_save" class="under_tool" onclick="savePage('all')">
+			<div id="i_save" class="under_tool" onclick="savePage('all')" role="전체 저장">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-check"></i>
 			</div>
 			<div id="i_exit" class="under_tool"
-				onclick="location.href='albumView?album_num=${album.album_num}'">
+				onclick="location.href='albumView?album_num=${album.album_num}'" role="편집 종료">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-sign-out-alt"></i>
 			</div>

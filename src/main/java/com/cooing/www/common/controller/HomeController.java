@@ -31,6 +31,7 @@ import com.cooing.www.member.dao.MemberDAO;
 import com.cooing.www.member.dao.RelationDAO;
 import com.cooing.www.member.vo.Member;
 import com.cooing.www.member.vo.Party;
+import com.cooing.www.util.PageNavigator;
 import com.google.gson.Gson;
 
 /**
@@ -184,12 +185,14 @@ public class HomeController {
 			// 조회할 reply vo
 			ArrayList<ReplyVO> arr_reply = replyDAO.listReply(album_num, 1, 3);
 			
+			PageNavigator pageNav = new PageNavigator(3, 3, 1, replyDAO.getReplyTotal(album_num));
 			
 			model.addAttribute("albumwrite", memberDAO.selectMember(album.getAlbum_writer()));
 			model.addAttribute("album", album);
 			model.addAttribute("arr_page", arr_page);
 			model.addAttribute("like", result_like);
 			model.addAttribute("arr_reply", arr_reply);
+			model.addAttribute("pageNav", pageNav);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

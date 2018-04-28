@@ -21,7 +21,17 @@
 </insert>
 <!-- 댓글 목록-->
 <select id = "listReply" resultType = "reply" parameterType="int">
-select * from reply where reply_albumnum = #{reply_albumnum} order by reply_num desc
+select
+	reply_num,
+	reply_albumnum,
+	reply_memberid,
+	reply_contents,
+	reply_date
+from
+	reply
+where
+	reply_albumnum = #{reply_albumnum}
+order by reply_num desc
 </select>
 <!-- 댓글 하나 가져옴 -->
 <select id = "getReply" resultType = "reply" parameterType="int">
@@ -33,6 +43,6 @@ delete from reply where reply_memberid = #{reply_memberid} and reply_num = #{rep
 </delete>
 <!-- 해당 앨범의 댓글 갯수 -->
 <select id="getReplyTotal" parameterType="int" resultType="int">
-select count(*) from reply where reply_albumnum = #{reply_albumnum} order by reply_num desc
+select count(*) from reply where reply_albumnum = #{reply_albumnum}
 </select>
 </mapper>

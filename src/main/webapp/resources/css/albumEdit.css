@@ -193,10 +193,9 @@ svg, path {
 }
 
 .under_bar {
-	height: 60px;
-	width: 800px;
 	margin-top: 20px;
 	margin-left: 35%;
+	float:left;
 }
 
 .under_bar_left {
@@ -207,7 +206,6 @@ svg, path {
 	z-index:99;
 	float:left;
 	padding-left: 10px;
-	width: 10%;
 }
 
 .div_select_bg {

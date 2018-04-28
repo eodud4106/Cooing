@@ -16,8 +16,7 @@
 <!-- 기본 js -->
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="resources/js/jquery-ui.min.js"></script>
-<script defer
-	src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
 
 <script src="resources/aside_js/popper.min.js"></script>
 <script src="resources/aside_js/owl.carousel.min.js"></script>
@@ -47,9 +46,7 @@
 <link rel="stylesheet" href="resources/aside_css/animate.css">
 <link rel="stylesheet" href="resources/aside_css/style.css">
 <link rel="stylesheet" href="resources/css/albumEdit.css">
-<!-- 아이콘 -->
-<script defer
-	src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
+
 <!-- 친구 그룹 리스트 출력 -->
 <link rel="stylesheet" href="resources/css/friend_list.css">
 
@@ -59,9 +56,6 @@
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
 	href="resources/album_create/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-	href="resources/album_create/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
 	href="resources/album_create/vendor/animate/animate.css">
@@ -266,22 +260,14 @@ html, body, main, .container-fluid {
 
 	//라디오버튼
 	$(document).ready(function() {
+		
+		ready_album('view');
 
 		replyList();
 
 		hashtagCheck();
-
-		$('#bookmarkButton').on('click', function() {
-			if ($('#bookmarkButton').attr('data') == 1) {
-				bookmark_delete();
-			} else {
-				bookmark_create();
-			}
-		});
-
-		$('#album').on('change', function() {
-			alert('test');
-		});
+		
+		bookmark_check();
 
 		$('.input').iCheck({
 			radioClass : 'iradio_square-green',
@@ -289,9 +275,8 @@ html, body, main, .container-fluid {
 
 		});
 
-		ready_album('view');
-
 	});
+	
 	//현재 페이지의 북마크가 있는지 검색 
 	function bookmark_check() {
 
@@ -308,19 +293,20 @@ html, body, main, .container-fluid {
 				},
 				dataType : 'text',
 				success : function(a) {
-					//성공이면 있는 거 책갈피가  data 가 1일때는 있는거 
+					//성공이면 있는 거 책갈피가  data 가 1일때는 있는거
+					$('#i_bookmark').html('');
+					var $icon = $('<i />').css({
+						"width": "30px",
+						"height": "30px",
+						"margin": "10px"
+					}).appendTo($('#i_bookmark'))
+					
 					if (a == 'success') {
-						//data값을 넣어서 data값으로 확인
-						$('#bookmarkButton').attr('data', 1);
-						//책갈피 해제 이미지가 바뀐다면 여기 밑에 text를 없애고 사용
-						$('#bookmarkButton').text('책갈피 해제');
+						$icon.addClass("fas fa-check");
 					}
 					//fail이면 없는 거 책갈피가 
 					else {
-						//data값을 넣어서 data값으로 확인
-						$('#bookmarkButton').attr('data', 0);
-						//책갈피 해제 이미지가 바뀐다면 여기 밑에 text를 없애고 사용
-						$('#bookmarkButton').text('책갈피');
+						$icon.addClass("fas fa-plus");
 					}
 				},
 				error : function(e) {
@@ -329,14 +315,16 @@ html, body, main, .container-fluid {
 			});
 		}
 	}
-	//책갈피
-	function bookmark_create() {
+	
+	//책갈피 토글
+	function bookmark_toggle() {
 		var pagenum = $('#album').turn('page');
+		var isMarked = $('#i_bookmark').attr('role') == '책갈피 추가' ? 'bookmark_create' : 'bookmark_delete'
 		if (pagenum != null) {
 			pagenum = (pagenum == 1 ? 1 : (pagenum % 2 == 0 ? pagenum
 					: pagenum - 1));
 			$.ajax({
-				url : 'bookmark_create',
+				url : isMarked,
 				type : 'POST',
 				data : {
 					bookmark_albumnum : album_num,
@@ -345,10 +333,22 @@ html, body, main, .container-fluid {
 				dataType : 'text',
 				success : function(a) {
 					if (a == 'success') {
-						//data값을 넣어서 data값으로 확인
-						$('#bookmarkButton').attr('data', 1);
-						//책갈피 해제 이미지가 바뀐다면 여기 밑에 text를 없애고 사용
-						$('#bookmarkButton').text('책갈피 해제');
+						$('.tooltip_under_bar').remove();
+						$('#i_bookmark').html('');
+						var $isMarked = $('<i />').css({
+							"width": "30px",
+							"height": "30px",
+							"margin": "10px"
+						}).appendTo($('#i_bookmark'));
+						
+						if(isMarked == 'bookmark_create') {
+							$isMarked.addClass('fas fa-check');
+							$('#i_bookmark').attr('role', '책갈피 제거');
+						} else {
+							$isMarked.addClass('fas fa-plus');
+							$('#i_bookmark').attr('role', '책갈피 추가');
+						}
+						
 					}
 				},
 				error : function(e) {
@@ -357,35 +357,7 @@ html, body, main, .container-fluid {
 			});
 		}
 	}
-
-	//책갈피삭제
-	function bookmark_delete() {
-		var pagenum = $('#album').turn('page');
-		if (pagenum != null) {
-			pagenum = (pagenum == 1 ? 1 : (pagenum % 2 == 0 ? pagenum
-					: pagenum - 1));
-			$.ajax({
-				url : 'bookmark_delete',
-				type : 'POST',
-				data : {
-					bookmark_albumnum : album_num,
-					bookmark_page : pagenum
-				},
-				dataType : 'text',
-				success : function(a) {
-					if (a == 'success') {
-						//data값을 넣어서 data값으로 확인
-						$('#bookmarkButton').attr('data', 0);
-						//책갈피 이미지가 바뀐다면 여기 밑에 text를 없애고 사용
-						$('#bookmarkButton').text('책갈피');
-					}
-				},
-				error : function(e) {
-					alert(JSON.stringify(e));
-				}
-			});
-		}
-	}
+	
 	
 	// 좋아요...??
 	function addLike() {
@@ -413,7 +385,7 @@ html, body, main, .container-fluid {
 	// 댓글 쓰기
 	function writereply() {
 
-		var contents = $('#contents').val();
+		var contents = $('#input_reply').val();
 
 		if (contents == "") {
 			alert("댓글의 내용을 입력하세요.");
@@ -433,10 +405,10 @@ html, body, main, .container-fluid {
 			},
 			dataType : 'text',
 			success : function(a) {
-
+				
 				if (a == 'success') {
 					// alert("댓글 등록");	
-					$('#contents').val('');
+					$('#input_reply').val('');
 					replyList();
 				} else {
 					alert('실패');
@@ -473,66 +445,68 @@ html, body, main, .container-fluid {
 	}
 	//댓글 목록
 	function replyList(p) {
-
-		var rep_page = p;
-		$.ajax({
-			url : 'listReply',
-			type : 'get',
-			data : {
-				"reply_albumnum" : album_num,
-				"rep_page" : rep_page
-			},
-			dataType : 'json',
+		var rep_page = p; 
+	    $.ajax({ 
+			url : 'listReply', 
+			type : 'get', 
+			data : { 
+				"reply_albumnum" : album_num, 
+				"rep_page" : rep_page 
+			}, 
+			dataType : 'json', 
 			success : function(replyList) {
-				var str = '';
-
-				str += '<table>';
-
-				$(replyList).each(function(i, vo) {
-
-					if (i < 0) {
-						p = vo.currentPage;
-					}
-
-					str += '<tr>';
-					str += '<td>';
-					str += ' ' + vo.reply_contents;
-					str += '<br>';
-					str += ' ' + vo.reply_memberid;
-					/* str += ' ' + vo.reply_date; */
-					if (vo.reply_memberid == '${Member.member_id}') {
-						str += ' '
-								+ "<i onclick='updatereply("
-								+ vo.reply_num
-								+ ")' style = 'width: 15px; height: 15px; cursor:pointer;' class='far fa-check-circle'></i>";
-						str += ' '
-								+ "<i onclick='deletereply("
-								+ vo.reply_num
-								+ ")' style = 'width: 15px; height: 15px; cursor:pointer;' class='far fa-trash-alt'></i>";
-					}
-					str += '</td>';
-					str += '</tr>';
-				});
-				str += '</table>';
-				$("#resultReply").html('');
-				$("#resultReply").html(str);
-
-				$("#reply_page").html('');
-
-				if (typeof p == "undefined") {
-					p = 1;
-				}
-
-				pageReply(p);//리스트 뿌려질 때 페이징도 같이 뿌려주기
-			},
-			error : function(e) {
-				alert(JSON.stringify(e));
-			}
-		});
+				
+				$('#div_reply_list').html('');
+	 
+				$(replyList).each(function(i, reply) { 
+	 
+					var $reply_wrapper = $('<div />', {
+						"class": "reply_wrapper",
+						"reply_num": reply.reply_num
+					}).appendTo($('#div_reply_list'));
+	          		var $reply_text = $('<div />', {
+	          			"class": "reply_text",
+	          			"text": reply.reply_contents
+	          		}).appendTo($reply_wrapper);
+	          		var $reply_writer = $('<div />', {
+	          			"class": "reply_writer",
+	          			"html": reply.reply_memberid
+	          		}).appendTo($reply_wrapper).css({
+	          			"text-align": "right"
+	          		});
+	          		
+	          		if(reply.reply_memberid == '${sessionScope.Member.member_id}') {
+	          			
+		          		var $i_delete = $('<i />', {
+		          			"class": "far fa-trash-alt"
+						}).css({
+							"width": "15px",
+							"height": "15px",
+							"cursor": "pointer"
+						});
+		          		
+		          		var $tmp_div = $('<div />').append($i_delete).appendTo($reply_writer).css({
+		          			"display": "inline"
+		          		}).click(function(e) {
+							deletereply($(this).parent().parent().attr('reply_num'));
+						})
+	          		}
+	          	});
+	 
+		        if (typeof p == "undefined") { 
+					p = 1; 
+		        } 
+		 
+		        pageReply(p);//리스트 뿌려질 때 페이징도 같이 뿌려주기 
+			}, 
+			error : function(e) { 
+				alert(JSON.stringify(e)); 
+			} 
+		}); 
 	}
 
 	// 페이징
-	function pageReply(p) {
+	function pageReply(curr_page) {
 
 		var rep_page = p;
 
@@ -545,37 +519,53 @@ html, body, main, .container-fluid {
 			},
 			dataType : 'json',
 			success : function(navi) {
-
-				var html = '';
-				if (navi.endPageGroup > 1) {
-					html += '<a href="javascript:replyList('
-							+ (navi.currentPage - navi.pagePerGroup)
-							+ ')" style="color: navy;">◁◁ </a>&nbsp;';
-					html += '<a href="javascript:replyList('
-							+ (navi.currentPage - 1)
-							+ ')" style="color: navy;">◀</a>&nbsp;';
+				
+				$('#div_reply_paging').html('');
+				
+				var $paging_wrapper = $('<div />', {
+					"class": "paging_wrapper"
+				}).css({
+					"text-align": "center"
+				}).appendTo($('#div_reply_paging'));
+				
+				if(curr_page > 1) {
+					var $go_first = $('<a />', {
+						"href": "javascript:replyList(1)",
+						"text": "◀"
+					}).appendTo($paging_wrapper);
+					var $go_before = $('<a />', {
+						"href": "javascript:replyList(" + (curr_page - 1) + ")",
+						"text": "◁"
+					}).appendTo($paging_wrapper);
 				}
+				
 				for (var i = navi.startPageGroup; i <= navi.endPageGroup; i++) {
-					if (i == navi.currentPage) {
-						html += '<a href="javascript:replyList(' + i
-								+ ')" style="color: navy;"><b>' + i
-								+ '</b></a>&nbsp;';
-					} else {
-						html += '<a href="javascript:replyList(' + i
-								+ ')" style="color: navy;">' + i
-								+ '</a>&nbsp;';
+					var $go_page = $('<a />', {
+						"href": "javascript:replyList(" + i + ")",
+						"text": i
+					}).appendTo($paging_wrapper);
+					if(i == curr_page) {
+						$go_page.css({
+							"font-weight": "bold"
+						})
 					}
 				}
-				if (navi.endPageGroup > 1) {
-					html += '<a href="javascript:replyList('
-							+ (navi.currentPage + 1)
-							+ ')" style="color: navy;">▶</a>&nbsp;';
-					html += '<a href="javascript:replyList('
-							+ (navi.currentPage + navi.pagePerGroup)
-							+ ')" style="color: navy;">▷▷</a>';
+				
+				if(curr_page < navi.totalPageCount) {
+					var $go_next = $('<a />', {
+						"href": "javascript:replyList(" + (curr_page + 1) + ")",
+						"text": "▷"
+					}).appendTo($paging_wrapper);
+					var $go_end = $('<a />', {
+						"href": "javascript:replyList(" + navi.totalPageCount + ")",
+						"text": "▶"
+					}).appendTo($paging_wrapper);
 				}
-				$('#reply_page').html('');
-				$('#reply_page').append(html);
+				
+				$paging_wrapper.children().css({
+					"margin" : "3px"
+				})
+
 			},
 			error : function(e) {
 				alert(JSON.stringify(e));
@@ -630,6 +620,7 @@ html, body, main, .container-fluid {
 			alert('체크된거없음');
 		}
 	}
+	
 </script>
 
 </head>
@@ -642,7 +633,7 @@ html, body, main, .container-fluid {
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate"
-			data-animate-effect="fadeInLeft">
+			data-animate-effect="fadeInLeft" style="padding-bottom: 0;">
 			<a href="/www" class="mb-2 d-block probootstrap-logo"
 				style="font-family: Poppins-Bold;">COOING</a>
 		</div>
@@ -654,59 +645,6 @@ html, body, main, .container-fluid {
 					type="radio" name="tabs"> <label for="tab2">Chat</label>
 				<section id="content1">
 
-					<%-- <div>
-						<!-- 앨범 만든사람 아이디와 프로필사진 -->
-						<img class="img-responsive img-circle"
-							style="border-radius: 100%; display: inline-block;; width: 100% \9; width: 25%; height: 25%;"
-							src="<c:url value="/memberimg?strurl=${albumwrite.member_picture}" />"
-							class="img1">${albumwrite.member_id}
-						<!-- 앨범제목, 앨범내용, 태그 -->
-						<div class="album_content" style="height: 150px;">
-							<table>
-								<tr>
-									<th id="title"></th>
-								</tr>
-								<tr>
-									<td id="content">${album.album_contents}</td>
-								</tr>
-							</table>
-						</div>
-
-					</div>
-					<div class="buttonHolder" id="likes" onclick="likes()">
-						<a href="#" class="likes"></a>
-					</div>
-					<div class="buttonHolder" id="deleteLikes" onclick="deletelikes()">
-						<a href="#" class="deleteLikes"></a>
-					</div>
-					<span id="likecount">${likecount}</span>명
-					<!-- <div id="resultLikes">	
-		</div> -->
-					<!-- 하단 바 영역 -->
-					<div class="reply_page_div" id="reply_page_div"
-						style="float: left;">
-						<form>
-							<!-- 로그인한 사람 프로필 사진만 -->
-							<img class="img-responsive img-circle"
-								style="border-radius: 100%; display: inline-block; width: 100% \9; width: 15%; height: 25%;"
-								src="<c:url value="/img_member" />" class="img1"> <input
-								type="text" id="contents" class="reply" style="width: 130px;"
-								placeholder="comment..."> <i onClick="writereply()"
-								style="width: 20px; height: 20px; cursor: pointer; margin-left: 180px;"
-								class="far fa-check-circle"></i>
-							<!-- <button type="button" onclick="writereply()">저장</button> -->
-							<input type="hidden" name="reply_albumnum">
-						</form>
-
-						<div id="resultReply" style="height: 150px;">
-							<!-- 댓글리스트 출력 -->
-						</div>
-
-						<div id="reply_page">
-							<!-- 댓글 페이지 -->
-						</div>
-
-					</div> --%>
 					<!-- 페이지 저장 -->
 					<form class="contact100-form validate-form" id="entry">
 						<span class="contact100-form-title" style="font-size: 20pt"> ${album.album_name } </span>
@@ -746,7 +684,8 @@ html, body, main, .container-fluid {
 							</span>
 						</button>
 					</div>
-				
+					<span class="focus-input100"></span>
+					
 					<!--  댓글 영역 -->
 					<div class="wrap-input100 validate-input">
 						<span class="label-input100">댓글</span>
@@ -755,16 +694,19 @@ html, body, main, .container-fluid {
 						<div id="div_reply_list"></div>
 						<!-- 페이징 버튼 영역 -->
 						<div id="div_reply_paging"></div>
+					</div>
+					<div class="wrap-input100 validate-input">	
 						<textarea class="input100" id="input_reply"
 							class="input_album_info input_album_info_contents"
-							style="min-height: 30px"></textarea>
+							style="padding-bottom: 5px; min-height: 10px" placeholder="댓글을 작성해보세요..."
+							maxlength="20"></textarea>
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="wrap-contact100-form-btn">
 						<div class="contact100-form-bgbtn"></div>
 						<button class="contact100-form-btn bt_album_info"
-							onclick="">
+							onclick="writereply()">
 							<span>
 								등록 <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
 							</span>
@@ -849,44 +791,36 @@ html, body, main, .container-fluid {
 		</div>
 		<!-- END row -->
 		<!-- 하단 바 영역 -->
-		<div class="under_bar " align="right">
-			<!-- 텍스트, 이미지 삽입 버튼 -->
-			<div id="i_text" class="tool text under_tool">
-				<i class="fas fa-align-justify"></i>
-			</div>
-			<div id="i_image" class="tool image under_tool">
-				<i class="far fa-image"></i>
-			</div>
-			<!-- 각종 버튼 -->
-			<div id="i_brush" class="under_tool i_brush"
-				onclick="open_background()">
-				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="fas fa-paint-brush"></i>
-			</div>
-			<div id="i_start" class="under_tool" onclick="nav_page('start')">
-				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="fas fa-backward"></i>
-			</div>
-			<div id="i_end" class="under_tool" onclick="nav_page('end')">
-				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="fas fa-forward"></i>
-			</div>
-			<div id="i_add" class="under_tool" onclick="addPage()">
-				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="far fa-plus-square"></i>
-			</div>
-			<div id="i_remove" class="under_tool" onclick="removePage()">
-				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="far fa-trash-alt"></i>
-			</div>
-			<div id="i_save" class="under_tool" onclick="savePage('all')">
-				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="fas fa-check"></i>
-			</div>
-			<div id="i_exit" class="under_tool"
-				onclick="location.href='albumView?album_num=${album.album_num}'">
-				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="fas fa-sign-out-alt"></i>
+		<div style="margin-left: 250px; float:left">
+			<div class="under_bar " align="right">
+				<!-- 각종 버튼 -->
+				<div id="i_before" class="under_tool" onclick="go_page('first')" role="첫 페이지">
+					<i style="width: 30px; height: 30px; margin: 10px;"
+						class="fas fa-angle-double-left"></i>
+				</div>
+				<div id="i_before" class="under_tool" onclick="go_page('before')" role="이전 페이지">
+					<i style="width: 30px; height: 30px; margin: 10px;"
+						class="fas fa-angle-left"></i>
+				</div>
+				<div id="i_next" class="under_tool" onclick="go_page('next')" role="다음 페이지">
+					<i style="width: 30px; height: 30px; margin: 10px;"
+						class="fas fa-angle-right"></i>
+				</div>
+				<div id="i_before" class="under_tool" onclick="go_page('end')" role="마지막 페이지">
+					<i style="width: 30px; height: 30px; margin: 10px;"
+						class="fas fa-angle-double-right"></i>
+				</div>
+				<c:if test="${sessionScope.Member.member_id == album.album_writer}">
+					<div id="i_edit" class="under_tool"
+						onclick="location.href='edit_album?album_num=${album.album_num}'" role="편집">
+						<i style="width: 30px; height: 30px; margin: 10px;"
+							class="fas fa-pencil-alt"></i>
+					</div>
+				</c:if>
+				<div id="i_bookmark" class="under_tool" onclick="bookmark_toggle()" role="책갈피 추가">
+					<i style="width: 30px; height: 30px; margin: 10px;"
+						class="fas fa-plus"></i>
+				</div>
 			</div>
 		</div>
 
