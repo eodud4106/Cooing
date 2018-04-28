@@ -64,16 +64,16 @@
 	
 	<select id="total_album_list" parameterType="Map" resultType="album">
 			<if test="check == 2">
-			select a.*
-				from albumlist a left outer join (
-					select likeit_albumnum as album_num , count(*) as count
-					from likeit
-					group by likeit_albumnum	
-				) l 
-				on a.album_num = l.album_num
+				select a.*
+					from albumlist a left outer join (
+						select likeit_albumnum as album_num , count(*) as count
+						from likeit
+						group by likeit_albumnum	
+					) l 
+					on a.album_num = l.album_num
 			</if>			
 			<if test="check != 2">
-			select * from albumlist 
+				select * from albumlist 
 			</if>			
 			where 				
 			<!-- 2번은 좋아요 리스트 조인이라 a가 붙어서 합칠수 없음 -->
@@ -86,7 +86,8 @@
 				        or lower(a.album_writer) like lower('%'||#{search}||'%')
 				    )and
 				    </if>
-				    (a.album_writer = #{search_writer}
+				    (
+				    	a.album_writer = #{search_writer}
 				        or a.album_openrange = 4
 				        or a.album_num in(
 				            select specific_albumnum as album_num
@@ -107,25 +108,19 @@
 			    )
 			</if>
 			<!-- 3번은 총합 앨범리스트 , 4번은 없지만 내 리스트  어느때든 검사하기에 1번 검색 기능은 딱히 필요 없을 듯 -->
-			<if test="check != 2 and check != 5">
+			<if test="check == 3 or check ==4">
 				(
 					<if test="search != null">
 					   	( 
 							lower(album_contents) like lower('%'||#{search}||'%')
 					        or lower(album_name) like lower('%'||#{search}||'%')
 					        or lower(album_writer) like lower('%'||#{search}||'%')
-						 )and
+					 	)and
 					</if>
+					<if test="check == 3">
 					(
-						<if test="check == 3">
-							album_openrange = 4 or
-						</if>
-						album_writer = #{search_writer}
-						or album_num in(
-							select specific_albumnum as album_num
-							from specific
-							where specific_memberid = #{search_writer}
-						)		
+						album_openrange = 4 
+						or album_writer = #{search_writer}		
 						or album_num in(
 							select album_num
 							from albumlist
@@ -137,6 +132,12 @@
 							)
 						)	
 					)
+					</if>
+					<if test="check == 4">
+					(
+						album_writer = #{search_writer}	
+					)
+					</if>
 				)		
 			</if>
 			<!-- 5번은 친구든 모르는 사람이든 페이지  -->
@@ -160,8 +161,9 @@
 								from friend
 								where friend_id2 = #{self_id}
 							)
-                        or album_openrange = 4
+                        
                         )
+                        or album_openrange = 4
 					)
 				)	    
 			</if>
@@ -205,7 +207,7 @@
 				)
 			</if>
 			<!-- 3번은 총합 앨범리스트 , 4번은 없지만 내 리스트 -->
-			<if test="check != 2 and check != 5">
+			<if test="check == 3 or check ==4">
 				(
 					<if test="search != null">
 					   	( 
@@ -214,16 +216,10 @@
 					        or lower(album_writer) like lower('%'||#{search}||'%')
 					 	)and
 					</if>
+					<if test="check == 3">
 					(
-						<if test="check == 3">
-							album_openrange = 4 or
-						</if>
-						album_writer = #{search_writer}
-						or album_num in(
-							select specific_albumnum as album_num
-							from specific
-							where specific_memberid = #{search_writer}
-						)		
+						album_openrange = 4 
+						or album_writer = #{search_writer}		
 						or album_num in(
 							select album_num
 							from albumlist
@@ -235,6 +231,12 @@
 							)
 						)	
 					)
+					</if>
+					<if test="check == 4">
+					(
+						album_writer = #{search_writer}	
+					)
+					</if>
 				)		
 			</if>
 			<!-- 5번은 ID로 찾기 -->
@@ -258,8 +260,8 @@
 								from friend
 								where friend_id2 = #{self_id}
 							)
-                        or album_openrange = 4
                         )
+                        or album_openrange = 4
 					)
 				)	    
 			</if>

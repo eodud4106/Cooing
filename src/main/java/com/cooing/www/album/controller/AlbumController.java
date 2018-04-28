@@ -54,33 +54,41 @@ public class AlbumController {
 	}
 	
 	// 책 목록 조회
-		@ResponseBody
-		@RequestMapping(value = "/getMyAlbumList", method= RequestMethod.POST)
-		public ArrayList<AlbumVO> getMyAlbumList(HttpSession session , String search ,  int pagenum) {
-			logger.info("myalbumlist_homecontroller_ljs");
-			String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
-			int totalnum = albumDAO.total_album_count("",album_writer,"4");
-			PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-			return albumDAO.total_album_list(search,album_writer , "4" , pl.getStartBoard() , pl.getCountPage());
-		}
-		
-		//친구 목록 조회
-		@ResponseBody
-		@RequestMapping(value = "/getIDAlbumList", method= RequestMethod.POST)
-		public ArrayList<AlbumVO> getIDAlbumList(HttpSession session , String search , String albumwriter , int pagenum) {
-			logger.info(albumwriter+"_IDalbumlist_homecontroller_ljs");
-			Member member = (Member)session.getAttribute("Member");
-			int totalnum = albumDAO.friend_album_count("",albumwriter, member.getMember_id() , "5");
-			PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-			return albumDAO.friend_album_list(search,albumwriter , member.getMember_id() , "5" , pl.getStartBoard() , pl.getCountPage());
-		}
-		
-		//친구 총 목록 숫자
-		@ResponseBody
-		@RequestMapping(value = "/getIDAlbumCount", method= RequestMethod.POST)
-		public int getIDAlbumCount(HttpSession session , String search , String albumwriter) {
-			logger.info(albumwriter+"_IDalbumcount_homecontroller_ljs");
-			Member member = (Member)session.getAttribute("Member");
-			return albumDAO.friend_album_count(search,albumwriter, member.getMember_id() , "5");
-		}
+	@ResponseBody
+	@RequestMapping(value = "/getMyAlbumList", method= RequestMethod.POST)
+	public ArrayList<AlbumVO> getMyAlbumList(HttpSession session , String search ,  int pagenum) {
+		logger.info("myalbumlist_homecontroller_ljs");
+		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+		int totalnum = albumDAO.total_album_count("",album_writer,"4");
+		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
+		return albumDAO.total_album_list(search,album_writer , "4" , pl.getStartBoard() , pl.getCountPage());
+	}
+	//책 목록 카운트 
+	@ResponseBody
+	@RequestMapping(value = "/getMyAlbumCount", method= RequestMethod.POST)
+	public int getMyAlbumCount(HttpSession session , String search) {
+		logger.info("myalbumlist_homecontroller_ljs");
+		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+		return albumDAO.total_album_count(search , album_writer ,"4") / 10;
+	}
+	
+	//친구 목록 조회
+	@ResponseBody
+	@RequestMapping(value = "/getIDAlbumList", method= RequestMethod.POST)
+	public ArrayList<AlbumVO> getIDAlbumList(HttpSession session , String search , String albumwriter , int pagenum) {
+		logger.info(albumwriter+"_IDalbumlist_homecontroller_ljs");
+		Member member = (Member)session.getAttribute("Member");
+		int totalnum = albumDAO.friend_album_count("",albumwriter, member.getMember_id() , "5");
+		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
+		return albumDAO.friend_album_list(search,albumwriter , member.getMember_id() , "5" , pl.getStartBoard() , pl.getCountPage());
+	}
+	
+	//친구 총 목록 숫자
+	@ResponseBody
+	@RequestMapping(value = "/getIDAlbumCount", method= RequestMethod.POST)
+	public int getIDAlbumCount(HttpSession session , String search , String albumwriter) {
+		logger.info(albumwriter+"_IDalbumcount_homecontroller_ljs");
+		Member member = (Member)session.getAttribute("Member");
+		return albumDAO.friend_album_count(search,albumwriter, member.getMember_id() , "5") / 10;
+	}
 }
