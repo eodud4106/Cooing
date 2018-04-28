@@ -190,14 +190,14 @@ html, body, main, .container-fluid {
 			   var count = 1;
 			   var tmp = word.replace(/\s|　/gi, ' ');
 			   for(var i = 0; i < tmp.length; i++){
-				   if(tmp.charAt(i)!='\r\n' && tmp.charAt(i) != ' ' && tmp.charAt(i)!='\t' && tmp.charAt(i)!='\n')
+				   if(tmp.charAt(i)!='\r\n' && tmp.charAt(i) != ' ' && tmp.charAt(i)!='\t' && tmp.charAt(i)!='\n' && tmp.charAt(i)!='<')
 				   		count++
 				   else
 					   	break;
 			   }
-			   var hashword = word.substring(0,count);
+			   var hashword = word.substring(1,count);
 			   var hashwordother = word.substring(count,word.length);
-			   word = '<a href="./hashtag_other?search='+ hashword+'">' + hashword + '</a>' + hashwordother; 
+			   word = '<a href="./hashtag_other?search='+ hashword+'">#' + hashword + '</a>' + hashwordother; 
 		   }
 		   linkedContent += word+' ';
 		}
