@@ -44,9 +44,8 @@
 <link rel="stylesheet" href="resources/aside_css/style.css">
 <!-- 아이콘 -->
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
-<!-- 폰트 -->
-
-<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+<!-- 친구 그룹 리스트 출력 -->
+<link rel="stylesheet" href="resources/css/friend_list.css">
 
 
 <style type="text/css">
@@ -675,7 +674,7 @@ html, body, main, .container-fluid {
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="/www" class="mb-2 d-block probootstrap-logo" style = "font-family: 'Orbitron', sans-serif;">COOING</a>			
+			<a href="/www" class="mb-2 d-block probootstrap-logo" style = "font-family: Poppins-Bold;">COOING</a>			
 		</div>
 		<div class="probootstrap-overflow">
 		<div class="main">
@@ -688,12 +687,13 @@ html, body, main, .container-fluid {
     	
     	<div>
     	<!-- 앨범 만든사람 아이디와 프로필사진 -->    	
-    	<img src="<c:url value="/memberimg?strurl=${albumwrite.member_picture}" />" class="img1">${albumwrite.member_id}
+    	<img class="img-responsive img-circle" style =" border-radius: 100%; display: inline-block;; width: 100% \9;
+    				width: 25%; height: 25%;" src="<c:url value="/memberimg?strurl=${albumwrite.member_picture}" />" class="img1">${albumwrite.member_id}
     	<!-- 앨범제목, 앨범내용, 태그 -->
     	<div class = "album_content" style = "height:150px;">
     		<table>
-    		<tr><th id="title">앨범제목</th></tr>
-    		<tr><td id="content">앨범내용</td></tr>
+    		<tr><th id="title"></th></tr>
+    		<tr><td id="content">${album.album_contents}</td></tr>
     		</table>
     	</div>
     	
@@ -711,7 +711,8 @@ html, body, main, .container-fluid {
 		<div class="reply_page_div" id="reply_page_div" style = "float : left;">
 			<form>		
 			<!-- 로그인한 사람 프로필 사진만 -->
-				<img src="<c:url value="/img_member" />" class="img1">	
+				<img class="img-responsive img-circle" style =" border-radius: 100%; display: inline-block; width: 100% \9;
+    				width: 15%; height: 25%;"src="<c:url value="/img_member" />" class="img1">	
 				<input type="text" id="contents" class ="reply" style ="width: 130px;"placeholder="comment...">
 				<div style= "z-index:99; float:right; " onClick="writereply()"><i class="far fa-check-circle" ></i></div>
 				<!-- <button type="button" onclick="writereply()">저장</button> -->
@@ -739,43 +740,28 @@ html, body, main, .container-fluid {
 				<p>친구4</p>
 		
 				<p>그룹1</p>
-				<p>그룹2</p>	
+				<p>그룹2</p>	 -->
 				<form id="testimg">
 					<input type="hidden" name="imgSrc" id="imgSrc" />
 				</form>	
-				 -->
-					
-			<aside class="probootstrap-aside2 js-probootstrap-aside2">
-		<a href="#"
-			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
-			<span class="oi oi-arrow-right"></span> Close
-		</a>
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<p class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY FRIEND</p>			
-		</div>				
+				
+				<p class="mb-2 d-block probootstrap-logo" style = "text-align: center; font-size: 20px; padding: 0px 0px 0px 0px;font-family: Poppins-Bold;">MY FRIEND</p>			
 				 <form>
 					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
 					<div>
        			  <img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
-       			 height: 24px;margin-left: 215px; margin-top: -50px;">
-				</form>
-			<div class = "friendList">
+       			 height: 24px;margin-left: 180px; margin-top: -50px;">
+				</form>	
+			<div class = "friendList" style = "width: 200px;">
 				<div name="friend" id="friend">
 				</div>
 				<div name="user" id="user">
 				</div>
 			</div>
 		
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<p class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY GROUP</p>				
-						
-		<!-- <div class="probootstrap-overflow"> -->
+			<p class="mb-2 d-block probootstrap-logo" style = "text-align: center; font-size: 20px; padding: 20px 0px 0px 0px; font-family: Poppins-Bold;">MY GROUP</p>				
 		
-		<!-- 그룹생성 -->
-		<div class="button_container">		
-		<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
-		</div>
-			<div class = "groupList">
+			<div class = "groupList" style= "margin-top: 20px; width: 200px;">
 				<c:if test="${Member ne null}">
 					<c:if test="${fn:length(group) ne 0}">
 						<c:forEach var="party" items="${group}">
