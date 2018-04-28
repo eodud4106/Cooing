@@ -80,9 +80,10 @@
 			<if test="check == 2 ">
 				(
 					<if test="search != null">
-				    ( a.album_contents like '%'||#{search}||'%'
-				        or a.album_name like '%'||#{search}||'%'
-				        or a.album_writer like '%'||#{search}||'%'
+				    ( 
+				    	lower(a.album_contents) like lower('%'||#{search}||'%')
+				        or lower(a.album_name) like lower('%'||#{search}||'%')
+				        or lower(a.album_writer) like lower('%'||#{search}||'%')
 				    )and
 				    </if>
 				    (a.album_writer = #{search_writer}
@@ -109,10 +110,11 @@
 			<if test="check != 2 and check != 5">
 				(
 					<if test="search != null">
-					   	( album_contents like '%'||#{search}||'%'
-					        or album_name like '%'||#{search}||'%'
-					        or album_writer like '%'||#{search}||'%'
-					    )and
+					   	( 
+							lower(album_contents) like lower('%'||#{search}||'%')
+					        or lower(album_name) like lower('%'||#{search}||'%')
+					        or lower(album_writer) like lower('%'||#{search}||'%')
+						 )and
 					</if>
 					(
 						<if test="check == 3">
@@ -140,9 +142,10 @@
 			<!-- 5번은 친구든 모르는 사람이든 페이지  -->
 			<if test="check == 5">
 				<if test="search != null">
-					( album_contents like '%'||#{search}||'%'
-					        or album_name like '%'||#{search}||'%'
-					        or album_writer like '%'||#{search}||'%'
+					( 
+						lower(album_contents) like lower('%'||#{search}||'%')
+				        or lower(album_name) like lower('%'||#{search}||'%')
+				        or lower(album_writer) like lower('%'||#{search}||'%')
 					 )and
 				</if>
 				(
@@ -181,12 +184,6 @@
 				on a.album_num = l.album_num
 			</if>			
 			where			
-			<!-- 1번은 검색 -->
-			<if test="check == 1 ">			
-				album_writer like '%'||#{search_writer}||'%'
-				or album_name like '%'||#{search_writer}||'%'
-				or album_contents like '%'||#{search_writer}||'%'
-			</if>
 			<!-- 2번은 좋아요 리스트 조인이라 a가 붙어서 합칠수 없음 -->
 			<if test="check == 2 ">
 				a.album_openrange = 4
@@ -211,10 +208,11 @@
 			<if test="check != 2 and check != 5">
 				(
 					<if test="search != null">
-					   	( album_contents like '%'||#{search}||'%'
-					        or album_name like '%'||#{search}||'%'
-					        or album_writer like '%'||#{search}||'%'
-					    )and
+					   	( 
+							lower(album_contents) like lower('%'||#{search}||'%')
+					        or lower(album_name) like lower('%'||#{search}||'%')
+					        or lower(album_writer) like lower('%'||#{search}||'%')
+					 	)and
 					</if>
 					(
 						<if test="check == 3">
@@ -242,9 +240,10 @@
 			<!-- 5번은 ID로 찾기 -->
 			<if test="check == 5">
 				<if test="search != null">
-					( album_contents like '%'||#{search}||'%'
-					        or album_name like '%'||#{search}||'%'
-					        or album_writer like '%'||#{search}||'%'
+					( 
+							lower(album_contents) like lower('%'||#{search}||'%')
+					        or lower(album_name) like lower('%'||#{search}||'%')
+					        or lower(album_writer) like lower('%'||#{search}||'%')
 					 )and
 				</if>
 				(
