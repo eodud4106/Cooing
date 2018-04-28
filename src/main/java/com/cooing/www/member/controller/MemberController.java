@@ -36,6 +36,7 @@ public class MemberController {
 	@Autowired
 	MemberDAO memberDAO;
 	
+	
 	@RequestMapping(value="/member_get" , method = RequestMethod.GET)
 	public String member_get(){		
 		logger.info("member_get__jinsu");

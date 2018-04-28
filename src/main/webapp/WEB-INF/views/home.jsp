@@ -78,12 +78,6 @@ $(document).ready(function () {
 	    }
 	});
 	
-	$(document).mouseup(function(e){
-		var container=$('.popuplayer');
-		if(container.has(e.target).length == 0)
-			container.hide();
-	});
-	
 	$('#myBtn').click(function() {
 		$('#myModal').css('display', 'block');
 	});
@@ -102,11 +96,8 @@ $(document).ready(function () {
 		searchcheck = 0;
 		pagenum = 0;
 		pagecheck = false;
-		var inputBox = document.getElementById('searchtx');
-		inputBox.value='${search}';	 
-		inputBox.style.width = '200px';
-		inputBox.style.paddingLeft='3px'; 
-		inputBox.focus();
+		inputbox_focus();
+		$('#searchtx').val('${searcj}');
 		search();
 	}else if(${search_other == 1}){
 		searchcheck = 1;
@@ -122,11 +113,23 @@ $(document).ready(function () {
 });
 
 function inputbox_focus(){
-	var inputBox = document.getElementById('searchtx');
-	inputBox.value='';	 
-	inputBox.style.width = '200px';
-	inputBox.style.paddingLeft='3px'; 
-	inputBox.focus();
+	if($('#searchtx').css('width') == '0px'){
+		$('#searchtx').val('');
+		$('#searchtx').css('width' , '200px');
+		$('#searchtx').css('paddingLeft' , '3px');
+		$('#searchtx').focus();
+	}else if($('#searchtx').css('width') == '200px'){
+		$('#searchtx').val('');
+		$('#searchtx').css('width' , '0px');
+		$('#searchtx').css('paddingLeft' , '0px');
+	}
+}
+
+function search_bar(search){
+	if($('#searchtx').val() == 0){
+		$(search).css('width' , '0px');
+		$(search).css('paddingLeft' , '0px');
+	}
 }
 </script>
 
@@ -263,21 +266,6 @@ $(document).ready(function(){
     cursor: pointer;
     margin-top: 70px;
 }
-/* 포인터로 마우스 모양 바꿔주는곳 */
-.friendclick{
-	cursor:pointer;
-}
-/* 팝업창 꾸미는 곳 */
-.popuplayer{
-	position:absoulute;
-	display:none;
-	background-color:#e0e0e0;
-	border:solid 2px #d0d0d0.;
-	width:120px;
-	height:70px;
-	padding:10px;
-	
-}
 
 </style>
 </head>
@@ -355,10 +343,9 @@ $(document).ready(function(){
 	<div class ="search-bar">
 		<br><br>
 		<div align="margin-left: 20px;">
-       			 SEARCH &nbsp<img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
+       			 SEARCH &nbsp<img id="image_search" src="resources/img/ico/seo-1970475_960_720.png" style="width: 24px;
        			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">
-     			 <input id="searchtx" type="text" onblur="this.style.width='0px';
-             	  this.style.paddingLeft='0px';" style="  border: none;
+     			 <input id="searchtx" type="text" onblur="search_bar(this)" style="  border: none;
               	 background-color: rgba(0,0,0,0);
               	 color: #666666;
                	 border-bottom: solid 2px #333;
@@ -374,9 +361,8 @@ $(document).ready(function(){
 			<input type="radio" name="iCheck" class = "input"value="2" >인기순				
 		</form>
 	</div>
-		<br>
 	
-	
+	<br>
 	
 	<!-- 앨범 리스트 -->
 	<div class="card-columns" id="card-columns">
@@ -455,11 +441,5 @@ $(document).ready(function(){
 		</div>
 
 	</aside>
-	
-	<div class="popuplayer">
-		<p onClick="friendpage()" style="font-size:8pt;color:#26afa1;">친구페이지</p>
-		<p onClick="chatpage()" style="font-size:8pt;color:#26afa1;">채팅</p>
-	</div>
-
 </body>
 </html>

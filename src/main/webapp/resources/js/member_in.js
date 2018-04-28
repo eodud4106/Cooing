@@ -34,7 +34,6 @@ function idcheck(){
 		alert('ID를 입력해 주세요.');
 		return false;
 	}
-	
 	$.ajax({
 		url:'id_check',
 		type:'POST',		
