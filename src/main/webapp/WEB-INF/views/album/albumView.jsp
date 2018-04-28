@@ -713,7 +713,7 @@ html, body, main, .container-fluid {
 			<!-- 로그인한 사람 프로필 사진만 -->
 				<img src="<c:url value="/img_member" />" class="img1">	
 				<input type="text" id="contents" class ="reply" style ="width: 130px;"placeholder="comment...">
-				<div style= "z-index:99; float:right; " onClick="writereply()"><i class="far fa-check-circle" ></i></div>
+				<i onClick="writereply()" style = "width: 20px; height: 20px; cursor:pointer; margin-left: 180px;" class="far fa-check-circle"></i> 
 				<!-- <button type="button" onclick="writereply()">저장</button> -->
 				<input type="hidden" name="reply_albumnum">
 			</form>
