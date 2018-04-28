@@ -28,6 +28,9 @@
 <!-- <script src="resources/js/chat.js"></script> -->
 <script src="<c:url value="/resources/js/friend.js"/>" ></script>
 <script src="<c:url value="/resources/js/search.js"/>" ></script>
+<!-- 친구, 그룹 리스트 출력 -->
+<link rel="stylesheet" href="resources/css/friend_list.css">
+
 <script>
 
 var pagenum = 0;
@@ -104,7 +107,7 @@ select::-ms-expand { /* for IE 11 */
 
 </style>
 </head>
-<body style ="font-family: 'Nanum Gothic Coding', monospace;">
+<body style ="font-family: Poppins-Bold;">
 
 	<aside class="probootstrap-aside js-probootstrap-aside">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
@@ -117,15 +120,19 @@ select::-ms-expand { /* for IE 11 */
 			<p id="friendid"><img src="<c:url value="/memberimg?strurl=${friend_id.getMember_picture()}"/>">${friend_id.getMember_id()}</p>
 		<p>
 			<c:if test="${check ne true }">
-				<input type="button" id="friendbt" value="친구추가" data="0">
+				<div style= "z-index:99; float:right; margin-top: -40px;"id="friendbt" data="0">
+					<i class="fas fa-user-plus"></i></div>
+				<!-- <input type="button" id="friendbt" value="친구추가" data="0"> -->
 			</c:if>
 			<c:if test="${check eq true }">
-				<input type="button" id="friendbt" value="친구삭제" data="1">
+				<!-- <input type="button" id="friendbt" value="친구삭제" data="1"> -->
+				<div style= "z-index:99; float:right; margin-top: -40px;"id="friendbt" data="1">
+					<i class="fas fa-user-times"></i></div>
 			</c:if>
 			<input type="hidden" value="${friend_id.getMember_id()}" id="friendid">
 		</p>
 
-		</div>
+	
 		<div class="probootstrap-overflow">
 			<nav class="probootstrap-nav">
 				<p>FRIEND_PAGE</p>
