@@ -44,6 +44,8 @@
 <link rel="stylesheet" href="resources/aside_css/style.css">
 
 <link rel="stylesheet" href="resources/skin_radio/green.css">
+<!-- 친구, 그룹 리스트 출력 -->
+<link rel="stylesheet" href="resources/css/friend_list.css">
 
 <!--앨범 생성하기 =======================================================================================-->
 	<link rel="icon" type="image/png" href="resources/album_create/images/icons/favicon.ico"/>
@@ -254,7 +256,8 @@ html, body, main, .container-fluid {
 	            type : 'POST', 
 	            data : $('#testimg').serialize(), 
 	            dataType : 'text', 
-	            success : function(a) { 
+	            success : function(a) {
+	            	 console.log('표지 저장 -> ' + a);
 	              if (a != 'fail') { 
 	                $.ajax({ 
 	                  url : 'thumbnailPathSave', 
@@ -316,7 +319,7 @@ html, body, main, .container-fluid {
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
+		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft" style = "    padding: 30px 30px 0px 30px;">
 			<a href="/www" class="mb-2 d-block probootstrap-logo" id="home_button" onclick="return really_back_home()">COOING</a>			
 		</div>
 		<div class="probootstrap-overflow">
@@ -411,7 +414,7 @@ html, body, main, .container-fluid {
     	</section>
 
    		<section id="content2">
-       		<form id ="" method="" action="">
+       		<!-- <form id ="" method="" action="">
 			<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search">
 			<button class = "bt">s</button>
 			</form>					
@@ -422,10 +425,47 @@ html, body, main, .container-fluid {
 				<p>친구4</p>
 		
 				<p>그룹1</p>
-				<p>그룹2</p>	
+				<p>그룹2</p>		 -->
 				<form id="testimg">
 					<input type="hidden" name="imgSrc" id="imgSrc" />
-				</form>	
+				</form>				
+			
+			<p class="mb-2 d-block probootstrap-logo" style = "text-align: center; font-size: 20px; padding: 0px 0px 0px 0px;font-family: Poppins-Bold;">MY FRIEND</p>			
+				 <form>
+					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
+					<div>
+       			  <img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
+       			 height: 24px;margin-left: 180px; margin-top: -50px;">
+				</form>
+			<div class = "friendList" style = "width: 200px;">
+				<div name="friend" id="friend">
+				</div>
+				<div name="user" id="user">
+				</div>
+			</div>
+		
+			<p class="mb-2 d-block probootstrap-logo" style = "text-align: center; font-size: 20px; padding: 20px 0px 0px 0px; font-family: Poppins-Bold;">MY GROUP</p>				
+		
+			<div class = "groupList" style= "margin-top: 20px; width: 200px;">
+				<c:if test="${Member ne null}">
+					<c:if test="${fn:length(group) ne 0}">
+						<c:forEach var="party" items="${group}">
+							<div name="group">
+								<p class="arr_party" partynum="${party.party_num}">${party.party_name}</p>
+							</div>
+						</c:forEach>
+					</c:if>
+				</c:if>				
+			<!-- </div> -->
+		</div>
+
+	</aside>
+	
+	<div class="popuplayer">
+		<p onClick="friendpage()" style="font-size:8pt;color:#26afa1;">친구페이지</p>
+		<p onClick="chatpage()" style="font-size:8pt;color:#26afa1;">채팅</p>
+	</div>
+				
     	</section>
     	</div>		
 			

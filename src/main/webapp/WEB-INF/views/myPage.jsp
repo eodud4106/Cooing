@@ -12,7 +12,10 @@
 
 <script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
 <!-- 폰트 -->
-<link href="https://fonts.googleapis.com/css?family=McLaren" rel="stylesheet">
+<!-- 폰트 -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
+<!-- <link href="https://fonts.googleapis.com/css?family=McLaren" rel="stylesheet"> -->
 <!-- 친구 그룹목록 출력-->
 <link rel="stylesheet" href="resources/css/friend_list.css">
 
@@ -135,7 +138,7 @@ function create_personal_album() {
 </script>
 
 </head >
-<body style ="font-family: 'McLaren', cursive;">
+<body style ="font-family: 'Nanum Gothic Coding', monospace;">
 
 	<aside class="probootstrap-aside js-probootstrap-aside">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">

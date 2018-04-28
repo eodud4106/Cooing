@@ -277,7 +277,6 @@ $(document).ready(function(){
 	height:70px;
 	padding:10px;
 	
-	
 }
 
 </style>

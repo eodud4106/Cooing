@@ -240,9 +240,10 @@ public class AlbumEditController {
             
         }catch(Exception e){
         	logger.info("파일이 정상적으로 넘어오지 않았습니다.");
+        	e.printStackTrace();
             return "fail";
         }finally{
-            stream.close();
+        	if(stream != null) stream.close();
         }
         return newFileName + ".png";		
 	}

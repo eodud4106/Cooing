@@ -45,7 +45,7 @@
 <!-- 아이콘 -->
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 <!-- 폰트 -->
-<link href="https://fonts.googleapis.com/css?family=Gaegu" rel="stylesheet"> 
+
 <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
 
 
@@ -666,7 +666,7 @@ html, body, main, .container-fluid {
 </script>
 
 </head>
-<body>
+<body style ="font-family: 'Nanum Gothic Coding', monospace;">
 
 	<!-- 사이드 바 -->
 	<aside class="probootstrap-aside js-probootstrap-aside">
@@ -727,7 +727,7 @@ html, body, main, .container-fluid {
 		</section>
 		
    		<section id="content2">
-       		<form id ="" method="" action="">
+       		<!-- <form id ="" method="" action="">
 			<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search">
 			<button class = "bt">s</button>
 			</form>					
@@ -742,8 +742,57 @@ html, body, main, .container-fluid {
 				<form id="testimg">
 					<input type="hidden" name="imgSrc" id="imgSrc" />
 				</form>	
-				
-							
+				 -->
+					
+			<aside class="probootstrap-aside2 js-probootstrap-aside2">
+		<a href="#"
+			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
+			<span class="oi oi-arrow-right"></span> Close
+		</a>
+		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
+			<p class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY FRIEND</p>			
+		</div>				
+				 <form>
+					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
+					<div>
+       			  <img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
+       			 height: 24px;margin-left: 215px; margin-top: -50px;">
+				</form>
+			<div class = "friendList">
+				<div name="friend" id="friend">
+				</div>
+				<div name="user" id="user">
+				</div>
+			</div>
+		
+		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
+			<p class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY GROUP</p>				
+						
+		<!-- <div class="probootstrap-overflow"> -->
+		
+		<!-- 그룹생성 -->
+		<div class="button_container">		
+		<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
+		</div>
+			<div class = "groupList">
+				<c:if test="${Member ne null}">
+					<c:if test="${fn:length(group) ne 0}">
+						<c:forEach var="party" items="${group}">
+							<div name="group">
+								<p class="arr_party" partynum="${party.party_num}">${party.party_name}</p>
+							</div>
+						</c:forEach>
+					</c:if>
+				</c:if>				
+			<!-- </div> -->
+		</div>
+
+	</aside>
+	
+	<div class="popuplayer">
+		<p onClick="friendpage()" style="font-size:8pt;color:#26afa1;">친구페이지</p>
+		<p onClick="chatpage()" style="font-size:8pt;color:#26afa1;">채팅</p>
+	</div>				
     	</section>
     	</div>			
 
