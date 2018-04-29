@@ -129,7 +129,8 @@ function bookmark_list() {
 					bookmark_info_div_html += '<p class="bookmark_p"> 앨범 이름 : ' + vo.album_name + '</p>';
 					bookmark_info_div_html += '<p class="bookmark_p"> 작성자 : ' + vo.album_writer + '</p>';
 					bookmark_info_div_html += '<p class="bookmark_p"> 앨범내용 : ' + vo.album_contents + '</p>';
-					bookmark_info_div_html += '<p class="bookmark_p"> 앨범카테고리 : ' + vo.album_category + '</p>';
+					var temp_category = category_change(vo.album_category);
+					bookmark_info_div_html += '<p class="bookmark_p"> 앨범카테고리 : ' + temp_category + '</p>';
 					bookmark_info_div_html += '<p class="bookmark_p"> 북마크된 페이지 : ' + vo.bookmark_page + '</p>';
 				
 				$(bookmark_page_div).addClass('bookmark_page_div').append(bookmark_img_thumbnail);
@@ -150,6 +151,31 @@ function bookmark_list() {
 }
 
 function category_change(category) {
+	
+	var change_category;
+	switch (category) {
+		case 1: change_category = '스포츠/래저'; break;
+		case 2: change_category = '동물'; break;
+		case 3: change_category = '음악'; break;
+		case 4: change_category = '요리/음식'; break;
+		case 5: change_category = '패션/뷰티'; break; 
+		case 6: change_category = '연예/TV'; break;
+		case 7: change_category = '게임'; break; 
+		case 8: change_category = '영화'; break; 
+		case 9: change_category = '도서'; break;
+		case 10: change_category = '공연/전시'; break;
+		case 11: change_category = '외국어'; break;
+		case 12: change_category = '전문지식'; break;
+		case 13: change_category = '수집/제작'; break;
+		case 14: change_category = '자기계발'; break;
+		case 15: change_category = '육아'; break;
+		case 16: change_category = '일상생활'; break;
+		case 17: change_category = '자동차'; break;
+		case 18: change_category = '낚시'; break;
+		case 19: change_category = '건강'; break;
+		default: change_category = '기타'; break;
+	}
+	return change_category;
 	
 }
 
