@@ -161,6 +161,8 @@ public class AlbumController {
 		
 		HashMap<String, String> map = new HashMap<>();
 		
+		//홈 페이지에서 검색어 없이 로딩하는 것 외의 경우는 아직 기능 테스트가 안 되었으니 사용하지 마세요....
+		
 		/*
 		 * type
 		 *  - total: 전체 검색

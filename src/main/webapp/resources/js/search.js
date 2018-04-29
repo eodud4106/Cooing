@@ -1,6 +1,7 @@
 /**
  * 
  */
+
 //검색창 줄였다 늘렸다 
 function inputbox_focus(){
 	if($('#searchtx').css('width') == '0px'){
@@ -292,7 +293,7 @@ function print_search_result(result, $destination, type) {
 
 
 //검색 타입, 검색 키워드, 정렬 순서, 페이지를 받아 albumlist 조회
-function get_album_list(type, keyword, order, page) {
+function get_album_list(type, keyword, order) {
 	var check  = false;
 
 	if(page == 0) check  = true;
@@ -304,29 +305,37 @@ function get_album_list(type, keyword, order, page) {
 			type: type,
 			keyword: keyword,
 			order: order,
-			page: page
+			page: page++
 		}, 
 		dataType: 'json',
 		success: function(result) {
 			
-			// 앨범 스크롤 페이징 처리...
+			if(JSON.stringify(result) == '[]') {
+				// 더 이상 불러올 앨범이 없는 경우
+				// 진수 씨 이 경우 더 이상 서버에 호출하지 않도록 해두면 됩니다....
+				$('a[href="/www"]').text("더 이상 못 불러와요.")
+			} else {
+				$('a[href="/www"]').text("COOING")
+			}
+			
+			// 가져온 앨범을 보여주기...
 			AlbumListPaging_hindoong(check , result);
 			
-			if(check){
-				$.ajax({
-					url:'searchTotalCount',
-					type:'POST',		
-					data:{
-						checknum: 3
-					}, 
-					dataType:'text',
-					success: function(list){
-						//total count 변경 부분
-						$('#totalpage').val(list);
-					},
-					error:function(e){alert(JSON.stringify(e));}	
-				});
-			}			
+//			if(check){
+//				$.ajax({
+//					url:'searchTotalCount',
+//					type:'POST',		
+//					data:{
+//						checknum: 3
+//					}, 
+//					dataType:'text',
+//					success: function(list){
+//						//total count 변경 부분
+//						$('#totalpage').val(list);
+//					},
+//					error:function(e){alert(JSON.stringify(e));}
+//				});
+//			}			
 		},
 		error: function(e) {
 			alert(JSON.stringify(e));	
@@ -361,15 +370,15 @@ function AlbumListPaging_hindoong(check, result) {
 		}).appendTo($div_card);
 		
 		var $p_name = $('<p />', {
-			"text": /*"ALBUM " +*/ album.album_name,
+			"text": album.album_name,
 			"class": "card_album_name"
 		}).appendTo($info_div);
 		var $p_writer = $('<p />', {
-			"text": /*"ID: " + */album.album_writer,
+			"text": album.album_writer,
 			"class": "card_album_writer"
 		}).appendTo($info_div);
 		var $p_contents = $('<p />', {
-			"html": /*"<CONTENT><br>" +*/ album.album_contents + "<br>",
+			"html": album.album_contents + "<br>",
 			"class": "card_album_contents"
 		}).appendTo($info_div);
 		if(album.album_contents == null) {

@@ -484,6 +484,7 @@
   			)
 		</if>
 	</select>
+	
 	<select id="get_album_list" resultType="album" parameterType="hashmap">
 	SELECT *
 	FROM
@@ -531,31 +532,34 @@
 	    a.album_num = lr.album_num
 	)
     WHERE
-	1 = 1
-	<if test="type == 'total'"></if>
-	<if test="type == 'writer'">
-	AND a.album_writer = #{keyword}
-		<if test="writer_type == 'total'">
-		AND 1 = 1 
+		1 = 1
+		<if test="type == 'total'">
+		AND album_openrange = 4
 		</if>
-		<if test="writer_type == 'personal'">
-		AND isPersonal = 1
+		<!-- 홈 페이지에서 검색어 없이 로딩하는 것 외의 경우는 아직 기능 테스트가 안 되었으니 사용하지 마세요.... -->
+		<if test="type == 'writer'">
+		AND a.album_writer = #{keyword}
+			<if test="writer_type == 'total'">
+			AND 1 = 1
+			</if>
+			<if test="writer_type == 'personal'">
+			AND isPersonal = 1
+			</if>
+			<if test="writer_type == 'party'">
+			AND isPersonal = 0
+			</if>
 		</if>
-		<if test="writer_type == 'party'">
-		AND isPersonal = 0
+		<if test="type == 'like'">
+		AND a.album_writer = #{keyword}
+		AND like_count > 0
 		</if>
-	</if>
-	<if test="type == 'like'">
-	AND a.album_writer = #{keyword}
-	AND like_count > 0
-	</if>
-	<if test="order == 'date'">
 	ORDER BY
-	album_num desc
-	</if>
-	<if test="order == 'like'">
-	ORDER BY
-	like_count desc
-	</if>
+		<if test="order == 'date'">
+		album_num desc
+		</if>
+		<if test="order == 'like'">
+		like_count desc
+		</if>
 	</select>
+
 </mapper>
