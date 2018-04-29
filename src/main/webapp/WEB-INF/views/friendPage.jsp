@@ -35,6 +35,7 @@
 <script src="<c:url value="/resources/js/friend.js"/>"></script>
 <script src="<c:url value="/resources/js/search.js"/>"></script>
 <script src="resources/js/popup.js"></script>
+<script src="resources/js/chat.js"></script>
 <!-- 친구, 그룹 리스트 출력 -->
 <link rel="stylesheet" href="resources/css/friend_list.css">
 
