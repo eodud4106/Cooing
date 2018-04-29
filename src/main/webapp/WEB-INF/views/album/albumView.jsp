@@ -261,9 +261,9 @@ html, body, main, .container-fluid {
 	//라디오버튼
 	$(document).ready(function() {
 		
-		ready_album('view');
-
 		replyList();
+		
+		ready_album('view');
 
 		hashtagCheck();
 		
