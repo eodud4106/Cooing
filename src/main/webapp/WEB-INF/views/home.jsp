@@ -99,7 +99,7 @@ $(document).ready(function () {
 		get_album_list('total', '', 'date', 0);
 	}
 	
-	//경고!! 아래 코드를 절대 별도의 js파일에 넣지 마시오!!
+	//경고!! 아래 코드를 절대 별도의 js파일로  마시오!!
 	if ('${sessionScope.Member}' != null) {
 		readyChat('${sessionScope.Member.member_id}', '');
 	}
