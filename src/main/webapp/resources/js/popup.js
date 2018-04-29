@@ -76,8 +76,7 @@ function createFriendPopup(e, elem, type) {
 		"width": "100px",
 		"height": "60px",
 		"background-color": "#A9E2F3",
-		"z-index": "1000",
-		"color": "black"
+		"z-index": "1000"
 	}).appendTo($('body'));
 
 	var $div_go_friend_page = $('<div />', {
@@ -86,7 +85,9 @@ function createFriendPopup(e, elem, type) {
 		"width": "100%",
 		"height": "50%",
 		"display": "block",
-		"float": "left"
+		"float": "left",
+		"color": "black",
+		"cursor": "pointer"
 	}).appendTo($div_friend_popup);
 	
 	if(type == 'friend') {
@@ -112,7 +113,9 @@ function createFriendPopup(e, elem, type) {
 		"width": "100%",
 		"height": "50%",
 		"display": "block",
-		"float": "left"
+		"float": "left",
+		"color": "black",
+		"cursor": "pointer"
 	}).click(function(e) {
 		openChat(1, $(this).attr('friend_id'), '');
 	}).appendTo($div_friend_popup);
