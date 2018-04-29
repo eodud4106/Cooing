@@ -286,7 +286,7 @@
 	</select>
 	
 	<delete id="deleteAlbum" parameterType="int">
-		delete	from albumlist where album_num=#{album_num}
+		delete from albumlist where album_num=#{album_num}
 	</delete>
 	
 	<!-- 앨범 넘버로 앨범 내 페이지 검색 -->

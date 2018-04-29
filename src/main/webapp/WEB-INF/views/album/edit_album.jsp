@@ -334,7 +334,7 @@ html, body, main, .container-fluid {
 	}
 	
 	function removeAlbum() {
-		var isDelete = confirm("삭제 하시겠습니까?");
+		var isDelete = confirm("앨범을 삭제 하시겠습니까?");
 		if(isDelete == false){
 			return false;
 		}
