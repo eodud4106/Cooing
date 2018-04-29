@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -324,6 +323,7 @@ html, body, main, .container-fluid {
 			},
 			dataType : 'text',
 			success : function(e) {
+				alert('앨범정보가 저장되었습니다.');
 			},
 			error : function(e) {
 				console.log('에러 발생.' + e);
@@ -410,15 +410,24 @@ html, body, main, .container-fluid {
 
 					<div class="wrap-input100 input100-select">
 						<span class="label-input100">공개범위</span>
+						
+
 						<div>
-							<select class="selection-2" name="album_openrange"
-								id="album_openrange">
-								<option value="1">나만 보기</option>
-								<option value="2">친구 공개</option>
-								<option value="3">그룹 공개</option>
-								<option value="4">전체 공개</option>
+							<select class="selection-2" name="album_openrange" id="album_openrange">	
+								<c:if test="${album.isPersonal eq '1'}">
+									<option value="1">나만 보기</option>
+									<option value="2">친구 공개</option>
+									<option value="4">전체 공개</option>
+								</c:if>
+								
+								<c:if test="${album.isPersonal eq '0'}">
+									<option value="3">그룹 공개</option>
+									<option value="4">전체 공개</option>
+								</c:if>
 							</select>
 						</div>
+						
+						
 						<span class="focus-input100"></span>
 					</div>
 
