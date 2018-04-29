@@ -54,6 +54,18 @@ public class AlbumController {
 		return arr_album;
 	}
 	
+	//파티 앨범 리스트 카운트
+	@ResponseBody
+	@RequestMapping(value = "/getPartyAlbumCount", method= RequestMethod.POST)
+	public int getPartyAlbumCount(String party_name, HttpSession session) {
+		logger.info(party_name + "_page_count ljs");
+		AlbumVO album = new AlbumVO();
+		album.setAlbum_writer(party_name);
+		album.setIsPersonal("0");
+		// 파티는 파티 이름이 유니크. 그래서 파티 이름으로 총 파티 앨범 개수를 구한다.
+		return albumDAO.select_album_count(album);
+	}
+	
 	// 책 목록 조회
 	@ResponseBody
 	@RequestMapping(value = "/getMyAlbumList", method= RequestMethod.POST)
@@ -140,7 +152,6 @@ public class AlbumController {
 	@RequestMapping(value = "/get_album_list", method= RequestMethod.POST)
 	public ArrayList<AlbumVO> get_album_list(String type, String keyword, String order, String openrange, 
 			String writer_type, int page, HttpSession session) {
-		System.out.println("type: " + type + " / keyword: " + keyword + " / order: " + order + " / page: " + page);
 		
 		String userId = ((Member)session.getAttribute("Member")).getMember_id();
 		

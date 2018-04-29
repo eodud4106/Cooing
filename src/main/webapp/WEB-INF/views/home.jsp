@@ -98,6 +98,11 @@ $(document).ready(function () {
 		// 전체 앨범, 검색 키워드 없음, 최신 순, 0페이지(= 1페이지)
 		get_album_list('total', '', 'date', 0);
 	}
+	
+	//경고!! 아래 코드를 절대 별도의 js파일에 넣지 마시오!!
+	if ('${sessionScope.Member}' != null) {
+		readyChat('${sessionScope.Member.member_id}', '');
+	}
 });
 </script>
 

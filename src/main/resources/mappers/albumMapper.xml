@@ -319,7 +319,7 @@
 			isPersonal = #{isPersonal}
 	</select>
 	
-	<select id="select_album_count" resultType="album" parameterType="int">
+	<select id="select_album_count" resultType="int" parameterType="album">
 		SELECT count(*)
 		FROM albumlist
 		WHERE

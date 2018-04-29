@@ -40,10 +40,7 @@ function initialize(){
 	$('#myBtn_close').click(function() {
 		$('#myModal').css('display', 'none');
 	});
-	
-	if ('${sessionScope.Member}' != null) {
-		readyChat('${sessionScope.Member.member_id}', '');
-	}	
+		
 	searchword();
 
 }
