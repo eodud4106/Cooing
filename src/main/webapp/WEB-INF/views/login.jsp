@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>COOING</title>
-
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
 <!-- favicon icon --> 
 <link rel="shortcut icon" 
   href="resources/assets/images/cooing_logo.png"> 
@@ -87,7 +87,7 @@
 						<div class="content">
 							<div class="main-content">
 								
-								 <h1 class="text-uppercase" style = "font-family: 'Titan One', cursive; padding : 50px;">COOING</h1> 
+								 <h1 class="text-uppercase" style = "font-family: 'Nanum Gothic Coding', monospace; margin-top: 100px;">COOING</h1> 
 
 								<div class="subscribe-area text-center">
 									<!-- <h3>please login</h3> -->

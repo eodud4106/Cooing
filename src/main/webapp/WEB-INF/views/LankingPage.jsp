@@ -9,7 +9,7 @@
 <title>LankingPage</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans">
 <link rel="stylesheet" href="resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
@@ -84,7 +84,7 @@ select::-ms-expand { /* for IE 11 */
 
 </style>
 </head>
-<body>
+<body style ="font-family: 'Nanum Gothic Coding', monospace;">
 
 	<aside class="probootstrap-aside js-probootstrap-aside">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
@@ -92,7 +92,7 @@ select::-ms-expand { /* for IE 11 */
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
-			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
+			<a href="/www" class="mb-2 d-block probootstrap-logo" style= "font-size: 30px;">COOING</a>
 
 			<!-- 로그인되어있을 때 -->
 			<c:if test="${Member ne null}">

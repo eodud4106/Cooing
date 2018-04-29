@@ -12,7 +12,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Work+Sans">
-
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
 <link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="resources/aside_css/open-iconic-bootstrap.min.css">
@@ -104,7 +104,7 @@ select::-ms-expand { /* for IE 11 */
 }
 </style>
 </head>
-<body style="font-family: Poppins-Bold;">
+<body style ="font-family: 'Nanum Gothic Coding', monospace;">
 
 	<aside class="probootstrap-aside js-probootstrap-aside">
 		<a href="#"

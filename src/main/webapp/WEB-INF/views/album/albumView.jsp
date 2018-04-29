@@ -33,6 +33,8 @@
 <script type="text/javascript" src="resources/js/albumEdit.js"></script>
 <script type="text/javascript" src="resources/js_js/html2canvas.min.js"></script>
 <!-- 기본 css -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
+
 <link rel="stylesheet" href="resources/css/albumEdit.css">
 <link rel="stylesheet" href="resources/css/jquery-ui.min.css">
 
@@ -626,7 +628,7 @@ html, body, main, .container-fluid {
 </script>
 
 </head>
-<body>
+<body style ="font-family: 'Nanum Gothic Coding', monospace;">
 
 	<!-- 사이드 바 -->
 	<aside class="probootstrap-aside js-probootstrap-aside">
@@ -636,8 +638,7 @@ html, body, main, .container-fluid {
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate"
 			data-animate-effect="fadeInLeft" style="padding-bottom: 0;">
-			<a href="/www" class="mb-2 d-block probootstrap-logo"
-				style="font-family: Poppins-Bold;">COOING</a>
+			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
 		</div>
 		<div class="probootstrap-overflow">
 			<div class="main">

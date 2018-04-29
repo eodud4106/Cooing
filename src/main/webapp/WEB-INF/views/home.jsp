@@ -47,6 +47,7 @@
 <!-- 폰트 -->
 <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
 
 <!-- 채팅목록 -->
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -326,7 +327,7 @@ html, body, main, .container-fluid {
 
 
 </head>
-<body>
+<body style ="font-family: 'Nanum Gothic Coding', monospace;">
 
 	<aside class="probootstrap-aside js-probootstrap-aside">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
@@ -353,17 +354,17 @@ html, body, main, .container-fluid {
 		<div class="probootstrap-overflow">
 			<nav class="probootstrap-nav">
 				<p>MYPAGE</p>
-				<p>오늘의 랭킹</p>
+				<p>Today's Ranking</p>
 				<p></p>
 				<p>CATEGORY</p>
 				<ul>
 
-					<li class="category" data="0">여행</li>
+					<li class="category" data="0">Journey</li>
 					
 					<li><a href="<c:url value ="/"/>">MainPage</a></li>
-					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>	
-					<li><a href="<c:url value ="/LankingPage"/>">LankingPage</a></li>				 		
-					<li><a href="<c:url value ="/logout_get"/>">로그아웃</a></li>
+					<li><a href="<c:url value ="/myPage"/>">MyPage</a></li>	
+					<li><a href="<c:url value ="/LankingPage"/>">Ranking</a></li>				 		
+					<li><a href="<c:url value ="/logout_get"/>">LogOut</a></li>
 
 				</ul>
 			</nav>
