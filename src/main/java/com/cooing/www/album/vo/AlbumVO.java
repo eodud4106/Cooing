@@ -9,6 +9,8 @@ public class AlbumVO {
 	private int album_category;
 	private String album_thumbnail;
 	private String isPersonal;
+	private int like_count;
+	private int reply_count;
 	
 	public AlbumVO() {
 		super();
@@ -54,6 +56,21 @@ public class AlbumVO {
 		this.album_category = album_category;
 		this.album_thumbnail = album_thumbnail;
 		this.isPersonal = isPersonal;
+	}
+
+	public AlbumVO(int album_num, String album_writer, String album_name, int album_openrange, String album_contents,
+			int album_category, String album_thumbnail, String isPersonal, int like_count, int reply_count) {
+		super();
+		this.album_num = album_num;
+		this.album_writer = album_writer;
+		this.album_name = album_name;
+		this.album_openrange = album_openrange;
+		this.album_contents = album_contents;
+		this.album_category = album_category;
+		this.album_thumbnail = album_thumbnail;
+		this.isPersonal = isPersonal;
+		this.like_count = like_count;
+		this.reply_count = reply_count;
 	}
 
 	public int getAlbum_num() {
@@ -120,12 +137,30 @@ public class AlbumVO {
 		this.isPersonal = isPersonal;
 	}
 
+	public int getLike_count() {
+		return like_count;
+	}
+
+	public void setLike_count(int like_count) {
+		this.like_count = like_count;
+	}
+
+	public int getReply_count() {
+		return reply_count;
+	}
+
+	public void setReply_count(int reply_count) {
+		this.reply_count = reply_count;
+	}
+
 	@Override
 	public String toString() {
-		return "AlbumWriteVO [album_num=" + album_num + ", album_writer=" + album_writer + ", album_name=" + album_name
+		return "AlbumVO [album_num=" + album_num + ", album_writer=" + album_writer + ", album_name=" + album_name
 				+ ", album_openrange=" + album_openrange + ", album_contents=" + album_contents + ", album_category="
-				+ album_category + ", album_thumbnail=" + album_thumbnail + ", isPersonal=" + isPersonal + "]";
+				+ album_category + ", album_thumbnail=" + album_thumbnail + ", isPersonal=" + isPersonal
+				+ ", like_count=" + like_count + ", reply_count=" + reply_count + "]";
 	}
+
 	
 	
 }

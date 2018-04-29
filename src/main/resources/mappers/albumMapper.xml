@@ -343,4 +343,78 @@
 			isPersonal = #{isPersonal}
 	</select>
 	
+	<select id="get_album_list" resultType="album" parameterType="hashmap">
+	SELECT *
+	FROM
+	(SELECT
+	    a.album_num,
+	    a.album_writer,
+	    a.album_name,
+	    a.album_contents,
+	    a.album_openrange,
+	    a.album_category,
+	    a.album_thumbnail,
+	    a.isPersonal,
+	    nvl(lr.like_count, 0) as like_count,
+	    nvl(lr.reply_count, 0) as reply_count
+	FROM
+	    albumlist a
+	LEFT OUTER JOIN
+	    (   
+	    SELECT
+	        l.album_num as album_num,
+	        l.like_count,
+	        r.reply_count
+	    FROM
+	        (SELECT
+	            likeit_albumnum as album_num,
+	            count(*) as like_count
+	        FROM
+	            likeit
+	        GROUP BY
+	           likeit_albumnum
+	        )l
+	    JOIN
+	        (SELECT
+	            reply_albumnum as album_num,
+	            count(*) as reply_count
+	        FROM
+	            reply
+	        GROUP BY
+	            reply_albumnum
+	        )r
+	    ON
+	        l.album_num = r.album_num
+	    ) lr
+	ON
+	    a.album_num = lr.album_num
+	)
+    WHERE
+	1 = 1
+	<if test="type == 'total'"></if>
+	<if test="type == 'writer'">
+	AND a.album_writer = #{keyword}
+		<if test="writer_type == 'total'">
+		AND 1 = 1 
+		</if>
+		<if test="writer_type == 'personal'">
+		AND isPersonal = 1
+		</if>
+		<if test="writer_type == 'party'">
+		AND isPersonal = 0
+		</if>
+	</if>
+	<if test="type == 'like'">
+	AND a.album_writer = #{keyword}
+	AND like_count > 0
+	</if>
+	<if test="order == 'date'">
+	ORDER BY
+	album_num desc
+	</if>
+	<if test="order == 'like'">
+	ORDER BY
+	like_count desc
+	</if>
+	</select>
 </mapper>

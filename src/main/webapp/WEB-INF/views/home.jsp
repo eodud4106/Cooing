@@ -80,16 +80,18 @@ $(document).ready(function () {
 	initialize();	
 	
 	//1번이면 카테고리 눌러서 넘어온 경우 , 엘스는 그냥 홈에 온 경우 혹은 검색으로 온 경우 
-	if(${search_other == 1}){
+	if('${search_other}' == 1){
 		searchcheck = 1;
 		pagenum = 0;
 		pagingcheck = false;
-		searchCategory(${categorynum});
+		searchCategory('${categorynum}');
 	}else{
 		searchcheck = 0;
 		pagenum = 0;
 		pagingcheck = false;
-		getTotalAlbumList("3");		
+		//getTotalAlbumList("3");
+		// 전체 앨범, 검색 키워드 없음, 최신 순, 0페이지(= 1페이지)
+		get_album_list('total', '', 'date', 0);
 	}
 });
 </script>
@@ -401,7 +403,7 @@ html, body, main, .container-fluid {
 	<!-- 앨범 리스트 -->
 	<div class="card-columns" id="card-columns">
 			
-		<div class="card">
+<!-- 		<div class="card">
 			<a href="single.html" id="test1">
 				<img class="card-img-top probootstrap-animate" 
 				src="resources/aside_images/img_1.jpg" alt="Card image cap">
@@ -412,7 +414,7 @@ html, body, main, .container-fluid {
 				<img class="card-img-top probootstrap-animate" 
 				src="resources/image_mj/a1.jpg" alt="Card image cap">
 			</a>
-		</div>
+		</div> -->
 	</div>
 	
 	<div class="container-fluid d-md-none">

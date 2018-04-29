@@ -28,8 +28,6 @@ function AlbumListPaging(check, result) {
 		$('.card-columns').html('');
 	$(result).each(function(i, album) {
 		
-		console.log(JSON.stringify(album))
-		
 		var $div_card = $('<div />', {
 			"class":'card img-loaded div_card',
 			"album_num": album.album_num

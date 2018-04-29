@@ -1,6 +1,7 @@
 package com.cooing.www.album.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -91,4 +92,57 @@ public class AlbumController {
 		Member member = (Member)session.getAttribute("Member");
 		return albumDAO.friend_album_count(search,albumwriter, member.getMember_id() , "5") / 10;
 	}
+	
+	//앨범 리스트 리턴
+	@ResponseBody
+	@RequestMapping(value = "/get_album_list", method= RequestMethod.POST)
+	public ArrayList<AlbumVO> get_album_list(String type, String keyword, String order, String openrange, 
+			String writer_type, int page, HttpSession session) {
+		System.out.println("type: " + type + " / keyword: " + keyword + " / order: " + order + " / page: " + page);
+		
+		String userId = ((Member)session.getAttribute("Member")).getMember_id();
+		
+		int album_per_page = 10;
+		
+		RowBounds rb = new RowBounds(page *10, album_per_page);
+		
+		HashMap<String, String> map = new HashMap<>();
+		
+		/*
+		 * type
+		 *  - total: 전체 검색
+		 *  - writer: 저자로 검색
+		 *  - like: 내가 좋아요 한 사람만 검색 -> id keyword에 자신의 아이디 넣어야 함
+		 * 
+		 * keyword: writer 검색 시 검색할 writer, like일 경우 자신의 id
+		 * 
+		 * writer_type(tyep == writer 일 때만, keyword에는 그룹명이 들어가야겠지...)
+		 *  - total: 가리지 않고 저자 검색
+		 * 	- personal: 개인 앨범만
+		 * 	- party: 파티 앨범만
+		 * 
+		 * order
+		 *  - like: 좋아요 순
+		 *  - date: 최신 순
+		 * 
+		 * openrange
+		 * 	- private: 나만(type: writer, keyword: 내 아이디, writer_type: personal)
+		 *  - friend: 친구만(type: writer, keyword: 친구 아이디, writer_type: personal)
+		 * 	- party: 파티만(type: writer, keyword: 파티명, writer_type: party)
+		 * 	- total: 전체(type: total, keyword: "", writer_type: total)
+		 * 
+		 * userId
+		 * 	- openrange에서 시 현재 접속한 유저가 열람 권한이 있는지 판별하기 위해 넣어 보냄
+		 */
+		map.put("type", type);
+		map.put("keyword", keyword);
+		map.put("writer_type", writer_type);
+		map.put("order", order);
+		map.put("opendrange", openrange);
+		map.put("userId", userId);
+		
+		return albumDAO.get_album_list(map, rb);
+	}
+	
+	
 }

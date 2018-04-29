@@ -44,7 +44,7 @@ public class SearchController {
 	@ResponseBody
 	@RequestMapping(value = "/searchTotalAlbumList", method= RequestMethod.POST)
 	public ArrayList<AlbumVO> getMyAlbumList(int pagenum , String searchword  , String checknum, HttpSession session) {
-		System.out.println(pagenum + "_page " + searchword + "_search " + checknum + "check_list ljs");
+		System.out.println(pagenum + "_page / " + searchword + "_search / " + checknum + "_check_list ljs");
 		Member member = (Member)session.getAttribute("Member");
 		int totalnum = albumDAO.total_album_count(searchword , member.getMember_id() , checknum);
 		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);

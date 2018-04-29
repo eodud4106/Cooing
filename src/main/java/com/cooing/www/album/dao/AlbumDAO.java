@@ -90,7 +90,7 @@ public class AlbumDAO{
 	
 	//2번 좋아요리스트 3번 토탈 앨범 4번 내 앨범 5번 ID로 앨범찾기
 	public ArrayList<AlbumVO> total_album_list(String search , String writer , String check , int startpl , int endpl ){
-		System.out.println("total_album_list : " + search+"_search , " + writer + "_writer" + check + "_check");
+		System.out.println("total_album_list : " + search+"_search / " + writer + "_writer / " + check + "_check");
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		RowBounds rb = new RowBounds(startpl , endpl);
 		Map<String,String> map = new HashMap<String,String>();
@@ -175,5 +175,16 @@ public class AlbumDAO{
 	
 	public int select_album_count(AlbumVO album) {
 		return sqlSession.getMapper(AlbumMapper.class).select_album_count(album);
+	}
+	
+	public ArrayList<AlbumVO> get_album_list(HashMap<String, String> map, RowBounds rb) {
+		ArrayList<AlbumVO> result = null;
+		try {
+			result = sqlSession.getMapper(AlbumMapper.class).get_album_list(rb, map);
+			System.out.println("result -> " + result.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

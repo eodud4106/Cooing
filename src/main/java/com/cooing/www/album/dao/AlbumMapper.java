@@ -1,6 +1,7 @@
 package com.cooing.www.album.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import org.apache.ibatis.session.RowBounds;
 import com.cooing.www.album.vo.AlbumVO;
@@ -37,4 +38,7 @@ public interface AlbumMapper {
 	public ArrayList<AlbumVO> select_album(RowBounds rb, AlbumVO album);
 	// 검색 조건으로 앨범 리스트의 개수를 검색
 	public int select_album_count(AlbumVO album);
+	
+	// 검색 조건 포함 앨범 리스트 조회
+	public ArrayList<AlbumVO> get_album_list(RowBounds rb, HashMap<String, String> map);
 }
