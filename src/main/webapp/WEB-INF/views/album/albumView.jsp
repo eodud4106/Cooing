@@ -257,13 +257,17 @@ html, body, main, .container-fluid {
 	}
 	
 	var selectcheck = true;
-
+	var page_num = '${page_num}';
 	//라디오버튼
 	$(document).ready(function() {
 		
+		ready_album('view');
+		
 		replyList();
 		
-		ready_album('view');
+		if(page_num != ''){
+			$('#album').turn('page', page_num);
+		}
 
 		hashtagCheck();
 		

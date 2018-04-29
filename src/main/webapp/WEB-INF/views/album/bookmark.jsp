@@ -117,7 +117,7 @@ function bookmark_list() {
 				var bookmark_info_div = document.createElement('div');
 				
 				var a_bookmark = document.createElement('a');
-				$(a_bookmark).attr('href', 'albumView?album_num='+ vo.bookmark_albumnum + '');
+				$(a_bookmark).attr('href', 'albumView?album_num='+ vo.bookmark_albumnum + '&page_num=' + vo.bookmark_page + '');
 				
 				var bookmark_img_thumbnail = document.createElement('img');
 				$(bookmark_img_thumbnail).attr('src', ''+ vo.album_thumbnail +'');
@@ -130,6 +130,7 @@ function bookmark_list() {
 					bookmark_info_div_html += '<p> 작성자 : ' + vo.album_writer + '</p>';
 					bookmark_info_div_html += '<p> 앨범내용 : ' + vo.album_contents + '</p>';
 					bookmark_info_div_html += '<p> 앨범카테고리 : ' + vo.album_category + '</p>';
+					bookmark_info_div_html += '<p> 북마크된 페이지 : ' + vo.bookmark_page + '</p>';
 					bookmark_info_div_html += '<input type="hidden" id="bookmark_num" name="bookmark_num" value="' + vo.bookmark_num + '">';
 				
 				$(bookmark_info_div).addClass('bookmark_info_div').append(bookmark_info_div_html);
