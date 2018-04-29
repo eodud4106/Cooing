@@ -63,9 +63,12 @@ function memberdelete(){
 					success: function(list){
 						var strmember='';
 						$.each(list,function(i,data){
-							strmember += '<p><img class = "img-responsive img-circle" style =" border-radius: 80%; display: inline-block;; width: 100% \9;max-width: 25%; height: auto;" src = "./memberimg?strurl='+(data.member_picture==null?'':data.member_picture)	+'">'+ data.member_id;
+							strmember += '<p><img class = "img-responsive img-circle" style =" border-radius: 80%; display:'
+								+ ' inline-block;; width: 100% \9;max-width: 25%; height: auto;" src = "./memberimg?strurl='
+								+ data.member_picture==null? '':data.member_picture + '">'+ data.member_id;
 							if(data.member_id  != $('#sessionid').attr('data') )
-								strmember +='<div style= "z-index:99; float:right;margin-top: -29px; " class = "img_3" data="'+data.member_id+'" data2="'+party_num+'"> <i class="fas fa-user-times" ></i></div>';	
+								strmember +='<div style= "z-index:99; float:right;margin-top: -29px; " class = "img_3"'
+									+ ' data="'+data.member_id+'" data2="'+party_num+'"> <i class="fas fa-user-times" ></i></div>';	
 						});
 						$('#memberdiv').html(strmember);
 						$('#findid').val('');
@@ -102,9 +105,13 @@ function memberplus(){
 					success: function(list){
 						var strmember='';
 						$.each(list,function(i,data){
-							strmember += '<p><img class = "img-responsive img-circle" style =" border-radius: 80%; display: inline-block;; width: 100% \9;max-width: 25%; height: auto;" src = "./memberimg?strurl='+(data.member_picture==null?'':data.member_picture)	+'">'+ data.member_id;
+							strmember += '<p><img class = "img-responsive img-circle" style ="'
+								+'border-radius: 80%; display: inline-block;; width: 100% \9;max-width: 25%; height: auto;"'
+								+ 'src = "./memberimg?strurl='+ data.member_picture==null?'':data.member_picture +'">'+ data.member_id;
 							if(data.member_id  != $('#sessionid').attr('data') )
-								strmember +='<div style= "z-index:99; float:right;margin-top: -29px; " class = "img_3" data="'+data.member_id+'" data2="'+party_num+'"> <i class="fas fa-user-times" ></i></div>';	
+								strmember +='<div style= "z-index:99; float:right;margin-top: -29px;' 
+									+ '"class = "img_3" data="'+data.member_id+'" data2="'+party_num+'">'
+									+ '<i class="fas fa-user-times" ></i></div>';	
 						});
 						$('#memberdiv').html(strmember);
 						$('#findid').val('');
@@ -174,18 +181,3 @@ function getPartyAlbumList() {
 		}
 	});
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
