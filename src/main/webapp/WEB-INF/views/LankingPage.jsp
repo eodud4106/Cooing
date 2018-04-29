@@ -110,19 +110,19 @@ select::-ms-expand { /* for IE 11 */
 		</div>
 		<div class="probootstrap-overflow">
 			<nav class="probootstrap-nav">
-				<p>LANKINGPAGE</p>
+				<p>RANKINGPAGE</p>
 				<p>오늘의 랭킹</p>
 				<p></p>
 				<p>CATEGORY</p>
 				<ul>
 
-					<li class="category" data="0">여행</li>
-					<li class="category" data="1">음식</li>
+					<li class="category" data="0">Journey</li>
+					<li class="category" data="1">Food</li>
 					<li><a href="<c:url value ="/"/>">MainPage</a></li>
 					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
-					<li><a href="<c:url value ="/member_get"/>">회원가입...</a></li>
-					<li><a href="<c:url value ="/login_get"/>">로그인...</a></li>
-					<li><a href="<c:url value ="/logout_get"/>">로그아웃</a></li>
+					<li><a href="<c:url value ="/member_get"/>">SignIn</a></li>
+					<li><a href="<c:url value ="/login_get"/>">LogIn</a></li>
+					<li><a href="<c:url value ="/logout_get"/>">LogOut</a></li>
 					
 				</ul>				
 				
