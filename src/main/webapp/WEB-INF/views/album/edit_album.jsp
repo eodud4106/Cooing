@@ -332,6 +332,16 @@ html, body, main, .container-fluid {
 		});
 
 	}
+	
+	function removeAlbum() {
+		var isDelete = confirm("삭제 하시겠습니까?");
+		if(isDelete == false){
+			return false;
+		}
+		alert(${album.album_num});
+		location.href="deleteAlbum?album_num=" + ${album.album_num} + "";
+	}
+
 </script>
 
 </head>
@@ -563,6 +573,10 @@ html, body, main, .container-fluid {
 				onclick="location.href='albumView?album_num=${album.album_num}'" role="편집 종료">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-sign-out-alt"></i>
+			</div>
+			<div id="i_remove" class="under_tool" onclick="return removeAlbum()" role="앨범 삭제">
+				<i style="width: 30px; height: 30px; margin: 10px;"
+					class="far fa-trash-alt"></i>
 			</div>
 		</div>
 

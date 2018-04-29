@@ -193,14 +193,10 @@ public class AlbumEditController {
 		return "saved";
 	}	
 	
-	@ResponseBody
-	@RequestMapping(value = "/deleteAlbum", method = RequestMethod.POST)
-	public String deleteAlbum(int albumnum){
-		////logger.info("deleteAlbum_LJS");
-		if(albumDAO.deleteAlbum(albumnum) > 0)
-			return "success";
-		
-		return "fail";
+	@RequestMapping(value = "/deleteAlbum", method = RequestMethod.GET)
+	public String deleteAlbum(int album_num){
+		albumDAO.deleteAlbum(album_num);
+		return "redirect:/";
 	}
 	
 	@ResponseBody
