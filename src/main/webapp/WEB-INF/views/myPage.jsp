@@ -208,12 +208,7 @@ $(document).ready(function () {
 				src="resources/image_mj/a4.jpg" alt="Card image cap"/>
 				</div></li>
 			</ul></div>					
-	</div>
-	
-	
-	
-	
-	
+	</div>	
 
 	<div class="container-fluid d-md-none">
 		<div class="row">

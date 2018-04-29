@@ -18,8 +18,9 @@ function initialize(){
 		}
 	});
 	$('.category').on('click' , function(){
-		searchcheck = 99;
-		searchCategory($(this).attr('data'));
+		searchcheck = 1;
+		$('#categorynum').val($(this).attr('data'));
+		checkRadioPaging();
 	});
 	
 	$('.input').on('ifChanged' , function(){
@@ -67,16 +68,29 @@ function checkRadioPaging(){
 	         }
 	      }
 	   }
-	   searchcheck = 99;
+	  alert(searchcheck);
 	   if(isChecked){
 		   temp = radioObj[i].value; 	   
 		   //value값
 		   switch (temp) {
 		      case '1':
-		    	  getTotalAlbumList("3"); 
+		    	  if(searchcheck == 0){
+			    	  searchcheck = 99;
+			    	  getTotalAlbumList("3");
+		    	  }else if(searchcheck == 1){
+		    		  searchcheck = 99;
+		    		  searchCategory("3" , $('#categorynum').val());
+		    	  }
 		         break;
 		      case '2':
-		    	  getTotalAlbumList("2");
+		    	  if(searchcheck == 0){
+		    		  searchcheck = 99;
+		    	  	getTotalAlbumList("2");
+		    	  }else if(searchcheck == 1){
+		    		  searchcheck = 99;
+		    		  searchCategory("2" , $('#categorynum').val());
+		    	  }
+		    	  
 		         break;  
 		   }
 	   }else{
@@ -91,8 +105,8 @@ function openGUpdate(group_name) {
 //앨범 리스트 Ajax로 받는 코드
 function getTotalAlbumList(checknum) {
 	var check  = false;
-	if(searchcheck != 2){
-		searchcheck = 2;
+	if(searchcheck != 0){
+		searchcheck = 0;
 		pagenum = 0;
 	}
 	if(pagenum == 0)
@@ -134,7 +148,7 @@ function getTotalAlbumList(checknum) {
 	});
 }
 
-function searchCategory(categorynumber){
+function searchCategory(checknum , categorynumber){
 	$('#searchtx').val('');
 	var check  = false;
 	if(searchcheck != 1){
@@ -143,11 +157,10 @@ function searchCategory(categorynumber){
 	}
 	if(pagenum == 0)
 		check  = true;
-	categorynum = categorynumber;	
 	$.ajax({
 		url:'searchCategory',
 		type:'POST',		
-		data:{searchtext:categorynum , pagenum:++pagenum},
+		data:{check:checknum , searchtext:categorynumber , pagenum:++pagenum},
 		dataType:'json',
 		success: function(list){
 			//list 받아오면 리스트 돌려서 처리할 부분
@@ -156,7 +169,7 @@ function searchCategory(categorynumber){
 				$.ajax({
 					url:'searchCategoryCount',
 					type:'POST',		
-					data:{searchtext:categorynum},
+					data:{check:checknum,searchtext:categorynum},
 					dataType:'text',
 					success: function(list){
 						//total count 변경 부분

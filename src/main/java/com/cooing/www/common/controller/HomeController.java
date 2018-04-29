@@ -91,7 +91,7 @@ public class HomeController {
 			searchDAO.insertCategoryPop(new CategoryPop(0 , categorynum , "0"));
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
 			model.addAttribute("group", arraystrval);
-			int totalpage = albumDAO.CategoryAlbumCount(categorynum);
+			int totalpage = albumDAO.searchCategoryCount("3" , personal.getMember_id() , categorynum+"");
 			model.addAttribute("totalpage", (totalpage/10));			
 			//다른 곳에서 홈으로 검색을 통해 home으로 간다는 것을 알려준다.
 			model.addAttribute("search_other", 1);
