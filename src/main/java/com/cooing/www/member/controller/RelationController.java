@@ -117,59 +117,6 @@ public class RelationController {
 		return "success";		
 	}
 	
-	@RequestMapping(value="/groupview_get" , method = RequestMethod.GET)
-	public String groupview_get(HttpSession session , Model model){
-		logger.info("groupview_get__jinsu");
-		Member personally = get_session(session);
-		if(personally == null){
-			return "redirect:/";
-		}
-		ArrayList<String> groupleaderlist = new ArrayList<String>();
-		ArrayList<String> arraystrval = relationDAO.searchLeaderPartyName(personally.getMember_id());
-		for(String s : arraystrval){
-			groupleaderlist.add(s);
-		}
-		arraystrval.clear();
-		
-		// 파티 멤버의 id만 담는 배열
-		ArrayList<String> groupmemberlist = new ArrayList<String>();
-		
-		// 아이디가 속한 파티를 불러온다
-		ArrayList<Party> array_party = relationDAO.searchPartyByMemberid(personally.getMember_id());
-		
-		// 방금 불러온 파티의 party_num으로 파티 멤버를 불러와 멤버의 id만 배열에 담는다
-		for (Party party : array_party) {
-			ArrayList<PartyMember> array_memeber = relationDAO.searchPartyMember(party.getParty_num());
-			for (PartyMember partyMember : array_memeber) {
-				groupmemberlist.add(partyMember.getG_member_memberid());
-			}
-		}
-		
-		model.addAttribute("leaderlist", groupleaderlist);
-		model.addAttribute("memberlist", groupmemberlist);
-		
-		return "/groupview";
-	}
-	
-	@RequestMapping(value="/groupPage" , method = RequestMethod.GET)
-	public String groupPage_get(String group_name , Model model){
-		logger.info("groupPage__jinsu");
-		Party party = relationDAO.searchParty(group_name);
-		if(party != null){
-			ArrayList<PartyMember> arr_party_member = relationDAO.searchPartyMember(party.getParty_num());
-			ArrayList<Member> arr_member = new ArrayList<Member>();
-			for(PartyMember pm: arr_party_member){
-				arr_member.add(memberDAO.selectMember(pm.getG_member_memberid()));
-			}
-			model.addAttribute("partyleader" , memberDAO.selectMember(party.getParty_leader()));
-			model.addAttribute("partyinfo", party);
-			model.addAttribute("memberlist", arr_party_member);
-			model.addAttribute("memberinfo", arr_member);
-			return "/groupPage";
-		}
-		return "redirect:/";		
-	}
-	
 	@ResponseBody
 	@RequestMapping(value="/delete_member" , method = RequestMethod.POST,produces = "application/text; charset=utf8")
 	public String delete_member(int partynum , String memberid){

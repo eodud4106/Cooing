@@ -311,22 +311,19 @@ html, body, main, .container-fluid {
 
 	// 앨범 정보 수정
 	function modifiy_AlbumInfomation() {
-		var content = $('#album_contents').val().replace(/(?:\r\n|\r|\n)/g,
-				'<br>');
-		alert(content);
+		var content = $('#album_contents').val().replace(/(?:\r\n|\r|\n)/g,'<br>');
 		$.ajax({
 			url : 'update_albuminfo',
 			type : 'POST',
 			data : {
 				album_num : '${album.album_num}',
-				album_name : $('#album_name').val(),
+				album_name : $('#album_name').text(),
 				album_contents : content,
 				album_category : $('#album_category').val(),
 				album_openrange : $('#album_openrange').val()
 			},
 			dataType : 'text',
 			success : function(e) {
-				alert(e);
 			},
 			error : function(e) {
 				console.log('에러 발생.' + e);
@@ -363,7 +360,7 @@ html, body, main, .container-fluid {
 					<div class="wrap-input100 validate-input"
 						data-validate="Name is required">
 						<span class="label-input100">Album Name</span>
-						<div class="contact100-form-title input100" style="font-size: 20pt; outline:none;" contenteditable="true"> 
+						<div class="contact100-form-title input100" id="album_name" style="font-size: 20pt; outline:none;" contenteditable="true"> 
 							${album.album_name }
 						</div>
 						<span class="focus-input100"></span>

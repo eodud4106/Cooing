@@ -150,15 +150,17 @@ function getPartyAlbumList() {
 		}, 
 		dataType: 'json',
 		success: function(result) {
+			//list 받아오면 리스트 돌려서 처리할 부분
 			console.log('안 -> ' + JSON.stringify(result));
 			AlbumListPaging(check , result);
 			if(check){
 				$.ajax({
-					url:'searchTotalCount',
+					url:'getPartyAlbumCount',
 					type:'POST',		
+					data:{party_name: $('#party_name').text()}
 					dataType:'text',
 					success: function(list){
-						//list 받아오면 리스트 돌려서 처리할 부분
+						//카운트 개수 불러와서 처리
 						console.log("list -> " + list)
 						$('#totalpage').val(list);
 					},
