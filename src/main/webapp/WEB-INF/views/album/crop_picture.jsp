@@ -265,7 +265,8 @@ function getResults() {
 </script>
 
 <style>
-body{margin-left: auto;}
+html, body { width: 100%; height: 100%;}
+body { background:rgb(54,55,60); background-size: 100% 100% }
 #container{}
 #results{}
 #crop_button{}
