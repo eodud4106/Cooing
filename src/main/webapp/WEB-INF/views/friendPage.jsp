@@ -26,12 +26,12 @@
 <link rel="stylesheet" href="resources/aside_css/icomoon.css">
 <link rel="stylesheet" href="resources/aside_css/animate.css">
 <link rel="stylesheet" href="resources/aside_css/style.css">
-
+<link rel="stylesheet" href="resources/css/chat.css">
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
-<!-- <script src="resources/js/chat.js"></script> -->
+
 <script src="<c:url value="/resources/js/friend.js"/>"></script>
 <script src="<c:url value="/resources/js/search.js"/>"></script>
 <script src="resources/js/popup.js"></script>
@@ -63,6 +63,7 @@ $(window).scroll(function() {
 
 $(document).ready(function () {
 	if (${sessionScope.Member != null}) {
+		readyChat('${sessionScope.Member.member_id}', '');
 		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
 	}
 	initialize();

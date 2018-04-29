@@ -81,6 +81,7 @@ function memberdelete(){
 	});
 }
 function memberplus(){
+	
 	var member_id = $('#findid').val();
 	var party_num = $('#desolve').attr('data');
 	if(confirmcheck(member_id + '를 그룹 멤버로 초대 하시겠습니까?') == false) {
@@ -155,7 +156,7 @@ function getPartyAlbumList() {
 			AlbumListPaging(check , result);
 			if(check){
 				$.ajax({
-					url:'getPartyAlbumCount',
+					url:'album/getPartyAlbumCount',
 					type:'POST',		
 					data:{party_name: $('#party_name').text()},
 					dataType:'text',
@@ -172,30 +173,19 @@ function getPartyAlbumList() {
 			alert(JSON.stringify(e));	
 		}
 	});
-	
-	// 그룹 앨범 만드기...
-	function create_group_album() {
-		$.ajax({
-			url: 'create_album',
-			type: 'post',
-			data: {
-				party_name: '${partyinfo.party_name}',
-				isPersonal: 0
-			},
-			dataType: 'json',
-			success: function(result) {
-				if(result == 'user null') {
-					alert('로그인 정보 없음!');
-				} else if(result == 'fail') {
-					alert('오류 발생!!');
-				} else {
-					 //TODO 앨범 편집창으로 이동
-					 location.href="edit_album?album_num=" + result;
-				}
-			},
-			error: function(e) {
-				alert(JSON.stringify(e));	
-			}
-		});
-	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

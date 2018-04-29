@@ -21,7 +21,7 @@ function searchgroupname(){
 			success: function(a){
 				if(a == 'success'){
 					$('#createbt').off();
-					$('#createbt').on('click' , creategroup());
+					$('#createbt').on('click' , creategroup);
 					$(thisAlert).removeClass('alert-validate');
 					//$('#groupbody').css('background-color','#00ff00');
 				}
