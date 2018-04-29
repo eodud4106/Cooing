@@ -149,11 +149,47 @@ public class AlbumDAO{
 		return mapper.searchPage1(num);		
 	}
 	
-	public ArrayList<AlbumVO> searchCategory(int icategorynum , int startpl , int endpl){
+	public ArrayList<AlbumVO> searchCategory(String check , String album_writer , String icategorynum , int startpl , int endpl){
+		System.out.println("search_category : " + icategorynum+ "_category , " + album_writer + "_writer" + check + "_check");
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		RowBounds rb = new RowBounds(startpl , endpl);
-		return mapper.searchCategory(rb , icategorynum);		
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("check", check);
+		map.put("album_writer", album_writer);
+		map.put("categorynum", icategorynum);
+		return mapper.searchCategory(rb , map);		
 	}	
+	
+	public int searchCategoryCount(String check , String album_writer , String categorynum){
+		System.out.println("search_category_count : " + categorynum+ "_category , " + album_writer + "_writer" + check + "_check");
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("check", check);
+		map.put("album_writer", album_writer);
+		map.put("categorynum", categorynum);
+		return sqlSession.getMapper(AlbumMapper.class).searchCategoryCount(map);
+	}
+	
+	public ArrayList<AlbumVO> friendCategory(String myid , String check , String album_writer , String icategorynum , int startpl , int endpl){
+		System.out.println("search_category : " + icategorynum+ "_category , " + album_writer + "_writer" + check + "_check");
+		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
+		RowBounds rb = new RowBounds(startpl , endpl);
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("check", check);
+		map.put("self_id", myid);
+		map.put("album_writer", album_writer);
+		map.put("categorynum", icategorynum);
+		return mapper.searchCategory(rb , map);		
+	}	
+	
+	public int friendCategoryCount(String myid , String check , String album_writer , String categorynum){
+		System.out.println("search_category_count : " + categorynum+ "_category , " + album_writer + "_writer" + check + "_check");
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("check", check);
+		map.put("album_writer", album_writer);
+		map.put("self_id", myid);
+		map.put("categorynum", categorynum);
+		return sqlSession.getMapper(AlbumMapper.class).searchCategoryCount(map);
+	}
 	
 	public int updateThumbnail(Map<String,String> map){
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
@@ -163,10 +199,6 @@ public class AlbumDAO{
 	public int deleteAlbum(int album_num){
 		AlbumMapper mapper = sqlSession.getMapper(AlbumMapper.class);
 		return mapper.deleteAlbum(album_num);	
-	}
-	
-	public int CategoryAlbumCount(int categorynum){
-		return sqlSession.getMapper(AlbumMapper.class).CategoryAlbumCount(categorynum);
 	}
 	
 	public ArrayList<AlbumVO> select_album(RowBounds rb, AlbumVO album) {

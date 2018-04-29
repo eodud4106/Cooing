@@ -224,7 +224,6 @@ html, body, main, .container-fluid {
 	var album_num = '${album.album_num}';
 
 	function hashtagCheck(){
-		var title = '${album.album_name}';
 		var content = $('#album_contents').html();
 		//일단 ' '로 나누고 맨 앞이 #인 문자를 찾아서 a태그를 앞뒤로 붙여서 더해서 다시 넣어준다
 		//SearchController에 searchHashTag를 좀 고쳐야 된다.
@@ -248,22 +247,25 @@ html, body, main, .container-fluid {
 		   		hashword_be = word.substring(0,word.length);
 		   		hashword_af = '';
 		   	}
-		   	word ='<a href="./hashtag_other?search='+ hashword_be+'">#' + hashword_be + '</a>' + hashword_af;
+		   	word ='<a href="./?search='+ hashword_be+'">#' + hashword_be + '</a>' + hashword_af;
 		   
 		   	linkedContent += word+' ';
 		}
-		$('#title').html(title);
-		$('#content').html(linkedContent);
+		$('#album_contents').html(linkedContent);
 	}
 	
 	var selectcheck = true;
-
+	var page_num = '${page_num}';
 	//라디오버튼
 	$(document).ready(function() {
 		
+		ready_album('view');
+		
 		replyList();
 		
-		ready_album('view');
+		if(page_num != ''){
+			$('#album').turn('page', page_num);
+		}
 
 		hashtagCheck();
 		

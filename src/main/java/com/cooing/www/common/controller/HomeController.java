@@ -91,7 +91,7 @@ public class HomeController {
 			searchDAO.insertCategoryPop(new CategoryPop(0 , categorynum , "0"));
 			ArrayList<Party> arraystrval = relationDAO.searchPartyByMemberid(personal.getMember_id());
 			model.addAttribute("group", arraystrval);
-			int totalpage = albumDAO.CategoryAlbumCount(categorynum);
+			int totalpage = albumDAO.searchCategoryCount("3" , personal.getMember_id() , categorynum+"");
 			model.addAttribute("totalpage", (totalpage/10));			
 			//다른 곳에서 홈으로 검색을 통해 home으로 간다는 것을 알려준다.
 			model.addAttribute("search_other", 1);
@@ -105,7 +105,12 @@ public class HomeController {
 	 * 앨범뷰... 앨범과 페이지 리스트를 갖고 albumView로 이동....
 	 */
 	@RequestMapping(value = "/albumView", method = RequestMethod.GET)
-	public String albumPage(int album_num, Model model , HttpSession session) {
+	public String albumPage(int album_num, Model model , HttpSession session, String page_num) {
+		//북마크 있을시 저장된 페이지 모데롤 줄 부분
+		if(page_num != null){
+			model.addAttribute("page_num", page_num);
+		}
+		
 		Member member = (Member)session.getAttribute("Member");
 		try {
 			AlbumVO album = albumDAO.searchAlbumNum(album_num);

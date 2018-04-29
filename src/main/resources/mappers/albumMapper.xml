@@ -88,12 +88,7 @@
 				    </if>
 				    (
 				    	a.album_writer = #{search_writer}
-				        or a.album_openrange = 4
-				        or a.album_num in(
-				            select specific_albumnum as album_num
-				            from specific
-				            where specific_memberid = #{search_writer}
-				        )		
+				        or a.album_openrange = 4		
 				        or a.album_num in(
 				            select album_num
 				            from albumlist
@@ -282,12 +277,6 @@
 			where album_num = #{album_num}
 	</update>
 	
-	<select id="searchCategory" parameterType="int" resultType="album">
-		select * from albumlist 
-			where album_category=#{album_category}
-			order by album_num desc
-	</select>
-	
 	<select id="searchAlbumNum" parameterType="int" resultType="album">
 		select * from albumlist	where album_num=#{searchnum}
 	</select>
@@ -298,11 +287,7 @@
 	
 	<delete id="deleteAlbum" parameterType="int">
 		delete	from albumlist where album_num=#{album_num}
-	</delete>	
-	
-	<select id="CategoryAlbumCount" parameterType="int" resultType="int">
-		select count(*)  from albumlist where album_category = #{album_category}
-	</select>
+	</delete>
 	
 	<!-- 앨범 넘버로 앨범 내 페이지 검색 -->
 	<select id="select_pages_by_album_num" parameterType="int" resultType="page">
@@ -343,6 +328,162 @@
 			isPersonal = #{isPersonal}
 	</select>
 	
+	<select id="searchCategory" parameterType="int" resultType="album">
+		<if test="check != 2">
+			select * from albumlist
+		</if>
+		<if test="check == 2">
+			select a.*
+		    from albumlist a left outer join (
+		        select likeit_albumnum as album_num , count(*) as count
+		        from likeit
+		        group by likeit_albumnum	
+		    ) l 
+		    on a.album_num = l.album_num
+		</if> 
+		where 
+		<if test="check != 2">
+			album_category=#{categorynum}
+			and
+			<if test="check == 4">
+			album_writer = #{album_writer}
+			</if>
+			<if test="check == 5">
+			(
+				album_writer = #{search_writer} 
+				and(
+					album_num in(
+						select album_num
+						from albumlist
+						where album_openrange = 2
+						and album_writer in(
+							select friend_id1 as album_writer
+							from friend
+							where friend_id2 = #{self_id}
+						)
+                       )
+                       or album_openrange = 4
+				)
+			)
+			</if>
+			<if test="check == 3">
+		    (
+		    album_writer = #{album_writer}
+		    or album_openrange = 4		
+		    or album_num in(
+		        select album_num
+		        from albumlist
+		        where album_openrange = 2
+		        and album_writer in(
+		            select friend_id1 as album_writer
+		            from friend
+		            where friend_id2 = #{album_writer}
+		        	)	
+		    	)
+  			)
+  			</if>
+		</if>
+		<if test="check == 2">
+			a.album_category = #{categorynum}
+		    and
+		    (
+		    a.album_writer = #{album_writer}
+		    or a.album_openrange = 4		
+		    or a.album_num in(
+		        select album_num
+		        from albumlist
+		        where album_openrange = 2
+		        and album_writer in(
+		            select friend_id1 as album_writer
+		            from friend
+		            where friend_id2 = #{album_writer}
+		        	)	
+		    	)
+  			)
+		</if>
+		<if test="check != 2">
+			order by album_num desc
+		</if>
+		<if test="check == 2">
+			order by a.album_num desc
+		</if>
+	</select>
+	
+	<select id="searchCategoryCount" parameterType="Map" resultType="int">
+		<if test="check != 2">
+			select count(*) from albumlist
+		</if>
+		<if test="check == 2">
+			select count(*)
+		    from albumlist a left outer join (
+		        select likeit_albumnum as album_num , count(*) as count
+		        from likeit
+		        group by likeit_albumnum	
+		    ) l 
+		    on a.album_num = l.album_num
+		</if> 
+		where 
+		<if test="check != 2">
+			album_category=#{categorynum}
+			and
+			<if test="check == 4">
+			album_writer = #{album_writer}
+			</if>
+			<if test="check == 5">
+			(
+				album_writer = #{search_writer} 
+				and(
+					album_num in(
+						select album_num
+						from albumlist
+						where album_openrange = 2
+						and album_writer in(
+							select friend_id1 as album_writer
+							from friend
+							where friend_id2 = #{self_id}
+						)
+                       )
+                       or album_openrange = 4
+				)
+			)
+			</if>
+			<if test="check == 3">
+		    (
+		    album_writer = #{album_writer}
+		    or album_openrange = 4		
+		    or album_num in(
+		        select album_num
+		        from albumlist
+		        where album_openrange = 2
+		        and album_writer in(
+		            select friend_id1 as album_writer
+		            from friend
+		            where friend_id2 = #{album_writer}
+		        	)	
+		    	)
+  			)
+  			</if>
+		</if>
+		<if test="check == 2">
+			a.album_category = #{categorynum}
+		    and
+		    (
+		    a.album_writer = #{album_writer}
+		    or
+		    a.album_openrange = 4		
+		    or a.album_num in(
+		        select album_num
+		        from albumlist
+		        where album_openrange = 2
+		        and album_writer in(
+		            select friend_id1 as album_writer
+		            from friend
+		            where friend_id2 = #{album_writer}
+		        	)	
+		    	)
+  			)
+		</if>
+	</select>
 	<select id="get_album_list" resultType="album" parameterType="hashmap">
 	SELECT *
 	FROM

@@ -54,11 +54,20 @@
 
 var pagenum = 0;
 var pagingcheck = false;
+//0번이면 검색 1번 이면 카테고리 
+var searchcheck = 0; 
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
-    	if($('#totalpage').val() >= pagenum){
-    		getMyAlbumList();
-	    	pagingcheck = true;
+    	if(searchcheck == 0){
+	    	if($('#totalpage').val() >= pagenum){
+	    		getMyAlbumList();
+		    	pagingcheck = true;
+	    	}
+    	}else if(searchcheck == 1){
+    		if($('#totalpage').val() >= pagenum){	
+    			getMyCategoryAlbumList();
+    			pagingcheck = true;
+    		}
     	}
     }
 });
@@ -137,7 +146,7 @@ $(document).ready(function () {
 		<div style = "margin-left: 20px;">
        			 SEARCH &nbsp<img id='image_search' src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
        			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">
-     			 <input id='searchtx' type="text" onblur="search_bar(this)" style="  border: none;
+     			 <input id="searchtx" type="text" onblur="search_bar(this)" style="  border: none;
               	 background-color: rgba(0,0,0,0);
               	 color: #666666;
                	 border-bottom: solid 2px #333;
@@ -147,6 +156,7 @@ $(document).ready(function () {
 				
 		</div>
 		<input type="hidden" id="totalpage" value="${totalpage }">
+		<input type="hidden" id="categorynum">
 		<br>	
 	</div>
 			
@@ -208,12 +218,7 @@ $(document).ready(function () {
 				src="resources/image_mj/a4.jpg" alt="Card image cap"/>
 				</div></li>
 			</ul></div>					
-	</div>
-	
-	
-	
-	
-	
+	</div>	
 
 	<div class="container-fluid d-md-none">
 		<div class="row">
@@ -276,11 +281,6 @@ $(document).ready(function () {
 		</div>
 
 	</aside>
-	
-	<div class="popuplayer">
-		<p onClick="friendpage()" style="font-size:8pt;color:#26afa1;">친구페이지</p>
-		<p onClick="chatpage()" style="font-size:8pt;color:#26afa1;">채팅</p>
-	</div>	
 
 	<script src="resources/aside_js/popper.min.js"></script>
 	<script src="resources/aside_js/bootstrap.min.js"></script>

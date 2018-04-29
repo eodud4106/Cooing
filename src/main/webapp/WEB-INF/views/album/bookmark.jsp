@@ -115,27 +115,32 @@ function bookmark_list() {
 			$(bookmark_info).each(function(i, vo){
 				var bookmark_page_div = document.createElement('div');
 				var bookmark_info_div = document.createElement('div');
-				
-				var a_bookmark = document.createElement('a');
-				$(a_bookmark).attr('href', 'albumView?album_num='+ vo.bookmark_albumnum + '');
-				
+				var bookmark_link_div = document.createElement('div');
+				var button_bookmark = document.createElement('button');
 				var bookmark_img_thumbnail = document.createElement('img');
+				
+				//맨 왼쪽 디브에 사진 넣는 부분
 				$(bookmark_img_thumbnail).attr('src', ''+ vo.album_thumbnail +'');
-				
-				$(a_bookmark).append(bookmark_img_thumbnail);
-				$(bookmark_page_div).addClass('bookmark_page_div').append(a_bookmark);
-	
+				//버튼에 링크 다는 부분
+				$(button_bookmark).attr('onclick', 'location.href="albumView?album_num='+ vo.bookmark_albumnum + '&page_num=' + vo.bookmark_page + '"');
+				$(button_bookmark).addClass('bookmark_button');
+
 				var bookmark_info_div_html = '';
-					bookmark_info_div_html += '<p> 앨범 이름 : ' + vo.album_name + '</p>';
-					bookmark_info_div_html += '<p> 작성자 : ' + vo.album_writer + '</p>';
-					bookmark_info_div_html += '<p> 앨범내용 : ' + vo.album_contents + '</p>';
-					bookmark_info_div_html += '<p> 앨범카테고리 : ' + vo.album_category + '</p>';
-					bookmark_info_div_html += '<input type="hidden" id="bookmark_num" name="bookmark_num" value="' + vo.bookmark_num + '">';
+					bookmark_info_div_html += '<p class="bookmark_p"> 앨범 이름 : ' + vo.album_name + '</p>';
+					bookmark_info_div_html += '<p class="bookmark_p"> 작성자 : ' + vo.album_writer + '</p>';
+					bookmark_info_div_html += '<p class="bookmark_p"> 앨범내용 : ' + vo.album_contents + '</p>';
+					var temp_category = category_change(vo.album_category);
+					bookmark_info_div_html += '<p class="bookmark_p"> 앨범카테고리 : ' + temp_category + '</p>';
+					bookmark_info_div_html += '<p class="bookmark_p"> 북마크된 페이지 : ' + vo.bookmark_page + '</p>';
 				
+				$(bookmark_page_div).addClass('bookmark_page_div').append(bookmark_img_thumbnail);
 				$(bookmark_info_div).addClass('bookmark_info_div').append(bookmark_info_div_html);
+				$(bookmark_link_div).addClass('bookmark_link_div').append(button_bookmark);
 				
 				$('#bookmark').append(bookmark_page_div);
 				$('#bookmark').append(bookmark_info_div);
+				$('#bookmark').append(bookmark_link_div);
+				
 
 			});
 		},
@@ -144,14 +149,46 @@ function bookmark_list() {
 		}
 	});
 }
+
+function category_change(category) {
+	
+	var change_category;
+	switch (category) {
+		case 1: change_category = '스포츠/래저'; break;
+		case 2: change_category = '동물'; break;
+		case 3: change_category = '음악'; break;
+		case 4: change_category = '요리/음식'; break;
+		case 5: change_category = '패션/뷰티'; break; 
+		case 6: change_category = '연예/TV'; break;
+		case 7: change_category = '게임'; break; 
+		case 8: change_category = '영화'; break; 
+		case 9: change_category = '도서'; break;
+		case 10: change_category = '공연/전시'; break;
+		case 11: change_category = '외국어'; break;
+		case 12: change_category = '전문지식'; break;
+		case 13: change_category = '수집/제작'; break;
+		case 14: change_category = '자기계발'; break;
+		case 15: change_category = '육아'; break;
+		case 16: change_category = '일상생활'; break;
+		case 17: change_category = '자동차'; break;
+		case 18: change_category = '낚시'; break;
+		case 19: change_category = '건강'; break;
+		default: change_category = '기타'; break;
+	}
+	return change_category;
+	
+}
+
 </script>
 
 <style>
-	.bookmark_page_div {float: left; width: 50%; height: 400px; margin: auto;}
-	.bookmark_info_div {float: right; width: 50%; height: 400px; margin: auto;}
-	.bookmark{width:70%; margin-left: 250px;}
-	.bookmark_page_div img {width: 80%;}
-	.bookmark_page_div a {display: block;}
+	.bookmark_page_div {float: left; width: 200px; height: 200px; margin-bottom: 70px;}
+	.bookmark_info_div {margin-left:120px; float: left; width: 200px; height: 200px; margin-bottom: 70px;}
+	.bookmark_link_div {float: right; width: 200px; height: 200px; margin-bottom: 70px;}
+	.bookmark{width:750px; margin-left: 260px;}
+	.bookmark_page_div img {width: 100%;}
+	.bookmark_link_div button {width: 50%; height: 50%;}
+	.bookmark_p{font-size: small;}
 </style>
 
 </head >
@@ -241,13 +278,6 @@ function bookmark_list() {
 	</div>
 	
 	<div class="bookmark" id="bookmark">
-		<!-- 이 div들을 계속 생성해주기 
-		<div class="bookmark_page_div" id="bookmark_page_div1" style="border-style: solid;">
-		</div>
-		
-		<div class="bookmark_info_div" id="bookmark_info_div1" style="border-style: solid;">
-		</div>
-		-->
 	</div>
 	
 	

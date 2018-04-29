@@ -41,7 +41,7 @@
 			B.BOOKMARK_ALBUMNUM = A.ALBUM_NUM
 		AND 
 			B.BOOKMARK_MEMBERID = #{bookmark_memberid}
-		ORDER BY BOOKMARK_NUM ASC
+		ORDER BY BOOKMARK_NUM DESC
 	</select>
 	
 </mapper>

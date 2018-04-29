@@ -5,27 +5,6 @@
 function initialize(){
 	$('#friendbt').on('click',fiendplus);
 	
-	$('window').click(function(event) {
-		if (event.target == $('#myModal')) {
-			$('#myModal').css('display', 'none');
-	    }
-	});
-	
-	$('#myBtn').click(function() {
-		$('#myModal').css('display', 'block');
-	});
-	
-	$('#myBtn_close').click(function() {
-		$('#myModal').css('display', 'none');
-	});
-	
-	$('#createBtn').click(function() {
-		$('#album_create_modal').css({
-			'display': 'block',
-			'z-index': '10000'
-		});
-	});
-	
 	//초기 친구 찾을 때만 사용했었음
 	$('#friendsearch').keyup(function() {
 		searchword();
@@ -33,22 +12,16 @@ function initialize(){
 	
 	$('#searchtx').keydown(function(event){
 		if(event.keyCode == 13){
-			pagenum = 0;
+			searchcheck = 99;
 			getIDAlbumList();
 		}
 	});	
 	
 	$('.category').on('click' , function(){
-		searchCategory($(this).attr('data'));
-		location.href = './category_other?categorynum=' + $(this).attr('data') + '';
-	});
-	
-	$('#createBtn_close').click(function() {
-		$('#album_create_frame').attr('src', '/AlbumNameCreate');
-		$('#album_create_modal').css({
-			'display': 'none',
-			'z-index': '0'
-		});
+		searchcheck = 99;
+		$('#searchtx').val('');
+		$('#categorynum').val($(this).attr('data'));
+		getIDCategoryAlbumList();
 	});
 	
 	searchword();
@@ -57,7 +30,6 @@ function initialize(){
 function fiendplus(){
 	var friendid = $('#friendidval').val();
 	var data = $('#friendbt').attr('data');
-	alert(friendid +  ',' + data);
 	if(data == 0){
 		$.ajax({
 			url:'friend_plus',
@@ -95,9 +67,58 @@ function fiendplus(){
 	}	
 }
 
+//카테고리 앨범 리스트 Ajax로 받는 코드
+function getIDCategoryAlbumList() {
+	var check  = false;
+	if(searchcheck != 1){
+		searchcheck = 1;
+		pagenum = 0;
+	}
+	if(pagenum == 0)
+		check  = true;
+	var catgorynum = $('#categorynum').val();
+	var albumwriter = $('#friendidval').val();
+	$.ajax({
+		url: 'album/getIDCategoryAlbumList',
+		type: 'post',
+		data:{
+			categorynum:catgorynum,
+			albumwriter:albumwriter,
+			pagenum:++pagenum
+		},
+		dataType: 'json',
+		success: function(result) {
+				AlbumListPaging(check , result);
+				$.ajax({
+					url: 'album/getIDCategoryAlbumCount',
+					type: 'post',
+					data:{
+						categorynum:catgorynum,
+						albumwriter:albumwriter
+					},
+					dataType: 'text',
+					success: function(count) {
+						//total count 변경 부분
+						$('#totalpage').val(count);
+					},
+					error: function(e) {
+						alert(JSON.stringify(e));	
+					}
+				});
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+}
+
 //앨범 리스트 Ajax로 받는 코드
 function getIDAlbumList() {
 	var check  = false;
+	if(searchcheck != 0){
+		searchcheck = 0;
+		pagenum = 0;
+	}
 	if(pagenum == 0)
 		check  = true;
 	var searchtx = $('#searchtx').val();
