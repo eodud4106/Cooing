@@ -9,11 +9,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Login</title>
+<title>COOING</title>
 
 <!-- favicon icon --> 
 <link rel="shortcut icon" 
-  href="resources/assets/images/ico/favicon.ico"> 
+  href="resources/assets/images/cooing_logo.png"> 
 <link rel="apple-touch-icon-precomposed" sizes="144x144" 
   href="resources/assets/images/ico/apple-icon-144x144.png"> 
 <link rel="apple-touch-icon-precomposed" sizes="114x114" 
@@ -29,6 +29,8 @@
 <link rel="stylesheet" href="resources/css/login.css"> 
 <link rel="stylesheet" href="resources/assets/css/responsive.css"> 
  
+<!-- font -->
+<link href="https://fonts.googleapis.com/css?family=Titan+One" rel="stylesheet"> 
 <script src="resources/js_js/jquery-3.2.1.min.js"></script> 
 <script src="resources/js/member.js"></script> 
 <script>
@@ -84,10 +86,11 @@
 					<div class="col-md-8 col-md-offset-2 text-center">
 						<div class="content">
 							<div class="main-content">
-								<h1 class="text-uppercase">COOING</h1>
+								
+								 <h1 class="text-uppercase" style = "font-family: 'Titan One', cursive; padding : 50px;">COOING</h1> 
 
 								<div class="subscribe-area text-center">
-									<h3>please login</h3>
+									<!-- <h3>please login</h3> -->
 								</div>
 
 								<table class="tb1">
@@ -104,10 +107,10 @@
 
 									<tr align="center">
 										<td colspan="2">
-											<input type="button" id="join" value="로그인" class="button-login">
-											<input type="button" onclick="javascript:location.href='<c:url value="/"/>';"value="취소"
+											<input type="button" id="join" value="LOGIN" class="button-login">
+											<input type="button" onclick="javascript:location.href='<c:url value="/"/>';"value="CANCEL"
 											class="button-login">
-											<input type="button" id="member" value="회원가입" class="button-login">
+											<input type="button" id="member" value="JOIN" class="button-login">
 										</td>
 									</tr>
 								</table>
