@@ -29,9 +29,6 @@
 <link rel="stylesheet" href="resources/css/jquery-ui.min.css">
 <link rel="stylesheet" href="resources/css/chat.css">
 
-<!-- 친구그룹목록출력 -->
-<link rel="stylesheet" href="resources/css/friend_list.css">
-
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/chat.js"></script>
@@ -40,6 +37,8 @@
 <!-- 폰트 -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
+
+<link rel="stylesheet" href="resources/button_css/style.css">
 <script>
 
 $(document).ready(function () {
@@ -81,7 +80,172 @@ function create_group_album() {
 	});
 }
 </script>
+<style type="text/css">
+#main {
+    min-width: 200px;
+    max-width: 200px;
+    margin-top : 30px;
+    padding: 10px;
+    margin: 0 auto;
+    background: #ffffff;}
+section {
+    display: none;
+    padding: 20px 0 0;    
+    font-size : 14px;        
+    border-top: 1px solid #ddd;}
+/*라디오버튼 숨김*/
+#tab1,#tab2 {
+      display: none;}
 
+label {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 5px 10px;
+    font-weight: 600;
+    text-align: center;
+    color: #bbb;
+    border: 1px solid transparent;
+    font-size: 15px;}
+
+label:hover {
+    color: #2e9cdf;
+    cursor: pointer;}
+
+/*input 클릭시, label 스타일*/
+#tab1:checked + label,#tab2:checked + label {
+      color: #555;
+      border: 1px solid #ddd;
+      border-top: 2px solid #2e9cdf;
+      border-bottom: 1px solid #ffffff;}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2{
+    display: block;}
+
+.search{	
+	width: 120px;
+	display:block;
+	position: absolute;	
+}
+.bt{
+	position: absolute;
+	right: 40px;
+}
+.tb1{
+	padding-top: 20px;
+}	    
+
+html, body, main, .container-fluid {
+	height: 100%;
+}
+.container-fluid {
+	padding: 0;
+}
+
+.view_wrapper {
+	margin: 0;
+	margin-left: 250px;
+	display: flex;
+	flex-wrap: wrap;
+}
+.album_wrapper, .top_bar {
+	margin: auto !important;
+	display: block;
+}
+.checkbox {
+	font-size: 20px;
+}
+.page {
+	background-color: #A4A4A4;
+	
+}
+.outer {
+	background-color: #aaa;
+}
+.button_container {
+  position: absolute;
+ /*  left: 0; */
+  /* right: 0; */
+ /* top: 50%;  */
+}
+
+.btn {
+  border: none;
+  display: block; 
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: #bae5e1;
+  /* padding: 17px 60px; */
+  margin: 0 auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+}
+
+.btn span {
+  position: relative; 
+  z-index: 1;
+}
+
+.btn:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 490%;
+  width: 140%;
+  background: #78c7d2;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  transform: translateX(-98%) translateY(-25%) rotate(45deg);
+}
+
+.btn:hover:after {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+
+.link {
+  font-size: 20px;
+  margin-top: 30px;
+}
+
+.link a {
+  color: #000;
+  font-size: 25px; 
+}
+.img1 {
+	width: 50px;
+	height: 50px;
+}
+
+.friendList{
+	height: 700px;		
+	overflow-y : scroll;
+	padding-left: 30px;	
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: -15px;
+}
+.groupList{
+	height: 700px;	
+	overflow-y : scroll;
+	padding-left: 30px;
+	/* overflow-y:hidden; */
+	/* background-color : aliceblue; */
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 100px;
+    
+}
+
+</style>
 <style>
 .img-responsive img-circle {
 	width: 50px;
@@ -117,6 +281,7 @@ select::-ms-expand { /* for IE 11 */
     display: none;
 }
 
+
 </style>
 </head>
 <body style ="font-family: 'Nanum Gothic Coding', monospace;">
@@ -128,7 +293,7 @@ select::-ms-expand { /* for IE 11 */
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
 			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
-			<div id="party_name" class="mb-2 d-block probootstrap-logo" style = "font-family: 'Do Hyeon', sans-serif; color : #1f5dad">${partyinfo.getParty_name()}</div>	
+			<div id="party_name" class="mb-2 d-block probootstrap-logo" style = "font-family: 'Do Hyeon', sans-serif; color : #1f5dad"><${partyinfo.getParty_name()}></div>	
 			
 			<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id()}">
 				<div style= "z-index:99; float:right; margin-top: -40px;"id="desolve" data="${partyinfo.getParty_num()}">
@@ -153,10 +318,8 @@ select::-ms-expand { /* for IE 11 */
 				<c:if test="${partyleader ne null}">${partyleader.getMember_id()}(Leader)</c:if></p>
 			</c:if>	
 			
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<p class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MEMBERS	
-		</div>	
-		<div id="memberdiv">
+		<p style = "font-size: 20px;">[Member]</p>	
+		<div id="memberdiv" style ="height: 400px;">
 		<c:if test="${fn:length(memberinfo) ne 0}">
 			<c:forEach var="arrmi" items="${memberinfo}">
 				<p><img  class="img-responsive img-circle" style =" border-radius: 80%; display: inline-block;; width: 100% \9;
@@ -171,12 +334,14 @@ select::-ms-expand { /* for IE 11 */
 		</c:if>
 
 		</div>
-		<div class="probootstrap-overflow" id="albumcreate">
-			<nav class="probootstrap-nav">	
-			<a href="#">앨범 만들기</a>				
-			</nav>
-		</div>
+		
+		<button id="albumcreate" class = "button">
+			Album Create
+			<div class="button__horizontal"></div>
+			<div class="button__vertical"></div>
+		</button>
 
+		
 	</aside>
 
 
@@ -244,7 +409,7 @@ select::-ms-expand { /* for IE 11 */
 	</main>
 
 	
-	<aside class="probootstrap-aside2 js-probootstrap-aside2">
+	<%-- <aside class="probootstrap-aside2 js-probootstrap-aside2">
 		<a href="#"
 			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-right"></span> Close
@@ -287,7 +452,61 @@ select::-ms-expand { /* for IE 11 */
 			<!-- </div> -->
 		</div>
 
-	</aside>
+	</aside> --%>
+	
+	<aside class="probootstrap-aside2 js-probootstrap-aside2">
+		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
+		
+			<span class="oi oi-arrow-right"></span> Close
+		</a>
+		
+		<div class="probootstrap-overflow">
+		<div id="main">
+		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
+		<label for="tab1">FRIEND</label>
+
+  		<input class = "input1" id="tab2" type="radio" name="tabs">
+    	<label for="tab2">GROUP</label>   
+
+    	<section id="content1"> 
+    	<!-- 페이지 저장 -->		
+			<form class="contact100-form validate-form" id="entry">
+				<span class="contact100-form-title">
+					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
+				</span>
+			</form>						
+				<div class = "friendList" style = "width: 200px;">
+					<div name="friend" id="friend"></div>
+					<div name="user" id="user"></div>
+				</div>			
+
+	<div id="dropDownSelect1"></div>    	    
+       
+    	</section>
+	<form id="testimg">
+		<input type="hidden" name="imgSrc" id="imgSrc" />
+	</form>	
+   	
+   	<section id ="content2">       					
+		<div class="button_container">		
+			<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
+		</div>		
+		
+		<div class = "groupList" style= "margin-top: 70px; width: 200px;">
+			<c:if test="${Member ne null}">
+				<c:if test="${fn:length(group) ne 0}">
+					<c:forEach var="party" items="${group}">
+						<div name="group">
+							<p class="arr_party" partynum="${party.party_num}">${party.party_name}</p>
+						</div>
+					</c:forEach>
+				</c:if>
+			</c:if>				
+		</div>
+	</section>   
+   </div>
+   </div>
+</aside>
 	
 	<div class="popuplayer">
 		<p onClick="friendpage()" style="font-size:8pt;color:#26afa1;">친구페이지</p>
