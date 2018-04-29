@@ -9,7 +9,6 @@ $(document).ready(function() {
 		$('.div_party_popup').remove();
 		$('.div_friend_popup').remove();
 		
-		
 		if($(e.target).hasClass('arr_party')) {
 			createPartyPopup(e, e.target);
 		} else if($(e.target).hasClass('arr_friend')) {
@@ -19,7 +18,6 @@ $(document).ready(function() {
 		}
 	});
 })
-
 
 function createPartyPopup(e, elem) {
 
@@ -90,8 +88,6 @@ function createFriendPopup(e, elem, type) {
 		"display": "block",
 		"float": "left"
 	}).appendTo($div_friend_popup);
-	
-	
 	
 	if(type == 'friend') {
 		$div_go_friend_page.attr({
