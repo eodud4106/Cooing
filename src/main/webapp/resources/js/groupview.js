@@ -81,6 +81,7 @@ function memberdelete(){
 	});
 }
 function memberplus(){
+	
 	var member_id = $('#findid').val();
 	var party_num = $('#desolve').attr('data');
 	if(confirmcheck(member_id + '를 그룹 멤버로 초대 하시겠습니까?') == false) {
