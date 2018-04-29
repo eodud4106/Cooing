@@ -213,7 +213,6 @@ public class AlbumDAO{
 		ArrayList<AlbumVO> result = null;
 		try {
 			result = sqlSession.getMapper(AlbumMapper.class).get_album_list(rb, map);
-			System.out.println("result -> " + result.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

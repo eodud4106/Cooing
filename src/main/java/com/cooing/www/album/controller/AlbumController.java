@@ -152,7 +152,6 @@ public class AlbumController {
 	@RequestMapping(value = "/get_album_list", method= RequestMethod.POST)
 	public ArrayList<AlbumVO> get_album_list(String type, String keyword, String order, String openrange, 
 			String writer_type, int page, HttpSession session) {
-		System.out.println("type: " + type + " / keyword: " + keyword + " / order: " + order + " / page: " + page);
 		
 		String userId = ((Member)session.getAttribute("Member")).getMember_id();
 		

@@ -27,11 +27,11 @@ var $message;
 
 /*
  *	로그인 상태일 경우 채팅 준비
- *	@param (로그인 아이디, chat창이 될 빈 div)
+ *	@param (로그인 아이디, home으로 가기 위한 경로)
  */ 
 function readyChat (userId, goRoot) {
 
-	console.log('채팅 준비!');
+	console.log('채팅 준비!, userId-> ' + userId);
 
 	// 로그인 정보 확인 후 전역변수에 저장
 	if(userId == '') {
