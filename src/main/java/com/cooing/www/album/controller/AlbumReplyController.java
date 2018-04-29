@@ -25,10 +25,6 @@ public class AlbumReplyController {
 	@Autowired
 	ReplyDAO albumreplyDAO;
 	
-	// 한 페이지 당 글 개수
-	private static final int COUNT_PER_PAGE = 3;
-	// 페이지 그룹 개수
-	private static final int PAGE_PER_GROUP = 5;
 	// 댓글 작성
 	@ResponseBody
 	@RequestMapping(value = "/writeReply", method = RequestMethod.POST)
@@ -127,12 +123,17 @@ public class AlbumReplyController {
 			i_rep_page = 1;
 		}
 		
+		System.out.println("페이징 컨트롤러에 page값 : "  + i_rep_page);
+		
 		int num = 0;
 		num = Integer.parseInt(reply_albumnum);
 		// 댓글 페이징
 		int repTotal = albumreplyDAO.getReplyTotal(num);
 		//가져 갈 요소들
 		PageNavigator navi = new PageNavigator(3, 3, i_rep_page, repTotal);
+		
+		System.out.println("나비 들어 갔다 나온 현재 페이지 : " + navi.getCurrentPage());
+		
 		
 		return navi;
 	}

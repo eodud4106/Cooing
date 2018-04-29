@@ -387,7 +387,7 @@ html, body, main, .container-fluid {
 
 		var contents = $('#input_reply').val();
 
-		if (contents == "") {
+		if (contents.length == 0) {
 			alert("댓글의 내용을 입력하세요.");
 			return;
 		}
