@@ -338,7 +338,6 @@ html, body, main, .container-fluid {
 		if(isDelete == false){
 			return false;
 		}
-		alert(${album.album_num});
 		location.href="deleteAlbum?album_num=" + ${album.album_num} + "";
 	}
 
