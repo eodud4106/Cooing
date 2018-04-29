@@ -195,7 +195,7 @@ html, body, main, .container-fluid {
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/icomoon.css"/>">
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/animate.css"/>">
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/style.css"/>">
-
+<link rel="stylesheet" href="resources/css/chat.css">
 
 <script src="<c:url value="/resources/aside_js/popper.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/bootstrap.min.js"/>"></script>
@@ -203,7 +203,8 @@ html, body, main, .container-fluid {
 <script src="<c:url value="/resources/aside_js/jquery.waypoints.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/imagesloaded.pkgd.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/main.js"/>"></script>
-
+<script src="resources/js/popup.js"></script>
+<script src="resources/js/chat.js"></script>
 <!-- 탭나누는 사이드바 -->
 <link rel="stylesheet" type="text/css" href="resources/album_create/css/util.css">
 <link rel="stylesheet" type="text/css" href="resources/album_create/css/main.css">
@@ -241,6 +242,9 @@ $(window).scroll(function() {
 });
 
 $(document).ready(function () {
+	if (${sessionScope.Member != null}) {
+		readyChat('${sessionScope.Member.member_id}', '');
+	}
 	initialize();
 });
 </script>
