@@ -157,7 +157,7 @@ function getPartyAlbumList() {
 				$.ajax({
 					url:'getPartyAlbumCount',
 					type:'POST',		
-					data:{party_name: $('#party_name').text()}
+					data:{party_name: $('#party_name').text()},
 					dataType:'text',
 					success: function(list){
 						//카운트 개수 불러와서 처리
