@@ -23,6 +23,8 @@ function initialize(){
 			getMyAlbumList();
 		}
 	});	
+	
+	searchword();
 }
 
 //앨범 리스트 Ajax로 받는 코드

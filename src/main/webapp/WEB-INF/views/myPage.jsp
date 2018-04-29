@@ -156,7 +156,7 @@ $(document).ready(function () {
 				
 		</div>
 		<input type="hidden" id="totalpage" value="${totalpage }">
-		<input type="hidden" id="categorynum" value="${categorynum}">
+		<input type="hidden" id="categorynum">
 		<br>	
 	</div>
 			
