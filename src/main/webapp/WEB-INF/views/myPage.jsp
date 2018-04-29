@@ -177,7 +177,6 @@ html, body, main, .container-fluid {
 
 <script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
 <!-- 폰트 -->
-
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
 <!-- <link href="https://fonts.googleapis.com/css?family=McLaren" rel="stylesheet"> -->
@@ -507,6 +506,7 @@ $(document).ready(function () {
    </div>
    </div>
 </aside>
+
 <script src="<c:url value="/resources/aside_js/popper.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/owl.carousel.min.js"/>"></script>
