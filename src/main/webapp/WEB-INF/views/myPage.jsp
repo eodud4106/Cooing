@@ -287,7 +287,7 @@ $(document).ready(function () {
 					<li><a href="<c:url value ="/"/>">MainPage</a></li>
 					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
 					<li><a href="<c:url value ="/bookmark"/>">bookmark</a></li>
-					<li><a href="<c:url value ="/logout_get"/>">로그아웃</a></li>
+					<li><a href="<c:url value ="/logout_get"/>">LogOut</a></li>
 					<li><a href="javascript:create_personal_album()">앨범 만들기</a></li>
 					
 				</ul>
