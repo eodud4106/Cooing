@@ -10,6 +10,7 @@ function initialize(){
 	$('#gmemberplus').on('click',memberplus);
 	$('.img_3').on('click',memberdelete);
 	$('#desolve').on('click',deleteparty);
+	$('#albumcreate').on('click',create_group_album);
 }
 
 function confirmcheck(strque){
@@ -167,6 +168,32 @@ function getPartyAlbumList() {
 					error:function(e){alert(JSON.stringify(e));}		
 				});
 			}			
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+}
+
+//그룹 앨범 만드기...
+function create_group_album() {
+	$.ajax({
+		url: 'create_album',
+		type: 'post',
+		data: {
+			party_name: '${partyinfo.party_name}',
+			isPersonal: 0
+		},
+		dataType: 'json',
+		success: function(result) {
+			if(result == 'user null') {
+				alert('로그인 정보 없음!');
+			} else if(result == 'fail') {
+				alert('오류 발생!!');
+			} else {
+				 //TODO 앨범 편집창으로 이동
+				 location.href="edit_album?album_num=" + result;
+			}
 		},
 		error: function(e) {
 			alert(JSON.stringify(e));	
