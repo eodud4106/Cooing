@@ -143,9 +143,9 @@ select::-ms-expand { /* for IE 11 */
 		</c:if>
 
 		</div>
-		<div class="probootstrap-overflow">
+		<div class="probootstrap-overflow" id="albumcreate">
 			<nav class="probootstrap-nav">	
-			<a href="javascript:">앨범 만들기</a>				
+			<a href="#">앨범 만들기</a>				
 			</nav>
 		</div>
 
