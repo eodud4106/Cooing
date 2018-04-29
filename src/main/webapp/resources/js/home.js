@@ -68,7 +68,7 @@ function checkRadioPaging(){
 	         }
 	      }
 	   }
-	  alert(searchcheck);
+	  
 	   if(isChecked){
 		   temp = radioObj[i].value; 	   
 		   //value값

@@ -34,11 +34,8 @@ function initialize(){
 	});
 	
 	$('.category').on('click' , function(){
-		/*searchCategory($(this).attr('data'));*/
 		location.href = './category_other?categorynum=' + $(this).attr('data') + '';
 	});
-	 
-	
 }
 
 

@@ -72,6 +72,27 @@ public class AlbumController {
 		return albumDAO.total_album_count(search , album_writer ,"4") / 10;
 	}
 	
+	// 책 카테고리 조회
+	@ResponseBody
+	@RequestMapping(value = "/getMyCategoryAlbumList", method= RequestMethod.POST)
+	public ArrayList<AlbumVO> getMyCategoryAlbumList(HttpSession session , String categorynum ,  int pagenum) {
+		logger.info("mycategoryalbumlist_homecontroller_ljs");
+		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+		int totalnum = albumDAO.searchCategoryCount("4", album_writer, categorynum);
+		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
+		return albumDAO.searchCategory("4", album_writer, categorynum, pl.getStartBoard() , pl.getCountPage());
+	}
+	//책 카테고리 카운트 
+	@ResponseBody
+	@RequestMapping(value = "/getMyCategoryAlbumCount", method= RequestMethod.POST)
+	public int getMyCategoryAlbumCount(HttpSession session , String categorynum) {
+		logger.info("mycategoryalbumcount_homecontroller_ljs");
+		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+		return albumDAO.searchCategoryCount("4", album_writer, categorynum) / 10;
+		
+		
+	}
+	
 	//친구 목록 조회
 	@ResponseBody
 	@RequestMapping(value = "/getIDAlbumList", method= RequestMethod.POST)
