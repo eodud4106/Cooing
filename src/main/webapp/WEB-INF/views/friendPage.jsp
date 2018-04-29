@@ -42,11 +42,20 @@
 
 var pagenum = 0;
 var pagingcheck = false;
+//0번이면 검색 1번 이면 카테고리 
+var searchcheck = 0; 
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
-    	if($('#totalpage').val() >= pagenum){
-    		getIDAlbumList();
-	    	pagingcheck = true;
+    	if(searchcheck == 0){
+	    	if($('#totalpage').val() >= pagenum){
+	    		getIDAlbumList();
+	    		pagingcheck = true;
+	    	}
+    	}else if(searchcheck == 1){
+    		if($('#totalpage').val() >= pagenum){
+    			getIDCategoryAlbumList();
+    			pagingcheck = true;
+    		}
     	}
     }
 });
@@ -176,6 +185,7 @@ select::-ms-expand { /* for IE 11 */
 
 		</div>
 		<input type="hidden" id="totalpage" value="${totalpage }"> <br>
+		<input type="hidden" id="categorynum">
 	</div>
 
 

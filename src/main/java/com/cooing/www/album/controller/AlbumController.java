@@ -112,4 +112,25 @@ public class AlbumController {
 		Member member = (Member)session.getAttribute("Member");
 		return albumDAO.friend_album_count(search,albumwriter, member.getMember_id() , "5") / 10;
 	}
+	
+	// 책 카테고리 조회
+	@ResponseBody
+	@RequestMapping(value = "/getIDCategoryAlbumList", method= RequestMethod.POST)
+	public ArrayList<AlbumVO> getIDCategoryAlbumList(HttpSession session , String albumwriter , String categorynum ,  int pagenum) {
+		logger.info("IDcategoryalbumlist_homecontroller_ljs");
+		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+		int totalnum = albumDAO.friendCategoryCount(album_writer, "4", albumwriter, categorynum);
+		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
+		return albumDAO.friendCategory(album_writer, "4", albumwriter, categorynum ,pl.getStartBoard() , pl.getCountPage());
+	}
+	//책 카테고리 카운트 
+	@ResponseBody
+	@RequestMapping(value = "/getIDCategoryAlbumCount", method= RequestMethod.POST)
+	public int getIDCategoryAlbumCount(HttpSession session , String categorynum , String albumwriter) {
+		logger.info("IDcategoryalbumcount_homecontroller_ljs");
+		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
+		return albumDAO.friendCategoryCount(album_writer, "4", albumwriter, categorynum) / 10;
+		
+		
+	}
 }
