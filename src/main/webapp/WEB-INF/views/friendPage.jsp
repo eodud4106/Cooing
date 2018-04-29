@@ -146,8 +146,8 @@ select::-ms-expand { /* for IE 11 */
 					<p>CATEGORY</p>
 					<ul>
 
-						<li class="category" data="0">여행</li>
-						<li class="category" data="1">음식</li>
+						<li class="category" data="0">Journey</li>
+						<li class="category" data="1">Food</li>
 						<li><a href="<c:url value ="/"/>">MainPage</a></li>
 						<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
 						<li><a href="<c:url value ="/logout_get"/>">LogOut</a></li>
