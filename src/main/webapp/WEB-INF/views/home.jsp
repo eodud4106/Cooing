@@ -78,6 +78,12 @@ $(window).scroll(function() {
 $(document).ready(function () {
 	
 	initialize();	
+	if(${search != null}){
+		$('#searchtx').val('${search}');
+		$('#searchtx').css('width' , '200px');
+		$('#searchtx').css('paddingLeft' , '3px');
+		$('#searchtx').focus();
+	}
 	
 	//1번이면 카테고리 눌러서 넘어온 경우 , 엘스는 그냥 홈에 온 경우 혹은 검색으로 온 경우 
 	if(${search_other == 1}){
@@ -376,7 +382,8 @@ html, body, main, .container-fluid {
 	<div class ="search-bar">
 		<br><br>
 		<div align="margin-left: 20px;">
-       			 SEARCH &nbsp<img id="image_search" src="resources/img/ico/seo-1970475_960_720.png" style="width: 24px;
+				 <!-- src="resources/img/ico/seo-1970475_960_720.png" -->
+       			 SEARCH &nbsp<img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
        			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">
      			 <input id="searchtx" type="text" onblur="search_bar(this)" style="  border: none;
               	 background-color: rgba(0,0,0,0);
@@ -385,7 +392,7 @@ html, body, main, .container-fluid {
                	 outline: none;
               	  width: 0px;
                	 transition: all 0.5s;"
-               	 value="${search }"
+               	 
                	 >  		
 			
 			<!-- 정렬순서 -->		

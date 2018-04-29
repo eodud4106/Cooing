@@ -98,10 +98,15 @@ function getTotalAlbumList(checknum) {
 	if(pagenum == 0)
 		check  = true;
 	var searchtext = $('#searchtx').val();
+	console.log(searchtext + '_text : test')
 	$.ajax({
 		url: 'searchTotalAlbumList',
 		type: 'post',
-		data:{pagenum:++pagenum , checknum:checknum , searchtext:searchtext}, 
+		data:{
+			pagenum:++pagenum , 
+			checknum:checknum , 
+			searchword:searchtext
+		}, 
 		dataType: 'json',
 		success: function(result) {
 			//list 받아오면 리스트 돌려서 처리할 부분
@@ -110,7 +115,10 @@ function getTotalAlbumList(checknum) {
 				$.ajax({
 					url:'searchTotalCount',
 					type:'POST',		
-					data:{checknum:checknum}, 
+					data:{
+						searchword:searchtext,
+						checknum:checknum
+					}, 
 					dataType:'text',
 					success: function(list){
 						//total count 변경 부분
