@@ -181,6 +181,11 @@ html, body, main, .container-fluid {
 .outer {
 	background-color: #aaa;
 }
+/* 앨범 에딧 들어왔을 때 배경화면 꽉 채우기 */
+.page{
+	background-repeat: no-repeat !important;
+	background-size:100% 100% !important;
+}
 </style>
 
 <script>
