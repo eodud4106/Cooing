@@ -29,6 +29,10 @@
 <!-- 페이지 넘김 효과를 위한 js -->
 <script type="text/javascript" src="resources/js/turn.js"></script>
 
+<!-- 친구 그룹창을 위한 js -->
+<script src="resources/js/search.js"></script>
+<script src="resources/js/popup.js"></script>
+
 <!-- albumEdit 용 js -->
 <script type="text/javascript" src="resources/js/albumEdit.js"></script>
 <script type="text/javascript" src="resources/js_js/html2canvas.min.js"></script>
@@ -225,7 +229,12 @@ html, body, main, .container-fluid {
 						true).trigger('change');
 				$("#album_category").val(album_category).prop("selected", true)
 						.trigger('change');
-
+				
+				searchword();
+				searchgroup();
+				$('#friendsearch').keyup(function() {
+					searchword();
+				});
 			});
 
 	function checkRadioButton(iCheck) {
@@ -509,17 +518,7 @@ html, body, main, .container-fluid {
 						style="text-align: center; font-size: 20px; padding: 20px 0px 0px 0px; font-family: Poppins-Bold;">MY
 						GROUP</p>
 
-					<div class="groupList" style="margin-top: 20px; width: 200px;">
-						<c:if test="${Member ne null}">
-							<c:if test="${fn:length(group) ne 0}">
-								<c:forEach var="party" items="${group}">
-									<div name="group">
-										<p class="arr_party" partynum="${party.party_num}">${party.party_name}</p>
-									</div>
-								</c:forEach>
-							</c:if>
-						</c:if>
-						<!-- </div> -->
+					<div class="groupList" id="group" style="margin-top: 20px; width: 200px;">
 					</div>
 				</section>
 			</div>

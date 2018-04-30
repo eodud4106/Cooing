@@ -29,6 +29,10 @@
 <!-- 페이지 넘김 효과를 위한 js -->
 <script type="text/javascript" src="resources/js/turn.js"></script>
 
+<!-- 친구 그룹창을 위한 js -->
+<script src="resources/js/search.js"></script>
+<script src="resources/js/popup.js"></script>
+
 <!-- albumEdit 용 js -->
 <script type="text/javascript" src="resources/js/albumEdit.js"></script>
 <script type="text/javascript" src="resources/js_js/html2canvas.min.js"></script>
@@ -286,7 +290,9 @@ html, body, main, .container-fluid {
 		// increaseArea: '20%' // optional
 
 		});
-
+		
+		searchword();
+		searchgroup();
 	});
 	
 	//현재 페이지의 북마크가 있는지 검색 
@@ -584,55 +590,6 @@ html, body, main, .container-fluid {
 			}
 		});
 	}
-
-	function checkRadioButton(iCheck) {
-
-		var temp;
-
-		var radioObj = document.all(iCheck);
-
-		var isChecked;
-		if (radioObj.length == null) { // 라디오버튼이 같은 name 으로 하나밖에 없다면
-			isChecked = radioObj.checked;
-		} else { // 라디오 버튼이 같은 name 으로 여러개 있다면
-			for (var i = 0; i < radioObj.length; i++) {
-				if (radioObj[i].checked) {
-					isChecked = true;
-					break;
-				}
-			}
-		}
-
-		if (isChecked) {
-			alert('체크된거있음' + radioObj[i].value);
-			temp = radioObj[i].value;
-			alert('템프 값 : ' + temp);
-
-			//value값
-			switch (temp) {
-			case '1':
-				alert(temp);
-				$('.pages').css("background-image",
-						"url(..//resources//image_mj//season.jpg)");
-				break;
-
-			case '2':
-				alert(temp);
-				$('.pages').css("background-color", "pink");
-				break;
-
-			default:
-				alert(temp);
-				$('.pages').css("background-image",
-						"url(..//resources//image_mj//vintage.jpg)");
-				break;
-			}
-
-		} else {
-			alert('체크된거없음');
-		}
-	}
-	
 </script>
 
 </head>
@@ -760,17 +717,7 @@ html, body, main, .container-fluid {
 						style="text-align: center; font-size: 20px; padding: 20px 0px 0px 0px; font-family: 'Nanum Gothic Coding', monospace;">MY
 						GROUP</p>
 
-					<div class="groupList" style="margin-top: 20px; width: 200px;">
-						<c:if test="${Member ne null}">
-							<c:if test="${fn:length(group) ne 0}">
-								<c:forEach var="party" items="${group}">
-									<div name="group">
-										<p class="arr_party" partynum="${party.party_num}">${party.party_name}</p>
-									</div>
-								</c:forEach>
-							</c:if>
-						</c:if>
-						<!-- </div> -->
+					<div class="groupList" id="group" style="margin-top: 20px; width: 200px;">
 					</div>
 				</section>
 			</div>
