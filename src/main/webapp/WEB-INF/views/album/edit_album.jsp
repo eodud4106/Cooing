@@ -388,7 +388,7 @@ html, body, main, .container-fluid {
 					<div class="wrap-input100 validate-input"
 						data-validate="Name is required">
 						<span class="label-input100">Album Name</span>
-						<div class="contact100-form-title input100" id="album_name" style="font-size: 20pt; outline:none;" contenteditable="true">${album.album_name}</div>
+						<div class="contact100-form-title input100" id="album_name" style="font-size: 20pt; outline:none; margin-top: 0" contenteditable="true">${album.album_name}</div>
 						<span class="focus-input100"></span>
 						<input hidden="hidden" id="hidden_album_num" value="${album.album_num}">
 					</div>
