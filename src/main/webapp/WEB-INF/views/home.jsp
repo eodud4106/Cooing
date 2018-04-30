@@ -55,7 +55,6 @@
 
 <script>
 var page = 0;
-var pagenum = 0;
 var pagingcheck = false;
 var total = true;
 //이게 0번이면 검색어 1번이면 카테고리 2번이면 그냥 메인 으로 나눠서 페이징 가지고 오게 된다.
@@ -144,7 +143,7 @@ section {
     font-size : 14px;        
     border-top: 1px solid #ddd;}
 /*라디오버튼 숨김*/
-#tab1,#tab2 {
+#tab1,#tab2,#tab3 {
       display: none;}
 
 label {
@@ -162,14 +161,15 @@ label:hover {
     cursor: pointer;}
 
 /*input 클릭시, label 스타일*/
-#tab1:checked + label,#tab2:checked + label {
+#tab1:checked + label, #tab2:checked + label, #tab3:checked + label {
       color: #555;
       border: 1px solid #ddd;
       border-top: 2px solid #2e9cdf;
       border-bottom: 1px solid #ffffff;}
 
 #tab1:checked ~ #content1,
-#tab2:checked ~ #content2{
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3{
     display: block;}
 
 .search{	
@@ -275,34 +275,6 @@ html, body, main, .container-fluid {
 	height: 50px;
 }
 
-/* .modal {
-	display: none;
-	position: absolute;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: none;
-	background-color: rgba(0, 0, 0, 0.7);
-}
-
-.close {
-	color: #aaa;
-	float: left;
-	font-size: 30px;
-	font-weight: bold;
-	position: fixed;
-	right: 16;
-	top: 0;
-	background-color: #f0f0f0;
-}
-
-.close:hover, .close:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
-} */
 .friendList{
 	height: 700px;		
 	overflow-y : scroll;
@@ -321,6 +293,16 @@ html, body, main, .container-fluid {
     cursor: pointer;
     margin-top: 100px;    
 }
+.newsList{
+	height:700px;		
+	overflow-y : scroll;
+	padding-left: 30px;
+	/* overflow-y:hidden; */
+	/* background-color : aliceblue; */
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 100px;
+}
 a{
 	font-size: 20px;
 }
@@ -333,8 +315,6 @@ li{
 }
 
 </style>
-
-
 
 
 </head>
@@ -500,10 +480,13 @@ li{
 		<div class="probootstrap-overflow">
 		<div id="main">
 		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
-		<label for="tab1">FRIEND</label>
+		<label for="tab1" style = "font-size: 10px;">FRIEND</label>
 
   		<input class = "input1" id="tab2" type="radio" name="tabs">
-    	<label for="tab2">GROUP</label>   
+    	<label for="tab2" style = "font-size: 10px;">GROUP</label>   
+    	
+    	<input class = "input1" id="tab3" type="radio" name="tabs">
+    	<label for="tab3" style = "font-size: 10px;">NEWS</label>   
 
     	<section id="content1"> 
     	<!-- 페이지 저장 -->		
@@ -519,22 +502,26 @@ li{
 				</div>			
 
 	<div id="dropDownSelect1"></div>    	    
-       
-    	</section>
-	<form id="testimg">
+    <form id="testimg">
 		<input type="hidden" name="imgSrc" id="imgSrc" />
-	</form>	
+	</form>	   
+    </section>	
    	
    	<section id ="content2">       					
 		<div class="button_container">		
-			<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
-		</div>		
+			<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button>
+		</div>				
 		
-		<div class = "groupList" id="group" style= "margin-top: 70px; width: 200px;">						
-		</div>
+		<div class = "groupList" id="group" style= "margin-top: 70px; width: 200px;"></div>
+	</section>   	
+	
+	<!-- 영준이 알림공간 -->
+	<section id ="content3">       					
+		<div class = "newsList"  style= "margin-top: 70px; width: 200px;">
+		여기 넣으셈
+		</div>		
 	</section>   
-   </div>
-   </div>
+  
 	</aside>
 	
 </body>
