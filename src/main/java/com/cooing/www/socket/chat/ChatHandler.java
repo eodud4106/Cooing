@@ -159,7 +159,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 
 				// 1. message_to(수신 대상 그룹)으로 그룹 멤버를 조회
 				ArrayList<PartyMember> arr_partymember = 
-						rDAO.searchPartyMember(Integer.parseInt(msg.getAddressee()));
+						rDAO.searchPartyMember_by_party_name(msg.getAddressee());
 				// 2. 조회한 그룹 멤버들의 id 중 현재 세션에 연결된 경우 메시지 발신
 				
 				for (PartyMember partyMember : arr_partymember) {
@@ -206,7 +206,8 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 
 				// 1. message_to(수신 대상 그룹)으로 그룹 멤버를 조회
 				ArrayList<PartyMember> arr_partymember = 
-						rDAO.searchPartyMember(Integer.parseInt(msg.getAddressee()));
+						rDAO.searchPartyMember_by_party_name(msg.getSender());
+				
 				// 2. 조회한 그룹 멤버들의 id 중 현재 세션에 연결된 경우 읽음 메시지 발신
 				
 				for (PartyMember partyMember : arr_partymember) {
@@ -228,7 +229,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 		
 	}
 	
-	//대화 상대별 안 읽은 메시지 푸시
+	//TODO 대화 상대별 안 읽은 메시지 푸시
 	public void push_unread_message_count(MessageVO msg) {
 		
 		try {
@@ -252,7 +253,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 
 				// 1. message_to(수신 대상 그룹)으로 그룹 멤버를 조회
 				ArrayList<PartyMember> arr_partymember = 
-						rDAO.searchPartyMember(Integer.parseInt(msg.getAddressee()));
+						rDAO.searchPartyMember_by_party_name(msg.getSender());
 				// 2. 조회한 그룹 멤버들의 id 중 현재 세션에 연결된 경우 읽음 메시지 발신
 				
 				for (PartyMember partyMember : arr_partymember) {

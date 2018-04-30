@@ -462,6 +462,7 @@ function show_unread_msg_count(result) {
 		}).appendTo($target).click(function(e) {
 			
 			openChat($(this).attr('is1to1'), $(this).attr('who'));
+			$(this).remove;
 		});
 		
 		var $role = $('<div />', {

@@ -4,6 +4,7 @@ public class PartyMember {
 	private int g_member_num;
 	private int g_member_partynum;
 	private String g_member_memberid;
+	private String party_name;
 	
 	public PartyMember(){}
 	public PartyMember(int num , int partynum , String memberid){
@@ -28,6 +29,13 @@ public class PartyMember {
 	}
 	public void setG_member_memberid(String g_member_memberid) {
 		this.g_member_memberid = g_member_memberid;
+	}
+	
+	public String getParty_name() {
+		return party_name;
+	}
+	public void setParty_name(String party_name) {
+		this.party_name = party_name;
 	}
 	@Override
 	public String toString() {

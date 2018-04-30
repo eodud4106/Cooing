@@ -41,7 +41,7 @@
 			JOIN
 				partymember p2
 			ON
-				p1.party_num = p2.g_member_memberid) p
+				p1.party_num = p2.g_member_partynum) p
 		WHERE
 			g_member_memberid != #{sender}
 			AND party_name = #{addressee}
@@ -61,15 +61,13 @@
 				count(*)-1
 			FROM
 				(SELECT
-					p1.party_num,
-					p1.party_name,
-					p2.g_member_memberid
+					p1.party_name
 				FROM
 					party p1
 				JOIN
 					partymember p2
 				ON
-					p1.party_num = p2.g_member_memberid) p
+					p1.party_num = p2.g_member_partynum) p
 			WHERE
 				party_name = #{addressee}
 			) AS unread

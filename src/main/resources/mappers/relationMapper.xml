@@ -66,4 +66,22 @@
 	<delete id="deleteMemberParty" parameterType="int">
 		delete from partymember where g_member_partynum=#{g_member_partynum}
 	</delete>
+	
+	<select id="searchPartyMember_by_party_name" resultType="partymember">
+	SELECT
+		*
+	FROM
+		(SELECT
+			p2.g_member_partynum,
+			p1.party_name,
+			p2.g_member_memberid
+		FROM
+			party p1
+		JOIN
+			partymember p2
+		ON
+			p1.party_num = p2.g_member_partynum) p
+	WHERE
+		party_name = #{party_name}
+	</select>
 </mapper>

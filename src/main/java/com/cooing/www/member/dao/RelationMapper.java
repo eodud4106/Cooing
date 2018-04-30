@@ -22,4 +22,5 @@ public interface RelationMapper {
 	public int deletePartyMember(Map<String,Object> map);
 	public int deleteMemberParty(int groupnum);
 	public int deleteLeaderParty(int groupnum);
+	public ArrayList<PartyMember> searchPartyMember_by_party_name(String party_name);
 }
