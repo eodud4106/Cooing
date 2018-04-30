@@ -258,6 +258,10 @@ a{
 	font-size: 20px;
 	font-family: 'Nanum Gothic Coding', monospace;
 }
+li{
+	cursor: pointer;
+}
+
 </style>
 </head>
 <body style ="font-family: 'Nanum Gothic Coding', monospace;">

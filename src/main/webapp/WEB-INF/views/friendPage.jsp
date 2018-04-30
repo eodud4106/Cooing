@@ -252,7 +252,7 @@ html, body, main, .container-fluid {
 	padding-left: 30px;	
     font-size: 18px;
     cursor: pointer;
-    margin-top: -15px;
+    margin-top: 15px; 
 }
 .groupList{
 	height: 700px;	
@@ -264,6 +264,17 @@ html, body, main, .container-fluid {
     cursor: pointer;
     margin-top: 100px;
     
+}
+a{
+	font-size: 20px;
+	color: black;
+}
+.c{
+	font-size: 20px;
+	font-family: 'Nanum Gothic Coding', monospace;
+}
+li{
+	cursor: pointer;
 }
 
 </style>
@@ -305,21 +316,20 @@ html, body, main, .container-fluid {
 
 			<div class="probootstrap-overflow">
 				<nav class="probootstrap-nav">
-					<p>FRIEND_PAGE</p>
-
-					<p>CATEGORY</p>
 					<ul>
-
-						<li class="category" data="0">Journey</li>
-						<li class="category" data="1">Food</li>
-						<li><a href="<c:url value ="/"/>">MainPage</a></li>
-						<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
-						<li><a href="<c:url value ="/logout_get"/>">LogOut</a></li>
-
+						<li><a href="<c:url value ="/"/>">HOME</a></li>
+						<li><a href="<c:url value ="/myPage"/>">MYPAGE</a></li>
+						<li><a href="<c:url value ="/LankingPage"/>">TODAY'S LANKING</a></li>						
 					</ul>
+						<p class = "c">CATEGORY</p>
+					<ul>
+						<li class="category" data="0">Journey</li>
+						<li class="category" data="1">Food</li>
+					</ul>					
 				</nav>
-
 			</div>
+			<a href="<c:url value ="/logout_get"/>" style = "float :right;" role="Logout"><i class="fas fa-sign-out-alt"></i></a>
+			
 	</aside>
 
 
