@@ -296,8 +296,6 @@ function onMessage(evt) {
 			}
 		}
 
-		
-
 		return;
 	}
     
@@ -309,9 +307,19 @@ function onMessage(evt) {
     		
 	} else {
 		// 대화 중인 상대가 아님 -> 수신 알림
+		/*
+		 * TODO
+		 */
+		console.log('메세지 왔어요! -> ' + JSON.stringify(chatData));
+		
+		var sender = chatData.is1to1 == 1? chatData.sender : chatData.addressee;
+		
+		$('.news_sender[sender=' + sender + ']').css({
+			"background-color": "white"
+		});
 		
 		// 알림1. 팝업 알림
-		alert(chatData.sender + '님으로부터 메시지가 왔습니다!');
+		//alert(chatData.sender + '님으로부터 메시지가 왔습니다!');
 		
 		// 알림2. 대화창 빨간색 표시
 		if (is1to1 == 1) {
@@ -445,7 +453,7 @@ function readMessage() {
 
 function show_unread_msg_count(result) {
 	$(result).each(function(i, unread) {
-		console.log(unread);
+
 		var $target = $('#div_news');
 		
 		var $card = $('<div />', {
@@ -479,7 +487,8 @@ function show_unread_msg_count(result) {
 		var $sender = $('<div />', {
 			"class": "news_card news_sender",
 			"role": "sender",
-			"text": unread.sender
+			"text": unread.sender,
+			"sender": unread.sender
 		}).css({
 			"width": "50%",
 			"height": "25px",
@@ -490,7 +499,8 @@ function show_unread_msg_count(result) {
 		var $content = $('<div />', {
 			"class": "news_card news_content",
 			"role": "content",
-			"text": "메세지 " + unread.unread + "건"
+			"text": "메세지 " + unread.unread + "건",
+			"unread": unread.unread
 		}).css({
 			"width": "100%",
 			"height": "20px",
