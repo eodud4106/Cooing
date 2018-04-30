@@ -1424,6 +1424,8 @@ function savePage(mode) {
     if(mode == 'all') {
         // 앨범 전체 저장 모드
         count = $('#album').turn('pages');
+        // 전체 저장 안하면 confirm 띄우기 변수
+        all_save = true;
         alert('전체 페이지가 저장 되었습니다.');
 
     } else if(mode == 'curr') {
