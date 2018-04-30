@@ -183,7 +183,10 @@ function get_album_list(type , writer_type , order, page , checknum) {
 		page = 0;
 	}
 
-	if(page == 0) check  = true;
+	if(page == 0){ 
+		check  = true;
+		total = true;
+	}
 	
 	var keyword;
 	if(checknum == 1)
@@ -205,11 +208,9 @@ function get_album_list(type , writer_type , order, page , checknum) {
 		success: function(result) {
 			
 			if(JSON.stringify(result) == '[]') {
-				// 더 이상 불러올 앨범이 없는 경우
-				// 진수 씨 이 경우 더 이상 서버에 호출하지 않도록 해두면 됩니다....
-				$('a[href="/www"]').text("더 이상 못 불러와요.")
+				total = false;
 			} else {
-				$('a[href="/www"]').text("COOING")
+				total = true;
 			}
 			
 			// 가져온 앨범을 보여주기...

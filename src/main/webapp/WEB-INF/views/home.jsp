@@ -57,18 +57,19 @@
 var page = 0;
 var pagenum = 0;
 var pagingcheck = false;
+var total = true;
 //이게 0번이면 검색어 1번이면 카테고리 2번이면 그냥 메인 으로 나눠서 페이징 가지고 오게 된다.
 var searchcheck = 99;
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
     	//메인으로 그냥 들어왔을 때 와 검색해서 들어왔을 때 = 0 / 카테고리 눌러서 들어왔을 때  = 1 
     	if(searchcheck == 0){
-    		if($('#totalpage').val() >= pagenum){	
+    		if(total){	
     			get_album_list('writer' , 'total', 'date', ++pagenum , 0);
         		pagingcheck = true;
         	}
     	}else if(searchcheck == 1){
-    		if($('#totalpage').val() >= pagenum){	
+    		if(total){	
     			get_album_list('category','total','date',++pagenum , 1);
         		pagingcheck = true;
         	}
@@ -406,7 +407,6 @@ html, body, main, .container-fluid {
 				<input type="radio" name="iCheck" class = "input"value="1" checked>최신순
 				<input type="radio" name="iCheck" class = "input"value="2" >인기순				
 			</form>
-			<input type="hidden" id="totalpage" value="${totalpage }">
 			<input type="hidden" id="categorynum" value="${categorynum}">
 		</div>
 	</div>

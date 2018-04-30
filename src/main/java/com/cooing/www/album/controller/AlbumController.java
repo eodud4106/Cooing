@@ -102,8 +102,6 @@ public class AlbumController {
 		logger.info("mycategoryalbumcount_homecontroller_ljs");
 		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
 		return albumDAO.searchCategoryCount("4", album_writer, categorynum) / 10;
-		
-		
 	}
 	
 	//친구 목록 조회
@@ -143,8 +141,6 @@ public class AlbumController {
 		logger.info("IDcategoryalbumcount_homecontroller_ljs");
 		String album_writer = ((Member) session.getAttribute("Member")).getMember_id();
 		return albumDAO.friendCategoryCount(album_writer, "4", albumwriter, categorynum) / 10;
-		
-		
 	}
 	
 	//앨범 리스트 리턴

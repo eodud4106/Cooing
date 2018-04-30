@@ -41,17 +41,18 @@
 
 var pagenum = 0;
 var pagingcheck = false;
+var total = true;
 //0번이면 검색 1번 이면 카테고리 
 var searchcheck = 99; 
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
     	if(searchcheck == 0){
-	    	if($('#totalpage').val() >= pagenum){
+	    	if(total){
 	    		get_friend_album_list('writer','friend','date', ++pagenum , 0);
 	    		pagingcheck = true;
 	    	}
     	}else if(searchcheck == 1){
-    		if($('#totalpage').val() >= pagenum){
+    		if(total){
     			get_friend_album_list('category','friend','date', ++pagenum , 1);
     			pagingcheck = true;
     		}

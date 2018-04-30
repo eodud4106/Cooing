@@ -192,7 +192,10 @@ function get_group_album_list(type , writer_type , groupid , order, page , check
 		page = 0;
 	}
 
-	if(page == 0) check  = true;
+	if(page == 0){ 
+		check  = true;
+		total = true;
+	}
 	
 	var keyword;
 	if(checknum == 1)
@@ -212,6 +215,11 @@ function get_group_album_list(type , writer_type , groupid , order, page , check
 		}, 
 		dataType: 'json',
 		success: function(result) {
+			if(JSON.stringify(result) == '[]') {
+				total = false;
+			} else {
+				total = true;
+			}
 			// 앨범 스크롤 페이징 처리...
 			AlbumListPaging_hindoong(check , result);			
 		},
