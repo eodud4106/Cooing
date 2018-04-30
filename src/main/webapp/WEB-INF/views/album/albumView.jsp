@@ -686,7 +686,7 @@ height: 30px;
 						<button class="contact100-form-btn bt_album_info"
 							onclick="writereply()">
 							<span>
-								등록 <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+								작성
 							</span>
 						</button>
 					</div>
