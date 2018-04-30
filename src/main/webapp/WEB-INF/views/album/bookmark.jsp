@@ -8,7 +8,11 @@
 <head>
 <title>BookMark</title>
 <meta charset="utf-8" />
-
+<style>
+.bookmark_img {
+cursor:pointer;
+}
+</style>
 
 <script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
 <!-- 폰트 -->
