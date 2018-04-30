@@ -351,12 +351,19 @@ html, body, main, .container-fluid {
 
 	}
 	
+	
+	//앨범 삭제
 	function removeAlbum() {
 		var isDelete = confirm("앨범을 삭제 하시겠습니까?");
 		if(isDelete == false){
 			return false;
 		}
 		location.href="deleteAlbum?album_num=" + ${album.album_num} + "";
+	}
+	
+	//배경 되돌리기
+	function reset_background() {
+		$('#page1').css('background-image', '');
 	}
 
 </script>
@@ -580,13 +587,17 @@ html, body, main, .container-fluid {
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-forward"></i>
 			</div>
+			<div id="i_reset" class="under_tool" onclick="reset_background()" role="배경 초기화">
+				<i style="width: 30px; height: 30px; margin: 10px;"
+					class="fas fa-eraser"></i>
+			</div>
 			<div id="i_add" class="under_tool" onclick="addPage()" role="페이지 추가">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="far fa-plus-square"></i>
 			</div>
 			<div id="i_remove" class="under_tool" onclick="removePage()" role="페이지 삭제">
 				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="far fa-file-excel"></i>
+					class="far fa-minus-square"></i>
 			</div>
 			<div id="i_save" class="under_tool" onclick="savePage('all')" role="전체 저장">
 				<i style="width: 30px; height: 30px; margin: 10px;"
