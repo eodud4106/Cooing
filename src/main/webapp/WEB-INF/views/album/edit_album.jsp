@@ -568,6 +568,14 @@ html, body, main, .container-fluid {
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-backward"></i>
 			</div>
+			<div id="i_before" class="under_tool" onclick="go_page('before')" role="이전 페이지">
+				<i style="width: 30px; height: 30px; margin: 10px;"
+					class="fas fa-angle-left"></i>
+			</div>
+			<div id="i_next" class="under_tool" onclick="go_page('next')" role="다음 페이지">
+				<i style="width: 30px; height: 30px; margin: 10px;"
+					class="fas fa-angle-right"></i>
+			</div>
 			<div id="i_end" class="under_tool" onclick="nav_page('end')" role="마지막 페이지로">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-forward"></i>
