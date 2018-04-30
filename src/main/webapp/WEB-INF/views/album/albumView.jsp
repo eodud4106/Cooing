@@ -261,6 +261,14 @@ html, body, main, .container-fluid {
 	//라디오버튼
 	$(document).ready(function() {
 		
+		//댓글 15자 넘으면 alert창으로 막기
+		$('#input_reply').on('keyup', function() {
+	        if($(this).val().length > 15) {
+	            $(this).val($(this).val().substring(0, 15));
+	            alert('댓글은 최대 15자까지 입력하실 수 있습니다.');
+	        }
+	    });
+		
 		ready_album('view');
 		
 		replyList();
