@@ -85,7 +85,7 @@ public class AlbumEditController {
 		if (album_writer == null) returnMessage = "user null";
 		
 		// 앨범 이름 - 임시 앨범, 공개 범위 - 나만or그룹, 카테고리 - 기타로 설정
-		AlbumVO albumwrite = new AlbumVO(album_writer, "Enter album name", openrange, 20, isPersonal);
+		AlbumVO albumwrite = new AlbumVO(album_writer, "임시 앨범", openrange, 20, isPersonal);
 
 		//앨범 만들기
 		int created_album_num = -1;
