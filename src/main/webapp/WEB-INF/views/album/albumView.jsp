@@ -297,6 +297,10 @@ height: 30px;
 		
 		searchword();
 		searchgroup();
+		
+		$('#friendsearch').keyup(function() {
+			searchword();
+		});
 	});
 	
 	//현재 페이지의 북마크가 있는지 검색 
