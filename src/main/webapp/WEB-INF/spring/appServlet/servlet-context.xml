@@ -36,9 +36,11 @@
 	
 	<websocket:handlers>
         <websocket:mapping path="chat/echo.do" handler="chatHandler"/>
+        <websocket:mapping path="push/echo.do" handler="pushHandler"/>
     </websocket:handlers>
  
-    <beans:bean id="chatHandler" class="com.cooing.www.chat.controller.ChatHandler"/>
+    <beans:bean id="chatHandler" class="com.cooing.www.socket.chat.ChatHandler"/>
+    <beans:bean id="pushHandler" class="com.cooing.www.socket.push.PushHandler"/>
 
 	<context:component-scan base-package="com.cooing.www" />
 	<beans:bean id="loginInterceptor" class="com.cooing.www.interceptor.LoginInterceptor"></beans:bean>
@@ -50,6 +52,7 @@
 			<mvc:mapping path="/groupupdate_get" />
 			<mvc:mapping path="/albumList" />
 			<mvc:mapping path="/albumView" />
+			<mvc:mapping path="/edit_album" />
 			<mvc:mapping path="/myPage" />
 			<mvc:mapping path="/friendPage" />
 			<mvc:mapping path="/groupPage" />

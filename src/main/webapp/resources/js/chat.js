@@ -4,7 +4,7 @@
 
  // 채팅에 쓸 웹소켓과 위치
 var websocket;
-var wsUri = "ws://localhost:80/www/chat/echo.do";
+var wsUri = "ws://cooing.site/www/chat/echo.do";
 
 var userId;
 var counterpart;
