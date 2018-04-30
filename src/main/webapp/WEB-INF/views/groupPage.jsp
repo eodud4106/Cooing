@@ -50,12 +50,12 @@ $(window).scroll(function() {
     	//메인으로 그냥 들어왔을 때 와 검색해서 들어왔을 때 = 0 / 카테고리 눌러서 들어왔을 때  = 1 
     	if(searchcheck == 0){
     		if($('#totalpage').val() >= pagenum){	
-    			get_group_album_list('writer' , 'party', ${partyinfo.getParty_name()} , 'date', ++pagenum , 0);
+    			get_group_album_list('writer' , 'party', '${partyinfo.getParty_name()}' , 'date', ++pagenum , 0);
         		pagingcheck = true;
         	}
     	}else if(searchcheck == 1){
     		if($('#totalpage').val() >= pagenum){	
-    			get_group_album_list('category' , 'party', ${partyinfo.getParty_name()} , 'date', ++pagenum , 1);
+    			get_group_album_list('category' , 'party', '${partyinfo.getParty_name()}' , 'date', ++pagenum , 1);
         		pagingcheck = true;
         	}
     	}   	
@@ -68,7 +68,7 @@ $(document).ready(function () {
 	$('.category').on('click' , function(){
 		searchcheck = 99;
 		$('#categorynum').val($(this).attr('data'));
-		get_album_list('category' , 'party' , '${partyinfo.getParty_name()}'  , 'date', ++pagenum , 1);
+		get_group_album_list('category' , 'party' , '${partyinfo.getParty_name()}'  , 'date', ++pagenum , 1);
 	});
 	
 	if (${sessionScope.Member != null}) {
@@ -83,7 +83,7 @@ $(document).ready(function () {
 		}
 	});
 	
-	get_album_list('writer' , 'party' , '${partyinfo.getParty_name()}' ,  'date', ++pagenum , 0);
+	get_group_album_list('writer' , 'party' , '${partyinfo.getParty_name()}' ,  'date', ++pagenum , 0);
 	
 	$('#albumcreate').on('click',create_group_album);
 });

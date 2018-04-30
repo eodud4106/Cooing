@@ -195,6 +195,8 @@ public class AlbumController {
 			map.put("userId", user);
 		map.put("friendId", friendId);
 		
+		System.out.println(map.toString());
+		
 		return albumDAO.get_album_list(map, rb);
 	}
 	
