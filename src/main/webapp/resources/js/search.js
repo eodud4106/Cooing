@@ -246,6 +246,7 @@ function get_album_list(type , writer_type , order, page , checknum) {
 function AlbumListPaging_hindoong(check, result) {
 	if (check)
 		$('.card-columns').html('');
+	var category = ['여행' , '스포츠 및 레저' , '동물' , '음악' , '음식 및 요리' , '패션 및 뷰티' , '연예 및 TV' , '게임' , '영화' , '도서' , '공연 및 전시' , '외국어' , '전문지식' , '수집 및 제작' , '자기계발' , '육아' , '일상생활' , '자동차' , '낚시' , '건강'];
 	$(result).each(function(i, album) {
 		
 		var $div_card = $('<div />', {
@@ -297,6 +298,11 @@ function AlbumListPaging_hindoong(check, result) {
 		
 		var $p_reply = $('<p />', {
 			"html": "댓글 :" + album.reply_count,
+			"class": "card_album_contents"
+		}).appendTo($info_div);
+		
+		var $p_category = $('<p />', {
+			"html": "Category :" + category[album.album_category],
 			"class": "card_album_contents"
 		}).appendTo($info_div);
 		

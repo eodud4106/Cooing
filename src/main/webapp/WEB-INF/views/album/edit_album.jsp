@@ -286,12 +286,13 @@ html, body, main, .container-fluid {
 	}
 
 	function page1ImageSave() {
-
+		alert('check');
 		html2canvas($('#page1'), {
 			onrendered : function(canvas) {
 				if (typeof FlashCanvas != "undefined") {
 					FlashCanvas.initElement(canvas);
 				}
+				alert('check2');
 				//반전이라는데 확인은 못해봄 작동을 안해서리...
 				//canvas.scale(1,-1);
 				$('#imgSrc').val(canvas.toDataURL('image/png'));

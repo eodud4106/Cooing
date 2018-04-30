@@ -350,7 +350,8 @@ $(document).ready(function () {
                	 outline: none;
               	  width: 0px;
                	 transition: all 0.5s;
-               	 padding-right:0px;">		
+               	 padding-right:0px;
+               	 padding-left:0px;">		
 				
 		</div>
 		<input type="hidden" id="categorynum">

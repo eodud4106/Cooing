@@ -367,7 +367,7 @@ li{
 				onclick="inputbox_focus()">
 			<input id='searchtx' type="text"
 				onblur="search_bar(this)"			
-                style="border: none; background-color: rgba(0, 0, 0, 0); color: #666666; border-bottom: solid 2px #333; outline: none; width: 0px; transition: all 0.5s;padding-right:0px;">
+                style="border: none; background-color: rgba(0, 0, 0, 0); color: #666666; border-bottom: solid 2px #333; outline: none; width: 0px; transition: all 0.5s;padding-right:0px;padding-left:0px;">
 
 		</div>
 		<input type="hidden" id="totalpage" value="${totalpage }"> <br>

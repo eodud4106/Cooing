@@ -407,7 +407,7 @@ select::-ms-expand { /* for IE 11 */
               	  width: 0px;
                	 transition: all 0.5s;
                	  padding-right:0px;
-               	 "
+               	  padding-left:0px;"
                	 >		
 				
 		</div>
