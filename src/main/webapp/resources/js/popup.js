@@ -51,15 +51,14 @@ function createPartyPopup(e, elem) {
 	var $div_go_party_chat = $('<div />', {
 		"class": "div_go_party_chat",
 		"party_name": $(elem).text(),
-		"text": "채팅",
-		"party_num": $(elem).attr('partynum')
+		"text": "채팅"
 	}).css({
 		"width": "100%",
 		"height": "50%",
 		"display": "block",
 		"float": "left"
 	}).click(function(e) {
-		openChat(0, $(this).attr('party_num'), $(this).attr('party_name'));
+		openChat(0, $(this).attr('party_name'));
 	}).appendTo($div_party_popup);
 
 

@@ -475,9 +475,7 @@ li{
 	
 	<!-- 영준이 알림공간 -->
 	<section id ="content3">       					
-		<div class = "newsList"  style= "margin-top: 70px; width: 200px;">
-		여기 넣으셈
-		</div>		
+		<div class = "newsList" id="div_news" style= "margin-top: 0px; padding:5px;width: 200px;"></div>
 	</section>   
   
 	</aside>

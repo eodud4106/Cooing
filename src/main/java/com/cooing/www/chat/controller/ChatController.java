@@ -47,4 +47,23 @@ public class ChatController {
 		return arr_message;
 		
 	}
+	
+	// 안 읽은 메세지 개수 조회
+	@ResponseBody
+	@RequestMapping(value = "/get_unread_chat_count", method = RequestMethod.POST)
+	public ArrayList<MessageVO> get_unread_chat(Model model, HttpSession session) {
+		
+		logger.debug("안 읽은 메시지 불러오기");
+		
+		String id = ((Member) session.getAttribute("Member")).getMember_id();
+		HashMap<String, String> map_search = new HashMap<>();
+		
+		ArrayList<MessageVO> arr_message = new ArrayList<>();
+		map_search.put("unread", id);
+		
+		arr_message = mDAO.select_unread_message(map_search);
+		
+		return arr_message;
+		
+	}
 }

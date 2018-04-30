@@ -56,5 +56,18 @@ public class MessageDAO {
 		
 		return mlist;
 	}
+	
+	public ArrayList<MessageVO> select_unread_message(HashMap<String, String> map) {
+		
+		ArrayList<MessageVO> mlist = new ArrayList<MessageVO>();
+		
+		try {
+			mlist = session.getMapper(MessageMapper.class).select_unread_message(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return mlist;
+	}
 
 }

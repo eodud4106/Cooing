@@ -31,11 +31,21 @@
 		SELECT 
 			LISTAGG( CONCAT( (CONCAT('.', g_member_memberid)), '.'), '')
 			WITHIN GROUP (ORDER BY g_member_memberid)
-		FROM partymember
+		FROM
+			(SELECT
+				p1.party_num,
+				p1.party_name,
+				p2.g_member_memberid
+			FROM
+				party p1
+			JOIN
+				partymember p2
+			ON
+				p1.party_num = p2.g_member_memberid) p
 		WHERE
 			g_member_memberid != #{sender}
-			AND g_member_partynum = #{addressee}
-		GROUP BY g_member_partynum
+			AND party_name = #{addressee}
+		GROUP BY party_name
 		),
 		</if>
 		sysdate
@@ -50,9 +60,18 @@
 			(SELECT
 				count(*)-1
 			FROM
-				partymember
+				(SELECT
+					p1.party_num,
+					p1.party_name,
+					p2.g_member_memberid
+				FROM
+					party p1
+				JOIN
+					partymember p2
+				ON
+					p1.party_num = p2.g_member_memberid) p
 			WHERE
-				g_member_partynum = #{addressee}
+				party_name = #{addressee}
 			) AS unread
 			</if>
 		FROM dual
@@ -117,15 +136,29 @@
 		</if>
 	</select>
 	
-	<!--TODO 메시지 중 아직 읽지 않은 메시지의 개수를 조회 -->
-	<select id="selectCountUnreadMessage" resultType="int">
+	<!--메시지 중 아직 읽지 않은 메시지의 개수를 조회 -->
+	<select id="select_unread_message" resultType="message">
 	SELECT
-		count(*)
-	FROM message
+		sender as sender,
+		count(*) as unread,
+		(SELECT 1 FROM dual) as is1to1
+	FROM
+		message
 	WHERE
-		addressee = #{userId}
-		AND
-		unread NOT LIKE CONCAT('%.',#{userId},'.%')
+		unread like CONCAT(CONCAT('%.', #{unread}), '.%') AND is1to1 = 1
+	GROUP BY
+		sender
+	UNION
+	SELECT
+		addressee as sender,
+		count(*) as unread,
+		(select 0 from dual) as is1to1
+	FROM
+		message
+	WHERE
+		unread like CONCAT(CONCAT('%.', #{unread}), '.%') AND is1to1 = 0
+	GROUP BY
+		addressee
 	</select>
 
 </mapper>

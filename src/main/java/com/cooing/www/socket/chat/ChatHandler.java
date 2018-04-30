@@ -185,7 +185,51 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	//읽음 처리
 	public void readMessage(MessageVO msg) {
 		
-		System.out.println("읽음 메세지를 보냅니다 -> " + msg);
+		try {
+			
+			// 1:1 채팅 & 그룹채팅 여부에 따른 처리
+			if (msg.getIs1to1() == 1) {
+			
+				for (WebSocketSession session : this.sessionSet) {
+					if (session.isOpen()) {
+						
+						// 1. 발신인이 웹소켓 세션에 있을 경우 읽음 푸시
+						if (hashmap_id.containsKey(msg.getSender())
+								&& hashmap_id.get(msg.getSender()).equals(session.getId())) {
+							session.sendMessage(new TextMessage(gson.toJson(msg)));
+						}
+					}
+				}
+				
+			} else {
+				// 그룹 채팅
+
+				// 1. message_to(수신 대상 그룹)으로 그룹 멤버를 조회
+				ArrayList<PartyMember> arr_partymember = 
+						rDAO.searchPartyMember(Integer.parseInt(msg.getAddressee()));
+				// 2. 조회한 그룹 멤버들의 id 중 현재 세션에 연결된 경우 읽음 메시지 발신
+				
+				for (PartyMember partyMember : arr_partymember) {
+					String memberid = partyMember.getG_member_memberid();
+					for (WebSocketSession session : this.sessionSet) {
+						if (session.isOpen()) {
+							if (hashmap_id.containsKey(memberid)
+									&& hashmap_id.get(memberid).equals(session.getId())) {
+								session.sendMessage(new TextMessage(gson.toJson(msg)));
+							}
+						}
+					}
+				}
+			}
+	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	//대화 상대별 안 읽은 메시지 푸시
+	public void push_unread_message_count(MessageVO msg) {
 		
 		try {
 			
