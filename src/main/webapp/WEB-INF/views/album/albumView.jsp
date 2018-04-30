@@ -222,6 +222,9 @@ html, body, main, .container-fluid {
 	width: 30px;
 	height: 30px;
 }
+.wrap-contact100-form-btn {
+height: 30px;
+}
 </style>
 
 
