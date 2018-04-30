@@ -732,7 +732,7 @@ html, body, main, .container-fluid {
 					</form>
 
 					<p class="mb-2 d-block probootstrap-logo"
-						style="text-align: center; font-size: 20px; padding: 0px 0px 0px 0px; font-family: Poppins-Bold;">MY
+						style="text-align: center; font-size: 20px; padding: 0px 0px 0px 0px; font-family: 'Nanum Gothic Coding', monospace;">MY
 						FRIEND</p>
 					<form>
 						&nbsp<input type="text" placeholder="친구검색" id="friendsearch"
@@ -749,7 +749,7 @@ html, body, main, .container-fluid {
 					</div>
 
 					<p class="mb-2 d-block probootstrap-logo"
-						style="text-align: center; font-size: 20px; padding: 20px 0px 0px 0px; font-family: Poppins-Bold;">MY
+						style="text-align: center; font-size: 20px; padding: 20px 0px 0px 0px; font-family: 'Nanum Gothic Coding', monospace;">MY
 						GROUP</p>
 
 					<div class="groupList" style="margin-top: 20px; width: 200px;">
