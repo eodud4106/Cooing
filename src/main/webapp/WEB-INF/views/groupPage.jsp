@@ -68,7 +68,7 @@ $(document).ready(function () {
 	$('.category').on('click' , function(){
 		searchcheck = 99;
 		$('#categorynum').val($(this).attr('data'));
-		get_album_list('category' , 'party' , ${partyinfo.getParty_name()}  , 'date', ++pagenum , 1);
+		get_album_list('category' , 'party' , '${partyinfo.getParty_name()}'  , 'date', ++pagenum , 1);
 	});
 	
 	if (${sessionScope.Member != null}) {
@@ -76,7 +76,7 @@ $(document).ready(function () {
 		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
 	}
 	
-	get_album_list('writer' , 'party' , ${partyinfo.getParty_name()} ,  'date', ++pagenum , 0);
+	get_album_list('writer' , 'party' , '${partyinfo.getParty_name()}' ,  'date', ++pagenum , 0);
 	
 	$('#albumcreate').on('click',create_group_album);
 });
