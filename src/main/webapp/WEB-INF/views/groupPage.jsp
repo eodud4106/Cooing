@@ -265,7 +265,7 @@ html, body, main, .container-fluid {
 	padding-left: 30px;	
     font-size: 18px;
     cursor: pointer;
-    margin-top: -15px;
+    margin-top: 15px;
 }
 .groupList{
 	height: 700px;	
