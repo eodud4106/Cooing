@@ -485,9 +485,7 @@ $(document).ready(function () {
 			<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
 		</div>		
 		
-		<div class = "groupList" style= "margin-top: 70px; width: 200px;">
-			<div name="group" id="group">
-			</div>							
+		<div class = "groupList" id="group" style= "margin-top: 70px; width: 200px;">
 		</div>
 	</section>   
    </div>
