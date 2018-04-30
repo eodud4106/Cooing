@@ -15,12 +15,14 @@ function initialize(){
 		if(event.keyCode == 13){
 			searchcheck = 99;
 			get_album_list('writer','total','date', ++pagenum , 0);
+			$('#newcheck').iCheck('check');
 		}
 	});
 	$('.category').on('click' , function(){
 		searchcheck = 1;
 		$('#categorynum').val($(this).attr('data'));
-		checkRadioPaging();
+		$('#newcheck').iCheck('check');
+		checkRadioPaging();		
 	});
 	
 	$('.input').on('ifChanged' , function(){
@@ -86,9 +88,7 @@ function checkRadioPaging(){
 		    		  searchcheck = 99;
 		    		  get_album_list('category' , 'total' , 'like' , ++pagenum , 1);
 		    	  }
-		    	  
 		         break;  
-		         
 		      case '3':
 	    		  searchcheck = 99;
 	    		  get_album_list('mylike' , 'total' , 'date' , ++pagenum , 0);
