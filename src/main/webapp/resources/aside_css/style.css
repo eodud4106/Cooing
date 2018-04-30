@@ -703,13 +703,13 @@ textarea {
  html {
   overflow-x: hidden; }
 
-body {
-  /* font-family: "Work Sans", sans-serif; */
+/* body {
+  font-family: "Work Sans", sans-serif;
   font-family: 'Gaegu', cursive;  
   line-height: 1.8;
   font-size: 18px;
   background: #fff;
-  color: #859196; }
+  color: #859196; } */
 
 a {
   -webkit-transition: .3s all ease;

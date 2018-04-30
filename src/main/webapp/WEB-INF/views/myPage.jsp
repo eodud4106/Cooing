@@ -9,6 +9,20 @@
 <title>My Page</title>
 <meta charset="utf-8" />
 <style type="text/css">
+a{
+	font-size: 20px;
+	color: black;
+}
+.c{
+	font-size: 20px;
+	font-family: 'Nanum Gothic Coding', monospace;
+}
+li{
+	cursor: pointer;	
+}
+p{
+	font-size: 20px;
+}
 #main {
     min-width: 200px;
     max-width: 200px;
@@ -173,15 +187,15 @@ html, body, main, .container-fluid {
     
 }
 
+
 </style>
 
 <script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
 <!-- 폰트 -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
-<!-- <link href="https://fonts.googleapis.com/css?family=McLaren" rel="stylesheet"> -->
 
-
+<!-- 버튼 -->
+<link rel="stylesheet" href="resources/button_css/style.css">
 
  <link rel="stylesheet" href="<c:url value="/resources/css/myPage.css"/>">
 
@@ -274,27 +288,27 @@ $(document).ready(function () {
 
 		</div>
 		<div class="probootstrap-overflow">
-			<nav class="probootstrap-nav">
-				<p>MYPAGE</p>
-				<p>오늘의 랭킹</p>
-				<p></p>
-				<p>CATEGORY</p>
+			<nav class="probootstrap-nav">						
 				<ul>
-
-					<li class="category" data="0">여행</li>
-					<li class="category" data="1">음식</li>
-					<li><a href="<c:url value ="/"/>">MainPage</a></li>
-					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
-					<li><a href="<c:url value ="/bookmark"/>">bookmark</a></li>
-					<li><a href="<c:url value ="/logout_get"/>">LogOut</a></li>
-					<li><a href="javascript:create_personal_album()">앨범 만들기</a></li>
-					
+					<li><a href="<c:url value ="/"/>">HOME</a></li>
+					<li><a href="<c:url value ="/myPage"/>">MYPAGE</a></li>
+					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S LANKING</a></li>						
+					<li><a href="<c:url value ="/bookmark"/>">BOOKMARK</a></li>					
 				</ul>
-			
+				<p class ="c">CATEGORY</p>
+				<ul>
+					<li class="category" data="0">Journey</li>
+					<li class="category" data="1">Food</li>
+				</ul>
 			</nav>
-			<br><br><br>
-
 		</div>
+		<!-- <li><a href="javascript:create_personal_album()">앨범 만들기</a></li> -->
+		<button class = "button" style = "margin :auto;"onclick="javascript:create_personal_album()">
+			Album Create
+			<div class="button__horizontal"></div>
+			<div class="button__vertical"></div>
+		</button>		
+		<a href="<c:url value ="/logout_get"/>" style = "float :right;" role="Logout"><i class="fas fa-sign-out-alt"></i></a>
 	</aside>
 
 
@@ -374,20 +388,6 @@ $(document).ready(function () {
 				<img class="card-img-top probootstrap-animate" 
 				src="resources/image_mj/a2.jpg" alt="Card image cap"/>
 				</div></li>
-			</ul></div>		
-			
-			<div class="card">
-				<ul><li><div class="inner"><a href="single.html"><p><strong>출력고고?dsf2</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/image_mj/a3.jpg" alt="Card image cap"/>
-				</div></li>
-			</ul></div>	
-			
-			<div class="card">
-				<ul><li><div class="inner"><a href="single.html"><p><strong>출력고고?dsf2</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/image_mj/a4.jpg" alt="Card image cap"/>
-				</div></li>
 			</ul></div>					
 	</div>	
 
@@ -397,8 +397,8 @@ $(document).ready(function () {
 				
 				<p>
 					&copy; 2018 <a href="https://uicookies.com/" target="_blank">uiCookies:Aside</a>.
-					<br> All Rights Reserved. Designed by <a
-						href="https://uicookies.com/" target="_blank">uicookies.com</a>
+					<br> All Rights Reserved. Designed by 
+					<a href="https://uicookies.com/" target="_blank">uicookies.com</a>
 				</p>
 			</div>
 		</div>
