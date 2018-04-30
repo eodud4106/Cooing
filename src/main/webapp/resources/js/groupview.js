@@ -183,40 +183,45 @@ function searchgroupmember(){
 	}
 }
 
-//앨범 리스트 Ajax로 받는 코드
-function getPartyAlbumList() {
+//그룹 이름을 넘겨주기 위한 js에서 새로 만들어 봐야 된다 
+//검색 타입, 검색 키워드, 정렬 순서, 페이지를 받아 albumlist 조회
+function get_group_album_list(type , writer_type , groupid , order, page , checknum) {
 	var check  = false;
-	if(pagenum == 0)
-		check  = true;
+	if(searchcheck != check){ 
+		searchcheck = check;
+		page = 0;
+	}
+
+	if(page == 0) check  = true;
+	
+	var keyword;
+	if(checknum == 1)
+		keyword = $('#categorynum').val();
+	else if(checknum == 0)
+		keyword = $('#searchtx').val();
 	$.ajax({
-		url: 'album/getPartyAlbumList',
+		url: 'album/get_album_list',
 		type: 'post',
 		data:{
-			pagenum: ++pagenum,
-			party_name: $('#party_name').text()
+			type:type,
+			writer_type: writer_type,
+			keyword: keyword,
+			order: order,
+			page: page,
+			userId:groupid
 		}, 
 		dataType: 'json',
 		success: function(result) {
-			//list 받아오면 리스트 돌려서 처리할 부분
-			console.log('안 -> ' + JSON.stringify(result));
-			AlbumListPaging(check , result);
-			if(check){
-				$.ajax({
-					url:'album/getPartyAlbumCount',
-					type:'POST',		
-					data:{party_name: $('#party_name').text()},
-					dataType:'text',
-					success: function(list){
-						//카운트 개수 불러와서 처리
-						console.log("list -> " + list)
-						$('#totalpage').val(list);
-					},
-					error:function(e){alert(JSON.stringify(e));}		
-				});
-			}			
+			// 앨범 스크롤 페이징 처리...
+			AlbumListPaging_hindoong(check , result);			
 		},
 		error: function(e) {
 			alert(JSON.stringify(e));	
 		}
 	});
 }
+
+
+
+
+

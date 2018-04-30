@@ -58,19 +58,18 @@ var page = 0;
 var pagenum = 0;
 var pagingcheck = false;
 //이게 0번이면 검색어 1번이면 카테고리 2번이면 그냥 메인 으로 나눠서 페이징 가지고 오게 된다.
-var searchcheck = 0;
+var searchcheck = 99;
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
     	//메인으로 그냥 들어왔을 때 와 검색해서 들어왔을 때 = 0 / 카테고리 눌러서 들어왔을 때  = 1 
     	if(searchcheck == 0){
     		if($('#totalpage').val() >= pagenum){	
-    			//getTotalAlbumList("3");
-    			get_album_list('total', '', 'date');
+    			get_album_list('writer' , 'total', 'date', ++pagenum , 0);
         		pagingcheck = true;
         	}
     	}else if(searchcheck == 1){
     		if($('#totalpage').val() >= pagenum){	
-    			searchCategory("3",$('#categorynum').val());
+    			get_album_list('category','total','date',++pagenum , 1);
         		pagingcheck = true;
         	}
     	}   	
@@ -89,17 +88,16 @@ $(document).ready(function () {
 	
 	//1번이면 카테고리 눌러서 넘어온 경우 , 엘스는 그냥 홈에 온 경우 혹은 검색으로 온 경우 
 	if('${search_other}' == 1){
-		searchcheck = 1;
+		searchcheck = 99;
 		pagenum = 0;
 		pagingcheck = false;
-		searchCategory("3",$('#categorynum').val());
+		get_album_list('category','total','date',++pagenum , 1);
 	}else{
-		searchcheck = 0;
+		searchcheck = 99;
 		pagenum = 0;
 		pagingcheck = false;
-		//getTotalAlbumList("3");
 		// 전체 앨범, 검색 키워드 없음, 최신 순
-		get_album_list('total', '', 'date');
+		get_album_list('writer' ,'total', 'date', ++pagenum , 0);
 	}
 	
 	//경고!! 아래 코드를 절대 별도의 js파일로  마시오!!

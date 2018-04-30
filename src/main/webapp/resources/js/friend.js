@@ -21,7 +21,7 @@ function initialize(){
 		searchcheck = 99;
 		$('#searchtx').val('');
 		$('#categorynum').val($(this).attr('data'));
-		getIDCategoryAlbumList();
+		get_friend_album_list('category','friend','date', ++pagenum , 1);
 	});
 	
 	searchword();
@@ -67,87 +67,36 @@ function fiendplus(){
 	}	
 }
 
-//카테고리 앨범 리스트 Ajax로 받는 코드
-function getIDCategoryAlbumList() {
+//검색 타입, 검색 키워드, 정렬 순서, 페이지를 받아 albumlist 조회
+function get_friend_album_list(type , writer_type , order, page , checknum) {
 	var check  = false;
-	if(searchcheck != 1){
-		searchcheck = 1;
-		pagenum = 0;
+	if(searchcheck != check){ 
+		searchcheck = check;
+		page = 0;
 	}
-	if(pagenum == 0)
-		check  = true;
-	var catgorynum = $('#categorynum').val();
-	var albumwriter = $('#friendidval').val();
+
+	if(page == 0) check  = true;
+	
+	var keyword;
+	if(checknum == 1)
+		keyword = $('#categorynum').val();
+	else if(checknum == 0)
+		keyword = $('#searchtx').val();
 	$.ajax({
-		url: 'album/getIDCategoryAlbumList',
+		url: 'album/get_album_list',
 		type: 'post',
 		data:{
-			categorynum:catgorynum,
-			albumwriter:albumwriter,
-			pagenum:++pagenum
-		},
+			friendId:$('#friendidval').val(),
+			type:type,
+			writer_type: writer_type,
+			keyword: keyword,
+			order: order,
+			page: page
+		}, 
 		dataType: 'json',
 		success: function(result) {
-				AlbumListPaging(check , result);
-				$.ajax({
-					url: 'album/getIDCategoryAlbumCount',
-					type: 'post',
-					data:{
-						categorynum:catgorynum,
-						albumwriter:albumwriter
-					},
-					dataType: 'text',
-					success: function(count) {
-						//total count 변경 부분
-						$('#totalpage').val(count);
-					},
-					error: function(e) {
-						alert(JSON.stringify(e));	
-					}
-				});
-		},
-		error: function(e) {
-			alert(JSON.stringify(e));	
-		}
-	});
-}
-
-//앨범 리스트 Ajax로 받는 코드
-function getIDAlbumList() {
-	var check  = false;
-	if(searchcheck != 0){
-		searchcheck = 0;
-		pagenum = 0;
-	}
-	if(pagenum == 0)
-		check  = true;
-	var searchtx = $('#searchtx').val();
-	var albumwriter = $('#friendidval').val();
-	$.ajax({
-		url: 'album/getIDAlbumList',
-		type: 'post',
-		data:{albumwriter:albumwriter,
-				pagenum:++pagenum,
-				search:searchtx
-				},
-		dataType: 'json',
-		success: function(result) {
-			AlbumListPaging(check , result);
-			$.ajax({
-				url: 'album/getIDAlbumCount',
-				type: 'post',
-				data:{albumwriter:albumwriter,
-						search:searchtx
-						},
-				dataType: 'text',
-				success: function(count) {
-					//total count 변경 부분
-					$('#totalpage').val(count);
-				},
-				error: function(e) {
-					alert(JSON.stringify(e));	
-				}
-			});
+			// 앨범 스크롤 페이징 처리...
+			AlbumListPaging_hindoong(check , result);			
 		},
 		error: function(e) {
 			alert(JSON.stringify(e));	

@@ -47,12 +47,12 @@ $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
     	if(searchcheck == 0){
 	    	if($('#totalpage').val() >= pagenum){
-	    		getIDAlbumList();
+	    		get_friend_album_list('writer','friend','date', ++pagenum , 0);
 	    		pagingcheck = true;
 	    	}
     	}else if(searchcheck == 1){
     		if($('#totalpage').val() >= pagenum){
-    			getIDCategoryAlbumList();
+    			get_friend_album_list('category','friend','date', ++pagenum , 1);
     			pagingcheck = true;
     		}
     	}
@@ -65,7 +65,7 @@ $(document).ready(function () {
 		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
 	}
 	initialize();
-	getIDAlbumList();
+	get_friend_album_list('writer','friend','date', ++pagenum , 0);
 });
 </script>
 

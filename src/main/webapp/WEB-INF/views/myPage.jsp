@@ -243,12 +243,12 @@ $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
     	if(searchcheck == 0){
 	    	if($('#totalpage').val() >= pagenum){
-	    		getMyAlbumList();
+	    		get_album_list('writer','personal', 'date', ++pagenum , 0);
 		    	pagingcheck = true;
 	    	}
     	}else if(searchcheck == 1){
     		if($('#totalpage').val() >= pagenum){	
-    			getMyCategoryAlbumList();
+    			get_album_list('category','personal', 'date', ++pagenum , 1);
     			pagingcheck = true;
     		}
     	}

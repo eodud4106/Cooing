@@ -151,9 +151,9 @@ public class AlbumController {
 	@ResponseBody
 	@RequestMapping(value = "/get_album_list", method= RequestMethod.POST)
 	public ArrayList<AlbumVO> get_album_list(String type, String keyword, String order, String openrange, 
-			String writer_type, int page, HttpSession session) {
+			String writer_type, int page , String friendId , String userId , HttpSession session) {
 		
-		String userId = ((Member)session.getAttribute("Member")).getMember_id();
+		String user = ((Member)session.getAttribute("Member")).getMember_id();
 		
 		int album_per_page = 10;
 		
@@ -165,36 +165,37 @@ public class AlbumController {
 		
 		/*
 		 * type
-		 *  - total: 전체 검색
-		 *  - writer: 저자로 검색
-		 *  - like: 내가 좋아요 한 사람만 검색 -> id keyword에 자신의 아이디 넣어야 함
+		 *  - category: 카테고리 리스트
+		 *  - writer: 검색 리스트
 		 * 
-		 * keyword: writer 검색 시 검색할 writer, like일 경우 자신의 id
+		 * keyword: 모든 keyword 검색결과를 가지고 갈 때 사용   , category에서는 category번호
 		 * 
-		 * writer_type(tyep == writer 일 때만, keyword에는 그룹명이 들어가야겠지...)
-		 *  - total: 가리지 않고 저자 검색
-		 * 	- personal: 개인 앨범만
-		 * 	- party: 파티 앨범만
+		 * writer_type
+		 *  - total: 가리지 않고 저자 검색 - 전체페이지
+		 * 	- personal: 개인 앨범만 - 내페이지
+		 * 	- party: 파티 앨범만 - 그룹페이지
+		 *  - friend: 친구 앨범만  - 친구 페이지
 		 * 
 		 * order
 		 *  - like: 좋아요 순
 		 *  - date: 최신 순
 		 * 
-		 * openrange
-		 * 	- private: 나만(type: writer, keyword: 내 아이디, writer_type: personal)
-		 *  - friend: 친구만(type: writer, keyword: 친구 아이디, writer_type: personal)
-		 * 	- party: 파티만(type: writer, keyword: 파티명, writer_type: party)
-		 * 	- total: 전체(type: total, keyword: "", writer_type: total)
-		 * 
 		 * userId
-		 * 	- openrange에서 시 현재 접속한 유저가 열람 권한이 있는지 판별하기 위해 넣어 보냄
+		 * 	- 내 아이디를 넣어서 가져가기 위해서 사용  & party에서는 party이름이 들어가야 겠지??
+		 * 
+		 * friendId
+		 *  - 친구 페이지 갈때 친구 아이디를 넣어서 검색 하기 위해 사용 
 		 */
 		map.put("type", type);
 		map.put("keyword", keyword);
 		map.put("writer_type", writer_type);
 		map.put("order", order);
-		map.put("opendrange", openrange);
-		map.put("userId", userId);
+		map.put("openrange", openrange);
+		if(writer_type.equals("party"))
+			map.put("userId", userId);
+		else
+			map.put("userId", user);
+		map.put("friendId", friendId);
 		
 		return albumDAO.get_album_list(map, rb);
 	}
