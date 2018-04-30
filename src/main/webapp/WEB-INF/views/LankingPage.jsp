@@ -21,6 +21,7 @@
 <link rel="stylesheet" href="resources/css/animate.css">
 <link rel="stylesheet" href="resources/css/style.css">
 <link rel="stylesheet" href="resources/css/jquery-ui.css">
+<link rel="stylesheet" href="resources/css/chat.css">
 
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
@@ -37,6 +38,7 @@
 <script src="resources/js/groupview.js"/></script>
 <script src="resources/js/popup.js"></script>
 <script src="resources/js/main.js"></script>
+<script src="resources/js/chat.js"></script>
 
 <!-- 탭나누는 사이드바 -->
 <link rel="stylesheet" type="text/css" href="resources/album_create/css/util.css">
@@ -46,6 +48,7 @@
 <script>
 $(document).ready(function() {
 	initialize();
+	readyChat('${sessionScope.Member.member_id}', '');
 });
 </script>
 <!-- 정렬순 라디오 버튼 -->
