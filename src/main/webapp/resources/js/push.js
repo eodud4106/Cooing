@@ -1,10 +1,10 @@
 /**
- * 채팅 관련 메소드 모음
+ * push 관련된 함수 (웹소켓..)
  */
 
- // 채팅에 쓸 웹소켓과 위치
-var websocket;
-var wsUri = "ws://cooing.site/www/chat/echo.do";
+ // 에 쓸 웹소켓과 위치
+var ws_push;
+var wsUri = "ws://cooing.site/www/push/echo.do";
 
 var userId;
 var counterpart;
@@ -175,20 +175,6 @@ function onOpen(evt) {
 	websocket.send(JSON.stringify(sendMessage));
 	console.log('웹소켓 연결됨..')
 	
-	// 대화 상대 별 안 읽은 메세지 개수를 조회함.
-	$.ajax({
-		type: "POST",
-		url: "chat/get_unread_chat_count",
-		success : function(result) {
-			//console.log(JSON.stringify(result));
-			// 카드 형태로 news 탭에 뿌리기 위해 호출
-			show_unread_msg_count(result);
-        }, 
-        error : function(e) { 
-            alert(JSON.stringify(e)); 
-        } 
-	});
-	
 }
 
 /**
@@ -197,7 +183,7 @@ function onOpen(evt) {
  * @param counterpart 상대
  * @returns
  */
-function openChat(is1to1, counterpart) {
+function openChat(is1to1, counterpart, party_name) {
 	
 	// 기존 채팅창이 열려 있는 경우 닫는다.
 	closeChat();
@@ -231,7 +217,7 @@ function openChat(is1to1, counterpart) {
 		$title.text(counterpart);	
 	} else {
 		// 그룹 대화면 그룹 이름을 제목으로
-		$title.text('그룹)' + counterpart);
+		$title.text('그룹)' + party_name);
 	}
 	
 	$message.focus();
@@ -441,60 +427,4 @@ function readMessage() {
 		unread: userId
 	}
    	websocket.send(JSON.stringify(sendMessage));
-}
-
-function show_unread_msg_count(result) {
-	$(result).each(function(i, unread) {
-		console.log(unread);
-		var $target = $('#div_news');
-		
-		var $card = $('<div />', {
-			"class": "news_card",
-			"role": "msg",
-			"who": unread.sender,
-			"is1to1": unread.is1to1
-		}).css({
-			"width": "100%",
-			"height": "50px",
-			"background-color": "#D2FFD2",
-			"margin-bottom": "5px",
-			"text-align": "center"
-		}).appendTo($target).click(function(e) {
-			
-			openChat($(this).attr('is1to1'), $(this).attr('who'));
-		});
-		
-		var $role = $('<div />', {
-			"class": "news_card news_head",
-			"role": "head",
-			"text": "msg"
-		}).css({
-			"width": "50%",
-			"height": "25px",
-			"float": "left",
-			"display": "inline-block"
-		}).appendTo($card);
-		
-		var $sender = $('<div />', {
-			"class": "news_card news_sender",
-			"role": "sender",
-			"text": unread.sender
-		}).css({
-			"width": "50%",
-			"height": "25px",
-			"float": "left",
-			"display": "inline-block"
-		}).appendTo($card);
-		
-		var $content = $('<div />', {
-			"class": "news_card news_content",
-			"role": "content",
-			"text": "메세지 " + unread.unread + "건"
-		}).css({
-			"width": "100%",
-			"height": "20px",
-			"float": "left",
-			"display": "inline-block"
-		}).appendTo($card);
-	})
 }

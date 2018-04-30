@@ -23,7 +23,7 @@
 <script src="resources/aside_js/jquery.waypoints.min.js"></script>
 <script src="resources/aside_js/imagesloaded.pkgd.min.js"></script>
 <script src="resources/aside_js/main.js"></script>
-
+<script src="resources/js/chat.js"></script>
 <script src="resources/skin_radio/icheck.js"></script>
 
 <!-- 페이지 넘김 효과를 위한 js -->
@@ -52,6 +52,7 @@
 <link rel="stylesheet" href="resources/aside_css/animate.css">
 <link rel="stylesheet" href="resources/aside_css/style.css">
 <link rel="stylesheet" href="resources/css/albumEdit.css">
+<link rel="stylesheet" href="resources/css/chat.css">
 
 <!-- 친구 그룹 리스트 출력 -->
 <link rel="stylesheet" href="resources/css/friend_list.css">
@@ -267,7 +268,7 @@ height: 30px;
 	var page_num = '${page_num}';
 	//라디오버튼
 	$(document).ready(function() {
-		
+		readyChat('${sessionScope.Member.member_id}', '');
 		//댓글 15자 넘으면 alert창으로 막기
 		$('#input_reply').on('keyup', function() {
 	        if($(this).val().length > 15) {
@@ -686,7 +687,7 @@ height: 30px;
 						<button class="contact100-form-btn bt_album_info"
 							onclick="writereply()">
 							<span>
-								등록 <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+								작성
 							</span>
 						</button>
 					</div>

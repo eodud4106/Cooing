@@ -14,4 +14,6 @@ public interface MessageMapper {
 	
 	public ArrayList<MessageVO> selectMessage(HashMap<String, String> map);
 	
+	public ArrayList<MessageVO> select_unread_message(HashMap<String, String> map);
+	
 }
