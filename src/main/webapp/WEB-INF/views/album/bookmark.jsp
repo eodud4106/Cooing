@@ -109,14 +109,15 @@ function bookmark_list() {
 				var bookmark_page_div = document.createElement('div');
 				var bookmark_info_div = document.createElement('div');
 				var bookmark_link_div = document.createElement('div');
-				var button_bookmark = document.createElement('button');
+				var button_bookmark = document.createElement('img');
 				var bookmark_img_thumbnail = document.createElement('img');
 				
 				//맨 왼쪽 디브에 사진 넣는 부분
 				$(bookmark_img_thumbnail).attr('src', ''+ vo.album_thumbnail +'');
 				//버튼에 링크 다는 부분
 				$(button_bookmark).attr('onclick', 'location.href="albumView?album_num='+ vo.bookmark_albumnum + '&page_num=' + vo.bookmark_page + '"');
-				$(button_bookmark).addClass('bookmark_button');
+				$(button_bookmark).attr('src', 'resources/img/bookmark2.png');
+				$(button_bookmark).addClass('bookmark_img');
 
 				var bookmark_info_div_html = '';
 					bookmark_info_div_html += '<p class="bookmark_p"> 앨범 이름 : ' + vo.album_name + '</p>';
