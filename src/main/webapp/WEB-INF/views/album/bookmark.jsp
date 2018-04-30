@@ -219,18 +219,18 @@ function category_change(category) {
 		<div class="probootstrap-overflow">
 			<nav class="probootstrap-nav">
 				<p>MYPAGE</p>
-				<p>오늘의 랭킹</p>
+				<p>TODAY's RANKING</p>
 				<p></p>
 				<p>CATEGORY</p>
 				<ul>
 
-					<li class="category" data="0">여행</li>
-					<li class="category" data="1">음식</li>
+					<li class="category" data="0">Journey</li>
+					<li class="category" data="1">Food</li>
 					<li><a href="<c:url value ="/"/>">MainPage</a></li>
 					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
 					<li><a href="<c:url value ="/bookmark"/>">bookmark</a></li>
-					<li><a href="<c:url value ="/logout_get"/>">로그아웃</a></li>
-					<li><a href="javascript:create_personal_album()">앨범 만들기</a></li>
+					<li><a href="<c:url value ="/logout_get"/>">LogOut</a></li>
+					<li><a href="javascript:create_personal_album()">Created Album</a></li>
 					
 				</ul>
 			
