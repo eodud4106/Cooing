@@ -566,7 +566,7 @@ html, body, main, .container-fluid {
 			</div>
 			<div id="i_remove" class="under_tool" onclick="removePage()" role="페이지 삭제">
 				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="far fa-trash-alt"></i>
+					class="far fa-file-excel"></i>
 			</div>
 			<div id="i_save" class="under_tool" onclick="savePage('all')" role="전체 저장">
 				<i style="width: 30px; height: 30px; margin: 10px;"
