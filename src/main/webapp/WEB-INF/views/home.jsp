@@ -373,7 +373,7 @@ li{
 	
 	<div class ="search-bar">
 		<br><br>
-		<div align="margin-left: 20px;">
+		<div align="margin-left: 20px; "style = "font-size: 20px;">
 				 <!-- src="resources/img/ico/seo-1970475_960_720.png" -->
        			 SEARCH &nbsp<img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
        			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">
@@ -388,7 +388,7 @@ li{
                	 >  		
 			
 			<!-- 정렬순서 -->		
-			<form style = "float:right; padding-left : 10px;">
+			<form style = "float:right; padding-left : 10px; font-size: 20px;">
 				<input type="radio" id="newcheck" name="iCheck" class = "input"value="1" checked>NEW
 				<input type="radio" name="iCheck" class = "input"value="2" >POPULAR				
 				<input type="radio" name="iCheck" class = "input"value="3" >MYLIKE
