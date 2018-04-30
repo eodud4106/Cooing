@@ -86,11 +86,8 @@ $(document).ready(function () {
 		$('#searchtx').css('width' , '200px');
 		$('#searchtx').css('paddingLeft' , '3px');
 		$('#searchtx').focus();
-	}else{
-		$('#searchtx').val('');
-		$('#searchtx').css('width' , '0px');
-		$('#searchtx').css('paddingLeft' , '0px');
 	}
+	
 	//1번이면 카테고리 눌러서 넘어온 경우 , 엘스는 그냥 홈에 온 경우 혹은 검색으로 온 경우 
 	if('${search_other}' == 1){
 		searchcheck = 99;
@@ -534,16 +531,8 @@ li{
 		</div>		
 		
 		<div class = "groupList" style= "margin-top: 70px; width: 200px;">
-			<c:if test="${Member ne null}">
-				<c:if test="${fn:length(group) ne 0}">
-					<c:forEach var="party" items="${group}">
-						<div name="group">
-							<p class="arr_party" partynum="${party.party_num}">
-							<img src="<c:url value="/resources/img/group2.png" />" width="30" height="30"> ${party.party_name}</p>
-						</div>
-					</c:forEach>
-				</c:if>
-			</c:if>				
+			<div name="group" id="group">
+			</div>						
 		</div>
 	</section>   
    </div>
