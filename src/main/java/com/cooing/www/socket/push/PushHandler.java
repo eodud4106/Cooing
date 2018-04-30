@@ -1,4 +1,4 @@
-package com.cooing.www.chat.controller;
+package com.cooing.www.socket.push;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 @Repository
-public class ChatHandler extends TextWebSocketHandler implements InitializingBean {
+public class PushHandler extends TextWebSocketHandler implements InitializingBean {
 
 	@Autowired
 	MessageDAO mDAO;
@@ -42,7 +42,7 @@ public class ChatHandler extends TextWebSocketHandler implements InitializingBea
 	
 	private Gson gson = new Gson();
 	
-	public ChatHandler() {
+	public PushHandler() {
 		super();
 	}
 
