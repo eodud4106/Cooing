@@ -794,7 +794,7 @@ html, body, main, .container-fluid {
 					<c:if test="${arr_page.size() > 0 }">
 						<c:forEach items="${arr_page}" var="page">
 							<div id="page${page.page_num}" class="page hard"
-								style="background-image: ${page.page_background}; background-color: ${page.page_color}">${page.page_html}</div>
+								style='background-color: ${page.page_color}; background-image: ${page.page_background};'>${page.page_html}</div>
 						</c:forEach>
 					</c:if>
 				</div>
