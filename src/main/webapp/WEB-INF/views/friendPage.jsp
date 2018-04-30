@@ -294,7 +294,7 @@ li{
 
 			<p id="friendid">
 				<img class ="img1"
-					src="<c:url value="/memberimg?strurl=${friend_id.getMember_picture()}"/>">${friend_id.getMember_id()}</p>
+					src="<c:url value="/memberimg?strurl=${friend_id.getMember_picture()}"/>"> ${friend_id.getMember_id()}</p>
 			<p>
 				<c:if test="${check ne true }">
 					<div style="z-index: 99; float: right; margin-top: -40px;"
