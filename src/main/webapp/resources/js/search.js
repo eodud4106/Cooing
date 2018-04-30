@@ -298,12 +298,12 @@ function AlbumListPaging_hindoong(check, result) {
 		
 		var $p_reply = $('<p />', {
 			"html": "댓글 :" + album.reply_count,
-			"class": "card_album_contents"
+			"class": "card_album_reply"
 		}).appendTo($info_div);
 		
 		var $p_category = $('<p />', {
 			"html": "Category :" + category[album.album_category],
-			"class": "card_album_contents"
+			"class": "card_album_category"
 		}).appendTo($info_div);
 		
 		// 마우스 엔터
