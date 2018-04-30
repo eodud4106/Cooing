@@ -136,8 +136,9 @@ function readyChat (userId, goRoot) {
 	$message = $('<div />', {
 		"class": "div_chat_under_input_box",
 		"contentEditable": true
-	}).appendTo($div_chat_under_input).keyup(function(evt) {
-		if (evt.which == 13) {
+	}).appendTo($div_chat_under_input).keydown(function(evt) {
+		if (evt.keyCode == 13) {
+			evt.preventDefault();
 			sendMessage();
 			return;
 		}

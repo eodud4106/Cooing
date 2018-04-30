@@ -107,7 +107,7 @@ function createFriendPopup(e, elem, type) {
 
 	var $div_go_friend_chat = $('<div />', {
 		"class": "div_go_friend_chat",
-		"friend_id": $(elem).attr('friend_id'),
+		"friend_id": $(elem).attr('friend_id') || $(elem).attr('user_id'),
 		"text": "채팅"
 	}).css({
 		"width": "100%",
