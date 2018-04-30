@@ -37,49 +37,6 @@ public class SearchController {
 	@Autowired
 	MemberDAO memberDAO; 
 	
-	// 개인 앨범 조회
-	@ResponseBody
-	@RequestMapping(value = "/searchTotalAlbumList", method= RequestMethod.POST)
-	public ArrayList<AlbumVO> getMyAlbumList(int pagenum , String searchword  , String checknum, HttpSession session) {
-		System.out.println(pagenum + "_page / " + searchword + "_search / " + checknum + "_check_list ljs");
-		Member member = (Member)session.getAttribute("Member");
-		int totalnum = albumDAO.total_album_count(searchword , member.getMember_id() , checknum);
-		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		return albumDAO.total_album_list(searchword , member.getMember_id() , checknum , pl.getStartBoard() , pl.getCountPage() );
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/searchTotalCount" , method = RequestMethod.POST)
-	public int searchTotalCount(String searchword , String checknum , HttpSession session){
-		logger.info("search_total_count__jinsu");
-		//나누기를 하는 이유는 페이지 카운트로 들어갈 것이기 때문에 10개 씩 추가되기에 10으로 나눔
-		Member member = (Member)session.getAttribute("Member");
-		return albumDAO.total_album_count( searchword, member.getMember_id() , checknum) / 10;		
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/searchCategoryCount" , method = RequestMethod.POST)
-	public int searchCategoryCount(String check , String searchtext , HttpSession session){
-		logger.info(searchtext + "_search_category_count__jinsu");
-		//나누기를 하는 이유는 페이지 카운트로 들어갈 것이기 때문에 10개 씩 추가되기에 10으로 나눔
-		Member member = (Member)session.getAttribute("Member");
-		return albumDAO.searchCategoryCount(check , member.getMember_id() , searchtext) / 10;		
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/searchCategory" , method = RequestMethod.POST)
-	public ArrayList<AlbumVO> searchCategory(String check , String searchtext , int pagenum , HttpSession session){
-		logger.info(searchtext + "_search_Category__jinsu");		
-		Member member = (Member)session.getAttribute("Member");
-		int totalnum = albumDAO.searchCategoryCount(check , member.getMember_id() , searchtext);
-		PageLimit pl = new PageLimit(10,5,pagenum,totalnum);
-		//저장
-		searchDAO.insertCategoryPop(new CategoryPop(0 , Integer.parseInt(searchtext), "0"));
-		//카테고리 번호로 찾아온다.
-		ArrayList<AlbumVO> arrayalbum = albumDAO.searchCategory(check , member.getMember_id() , searchtext , pl.getStartBoard() , pl.getCountPage());
-		return arrayalbum;		
-	}
-	
 	@ResponseBody
 	@RequestMapping(value="/searchInformation" , method = RequestMethod.POST)
 	public ArrayList<Map<String , Object>> searchInfomation(String searchdate){

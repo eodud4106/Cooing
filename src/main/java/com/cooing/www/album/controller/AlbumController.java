@@ -163,6 +163,7 @@ public class AlbumController {
 		 * type
 		 *  - category: 카테고리 리스트
 		 *  - writer: 검색 리스트
+		 *  - mylike : 누른 카테고리가 아닌 내가 좋아하는 카테고리 
 		 * 
 		 * keyword: 모든 keyword 검색결과를 가지고 갈 때 사용   , category에서는 category번호
 		 * 
@@ -171,7 +172,8 @@ public class AlbumController {
 		 * 	- personal: 개인 앨범만 - 내페이지
 		 * 	- party: 파티 앨범만 - 그룹페이지
 		 *  - friend: 친구 앨범만  - 친구 페이지
-		 * 
+		 *  - popular: 내가 고른 카테고리만 - 내페이지 
+		 *  
 		 * order
 		 *  - like: 좋아요 순
 		 *  - date: 최신 순
