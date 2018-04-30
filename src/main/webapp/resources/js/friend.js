@@ -65,6 +65,7 @@ function fiendplus(){
 			error:function(e){alert(JSON.stringify(e));}		
 		});
 	}	
+	searchword();
 }
 
 //검색 타입, 검색 키워드, 정렬 순서, 페이지를 받아 albumlist 조회
