@@ -427,50 +427,7 @@ li{
 	</div>
 	</main>
 
-	<%--  <aside class="probootstrap-aside2 js-probootstrap-aside2">
-		<a href="#"
-			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
-			<span class="oi oi-arrow-right"></span> Close
-		</a>
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<p class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY FRIEND</p>			
-		</div>				
-				 <form>
-					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
-					<div>
-       			  <img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
-       			 height: 24px;margin-left: 215px; margin-top: -50px;">
-				</form>
-			<div class = "friendList">
-				<div name="friend" id="friend">
-				</div>
-				<div name="user" id="user">
-				</div>
-			</div>
-		
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<p class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY GROUP</p>				
-						
-		<!-- <div class="probootstrap-overflow"> -->
-		
-		<!-- 그룹생성 -->
-		<div class="button_container">		
-		<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
-		</div>
-			<div class = "groupList">
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(group) ne 0}">
-						<c:forEach var="party" items="${group}">
-							<div name="group">
-								<p class="arr_party" partynum="${party.party_num}">${party.party_name}</p>
-							</div>
-						</c:forEach>
-					</c:if>
-				</c:if>				
-			<!-- </div> -->
-		</div>
-
-	</aside>  --%>
+	
 	<aside class="probootstrap-aside2 js-probootstrap-aside2">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 		
@@ -480,13 +437,13 @@ li{
 		<div class="probootstrap-overflow">
 		<div id="main">
 		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
-		<label for="tab1" style = "font-size: 10px;">FRIEND</label>
+		<label for="tab1" style = "font-size: 13px;">FRIEND</label>
 
   		<input class = "input1" id="tab2" type="radio" name="tabs">
-    	<label for="tab2" style = "font-size: 10px;">GROUP</label>   
+    	<label for="tab2" style = "font-size: 13px;">GROUP</label>   
     	
     	<input class = "input1" id="tab3" type="radio" name="tabs">
-    	<label for="tab3" style = "font-size: 10px;">NEWS</label>   
+    	<label for="tab3" style = "font-size: 13px;">NEWS</label>   
 
     	<section id="content1"> 
     	<!-- 페이지 저장 -->		

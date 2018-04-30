@@ -105,7 +105,7 @@ section {
     font-size : 14px;        
     border-top: 1px solid #ddd;}
 /*라디오버튼 숨김*/
-#tab1,#tab2 {
+#tab1,#tab2,#tab3 {
       display: none;}
 
 label {
@@ -123,14 +123,15 @@ label:hover {
     cursor: pointer;}
 
 /*input 클릭시, label 스타일*/
-#tab1:checked + label,#tab2:checked + label {
+#tab1:checked + label,#tab2:checked + label,#tab3:checked + label {
       color: #555;
       border: 1px solid #ddd;
       border-top: 2px solid #2e9cdf;
       border-bottom: 1px solid #ffffff;}
 
 #tab1:checked ~ #content1,
-#tab2:checked ~ #content2{
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3{
     display: block;}
 
 .search{	
@@ -245,6 +246,17 @@ html, body, main, .container-fluid {
     margin-top: -15px;
 }
 .groupList{
+	height: 700px;	
+	/* overflow-y : scroll; */
+	padding-left: 30px;
+	/* overflow-y:hidden; */
+	/* background-color : aliceblue; */
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 100px;
+    
+}
+.newsList{
 	height: 700px;	
 	/* overflow-y : scroll; */
 	padding-left: 30px;
@@ -381,53 +393,7 @@ li{
 	</main>
 
 
-	<%-- <aside class="probootstrap-aside2 js-probootstrap-aside2">
-		<a href="#"
-			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
-			<span class="oi oi-arrow-right"></span> Close
-		</a>
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="" class="mb-2 d-block probootstrap-logo">MY FRIEND</a>			
-		</div>				
-				 <form>
-					<input type="text" placeholder="친구검색" id="friendsearch" class="search1" >
-					<input type="button" id="friendsearchbt" value="s">
-				</form>
-			<div class = "friendList">
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(friend) ne 0}">
-						<c:forEach var="arrf" items="${friend }">
-							<div name="friend">
-								<p onclick="openChat('1', '${arrf}')">${arrf}</p>
-							</div>
-						</c:forEach>
-					</c:if>
-				</c:if>
-			</div>
-		
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="" class="mb-2 d-block probootstrap-logo">MY GROUP</a>				
-		</div>				
-		<!-- <div class="probootstrap-overflow"> -->
-		<input type="button" value="그룹생성"
-					onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
-			<div class = "groupList">
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(group) ne 0}">
-						<c:forEach var="party" items="${group}">
-							<div name="group">
-								<p onclick="openGUpdate('${party.party_name}')"
-									partynum="${party.party_num}">${party.party_name}</p>
-								<input type="button" value="채팅"
-									onclick="openChat('0', '${party.party_num}', '')" />
-							</div>
-						</c:forEach>
-					</c:if>
-				</c:if>				
-			<!-- </div> -->
-		</div>
-
-	</aside> --%>
+	
 	<aside class="probootstrap-aside2 js-probootstrap-aside2">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 		
@@ -437,11 +403,14 @@ li{
 		<div class="probootstrap-overflow">
 		<div id="main">
 		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
-		<label for="tab1">FRIEND</label>
+		<label for="tab1"style = "font-size: 13px;" >FRIEND</label>
 
   		<input class = "input1" id="tab2" type="radio" name="tabs">
-    	<label for="tab2">GROUP</label>   
+    	<label for="tab2"style = "font-size: 13px;">GROUP</label>   
 
+    	<input class = "input1" id="tab3" type="radio" name="tabs">
+    	<label for="tab3" style = "font-size: 13px;">NEWS</label>  
+    	
     	<section id="content1"> 
     	<!-- 페이지 저장 -->		
 			<form class="contact100-form validate-form" id="entry">
@@ -464,13 +433,16 @@ li{
    	<section id ="content2">       					
 		<div class="button_container">		
 			<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
-		</div>		
-		
+			
 		<div class = "groupList" id="group" style= "margin-top: 70px; width: 200px;">
 		</div>
 	</section>   
-   </div>
-   </div>
+  <!-- 영준이 알림공간 -->
+	<section id ="content3">       					
+		<div class = "newsList"  style= "margin-top: 70px; width: 200px;">
+		여기 넣으셈
+		</div>		
+	</section>  
 </aside>
 	<div id="div_chat" 
 		style="width: 500px; height: 500px; position: absolute; padding: 0px; opacity: 1; background-color: rgb(240, 240, 240); display: none;">

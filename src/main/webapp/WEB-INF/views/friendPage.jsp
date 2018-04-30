@@ -116,7 +116,7 @@ section {
     font-size : 14px;        
     border-top: 1px solid #ddd;}
 /*라디오버튼 숨김*/
-#tab1,#tab2 {
+#tab1,#tab2,#tab3 {
       display: none;}
 
 label {
@@ -134,14 +134,15 @@ label:hover {
     cursor: pointer;}
 
 /*input 클릭시, label 스타일*/
-#tab1:checked + label,#tab2:checked + label {
+#tab1:checked + label,#tab2:checked + label,#tab3:checked + label {
       color: #555;
       border: 1px solid #ddd;
       border-top: 2px solid #2e9cdf;
       border-bottom: 1px solid #ffffff;}
 
 #tab1:checked ~ #content1,
-#tab2:checked ~ #content2{
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3{
     display: block;}
 
 .search{	
@@ -256,6 +257,17 @@ html, body, main, .container-fluid {
     margin-top: 15px; 
 }
 .groupList{
+	height: 700px;	
+	overflow-y : scroll;
+	padding-left: 30px;
+	/* overflow-y:hidden; */
+	/* background-color : aliceblue; */
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 100px;
+    
+}
+.newsList{
 	height: 700px;	
 	overflow-y : scroll;
 	padding-left: 30px;
@@ -401,58 +413,7 @@ li{
 
 	</main>
 
-	<%-- <aside class="probootstrap-aside2 js-probootstrap-aside2">
-		<a href="#"
-			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
-			<span class="oi oi-arrow-right"></span> Close
-		</a>
-		<div class="probootstrap-site-logo probootstrap-animate"
-			data-animate-effect="fadeInLeft">
-			<p class="mb-2 d-block probootstrap-logo" style="text-align: center;">MY
-				FRIEND</p>
-		</div>
-		<form>
-			&nbsp<input type="text" placeholder="친구검색" id="friendsearch"
-				class="search1">
-			<div>
-				<img id="image_search"
-					src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png"
-					style="width: 24px; height: 24px; margin-left: 215px; margin-top: -50px;">
-		</form>
-		<div class="friendList">
-			<div name="friend" id="friend"></div>
-			<div name="user" id="user"></div>
-		</div>
 
-		<div class="probootstrap-site-logo probootstrap-animate"
-			data-animate-effect="fadeInLeft">
-			<p class="mb-2 d-block probootstrap-logo" style="text-align: center;">MY
-				GROUP</p>
-
-			<!-- <div class="probootstrap-overflow"> -->
-
-			<!-- 그룹생성 -->
-			<div class="button_container">
-				<button class="btn"
-					onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
-					<span>GROUP CREATE</span>
-				</button>
-			</div>
-		</div>
-		<div class="groupList">
-			<c:if test="${Member ne null}">
-				<c:if test="${fn:length(group) ne 0}">
-					<c:forEach var="party" items="${group}">
-						<div name="group">
-							<p class="arr_party" partynum="${party.party_num}">${party.party_name}</p>
-						</div>
-					</c:forEach>
-				</c:if>
-			</c:if>
-			<!-- </div> -->
-		</div>
-
-	</aside> --%>
 	
 	<aside class="probootstrap-aside2 js-probootstrap-aside2">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
@@ -463,10 +424,13 @@ li{
 		<div class="probootstrap-overflow">
 		<div id="main">
 		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
-		<label for="tab1">FRIEND</label>
+		<label for="tab1" style = "font-size: 13px;">FRIEND</label>
 
   		<input class = "input1" id="tab2" type="radio" name="tabs">
-    	<label for="tab2">GROUP</label>   
+    	<label for="tab2" style = "font-size: 13px;">GROUP</label> 
+    	 
+    	<input class = "input1" id="tab3" type="radio" name="tabs">
+    	<label for="tab3" style = "font-size: 13px;">NEWS</label>  
 
     	<section id="content1"> 
     	<!-- 페이지 저장 -->		
@@ -490,13 +454,16 @@ li{
    	<section id ="content2">       					
 		<div class="button_container">		
 			<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
-		</div>		
-		
+			
 		<div class = "groupList" id="group" style= "margin-top: 70px; width: 200px;">
 		</div>
 	</section>   
-   </div>
-   </div>
+   <!-- 영준이 알림공간 -->
+	<section id ="content3">       					
+		<div class = "newsList"  style= "margin-top: 70px; width: 200px;">
+		여기 넣으셈
+		</div>		
+	</section>  
 </aside>
 
 	<script src="resources/aside_js/popper.min.js"></script>
