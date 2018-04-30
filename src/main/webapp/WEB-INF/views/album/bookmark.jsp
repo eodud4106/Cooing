@@ -154,6 +154,7 @@ function category_change(category) {
 	
 	var change_category;
 	switch (category) {
+		case 0: change_category = '여행'; break;
 		case 1: change_category = '스포츠/래저'; break;
 		case 2: change_category = '동물'; break;
 		case 3: change_category = '음악'; break;

@@ -312,12 +312,18 @@ html, body, main, .container-fluid {
 	// 앨범 정보 수정
 	function modifiy_AlbumInfomation() {
 		var content = $('#album_contents').val().replace(/(?:\r\n|\r|\n)/g,'<br>');
+		var album_name = $('#album_name').text();
+		if(album_name.length > 10) {
+			alert('앨범 이름은 최대 10글자까지만 가능합니다.');
+			return false;
+		}
+
 		$.ajax({
 			url : 'update_albuminfo',
 			type : 'POST',
 			data : {
 				album_num : '${album.album_num}',
-				album_name : $('#album_name').text(),
+				album_name : album_name,
 				album_contents : content,
 				album_category : $('#album_category').val(),
 				album_openrange : $('#album_openrange').val()
@@ -370,11 +376,9 @@ html, body, main, .container-fluid {
 					<div class="wrap-input100 validate-input"
 						data-validate="Name is required">
 						<span class="label-input100">Album Name</span>
-						<div class="contact100-form-title input100" id="album_name" style="font-size: 20pt; outline:none;" contenteditable="true"> 
-							${album.album_name }
-						</div>
+						<div class="contact100-form-title input100" id="album_name" style="font-size: 20pt; outline:none;" contenteditable="true">${album.album_name}</div>
 						<span class="focus-input100"></span>
-						<input hidden="hidden" id="hidden_album_num" value="${album.album_num }">
+						<input hidden="hidden" id="hidden_album_num" value="${album.album_num}">
 					</div>
 
 					<div class="wrap-input100 validate-input"
@@ -391,8 +395,8 @@ html, body, main, .container-fluid {
 					<div class="wrap-input100 input100-select">
 						<span class="label-input100">Category</span>
 						<div>
-							<select id="album_category" class="selection-2"
-								name="album_category">
+							<select id="album_category" class="selection-2"name="album_category">
+								<option value="0">여행</option>
 								<option value="1">스포츠/래저</option>
 								<option value="2">동물</option>
 								<option value="3">음악</option>
@@ -446,7 +450,7 @@ html, body, main, .container-fluid {
 						<div class="wrap-contact100-form-btn">
 							<div class="contact100-form-bgbtn"></div>
 							<button class="contact100-form-btn bt_album_info"
-								onclick="modifiy_AlbumInfomation()">
+								onclick="return modifiy_AlbumInfomation()">
 								<span> Submit <i class="fa fa-long-arrow-right m-l-7"
 									aria-hidden="true"></i>
 								</span>
