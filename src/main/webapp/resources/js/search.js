@@ -1,4 +1,4 @@
-/**
+	/**
  * 
  */
 
@@ -54,6 +54,25 @@ function searchfriend() {
 			alert(JSON.stringify(e));
 		}
 	});
+}
+
+function searchgroup(){
+	$('#group').html('');
+	$.ajax({
+		url : 'search_group',
+		type : 'POST',
+		dataType : 'json',
+		success : function(array) {
+			var str = '';
+			$(array).each(function(i, data) {
+				str += '<p class="arr_party" partynum="'+ data.party_num +'">' + data.party_name + '</p>';
+			});		
+			$('#group').html(str);
+		},
+		error : function(e) {
+			alert(JSON.stringify(e));
+		}
+	});	
 }
 
 function searchword() {

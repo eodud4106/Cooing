@@ -20,8 +20,11 @@ import com.cooing.www.album.vo.AlbumVO;
 import com.cooing.www.album.vo.CategoryPop;
 import com.cooing.www.common.dao.SearchDAO;
 import com.cooing.www.common.vo.PageLimit;
+import com.cooing.www.common.vo.Search;
 import com.cooing.www.member.dao.MemberDAO;
+import com.cooing.www.member.dao.RelationDAO;
 import com.cooing.www.member.vo.Member;
+import com.cooing.www.member.vo.Party;
 
 
 @Controller
@@ -30,12 +33,12 @@ public class SearchController {
 	
 	@Autowired
 	SearchDAO searchDAO;
-	
 	@Autowired
 	AlbumDAO albumDAO;
-	
 	@Autowired
-	MemberDAO memberDAO; 
+	MemberDAO memberDAO;
+	@Autowired
+	RelationDAO relationDAO;
 	
 	@ResponseBody
 	@RequestMapping(value="/searchInformation" , method = RequestMethod.POST)
@@ -86,6 +89,14 @@ public class SearchController {
 	public ArrayList<String> search_id_check(String text){
 		logger.info("search_id_check_groupview__jinsu");		
 		return  searchDAO.search_id_check(text);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/search_group" , method = RequestMethod.POST)
+	public ArrayList<Party> search_group(HttpSession session){
+		logger.info("search_group__jinsu");		
+		Member personal = (Member)session.getAttribute("Member");
+		return  relationDAO.searchPartyByMemberid(personal.getMember_id());
 	}
 	
 	@RequestMapping(value = "/information", method = RequestMethod.GET)

@@ -55,28 +55,21 @@ $(document).ready(function () {
 	//북마크 리스트
 	bookmark_list();
 	
-	$('#friendsearchbt').on('click', function() {
-		searchfriend();
-	});
 	//초기 친구 찾을 때만 사용했었음
 	$('#friendsearch').keyup(function() {
 		searchword();
 	});
-	
-	$('#searchbt').on('click' , function(){
-		location.href = './search_other?search=' + $('#searchtx').val() + '';
+	$('#searchtx').keydown(function(event){
+		if(event.keyCode == 13){
+			location.href = './search_other?search=' + $('#searchtx').val() + '';
+		}
 	});
-	
 	$('.category').on('click' , function(){
-		searchCategory($(this).attr('data'));
 		location.href = './category_other?categorynum=' + $(this).attr('data') + '';
 	});
 	
-	$(document).mouseup(function(e){
-		var container=$('.popuplayer');
-		if(container.has(e.target).length == 0)
-			container.hide();
-	});
+	searchword();
+	searchgroup();
 });
 
 /**
@@ -331,19 +324,10 @@ function category_change(category) {
 		<div class="button_container">		
 		<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
 		</div>
-			<div class = "groupList">
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(group) ne 0}">
-						<c:forEach var="party" items="${group}">
-							<div name="group">
-								<p class="arr_party" partynum="${party.party_num}">${party.party_name}</p>
-							</div>
-						</c:forEach>
-					</c:if>
-				</c:if>				
-			<!-- </div> -->
+		<div class = "groupList">
+			<div name="group" id="group">
+			</div>
 		</div>
-
 	</aside>
 	
 	<div class="popuplayer">
