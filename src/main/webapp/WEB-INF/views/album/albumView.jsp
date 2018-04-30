@@ -659,21 +659,20 @@ html, body, main, .container-fluid {
 						<span class="label-input100">${album.album_writer }</span>
 						
 						<!-- 여기 수정해야함 친구 팔로잉버튼  -->
-						<!-- <button style="z-index: 99; float: right; margin-top: 0px;"
+						 <button style="z-index: 99; float: right; margin-top: 0px;"
 						id="friendbt" data="0">
 						<i class="fas fa-user-plus"></i>
 						</button>					
 						<button style="z-index: 99; float: right; margin-top: 0px;"
 						id="friendbt" data="1">
 						<i class="fas fa-user-times"></i>
-						</button> -->
+						</button>
 
-					<div class="wrap-input100 validate-input">
-						<span class="label-input100">설명</span>
+					<div class="wrap-input100 validate-input">					
 						<div class="input100" name="album_contents"
 							id="album_contents"
 							class="input_album_info input_album_info_contents"
-							contenteditable="false" style="min-height: 100px">${album.album_contents}</div>
+							contenteditable="false" style="min-height: 80px">${album.album_contents}</div>
 						<span class="focus-input100"></span>
 					</div>
 					
@@ -700,8 +699,7 @@ html, body, main, .container-fluid {
 					
 					<!--  댓글 영역 -->
 					<div class="wrap-input100 validate-input">
-						<span class="label-input100">댓글</span>
-						
+												
 						<!-- 불러온 댓글 보여줄 영역 -->
 						<div id="div_reply_list"></div>
 						<!-- 페이징 버튼 영역 -->
@@ -803,7 +801,7 @@ html, body, main, .container-fluid {
 		</div>
 		<!-- END row -->
 		<!-- 하단 바 영역 -->
-		<div style="margin-left: 250px; float:left">
+		<div style="margin-right: 150px; float:right">
 			<div class="under_bar " align="right">
 				<!-- 각종 버튼 -->
 				<div id="i_before" class="under_tool" onclick="go_page('first')" role="첫 페이지">
