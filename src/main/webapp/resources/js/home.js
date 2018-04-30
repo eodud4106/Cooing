@@ -44,6 +44,7 @@ function initialize(){
 	});
 		
 	searchword();
+	searchgroup();
 }
 
 function checkRadioPaging(){

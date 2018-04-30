@@ -13,7 +13,7 @@ function initialize(){
 	$('#searchtx').keydown(function(event){
 		if(event.keyCode == 13){
 			searchcheck = 99;
-			getIDAlbumList();
+			get_friend_album_list('writer','friend','date', ++pagenum , 0);
 		}
 	});	
 	
@@ -25,6 +25,7 @@ function initialize(){
 	});
 	
 	searchword();
+	searchgroup();
 }
 
 function fiendplus(){

@@ -36,6 +36,13 @@ function initialize(){
 	$('.category').on('click' , function(){
 		location.href = './category_other?categorynum=' + $(this).attr('data') + '';
 	});
+	
+	$('#friendsearch').keyup(function() {
+		searchword();
+	});
+	
+	searchword();
+	searchgroup();
 }
 
 

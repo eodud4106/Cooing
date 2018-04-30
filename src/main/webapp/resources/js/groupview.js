@@ -10,6 +10,13 @@ function initialize(){
 	$('#gmemberplus').on('click',memberplus);
 	$('.img_3').on('click',memberdelete);
 	$('#desolve').on('click',deleteparty);
+	
+	$('#friendsearch').keyup(function() {
+		searchword();
+	});
+	
+	searchword();
+	searchgroup();
 }
 
 function confirmcheck(strque){
@@ -153,7 +160,7 @@ function memberplus(){
 							$('#memberdiv').html(p);
 						});
 						$('#findid').val('');
-						$('.img_3').on('click',memberdelete);				
+						$('.img_3').on('click',memberdelete);	
 					},
 					error:function(e){alert(JSON.stringify(e));}		
 				});				

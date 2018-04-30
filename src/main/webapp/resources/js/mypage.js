@@ -25,6 +25,7 @@ function initialize(){
 	});	
 	
 	searchword();
+	searchgroup();
 }
 
 /**
