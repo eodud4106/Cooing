@@ -538,7 +538,8 @@ li{
 				<c:if test="${fn:length(group) ne 0}">
 					<c:forEach var="party" items="${group}">
 						<div name="group">
-							<p class="arr_party" partynum="${party.party_num}">${party.party_name}</p>
+							<p class="arr_party" partynum="${party.party_num}">
+							<img src="<c:url value="/resources/img/group2.png" />" width="30" height="30"> ${party.party_name}</p>
 						</div>
 					</c:forEach>
 				</c:if>

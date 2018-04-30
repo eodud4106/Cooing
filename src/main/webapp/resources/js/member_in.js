@@ -35,7 +35,11 @@ function initialize(){
 
 function idcheck(){
 	if($('#id').val().legnth == 0){
-		alert('ID를 입력해 주세요.');
+		alert('ID를 입력해주세요.');
+		return false;
+	}
+	if($('#id').val() == ""){
+		alert('ID를 입력해주세요.');
 		return false;
 	}
 	

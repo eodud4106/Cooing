@@ -68,7 +68,7 @@ checkcount();
 					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter ID">
 						<input id = "id" mexlength="10" class="input100" type="text"name="member_id" >
 						<span class="focus-input100" data-placeholder="ID"></span>						
-					<div id="idcheck" class="field btn-radio" role="ID중복체크" style = "float : right; margin-top : -40px;"><i class="fas fa-check"></i></div>
+					<div id="idcheck" role="ID중복체크" style = "float : right; margin-top : -40px; cursor: pointer;">ID 중복확인</div>
 					</div>
 
 					<div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
