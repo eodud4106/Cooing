@@ -3,7 +3,7 @@
  */
 //달력 부분
 $( function() {
-    $( "#datepicker" ).datepicker({
+    $('#datepicker').datepicker({
     	 dateFormat: "yy-mm-dd",
     	 dayNamesShort: [ "일", "월", "화", "수", "목", "금", "토" ],
     	 dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
@@ -18,6 +18,7 @@ $( function() {
     	 showMonthAfterYear: true
     	 /* monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec" ] //바꿔봤지만 안이쁨*/
   	 });
+    $('.ui-datepicker-calendar td').css('padding' , '0px');
 });
 
 function initialize(){

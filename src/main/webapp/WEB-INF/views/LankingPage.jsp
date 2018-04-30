@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="resources/css/icomoon.css">
 <link rel="stylesheet" href="resources/css/animate.css">
 <link rel="stylesheet" href="resources/css/style.css">
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="resources/css/jquery-ui.css">
 
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
@@ -34,6 +34,7 @@
 <script src="resources/js/imagesloaded.pkgd.min.js"></script>
 <script src="resources/js/laking.js"></script>
 <script src="resources/js/search.js"></script>
+<script src="resources/js/groupview.js"/></script>
 <script src="resources/js/main.js"></script>
 
 <!-- 탭나누는 사이드바 -->
