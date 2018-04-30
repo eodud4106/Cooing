@@ -368,21 +368,7 @@ $(document).ready(function () {
 		</div>
 	</div> -->
 	
-	<div class="card-columns" id="card-columns">
-			<div class="card">
-			<ul>
-				<li><div class="inner"><a href="single.html" ><p><strong>출력고고?</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/aside_images/img_1.jpg" alt="Card image cap"/>						
-				</div></li>		
-			</ul></div>			
-			
-			<div class="card">
-				<ul><li><div class="inner"><a href="single.html"><p><strong>출력고고?dsf2</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/image_mj/a2.jpg" alt="Card image cap"/>
-				</div></li>
-			</ul></div>					
+	<div class="card-columns" id="card-columns">				
 	</div>	
 
 	<div class="container-fluid d-md-none">
