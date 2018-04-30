@@ -180,14 +180,25 @@ html, body, main, .container-fluid {
 </style>
 
 <script>
+	
+	//전체저장, 앨범정보 저장 confirm
+	var all_save;
+	var info_save;
 	//홈버튼 눌렀을 때 confirm
 	function really_back_home() {
-		var return_home = confirm('저장버튼이나 페이지를 넘기지 않으면 저장되지 않습니다. 정말 홈으로 돌아가시겠습니까?');
-
-		if (return_home == false) {
-			return false;
+		
+		if(all_save != true) {
+			var return_home = confirm('저장 버튼을 누르지 않으셨습니다. 정말 홈으로 돌아가겠습니까?');
+			if (return_home == false) {
+				return false;
+			}
 		}
-
+		if(info_save != true) {
+			var return_home = confirm('앨범정보를 저장하지 않으셨습니다. 정말 홈으로 돌아가시겠습니까?');
+			if (return_home == false) {
+				return false;
+			}
+		}
 	}
 
 	//페이지 로딩 후 초기화 내용
@@ -331,6 +342,7 @@ html, body, main, .container-fluid {
 			dataType : 'text',
 			success : function(e) {
 				alert('앨범정보가 저장되었습니다.');
+				info_save = true;
 			},
 			error : function(e) {
 				console.log('에러 발생.' + e);
