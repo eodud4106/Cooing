@@ -226,6 +226,11 @@ html, body, main, .container-fluid {
 .wrap-contact100-form-btn {
 height: 30px;
 }
+/* 페이지별 배경이미지 꽉 채우기 */
+.page{
+	background-repeat: no-repeat !important;
+	background-size:100% 100% !important;
+}
 </style>
 
 

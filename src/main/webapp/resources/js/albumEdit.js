@@ -646,8 +646,10 @@ function createWholeEditor($div_box) {
         $arr_bt[$arr_bt.length-1].append($i_set_background).click(function(e) {
             var src = $('.onSelect img').attr('src');
             $('.onSelect').parent('.page').css({
-                "background-image": "url(" + src + ")"
-            })
+                "background-image": "url(" + src + ")",
+                "background-repeat": "no-repeat",
+                "background-size":"100% 100%"
+            });
             $('.onSelect').remove();
             removeEdit();
         }).mouseenter(function(e) {
@@ -1562,6 +1564,40 @@ function savePage(mode) {
     alert('페이지가 삭제되었습니다!');
 
  }
+
+//왼쪽 페이지 배경 되돌리기
+function reset_left_background() {
+	
+	var current_page = $('#album').turn("page");
+	var last_page = $('#album').turn("pages");
+
+	if(current_page == last_page){
+		$('#page'+last_page).css('background-image', '');
+	} 
+	else if(current_page % 2 == 0){
+		$('#page' + current_page).css('background-image', '');
+	} 
+	else {
+		$('#page' + (current_page-1)).css('background-image', '');
+	}
+	
+}
+
+//오른쪽 페이지 배경 되돌리기
+function reset_right_background() {
+	
+	var current_page = $('#album').turn("page");
+	
+	if(current_page == 1){
+		$('#page1').css('background-image', '');
+	} 
+	else if(current_page % 2 == 1){
+		$('#page' + current_page).css('background-image', '');
+	} 
+	else {
+		$('#page' + (current_page+1)).css('background-image', '');
+	}
+}
  
 
 /*

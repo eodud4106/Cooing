@@ -237,62 +237,12 @@ html, body, main, .container-fluid {
 				});
 			});
 
-	function checkRadioButton(iCheck) {
-
-		var temp;
-
-		var radioObj = document.all(iCheck);
-
-		var isChecked;
-		if (radioObj.length == null) { // 라디오버튼이 같은 name 으로 하나밖에 없다면
-			isChecked = radioObj.checked;
-		} else { // 라디오 버튼이 같은 name 으로 여러개 있다면
-			for (var i = 0; i < radioObj.length; i++) {
-				if (radioObj[i].checked) {
-					isChecked = true;
-					break;
-				}
-			}
-		}
-
-		if (isChecked) {
-			alert('체크된거있음' + radioObj[i].value);
-			temp = radioObj[i].value;
-			alert('템프 값 : ' + temp);
-
-			//value값
-			switch (temp) {
-			case '1':
-				alert(temp);
-				$('.pages').css("background-image",
-						"url(..//resources//image_mj//season.jpg)");
-				break;
-
-			case '2':
-				alert(temp);
-				$('.pages').css("background-color", "pink");
-				break;
-
-			default:
-				alert(temp);
-				$('.pages').css("background-image",
-						"url(..//resources//image_mj//vintage.jpg)");
-				break;
-			}
-
-		} else {
-			alert('체크된거없음');
-		}
-	}
-
 	function page1ImageSave() {
-		alert('check');
 		html2canvas($('#page1'), {
 			onrendered : function(canvas) {
 				if (typeof FlashCanvas != "undefined") {
 					FlashCanvas.initElement(canvas);
 				}
-				alert('check2');
 				//반전이라는데 확인은 못해봄 작동을 안해서리...
 				//canvas.scale(1,-1);
 				$('#imgSrc').val(canvas.toDataURL('image/png'));
@@ -558,6 +508,10 @@ html, body, main, .container-fluid {
 		<!-- END row -->
 		<!-- 하단 바 영역 -->
 		<div class="under_bar " align="right">
+			<div id="i_left_reset" class="under_tool" onclick="reset_left_background()" role="왼쪽 페이지 배경 초기화">
+				<i style="width: 30px; height: 30px; margin: 10px;"
+					class="fas fa-eraser"></i>
+			</div>
 			<!-- 텍스트, 이미지 삽입 버튼 -->
 			<div id="i_text" class="tool text under_tool" role="글상자 추가">
 				<i class="fas fa-align-justify"></i>
@@ -587,10 +541,6 @@ html, body, main, .container-fluid {
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-forward"></i>
 			</div>
-			<div id="i_reset" class="under_tool" onclick="reset_background()" role="배경 초기화">
-				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="fas fa-eraser"></i>
-			</div>
 			<div id="i_add" class="under_tool" onclick="addPage()" role="페이지 추가">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="far fa-plus-square"></i>
@@ -612,8 +562,11 @@ html, body, main, .container-fluid {
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="far fa-trash-alt"></i>
 			</div>
+			<div id="i_right_reset" class="under_tool" onclick="reset_right_background()" role="오른쪽 페이지 배경 초기화">
+				<i style="width: 30px; height: 30px; margin: 10px;"
+					class="fas fa-eraser"></i>
+			</div>
 		</div>
-
 	</div>
 
 	</main>
