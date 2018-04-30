@@ -241,7 +241,7 @@ html, body, main, .container-fluid {
 }
 .groupList{
 	height: 700px;	
-	overflow-y : scroll;
+	/* overflow-y : scroll; */
 	padding-left: 30px;
 	/* overflow-y:hidden; */
 	/* background-color : aliceblue; */
@@ -319,7 +319,7 @@ li{
 		
 	<div class ="search-bar">
 		<br><br>
-		<div style = "margin-left: 20px;">
+		<div style = "margin-left: 20px; font-size: 20px;">
        			 SEARCH &nbsp<img id='image_search' src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
        			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">
      			 <input id='searchtx' type="text" onblur="search_bar(this)" style="  border: none;
@@ -339,7 +339,7 @@ li{
 	<div align="center">
 		DATE : <input type="text" id="datepicker">
 		<!-- 정렬순서 -->		
-		<form style = "float:right; padding-left : 10px;" id="radiobutton">
+		<form style = "float:right; padding-left : 10px; font-size: 20px;" id="radiobutton">
 			<input type="radio" name="iCheck" class="input"value="1" checked>Category 
 			<input type="radio" name="iCheck" class="input"value="2">Keyword
 			<input type="radio" name="iCheck" class="input"value="3">Like

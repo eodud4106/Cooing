@@ -293,14 +293,14 @@ $(document).ready(function () {
 			<nav class="probootstrap-nav">						
 				<ul>
 					<li><a href="<c:url value ="/"/>">HOME</a></li>
-					<li><a href="<c:url value ="/myPage"/>">MYPAGE</a></li>
+					<li><a href="<c:url value ="/myPage"/>">MY PAGE</a></li>
 					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S LANKING</a></li>						
 					<li><a href="<c:url value ="/bookmark"/>">BOOKMARK</a></li>					
 				</ul>
 				<p class ="c">CATEGORY</p>
 				<ul>
-					<li class="category" data="0">Journey</li>
-					<li class="category" data="1">Food</li>
+					<li><a href="<c:url value =""/>">MY ACCOUNT</a></li>
+					<li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -309,8 +309,7 @@ $(document).ready(function () {
 			Album Create
 			<div class="button__horizontal"></div>
 			<div class="button__vertical"></div>
-		</button>		
-		<a href="<c:url value ="/logout_get"/>" style = "float :right;" role="Logout"><i class="fas fa-sign-out-alt"></i></a>
+		</button>			
 	</aside>
 
 
@@ -330,7 +329,7 @@ $(document).ready(function () {
 	
 	<div class ="search-bar">
 		<br><br>
-		<div style = "margin-left: 20px;">
+		<div style = "margin-left: 20px; font-size: 20px;">
        			 SEARCH &nbsp<img id='image_search' src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
        			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">
      			 <input id="searchtx" type="text" onblur="search_bar(this)" style="  border: none;
@@ -375,14 +374,7 @@ $(document).ready(function () {
 				<img class="card-img-top probootstrap-animate" 
 				src="resources/aside_images/img_1.jpg" alt="Card image cap"/>						
 				</div></li>		
-			</ul></div>
-			
-			<div class="card">
-				<ul><li><div class="inner"><a href="single.html"><p><strong>출력고고?dsf2</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
-				<img class="card-img-top probootstrap-animate" 
-				src="resources/image_mj/a1.jpg" alt="Card image cap"/>
-				</div></li>
-			</ul></div>
+			</ul></div>			
 			
 			<div class="card">
 				<ul><li><div class="inner"><a href="single.html"><p><strong>출력고고?dsf2</strong>ㅇㅁㄹㄴㅇㄹㅇㄴ</p></a>	
