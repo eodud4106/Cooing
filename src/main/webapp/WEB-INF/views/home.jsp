@@ -303,7 +303,7 @@ html, body, main, .container-fluid {
 	cursor: pointer;
 } */
 .friendList{
-	height: 600px;		
+	height: 700px;		
 	overflow-y : scroll;
 	padding-left: 30px;	
     font-size: 18px;
@@ -311,15 +311,24 @@ html, body, main, .container-fluid {
     margin-top: -15px;
 }
 .groupList{
-	height: 600px;	
+	height: 700px;	
 	overflow-y : scroll;
 	padding-left: 30px;
 	/* overflow-y:hidden; */
 	/* background-color : aliceblue; */
     font-size: 18px;
     cursor: pointer;
-    margin-top: 100px;
-    
+    margin-top: 100px;    
+}
+a{
+	font-size: 20px;
+}
+.c{
+	font-size: 20px;
+	font-family: 'Nanum Gothic Coding', monospace;
+}
+li{
+	cursor: pointer;
 }
 
 </style>
@@ -353,23 +362,17 @@ html, body, main, .container-fluid {
 
 		</div>
 		<div class="probootstrap-overflow">
-			<nav class="probootstrap-nav">
-				<p>MYPAGE</p>
-				<p>Today's Ranking</p>
-				<p></p>
-				<p>CATEGORY</p>
-				<ul>
-
-					<li class="category" data="0">Journey</li>
-					
-					<li><a href="<c:url value ="/"/>">MainPage</a></li>
-					<li><a href="<c:url value ="/myPage"/>">MyPage</a></li>	
-					<li><a href="<c:url value ="/LankingPage"/>">Ranking</a></li>				 		
-					<li><a href="<c:url value ="/logout_get"/>">LogOut</a></li>
-
+			<nav class="probootstrap-nav">				
+				<ul>					
+					<li><a href="<c:url value ="/"/>">HOME</a></li>
+					<li><a href="<c:url value ="/myPage"/>">MYPAGE</a></li>	
+					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S LANKING</a></li>			
 				</ul>
-			</nav>
-
+				<p class ="c">CATEGORY</p>
+				<ul>					
+					<li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>
+				</ul>
+			</nav>					
 		</div>
 	</aside>
 
@@ -404,8 +407,9 @@ html, body, main, .container-fluid {
 			
 			<!-- 정렬순서 -->		
 			<form style = "float:right; padding-left : 10px;">
-				<input type="radio" name="iCheck" class = "input"value="1" checked>최신순
-				<input type="radio" name="iCheck" class = "input"value="2" >인기순				
+				<input type="radio" name="iCheck" class = "input"value="1" checked>NEW
+				<input type="radio" name="iCheck" class = "input"value="2" >POPULAR				
+				<input type="radio" name="iCheck" class = "input"value="3" >MYLIKE
 			</form>
 			<input type="hidden" id="categorynum" value="${categorynum}">
 		</div>

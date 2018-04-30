@@ -232,7 +232,7 @@ html, body, main, .container-fluid {
 }
 
 .friendList{
-	height: 600px;		
+	height: 700px;		
 	overflow-y : scroll;
 	padding-left: 30px;	
     font-size: 18px;
@@ -240,7 +240,7 @@ html, body, main, .container-fluid {
     margin-top: -15px;
 }
 .groupList{
-	height: 600px;	
+	height: 700px;	
 	overflow-y : scroll;
 	padding-left: 30px;
 	/* overflow-y:hidden; */
@@ -296,14 +296,11 @@ li{
 					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S LANKING</a></li>
 				</ul>
 					<p class ="c">CATEGORY</p>
-				<ul>	
-					<li class="category" data="0">Journey</li>
-					<li class="category" data="1">Food</li>
-				</ul>					
+				<ul>						
+					<li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>
+				</ul>									
 			</nav>
 		</div>		
-		
-		<a href="<c:url value ="/logout_get"/>" style = "float :right;" role="Logout"><i class="fas fa-sign-out-alt"></i></a>
 	</aside>
 
 
