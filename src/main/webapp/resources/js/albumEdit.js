@@ -69,9 +69,9 @@ var PAGE_HEIGHT = 650;      // 페이지 당 높이
 var curr_page = 1;
 
 var arr_color = ["#FF0000", "#FF5E00", "#FFBB00", "#FFE400", "#ABF200",
-     "#1DDB16", "#00D8FF", "#0054FF", "#0100FF", "#5F00FF", "#FF00DD", 
+     "#1DDB16", "#00D8FF", "#0100FF", "#5F00FF", "#FF00DD", 
      "#FFD9FA", "#B2CCFF", "#FFC6FF", "#D9E5FF", "#FAECC5", 
-    "#FFC19E", "#D5D5D5", "#000000", "#FFFFFF"];
+    "#FFC19E", "#D5D5D5", "#000000", "#FFFFFF", "rgba(0,0,0,0)"];
 
 var arr_size = ["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"];
 

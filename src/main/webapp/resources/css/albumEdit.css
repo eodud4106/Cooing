@@ -143,6 +143,10 @@ svg, path {
 	min-height: 100px;
 }
 
+.inner_div_font_size, .div_font, .inner_div_font_color, .inner_div_font_bcolor, .edit {
+	padding: 0 !important;
+}
+
 .inner_div_font_size, .div_font {
     position: absolute;
     bottom: 40px;
