@@ -147,6 +147,7 @@ public class AlbumEditController {
 	@RequestMapping(value = "/update_albuminfo", method = RequestMethod.POST)
 	public String AlbumFirstCreate(HttpSession session, int album_num, String album_name, String album_contents,
 			int album_openrange, int album_category, String hashtag){
+		
 		AlbumVO albumwrite = new AlbumVO(album_num, album_name, album_openrange, album_contents, album_category);
 		boolean update_check = false;
 		update_check = albumDAO.personal_update_page1_Album(albumwrite);
