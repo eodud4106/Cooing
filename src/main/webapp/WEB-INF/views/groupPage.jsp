@@ -265,7 +265,7 @@ html, body, main, .container-fluid {
 	padding-left: 30px;	
     font-size: 18px;
     cursor: pointer;
-    margin-top: -15px;
+    margin-top: 15px;
 }
 .groupList{
 	height: 700px;	
@@ -397,19 +397,17 @@ select::-ms-expand { /* for IE 11 */
 		<br><br>
 		<div style = "margin-left: 20px;">
        			 SEARCH &nbsp<img id='image_search' src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
-       			 height: 24px;margin-right: 5px;" onclick="var inputBox = document.getElementById('searchtx');
-       			 inputBox.style.width = '200px';
-        		 inputBox.style.paddingLeft='3px';
-       			 inputBox.value='';
-       			 inputBox.focus();">
-     			 <input id='searchtx' type="text" onblur="this.style.width='0px';
-             	  this.style.paddingLeft='0px';" style="  border: none;
+       			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">
+     			 <input id='searchtx' type="text" onblur="search_bar(this)" style="  border: none;
               	 background-color: rgba(0,0,0,0);
               	 color: #666666;
                	 border-bottom: solid 2px #333;
                	 outline: none;
               	  width: 0px;
-               	 transition: all 0.5s;" onkeydown="if(event.keyCode==13){searchfriend();}">		
+               	 transition: all 0.5s;
+               	  padding-right:0px;
+               	 "
+               	 >		
 				
 		</div>
 		<br>	

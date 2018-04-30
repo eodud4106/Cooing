@@ -68,11 +68,12 @@ function memberdelete(){
 					data:{partynum:party_num},
 					dataType:'json',
 					success: function(list){
+						$('#memberdiv').html('');
 						$.each(list,function(i,data){
 							var $p = $('<p />');
 							var $img = $('<img />', {
 								"class": "img-responsive img-circle",
-								"src": './memberimg?strurl=' + data.member_picture==null? '':data.member_picture
+								"src": "./memberimg?strurl=" + (data.member_picture==null? "":data.member_picture)+""
 							}).css({
 								"border-radius": "80%",
 								"display": "inline-block",
@@ -80,20 +81,20 @@ function memberdelete(){
 								"max-width": "25%",
 								"height": "auto"
 							}).appendTo($p);
+							$p.html($p.html() + '&nbsp' + data.member_id);
 							//뭐지?? data.member_id
 							if(data.member_id  != $('#sessionid').attr('data') ) {
 								var $div = $('<div />', {
 									"class": "img_3",
-									"data": data.member_id,
 									"data2": party_num
 								}).css({
 									"z-index": "99",
-									"float": "right",
-									"margin-top": "-29px"
-								}).appendTo($p)
+									"float": "right"
+								}).appendTo($p);
 								var $i = $('<i />', {
 									"class": "fas fa-user-times"
 								}).appendTo($div)
+								$div.attr('data' , data.member_id);
 							}
 							$('#memberdiv').append($p);
 						});
@@ -111,10 +112,10 @@ function memberdelete(){
 }
 function memberplus(){	
 	var member_id = $('#findid').val();
-	var party_num = $('#desolve').attr('data');
 	if(confirmcheck(member_id + '를 그룹 멤버로 초대 하시겠습니까?') == false) {
 		return false;
 	}
+	var party_num = $('#desolve').attr('data');
 	$.ajax({
 		url:'party_member_input',
 		type:'POST',		
@@ -128,13 +129,12 @@ function memberplus(){
 					data:{partynum:party_num},
 					dataType:'json',
 					success: function(list){
-
+						$('#memberdiv').html('');
 						$.each(list,function(i,data){
-							
 							var $p = $('<p />');
 							var $img = $('<img />', {
 								"class": "img-responsive img-circle",
-								"src": './memberimg?strurl=' + data.member_picture==null? '':data.member_picture
+								"src": "./memberimg?strurl=" + (data.member_picture==null? "":data.member_picture) + ""
 							}).css({
 								"border-radius": "80%",
 								"display": "inline-block",
@@ -142,22 +142,22 @@ function memberplus(){
 								"max-width": "25%",
 								"height": "auto"
 							}).appendTo($p);
+							$p.html($p.html() + '&nbsp' + data.member_id);
 							//뭐지?? data.member_id
 							if(data.member_id  != $('#sessionid').attr('data') ) {
 								var $div = $('<div />', {
 									"class": "img_3",
-									"data": data.member_id,
 									"data2": party_num
 								}).css({
 									"z-index": "99",
-									"float": "right",
-									"margin-top": "-29px"
-								}).appendTo($p)
+									"float": "right"									
+								}).appendTo($p);
 								var $i = $('<i />', {
 									"class": "fas fa-user-times"
-								}).appendTo($div)
+								}).appendTo($div);
+								$div.attr('data' , data.member_id);
 							}
-							$('#memberdiv').html(p);
+							$('#memberdiv').append($p);
 						});
 						$('#findid').val('');
 						$('.img_3').on('click',memberdelete);	

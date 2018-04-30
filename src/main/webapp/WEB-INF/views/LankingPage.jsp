@@ -329,6 +329,7 @@ li{
                	 outline: none;
               	  width: 0px;
                	 transition: all 0.5s;
+               	 padding-left:0px;
                	 padding-right:0px;">		
 		
 	</div>
