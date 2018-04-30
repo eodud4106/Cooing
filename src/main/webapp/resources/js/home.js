@@ -91,6 +91,7 @@ function checkRadioPaging(){
 		    	  }
 		         break;  
 		      case '3':
+		    	  $('#searchtx').val('');
 	    		  searchcheck = 99;
 	    		  get_album_list('mylike' , 'total' , 'date' , ++pagenum , 0);
 		         break; 

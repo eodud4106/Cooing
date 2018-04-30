@@ -390,9 +390,9 @@ li{
 			
 			<!-- 정렬순서 -->		
 			<form style = "float:right; padding-left : 10px; font-size: 20px;">
-				<input type="radio" id="newcheck" name="iCheck" class = "input"value="1" checked>NEW
-				<input type="radio" name="iCheck" class = "input"value="2" >POPULAR				
-				<input type="radio" name="iCheck" class = "input"value="3" >MYLIKE
+				<input type="radio" id="newcheck" name="iCheck" class = "input" value="1" checked>NEW
+				<input type="radio" name="iCheck" class = "input" value="2" >POPULAR				
+				<input type="radio" name="iCheck" class = "input" value="3" >MYLIKE
 			</form>
 			<input type="hidden" id="categorynum" value="${categorynum}">
 		</div>
