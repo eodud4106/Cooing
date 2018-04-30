@@ -238,7 +238,7 @@ html, body, main, .container-fluid {
 var pagenum = 0;
 var pagingcheck = false;
 //0번이면 검색 1번 이면 카테고리 
-var searchcheck = 0; 
+var searchcheck = 99; 
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
     	if(searchcheck == 0){
