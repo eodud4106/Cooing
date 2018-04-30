@@ -192,6 +192,15 @@
 			 	)
 			</if>
 		</if>
+		<if test="type == 'mylike'">
+			and(
+				album_category in(
+					select category_kind 
+					from category
+					where category_memberid = #{userId}
+				)
+			)				
+		</if>
 		<if test="writer_type == 'total'">
 			and (
 				album_openrange = 4 		

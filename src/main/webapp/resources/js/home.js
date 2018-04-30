@@ -42,7 +42,6 @@ function initialize(){
 	});
 		
 	searchword();
-
 }
 
 function checkRadioPaging(){
@@ -89,6 +88,11 @@ function checkRadioPaging(){
 		    	  }
 		    	  
 		         break;  
+		         
+		      case '3':
+	    		  searchcheck = 99;
+	    		  get_album_list('mylike' , 'total' , 'date' , ++pagenum , 0);
+		         break; 
 		   }
 	   }else{
 	   }	 
