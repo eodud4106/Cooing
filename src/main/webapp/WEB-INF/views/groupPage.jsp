@@ -535,10 +535,12 @@ select::-ms-expand { /* for IE 11 */
    </div>
 </aside>
 	
+	<!-- 
 	<div class="popuplayer">
 		<p onClick="friendpage()" style="font-size:8pt;color:#26afa1;">친구페이지</p>
 		<p onClick="chatpage()" style="font-size:8pt;color:#26afa1;">채팅</p>
-	</div>	
+	</div>
+	 -->	
 
 	<script src="resources/aside_js/popper.min.js"></script>
 	<script src="resources/aside_js/bootstrap.min.js"></script>
