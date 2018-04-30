@@ -76,6 +76,13 @@ $(document).ready(function () {
 		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
 	}
 	
+	$('#searchtx').keydown(function(event){
+		if(event.keyCode == 13){
+			searchcheck = 99;
+			get_group_album_list('writer' , 'party' , '${partyinfo.getParty_name()}' , 'data', ++pagenum , 0);
+		}
+	});
+	
 	get_album_list('writer' , 'party' , '${partyinfo.getParty_name()}' ,  'date', ++pagenum , 0);
 	
 	$('#albumcreate').on('click',create_group_album);
@@ -520,15 +527,8 @@ select::-ms-expand { /* for IE 11 */
 		</div>		
 		
 		<div class = "groupList" style= "margin-top: 70px; width: 200px;">
-			<c:if test="${Member ne null}">
-				<c:if test="${fn:length(group) ne 0}">
-					<c:forEach var="party" items="${group}">
-						<div name="group">
-							<p class="arr_party" partynum="${party.party_num}">${party.party_name}</p>
-						</div>
-					</c:forEach>
-				</c:if>
-			</c:if>				
+			<div name="group" id="group">
+			</div>				
 		</div>
 	</section>   
    </div>
