@@ -80,13 +80,17 @@ $(window).scroll(function() {
 $(document).ready(function () {
 	
 	initialize();	
+	
 	if(${search != null}){
 		$('#searchtx').val('${search}');
 		$('#searchtx').css('width' , '200px');
 		$('#searchtx').css('paddingLeft' , '3px');
 		$('#searchtx').focus();
+	}else{
+		$('#searchtx').val('');
+		$('#searchtx').css('width' , '0px');
+		$('#searchtx').css('paddingLeft' , '0px');
 	}
-	
 	//1번이면 카테고리 눌러서 넘어온 경우 , 엘스는 그냥 홈에 온 경우 혹은 검색으로 온 경우 
 	if('${search_other}' == 1){
 		searchcheck = 99;
@@ -402,7 +406,8 @@ li{
                	 border-bottom: solid 2px #333;
                	 outline: none;
               	  width: 0px;
-               	 transition: all 0.5s;"
+               	 transition: all 0.5s;
+               	 padding-right:0px;"               	 
                	 >  		
 			
 			<!-- 정렬순서 -->		

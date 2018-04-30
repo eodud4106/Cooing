@@ -328,7 +328,8 @@ li{
                	 border-bottom: solid 2px #333;
                	 outline: none;
               	  width: 0px;
-               	 transition: all 0.5s;">		
+               	 transition: all 0.5s;
+               	 padding-right:0px;">		
 		
 	</div>
 		<br>	
