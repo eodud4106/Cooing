@@ -650,14 +650,23 @@ html, body, main, .container-fluid {
 
 					<!-- 페이지 저장 -->
 					<div class="contact100-form validate-form" id="entry">
-						<span class="contact100-form-title" style="font-size: 20pt; margin-top: 0px"> ${album.album_name } </span>
+						<span class="contact100-form-title" style="font-size: 15pt; margin-top: 0px"> ${album.album_name } </span>
 					</div>
 
 					<!-- 앨범 정보 -->
 					<div class="wrap-input100 validate-input">
-						<span class="label-input100">지은이</span>
+						<span class="label-input100">프로필사진</span>
 						<span class="label-input100">${album.album_writer }</span>
-					</div>
+						
+						<!-- 여기 수정해야함 친구 팔로잉버튼  -->
+						<!-- <button style="z-index: 99; float: right; margin-top: 0px;"
+						id="friendbt" data="0">
+						<i class="fas fa-user-plus"></i>
+						</button>					
+						<button style="z-index: 99; float: right; margin-top: 0px;"
+						id="friendbt" data="1">
+						<i class="fas fa-user-times"></i>
+						</button> -->
 
 					<div class="wrap-input100 validate-input">
 						<span class="label-input100">설명</span>
