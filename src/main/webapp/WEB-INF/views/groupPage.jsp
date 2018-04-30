@@ -32,6 +32,7 @@
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/chat.js"></script>
+<script src="resources/js/popup.js"></script>
 <script src="resources/js/groupview.js"/></script>
 <script src="resources/js/search.js"></script>
 <!-- 폰트 -->
@@ -530,13 +531,6 @@ select::-ms-expand { /* for IE 11 */
    </div>
    </div>
 </aside>
-	
-	<!-- 
-	<div class="popuplayer">
-		<p onClick="friendpage()" style="font-size:8pt;color:#26afa1;">친구페이지</p>
-		<p onClick="chatpage()" style="font-size:8pt;color:#26afa1;">채팅</p>
-	</div>
-	 -->	
 
 	<script src="resources/aside_js/popper.min.js"></script>
 	<script src="resources/aside_js/bootstrap.min.js"></script>

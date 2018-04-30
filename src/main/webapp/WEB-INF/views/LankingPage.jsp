@@ -35,6 +35,7 @@
 <script src="resources/js/laking.js"></script>
 <script src="resources/js/search.js"></script>
 <script src="resources/js/groupview.js"/></script>
+<script src="resources/js/popup.js"></script>
 <script src="resources/js/main.js"></script>
 
 <!-- 탭나누는 사이드바 -->
