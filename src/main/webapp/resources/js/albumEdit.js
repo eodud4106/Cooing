@@ -180,7 +180,14 @@ function ready_album(mode) {
 	                // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
 	                $('.page').droppable("disable");
 	                $('#page' + curr_page + '').droppable("enable");
-
+	               
+	                if(curr_page != 1){ 
+	            	   $('#page' + curr_page + '').css('border-right' , '1px solid black');
+	            	   $('#page' + curr_page + '').css('box-shadow' , 'rgb(134, 142, 150) 1px -1px 1px 1px inset');	            	   
+	            	   $('#page' + (curr_page + 1) + '').css('border-left' , '1px solid black');
+	            	   $('#page' + (curr_page + 1) + '').css('box-shadow' , 'rgb(134, 142, 150) -1px -1px 1px 1px inset');
+	                }
+	                
 	                // 현재 페이지가 싱글 페이지가 아닌 경우 오른쪽 페이지도 droppable을 켠다.
 	                if(arr_single_page.indexOf(curr_page) == -1) {
 	                    $('#page' + (curr_page + 1) + '').droppable("enable");
