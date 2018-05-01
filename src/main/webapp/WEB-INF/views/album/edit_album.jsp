@@ -32,6 +32,7 @@
 <!-- 친구 그룹창을 위한 js -->
 <script src="resources/js/search.js"></script>
 <script src="resources/js/popup.js"></script>
+<script src="resources/js/chat.js"></script>
 
 <!-- albumEdit 용 js -->
 <script type="text/javascript" src="resources/js/albumEdit.js"></script>
@@ -40,7 +41,7 @@
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/albumEdit.css">
 <link rel="stylesheet" href="resources/css/jquery-ui.min.css">
-
+<link rel="stylesheet" href="resources/css/chat.css">
 <link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="resources/aside_css/open-iconic-bootstrap.min.css">
@@ -205,7 +206,11 @@ html, body, main, .container-fluid {
 	//페이지 로딩 후 초기화 내용
 	$(document).ready(
 			function() {
-
+				
+				if ('${sessionScope.Member}' != null) {
+					readyChat('${sessionScope.Member.member_id}', '');
+				}
+				
 				$('.input').iCheck({
 					radioClass : 'iradio_square-green',
 				// increaseArea: '20%' // optional
