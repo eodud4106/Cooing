@@ -216,7 +216,7 @@ select::-ms-expand { /* for IE 11 */
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
 			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
-			<div id="party_name" class="mb-2 d-block probootstrap-logo" style = "color : #1f5dad" party_name="${partyinfo.getParty_name()}">${partyinfo.getParty_name()}
+			<div id="party_name" class="mb-2 d-block probootstrap-logo" style = "color : #1f5dad; font-size: 20px;" party_name="${partyinfo.getParty_name()}">"${partyinfo.getParty_name()}"
 			</div>	
 			
 			<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id()}">
@@ -231,20 +231,18 @@ select::-ms-expand { /* for IE 11 */
 					</div>
 				</div>				
 			</c:if>				
-			<div style ="font-family: 'Nanum Gothic Coding', monospace;"><a class="mb-2 d-block probootstrap-logo">${partyinfo.getParty_name() }</a></div>
+			
 			<input type="hidden" id="sessionid" data="${Member.getMember_id()}">
 				<c:if test="${partyleader ne null}">
-				<p><img  class="img-circle" style =" border-radius: 80%; display: inline-block;; width: 100% \9;
-    				max-width: 25%; height: auto;"src = "<c:url value="/memberimg?strurl=${partyleader.getMember_picture()}"/>">&nbsp
+				<p style ="font-family:  Poppins-Regular;"><img	style = "width: 40px; height: 40px;"src = "<c:url value="/memberimg?strurl=${partyleader.getMember_picture()}"/>">&nbsp
 				<c:if test="${partyleader ne null}">${partyleader.getMember_id()}(Leader)</c:if></p>
 			</c:if>	
 			
-		<p style = "font-size: 20px;">[Member]</p>	
-		<div id="memberdiv" style ="height: 300px;">
+		<p style = "font-size: 20px;">[MEMBER]</p>	
+		<div id="memberdiv" style ="height: 300px; font-family:  Poppins-Regular;">
 		<c:if test="${fn:length(memberinfo) ne 0}">
 			<c:forEach var="arrmi" items="${memberinfo}">
-				<p class ="p1"><img  class="img-responsive img-circle" style =" border-radius: 80%; display: inline-block;; width: 100% \9;
-    				max-width: 25%; height: auto;"src = "<c:url value="/memberimg?strurl=${arrmi.getMember_picture()}"/>">&nbsp${arrmi.getMember_id()}
+				<p class ="p1"><img  style ="width: 40px; height: 40px;"src = "<c:url value="/memberimg?strurl=${arrmi.getMember_picture()}"/>">&nbsp${arrmi.getMember_id()}
 				<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id() and partyinfo.getParty_leader() ne arrmi.getMember_id()}">					
 					<div style= "z-index:99; float:right;margin-top: -29px; cursor: pointer;" class="img_3" data="${arrmi.getMember_id()}" data2="${partyinfo.getParty_num()}">
 					<i class="fas fa-user-times" ></i></div>
@@ -253,11 +251,11 @@ select::-ms-expand { /* for IE 11 */
 			</c:forEach>
 		</c:if>
 		</div>
-		<nav class="probootstrap-nav">
+		<nav class="probootstrap-nav" style = "padding-left: 0px;">
 		<ul>
-			<li><a href="<c:url value ="/"/>">HOME</a></li>
+			<%-- <li><a href="<c:url value ="/"/>">HOME</a></li> --%>
 			<li><a href="<c:url value ="/myPage"/>">MYPAGE</a></li>
-			<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>						
+			<%-- <li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>		 --%>				
 		</ul>
 			<div class = "dropdown">
 						<p class ="c" class = "dropbtn">CATEGORY</p>
@@ -288,7 +286,7 @@ select::-ms-expand { /* for IE 11 */
 					    </div>
 					</div>
 		<ul>
-			<li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>						
+			<%-- <li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>	 --%>					
 		</ul>		
 		</nav>	
 		
