@@ -23,6 +23,7 @@
 <script src="resources/aside_js/imagesloaded.pkgd.min.js"></script>
 <script src="resources/aside_js/main.js"></script>
 <script src="resources/js/chat.js"></script>
+<script src="resources/js/push.js"></script>
 <script src="resources/skin_radio/icheck.js"></script>
 <!-- 페이지 넘김 효과를 위한 js -->
 <script type="text/javascript" src="resources/js/turn.js"></script>
@@ -34,7 +35,7 @@
 <script type="text/javascript" src="resources/js_js/html2canvas.min.js"></script>
 
 <!-- 기본 css -->
-<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/albumEdit.css">
 <link rel="stylesheet" href="resources/css/jquery-ui.min.css">
 <link rel="stylesheet" href="resources/aside_css/bootstrap.min.css"><link rel="stylesheet"
@@ -46,6 +47,7 @@
 <link rel="stylesheet" href="resources/aside_css/style.css">
 <link rel="stylesheet" href="resources/css/albumEdit.css">
 <link rel="stylesheet" href="resources/css/chat.css">
+<link rel="stylesheet" href="resources/css/push.css">
 <!-- 친구 그룹 리스트 출력 -->
 <link rel="stylesheet" href="resources/css/friend_list.css">
 

@@ -57,23 +57,17 @@ function creategroup(){
 				if(a != '-1'){
 					var idlist = $('#idlist').text();
 					if(idlist.length > 0){
-						$.ajax({
-							url:'party_member_create',
-							type:'POST',		
-							data:{groupmember:idlist,partynum:a},
-							dataType:'text',
-							success: function(a){
-								if(a=='success'){									
-									opener.location.href="./groupPage?group_name="+name;
-									alert('그룹이 생성되었습니다. 그룹창으로 이동합니다.');
-									window.close();
-								}
-								else{
-									alert(a);
-								}
-							},
-							error:function(e){alert(JSON.stringify(e));}		
-						});
+						
+						var arr_member_id = idlist.match(/[a-z0-9]{1,15}/g);
+						
+						for (var i = 0; i < arr_member_id.length; i++) {
+							sendPush(name, arr_member_id[i], 2, '우리 파티에 오세요!!');
+						}
+						
+						alert('그룹을 만들고 초대장을 보냈습니다!')
+						opener.location.href="./groupPage?group_name="+name;
+						window.close();
+
 					}
 					else{
 						opener.location.href="./groupPage?group_name="+name;

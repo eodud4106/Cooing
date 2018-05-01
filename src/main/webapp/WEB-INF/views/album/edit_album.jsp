@@ -33,15 +33,17 @@
 <script src="resources/js/search.js"></script>
 <script src="resources/js/popup.js"></script>
 <script src="resources/js/chat.js"></script>
+<script src="resources/js/push.js"></script>
 
 <!-- albumEdit 용 js -->
 <script type="text/javascript" src="resources/js/albumEdit.js"></script>
 <script type="text/javascript" src="resources/js_js/html2canvas.min.js"></script>
 <!-- 기본 css -->
-<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/albumEdit.css">
 <link rel="stylesheet" href="resources/css/jquery-ui.min.css">
 <link rel="stylesheet" href="resources/css/chat.css">
+<link rel="stylesheet" href="resources/css/push.css">
 <link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="resources/aside_css/open-iconic-bootstrap.min.css">

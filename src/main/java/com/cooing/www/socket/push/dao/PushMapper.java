@@ -13,6 +13,9 @@ public interface PushMapper {
 	public int updatePush(PushVO push);
 	
 	// 맵에 검색 조건을 담아 push 검색...
-	public ArrayList<PushVO> selectPush(HashMap<String, String> map);
+	public ArrayList<PushVO> selectPushList(HashMap<String, String> map);
+	
+	// 맵에 검색 조건을 담아 push 검색...
+	public PushVO selectPushOne(int push_id);
 	
 }

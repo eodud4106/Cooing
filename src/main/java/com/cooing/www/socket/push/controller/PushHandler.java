@@ -1,8 +1,5 @@
 package com.cooing.www.socket.push.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,8 +17,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.cooing.www.member.dao.RelationDAO;
 import com.cooing.www.member.vo.PartyMember;
-import com.cooing.www.socket.chat.dao.MessageDAO;
-import com.cooing.www.socket.chat.vo.MessageVO;
+import com.cooing.www.socket.push.dao.PushDAO;
+import com.cooing.www.socket.push.vo.PushVO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -30,7 +27,7 @@ import com.google.gson.Gson;
 public class PushHandler extends TextWebSocketHandler implements InitializingBean {
 
 	@Autowired
-	MessageDAO mDAO;
+	PushDAO pDAO;
 	@Autowired
 	RelationDAO rDAO;
 
@@ -72,41 +69,71 @@ public class PushHandler extends TextWebSocketHandler implements InitializingBea
 		super.handleMessage(session, message);
 		
 		// 메세지....
-		MessageVO msg = null;
+		PushVO push = null;
 		
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			//사용자가 보낸 메세지는 message.getPayload에 담겨 있다.
-			msg = mapper.readValue(message.getPayload().toString(), 
-					new TypeReference<MessageVO>(){});
-			
+			push = mapper.readValue(message.getPayload().toString(), 
+					new TypeReference<PushVO>(){});
 			// 메세지의 타입
-			String type = msg.getType();
+			/*
+			 * 0 - 웹소켓 초기 설정
+			 * 1 - 친구 요청
+			 * 2 - 파티 초대
+			 * 3 - 수신인의 대답
+			 */
+			int type = push.getType();
 			
 			// 타입 별 처리
-			if(type.equals("login")) {
+			if(type == 0) {
 				// 1. [홈페이지 접속]
 				// 실제 id와 웹소켓 세션 id를 key, value로 저장 
 				// (메시지 푸시 받을 id -> 웹소켓 세션 id -> 발송) 구조이기 때문.
-				hashmap_id.put(msg.getSender(), session.getId());
+				hashmap_id.put(push.getSender(), session.getId());
 				
-			} else if (type.equals("message")) {
-				// 2. [사용자가 보낸 메시지]
-
-				//날짜 정보 저장
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				String message_date = sdf.format(new Date());
+			} else if (type == 1 || type == 2) {
+				// 2. [친구 요청  or 파티초대]
 				
-				msg.setSend_date(message_date);
+				PushVO db_push = pDAO.insertPush(push);
+				sendMessage(db_push);
 				
-				MessageVO saved_msg = mDAO.insertMessage(msg);
+			} else if (type == 3 || type == 4) {
+				// 3. [push에 대한 대답..]
+				int result = pDAO.updatePush(push);
 				
-				sendMessage(saved_msg);
+				if (result == 1) {
+					PushVO db_push = pDAO.selectPushOne(push.getPush_id());
+					
+					// 친구 요청
+					if (db_push.getType() == 1) {
+						db_push.setType(3);
+						
+						// 승낙한 경우만 가입처리
+						if (push.getAgree() == 1) {
+							
+						}
+						
+					}
+					
+					// 파티 초대
+					else if(db_push.getType() == 2) {
+						db_push.setType(4);
+						
+						// 승낙한 경우만 가입처리
+						if (push.getAgree() == 1) {
+							PartyMember pm = new PartyMember(db_push.getAddressee(), db_push.getSender());
+							rDAO.insertPartyMember_by_party_name(pm);
+							
+						}
+						
+					}
+					
+					sendMessage(db_push);
+				} else {
+					System.out.println("push 업데이트 실패!!!!");
+				}
 				
-			} else if (type.equals("read")) {
-				// 3. [메시지 읽음]
-				MessageVO m = mDAO.updateMessage(msg);
-				readMessage(m);
 			}
 		
 		} catch (Exception e) {
@@ -129,131 +156,58 @@ public class PushHandler extends TextWebSocketHandler implements InitializingBea
 		return super.supportsPartialMessages();
 	}
 
-	// 대화 푸시
-	public void sendMessage(MessageVO msg) {
+	// 푸시
+	public void sendMessage(PushVO push) {
 		
-		try {
-			
-			// 1:1 채팅 & 그룹채팅 여부에 따른 처리
-			if (msg.getIs1to1() == 1) {
-			
+		// push의 타입이 초대, 요청일 경우는 수신자한테!
+		if(push.getType() <= 2) {
+		
+			try {
+		
 				for (WebSocketSession session : this.sessionSet) {
 					if (session.isOpen()) {
-						
-						// 1:1 채팅(가독성을 위해 1, 2로 나누어 작성)
-						// 1. 발신인이 웹소켓 세션에 있을 경우 메시지 푸시
-						if (hashmap_id.containsKey(msg.getSender())
-								&& hashmap_id.get(msg.getSender()).equals(session.getId())) {
-							session.sendMessage(new TextMessage(gson.toJson(msg)));
-						} 
-						// 2. 수신인이 웹소켓 세션에 있을 경우 메시지 푸시
-						else if (hashmap_id.containsKey(msg.getAddressee())
-								&& hashmap_id.get(msg.getAddressee()).equals(session.getId())) {
-							session.sendMessage(new TextMessage(gson.toJson(msg)));
+						// 수신인이 웹소켓 세션에 있을 경우 메시지 푸시
+						if (hashmap_id.containsKey(push.getAddressee())
+								&& hashmap_id.get(push.getAddressee()).equals(session.getId())) {
+							session.sendMessage(new TextMessage(gson.toJson(push)));
 						}
-					}
-				}
-				
-			} else {
-				// 그룹 채팅
 
-				// 1. message_to(수신 대상 그룹)으로 그룹 멤버를 조회
-				ArrayList<PartyMember> arr_partymember = 
-						rDAO.searchPartyMember(Integer.parseInt(msg.getAddressee()));
-				// 2. 조회한 그룹 멤버들의 id 중 현재 세션에 연결된 경우 메시지 발신
-				
-				for (PartyMember partyMember : arr_partymember) {
-					String memberid = partyMember.getMember_id();
-					
-					for (WebSocketSession session : this.sessionSet) {
-						if (session.isOpen()) {
-							if (hashmap_id.containsKey(memberid)
-									&& hashmap_id.get(memberid).equals(session.getId())) {
-								session.sendMessage(new TextMessage(gson.toJson(msg)));
-							}
+					}
+				}
+		
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// push의 타입이 응답일 경우는 발신자한테!
+		else if (push.getType() > 2) {
+			
+			if(push.getType() == 4) {
+				// 파티 초대에 대한 대답일 경우는 파티 리더한테 보낸다!
+				push.setSender(rDAO.searchParty(push.getSender()).getParty_leader());
+			}
+			
+			try {
+				for (WebSocketSession session : this.sessionSet) {
+					if (session.isOpen()) {
+						// 수신인이 웹소켓 세션에 있을 경우 메시지 푸시
+						if (hashmap_id.containsKey(push.getSender())
+								&& hashmap_id.get(push.getSender()).equals(session.getId())) {
+							session.sendMessage(new TextMessage(gson.toJson(push)));
 						}
 					}
 				}
+			}catch (Exception e) {
+				e.printStackTrace();
 			}
-	
-		}catch (Exception e) {
-			e.printStackTrace();
 		}
 	
 	}
 	
-	//읽음 처리
-	public void readMessage(MessageVO msg) {
-		
-		System.out.println("읽음 메세지를 보냅니다 -> " + msg);
-		
-		try {
-			
-			// 1:1 채팅 & 그룹채팅 여부에 따른 처리
-			if (msg.getIs1to1() == 1) {
-			
-				for (WebSocketSession session : this.sessionSet) {
-					if (session.isOpen()) {
-						
-						// 1. 발신인이 웹소켓 세션에 있을 경우 읽음 푸시
-						if (hashmap_id.containsKey(msg.getSender())
-								&& hashmap_id.get(msg.getSender()).equals(session.getId())) {
-							session.sendMessage(new TextMessage(gson.toJson(msg)));
-						}
-					}
-				}
-				
-			} else {
-				// 그룹 채팅
-
-				// 1. message_to(수신 대상 그룹)으로 그룹 멤버를 조회
-				ArrayList<PartyMember> arr_partymember = 
-						rDAO.searchPartyMember(Integer.parseInt(msg.getAddressee()));
-				// 2. 조회한 그룹 멤버들의 id 중 현재 세션에 연결된 경우 읽음 메시지 발신
-				
-				for (PartyMember partyMember : arr_partymember) {
-					String memberid = partyMember.getMember_id();
-					for (WebSocketSession session : this.sessionSet) {
-						if (session.isOpen()) {
-							if (hashmap_id.containsKey(memberid)
-									&& hashmap_id.get(memberid).equals(session.getId())) {
-								session.sendMessage(new TextMessage(gson.toJson(msg)));
-							}
-						}
-					}
-				}
-			}
-	
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-
 	@Override
 	public void afterPropertiesSet() throws Exception {
 
-//		Thread thread = new Thread() {
-//
-//			int i = 0;
-//
-//			@Override
-//			public void run() {
-//				while (true) {
-//
-//					try {
-//						sendMessage("send message index " + i++);
-//						Thread.sleep(1000);
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//						break;
-//					}
-//				}
-//			}
-//
-//		};
-//
-//		thread.start();
 	}
 
 }

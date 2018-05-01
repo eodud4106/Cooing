@@ -205,7 +205,7 @@ p{
 <script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
 <!-- 폰트 -->
 <!-- 폰트 -->
-<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
 <!-- <link href="https://fonts.googleapis.com/css?family=McLaren" rel="stylesheet"> -->
 
@@ -222,6 +222,7 @@ p{
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/animate.css"/>">
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/style.css"/>">
 <link rel="stylesheet" href="resources/css/chat.css">
+<link rel="stylesheet" href="resources/css/push.css">
 
 <script src="<c:url value="/resources/aside_js/popper.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/bootstrap.min.js"/>"></script>
@@ -232,6 +233,7 @@ p{
 <script src="<c:url value="/resources/aside_js/main.js"/>"></script>
 <script src="resources/js/popup.js"></script>
 <script src="resources/js/chat.js"></script>
+<script src="resources/js/push.js"></script>
 
 <link rel="stylesheet" href="resources/skin_radio/green.css">
 <script src="resources/skin_radio/icheck.js"></script>

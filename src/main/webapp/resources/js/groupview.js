@@ -121,6 +121,9 @@ function memberplus(){
 		return false;
 	}
 	var party_num = $('#desolve').attr('data');
+	
+	
+	
 	$.ajax({
 		url:'party_member_input',
 		type:'POST',		
@@ -128,47 +131,8 @@ function memberplus(){
 		dataType:'text',
 		success: function(a){
 			if(a=='success'){
-				$.ajax({
-					url:'member_list_post',
-					type:'POST',		
-					data:{partynum:party_num},
-					dataType:'json',
-					success: function(list){
-						$('#memberdiv').html('');
-						$.each(list,function(i,data){
-							var $p = $('<p />');
-							var $img = $('<img />', {
-								"class": "img-responsive img-circle",
-								"src": "./memberimg?strurl=" + (data.member_picture==null? "":data.member_picture) + ""
-							}).css({
-								"border-radius": "80%",
-								"display": "inline-block",
-								"width": "100%",
-								"max-width": "25%",
-								"height": "auto"
-							}).appendTo($p);
-							$p.html($p.html() + '&nbsp' + data.member_id);
-							//뭐지?? data.member_id
-							if(data.member_id  != $('#sessionid').attr('data') ) {
-								var $div = $('<div />', {
-									"class": "img_3",
-									"data2": party_num
-								}).css({
-									"z-index": "99",
-									"float": "right"									
-								}).appendTo($p);
-								var $i = $('<i />', {
-									"class": "fas fa-user-times"
-								}).appendTo($div);
-								$div.attr('data' , data.member_id);
-							}
-							$('#memberdiv').append($p);
-						});
-						$('#findid').val('');
-						$('.img_3').on('click',memberdelete);	
-					},
-					error:function(e){alert(JSON.stringify(e));}		
-				});				
+				sendPush($('#party_name').attr('party_name'), member_id, 2, '우리 파티에 오세요!!');
+				alert('가입 요청 메세지를 보냈습니다!');
 			}else{
 				alert(a);
 			}
@@ -192,6 +156,50 @@ function searchgroupmember(){
 			error:function(e){alert(JSON.stringify(e));}		
 		});
 	}
+}
+
+function print_party_member(party_num) {
+	$.ajax({
+		url:'member_list_post',
+		type:'POST',		
+		data:{partynum:party_num},
+		dataType:'json',
+		success: function(list){
+			$('#memberdiv').html('');
+			$.each(list,function(i,data){
+				var $p = $('<p />');
+				var $img = $('<img />', {
+					"class": "img-responsive img-circle",
+					"src": "./memberimg?strurl=" + (data.member_picture==null? "":data.member_picture) + ""
+				}).css({
+					"border-radius": "80%",
+					"display": "inline-block",
+					"width": "100%",
+					"max-width": "25%",
+					"height": "auto"
+				}).appendTo($p);
+				$p.html($p.html() + '&nbsp' + data.member_id);
+				//뭐지?? data.member_id
+				if(data.member_id  != $('#sessionid').attr('data') ) {
+					var $div = $('<div />', {
+						"class": "img_3",
+						"data2": party_num
+					}).css({
+						"z-index": "99",
+						"float": "right"									
+					}).appendTo($p);
+					var $i = $('<i />', {
+						"class": "fas fa-user-times"
+					}).appendTo($div);
+					$div.attr('data' , data.member_id);
+				}
+				$('#memberdiv').append($p);
+			});
+			$('#findid').val('');
+			$('.img_3').on('click',memberdelete);	
+		},
+		error:function(e){alert(JSON.stringify(e));}		
+	});		
 }
 
 //그룹 이름을 넘겨주기 위한 js에서 새로 만들어 봐야 된다 

@@ -108,7 +108,7 @@ public class RelationController {
 				if(!relationDAO.insertPartyMember(new PartyMember(0 , partynum , s)) == true)
 					return "멤버 추가를 실패 했습니다. 잠시 후 다시 시도해 주십시오.";
 			}
-		}		
+		}
 		if(!relationDAO.insertPartyMember(new PartyMember(0 , partynum , smember.getMember_id())) == true)
 			return "멤버 추가를 실패 했습니다. 잠시 후 다시 시도해 주십시오.";
 		return "success";		
@@ -168,8 +168,8 @@ public class RelationController {
 		if(smember.getMember_id().equals(groupmember)){
 			return "자신의 ID는 추가할 수 없습니다.";
 		}
-		if(!relationDAO.insertPartyMember(new PartyMember(0 , partynum , groupmember)))
-			return "멤버 추가를 실패 했습니다. 잠시 후 다시 시도해 주십시오.";		
+//		if(!relationDAO.insertPartyMember(new PartyMember(0 , partynum , groupmember)))
+//			return "멤버 추가를 실패 했습니다. 잠시 후 다시 시도해 주십시오.";		
 		return "success";		
 	}
 	

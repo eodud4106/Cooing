@@ -8,7 +8,7 @@
 
 	<insert id="insertPush" parameterType="push">
 	INSERT INTO push (
-		push_id
+		push_id,
 		sender,
 		addressee,
 		type,
@@ -21,9 +21,10 @@
 		#{type},
 		#{msg}
 	)
-	<selectKey keyProperty="push_id" resultType="int" order="AFTER"> 
+	<selectKey keyProperty="push_id,push_date" resultType="push" order="AFTER"> 
 		SELECT
-			push_seq.currval
+			push_seq.currval as push_id,
+			sysdate as push_date
 		FROM dual
 	</selectKey>
 	</insert>
@@ -37,13 +38,24 @@
 		push_id = #{push_id}
 	</update>
 	
-	<!-- 메시지 조회 -->
-	<select id="selectPush" resultType="push">
+	<!-- 메시지 조회(하나만) -->
+	<select id="selectPushOne" resultType="push">
 	SELECT
 		*
 	FROM push
 	WHERE
-		<if test="search == unread">
+		push_id = #{push_id}
+	</select>
+	
+	<!-- 메시지 조회 -->
+	<select id="selectPushList" resultType="push">
+	SELECT
+		*
+	FROM push
+	WHERE
+		1 = 1
+		<if test="search == 'unread'">
+		AND
 		addressee = #{user_id}
 		AND
 		agree is null

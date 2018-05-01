@@ -23,4 +23,5 @@ public interface RelationMapper {
 	public int deleteMemberParty(int groupnum);
 	public int deleteLeaderParty(int groupnum);
 	public ArrayList<PartyMember> searchPartyMember_by_party_name(String party_name);
+	public int insertPartyMember_by_party_name(PartyMember pm);
 }

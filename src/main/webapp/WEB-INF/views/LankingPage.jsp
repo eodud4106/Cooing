@@ -10,7 +10,7 @@
 <meta charset="UTF-8" />
 <link rel="icon" type="image/png" href="resources/assets/images/cooing_logo.png"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans">
 <link rel="stylesheet" href="resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="resources/css/style.css">
 <link rel="stylesheet" href="resources/css/jquery-ui.css">
 <link rel="stylesheet" href="resources/css/chat.css">
+<link rel="stylesheet" href="resources/css/push.css">
 
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
@@ -38,7 +39,8 @@
 <script src="resources/js/search.js"></script>
 <script src="resources/js/popup.js"></script>
 <script src="resources/js/main.js"></script>
-<!-- <script src="resources/js/chat.js"></script> -->
+<script src="resources/js/chat.js"></script>
+<script src="resources/js/push.js"></script>
 
 <!-- 탭나누는 사이드바 -->
 <link rel="stylesheet" type="text/css" href="resources/album_create/css/util.css">

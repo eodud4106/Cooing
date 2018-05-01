@@ -7,6 +7,16 @@ public class PartyMember {
 	private String party_name;
 	
 	public PartyMember(){}
+	
+	
+
+	public PartyMember(String member_id, String party_name) {
+		super();
+		this.member_id = member_id;
+		this.party_name = party_name;
+	}
+
+
 
 	public PartyMember(int partymember_num, int party_num, String member_id) {
 		super();

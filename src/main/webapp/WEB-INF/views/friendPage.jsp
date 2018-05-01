@@ -12,7 +12,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="icon" type="image/png" href="resources/assets/images/cooing_logo.png"/>
 <!-- 폰트 -->
-<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
 <!-- 탭메뉴 -->
 <link rel="stylesheet" href="resources/css/tab.css">
 <link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="resources/aside_css/animate.css">
 <link rel="stylesheet" href="resources/aside_css/style.css">
 <link rel="stylesheet" href="resources/css/chat.css">
+<link rel="stylesheet" href="resources/css/push.css">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 
@@ -33,6 +34,7 @@
 <script src="<c:url value="/resources/js/search.js"/>"></script>
 <script src="resources/js/popup.js"></script>
 <script src="resources/js/chat.js"></script>
+<script src="resources/js/push.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 <script>
 

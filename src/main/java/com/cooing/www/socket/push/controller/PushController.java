@@ -31,16 +31,14 @@ public class PushController {
 	@RequestMapping(value = "/get_unread_push", method = RequestMethod.POST)
 	public ArrayList<PushVO> getChat(HttpSession session) {
 		
-		logger.debug("push 불러오기");
-		
 		String id = ((Member) session.getAttribute("Member")).getMember_id();
 		HashMap<String, String> map_search = new HashMap<>();
 		
 		ArrayList<PushVO> arr_push = new ArrayList<>();
-		map_search.put("userId", id);
+		map_search.put("user_id", id);
 		map_search.put("search", "unread");
 		
-		arr_push = pDAO.selectPush(map_search);
+		arr_push = pDAO.selectPushList(map_search);
 		
 		return arr_push;
 		
@@ -50,8 +48,6 @@ public class PushController {
 	@ResponseBody
 	@RequestMapping(value = "/send_answer", method = RequestMethod.POST)
 	public String send_answer(String push_id, String agree, HttpSession session) {
-		
-		logger.debug("push 대답");
 		
 		int i_push_id = -1;
 		int i_agree = -1;

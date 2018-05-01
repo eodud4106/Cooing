@@ -100,4 +100,14 @@ public class RelationDAO {
 		RelationMapper mapper = sqlSession.getMapper(RelationMapper.class);
 		return mapper.searchPartyMember_by_party_name(party_name);
 	}
+	
+	public int insertPartyMember_by_party_name(PartyMember pm) {
+		int result = 0;
+		try {
+			result = sqlSession.getMapper(RelationMapper.class).insertPartyMember_by_party_name(pm);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

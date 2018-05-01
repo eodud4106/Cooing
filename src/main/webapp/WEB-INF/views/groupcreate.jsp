@@ -17,6 +17,10 @@
 <script>
 $(document).ready(function () {
 	initialize();
+	// 경고!! 절대 아래 코드를 옮기지 마시오!
+	if ('${sessionScope.Member}' != '') {
+		readyPush('${sessionScope.Member.member_id}', '');
+	}
 });
 
 </script>
@@ -44,8 +48,8 @@ $(document).ready(function () {
 	<link rel="stylesheet" type="text/css" href="resources/group_css/util.css">
 	<link rel="stylesheet" type="text/css" href="resources/group_css/main.css">
 <!-- =============================================================================================== -->
-
-
+<script src="resources/js/push.js"></script>
+<link rel="stylesheet" href="resources/css/push.css">
 
 </head>
 <body id="groupbody">

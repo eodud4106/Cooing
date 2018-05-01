@@ -30,6 +30,7 @@
 <script src="resources/js/home.js"></script>
 <script src="resources/js/search.js"></script>
 <script src="resources/js/chat.js"></script>
+<script src="resources/js/push.js"></script>
 <script src="resources/js/icheck.js"></script> 
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 <script src="resources/js/popper.min.js"></script>
@@ -48,12 +49,12 @@
 
 <script type="text/javascript" src="resources/js_js/html2canvas.min.js"></script>
 <!-- 폰트 -->
-<link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
+<!-- <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">-->
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
 
 <!-- 채팅목록 -->
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <script src="https://use.fontawesome.com/1c6f725ec5.js"></script>
 
 <script>
@@ -107,6 +108,7 @@ $(document).ready(function () {
 	//경고!! 아래 코드를 절대 별도의 js파일로  마시오!!
 	if ('${sessionScope.Member}' != null) {
 		readyChat('${sessionScope.Member.member_id}', '');
+		readyPush('${sessionScope.Member.member_id}', '');
 	}
 });
 </script>

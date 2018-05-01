@@ -30,10 +30,12 @@
 <link rel="stylesheet" href="resources/css/tab.css">
 <link rel="stylesheet" href="resources/css/jquery-ui.min.css">
 <link rel="stylesheet" href="resources/css/chat.css">
+<link rel="stylesheet" href="resources/css/push.css">
 
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/chat.js"></script>
+<script src="resources/js/push.js"></script>
 <script src="resources/js/popup.js"></script>
 <script src="resources/js/groupview.js"/></script>
 <script src="resources/js/search.js"></script>
@@ -119,11 +121,6 @@ $(document).ready(function () {
 		get_group_album_list('category' , 'party' , '${partyinfo.getParty_name()}'  , 'date', ++pagenum , 1);
 	});
 	
-	if (${sessionScope.Member != null}) {
-		readyChat();
-		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
-	}
-	
 	$('#searchtx').keydown(function(event){
 		if(event.keyCode == 13){
 			searchcheck = 99;
@@ -134,6 +131,12 @@ $(document).ready(function () {
 	get_group_album_list('writer' , 'party' , '${partyinfo.getParty_name()}' ,  'date', ++pagenum , 0);
 	
 	$('#albumcreate').on('click',create_group_album);
+	
+	// 경고!! 절대 아래 코드를 옮기지 마시오!
+	if ('${sessionScope.Member}' != '') {
+		readyChat('${sessionScope.Member.member_id}', '');
+		readyPush('${sessionScope.Member.member_id}', '');
+	}
 });
 
 //그룹 앨범 만드기...
@@ -210,7 +213,7 @@ select::-ms-expand { /* for IE 11 */
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
 			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
-			<div id="party_name" class="mb-2 d-block probootstrap-logo" style = "color : #1f5dad"><${partyinfo.getParty_name()}>
+			<div id="party_name" class="mb-2 d-block probootstrap-logo" style = "color : #1f5dad" party_name="${partyinfo.getParty_name()}">${partyinfo.getParty_name()}
 			</div>	
 			
 			<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id()}">
@@ -395,11 +398,19 @@ select::-ms-expand { /* for IE 11 */
 		</div>
 	</section>   
 	
-	<section id ="content3">       					
-	<div class="button_container">		
-		여기!
-	</div>
-	</section>   
+	<!-- 영준이 알림공간 -->
+	<section id ="content3" class="content3">       					
+		<div class = "div_news" id="div_news">
+			<div class="msg_box" id="msg_box">
+				<div class="msg_title">메세지</div>
+				<div class="msg_list" id="msg_list"></div>
+			</div>
+			<div class="invite_box" id="invite_box">
+				<div class="invite_title">초대</div>
+				<div class="invite_list" id="invite_list"></div>
+			</div>
+		</div>
+	</section> 
    
 </aside>
 

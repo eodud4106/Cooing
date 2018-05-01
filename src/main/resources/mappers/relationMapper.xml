@@ -84,4 +84,21 @@
 	WHERE
 		party_name = #{party_name}
 	</select>
+	
+	<insert id="insertPartyMember_by_party_name" parameterType="partymember">
+	<selectKey keyProperty="party_num" resultType="Integer" order="BEFORE">
+	SELECT party_num
+	FROM party
+	WHERE party_name = #{party_name}
+	</selectKey>
+	INSERT INTO partymember(
+		partymember_num,
+		party_num,
+		member_id
+	)VALUES(
+		partymember_seq.nextval,
+		#{party_num},
+		#{member_id}
+	)
+	</insert>
 </mapper>

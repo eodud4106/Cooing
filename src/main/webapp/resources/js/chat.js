@@ -3,8 +3,8 @@
  */
 
  // 채팅에 쓸 웹소켓과 위치
-var websocket;
-var wsUri = "ws://cooing.site/www/chat/echo.do";
+var websocket_chat;
+var wsUri_chat = "ws://cooing.site/www/chat/echo.do";
 
 var userId;
 var counterpart;
@@ -37,27 +37,27 @@ function readyChat (userId, goRoot) {
 	this.goRoot = goRoot;
 
 	// 웹소켓 연결
- 	websocket = new WebSocket(wsUri);
+	websocket_chat = new WebSocket(wsUri_chat);
  	
  	// 웹소켓 이벤트 별 함수 연결
 
  	// 채팅 연결
- 	websocket.onopen = function(evt) {
+	websocket_chat.onopen = function(evt) {
    		onOpen(evt)
    	};
 
    	// 메세지 수신
- 	websocket.onmessage = function(evt) {
+   	websocket_chat.onmessage = function(evt) {
    		onMessage(evt)
    	};
 
    	// 에러 수신
-   	websocket.onerror = function(evt) {
+   	websocket_chat.onerror = function(evt) {
    		//onError(evt)
    	};
 
    	// 웹소켓 종료
-   	websocket.onclose = function(evt) {
+   	websocket_chat.onclose = function(evt) {
    		closeChat(evt)
    	};
 
@@ -178,7 +178,7 @@ function onOpen(evt) {
 		type: "login",
 		sender: userId
 	}
-	websocket.send(JSON.stringify(sendMessage));
+	websocket_chat.send(JSON.stringify(sendMessage));
 	console.log('웹소켓 연결됨..')
 	
 	// 대화 상대 별 안 읽은 메세지 개수를 조회함.
@@ -273,7 +273,7 @@ function sendMessage() {
 		message: $message.text()
 	}
 
-    websocket.send(JSON.stringify(sendMessage));
+    websocket_chat.send(JSON.stringify(sendMessage));
 
     $message.text('').focus();
 
@@ -455,7 +455,7 @@ function readMessage() {
 		addressee: userId,
 		unread: userId
 	}
-   	websocket.send(JSON.stringify(sendMessage));
+    websocket_chat.send(JSON.stringify(sendMessage));
 }
 
 function show_unread_msg_count(result) {
