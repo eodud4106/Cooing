@@ -308,12 +308,8 @@ function AlbumListPaging_hindoong(check, result) {
 		
 		// 마우스 엔터
 		$div_card.mouseenter(function(e) {
-			var $div_overlay = $('<div />', {
-				"class": "go_back"
-			}).appendTo($(this));
 			$info_div.removeClass('hidden_info').addClass('go_front');
 		}).mouseleave(function(e) {
-			$('.go_back').remove();
 			$info_div.removeClass('go_front').addClass('hidden_info');
 		})
 		
