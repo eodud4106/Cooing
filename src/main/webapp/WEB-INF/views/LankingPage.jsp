@@ -36,10 +36,9 @@
 <script src="resources/js/imagesloaded.pkgd.min.js"></script>
 <script src="resources/js/laking.js"></script>
 <script src="resources/js/search.js"></script>
-<script src="resources/js/groupview.js"/></script>
 <script src="resources/js/popup.js"></script>
 <script src="resources/js/main.js"></script>
-<script src="resources/js/chat.js"></script>
+<!-- <script src="resources/js/chat.js"></script> -->
 
 <!-- 탭나누는 사이드바 -->
 <link rel="stylesheet" type="text/css" href="resources/album_create/css/util.css">
@@ -49,8 +48,9 @@
 <script>
 $(document).ready(function() {
 	initialize();
-	readyChat('${sessionScope.Member.member_id}', '');
+	/* readyChat('${sessionScope.Member.member_id}', ''); */
 });
+
 </script>
 <!-- 정렬순 라디오 버튼 -->
 <script>
