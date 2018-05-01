@@ -112,7 +112,8 @@ checkcount();
 					
 					자동차<input type="checkbox" name="hobby" value="17">
 					낚시<input type="checkbox" name="hobby" value="18">
-					건강<input type="checkbox" name="hobby" value="19">	
+					건강<input type="checkbox" name="hobby" value="19">
+					기타<input type="checkbox" name="hobby" value="20">	
 				</td></tr>
 			<tr><td height="5" colspan="2"><font size="1px" style = "float: right; padding-bottom: 50px;"><span style="color:red;">※</span>최대 3개까지만 선택</font></td></tr>
                   </table>  </p>
