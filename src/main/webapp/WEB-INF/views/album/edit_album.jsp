@@ -88,6 +88,9 @@
 <!--===============================================================================================-->
 
 <style type="text/css">
+#image_search {
+	cursor: pointer;
+}
 .main {
 	min-width: 200px;
 	max-width: 200px;
