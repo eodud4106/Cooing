@@ -264,7 +264,7 @@ $(document).ready(function(){
 	
 	<div class ="search-bar">
 		<br><br>
-		<div align="margin-left: 20px; "style = "font-size: 20px;">
+		<div style = "margin-left: 20px; font-size: 20px;">
 				 <!-- src="resources/img/ico/seo-1970475_960_720.png" -->
        			 SEARCH &nbsp<img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
        			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">

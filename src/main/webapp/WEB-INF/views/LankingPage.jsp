@@ -63,6 +63,9 @@ $(document).ready(function(){
 });
 </script>
 <style>
+#image_search {
+	cursor: pointer;
+}
 .img1 {
 	width: 50px;
 	height: 50px;

@@ -378,6 +378,9 @@ function category_change(category) {
 </script>
 
 <style>
+#image_search {
+	cursor: pointer;
+}
 	.bookmark_page_div {float: left; width: 200px; height: 200px; margin-bottom: 70px;}
 	.bookmark_info_div {padding-top:40px; margin-left:120px; float: left; width: 200px; height: 200px; margin-bottom: 70px;}
 	.bookmark_link_div {float: right; width: 200px; height: 200px; margin-bottom: 70px;}
@@ -448,7 +451,7 @@ function category_change(category) {
 	
 	<div class ="search-bar">
 		<br><br>
-		<div style = "margin-left: 20px;">
+		<div style = "margin-left: 20px; font-size: 20px;">
        			 SEARCH &nbsp<img id='image_search' src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
        			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">
      			 <input id='searchtx' type="text" onblur="search_bar(this)" style="  border: none;

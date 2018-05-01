@@ -41,6 +41,9 @@
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
 <link rel="stylesheet" href="resources/button_css/style.css">
 <style>
+#image_search {
+	cursor: pointer;
+}
 .dropbtn {
     background-color: #4CAF50;
     color: white;
