@@ -5,6 +5,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.cooing.www.socket.chat.vo.MessageVO" alias="message"/>
+		<typeAlias type="com.cooing.www.socket.push.vo.PushVO" alias="push"/>
 		<typeAlias type="com.cooing.www.member.vo.Member" alias="member"/>
 		<typeAlias type="com.cooing.www.album.vo.Category" alias="category"/>
 		<typeAlias type="com.cooing.www.member.vo.Party" alias="party"/>
@@ -20,6 +21,7 @@
 	</typeAliases>
  	<mappers>
 		<mapper resource="mappers/messageMapper.xml"/>
+		<mapper resource="mappers/pushMapper.xml"/>
 		<mapper resource="mappers/memberMapper.xml"/>
 		<mapper resource="mappers/relationMapper.xml"/>
 		<mapper resource="mappers/albumMapper.xml"/>
