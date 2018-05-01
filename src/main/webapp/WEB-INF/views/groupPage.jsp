@@ -223,7 +223,7 @@ select::-ms-expand { /* for IE 11 */
 				
 				<div>
 					<p>	<input type="text" id="findid" placeholder="Member 추가" size="19" style= "width: 150px;">						
-					<div style= "z-index:99; float:right; margin-top: -40px; "id="gmemberplus">
+					<div style= "z-index:99; float:right; margin-top: -40px; cursor: pointer;" id="gmemberplus">
 					<i class="fas fa-user-plus"></i>
 					</div>
 				</div>				
@@ -243,7 +243,7 @@ select::-ms-expand { /* for IE 11 */
 				<p class ="p1"><img  class="img-responsive img-circle" style =" border-radius: 80%; display: inline-block;; width: 100% \9;
     				max-width: 25%; height: auto;"src = "<c:url value="/memberimg?strurl=${arrmi.getMember_picture()}"/>">&nbsp${arrmi.getMember_id()}
 				<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id() and partyinfo.getParty_leader() ne arrmi.getMember_id()}">					
-					<div style= "z-index:99; float:right;margin-top: -29px; " class="img_3" data="${arrmi.getMember_id()}" data2="${partyinfo.getParty_num()}">
+					<div style= "z-index:99; float:right;margin-top: -29px; cursor: pointer;" class="img_3" data="${arrmi.getMember_id()}" data2="${partyinfo.getParty_num()}">
 					<i class="fas fa-user-times" ></i></div>
 				</c:if>
 				</p>
