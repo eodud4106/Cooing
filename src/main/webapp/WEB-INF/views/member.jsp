@@ -60,7 +60,7 @@ checkcount();
 						<span class="login100-form-avatar">
 							<img src="" id="preview" >
 						</span>
-						<div>
+						<div style = "margin-top: -80px;">
 							<i class="fas fa-plus" style="width: 50px; height: 50px"></i>
 							<input type="file" id="upload" class="input_prifile_image" name="upload" accept="image/*">
 						</div>

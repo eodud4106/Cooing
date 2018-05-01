@@ -17,7 +17,6 @@
 <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="resources/js/jquery-ui.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
-
 <script src="resources/aside_js/popper.min.js"></script>
 <script src="resources/aside_js/owl.carousel.min.js"></script>
 <script src="resources/aside_js/jquery.waypoints.min.js"></script>
@@ -25,35 +24,28 @@
 <script src="resources/aside_js/main.js"></script>
 <script src="resources/js/chat.js"></script>
 <script src="resources/skin_radio/icheck.js"></script>
-
 <!-- 페이지 넘김 효과를 위한 js -->
 <script type="text/javascript" src="resources/js/turn.js"></script>
-
 <!-- 친구 그룹창을 위한 js -->
 <script src="resources/js/search.js"></script>
 <script src="resources/js/popup.js"></script>
-
 <!-- albumEdit 용 js -->
 <script type="text/javascript" src="resources/js/albumEdit.js"></script>
 <script type="text/javascript" src="resources/js_js/html2canvas.min.js"></script>
+
 <!-- 기본 css -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
-
 <link rel="stylesheet" href="resources/css/albumEdit.css">
 <link rel="stylesheet" href="resources/css/jquery-ui.min.css">
-
-<link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
-<link rel="stylesheet"
+<link rel="stylesheet" href="resources/aside_css/bootstrap.min.css"><link rel="stylesheet"
 	href="resources/aside_css/open-iconic-bootstrap.min.css">
 <link rel="stylesheet" href="resources/aside_css/owl.carousel.min.css">
-<link rel="stylesheet"
-	href="resources/aside_css/owl.theme.default.min.css">
+<link rel="stylesheet" href="resources/aside_css/owl.theme.default.min.css">
 <link rel="stylesheet" href="resources/aside_css/icomoon.css">
 <link rel="stylesheet" href="resources/aside_css/animate.css">
 <link rel="stylesheet" href="resources/aside_css/style.css">
 <link rel="stylesheet" href="resources/css/albumEdit.css">
 <link rel="stylesheet" href="resources/css/chat.css">
-
 <!-- 친구 그룹 리스트 출력 -->
 <link rel="stylesheet" href="resources/css/friend_list.css">
 
@@ -98,92 +90,6 @@ section {
 	padding: 20px 0 0;
 	font-size: 14px;
 	border-top: 1px solid #ddd;
-}
-
-/*라디오버튼 숨김*/
-.input1 {
-	display: none;
-}
-
-label {
-	display: inline-block;
-	margin: 0 0 -1px;
-	padding: 5px 10px;
-	font-weight: 600;
-	text-align: center;
-	color: #bbb;
-	border: 1px solid transparent;
-	font-size: 15px;
-}
-
-label:hover {
-	color: #2e9cdf;
-	cursor: pointer;
-}
-
-/*input 클릭시, label 스타일*/
-.input1:checked+label {
-	color: #555;
-	border: 1px solid #ddd;
-	border-top: 2px solid #2e9cdf;
-	border-bottom: 1px solid #ffffff;
-}
-
-#tab1:checked ~ #content1, #tab2:checked ~ #content2 , #tab3:checked ~ #content {
-	display: block;
-}
-
-.search {
-	width: 120px;
-	display: block;
-	position: absolute;
-}
-
-.bt {
-	position: absolute;
-	right: 40px;
-}
-
-.tb1 {
-	padding-top: 20px;
-}
-
-html, body, main, .container-fluid {
-	height: 100%;
-	width: 100%;
-}
-
-.container-fluid {
-	padding: 0;
-}
-
-.view_wrapper {
-	margin: 0;
-	padding-left: 250px !important;
-	display: flex;
-	flex-wrap: wrap;
-	width: 100%;
-}
-
-.album_wrapper {
-	width: 100%;
-}
-
-.album_wrapper, .top_bar, .under_bar, .album {
-	margin: auto;
-	display: block;
-}
-
-.checkbox {
-	font-size: 20px;
-}
-
-.page {
-	background-color: #eee;
-}
-
-.outer {
-	background-color: #aaa;
 }
 
 .div_reply, .div_reply form, .div_reply form input, #resultReply,

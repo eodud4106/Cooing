@@ -29,10 +29,15 @@ function createPartyPopup(e, elem) {
 		"top": e.clientY,
 		"width": "100px",
 		"height": "60px",
-		"background-color": "#A9E2F3",
+		"background-color": "#007bfff5",
 		"z-index": "1000",
-		"color": "black",
-		"cursor" : "pointer"
+		"color": "white",
+		"cursor" : "pointer",
+		"-webkit-border-top-left-radius": "15px",
+		"-webkit-border-top-right-radius": "15px",
+		"-webkit-border-bottom-left-radius": "15px",
+		"-webkit-border-bottom-right-radius": "15px"
+
 	}).appendTo($('body'));
 
 	var $div_go_party_page = $('<div />', {
@@ -74,8 +79,14 @@ function createFriendPopup(e, elem, type) {
 		"top": e.clientY,
 		"width": "100px",
 		"height": "60px",
-		"background-color": "#A9E2F3",
-		"z-index": "1000"
+		"background-color": "#007bfff5",
+		"z-index": "1000",
+		"-webkit-border-top-left-radius": "15px",
+		"-webkit-border-top-right-radius": "15px",
+		"-webkit-border-bottom-left-radius": "15px",
+		"-webkit-border-bottom-right-radius": "15px"
+
+		
 	}).appendTo($('body'));
 
 	var $div_go_friend_page = $('<div />', {
@@ -85,7 +96,7 @@ function createFriendPopup(e, elem, type) {
 		"height": "50%",
 		"display": "block",
 		"float": "left",
-		"color": "black",
+		"color": "white",
 		"cursor": "pointer"
 	}).appendTo($div_friend_popup);
 	
@@ -113,7 +124,7 @@ function createFriendPopup(e, elem, type) {
 		"height": "50%",
 		"display": "block",
 		"float": "left",
-		"color": "black",
+		"color": "white",
 		"cursor": "pointer"
 	}).click(function(e) {
 		openChat(1, $(this).attr('friend_id'), '');

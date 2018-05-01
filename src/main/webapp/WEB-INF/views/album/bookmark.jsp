@@ -528,8 +528,7 @@ function category_change(category) {
 		<div class = "newsList"  style= "margin-top: 70px; width: 200px;">
 		여기 넣으셈
 		</div>		
-	</section>  
-   
+	</section>     
 </aside>
 	
 

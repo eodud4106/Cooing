@@ -96,3 +96,103 @@
 	padding:10px;
 	
 }
+.main {
+	min-width: 200px;
+	max-width: 200px;
+	padding: 10px;
+	margin: 0 auto;
+	background: #ffffff;
+}
+
+section {
+	display: none;
+	padding: 20px 0 0;
+	font-size: 14px;
+	border-top: 1px solid #ddd;
+}
+
+/*라디오버튼 숨김*/
+.input1 {
+	display: none;
+}
+
+label {
+	display: inline-block;
+	margin: 0 0 -1px;
+	padding: 5px 10px;
+	font-weight: 600;
+	text-align: center;
+	color: #bbb;
+	border: 1px solid transparent;
+	font-size: 15px;
+}
+
+label:hover {
+	color: #2e9cdf;
+	cursor: pointer;
+}
+
+/*input 클릭시, label 스타일*/
+.input1:checked+label {
+	color: #555;
+	border: 1px solid #ddd;
+	border-top: 2px solid #2e9cdf;
+	border-bottom: 1px solid #ffffff;
+}
+
+#tab1:checked ~ #content1, #tab2:checked ~ #content2 , #tab3:checked ~ #content {
+	display: block;
+}
+
+.search {
+	width: 120px;
+	display: block;
+	position: absolute;
+}
+
+.bt {
+	position: absolute;
+	right: 40px;
+}
+
+.tb1 {
+	padding-top: 20px;
+}
+
+html, body, main, .container-fluid {
+	height: 100%;
+	width: 100%;
+}
+
+.container-fluid {
+	padding: 0;
+}
+
+.view_wrapper {
+	margin: 0;
+	padding-left: 250px !important;
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+.album_wrapper {
+	width: 100%;
+}
+
+.album_wrapper, .top_bar, .under_bar, .album {
+	margin: auto;
+	display: block;
+}
+
+.checkbox {
+	font-size: 20px;
+}
+
+.page {
+	background-color: #eee;
+}
+
+.outer {
+	background-color: #aaa;
+}
