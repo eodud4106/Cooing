@@ -211,7 +211,7 @@ $(document).ready(function(){
 					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>			
 				</ul>
 				<div class = "dropdown">
-						<p class ="c" class = "dropbtn">CATEGORY</p>
+						<p class ="c" class = "dropbtn" style = "cursor: pointer;">CATEGORY</p>
 						 <div class="dropdown-content">
 						 <ul>
 						  	<li class="category" data="0">여행</li>
