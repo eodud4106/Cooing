@@ -235,14 +235,16 @@ height: 30px;
 						"width": "30px",
 						"height": "30px",
 						"margin": "10px"
-					}).appendTo($('#i_bookmark'))
+					}).appendTo($('#i_bookmark'));
 					
 					if (a == 'success') {
 						$icon.addClass("fas fa-check");
+						$('#i_bookmark').attr('role' , '책갈피 제거');
 					}
 					//fail이면 없는 거 책갈피가 
 					else {
 						$icon.addClass("fas fa-plus");
+						$('#i_bookmark').attr('role' , '책갈피 추가');
 					}
 				},
 				error : function(e) {
