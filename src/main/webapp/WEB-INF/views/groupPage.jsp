@@ -334,7 +334,7 @@ select::-ms-expand { /* for IE 11 */
 	
 	
 	<!-- 앨범 리스트 -->
-	<div class="card-columns" id="card-columns">
+	<div class="card-columns" id="card-columns" style="cursor: pointer;">
 	</div>		
 
 	<div class="container-fluid d-md-none">
