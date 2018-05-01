@@ -113,6 +113,7 @@ function ready_album(mode) {
 	        height: PAGE_HEIGHT,
 	        when:{
 	        	turned: function(event, page, view) {
+	        		nowpage();
 	        		bookmark_check();
 	        	}
 	        }

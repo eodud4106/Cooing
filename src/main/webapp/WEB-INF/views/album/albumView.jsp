@@ -216,6 +216,7 @@ height: 30px;
 		$('#friendsearch').keyup(function() {
 			searchword();
 		});
+		nowpage();
 	});
 	
 	//현재 페이지의 북마크가 있는지 검색 
@@ -549,13 +550,12 @@ height: 30px;
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate"
 			data-animate-effect="fadeInLeft" style="padding-bottom: 0;">
-			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
-			
 			<div style="text-align:center">
 				<input type="text" id="left_page" width="10px" height="10px">
 				<input type="text" id="right_page" width="10px" height="10px">
 				<input type="text" id="total_page" width="10px" height="10px">
 			</div>
+			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
 		</div>
 		<div class="probootstrap-overflow">
 			<div class="main">
