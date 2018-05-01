@@ -298,8 +298,7 @@ html, body, main, .container-fluid {
 			},
 			dataType : 'text',
 			success : function(e) {
-				alert('앨범정보가 저장되었습니다.');
-				info_save = true;
+				savePage('all');
 			},
 			error : function(e) {
 				console.log('에러 발생.' + e);

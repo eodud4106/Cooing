@@ -1440,6 +1440,7 @@ function savePage(mode) {
         // 앨범 전체 저장 모드
         count = $('#album').turn('pages');
         alert('저장이 완료 되었습니다.');
+		isSave = true;
 
     } else if(mode == 'curr') {
 
