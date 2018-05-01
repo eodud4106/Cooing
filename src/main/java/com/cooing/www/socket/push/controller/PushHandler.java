@@ -2,6 +2,7 @@ package com.cooing.www.socket.push.controller;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.LogManager;
@@ -111,7 +112,10 @@ public class PushHandler extends TextWebSocketHandler implements InitializingBea
 						
 						// 승낙한 경우만 가입처리
 						if (push.getAgree() == 1) {
-							
+							Map<String,String> map = new HashMap<String,String>();
+							map.put("person", db_push.getSender());
+							map.put("friend", db_push.getAddressee());
+							rDAO.insertFriend(map);
 						}
 						
 					}

@@ -40,13 +40,20 @@ function searchgroupname(){
 }
 
 function creategroup(){
+
+	var name = $('#groupname').val();
+	
+	if (name.length > 10) {
+		alert('그룹명은 10자 이내로 입력하세요.');
+		return false;
+	}
+	
 	var create_group = confirm('그룹을 생성하시겠습니까?');
 	
 	if(create_group == false) {
 		return false;
 	}
-	
-	var name = $('#groupname').val();
+
 	if(name.length > 0){
 		$.ajax({
 			url:'party_create',
