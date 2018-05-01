@@ -64,7 +64,7 @@ var album_top = 0;          //앨범의 top
 var album_left = 0;         //앨범의 left
 
 var PAGE_WIDTH = 600;       // 페이지 당 너비
-var PAGE_HEIGHT = 650;      // 페이지 당 높이
+var PAGE_HEIGHT = 700;      // 페이지 당 높이
 
 var curr_page = 1;
 

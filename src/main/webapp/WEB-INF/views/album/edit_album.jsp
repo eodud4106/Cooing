@@ -524,12 +524,19 @@ html, body, main, .container-fluid {
 					</div>
 				</section>
 				
-				 <!-- 영준이 알림공간 -->
-		<section id ="content3">       					
-			<div class = "newsList"  style= "margin-top: 70px; width: 200px;">
-			여기 넣으셈
-			</div>		
-		</section>  
+		<!-- 영준이 알림공간 -->
+		<section id ="content3" class="content3">       					
+			<div class = "div_news" id="div_news" style = "text-align :center;  font-size: 14px;">
+				<div class="msg_box" id="msg_box">
+					<div class="msg_title">MESSAGE</div>
+					<div class="msg_list" id="msg_list"></div>
+				</div>
+				<div class="invite_box" id="invite_box">
+					<div class="invite_title">INVITE</div>
+					<div class="invite_list" id="invite_list"></div>
+				</div>
+			</div>
+		</section> 
 			
 	</aside>
 
