@@ -150,7 +150,7 @@ public class RelationController {
 		ArrayList<PartyMember> arr_party_member = relationDAO.searchPartyMember(partynum);
 		ArrayList<Member> arr_member = new ArrayList<Member>();
 		for(PartyMember party : arr_party_member){
-			arr_member.add(memberDAO.selectMember(party.getG_member_memberid()));
+			arr_member.add(memberDAO.selectMember(party.getMember_id()));
 		}
 		return arr_member;
 	}
@@ -165,7 +165,7 @@ public class RelationController {
 			return "그룹은 8명을 초과할 수 없습니다.";
 		}
 		for(PartyMember party : member){
-			if(party.getG_member_memberid().equals(groupmember))
+			if(party.getMember_id().equals(groupmember))
 				return "이미 추가 되어 있는 아이디 입니다.";
 		}
 		if(smember.getMember_id().equals(groupmember)){

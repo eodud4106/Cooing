@@ -29,21 +29,21 @@
 		<if test="is1to1 == 0">
 		(
 		SELECT 
-			LISTAGG( CONCAT( (CONCAT('.', g_member_memberid)), '.'), '')
-			WITHIN GROUP (ORDER BY g_member_memberid)
+			LISTAGG( CONCAT( (CONCAT('.', member_id)), '.'), '')
+			WITHIN GROUP (ORDER BY member_id)
 		FROM
 			(SELECT
 				p1.party_num,
 				p1.party_name,
-				p2.g_member_memberid
+				p2.member_id
 			FROM
 				party p1
 			JOIN
 				partymember p2
 			ON
-				p1.party_num = p2.g_member_partynum) p
+				p1.party_num = p2.party_num) p
 		WHERE
-			g_member_memberid != #{sender}
+			member_id != #{sender}
 			AND party_name = #{addressee}
 		GROUP BY party_name
 		),
@@ -67,7 +67,7 @@
 				JOIN
 					partymember p2
 				ON
-					p1.party_num = p2.g_member_partynum) p
+					p1.party_num = p2.party_num) p
 			WHERE
 				party_name = #{addressee}
 			) AS unread

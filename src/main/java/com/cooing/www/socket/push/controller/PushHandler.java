@@ -163,7 +163,7 @@ public class PushHandler extends TextWebSocketHandler implements InitializingBea
 				// 2. 조회한 그룹 멤버들의 id 중 현재 세션에 연결된 경우 메시지 발신
 				
 				for (PartyMember partyMember : arr_partymember) {
-					String memberid = partyMember.getG_member_memberid();
+					String memberid = partyMember.getMember_id();
 					
 					for (WebSocketSession session : this.sessionSet) {
 						if (session.isOpen()) {
@@ -212,7 +212,7 @@ public class PushHandler extends TextWebSocketHandler implements InitializingBea
 				// 2. 조회한 그룹 멤버들의 id 중 현재 세션에 연결된 경우 읽음 메시지 발신
 				
 				for (PartyMember partyMember : arr_partymember) {
-					String memberid = partyMember.getG_member_memberid();
+					String memberid = partyMember.getMember_id();
 					for (WebSocketSession session : this.sessionSet) {
 						if (session.isOpen()) {
 							if (hashmap_id.containsKey(memberid)

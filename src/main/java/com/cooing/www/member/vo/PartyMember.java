@@ -1,45 +1,67 @@
 package com.cooing.www.member.vo;
 
 public class PartyMember {
-	private int g_member_num;
-	private int g_member_partynum;
-	private String g_member_memberid;
+	private int	partymember_num;
+	private int party_num;
+	private String member_id;
 	private String party_name;
 	
 	public PartyMember(){}
-	public PartyMember(int num , int partynum , String memberid){
-		this.g_member_num = num;
-		this.g_member_partynum = partynum;
-		this.g_member_memberid = memberid;
+
+	public PartyMember(int partymember_num, int party_num, String member_id) {
+		super();
+		this.partymember_num = partymember_num;
+		this.party_num = party_num;
+		this.member_id = member_id;
 	}
-	public int getG_member_num() {
-		return g_member_num;
+
+	public PartyMember(int partymember_num, int party_num, String member_id, String party_name) {
+		super();
+		this.partymember_num = partymember_num;
+		this.party_num = party_num;
+		this.member_id = member_id;
+		this.party_name = party_name;
 	}
-	public void setG_member_num(int g_member_num) {
-		this.g_member_num = g_member_num;
+
+	public int getPartymember_num() {
+		return partymember_num;
 	}
-	public int getG_member_partynum() {
-		return g_member_partynum;
+
+	public void setPartymember_num(int partymember_num) {
+		this.partymember_num = partymember_num;
 	}
-	public void setG_member_partynum(int g_member_partynum) {
-		this.g_member_partynum = g_member_partynum;
+
+	public int getParty_num() {
+		return party_num;
 	}
-	public String getG_member_memberid() {
-		return g_member_memberid;
+
+	public void setParty_num(int party_num) {
+		this.party_num = party_num;
 	}
-	public void setG_member_memberid(String g_member_memberid) {
-		this.g_member_memberid = g_member_memberid;
+
+	public String getMember_id() {
+		return member_id;
 	}
-	
+
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
+
 	public String getParty_name() {
 		return party_name;
 	}
+
 	public void setParty_name(String party_name) {
 		this.party_name = party_name;
 	}
+
 	@Override
 	public String toString() {
-		return "PartyMember [g_member_num=" + g_member_num + ", g_member_partynum=" + g_member_partynum
-				+ ", g_member_memberid=" + g_member_memberid + "]";
-	}	
+		return "PartyMember [partymember_num=" + partymember_num + ", party_num=" + party_num + ", member_id="
+				+ member_id + ", party_name=" + party_name + "]";
+	}
+	
+	
+	
+	
 }

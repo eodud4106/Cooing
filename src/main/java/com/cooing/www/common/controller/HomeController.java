@@ -271,7 +271,7 @@ public class HomeController {
 		for (Party party : array_party) {
 			ArrayList<PartyMember> array_memeber = relationDAO.searchPartyMember(party.getParty_num());
 			for (PartyMember partyMember : array_memeber) {
-				groupmemberlist.add(partyMember.getG_member_memberid());
+				groupmemberlist.add(partyMember.getMember_id());
 			}
 		}
 		
@@ -289,7 +289,7 @@ public class HomeController {
 			ArrayList<PartyMember> arr_party_member = relationDAO.searchPartyMember(party.getParty_num());
 			ArrayList<Member> arr_member = new ArrayList<Member>();
 			for(PartyMember pm: arr_party_member){
-				arr_member.add(memberDAO.selectMember(pm.getG_member_memberid()));
+				arr_member.add(memberDAO.selectMember(pm.getMember_id()));
 			}
 			model.addAttribute("partyleader" , memberDAO.selectMember(party.getParty_leader()));
 			model.addAttribute("partyinfo", party);
