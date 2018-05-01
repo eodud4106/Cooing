@@ -445,7 +445,6 @@ height: 30px;
 							"color" : "red"
 						});		
 		          	
-
 						var $tmp_div = $('<div />').append($i_siren).appendTo($reply_writer).css({
 		          			"display": "inline"
 		          		}).click(function(e) {
