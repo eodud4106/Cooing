@@ -87,6 +87,8 @@ public class RelationController {
 		if(relationDAO.insertParty(new Party(0,groupname , personally.getMember_id()))){
 			inum = relationDAO.searchPartyNumber(groupname);			
 		}
+		PartyMember pm = new PartyMember(personally.getMember_id(), groupname);
+		relationDAO.insertPartyMember_by_party_name(pm);
 		return inum;
 	}
 	
