@@ -381,7 +381,11 @@ height: 30px;
 			});
 		}
 	}
-	//댓글 목록
+	// 댓글 신고
+	function sirenreply(replynum) {
+		alert("악성 댓글로 신고되었습니다. 해당 댓글은 검토 후 처리하겠습니다.")
+	}
+	// 댓글 목록
 	function replyList(p) {
 		var rep_page = p; 
 	    $.ajax({ 
@@ -412,7 +416,7 @@ height: 30px;
 	          		}).appendTo($reply_wrapper).css({
 	          			"text-align": "right"
 	          		});
-	          		
+	          		// 댓글 삭제
 	          		if(reply.reply_memberid == '${sessionScope.Member.member_id}') {
 	          			
 		          		var $i_delete = $('<i />', {
@@ -422,8 +426,16 @@ height: 30px;
 							"height": "15px",
 							"cursor": "pointer"
 						});		
-		          		
-		          			          		
+
+		          		var $tmp_div = $('<div />').append($i_delete, $i_siren).appendTo($reply_writer).css({
+		          			"display": "inline"
+		          		}).click(function(e) {
+							deletereply($(this).parent().parent().attr('reply_num'));
+						})
+	          		}
+	          		// 댓글 신고	          	
+					if(reply.reply_memberid != '${sessionScope.Member.member_id}') {
+	          					          		
 		          		var $i_siren = $('<i />', {
 		          			"class" : "fas fa-lightbulb"
 		          		}).css({
@@ -433,11 +445,11 @@ height: 30px;
 							"color" : "red"
 						});		
 		          	
-		          		
-		          		var $tmp_div = $('<div />').append($i_delete, $i_siren).appendTo($reply_writer).css({
+
+						var $tmp_div = $('<div />').append($i_siren).appendTo($reply_writer).css({
 		          			"display": "inline"
 		          		}).click(function(e) {
-							deletereply($(this).parent().parent().attr('reply_num'));
+							sirenreply($(this).parent().parent().attr('reply_num'));
 						})
 	          		}
 	          	});
@@ -453,7 +465,6 @@ height: 30px;
 			} 
 		}); 
 	}
-
 	// 페이징
 	function pageReply(curr_page) {
 
