@@ -75,14 +75,12 @@ var arr_color = ["#FF0000", "#FF5E00", "#FFBB00", "#FFE400", "#ABF200",
 
 var arr_size = ["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"];
 
-//사진 자르기 창 1개만 사용 할 수 있게 제어할 변수
-var isWindowOpen = false;
 //자식창 닫혔을 때 감지
 function child_close() {
 	
-	var changedSrc = $('#temp_id').attr('src');
-	var check_changedSrc = $('#temp_id').attr('src').substring(0,5);
-	
+	var changedSrc = $('#picture_id').attr('src');
+	var check_changedSrc = $('#picture_id').attr('src').substring(0,5);
+
 	if(check_changedSrc == 'data:'){
 		$.ajax({
 			type: "POST",
@@ -98,11 +96,6 @@ function child_close() {
 		});
 
 	}
-	
-	//임시 지정한 img id값 날려주기
-	$('#temp_id').attr('id', '');
-	//자식 창 사용할 수 있게 만들어주는 부분
-	isWindowOpen = false;
 }
 
 // [start] 페이지 로딩 후 앨범 준비
@@ -629,20 +622,14 @@ function createWholeEditor($div_box) {
         	
         	var check_crop = $('.onSelect img').css('display');
         	if(check_crop != 'none'){
-            	if(isWindowOpen == false) {
+            		var curTime = new Date().getTime();
             		//편집창 열면서 사진url 넓이 높이 보내기
             		var settings ='height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes';
-                	$('.onSelect img').attr('id', 'temp_id'); //임시 id값은 자식창에서 종료키 누르면 삭제됨
-                	var windowObj = window.open("crop_picture?url_picture=" + $('.onSelect img').attr('src') + "", "window_crop", settings);
-                	isWindowOpen = true;
-            	} else{
-            		alert('사용중이 편집창이 있습니다.');
-            	}
+                	$('.onSelect img').attr('id', curTime); //임시 id값은 자식창에서 종료키 누르면 삭제됨
+                	var windowObj = window.open("crop_picture?url_picture=" + $('.onSelect img').attr('src') + "&picture_id="+ curTime +"", "window_crop", settings);
         	}else {
         		alert('사진을 올리고 자르기를 클릭해주세요.');
-        	} 
-        	
-        	
+        	}         	
 		});
         
         // 사진 회전 (대영)

@@ -9,12 +9,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>사진 자르기</title>
-
-<script src="resources/aside_js/popper.min.js"></script>
-<script src="resources/aside_js/owl.carousel.min.js"></script>
-<script src="resources/aside_js/jquery.waypoints.min.js"></script>
-<script src="resources/aside_js/imagesloaded.pkgd.min.js"></script>
-<script src="resources/aside_js/main.js"></script>
 <script src="resources/js_js/jquery-3.2.1.min.js"></script>
 
 <link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
@@ -36,11 +30,11 @@ function pass_parent() {
 	
 	if(isDidCrop != 0){
 	    change_url = $('#crop_result').attr('src');
-	    opener.document.getElementById('temp_id').src = change_url;
+	    opener.document.getElementById('${picture_id}').src = change_url;
 		window.close();
 		return true;
 	} else {
-		alert('자른 사진을 저장해주세요.');
+		alert('crop버튼을 눌러주세요');
 		return false;
 	}
 	//저장버튼 pass_parent
@@ -109,11 +103,7 @@ function drawScene() { // main drawScene function
 $(function(){
 	
 	$('#crop_button').click(function() {
-		var save_button_html = '<input type="button" id="save_button" value="저장 버튼" onclick="pass_parent()">';
-		$('body').append(save_button_html);
 	    $('canvas').remove();
-	    $('#crop_button').remove();
-		
 	});
     // loading source image
     // 부모창에서 받은 이미지 url
@@ -290,18 +280,6 @@ h2{text-align: center;}
 
 </head>
     <body onunload="opener.child_close()" style ="font-family: 'Nanum Gothic Coding', monospace;">
-        <%-- <header>
-            <h2 style = "margin-top: 50px;">CROP PHOTO</h2>
-        </header>
-        <div class="container" style ="text-align: center; padding : 100px;">
-            <canvas id="panel" width="${picture_width}" height="${picture_height}"></canvas>
-            <div id="results">
-                <img id="crop_result"/>
-            </div>
-        </div>
-        <br><br>
-        <input type="button" onclick="getResults()" id="crop_button" value="사진 자르기 실행!!">
-    </body> --%>
     
     <!-- 사이드 바 -->
 	<aside class="probootstrap-aside js-probootstrap-aside" style = "background-color: aliceblue;">
@@ -312,12 +290,29 @@ h2{text-align: center;}
 		</div>
 		<div class="probootstrap-overflow">
 			<div class="main">
-			<button class = "button" style = "margin :auto; margin-top: 150px; width : 200px;"onclick="getResults()" id="crop_button">
-			CROP
-			<div class="button__horizontal"></div>
-			<div class="button__vertical"></div>
-		</button>		
-			<!--  <input type="button" onclick="getResults()" id="crop_button" value="사진 자르기 실행!!"> -->
+			<button class = "button" style = "margin :auto; margin-top: 90px; width : 200px;"onclick="getResults()" id="crop_button">
+				CROP
+				<div class="button__horizontal"></div>
+				<div class="button__vertical"></div>
+			</button>
+			
+			<button class = "button" style = "margin :auto; margin-top: 70px; width : 200px;"onclick="location.reload()" id="restore_button">
+				RESTORE
+				<div class="button__horizontal"></div>
+				<div class="button__vertical"></div>
+			</button>
+			
+			<button class = "button" style = "margin :auto; margin-top: 70px; width : 200px;" onclick="pass_parent()" id="save_button">
+				SAVE
+				<div class="button__horizontal"></div>
+				<div class="button__vertical"></div>
+			</button>
+			
+			<button class = "button" style = "margin :auto; margin-top: 70px; width : 200px;" onclick="window.close()" id="exit_button">
+				EXIT
+				<div class="button__horizontal"></div>
+				<div class="button__vertical"></div>
+			</button>
 			
 			</div>
 		</div>
@@ -341,15 +336,13 @@ h2{text-align: center;}
 	<div class="container-fluid">
 	
 		<div class="view_wrapper">
-
-			<!-- 앨범 영역 -->
-			<div class="container" style ="text-align: center; padding : 80px; margin-right: 50px;">
-            <canvas id="panel" width="${picture_width}" height="${picture_height}"></canvas>
-            <div id="results">
-                <img id="crop_result"/>
-            </div>
-        </div>
-			
+		<!-- 앨범 영역 -->
+			<div class="container" style ="text-align: center; padding : 20px; margin-right: 50px;">
+            	<canvas id="panel" width="${picture_width}" height="${picture_height}"></canvas>
+	            <div id="results">
+	                <img id="crop_result"/>
+	            </div>
+        	</div>			
 		</div>
 		<!-- END row -->		
 	</div>
