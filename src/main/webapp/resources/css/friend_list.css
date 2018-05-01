@@ -61,8 +61,8 @@
 	overflow-y : scroll;
 	padding-left: 30px;
 	background-color : #eee6;
-	font-family: 'Nanum Gothic Coding', monospace;
-    font-size: 18px;
+	font-family: Poppins-Regular;
+    font-size: 14px;
     cursor: pointer;
      margin-top: -15px;
 }
@@ -72,8 +72,8 @@
 	padding-left: 30px;
 	/* overflow-y:hidden; */
 	background-color : #eee6;
-	font-family: 'Nanum Gothic Coding', monospace;
-    font-size: 18px;
+	font-family: Poppins-Regular;
+    font-size: 14px;
     cursor: pointer;
     margin-top: 70px;
 }

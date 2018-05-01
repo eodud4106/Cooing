@@ -41,6 +41,7 @@ function fiendplus(){
 				if(a=='success'){
 					$('#friendbt').html('<i class="fas fa-user-times"></i>');
 					$('#friendbt').attr('data' , '1');
+					searchword();
 				}
 				else{
 					alert(a);
@@ -58,6 +59,7 @@ function fiendplus(){
 				if(a=='success'){
 					$('#friendbt').html('<i class="fas fa-user-plus"></i>');
 					$('#friendbt').attr('data' , '0');
+					searchword();
 				}
 				else{
 					alert(a);
@@ -66,7 +68,6 @@ function fiendplus(){
 			error:function(e){alert(JSON.stringify(e));}		
 		});
 	}	
-	searchword();
 }
 
 //검색 타입, 검색 키워드, 정렬 순서, 페이지를 받아 albumlist 조회

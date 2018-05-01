@@ -50,6 +50,9 @@
 <!-- 아마 드래그앤 드롭 css인듯 31일에도 별다른 에러 없으면 보는 사람이 지워주세요 -->  
 <!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
 <style>
+#image_search {
+	cursor: pointer;
+}
 .dropbtn {
     background-color: #4CAF50;
     color: white;

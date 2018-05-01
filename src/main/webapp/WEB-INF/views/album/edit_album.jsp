@@ -55,8 +55,7 @@
 <link rel="stylesheet" href="resources/aside_css/style.css">
 
 <link rel="stylesheet" href="resources/skin_radio/green.css">
-<!-- 탭 출력 -->
-<link rel="stylesheet" href="resources/css/tab.css">
+<!-- <link rel="stylesheet" href="resources/css/friend_list.css"> -->
 
 
 <!--앨범 생성하기 =======================================================================================-->
@@ -90,6 +89,9 @@
 <!--===============================================================================================-->
 
 <style type="text/css">
+#image_search {
+	cursor: pointer;
+}
 .main {
 	min-width: 200px;
 	max-width: 200px;
@@ -189,6 +191,27 @@ html, body, main, .container-fluid {
 	background-repeat: no-repeat !important;
 	background-size:100% 100% !important;
 }
+.friendList{
+	height: 250px;		
+	overflow-y : scroll;
+	padding-left: 30px;
+	background-color : #eee6;
+	font-family: Poppins-Regular;
+    font-size: 14px;
+    cursor: pointer;
+     margin-top: -15px;
+}
+.groupList{
+	height: 250px;	
+	overflow-y : scroll;
+	padding-left: 30px;
+	/* overflow-y:hidden; */
+	background-color : #eee6;
+	font-family: Poppins-Regular;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 70px;
+}
 </style>
 
 <script>
@@ -203,6 +226,16 @@ html, body, main, .container-fluid {
 				return false;
 			}
 		}
+	}
+	function really_end_albumEdit() {
+		
+		if(isSave != true) {
+			var return_home = confirm('저장 버튼을 누르지 않으셨습니다. 정말 편집을 종료하시겠습니까?');
+			if (return_home == false) {
+				return false;
+			}
+		}
+		location.href='albumView?album_num=${album.album_num}';
 	}
 
 	//페이지 로딩 후 초기화 내용
@@ -560,7 +593,7 @@ html, body, main, .container-fluid {
 					class="far fa-minus-square"></i>
 			</div>		
 			<div id="i_exit" class="under_tool"
-				onclick="location.href='albumView?album_num=${album.album_num}'" role="편집 종료">
+				onclick="really_end_albumEdit()" role="편집 종료">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-sign-out-alt"></i>
 			</div>

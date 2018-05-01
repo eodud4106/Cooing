@@ -134,6 +134,9 @@ $(document).ready(function(){
   }
 </script>
 <style>
+#image_search {
+	cursor: pointer;
+}
 .dropbtn {
     background-color: #4CAF50;
     color: white;
@@ -213,7 +216,7 @@ $(document).ready(function(){
 					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>			
 				</ul>
 				<div class = "dropdown">
-						<p class ="c" class = "dropbtn">CATEGORY</p>
+						<p class ="c" class = "dropbtn" style = "cursor: pointer;">CATEGORY</p>
 						 <div class="dropdown-content">
 						 <ul>
 						  	<li class="category" data="0">여행</li>
@@ -263,7 +266,7 @@ $(document).ready(function(){
 	
 	<div class ="search-bar">
 		<br><br>
-		<div align="margin-left: 20px; "style = "font-size: 20px;">
+		<div style = "margin-left: 20px; font-size: 20px;">
 				 <!-- src="resources/img/ico/seo-1970475_960_720.png" -->
        			 SEARCH &nbsp<img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
        			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">
@@ -365,13 +368,13 @@ $(document).ready(function(){
 	
 	<!-- 영준이 알림공간 -->
 	<section id ="content3" class="content3">       					
-		<div class = "div_news" id="div_news">
+		<div class = "div_news" id="div_news" style = "text-align :center;  font-size: 14px;">
 			<div class="msg_box" id="msg_box">
-				<div class="msg_title">메세지</div>
+				<div class="msg_title">MESSAGE</div>
 				<div class="msg_list" id="msg_list"></div>
 			</div>
 			<div class="invite_box" id="invite_box">
-				<div class="invite_title">초대</div>
+				<div class="invite_title">INVITE</div>
 				<div class="invite_list" id="invite_list"></div>
 			</div>
 		</div>

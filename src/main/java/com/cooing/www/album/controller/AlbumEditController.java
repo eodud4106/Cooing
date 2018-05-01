@@ -380,11 +380,11 @@ public class AlbumEditController {
 	
 	//사진 자를 때 자르는 창에 맞게 사진 재조정
 	@RequestMapping(value = "crop_picture", method = RequestMethod.GET)
-	public String crop_picture(Model model, String url_picture) {
+	public String crop_picture(Model model, String url_picture, String picture_id) {
 				
 		String imgFormat; // 새 이미지 포맷. jpg, gif 등
-		int newWidth = 500; // 변경 할 넓이
-		int newHeight = 500;// 변경 할 높이
+		int newWidth = 800; // 변경 할 넓이
+		int newHeight = 650;// 변경 할 높이
 			 
 		Image image;
 		int imageWidth;
@@ -459,6 +459,7 @@ public class AlbumEditController {
 		model.addAttribute("new_url_picture", new_url_picture);
 		model.addAttribute("picture_width", w);
 		model.addAttribute("picture_height", h);
+		model.addAttribute("picture_id", picture_id);
 		
 		return "album/crop_picture";
 	}

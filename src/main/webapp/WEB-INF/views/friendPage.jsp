@@ -70,6 +70,9 @@ $(document).ready(function () {
 </script>
 
 <style>
+#image_search {
+	cursor: pointer;
+}
 .img1 {
 	width: 50px;
 	height: 50px;
@@ -165,7 +168,7 @@ select::-ms-expand { /* for IE 11 */
 					src="<c:url value="/memberimg?strurl=${friend_id.getMember_picture()}"/>"> ${friend_id.getMember_id()}</p>
 			<p>
 				<c:if test="${check ne true }">
-					<div style="z-index: 99; float: right; margin-top: -40px;"
+					<div style="z-index: 99; float: right; margin-top: -40px; cursor: pointer;"
 						id="friendbt" data="0">
 						<i class="fas fa-user-plus"></i>
 					</div>
@@ -173,7 +176,7 @@ select::-ms-expand { /* for IE 11 */
 				</c:if>
 				<c:if test="${check eq true }">
 					<!-- <input type="button" id="friendbt" value="친구삭제" data="1"> -->
-					<div style="z-index: 99; float: right; margin-top: -40px;"
+					<div style="z-index: 99; float: right; margin-top: -40px; cursor: pointer;"
 						id="friendbt" data="1">
 						<i class="fas fa-user-times"></i>
 					</div>
@@ -191,7 +194,7 @@ select::-ms-expand { /* for IE 11 */
 						<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>						
 					</ul>
 					<div class = "dropdown">
-						<p class ="c" class = "dropbtn">CATEGORY</p>
+						<p class ="c" class = "dropbtn" style="cursor: pointer;">CATEGORY</p>
 						 <div class="dropdown-content">
 						 <ul>
 						  	<li class="category" data="0">여행</li>
@@ -244,7 +247,7 @@ select::-ms-expand { /* for IE 11 */
 	<div class="search-bar">
 		<br>
 		<br>
-		<div style="margin-left: 20px; font-size: 20px;">
+		<div style = "margin-left: 20px; font-size: 20px;">
 			SEARCH &nbsp<img id='image_search'
 				src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png"
 				style="width: 24px; height: 24px; margin-right: 5px;"
@@ -261,7 +264,7 @@ select::-ms-expand { /* for IE 11 */
 
 
 	<!-- 앨범 리스트 -->
-	<div class="card-columns" id="card-columns">
+	<div class="card-columns" id="card-columns" style="cursor: pointer;">
 
 		<!--  -->
 		<div class="card">

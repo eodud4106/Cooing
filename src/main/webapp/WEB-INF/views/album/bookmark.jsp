@@ -199,7 +199,7 @@ li{
 	cursor: pointer;	
 }
 p{
-	font-size: 20px;
+	font-size: 14px;
 }
 </style>
 <script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
@@ -234,6 +234,7 @@ p{
 <script src="resources/js/popup.js"></script>
 <script src="resources/js/chat.js"></script>
 <script src="resources/js/push.js"></script>
+<link rel="stylesheet" type="text/css" href="resources/album_create/css/main.css">
 
 <link rel="stylesheet" href="resources/skin_radio/green.css">
 <script src="resources/skin_radio/icheck.js"></script>
@@ -314,7 +315,7 @@ function bookmark_list() {
 				$(bookmark_img_thumbnail).attr('src', ''+ vo.album_thumbnail +'');
 				//버튼에 링크 다는 부분
 				$(button_bookmark).attr('onclick', 'location.href="albumView?album_num='+ vo.bookmark_albumnum + '&page_num=' + vo.bookmark_page + '"');
-				$(button_bookmark).attr('src', 'resources/img/bookmark3.png');
+				$(button_bookmark).attr('src', 'resources/img/bookmark.png');
 				$(button_bookmark).addClass('bookmark_img');
 				
 				var temp_contents;
@@ -380,6 +381,9 @@ function category_change(category) {
 </script>
 
 <style>
+#image_search {
+	cursor: pointer;
+}
 	.bookmark_page_div {float: left; width: 200px; height: 200px; margin-bottom: 70px;}
 	.bookmark_info_div {padding-top:40px; margin-left:120px; float: left; width: 200px; height: 200px; margin-bottom: 70px;}
 	.bookmark_link_div {float: right; width: 200px; height: 200px; margin-bottom: 70px;}
@@ -450,7 +454,7 @@ function category_change(category) {
 	
 	<div class ="search-bar">
 		<br><br>
-		<div style = "margin-left: 20px;">
+		<div style = "margin-left: 20px; font-size: 20px;">
        			 SEARCH &nbsp<img id='image_search' src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
        			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">
      			 <input id='searchtx' type="text" onblur="search_bar(this)" style="  border: none;
@@ -515,7 +519,7 @@ function category_change(category) {
 					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
 				</span>
 			</form>						
-				<div class = "friendList" style = "width: 200px; margin-top: 30px;">
+				<div class = "friendList" style = "width: 200px;">
 					<div name="friend" id="friend"></div>
 					<div name="user" id="user"></div>
 				</div>			
