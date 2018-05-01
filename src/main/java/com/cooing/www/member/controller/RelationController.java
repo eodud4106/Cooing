@@ -10,14 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.album.dao.AlbumDAO;
-import com.cooing.www.album.vo.AlbumVO;
-import com.cooing.www.common.vo.PageLimit;
 import com.cooing.www.member.dao.MemberDAO;
 import com.cooing.www.member.dao.RelationDAO;
 import com.cooing.www.member.vo.Member;
@@ -123,8 +120,8 @@ public class RelationController {
 		logger.info("delete_member__jinsu");
 		logger.info(partynum+"_party , " + memberid + "_id");
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("g_member_partynum", partynum);
-		map.put("g_member_memberid", memberid);
+		map.put("party_num", partynum);
+		map.put("member_id", memberid);
 		if(relationDAO.deletePartyMember(map) > 0){
 			return "success";
 		}
