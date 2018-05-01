@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="resources/css/home.css">
 <!-- 탭메뉴 -->
 <link rel="stylesheet" href="resources/css/tab.css">
+<link rel="stylesheet" href="resources/css/push.css">
 
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
@@ -287,8 +288,17 @@ $(document).ready(function(){
 	</section>   	
 	
 	<!-- 영준이 알림공간 -->
-	<section id ="content3">       					
-		<div class = "newsList" id="div_news" style= "margin-top: 0px; padding:5px;width: 200px;"></div>
+	<section id ="content3" class="content3">       					
+		<div class = "div_news" id="div_news">
+			<div class="msg_box" id="msg_box">
+				<div class="msg_title">메세지</div>
+				<div class="msg_list" id="msg_list"></div>
+			</div>
+			<div class="invite_box" id="invite_box">
+				<div class="invite_title">초대</div>
+				<div class="invite_list" id="invite_list"></div>
+			</div>
+		</div>
 	</section>   
   
 	</aside>
