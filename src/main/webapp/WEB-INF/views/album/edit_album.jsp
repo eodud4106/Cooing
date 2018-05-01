@@ -202,6 +202,16 @@ html, body, main, .container-fluid {
 			}
 		}
 	}
+	function really_end_albumEdit() {
+		
+		if(isSave != true) {
+			var return_home = confirm('저장 버튼을 누르지 않으셨습니다. 정말 편집을 종료하시겠습니까?');
+			if (return_home == false) {
+				return false;
+			}
+		}
+		location.href='albumView?album_num=${album.album_num}';
+	}
 
 	//페이지 로딩 후 초기화 내용
 	$(document).ready(
@@ -558,7 +568,7 @@ html, body, main, .container-fluid {
 					class="far fa-minus-square"></i>
 			</div>		
 			<div id="i_exit" class="under_tool"
-				onclick="location.href='albumView?album_num=${album.album_num}'" role="편집 종료">
+				onclick="really_end_albumEdit()" role="편집 종료">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-sign-out-alt"></i>
 			</div>
