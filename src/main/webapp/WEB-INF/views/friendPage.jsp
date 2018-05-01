@@ -60,9 +60,10 @@ $(window).scroll(function() {
 });
 
 $(document).ready(function () {
-	if (${sessionScope.Member != null}) {
+	//경고!! 아래 코드를 절대 별도의 js파일로  마시오!!
+	if ('${sessionScope.Member}' != null) {
 		readyChat('${sessionScope.Member.member_id}', '');
-		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
+		readyPush('${sessionScope.Member.member_id}', '');
 	}
 	initialize();
 	get_friend_album_list('writer','friend','date', ++pagenum , 0);
@@ -344,13 +345,21 @@ select::-ms-expand { /* for IE 11 */
 		<div class = "groupList" id="group" style= "margin-top: 70px; width: 200px;">
 		</div>
 	</section>   
-   <!-- 영준이 알림공간 -->
-	<section id ="content3">       					
-		<div class = "newsList"  style= "margin-top: 70px; width: 200px;">
-		여기 넣으셈
-		</div>		
+	<!-- 영준이 알림공간 -->
+	<section id ="content3" class="content3">       					
+		<div class = "div_news" id="div_news" style = "text-align :center;  font-size: 14px;">
+			<div class="msg_box" id="msg_box">
+				<div class="msg_title">MESSAGE</div>
+				<div class="msg_list" id="msg_list"></div>
+			</div>
+			<div class="invite_box" id="invite_box">
+				<div class="invite_title">INVITE</div>
+				<div class="invite_list" id="invite_list"></div>
+			</div>
+		</div>
 	</section>  
 </aside>
+	<input style="display: none" id="user_id" value="${sessionScope.Member.member_id }">
 
 	<script src="resources/aside_js/popper.min.js"></script>
 	<script src="resources/aside_js/bootstrap.min.js"></script>
