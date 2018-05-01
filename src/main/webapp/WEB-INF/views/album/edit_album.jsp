@@ -525,10 +525,6 @@ html, body, main, .container-fluid {
 		<!-- END row -->
 		<!-- 하단 바 영역 -->
 		<div class="under_bar " align="right">
-			<div id="i_left_reset" class="under_tool" onclick="reset_left_background()" role="왼쪽 페이지 배경 초기화">
-				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="fas fa-eraser"></i>
-			</div>
 			<!--  텍스트, 이미지 삽입 버튼 -->
 			<div id="i_text" class="tool text under_tool" role="글상자 추가">
 				<i class="fas fa-align-justify"></i>
@@ -541,6 +537,10 @@ html, body, main, .container-fluid {
 				onclick="open_background()" role="속지 변경">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-paint-brush"></i>
+			</div>
+			<div id="i_left_reset" class="under_tool" onclick="reset_left_background()" role="왼쪽 페이지 배경 초기화">
+				<i style="width: 30px; height: 30px; margin: 10px;"
+					class="fas fa-eraser"></i>
 			</div>
 			<div id="i_start" class="under_tool" onclick="nav_page('start')" role="첫 페이지로">
 				<i style="width: 30px; height: 30px; margin: 10px;"
@@ -558,6 +558,10 @@ html, body, main, .container-fluid {
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-forward"></i>
 			</div>
+			<div id="i_right_reset" class="under_tool" onclick="reset_right_background()" role="오른쪽 페이지 배경 초기화">
+				<i style="width: 30px; height: 30px; margin: 10px;"
+					class="fas fa-eraser"></i>
+			</div>
 			<div id="i_add" class="under_tool" onclick="addPage()" role="페이지 추가">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="far fa-plus-square"></i>
@@ -570,18 +574,14 @@ html, body, main, .container-fluid {
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-check"></i>
 			</div>
-			<div id="i_exit" class="under_tool"
-				onclick="location.href='albumView?album_num=${album.album_num}'" role="편집 종료">
-				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="fas fa-sign-out-alt"></i>
-			</div>
 			<div id="i_remove" class="under_tool" onclick="return removeAlbum()" role="앨범 삭제">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="far fa-trash-alt"></i>
 			</div>
-			<div id="i_right_reset" class="under_tool" onclick="reset_right_background()" role="오른쪽 페이지 배경 초기화">
+			<div id="i_exit" class="under_tool"
+				onclick="location.href='albumView?album_num=${album.album_num}'" role="편집 종료">
 				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="fas fa-eraser"></i>
+					class="fas fa-sign-out-alt"></i>
 			</div>
 		</div>
 	</div>
