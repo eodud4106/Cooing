@@ -272,6 +272,7 @@ html, body, main, .container-fluid {
 				$('#friendsearch').keyup(function() {
 					searchword();
 				});
+				nowpage();
 			});
 
 	function page1ImageSave() {
@@ -541,8 +542,13 @@ html, body, main, .container-fluid {
 		</a>
 		<div class="probootstrap-main-site-logo">
 			<a href="/www">COOING</a>
+			
+			<div style="text-align:center">
+				<input type="text" id="left_page" width="10px" height="10px">
+				<input type="text" id="right_page" width="10px" height="10px">
+				<input type="text" id="total_page" width="10px" height="10px">
+			</div>
 		</div>
-
 	</div>
 
 	<div class="container-fluid">

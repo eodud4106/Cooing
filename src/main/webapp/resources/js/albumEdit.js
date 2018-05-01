@@ -156,6 +156,8 @@ function ready_album(mode) {
 
 	            },
 	            turned: function(event, page, view) {
+	            	//페이지 알려주는 부분 
+	            	nowpage();
 
 	                console.log('현재 페이지 -> ' + $('#album').turn('page'));
 
@@ -1529,6 +1531,9 @@ function savePage(mode) {
     $('.page').droppable("disable");
     $('#page' + curr_page + '').droppable("enable");
 
+    //페이지 알려주는 부분 
+	nowpage();
+    
     alert('페이지가 추가되었습니다!');
 
  }
@@ -1566,6 +1571,9 @@ function savePage(mode) {
     if(curr_page > $('#album').turn('pages')) {
         curr_page = $('#album').turn('pages');
     }
+    
+    //페이지 알려주는 부분 
+	nowpage();
 
     alert('페이지가 삭제되었습니다!');
 
