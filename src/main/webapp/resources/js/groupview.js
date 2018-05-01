@@ -112,6 +112,11 @@ function memberdelete(){
 }
 function memberplus(){	
 	var member_id = $('#findid').val();
+	
+	if (member_id == "") {
+		alert("초대하실 멤버의 아이디를 입력해주세요.")
+		return false;
+	}
 	if(confirmcheck(member_id + '를 그룹 멤버로 초대 하시겠습니까?') == false) {
 		return false;
 	}
