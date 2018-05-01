@@ -314,11 +314,16 @@ function bookmark_list() {
 				$(button_bookmark).attr('onclick', 'location.href="albumView?album_num='+ vo.bookmark_albumnum + '&page_num=' + vo.bookmark_page + '"');
 				$(button_bookmark).attr('src', 'resources/img/bookmark3.png');
 				$(button_bookmark).addClass('bookmark_img');
+				
+				var temp_contents;
+				if(vo.album_contents == null){
+					temp_contents = '(내용 없음)';
+				}
 
 				var bookmark_info_div_html = '';
 					bookmark_info_div_html += '<p class="bookmark_p"> 앨범 이름 : ' + vo.album_name + '</p>';
 					bookmark_info_div_html += '<p class="bookmark_p"> 작성자 : ' + vo.album_writer + '</p>';
-					bookmark_info_div_html += '<p class="bookmark_p"> 앨범내용 : ' + vo.album_contents + '</p>';
+					bookmark_info_div_html += '<p class="bookmark_p"> 앨범내용 : ' + temp_contents + '</p>';
 					var temp_category = category_change(vo.album_category);
 					bookmark_info_div_html += '<p class="bookmark_p"> 앨범카테고리 : ' + temp_category + '</p>';
 					bookmark_info_div_html += '<p class="bookmark_p"> 북마크된 페이지 : ' + vo.bookmark_page + '</p>';
@@ -374,9 +379,9 @@ function category_change(category) {
 
 <style>
 	.bookmark_page_div {float: left; width: 200px; height: 200px; margin-bottom: 70px;}
-	.bookmark_info_div {margin-left:120px; float: left; width: 200px; height: 200px; margin-bottom: 70px;}
+	.bookmark_info_div {padding-top:40px; margin-left:120px; float: left; width: 200px; height: 200px; margin-bottom: 70px;}
 	.bookmark_link_div {float: right; width: 200px; height: 200px; margin-bottom: 70px;}
-	.bookmark{width:750px; margin-left: 260px;}
+	.bookmark{width:750px; margin-left: 150px;}
 	.bookmark_page_div img {width: 100%;}
 	.bookmark_link_div button {width: 50%; height: 50%;}
 	.bookmark_p{font-size: small;}
@@ -461,6 +466,7 @@ function category_change(category) {
 		<br>	
 	</div>
 	
+	<!-- 북마크 div -->
 	<div class="bookmark" id="bookmark">
 	</div>
 	
