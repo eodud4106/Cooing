@@ -225,7 +225,7 @@ select::-ms-expand { /* for IE 11 */
 					</div>
 				</div>				
 			</c:if>				
-			<div style ="font-family: 'Nanum Gothic Coding', monospace;">[ ${partyinfo.getParty_name() } ]</div>
+			<div style ="font-family: 'Nanum Gothic Coding', monospace;"><a class="mb-2 d-block probootstrap-logo">${partyinfo.getParty_name() }</a></div>
 			<input type="hidden" id="sessionid" data="${Member.getMember_id()}">
 				<c:if test="${partyleader ne null}">
 				<p><img  class="img-circle" style =" border-radius: 80%; display: inline-block;; width: 100% \9;
