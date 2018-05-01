@@ -186,7 +186,7 @@ $(document).ready(function(){
 </head>
 <body style ="font-family: 'Nanum Gothic Coding', monospace;">
 
-	<aside class="probootstrap-aside js-probootstrap-aside">
+	<aside class="probootstrap-aside js-probootstrap-aside" style = "background-color: aliceblue;">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
@@ -246,7 +246,10 @@ $(document).ready(function(){
 				<ul>					
 					<li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>
 				</ul>
-			</nav>					
+			</nav>	
+		<footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft">          
+          <p>&copy; 2018 <a href="cooing.site/www" target="_blank">COOING</a>. <br> All Rights Reserved.</p>
+        </footer>				
 		</div>
 	</aside>
 

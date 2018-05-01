@@ -87,7 +87,7 @@
 						<div class="content">
 							<div class="main-content">
 								
-								 <h1 class="text-uppercase" style = "font-family: 'Nanum Gothic Coding', monospace; margin-top: 100px;">COOING</h1> 
+								 <h1 class="text-uppercase" style = "font-family:  Poppins-Regular; margin-top: 100px; padding-top: 20px;">COOING</h1> 
 
 								<div class="subscribe-area text-center">
 									<!-- <h3>please login</h3> -->

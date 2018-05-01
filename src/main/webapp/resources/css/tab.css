@@ -23,7 +23,7 @@ p{
     background: #ffffff;}
 section {
     display: none;
-    padding: 20px 0 0;    
+   /*  padding: 20px 0 0;  */   
     font-size : 14px;        
     border-top: 1px solid #ddd;}
 /*라디오버튼 숨김*/
