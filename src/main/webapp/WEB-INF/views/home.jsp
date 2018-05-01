@@ -132,6 +132,9 @@ $(document).ready(function(){
   }
 </script>
 <style>
+#image_search {
+	cursor: pointer;
+}
 .dropbtn {
     background-color: #4CAF50;
     color: white;
