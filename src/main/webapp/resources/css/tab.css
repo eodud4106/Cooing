@@ -20,7 +20,8 @@ p{
     margin-top : 30px;
     padding: 10px;
     margin: 0 auto;
-    background: #ffffff;}
+    background: #ffffff;
+    margin-left: -20px;}
 section {
     display: none;
    /*  padding: 20px 0 0;  */   

@@ -209,20 +209,19 @@ select::-ms-expand { /* for IE 11 */
 </head>
 <body style ="font-family: 'Nanum Gothic Coding', monospace;">
 
-	<aside class="probootstrap-aside js-probootstrap-aside">
+	<aside class="probootstrap-aside js-probootstrap-aside" style = "background-color: aliceblue;">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
 			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
-			========================
 			<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id()}">
 			<div style= "z-index:99; float:right; margin-top: 10px; margin-right: 2px; cursor: pointer;"id="desolve" data="${partyinfo.getParty_num()}">
 				<i class="far fa-times-circle"></i>
 				</div>
 				</c:if>
-			<div id="party_name" class="mb-2 d-block probootstrap-logo" style = "color : #1f5dad; font-size: 20px;" party_name="${partyinfo.getParty_name()}">"${partyinfo.getParty_name()}"
+			<div id="party_name" class="mb-2 d-block probootstrap-logo" style = "color : #1f5dad; font-size: 20px;" align="center" party_name="${partyinfo.getParty_name()}">"${partyinfo.getParty_name()}"
 			</div>		
 			
 			<input type="hidden" id="sessionid" data="${Member.getMember_id()}">
@@ -233,14 +232,14 @@ select::-ms-expand { /* for IE 11 */
 			<div>
 			<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id()}">
 								<div>
-					<p>	<input type="text" id="findid" placeholder="Member 추가" size="19" style= "width: 150px;">						
+					<p>	<input type="text" id="findid" placeholder="Member 추가" size="19" style= "width: 150px; margin-top: 7px;">						
 					<div style= "z-index:99; float:right; margin-top: -35px; margin-right: -1px; cursor: pointer;" id="gmemberplus">
 					<i class="fas fa-user-plus"></i>
 					</div>
 				</div>				
 			</c:if>				
 			</div>
-		<p style = "font-size: 20px;">[MEMBER]</p>	
+		<p style = "font-size: 20px;" align="center">[MEMBER]</p>	
 		<div id="memberdiv" style ="height: 300px; font-family:  Poppins-Regular;">
 		<c:if test="${fn:length(memberinfo) ne 0}">
 			<c:forEach var="arrmi" items="${memberinfo}">
@@ -260,8 +259,8 @@ select::-ms-expand { /* for IE 11 */
 			<%-- <li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>		 --%>				
 		</ul>
 			<div class = "dropdown">
-						<p class ="c" class = "dropbtn">CATEGORY</p>
-						 <div class="dropdown-content">
+						<p class ="c" class = "dropbtn" style="cursor: pointer;">CATEGORY</p>
+						 <div class="dropdown-content" style = "font-family: Poppins-Regular; font-size: 15px; padding-left: 10px;">
 						 <ul>
 						  	<li class="category" data="0">여행</li>
 						    <li class="category" data="1">스포츠/레저</li>

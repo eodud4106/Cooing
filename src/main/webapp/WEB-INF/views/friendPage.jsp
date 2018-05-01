@@ -154,29 +154,28 @@ select::-ms-expand { /* for IE 11 */
 </head>
 <body style ="font-family: 'Nanum Gothic Coding', monospace;">
 
-	<aside class="probootstrap-aside js-probootstrap-aside">
+	<aside class="probootstrap-aside js-probootstrap-aside" style = "background-color: aliceblue;">
 		<a href="#"
 			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate"
 			data-animate-effect="fadeInLeft">
-
 			<a href="./" class="mb-2 d-block probootstrap-logo">COOING</a>
-
+			
 			<p id="friendid">
 				<img class ="img1"
-					src="<c:url value="/memberimg?strurl=${friend_id.getMember_picture()}"/>"> ${friend_id.getMember_id()}</p>
+					src="<c:url value="/memberimg?strurl=${friend_id.getMember_picture()}"/>"> ${friend_id.getMember_id()}
+			</p>
+			
 			<p>
 				<c:if test="${check ne true }">
 					<div style="z-index: 99; float: right; margin-top: -40px; cursor: pointer;"
 						id="friendbt" data="0">
 						<i class="fas fa-user-plus"></i>
-					</div>
-					<!-- <input type="button" id="friendbt" value="친구추가" data="0"> -->
+					</div>					
 				</c:if>
-				<c:if test="${check eq true }">
-					<!-- <input type="button" id="friendbt" value="친구삭제" data="1"> -->
+				<c:if test="${check eq true }">					
 					<div style="z-index: 99; float: right; margin-top: -40px; cursor: pointer;"
 						id="friendbt" data="1">
 						<i class="fas fa-user-times"></i>
@@ -185,7 +184,7 @@ select::-ms-expand { /* for IE 11 */
 				<input type="hidden" value="${friend_id.getMember_id()}"
 					id="friendidval">
 			</p>
-
+		</div>
 
 			<div class="probootstrap-overflow">
 				<nav class="probootstrap-nav">
@@ -196,7 +195,7 @@ select::-ms-expand { /* for IE 11 */
 					</ul>
 					<div class = "dropdown">
 						<p class ="c" class = "dropbtn" style="cursor: pointer;">CATEGORY</p>
-						 <div class="dropdown-content">
+						 <div class="dropdown-content" style = "font-family: Poppins-Regular; font-size: 15px; padding-left: 10px;">
 						 <ul>
 						  	<li class="category" data="0">여행</li>
 						    <li class="category" data="1">스포츠/레저</li>
@@ -227,6 +226,10 @@ select::-ms-expand { /* for IE 11 */
 						<li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>						
 					</ul>					
 				</nav>
+				<footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft" 
+				style = "font-family: Poppins-Regular;">          
+         		 <p>&copy; 2018 <a href="cooing.site/www" target="_blank">COOING</a>. <br> All Rights Reserved.</p>
+       			 </footer>	
 			</div>			
 	</aside>
 
