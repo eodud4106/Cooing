@@ -83,7 +83,7 @@
 <link rel="stylesheet" type="text/css"
 	href="resources/album_create/css/util.css">
 <link rel="stylesheet" type="text/css"
-	href="resources/album_create/css/main.css">
+	href="resources/album_create/css/changed_main.css">
 <!--===============================================================================================-->
 
 <style type="text/css">
@@ -190,20 +190,12 @@ html, body, main, .container-fluid {
 
 <script>
 	
-	//전체저장, 앨범정보 저장 confirm
-	var all_save;
-	var info_save;
+	var isSave;
 	//홈버튼 눌렀을 때 confirm
 	function really_back_home() {
 		
-		if(all_save != true) {
+		if(isSave != true) {
 			var return_home = confirm('저장 버튼을 누르지 않으셨습니다. 정말 홈으로 돌아가겠습니까?');
-			if (return_home == false) {
-				return false;
-			}
-		}
-		if(info_save != true) {
-			var return_home = confirm('앨범정보를 저장하지 않으셨습니다. 정말 홈으로 돌아가시겠습니까?');
 			if (return_home == false) {
 				return false;
 			}
@@ -527,21 +519,38 @@ html, body, main, .container-fluid {
 		<div class="under_bar " align="right">
 			<!--  텍스트, 이미지 삽입 버튼 -->
 			<div id="i_text" class="tool text under_tool" role="글상자 추가">
-				<i class="fas fa-align-justify"></i>
+				<i style="width: 30px; height: 30px; margin: 10px;" 
+					class="far fa-comment-alt"></i>
 			</div>
 			<div id="i_image" class="tool image under_tool" role="사진 추가">
-				<i class="far fa-image"></i>
-			</div> 
-			<!-- 각종 버튼 -->
+				<i style="width: 30px; height: 30px; margin: 10px;"
+					class="far fa-image"></i>
+			</div>
+			<!-- 각종 버튼 --> 
+			<div id="i_right_reset" class="tool remove under_tool" role="배경 초기화">
+				<i style="width: 30px; height: 30px; margin: 10px;"
+					class="fas fa-eraser"></i>
+			</div>
 			<div id="i_brush" class="under_tool i_brush"
 				onclick="open_background()" role="속지 변경">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-paint-brush"></i>
 			</div>
-			<div id="i_left_reset" class="under_tool" onclick="reset_left_background()" role="왼쪽 페이지 배경 초기화">
+			<div id="i_add" class="under_tool" onclick="addPage()" role="페이지 추가">
 				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="fas fa-eraser"></i>
+					class="far fa-plus-square"></i>
 			</div>
+			<div id="i_remove" class="under_tool" onclick="removePage()" role="페이지 삭제">
+				<i style="width: 30px; height: 30px; margin: 10px; margin-right: 400px;"
+					class="far fa-minus-square"></i>
+			</div>		
+			<div id="i_exit" class="under_tool"
+				onclick="location.href='albumView?album_num=${album.album_num}'" role="편집 종료">
+				<i style="width: 30px; height: 30px; margin: 10px;"
+					class="fas fa-sign-out-alt"></i>
+			</div>
+			
+			<!-- 
 			<div id="i_start" class="under_tool" onclick="nav_page('start')" role="첫 페이지로">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-backward"></i>
@@ -558,31 +567,19 @@ html, body, main, .container-fluid {
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-forward"></i>
 			</div>
-			<div id="i_right_reset" class="under_tool" onclick="reset_right_background()" role="오른쪽 페이지 배경 초기화">
-				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="fas fa-eraser"></i>
-			</div>
-			<div id="i_add" class="under_tool" onclick="addPage()" role="페이지 추가">
-				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="far fa-plus-square"></i>
-			</div>
-			<div id="i_remove" class="under_tool" onclick="removePage()" role="페이지 삭제">
-				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="far fa-minus-square"></i>
-			</div>
-			<div id="i_save" class="under_tool" onclick="savePage('all')" role="전체 저장">
+			<div id="i_save" class="under_tool" onclick="" role="전체 저장">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-check"></i>
 			</div>
-			<div id="i_remove" class="under_tool" onclick="return removeAlbum()" role="앨범 삭제">
+			<div id="i_remove" class="under_tool" onclick="" role="앨범 삭제">
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="far fa-trash-alt"></i>
 			</div>
-			<div id="i_exit" class="under_tool"
-				onclick="location.href='albumView?album_num=${album.album_num}'" role="편집 종료">
+			<div id="i_left_reset" class="under_tool" onclick="reset_left_background()" role="왼쪽 페이지 배경 초기화">
 				<i style="width: 30px; height: 30px; margin: 10px;"
-					class="fas fa-sign-out-alt"></i>
-			</div>
+					class="fas fa-eraser"></i>
+			</div> -->
+			
 		</div>
 	</div>
 

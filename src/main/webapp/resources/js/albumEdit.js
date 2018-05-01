@@ -272,6 +272,8 @@ function apply_page_droppable($page) {
 
             // 드랍한 페이지
             var page = $(this).attr('id').replace(/\D/g,'');
+            // 드랍된 페이지 알기 위한 변수(대영)
+            droppable_page = page;
 
             // 드랍으로 만든 node를 page 위에 그림
             renderbox(event, ui, page);
@@ -289,6 +291,9 @@ function initpage($page) {
  *  [start] 텍스트 박스를 캔버스에 추가
  *  @param : (좌표가 포함된 이벤트, 드래그 드랍한 박스, 드랍한 페이지)
  **/
+
+//배경 지울 때 드랍된 페이지 저장변수(대영)
+var droppable_page;
 function renderbox(event, ui, page) {
 
     // 클릭한 페이지의 위치 확인
@@ -315,8 +320,13 @@ function renderbox(event, ui, page) {
             "left": event.pageX - curr_page_left - 50
         });
 
-    } else if(ui.helper.hasClass("image")) {
-        // 이미지인 경우
+    }    
+    //배경 지우기
+    else if(ui.helper.hasClass("remove")) {
+    	$('#page' + droppable_page).css('background-image', '');
+    }
+    //이미지인 경우
+    else if(ui.helper.hasClass("image")) {
         var $i_plus = $('<i />', {
             "class": "fas fa-image",
             "position": "absolute",
@@ -1429,9 +1439,7 @@ function savePage(mode) {
     if(mode == 'all') {
         // 앨범 전체 저장 모드
         count = $('#album').turn('pages');
-        // 전체 저장 안하면 confirm 띄우기 변수
-        all_save = true;
-        alert('전체 페이지가 저장 되었습니다.');
+        alert('저장이 완료 되었습니다.');
 
     } else if(mode == 'curr') {
 
@@ -1567,41 +1575,6 @@ function savePage(mode) {
     alert('페이지가 삭제되었습니다!');
 
  }
-
-//왼쪽 페이지 배경 되돌리기
-function reset_left_background() {
-	
-	var current_page = $('#album').turn("page");
-	var last_page = $('#album').turn("pages");
-
-	if(current_page == last_page){
-		$('#page'+last_page).css('background-image', '');
-	} 
-	else if(current_page % 2 == 0){
-		$('#page' + current_page).css('background-image', '');
-	} 
-	else {
-		$('#page' + (current_page-1)).css('background-image', '');
-	}
-	
-}
-
-//오른쪽 페이지 배경 되돌리기
-function reset_right_background() {
-	
-	var current_page = $('#album').turn("page");
-	
-	if(current_page == 1){
-		$('#page1').css('background-image', '');
-	} 
-	else if(current_page % 2 == 1){
-		$('#page' + current_page).css('background-image', '');
-	} 
-	else {
-		$('#page' + (current_page+1)).css('background-image', '');
-	}
-}
- 
 
 /*
  * 슬라이더
