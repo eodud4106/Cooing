@@ -223,7 +223,7 @@ select::-ms-expand { /* for IE 11 */
 				
 				<div>
 					<p>	<input type="text" id="findid" placeholder="Member 추가" size="19" style= "width: 150px;">						
-					<div style= "z-index:99; float:right; margin-top: -40px; cursor: pointer;" id="gmemberplus">
+					<div style= "z-index:99; float:right; margin-top: -35px; margin-right: -20px; cursor: pointer;" id="gmemberplus">
 					<i class="fas fa-user-plus"></i>
 					</div>
 				</div>				
