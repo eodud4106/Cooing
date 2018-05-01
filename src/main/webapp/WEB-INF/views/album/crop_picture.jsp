@@ -22,25 +22,6 @@
 <link rel="stylesheet" href="resources/aside_css/style.css">
 <link rel="stylesheet" href="resources/button_css/style.css">
 <script>
-//부모창으로 값 넘기는 함수
-function pass_parent() {
-	
-	var isDidCrop = $('#crop_result').width();
-	var change_url;
-	
-	if(isDidCrop != 0){
-	    change_url = $('#crop_result').attr('src');
-	    opener.document.getElementById('${picture_id}').src = change_url;
-		window.close();
-		return true;
-	} else {
-		alert('crop버튼을 눌러주세요');
-		return false;
-	}
-	//저장버튼 pass_parent
-}
-
-
 // variables
 var canvas, ctx;
 var image;
@@ -98,6 +79,25 @@ function drawScene() { // main drawScene function
 
     // draw selection
     theSelection.draw();
+}
+
+//부모창으로 값 넘기는 함수
+function pass_parent() {
+	
+	var isDidCrop = $('#crop_result').width();
+	var change_url;
+	var cropped_id = '${picture_id}';
+	
+	if(isDidCrop != 0){
+	    change_url = $('#crop_result').attr('src');
+	    opener.document.getElementById(cropped_id).src = change_url;
+		window.close();
+		return true;
+	} else {
+		alert('crop버튼을 눌러주세요');
+		return false;
+	}
+	//저장버튼 pass_parent
 }
 
 $(function(){

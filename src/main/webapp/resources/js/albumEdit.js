@@ -76,11 +76,11 @@ var arr_color = ["#FF0000", "#FF5E00", "#FFBB00", "#FFE400", "#ABF200",
 var arr_size = ["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"];
 
 //자식창 닫혔을 때 감지
-function child_close() {
-	
-	var changedSrc = $('#picture_id').attr('src');
-	var check_changedSrc = $('#picture_id').attr('src').substring(0,5);
+var curTime;
+function child_close(){
 
+	var changedSrc = $('#'+curTime).attr('src');
+	var check_changedSrc = $('#'+curTime).attr('src').substring(0,5);
 	if(check_changedSrc == 'data:'){
 		$.ajax({
 			type: "POST",
@@ -622,7 +622,7 @@ function createWholeEditor($div_box) {
         	
         	var check_crop = $('.onSelect img').css('display');
         	if(check_crop != 'none'){
-            		var curTime = new Date().getTime();
+            		curTime = new Date().getTime();
             		//편집창 열면서 사진url 넓이 높이 보내기
             		var settings ='height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes';
                 	$('.onSelect img').attr('id', curTime); //임시 id값은 자식창에서 종료키 누르면 삭제됨
