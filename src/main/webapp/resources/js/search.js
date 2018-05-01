@@ -66,7 +66,7 @@ function searchgroup(){
 			var str = '';
 			$(array).each(function(i, data) {
 				str += '<div name="group"><p class="arr_party" partynum="'+ data.party_num +'">';
-				str += '<img src="./resources/img/group3.png" width="30" height="30">' + data.party_name + '</p></div>';
+				str += '<img src="./resources/img/group.png" width="40" height="40">' + data.party_name + '</p></div>';
 			});		
 			$('#group').html(str);
 		},

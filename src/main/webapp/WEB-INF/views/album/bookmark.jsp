@@ -199,7 +199,7 @@ li{
 	cursor: pointer;	
 }
 p{
-	font-size: 20px;
+	font-size: 14px;
 }
 </style>
 <script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
@@ -232,6 +232,7 @@ p{
 <script src="<c:url value="/resources/aside_js/main.js"/>"></script>
 <script src="resources/js/popup.js"></script>
 <script src="resources/js/chat.js"></script>
+<link rel="stylesheet" type="text/css" href="resources/album_create/css/main.css">
 
 <link rel="stylesheet" href="resources/skin_radio/green.css">
 <script src="resources/skin_radio/icheck.js"></script>
@@ -516,7 +517,7 @@ function category_change(category) {
 					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
 				</span>
 			</form>						
-				<div class = "friendList" style = "width: 200px; margin-top: 30px;">
+				<div class = "friendList" style = "width: 200px;">
 					<div name="friend" id="friend"></div>
 					<div name="user" id="user"></div>
 				</div>			

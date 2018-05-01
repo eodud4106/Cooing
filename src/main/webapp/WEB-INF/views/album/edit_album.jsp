@@ -53,8 +53,7 @@
 <link rel="stylesheet" href="resources/aside_css/style.css">
 
 <link rel="stylesheet" href="resources/skin_radio/green.css">
-<!-- 탭 출력 -->
-<link rel="stylesheet" href="resources/css/tab.css">
+<!-- <link rel="stylesheet" href="resources/css/friend_list.css"> -->
 
 
 <!--앨범 생성하기 =======================================================================================-->
@@ -189,6 +188,27 @@ html, body, main, .container-fluid {
 .page{
 	background-repeat: no-repeat !important;
 	background-size:100% 100% !important;
+}
+.friendList{
+	height: 250px;		
+	overflow-y : scroll;
+	padding-left: 30px;
+	background-color : #eee6;
+	font-family: Poppins-Regular;
+    font-size: 14px;
+    cursor: pointer;
+     margin-top: -15px;
+}
+.groupList{
+	height: 250px;	
+	overflow-y : scroll;
+	padding-left: 30px;
+	/* overflow-y:hidden; */
+	background-color : #eee6;
+	font-family: Poppins-Regular;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 70px;
 }
 </style>
 

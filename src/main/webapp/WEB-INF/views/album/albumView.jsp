@@ -616,7 +616,7 @@ height: 30px;
 					<div class="wrap-input100 validate-input">
 												
 						<!-- 불러온 댓글 보여줄 영역 -->
-						<div id="div_reply_list"></div>
+						<div id="div_reply_list" style = "font-family: Poppins-Regular;"></div>
 						<!-- 페이징 버튼 영역 -->
 						<div id="div_reply_paging"></div>
 					</div>
