@@ -1420,8 +1420,11 @@ function savePage(mode) {
     // 몇 페이지부터 저장할 것인지
     var start = 1;
 
-    // 표지 섬네일 저장
-    page1ImageSave();
+    
+    if(curr_page == 1){
+	    // 표지 섬네일 저장
+	    page1ImageSave();
+    }
 
     if(mode == 'all') {
         // 앨범 전체 저장 모드
