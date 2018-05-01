@@ -12,16 +12,203 @@
 .bookmark_img {
 cursor:pointer;
 }
-</style>
+.friendList{
+	height: 600px;		
+	overflow-y : scroll;
+	padding-left: 30px;	
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: -15px;
+}
+.groupList{
+	height: 600px;	
+	overflow-y : scroll;
+	padding-left: 30px;
+	/* overflow-y:hidden; */
+	/* background-color : aliceblue; */
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 100px;    
+}
+.newsList{
+	height: 600px;	
+	overflow-y : scroll;
+	padding-left: 30px;
+	/* overflow-y:hidden; */
+	/* background-color : aliceblue; */
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 100px;
+    
+}
+#main {
+    min-width: 200px;
+    max-width: 200px;
+    margin-top : 30px;
+    padding: 10px;
+    margin: 0 auto;
+    background: #ffffff;}
+section {
+    display: none;
+    padding: 20px 0 0;    
+    font-size : 14px;        
+    border-top: 1px solid #ddd;}
+/*라디오버튼 숨김*/
+#tab1,#tab2,#tab3 {
+      display: none;}
 
+label {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 5px 10px;
+    font-weight: 600;
+    text-align: center;
+    color: #bbb;
+    border: 1px solid transparent;
+    font-size: 15px;}
+
+label:hover {
+    color: #2e9cdf;
+    cursor: pointer;}
+
+/*input 클릭시, label 스타일*/
+#tab1:checked + label,#tab2:checked + label,#tab3:checked + label {
+      color: #555;
+      border: 1px solid #ddd;
+      border-top: 2px solid #2e9cdf;
+      border-bottom: 1px solid #ffffff;}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3{
+    display: block;}
+
+.search{	
+	width: 120px;
+	display:block;
+	position: absolute;	
+}
+.bt{
+	position: absolute;
+	right: 40px;
+}
+.tb1{
+	padding-top: 20px;
+}	    
+
+html, body, main, .container-fluid {
+	height: 100%;
+}
+.container-fluid {
+	padding: 0;
+}
+
+.view_wrapper {
+	margin: 0;
+	margin-left: 250px;
+	display: flex;
+	flex-wrap: wrap;
+}
+.album_wrapper, .top_bar {
+	margin: auto !important;
+	display: block;
+}
+.checkbox {
+	font-size: 20px;
+}
+.page {
+	background-color: #A4A4A4;
+	
+}
+.outer {
+	background-color: #aaa;
+}
+.button_container {
+  position: absolute;
+ /*  left: 0; */
+  /* right: 0; */
+ /* top: 50%;  */
+}
+
+.btn {
+  border: none;
+  display: block; 
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: #bae5e1;
+  /* padding: 17px 60px; */
+  margin: 0 auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+}
+
+.btn span {
+  position: relative; 
+  z-index: 1;
+}
+
+.btn:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 490%;
+  width: 140%;
+  background: #78c7d2;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  transform: translateX(-98%) translateY(-25%) rotate(45deg);
+}
+
+.btn:hover:after {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+
+.link {
+  font-size: 20px;
+  margin-top: 30px;
+}
+
+.link a {
+  color: #000;
+  font-size: 25px; 
+}
+.img1 {
+	width: 50px;
+	height: 50px;
+}
+</style>
+<style type="text/css">
+a{
+	font-size: 20px;
+	color: black;
+}
+.c{
+	font-size: 20px;
+	font-family: 'Nanum Gothic Coding', monospace;
+}
+li{
+	cursor: pointer;	
+}
+p{
+	font-size: 20px;
+}
+</style>
 <script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
 <!-- 폰트 -->
 <!-- 폰트 -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
 <!-- <link href="https://fonts.googleapis.com/css?family=McLaren" rel="stylesheet"> -->
-<!-- 친구 그룹목록 출력-->
-<link rel="stylesheet" href="resources/css/friend_list.css">
+
 
  <link rel="stylesheet" href="<c:url value="/resources/css/myPage.css"/>">
 
@@ -191,7 +378,7 @@ function category_change(category) {
 </style>
 
 </head >
-<body style ="font-family: 'Nanum Gothic Coding', monospace;">
+<body style ="font-family: 'Nanum Gothic Coding', monospace; ">
 
 	<aside class="probootstrap-aside js-probootstrap-aside">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
@@ -217,21 +404,16 @@ function category_change(category) {
 		</div>
 		<div class="probootstrap-overflow">
 			<nav class="probootstrap-nav">
-				<p>MYPAGE</p>
-				<p>TODAY's RANKING</p>
-				<p></p>
-				<p>CATEGORY</p>
 				<ul>
-
-					<li class="category" data="0">Journey</li>
-					<li class="category" data="1">Food</li>
-					<li><a href="<c:url value ="/"/>">MainPage</a></li>
-					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
-					<li><a href="<c:url value ="/bookmark"/>">bookmark</a></li>
-					<li><a href="<c:url value ="/logout_get"/>">LogOut</a></li>
-					<li><a href="javascript:create_personal_album()">Created Album</a></li>
-					
+					<li><a href="<c:url value ="/"/>">HOME</a></li>
+					<li><a href="<c:url value ="/myPage"/>">MYPAGE</a></li>
+					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>						
+					<li><a href="<c:url value ="/bookmark"/>">BOOKMARK</a></li>	
 				</ul>
+					<p class = "c">CATEGORY</p>
+				<ul>
+					<li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>						
+				</ul>		
 			
 			</nav>
 			<br><br><br>
@@ -298,45 +480,58 @@ function category_change(category) {
 	</main>
 
 
-	
 	<aside class="probootstrap-aside2 js-probootstrap-aside2">
-		<a href="#"
-			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
+		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
+		
 			<span class="oi oi-arrow-right"></span> Close
 		</a>
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="" class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY FRIEND</a>			
-		</div>				
-				 <form>
-					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" >
-					<div>
-       			  <img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
-       			 height: 24px;margin-left: 215px; margin-top: -50px;">
-				</form>
-			<div class = "friendList">
-				<div name="friend" id="friend">
-				</div>
-				<div name="user" id="user">
-				</div>
-			</div>
 		
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="" class="mb-2 d-block probootstrap-logo" style = "text-align: center;">MY GROUP</a>				
-						
-		<!-- <div class="probootstrap-overflow"> -->
-		
-		<!-- 그룹생성 -->
+		<div class="probootstrap-overflow">
+		<div id="main">
+		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
+		<label for="tab1" style = "font-size: 13px;">FRIEND</label>
+
+  		<input class = "input1" id="tab2" type="radio" name="tabs">
+    	<label for="tab2" style = "font-size: 13px;">GROUP</label> 
+    	
+    	<input class = "input1" id="tab3" type="radio" name="tabs">
+    	<label for="tab3" style = "font-size: 13px;">NEWS</label>   
+
+    	<section id="content1"> 
+    	<!-- 페이지 저장 -->		
+			<form class="contact100-form validate-form" id="entry">
+				<span class="contact100-form-title">
+					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
+				</span>
+			</form>						
+				<div class = "friendList" style = "width: 200px; margin-top: 30px;">
+					<div name="friend" id="friend"></div>
+					<div name="user" id="user"></div>
+				</div>			
+
+	<div id="dropDownSelect1"></div>    	    
+       
+    	</section>
+	<form id="testimg">
+		<input type="hidden" name="imgSrc" id="imgSrc" />
+	</form>	
+   	
+   	<section id ="content2">       					
 		<div class="button_container">		
-		<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
+			<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=1000 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
+		
+		<div class = "groupList" id="group" style= "margin-top: 70px; width: 200px;">
 		</div>
-		<div class = "groupList" id="group">
-		</div>
-	</aside>
+	</section>   
+	 <!-- 영준이 알림공간 -->
+	<section id ="content3">       					
+		<div class = "newsList"  style= "margin-top: 70px; width: 200px;">
+		여기 넣으셈
+		</div>		
+	</section>  
+   
+</aside>
 	
-	<div class="popuplayer">
-		<p onClick="friendpage()" style="font-size:8pt;color:#26afa1;">친구페이지</p>
-		<p onClick="chatpage()" style="font-size:8pt;color:#26afa1;">채팅</p>
-	</div>	
 
 	<script src="resources/aside_js/popper.min.js"></script>
 	<script src="resources/aside_js/bootstrap.min.js"></script>

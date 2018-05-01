@@ -131,7 +131,7 @@ label:hover {
 	border-bottom: 1px solid #ffffff;
 }
 
-#tab1:checked ~ #content1, #tab2:checked ~ #content2 {
+#tab1:checked ~ #content1, #tab2:checked ~ #content2, #tab3:checked ~ #content3 {
 	display: block;
 }
 
@@ -349,11 +349,16 @@ html, body, main, .container-fluid {
 		</div>
 		<div class="probootstrap-overflow">
 			<div class="main">
-				<!-- 왼쪽 대 메뉴 2가지 -->
+				<!-- 왼쪽 대 메뉴3가지 -->
 				<input class="input1" id="tab1" type="radio" name="tabs" checked>
-				<label for="tab1">Album</label>
+				<label for="tab1" style = "font-size: 13px;">Album</label>
+				
 				<input class="input1" id="tab2" type="radio" name="tabs">
-				<label for="tab2">Chat</label>
+				<label for="tab2" style = "font-size: 13px;">Chat</label>
+				
+				<input class="input1" id="tab3" type="radio" name="tabs">
+				<label for="tab3" style = "font-size: 13px;">NEWS</label>
+				
 				<section id="content1">
 				
 					<!-- 앨범 정보 -->
@@ -477,8 +482,14 @@ html, body, main, .container-fluid {
 					<div class="groupList" id="group" style="margin-top: 20px; width: 200px;">
 					</div>
 				</section>
-			</div>
-		</div>
+				
+				 <!-- 영준이 알림공간 -->
+		<section id ="content3">       					
+			<div class = "newsList"  style= "margin-top: 70px; width: 200px;">
+			여기 넣으셈
+			</div>		
+		</section>  
+			
 	</aside>
 
 	<!-- 메인 -->
@@ -495,6 +506,7 @@ html, body, main, .container-fluid {
 	</div>
 
 	<div class="container-fluid">
+	
 		<div class="view_wrapper">
 
 			<!-- 앨범 영역 -->
@@ -517,13 +529,13 @@ html, body, main, .container-fluid {
 				<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-eraser"></i>
 			</div>
-			<!-- 텍스트, 이미지 삽입 버튼 -->
+			<!--  텍스트, 이미지 삽입 버튼 -->
 			<div id="i_text" class="tool text under_tool" role="글상자 추가">
 				<i class="fas fa-align-justify"></i>
 			</div>
 			<div id="i_image" class="tool image under_tool" role="사진 추가">
 				<i class="far fa-image"></i>
-			</div>
+			</div> 
 			<!-- 각종 버튼 -->
 			<div id="i_brush" class="under_tool i_brush"
 				onclick="open_background()" role="속지 변경">
