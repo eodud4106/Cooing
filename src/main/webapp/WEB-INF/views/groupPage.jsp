@@ -163,22 +163,20 @@ select::-ms-expand { /* for IE 11 */
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
 			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
-			<div id="party_name" class="mb-2 d-block probootstrap-logo" style = "color : #1f5dad"><${partyinfo.getParty_name()}></div>	
+			<div id="party_name" class="mb-2 d-block probootstrap-logo" style = "color : #1f5dad"><${partyinfo.getParty_name()}>
+			</div>	
 			
 			<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id()}">
 				<div style= "z-index:99; float:right; margin-top: -40px;"id="desolve" data="${partyinfo.getParty_num()}">
-				<i class="far fa-times-circle"></i></div>
-				
-				<%-- 
-					<p><input type="button" id="desolve" value="그룹해체" data="${partyinfo.getParty_num()}"></p>
-				</div> --%>
-				<div>
-					<p>	<input type="text" id="findid" placeholder="Member 추가" size="19">
-					<!-- <input type="button" id="gmemberplus" value="추가"></p> -->	
-					<div style= "z-index:99; float:right; margin-top: -40px;"id="gmemberplus">
-					<i class="fas fa-user-plus"></i></div>
+				<i class="far fa-times-circle"></i>
 				</div>
 				
+				<div>
+					<p>	<input type="text" id="findid" placeholder="Member 추가" size="19" style= "width: 150px;">						
+					<div style= "z-index:99; float:right; margin-top: -40px; "id="gmemberplus">
+					<i class="fas fa-user-plus"></i>
+					</div>
+				</div>				
 			</c:if>				
 			
 			<input type="hidden" id="sessionid" data="${Member.getMember_id()}">
@@ -189,29 +187,37 @@ select::-ms-expand { /* for IE 11 */
 			</c:if>	
 			
 		<p style = "font-size: 20px;">[Member]</p>	
-		<div id="memberdiv" style ="height: 400px;">
+		<div id="memberdiv" style ="height: 300px;">
 		<c:if test="${fn:length(memberinfo) ne 0}">
 			<c:forEach var="arrmi" items="${memberinfo}">
-				<p><img  class="img-responsive img-circle" style =" border-radius: 80%; display: inline-block;; width: 100% \9;
+				<p class ="p1"><img  class="img-responsive img-circle" style =" border-radius: 80%; display: inline-block;; width: 100% \9;
     				max-width: 25%; height: auto;"src = "<c:url value="/memberimg?strurl=${arrmi.getMember_picture()}"/>">&nbsp${arrmi.getMember_id()}
-				<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id() and partyinfo.getParty_leader() ne arrmi.getMember_id()}">
-					<%-- <img src = "./resources/image_mj/remove.png" class="img_3" data="${arrmi.getMember_id()}" data2="${partyinfo.getParty_num()}"> --%>
+				<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id() and partyinfo.getParty_leader() ne arrmi.getMember_id()}">					
 					<div style= "z-index:99; float:right;margin-top: -29px; " class="img_3" data="${arrmi.getMember_id()}" data2="${partyinfo.getParty_num()}">
 					<i class="fas fa-user-times" ></i></div>
 				</c:if>
 				</p>
 			</c:forEach>
 		</c:if>
-
 		</div>
+		<nav class="probootstrap-nav">
+		<ul>
+			<li><a href="<c:url value ="/"/>">HOME</a></li>
+			<li><a href="<c:url value ="/myPage"/>">MYPAGE</a></li>
+			<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>						
+		</ul>
+			<p class = "c">CATEGORY</p>
+		<ul>
+			<li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>						
+		</ul>		
+		</nav>	
+		
 		
 		<button id="albumcreate" class = "button">
 			Album Create
 			<div class="button__horizontal"></div>
 			<div class="button__vertical"></div>
-		</button>
-
-		
+		</button>		
 	</aside>
 
 
