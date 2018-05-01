@@ -359,7 +359,7 @@ height: 30px;
 	}
 	// 댓글 삭제
 	function deletereply(replynum) {
-		if (confirm("댓글을 삭제 하시겠습니까?")) {
+		if (confirm("댓글을 삭제하시겠습니까?")) {
 			$.ajax({
 				url : 'deleteReply',
 				type : 'POST',
