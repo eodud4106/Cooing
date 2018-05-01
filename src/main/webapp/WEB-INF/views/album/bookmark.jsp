@@ -312,7 +312,7 @@ function bookmark_list() {
 				$(bookmark_img_thumbnail).attr('src', ''+ vo.album_thumbnail +'');
 				//버튼에 링크 다는 부분
 				$(button_bookmark).attr('onclick', 'location.href="albumView?album_num='+ vo.bookmark_albumnum + '&page_num=' + vo.bookmark_page + '"');
-				$(button_bookmark).attr('src', 'resources/img/bookmark3.png');
+				$(button_bookmark).attr('src', 'resources/img/bookmark.png');
 				$(button_bookmark).addClass('bookmark_img');
 				
 				var temp_contents;
