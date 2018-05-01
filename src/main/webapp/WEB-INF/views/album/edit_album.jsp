@@ -52,12 +52,12 @@
 <link rel="stylesheet" href="resources/aside_css/style.css">
 
 <link rel="stylesheet" href="resources/skin_radio/green.css">
-<!-- 친구, 그룹 리스트 출력 -->
-<link rel="stylesheet" href="resources/css/friend_list.css">
+<!-- 탭 출력 -->
+<link rel="stylesheet" href="resources/css/tab.css">
+
 
 <!--앨범 생성하기 =======================================================================================-->
-<link rel="icon" type="image/png"
-	href="resources/album_create/images/icons/favicon.ico" />
+<link rel="icon" type="image/png" href="resources/assets/images/cooing_logo.png"/>
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
 	href="resources/album_create/vendor/bootstrap/css/bootstrap.min.css">

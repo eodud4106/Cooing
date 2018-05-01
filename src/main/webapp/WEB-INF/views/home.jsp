@@ -9,7 +9,7 @@
 <title>COOING</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+<link rel="icon" type="image/png" href="resources/assets/images/cooing_logo.png"/>
 <link rel="stylesheet" href="resources/css/jquery-ui.min.css">
 <link rel="stylesheet" href="resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">

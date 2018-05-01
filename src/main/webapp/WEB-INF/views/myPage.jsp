@@ -8,7 +8,7 @@
 <head>
 <title>My Page</title>
 <meta charset="utf-8" />
-
+<link rel="icon" type="image/png" href="resources/assets/images/cooing_logo.png"/>
 <script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
 <!-- 폰트 -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">

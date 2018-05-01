@@ -10,6 +10,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="icon" type="image/png" href="resources/assets/images/cooing_logo.png"/>
 <!-- 폰트 -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
 <!-- 탭메뉴 -->

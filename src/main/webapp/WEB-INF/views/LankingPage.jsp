@@ -8,6 +8,7 @@
 <head>
 <title>RankingPage</title>
 <meta charset="UTF-8" />
+<link rel="icon" type="image/png" href="resources/assets/images/cooing_logo.png"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans">

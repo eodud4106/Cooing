@@ -209,7 +209,7 @@ p{
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
 <!-- <link href="https://fonts.googleapis.com/css?family=McLaren" rel="stylesheet"> -->
 
-
+<link rel="icon" type="image/png" href="resources/assets/images/cooing_logo.png"/>
  <link rel="stylesheet" href="<c:url value="/resources/css/myPage.css"/>">
 
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/bootstrap.min.css"/>">
