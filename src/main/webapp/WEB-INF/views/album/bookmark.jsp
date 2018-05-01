@@ -221,7 +221,7 @@ p{
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/icomoon.css"/>">
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/animate.css"/>">
 <link rel="stylesheet" href="<c:url value="/resources/aside_css/style.css"/>">
-
+<link rel="stylesheet" href="resources/css/chat.css">
 
 <script src="<c:url value="/resources/aside_js/popper.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/bootstrap.min.js"/>"></script>
@@ -230,6 +230,8 @@ p{
 <script src="<c:url value="/resources/aside_js/imagesloaded.pkgd.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/search.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/main.js"/>"></script>
+<script src="resources/js/popup.js"></script>
+<script src="resources/js/chat.js"></script>
 
 <link rel="stylesheet" href="resources/skin_radio/green.css">
 <script src="resources/skin_radio/icheck.js"></script>
@@ -243,7 +245,9 @@ p{
 
 <script>
 $(document).ready(function () {
-	
+	if (${sessionScope.Member != null}) {
+		readyChat('${sessionScope.Member.member_id}', '');
+	}
 	//북마크 리스트
 	bookmark_list();
 	

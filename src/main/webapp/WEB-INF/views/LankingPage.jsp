@@ -311,10 +311,7 @@ li{
 				<ul>					
 					<li><a href="<c:url value ="/"/>">HOME</a></li>
 					<li><a href="<c:url value ="/myPage"/>">MYPAGE</a></li>
-					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>
-				</ul>
-					<p class ="c">CATEGORY</p>
-				<ul>						
+					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>														
 					<li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>
 				</ul>									
 			</nav>
