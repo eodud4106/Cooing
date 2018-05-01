@@ -383,8 +383,8 @@ public class AlbumEditController {
 	public String crop_picture(Model model, String url_picture) {
 				
 		String imgFormat; // 새 이미지 포맷. jpg, gif 등
-		int newWidth = 500; // 변경 할 넓이
-		int newHeight = 500;// 변경 할 높이
+		int newWidth = 800; // 변경 할 넓이
+		int newHeight = 650;// 변경 할 높이
 			 
 		Image image;
 		int imageWidth;

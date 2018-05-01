@@ -10,8 +10,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>사진 자르기</title>
 
+<script src="resources/aside_js/popper.min.js"></script>
+<script src="resources/aside_js/owl.carousel.min.js"></script>
+<script src="resources/aside_js/jquery.waypoints.min.js"></script>
+<script src="resources/aside_js/imagesloaded.pkgd.min.js"></script>
+<script src="resources/aside_js/main.js"></script>
 <script src="resources/js_js/jquery-3.2.1.min.js"></script>
 
+<link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="resources/aside_css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="resources/aside_css/owl.carousel.min.css">
+<link rel="stylesheet"
+	href="resources/aside_css/owl.theme.default.min.css">
+<link rel="stylesheet" href="resources/aside_css/icomoon.css">
+<link rel="stylesheet" href="resources/aside_css/animate.css">
+<link rel="stylesheet" href="resources/aside_css/style.css">
+<link rel="stylesheet" href="resources/button_css/style.css">
 <script>
 //부모창으로 값 넘기는 함수
 function pass_parent() {
@@ -266,7 +281,7 @@ function getResults() {
 
 <style>
 html, body { width: 100%; height: 100%;}
-body { background:rgb(54,55,60); background-size: 100% 100% }
+body {  background-size: 100% 100% }
 #container{}
 #results{}
 #crop_button{}
@@ -274,11 +289,11 @@ h2{text-align: center;}
 </style>
 
 </head>
-    <body onunload="opener.child_close()">
-        <header>
-            <h2>[Cooing] crop페이지</h2>
+    <body onunload="opener.child_close()" style ="font-family: 'Nanum Gothic Coding', monospace;">
+        <%-- <header>
+            <h2 style = "margin-top: 50px;">CROP PHOTO</h2>
         </header>
-        <div class="container">
+        <div class="container" style ="text-align: center; padding : 100px;">
             <canvas id="panel" width="${picture_width}" height="${picture_height}"></canvas>
             <div id="results">
                 <img id="crop_result"/>
@@ -286,5 +301,62 @@ h2{text-align: center;}
         </div>
         <br><br>
         <input type="button" onclick="getResults()" id="crop_button" value="사진 자르기 실행!!">
-    </body>
+    </body> --%>
+    
+    <!-- 사이드 바 -->
+	<aside class="probootstrap-aside js-probootstrap-aside" style = "background-color: aliceblue;">
+		
+		<div class="probootstrap-site-logo probootstrap-animate" 
+			data-animate-effect="fadeInLeft" style="padding: 30px 30px 0px 30px; opacity: 1;">
+			<p class="mb-2 d-block probootstrap-logo" >CROP PHOTO</p>
+		</div>
+		<div class="probootstrap-overflow">
+			<div class="main">
+			<button class = "button" style = "margin :auto; margin-top: 150px; width : 200px;"onclick="getResults()" id="crop_button">
+			CROP
+			<div class="button__horizontal"></div>
+			<div class="button__vertical"></div>
+		</button>		
+			<!--  <input type="button" onclick="getResults()" id="crop_button" value="사진 자르기 실행!!"> -->
+			
+			</div>
+		</div>
+				
+			
+	</aside>
+
+	<!-- 메인 -->
+	<main role="main" class="probootstrap-main2 js-probootstrap-main">
+	<div class="probootstrap-bar">
+
+		<a href="#" class="probootstrap-toggle js-probootstrap-toggle"> <span
+			class="oi oi-menu"></span>
+		</a>
+		<div class="probootstrap-main-site-logo">
+			<a href="/www">COOING</a>
+		</div>
+
+	</div>
+
+	<div class="container-fluid">
+	
+		<div class="view_wrapper">
+
+			<!-- 앨범 영역 -->
+			<div class="container" style ="text-align: center; padding : 80px; margin-right: 50px;">
+            <canvas id="panel" width="${picture_width}" height="${picture_height}"></canvas>
+            <div id="results">
+                <img id="crop_result"/>
+            </div>
+        </div>
+			
+		</div>
+		<!-- END row -->		
+	</div>
+
+	</main>
+
+</body>
+    
+    
 </html>
