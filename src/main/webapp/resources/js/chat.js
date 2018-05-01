@@ -162,6 +162,20 @@ function readyChat (userId, goRoot) {
 
 	// div_chat에 각 부분 부착..
 	$div_chat.append($div_chat_top).append($message_list).append($div_chat_under);
+	
+	// 메세지 도착 시 탭 색깔 바꾸기....
+	$('#msg_list').bind("DOMSubtreeModified", function(e){
+
+		if($('#msg_list').children().length > 0) {
+			$('label[for=tab3]').css({
+				"background-color": "rgba(250,200,200,.5)"
+			});
+		} else {
+			$('label[for=tab3]').css({
+				"background-color": "rgba(255,255,255,1)"
+			});
+		}
+	})
    	
 }
 
@@ -307,28 +321,29 @@ function onMessage(evt) {
     		
 	} else {
 		// 대화 중인 상대가 아님 -> 수신 알림
-		/*
-		 * TODO
-		 */
-		console.log('메세지 왔어요! -> ' + JSON.stringify(chatData));
 		
 		var sender = chatData.is1to1 == 1? chatData.sender : chatData.addressee;
+		var $target = $('.msg_list').find('.news_card[who=' + sender + ']');
 		
-		$('.news_sender[sender=' + sender + ']').css({
-			"background-color": "white"
-		});
-		
-		// 알림1. 팝업 알림
-		//alert(chatData.sender + '님으로부터 메시지가 왔습니다!');
-		
-		// 알림2. 대화창 빨간색 표시
-		if (is1to1 == 1) {
-			// 1:1
+		if($target.length > 0) {
+			// 메세지 함에 이미 있는 카드
+			var $clone = $target.clone();
+			var unread =Number($clone.find('.news_content').attr('unread'));
+			
+			$clone.find('.news_content').text('안 읽은 메세지 ' + (unread + 1) + '건');
+			$clone.find('.news_content').attr('unread', (unread + 1));
+			$target.remove();
+			$clone.prependTo('#msg_list').click(function(e) {
+			
+				openChat($(this).attr('is1to1'), $(this).attr('who'));
+				$(this).remove();
+			});
 			
 		} else {
-			// 그룹
-			
+			// 메세지 함에 없는 카드
+			show_unread_msg_count(chatData);
 		}
+		
 	}
     
 }
@@ -452,10 +467,11 @@ function readMessage() {
 }
 
 function show_unread_msg_count(result) {
+	
+	var $target = $('#msg_list');
+	
 	$(result).each(function(i, unread) {
 
-		var $target = $('#div_news');
-		
 		var $card = $('<div />', {
 			"class": "news_card",
 			"role": "msg",
@@ -467,11 +483,11 @@ function show_unread_msg_count(result) {
 			"background-color": "#D2FFD2",
 			"margin-bottom": "5px",
 			"text-align": "center"
-		}).appendTo($target).click(function(e) {
+		}).click(function(e) {
 			
 			openChat($(this).attr('is1to1'), $(this).attr('who'));
-			$(this).remove;
-		});
+			$(this).remove();
+		}).appendTo($target);
 		
 		var $role = $('<div />', {
 			"class": "news_card news_head",
@@ -499,7 +515,7 @@ function show_unread_msg_count(result) {
 		var $content = $('<div />', {
 			"class": "news_card news_content",
 			"role": "content",
-			"text": "메세지 " + unread.unread + "건",
+			"text": "안 읽은 메세지 " + unread.unread + "건",
 			"unread": unread.unread
 		}).css({
 			"width": "100%",
@@ -507,5 +523,7 @@ function show_unread_msg_count(result) {
 			"float": "left",
 			"display": "inline-block"
 		}).appendTo($card);
+		
 	})
+	
 }

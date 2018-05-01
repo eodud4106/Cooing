@@ -1,0 +1,33 @@
+/* 뉴스칸 꾸미기 */
+#div_news:hover {
+	cursor: default;
+}
+
+.content3 {
+	overflow: auto;
+}
+
+.div_news {
+	margin-top:0px;
+	padding:5px;
+	width: 100%;	
+}
+
+.msg_box {
+	height: 55%;
+	background-color: #E0F8EC;
+	margin-bottom: 5%
+}
+
+.invite_box {
+	height: 40%;
+	background-color: #F7F8E0;
+}
+
+.msg_list, .invite_list {
+	overflow-y: scroll;
+}
+
+.news_card {
+	cursor: pointer;
+}
