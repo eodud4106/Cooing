@@ -633,7 +633,7 @@ function createWholeEditor($div_box) {
         	}else {
         		alert('사진을 올리고 자르기를 클릭해주세요.');
         	}         	
-		});
+		});/*주석처리*/
         
         // 사진 회전 (대영)
         $arr_bt.push($('<button />', {

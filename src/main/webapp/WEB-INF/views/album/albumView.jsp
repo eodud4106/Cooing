@@ -549,12 +549,7 @@ height: 30px;
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate"
-			data-animate-effect="fadeInLeft" style="padding-bottom: 0;">
-			<div style="text-align:center">
-				<input type="text" id="left_page" width="10px" height="10px">
-				<input type="text" id="right_page" width="10px" height="10px">
-				<input type="text" id="total_page" width="10px" height="10px">
-			</div>
+			data-animate-effect="fadeInLeft" style="padding-bottom: 0;">			
 			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
 		</div>
 		<div class="probootstrap-overflow">
@@ -595,7 +590,7 @@ height: 30px;
 						<div class="input100" name="album_contents"
 							id="album_contents"
 							class="input_album_info input_album_info_contents"
-							contenteditable="false" style="min-height: 80px">${album.album_contents}</div>
+							contenteditable="false" style="min-height: 100px">${album.album_contents}</div>
 						<span class="focus-input100"></span>
 					</div>
 					
@@ -624,7 +619,7 @@ height: 30px;
 					<div class="wrap-input100 validate-input">
 												
 						<!-- 불러온 댓글 보여줄 영역 -->
-						<div id="div_reply_list" style = "font-family: Poppins-Regular;"></div>
+						<div id="div_reply_list" style = "font-family: Poppins-Regular; height: 200px;"></div>
 						<!-- 페이징 버튼 영역 -->
 						<div id="div_reply_paging"></div>
 					</div>
@@ -683,8 +678,7 @@ height: 30px;
 			<div class = "newsList"  style= "margin-top: 70px; width: 200px;">
 			여기 넣으셈
 			</div>		
-		</section>  
-
+		</section> 
 	</aside>
 
 	<!-- 메인 -->
@@ -702,7 +696,13 @@ height: 30px;
 
 	<div class="container-fluid">
 		<div class="view_wrapper">
-
+		
+	 		<!-- 진수가만든 바... -->
+			<!-- <div style="text-align:center">
+				<input type="text" id="left_page" width="10px" height="10px">
+				<input type="text" id="right_page" width="10px" height="10px">
+				<input type="text" id="total_page" width="10px" height="10px">
+			</div> -->
 			<!-- 앨범 영역 -->
 			<div class="album_wrapper" id="album_wrapper">
 				<div class="album" id="album" style="display: none">
