@@ -432,9 +432,18 @@ html, body, main, .container-fluid {
 							<div class="contact100-form-bgbtn"></div>
 							<button class="contact100-form-btn bt_album_info"
 								onclick="return modifiy_AlbumInfomation()">
-								<span> Submit <i class="fa fa-long-arrow-right m-l-7"
-									aria-hidden="true"></i>
-								</span>
+								<span> Submit</span>
+							</button>
+						</div>
+						
+						
+						<div class="wrap-contact100-form-btn" style="margin-left: 10px;">
+							<div class="contact100-form-bgbtn"></div>
+							<button class="contact100-form-btn bt_album_info"
+								onclick="return removeAlbum()">
+								<span> Delete </span><!-- <i class="fa fa-long-arrow-right m-l-7"
+									aria-hidden="true"></i> -->
+								
 							</button>
 						</div>
 					</div>
