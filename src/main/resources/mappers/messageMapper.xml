@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- message 처리 SQL -->
-<mapper namespace="com.cooing.www.chat.dao.MessageMapper">
+<mapper namespace="com.cooing.www.socket.chat.dao.MessageMapper">
 
 	<!-- message 저장 -->
 	<insert id="insertMessage" parameterType="message">

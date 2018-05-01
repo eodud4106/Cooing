@@ -39,8 +39,8 @@
         <websocket:mapping path="push/echo.do" handler="pushHandler"/>
     </websocket:handlers>
  
-    <beans:bean id="chatHandler" class="com.cooing.www.socket.chat.ChatHandler"/>
-    <beans:bean id="pushHandler" class="com.cooing.www.socket.push.PushHandler"/>
+    <beans:bean id="chatHandler" class="com.cooing.www.socket.chat.controller.ChatHandler"/>
+    <beans:bean id="pushHandler" class="com.cooing.www.socket.push.controller.PushHandler"/>
 
 	<context:component-scan base-package="com.cooing.www" />
 	<beans:bean id="loginInterceptor" class="com.cooing.www.interceptor.LoginInterceptor"></beans:bean>

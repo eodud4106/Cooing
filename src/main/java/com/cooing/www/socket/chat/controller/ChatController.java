@@ -1,4 +1,4 @@
-package com.cooing.www.chat.controller;
+package com.cooing.www.socket.chat.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cooing.www.chat.dao.MessageDAO;
-import com.cooing.www.chat.vo.MessageVO;
 import com.cooing.www.member.vo.Member;
+import com.cooing.www.socket.chat.dao.MessageDAO;
+import com.cooing.www.socket.chat.vo.MessageVO;
 
 @Controller
 @RequestMapping(value = "chat")
@@ -45,6 +45,7 @@ public class ChatController {
 		arr_message = mDAO.selectMessage(map_search);
 		
 		return arr_message;
+
 		
 	}
 	

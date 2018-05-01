@@ -1,9 +1,9 @@
-package com.cooing.www.chat.dao;
+package com.cooing.www.socket.chat.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.cooing.www.chat.vo.MessageVO;
+import com.cooing.www.socket.chat.vo.MessageVO;
 
 public interface MessageMapper {
 
@@ -14,6 +14,6 @@ public interface MessageMapper {
 	
 	public ArrayList<MessageVO> selectMessage(HashMap<String, String> map);
 	
-	public ArrayList<MessageVO> select_unread_message(HashMap<String, String> map);
+	public ArrayList<MessageVO> select_unread_message(HashMap<String, String> map); 
 	
 }

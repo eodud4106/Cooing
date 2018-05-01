@@ -1,4 +1,4 @@
-package com.cooing.www.chat.dao;
+package com.cooing.www.socket.chat.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.cooing.www.chat.vo.MessageVO;
+import com.cooing.www.socket.chat.vo.MessageVO;
 
 @Repository
 public class MessageDAO {

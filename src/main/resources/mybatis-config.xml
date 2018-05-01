@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.cooing.www.chat.vo.MessageVO" alias="message"/>
+		<typeAlias type="com.cooing.www.socket.chat.vo.MessageVO" alias="message"/>
 		<typeAlias type="com.cooing.www.member.vo.Member" alias="member"/>
 		<typeAlias type="com.cooing.www.album.vo.Category" alias="category"/>
 		<typeAlias type="com.cooing.www.member.vo.Party" alias="party"/>
