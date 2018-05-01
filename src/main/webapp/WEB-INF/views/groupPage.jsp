@@ -216,28 +216,30 @@ select::-ms-expand { /* for IE 11 */
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
 			<a href="/www" class="mb-2 d-block probootstrap-logo">COOING</a>
-			<div id="party_name" class="mb-2 d-block probootstrap-logo" style = "color : #1f5dad; font-size: 20px;" party_name="${partyinfo.getParty_name()}">"${partyinfo.getParty_name()}"
-			</div>	
-			
+			========================
 			<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id()}">
-				<div style= "z-index:99; float:right; margin-top: 60px; cursor: pointer;"id="desolve" data="${partyinfo.getParty_num()}">
+			<div style= "z-index:99; float:right; margin-top: 10px; margin-right: 2px; cursor: pointer;"id="desolve" data="${partyinfo.getParty_num()}">
 				<i class="far fa-times-circle"></i>
 				</div>
-				
-				<div>
-					<p>	<input type="text" id="findid" placeholder="Member 추가" size="19" style= "width: 150px;">						
-					<div style= "z-index:99; float:right; margin-top: -35px; margin-right: -20px; cursor: pointer;" id="gmemberplus">
-					<i class="fas fa-user-plus"></i>
-					</div>
-				</div>				
-			</c:if>				
+				</c:if>
+			<div id="party_name" class="mb-2 d-block probootstrap-logo" style = "color : #1f5dad; font-size: 20px;" party_name="${partyinfo.getParty_name()}">"${partyinfo.getParty_name()}"
+			</div>		
 			
 			<input type="hidden" id="sessionid" data="${Member.getMember_id()}">
 				<c:if test="${partyleader ne null}">
 				<p style ="font-family:  Poppins-Regular;"><img	style = "width: 40px; height: 40px;"src = "<c:url value="/memberimg?strurl=${partyleader.getMember_picture()}"/>">&nbsp
 				<c:if test="${partyleader ne null}">${partyleader.getMember_id()}(Leader)</c:if></p>
 			</c:if>	
-			
+			<div>
+			<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id()}">
+								<div>
+					<p>	<input type="text" id="findid" placeholder="Member 추가" size="19" style= "width: 150px;">						
+					<div style= "z-index:99; float:right; margin-top: -35px; margin-right: -1px; cursor: pointer;" id="gmemberplus">
+					<i class="fas fa-user-plus"></i>
+					</div>
+				</div>				
+			</c:if>				
+			</div>
 		<p style = "font-size: 20px;">[MEMBER]</p>	
 		<div id="memberdiv" style ="height: 300px; font-family:  Poppins-Regular;">
 		<c:if test="${fn:length(memberinfo) ne 0}">
