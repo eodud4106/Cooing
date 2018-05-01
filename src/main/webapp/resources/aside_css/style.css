@@ -831,7 +831,7 @@ h1, h2, h3, h4, h5,
 /* 사이드오른쪽 */
   .probootstrap-aside2 {
   height: 100vh;
-  width: 250px;
+ /*  width: 250px; */
   top: 0;
   position: fixed;
   float: left;

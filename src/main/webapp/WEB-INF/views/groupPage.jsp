@@ -209,7 +209,7 @@ select::-ms-expand { /* for IE 11 */
 </head>
 <body style ="font-family: 'Nanum Gothic Coding', monospace;">
 
-	<aside class="probootstrap-aside js-probootstrap-aside">
+	<aside class="probootstrap-aside js-probootstrap-aside" style = "background-color: aliceblue;">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
@@ -260,7 +260,7 @@ select::-ms-expand { /* for IE 11 */
 		</ul>
 			<div class = "dropdown">
 						<p class ="c" class = "dropbtn">CATEGORY</p>
-						 <div class="dropdown-content">
+						 <div class="dropdown-content" style = "font-family: Poppins-Regular; font-size: 15px; padding-left: 10px;">
 						 <ul>
 						  	<li class="category" data="0">여행</li>
 						    <li class="category" data="1">스포츠/레저</li>

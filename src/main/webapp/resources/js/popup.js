@@ -29,7 +29,8 @@ function createPartyPopup(e, elem) {
 		"top": e.clientY,
 		"width": "100px",
 		"height": "60px",
-		"background-color": "#ddd",
+		"margin-left" : "10px",
+		"background-color": "#464a4e",
 		"z-index": "1000",
 		"color": "white",
 		"cursor" : "pointer",
@@ -47,6 +48,7 @@ function createPartyPopup(e, elem) {
 	}).css({
 		"width": "100%",
 		"height": "50%",
+		"margin-left" : "10px",
 		"display": "block",
 		"float": "left"
 	}).click(function(e) {
@@ -60,6 +62,7 @@ function createPartyPopup(e, elem) {
 	}).css({
 		"width": "100%",
 		"height": "50%",
+		"margin-left" : "10px",
 		"display": "block",
 		"float": "left"
 	}).click(function(e) {
@@ -79,8 +82,9 @@ function createFriendPopup(e, elem, type) {
 		"top": e.clientY,
 		"width": "100px",
 		"height": "60px",
-		"background-color": "#ddd",
+		"background-color": "#464a4e",
 		"z-index": "1000",
+		"margin-left" : "10px",
 		"-webkit-border-top-left-radius": "15px",
 		"-webkit-border-top-right-radius": "15px",
 		"-webkit-border-bottom-left-radius": "15px",
