@@ -81,7 +81,7 @@ function creategroup(){
 					}
 				}
 				else{
-					alert('그룹 생성을 실패 했습니다. 잠시 후 다시 시도해 주십시오.');
+					alert('그룹 생성을 실패했습니다. 잠시 후 다시 시도해 주십시오.');
 				}
 			},
 			error:function(e){alert(JSON.stringify(e));}		

@@ -28,7 +28,7 @@ function confirmcheck(strque){
 }
 
 function deleteparty(){
-	if(confirmcheck('그룹을 삭제 하시겠습니까?') == false) {
+	if(confirmcheck('그룹을 삭제하시겠습니까?') == false) {
 		return false;
 	}
 	//그룹 탈퇴 확인		
@@ -50,7 +50,7 @@ function deleteparty(){
 }
 
 function memberdelete(){	
-	if(confirmcheck('그룹 멤버를 삭제 하시겠습니까?') == false) {
+	if(confirmcheck('그룹 멤버를 삭제하시겠습니까?') == false) {
 		return false;
 	}
 	var member_id = $(this).attr('data');
@@ -117,7 +117,7 @@ function memberplus(){
 		alert("초대하실 멤버의 아이디를 입력해주세요.")
 		return false;
 	}
-	if(confirmcheck(member_id + '를 그룹 멤버로 초대 하시겠습니까?') == false) {
+	if(confirmcheck(member_id + '를 그룹 멤버로 초대하시겠습니까?') == false) {
 		return false;
 	}
 	var party_num = $('#desolve').attr('data');
