@@ -166,7 +166,7 @@ select::-ms-expand { /* for IE 11 */
 					src="<c:url value="/memberimg?strurl=${friend_id.getMember_picture()}"/>"> ${friend_id.getMember_id()}</p>
 			<p>
 				<c:if test="${check ne true }">
-					<div style="z-index: 99; float: right; margin-top: -40px;"
+					<div style="z-index: 99; float: right; margin-top: -40px; cursor: pointer;"
 						id="friendbt" data="0">
 						<i class="fas fa-user-plus"></i>
 					</div>
@@ -174,7 +174,7 @@ select::-ms-expand { /* for IE 11 */
 				</c:if>
 				<c:if test="${check eq true }">
 					<!-- <input type="button" id="friendbt" value="친구삭제" data="1"> -->
-					<div style="z-index: 99; float: right; margin-top: -40px;"
+					<div style="z-index: 99; float: right; margin-top: -40px; cursor: pointer;"
 						id="friendbt" data="1">
 						<i class="fas fa-user-times"></i>
 					</div>
