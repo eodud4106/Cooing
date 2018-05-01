@@ -214,7 +214,7 @@ select::-ms-expand { /* for IE 11 */
 			</div>	
 			
 			<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id()}">
-				<div style= "z-index:99; float:right; margin-top: -40px;"id="desolve" data="${partyinfo.getParty_num()}">
+				<div style= "z-index:99; float:right; margin-top: 60px; cursor: pointer;"id="desolve" data="${partyinfo.getParty_num()}">
 				<i class="far fa-times-circle"></i>
 				</div>
 				
