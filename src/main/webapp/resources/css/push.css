@@ -1,4 +1,4 @@
-/* ´º½ºÄ­ ²Ù¹Ì±â */
+/* ï¿½ï¿½ï¿½ï¿½Ä­ ï¿½Ù¹Ì±ï¿½ */
 #div_news:hover {
 	cursor: default;
 }
@@ -15,13 +15,19 @@
 
 .msg_box {
 	height: 55%;
-	background-color: #E0F8EC;
-	margin-bottom: 5%
+	background-color: #c6e1f3;
+	margin-bottom: 5%;
+	color: white;
+	font-family: Poppins-Regular;
+	font-size: 14px;
 }
 
 .invite_box {
 	height: 40%;
-	background-color: #F7F8E0;
+	background-color: #9cdbd4;
+	color: white;
+	font-family: Poppins-Regular;
+	font-size: 14px;
 }
 
 .msg_list, .invite_list {
@@ -30,4 +36,8 @@
 
 .news_card {
 	cursor: pointer;
+	background-color: #f8f9fa;
+	color : #464a4e;
+	font-family: Poppins-Regular;
+	font-size: 14px;
 }
