@@ -208,7 +208,7 @@ function show_unread_push(push) {
 		}).css({
 			"width": "100%",
 			"height": "100px",
-			"background-color": "#D2FFD2",
+			"background-color": "white",
 			"margin-bottom": "5px",
 			"text-align": "center"
 		}).prependTo($target);
@@ -273,7 +273,7 @@ function show_unread_push(push) {
 			var $ok = $('<div />', {
 				"class": "news_card news_button",
 				"role": "ok",
-				"text": "ok!"
+				"text": "YES"
 			}).css({
 				"width": "25%",
 				"height": "14px",
@@ -290,7 +290,7 @@ function show_unread_push(push) {
 			var $no = $('<div />', {
 				"class": "news_card news_button",
 				"role": "no",
-				"text": "no!"
+				"text": "NO"
 			}).css({
 				"width": "25%",
 				"height": "14px",
@@ -309,7 +309,7 @@ function show_unread_push(push) {
 		var $close = $('<div />', {
 			"class": "news_card news_button",
 			"role": "close",
-			"text": "close"
+			"text": "CLOSE"
 		}).css({
 			"width": "25%",
 			"height": "14px",
