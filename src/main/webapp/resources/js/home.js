@@ -14,7 +14,7 @@ function initialize(){
 	$('#searchtx').keydown(function(event){
 		if(event.keyCode == 13){
 			searchcheck = 99;
-			get_album_list('writer','total','date', ++pagenum , 0);
+			get_album_list('writer','total','date', pagenum++ , 0);
 			$('#newcheck').iCheck('check');
 		}
 	});
@@ -75,25 +75,26 @@ function checkRadioPaging(){
 		      case '1':
 		    	  if(searchcheck == 0){
 			    	  searchcheck = 99;
-			    	  get_album_list('writer','total','date',++pagenum, 0);
+			    	  get_album_list('writer','total','date',pagenum++, 0);
 		    	  }else if(searchcheck == 1){
 		    		  searchcheck = 99;
-		    		  get_album_list('category' , 'total' , 'data' , ++pagenum , 1);
+		    		  get_album_list('category' , 'total' , 'data' , pagenum++ , 1);
 		    	  }
 		         break;
 		      case '2':
 		    	  if(searchcheck == 0){
 		    		  searchcheck = 99;
-		    		  get_album_list('writer','total','like', ++pagenum , 0);
+		    		  get_album_list('writer','total','like', pagenum++ , 0);
 		    	  }else if(searchcheck == 1){
 		    		  searchcheck = 99;
-		    		  get_album_list('category' , 'total' , 'like' , ++pagenum , 1);
+		    		  get_album_list('category' , 'total' , 'like' , pagenum++ , 1);
 		    	  }
 		         break;  
 		      case '3':
 		    	  $('#searchtx').val('');
-	    		  searchcheck = 99;
-	    		  get_album_list('mylike' , 'total' , 'date' , ++pagenum , 0);
+		    	  $('#searchtx').blur();		    	  
+	    		  searchcheck = 99;	
+	    		  get_album_list('mylike' , 'total' , 'like' , pagenum++ , 2);
 		         break; 
 		   }
 	   }else{

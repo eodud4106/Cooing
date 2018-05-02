@@ -58,24 +58,28 @@
 <script src="https://use.fontawesome.com/1c6f725ec5.js"></script>
 
 <script>
-var page = 0;
+var pagenum = 0;
 var pagingcheck = false;
 var total = true;
-//이게 0번이면 검색어 1번이면 카테고리 2번이면 그냥 메인 으로 나눠서 페이징 가지고 오게 된다.
+//이게 0번이면 검색어 1번이면 카테고리  나눠서 페이징 가지고 오게 된다.
 var searchcheck = 99;
 $(window).scroll(function() {
-	console.log(($(window).scrollTop() + 100) + '_window' + ($(document).height() - $(window).height()) + '_document');
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
-    	console.log('test _ ' + searchcheck + '_search' + pagenum + '_pagenum');
+    	console.log('test , ' + searchcheck + '_search , ' + pagenum + '_pagenum , ' + total + '_total');
     	//메인으로 그냥 들어왔을 때 와 검색해서 들어왔을 때 = 0 / 카테고리 눌러서 들어왔을 때  = 1 
     	if(searchcheck == 0){
     		if(total){	
-    			get_album_list('writer' , 'total', 'date', ++pagenum , 0);
+    			get_album_list('writer' , 'total', 'date', pagenum++ , 0);
         		pagingcheck = true;
         	}
     	}else if(searchcheck == 1){
     		if(total){	
-    			get_album_list('category','total','date',++pagenum , 1);
+    			get_album_list('category','total','date', pagenum++ , 1);
+        		pagingcheck = true;
+        	}
+    	}else if(searchcheck == 2){
+    		if(total){	
+    			get_album_list('mylike','total','like', pagenum++ , 2);
         		pagingcheck = true;
         	}
     	}   	
@@ -98,13 +102,13 @@ $(document).ready(function () {
 		searchcheck = 99;
 		pagenum = 0;
 		pagingcheck = false;
-		get_album_list('category','total','date',++pagenum , 1);
+		get_album_list('category','total','date', pagenum++ , 1);
 	}else{
 		searchcheck = 99;
 		pagenum = 0;
 		pagingcheck = false;
 		// 전체 앨범, 검색 키워드 없음, 최신 순
-		get_album_list('writer' ,'total', 'date', ++pagenum , 0);
+		get_album_list('writer' ,'total', 'date', pagenum++ , 0);
 	}
 	
 	//경고!! 아래 코드를 절대 별도의 js파일로  마시오!!

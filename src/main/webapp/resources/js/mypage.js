@@ -12,15 +12,15 @@ function initialize(){
 		searchcheck = 99;
 		$('#searchtx').val('');
 		$('#categorynum').val($(this).attr('data'));
-		get_album_list('category','personal', 'date', ++pagenum , 1);
+		get_album_list('category','personal', 'date', pagenum++ , 1);
 	});
 
-	get_album_list('writer','personal', 'date', ++pagenum , 0);
+	get_album_list('writer','personal', 'date', pagenum++ , 0);
 	
 	$('#searchtx').keydown(function(event){
 		if(event.keyCode == 13){
 			searchcheck = 99;
-			get_album_list('writer','personal', 'date', ++pagenum , 0);
+			get_album_list('writer','personal', 'date', pagenum++ , 0);
 		}
 	});	
 	

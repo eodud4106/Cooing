@@ -114,12 +114,12 @@ $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
     	if(searchcheck == 0){
 	    	if(total){
-	    		get_album_list('writer','personal', 'date', ++pagenum , 0);
+	    		get_album_list('writer','personal', 'date', pagenum++ , 0);
 		    	pagingcheck = true;
 	    	}
     	}else if(searchcheck == 1){
     		if(total){	
-    			get_album_list('category','personal', 'date', ++pagenum , 1);
+    			get_album_list('category','personal', 'date', pagenum++ , 1);
     			pagingcheck = true;
     		}
     	}

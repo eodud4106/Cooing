@@ -577,7 +577,7 @@ height: 30px;
 
 					<!-- 앨범 정보 -->
 					<div class="wrap-input100 validate-input">
-						<span class="label-input100">프로필사진</span>
+						<span class="label-input100"><img src="${profile_url}" style="width: 30px; height: 40px;"></span>
 						<span class="label-input100">${album.album_writer }</span>
 						
 						<!-- 여기 수정해야함 친구 팔로잉버튼  -->

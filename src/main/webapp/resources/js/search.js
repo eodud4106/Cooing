@@ -220,8 +220,9 @@ function print_search_result(result, $destination, type) {
 function get_album_list(type , writer_type , order, page , checknum) {
 	var check  = false;
 	
-	if(searchcheck != check){ 
-		searchcheck = check;
+	if(searchcheck != checknum){ 
+		searchcheck = checknum;
+		pagenum = 0;
 		page = 0;
 	}
 

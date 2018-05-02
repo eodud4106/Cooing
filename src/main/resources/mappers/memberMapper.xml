@@ -20,9 +20,13 @@
 	from member 
 	where 
 	member_id in(
-		select friend_id2 as member_id
-		from friend
-		where friend_id1 = #{myid} 
+		 select friend_id2 as member_id
+		 from friend
+		 where friend_id1 = #{myid}
+		 union 
+		 select friend_id1 as member_id
+		 from friend
+		 where friend_id2 = #{myid} 
 	) 
 	and member_id != #{myid}
 	</select>
@@ -38,10 +42,15 @@
 	from member 
 	where member_id like '%'||#{friendid}||'%'
 	and member_id in(
-		select friend_id2 as member_id
-		from friend
-		where friend_id2 like '%'||#{friendid}||'%'
-		and friend_id1 = #{myid} 
+		 select friend_id2 as member_id
+		 from friend
+		 where friend_id1 = #{myid}
+		 		and friend_id2 like '%'||#{friendid}||'%'
+		 union 
+		 select friend_id1 as member_id
+		 from friend
+		 where friend_id2 = #{myid} 
+		  		and friend_id1 like '%'||#{friendid}||'%' 
 	)
 	and member_id != #{myid}
 	</select>
@@ -52,9 +61,14 @@
 	where member_id like '%'||#{friendid}||'%'
 	and member_id not in(
 		select friend_id2 as member_id
-		from friend
-		where friend_id2 like '%'||#{friendid}||'%'
-		and friend_id1 = #{myid} 
+		 from friend
+		 where friend_id1 = #{myid}
+		 		and friend_id2 like '%'||#{friendid}||'%'
+		 union 
+		 select friend_id1 as member_id
+		 from friend
+		 where friend_id2 = #{myid} 
+		  		and friend_id1 like '%'||#{friendid}||'%' 
 	) 
 	and member_id != #{myid}
 	</select>

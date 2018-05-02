@@ -41,4 +41,7 @@ public interface AlbumMapper {
 	
 	// 검색 조건 포함 앨범 리스트 조회
 	public ArrayList<AlbumVO> get_album_list(RowBounds rb, HashMap<String, String> map);
+	
+	// 앨범 작성자 프로필사진
+	public String select_album_writer(String member_id);
 }

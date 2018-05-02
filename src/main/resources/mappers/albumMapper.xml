@@ -195,7 +195,7 @@
 		<if test="type == 'mylike'">
 			and(
 				album_category in(
-					select category_kind 
+					select category_kind as album_category
 					from category
 					where category_memberid = #{userId}
 				)
@@ -245,6 +245,16 @@
 		ORDER BY
 		like_count desc
 		</if>
+	</select>
+	
+	<!-- 앨범 작성자의 프로필 사진 -->
+	<select id="select_album_writer" parameterType="String" resultType="String">
+		SELECT
+			MEMBER_PICTURE
+		FROM
+			MEMBER
+		WHERE
+			MEMBER_ID = #{member_id}
 	</select>
 
 </mapper>
