@@ -34,6 +34,7 @@
 <script src="resources/js/popup.js"></script>
 <script src="resources/js/chat.js"></script>
 <script src="resources/js/push.js"></script>
+<script src="resources/js/edit_push.js"></script>
 
 <!-- albumEdit 용 js -->
 <script type="text/javascript" src="resources/js/albumEdit.js"></script>
@@ -242,8 +243,13 @@ html, body, main, .container-fluid {
 	$(document).ready(
 			function() {
 				
+				// 경고!! 아래 구문 절대 지우거나 옮기지 마세요!
 				if ('${sessionScope.Member}' != null) {
 					readyChat('${sessionScope.Member.member_id}', '');
+					readyPush('${sessionScope.Member.member_id}', '');
+					if('${album.isPersonal}' == 0) {
+						readyEdit('${sessionScope.Member.member_id}', '${album.album_writer}')
+					}
 				}
 				
 				$('.input').iCheck({
@@ -273,12 +279,6 @@ html, body, main, .container-fluid {
 					searchword();
 				});
 				nowpage();
-				
-				
-				$(window).bind("beforeunload", function (e){
-					//TODO 웹소켓 닫기
-					console.log('편집을 종료합니다.');
-				});
 				
 				
 			});
@@ -614,6 +614,10 @@ html, body, main, .container-fluid {
 			<div id="i_remove" class="under_tool" onclick="removePage()" role="페이지 삭제">
 				<i style="width: 30px; height: 30px; margin: 10px; margin-right: 400px;"
 					class="far fa-minus-square"></i>
+			</div>
+			<div id="i_edit" class="under_tool" role="편집하기">
+				<i style="width: 30px; height: 30px; margin: 10px;"
+					class="fas fa-pencil-alt"></i>
 			</div>		
 			<div id="i_exit" class="under_tool"
 				onclick="really_end_albumEdit()" role="편집 종료">

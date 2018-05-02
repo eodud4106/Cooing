@@ -4,31 +4,27 @@
 
  // 채팅에 쓸 웹소켓과 위치
 var websocket_edit;
-var wsUri_edit = "ws://cooing.site/www/edit/echo.do";
+var wsUri_edit = "ws://localhost:8888/www/edit/echo.do";
 
-var userId;
-var counterpart;
-var is1to1;
-var goRoot;
+var member_id;
+var party_name;
 
 /*
  *	로그인 상태일 경우 채팅 준비
- *	@param (로그인 아이디)
+ *	@param (로그인 아이디, 파티명)
  */ 
-function readyEdit (userId) {
+function readyEdit (member_id, party_name) {
 
 	console.log('edit 준비!, userId-> ' + userId);
 
 	// 로그인 정보 확인 후 전역변수에 저장
-	if(userId == '') {
+	if(member_id == '') {
 		// 로그인 정보 없음
 		return;
 	} else {
-		this.userId = userId;
+		this.member_id = member_id;
+		this.party_name = party_name;
 	}
-
-	// 루트(홈)으로 가는 경로 저장...
-	this.goRoot = goRoot;
 
 	// 웹소켓 연결
 	websocket_edit = new WebSocket(wsUri_edit);
@@ -52,26 +48,118 @@ function readyEdit (userId) {
 
    	// 웹소켓 종료
    	websocket_edit.onclose = function(evt) {
-   		onClose_edit(evt)
+   		//onClose_edit(evt)
    	};
+   	
+	$(window).bind("beforeunload", function (e){
+		if($('#i_edit').attr('role') == '편집 그만하기') {
+			end_edit();
+		}
+	});
 
    	
 }
 
-//웹소켓 연결 성공
+//편집 시작
 function onOpen_edit(evt) {
-
+	
+	var msg = {
+		type: "open",
+		party_name: party_name,
+		member_id: member_id
+	}
+	websocket_edit.send(JSON.stringify(msg));
 	
 }
 
-//채팅창 닫힘
-function onClose_edit() {
-	
 
+
+//편집 종료
+function end_edit() {
+	
+	savePage('all');
+	
+	var msg = {
+		type: "end",
+		party_name: party_name,
+		member_id: member_id
+	}
+	websocket_edit.send(JSON.stringify(msg));
+	
 }
 
 //메시지 수신
 function onMessage_edit(evt) {
     
+    var pushData = JSON.parse(evt.data);
     
+    console.log('push서버에서 메세지옴 -> ' + JSON.stringify(evt.data));
+    
+    
+    if(pushData.type == 'open') {
+    	// 편집 가능
+    	if (pushData.editable == 'true') {
+    		$('#i_edit').attr('role', '편집하기').click(function(e) {
+    			isEditable();
+        	}).css({
+    			"color": "blue"
+    		});
+    		
+		} else if(pushData.editable == 'false') {
+			$('#i_edit').attr('role', '편집 중').click(function(e) {
+				return;
+        	}).css({
+    			"color": "red"
+    		});
+		}
+    	
+    } else if(pushData.type == 'start') {
+    	// 편집 가능
+    	if (pushData.editable == 'true') {
+    		
+    		if (pushData.member_id == this.member_id) {
+				// 편집 요청한 사람
+    			$('#i_edit').attr('role', '편집 그만하기').click(function(e) {
+            		end_edit();
+            	}).css({
+        			"color": "black"
+        		});
+    			
+			} else {
+				$('#i_edit').attr('role', '편집 중').click(function(e) {
+					return;
+	        	}).css({
+	    			"color": "red"
+	    		});
+			}
+    		
+		} else if(pushData.editable == 'false') {
+			// 이 때는 변동사항이 없을 걸...?
+			
+		}
+    	
+    } else if(pushData.type == 'end') {
+    	// 편집 끝남
+    	//reload 말고 더 좋은 방법은...?
+    	location.reload();
+    	$('#i_edit').attr('role', '편집하기').click(function(e) {
+    		isEditable();
+    	}).css({
+			"color": "blue"
+		});
+    	
+    }
+    
+}
+
+//메시지 발신
+function isEditable() {
+	
+	var msg = {
+		type: "start",
+		party_name: party_name,
+		member_id: member_id
+	}
+	websocket_edit.send(JSON.stringify(msg));
+	
 }

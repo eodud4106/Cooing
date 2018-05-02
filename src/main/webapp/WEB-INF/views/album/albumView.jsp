@@ -183,7 +183,11 @@ height: 30px;
 	var page_num = '${page_num}';
 	//라디오버튼
 	$(document).ready(function() {
-		readyChat('${sessionScope.Member.member_id}', '');
+		// 경고!! 아래 구문 절대 지우거나 옮기지 마세요!
+		if ('${sessionScope.Member}' != null) {
+			readyChat('${sessionScope.Member.member_id}', '');
+			readyPush('${sessionScope.Member.member_id}', '');
+		}
 		//댓글 15자 넘으면 alert창으로 막기
 		$('#input_reply').on('keyup', function() {
 	        if($(this).val().length > 15) {
@@ -750,12 +754,21 @@ height: 30px;
 						class="fas fa-angle-double-right"></i>
 				</div>
 				-->
-				<c:if test="${sessionScope.Member.member_id == album.album_writer}">
-					<div id="i_edit" class="under_tool"
-						onclick="location.href='edit_album?album_num=${album.album_num}'" role="편집">
-						<i style="width: 30px; height: 30px; margin: 10px;"
-							class="fas fa-pencil-alt"></i>
-					</div>
+				<c:if test="${album.isPersonal == 1 }">
+					<c:if test="${sessionScope.Member.member_id == album.album_writer}">
+						<div id="i_edit" class="under_tool" onclick="location.href='edit_album?album_num=${album.album_num}'" role="편집">
+							<i style="width: 30px; height: 30px; margin: 10px;"
+								class="fas fa-pencil-alt"></i>
+						</div>
+					</c:if>
+				</c:if>
+				<c:if test="${album.isPersonal == 0 }">
+					<c:if test="${isPartymember == 1 }">
+						<div id="i_edit" class="under_tool" onclick="location.href='edit_album?album_num=${album.album_num}'" role="편집">
+							<i style="width: 30px; height: 30px; margin: 10px;"
+								class="fas fa-pencil-alt"></i>
+						</div>
+					</c:if>
 				</c:if>
 				<div id="i_bookmark" class="under_tool" onclick="bookmark_toggle()" role="책갈피 추가">
 					<i style="width: 30px; height: 30px; margin: 10px;"

@@ -1,8 +1,6 @@
 package com.cooing.www.socket.edit;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +8,6 @@ import java.util.Set;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -18,10 +15,6 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.cooing.www.member.dao.RelationDAO;
-import com.cooing.www.member.vo.PartyMember;
-import com.cooing.www.socket.chat.dao.MessageDAO;
-import com.cooing.www.socket.chat.vo.MessageVO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -33,11 +26,14 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 
 	private Set<WebSocketSession> sessionSet = new HashSet<WebSocketSession>();
 	
-	// 키=파티명, 값=편집 유저명
-	private HashMap<String, String> edit_user = new HashMap<>();
+	// 키=m_id, 값=s_id
+	private HashMap<String, String> mid_map = new HashMap<>();
 	
+	// 키=p_name, 값=mid_arr
+	private HashMap<String, ArrayList<String>> pname_map = new HashMap<>();
 	
-	//private HashMap<String, String> edit_user = new HashMap<>();
+	// 키=p_name, 값=m_id
+	private HashMap<String, String> edit_map = new HashMap<>();
 	
 	private Gson gson = new Gson();
 	
@@ -79,6 +75,8 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 			msg = mapper.readValue(message.getPayload().toString(), 
 					new TypeReference<HashMap<String, String>>(){});
 			
+			System.out.println("msg 받음 -> " + msg.toString());
+			
 			// 메세지의 타입
 			String type = msg.get("type");
 			// 메세지의 타입
@@ -86,36 +84,69 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 			// 메세지의 타입
 			String member_id = msg.get("member_id");
 			
-			msg.put("session_id", session.getId());
-			
 			// 타입 별 처리
 			if(type.equals("open")) {
 				// 1. [edit 시작...]
 				
+				ArrayList<String> mid_arr;
+				
+				mid_map.put(member_id, session.getId());
+				
+				if(!pname_map.containsKey(party_name)) {
+					pname_map.put(party_name, null);
+				}
+				
+				if (pname_map.get(party_name) == null) {
+					mid_arr = new ArrayList<>();
+				} else {
+					mid_arr = pname_map.get(party_name);
+				}
+				mid_arr.add(member_id);
+				pname_map.put(party_name, mid_arr);
+				
 				// 누가 편집중인지 확인
-				if(edit_user.containsKey(party_name)) {
-					// 누가 편집 중임..
+				if(edit_map.containsKey(party_name)) {
+					// 누가 편집 중인 파티
+					
+					msg.put("editable", "false");
+					sendMessage(msg);
+				} else {
+					// 편집 중이 아님
+					
+					msg.put("editable", "true");
+					sendMessage(msg);
+				}
+	
+			} 
+			
+			else if(type.equals("start")) {
+				// 1. [edit 시작...]
+				
+				// 누가 편집중인지 확인
+				if(edit_map.containsKey(party_name)) {
+					// 누가 편집 중인 파티
 					
 					//TODO 편집 중임을 유저에게 알리기
 					msg.put("editable", "false");
 					sendMessage(msg);
 				} else {
 					// 편집 중이 아님
-					edit_user.put(party_name, member_id);
+					edit_map.put(party_name, member_id);
 					//TODO 편집 중이 아님을 유저에게 알리기
 					msg.put("editable", "true");
 					sendMessage(msg);
 				}
 				
-				
-				
-			} else if (type.equals("close")) {
+			} else if (type.equals("end")) {
 				// 2. [edit 종료...]
 
-				if(edit_user.containsKey(party_name)) {
+				if(edit_map.containsKey(party_name)) {
 					
-					edit_user.remove(party_name);
+					edit_map.remove(party_name);
 				}
+				
+				msg.put("editable", "true");
+				sendMessage(msg);
 				
 			} 
 		
@@ -142,7 +173,27 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 	// 대화 푸시
 	public void sendMessage(HashMap<String, String> msg) {
 		
-		
+		try {
+			
+			for (WebSocketSession session : this.sessionSet) {
+				if (session.isOpen()) {
+					// 발신인이 웹소켓 세션에 있을 경우 메시지 푸시
+					
+					String party_name = msg.get("party_name");
+					ArrayList<String> mid_arr = pname_map.get(party_name);
+					for (String m_id : mid_arr) {
+
+						if (session.getId().equals(mid_map.get(m_id))) {
+							session.sendMessage(new TextMessage(gson.toJson(msg)));
+						}
+					}
+					
+				}
+			}
+	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	
 	}
 
