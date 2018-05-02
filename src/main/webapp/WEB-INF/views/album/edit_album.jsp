@@ -405,7 +405,7 @@ html, body, main, .container-fluid {
 					<div class="wrap-input100 validate-input"
 						data-validate="Message is required">
 						<span class="label-input100">Content</span>
-						<textarea class="input100" name="album_contents"
+						<textarea style = "height: 200px;"class="input100" name="album_contents"
 							id="album_contents"
 							class="input_album_info input_album_info_contents"
 							value="${album.album_contents }"
@@ -550,18 +550,20 @@ html, body, main, .container-fluid {
 		<div class="probootstrap-main-site-logo">
 			<a href="/www">COOING</a>
 			
-			<div style="text-align:center">
+			<!-- <div style="text-align:center">
 				<input type="text" id="left_page" width="10px" height="10px">
 				<input type="text" id="right_page" width="10px" height="10px">
 				<input type="text" id="total_page" width="10px" height="10px">
-			</div>
+			</div> -->
 		</div>
 	</div>
 
 	<div class="container-fluid">
 	
 		<div class="view_wrapper">
-
+			<div id="slider-bar" class="turnjs-slider" style="width: 300px; margin-top: -15px; padding-bottom: 25px; margin-left: 350px;">
+					<div id="slider" ></div>
+			</div>
 			<!-- 앨범 영역 -->
 			<div class="album_wrapper" id="album_wrapper">
 				<div class="album" id="album" style="display: none">

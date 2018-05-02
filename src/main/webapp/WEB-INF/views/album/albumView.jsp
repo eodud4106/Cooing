@@ -704,7 +704,9 @@ height: 30px;
 
 	<div class="container-fluid">
 		<div class="view_wrapper">
-		
+			<div id="slider-bar" class="turnjs-slider" style="width: 300px; margin-top: -15px; padding-bottom: 25px; margin-left: 350px;">
+					<div id="slider" ></div>
+			</div>
 	 		<!-- 진수가만든 바... -->
 			<!-- <div style="text-align:center">
 				<input type="text" id="left_page" width="10px" height="10px">
@@ -759,9 +761,7 @@ height: 30px;
 					<i style="width: 30px; height: 30px; margin: 10px;"
 						class="fas fa-plus"></i>
 				</div>
-				<div id="slider-bar" class="turnjs-slider" style="margin-top: 15px; margin-right:150px; width: 300px;">
-					<div id="slider"></div>
-				</div>
+			
 			</div>
 		</div>
 
