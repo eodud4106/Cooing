@@ -73,6 +73,9 @@ function checkRadioPaging(){
 		   //value값
 		   switch (temp) {
 		      case '1':
+		    	  if(searchcheck == 2){
+			    	searchcheck = 0;  
+		    	  }
 		    	  if(searchcheck == 0){
 			    	  searchcheck = 99;
 			    	  get_album_list('writer','total','date',pagenum++, 0);
@@ -82,6 +85,9 @@ function checkRadioPaging(){
 		    	  }
 		         break;
 		      case '2':
+		    	  if(searchcheck == 2){
+		    		searchcheck = 0;  
+		    	  }
 		    	  if(searchcheck == 0){
 		    		  searchcheck = 99;
 		    		  get_album_list('writer','total','like', pagenum++ , 0);
