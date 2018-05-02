@@ -218,4 +218,8 @@ public class AlbumDAO{
 		}
 		return result;
 	}
+	
+	public String select_album_writer(String member_id) {
+		return sqlSession.getMapper(AlbumMapper.class).select_album_writer(member_id);
+	}
 }
