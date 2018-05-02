@@ -78,6 +78,11 @@ $(window).scroll(function() {
     			get_album_list('category','total','date', pagenum++ , 1);
         		pagingcheck = true;
         	}
+    	}else if(searchcheck == 2){
+    		if(total){	
+    			get_album_list('mylike','total','like', pagenum++ , 2);
+        		pagingcheck = true;
+        	}
     	}   	
     }
 });
