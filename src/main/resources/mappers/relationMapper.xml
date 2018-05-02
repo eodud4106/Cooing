@@ -11,7 +11,13 @@
 	</insert>	
 	
 	<select id="selectFriend" resultType="String" parameterType="String">
-	select friend_id2 from friend where friend_id1 = #{id}
+	select friend_id2
+		 from friend
+		 where friend_id1 = #{id}
+	union 
+	select friend_id1
+		from friend
+		where friend_id2 = #{id}
 	</select>
 	
 	<delete id="deleteFriend" parameterType="map">
