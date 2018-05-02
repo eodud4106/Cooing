@@ -31,6 +31,9 @@
 <link rel="stylesheet" href="resources/css/chat.css">
 <link rel="stylesheet" href="resources/css/push.css">
 
+<!-- 앨범 정보 띄우는 부분  -->
+<link rel="stylesheet" href="resources/css/search.css">
+
 <script src="<c:url value="/resources/aside_js/popper.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/owl.carousel.min.js"/>"></script>

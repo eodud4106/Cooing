@@ -24,6 +24,8 @@
 <!-- 탭메뉴 -->
 <link rel="stylesheet" href="resources/css/tab.css">
 <link rel="stylesheet" href="resources/css/push.css">
+<!-- 앨범 정보 띄우는 부분  -->
+<link rel="stylesheet" href="resources/css/search.css">
 
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>

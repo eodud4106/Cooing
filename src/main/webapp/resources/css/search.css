@@ -1,0 +1,24 @@
+@CHARSET "UTF-8";
+
+
+.go_front {
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 96%;
+    height: 96%;
+   	margin: 2%;
+    padding: 10px;
+    position: absolute;
+    display: block;
+   	background-color: rgba(255,255,255, 0.5);
+   	text-align: center;  	
+   	overflow : hidden;
+}
+
+.hidden_info{
+	display: none;
+	color :  black;
+}
