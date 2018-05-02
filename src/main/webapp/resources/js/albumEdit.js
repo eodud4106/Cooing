@@ -68,6 +68,8 @@ var PAGE_HEIGHT = 700;      // 페이지 당 높이
 
 var editable = true;		// 그룹 편집 시 편집 가능 불가능 토글용
 
+var slider_load = false;
+
 var curr_page = 1;
 
 var arr_color = ["#FF0000", "#FF5E00", "#FFBB00", "#FFE400", "#ABF200",
@@ -119,6 +121,7 @@ function slider() {
 			$('.slider_popup').remove();
 		}
 	});
+	slider_load = true;
 }
 
 function create_nav_bar(ui) {
@@ -126,6 +129,8 @@ function create_nav_bar(ui) {
 	var scale = total_width / ($('#album').turn('pages')/2);
 	var curr_left = scale * (ui.value - 1);
 	var left = curr_left + $('#slider-bar').position().left;
+	
+	
 
 	var top = $('#slider-bar').position().top;
 	
@@ -137,6 +142,8 @@ function create_nav_bar(ui) {
 		"left": left,
 		"top": top - 50
 	});
+	
+	
 	
 	if(ui.value == 1) {
 		$('#album').turn('page', 1);
@@ -157,7 +164,7 @@ function create_nav_bar(ui) {
 
 // [start] 페이지 로딩 후 앨범 준비
 function ready_album(mode) {
-    //TODO 앨범 로딩...
+    
 	
 	if(mode == 'view') {
 		
@@ -172,9 +179,19 @@ function ready_album(mode) {
 	        	turned: function(event, page, view) {
 	        		nowpage();
 	        		bookmark_check();
+	        		curr_page = $('#album').turn('page');
+	                if(slider_load) {
+	                	if (curr_page == 1) {
+	                		 $('#slider').slider("value", curr_page);
+						} else {
+							$('#slider').slider("value", curr_page/2+1);
+						}
+	                	
+	                }
 	        	}
 	        }
 	    });
+	    
 		
 	} else if (mode == 'edit') {
 		
@@ -217,6 +234,7 @@ function ready_album(mode) {
 	                // page 저장
 	                savePage('curr');
 
+
 	            },
 	            turned: function(event, page, view) {
 	            	//페이지 알려주는 부분 
@@ -250,7 +268,16 @@ function ready_album(mode) {
 	                if(arr_single_page.indexOf(curr_page) == -1) {
 	                    $('#page' + (curr_page + 1) + '').droppable("enable");
 	                }
-	                
+
+	                if(slider_load) {
+	                	if (curr_page == 1) {
+	                		 $('#slider').slider("value", curr_page);
+						} else {
+							$('#slider').slider("value", curr_page/2+1);
+						}
+	                	
+	                }
+	               
 	            }
 	        } 
 	    });
@@ -296,9 +323,12 @@ function ready_album(mode) {
 		alert('설정 오류!');
 	}
 	
-	slider();
 	
+    
+    slider();
 	create_tooltip_of_under_tool();
+	
+	
 
 }
 // [end] 페이지 로딩 후 앨범 준비
@@ -1683,32 +1713,32 @@ function savePage(mode) {
 /*
  * 슬라이더
  */
-function slider(nowpage) {
-	
-	$('#slider').slider({
-		min: 1,
-		max: $('#album').turn('pages')/2 +1,
-		change: function(event, ui) {
-			alert(ui.value);
-		},
-		slide: function(event, ui) {
-			create_nav_bar(ui);
-		},
-		start: function(event, ui) {
-			create_nav_bar(ui);
-		},
-		stop: function() {
-			$('.slider_popup').remove();
-		}
-	});
-}
+//function slider(nowpage) {
+//	
+//	$('#slider').slider({
+//		min: 1,
+//		max: $('#album').turn('pages')/2 +1,
+//		change: function(event, ui) {
+//			//alert(ui.value);
+//		},
+//		slide: function(event, ui) {
+//			create_nav_bar(ui);
+//		},
+//		start: function(event, ui) {
+//			create_nav_bar(ui);
+//		},
+//		stop: function() {
+//			$('.slider_popup').remove();
+//		}
+//	});
+//}
 function create_nav_bar(ui) {
 	var total_width = $('.ui-slider').width();
 	var scale = total_width / ($('#album').turn('pages')/2);
 	var curr_left = scale * (ui.value - 1);
-	var left = curr_left + $('#slider-bar').position().left;
+	var left = curr_left + $('#slider').position().left;
 
-	var top = $('#slider-bar').position().top;
+	var top = $('#slider').position().top + 70;
 	
 	$('.slider_popup').remove();
 	
@@ -1725,6 +1755,8 @@ function create_nav_bar(ui) {
 		$('#album').turn('page', (ui.value-1)*2 );
 		
 	}
+	
+	console.log('슬라이더바... left -> ' + left + ' /top ->' + top);
 
 	if(ui.value == 1 || ui.value == $('#album').turn('pages')/2 +1) {
 		$slider_popup.text(((ui.value-1)*2) == 0? 1: (ui.value-1)*2);

@@ -159,7 +159,7 @@
 	        GROUP BY
 	           likeit_albumnum
 	        )l
-	    JOIN
+	    LEFT OUTER JOIN
 	        (SELECT
 	            reply_albumnum as album_num,
 	            count(*) as reply_count
