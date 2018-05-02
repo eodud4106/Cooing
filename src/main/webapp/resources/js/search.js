@@ -29,21 +29,6 @@ function nowpage(){
 	nowpage = (nowpage==1?1:(nowpage%2 == 0?nowpage:nowpage-1));
 	
 	slider(nowpage);
-	
-/*	if(nowpage != 1){
-		$('#left_page').show();
-		$('#right_page').show();
-		$('#left_page').val(nowpage + '_left');
-		$('#right_page').val((nowpage+1) + '_right');
-	}else if(nowpage == totalpage){
-		$('#right_page').hide();
-		$('#left_page').val(nowpage + '_left');
-	}else{
-		$('#left_page').hide();
-		$('#right_page').val(nowpage + '_right');
-	}
-	
-	$('#total_page').val(totalpage + '_total');*/
 }
 
 //home이 아닌곳에서 search를 할경우 메인으로 보내서 검색을 해야한다.
@@ -362,3 +347,55 @@ function AlbumListPaging_hindoong(check, result) {
 	});
 	pagingcheck = false;
 }
+
+
+function category_save(categorynum){
+	$.ajax({
+		url: 'insert_categorypop',
+		type: 'post',
+		data:{
+			categorynum:categorynum
+		}, 
+		dataType: 'text',
+		success: function(result) {
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+}
+
+function search_save(search){
+	$.ajax({
+		url: 'insert_search',
+		type: 'post',
+		data:{
+			search:search
+		}, 
+		dataType: 'text',
+		success: function(result) {
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
