@@ -59,7 +59,7 @@ function searchfriend() {
 			}
 		},
 		error : function(e) {
-			alert(JSON.stringify(e));
+			//alert(JSON.stringify(e));
 		}
 	});
 }
@@ -303,11 +303,10 @@ function AlbumListPaging_hindoong(check, result) {
 			"text-align": "center",
 			"width" : "100%",
 			"height" : "100px"	
-		}).appendTo($info_div);
-		
-		if(album.album_contents == null) {
-			$p_contents.html("<CONTENT><br><br>")
-		}	*/	
+		}).appendTo($info_div);*/
+//		if(album.album_contents == null) {
+//			$p_contents.html("<CONTENT><br><br>")
+//		}		
 		var $span_like = $('<sapn />', {
 			"html": "<br>" +"<br>" +"<br>" + "<br>" +"❤" ,
 			"class": "card_album_likes"

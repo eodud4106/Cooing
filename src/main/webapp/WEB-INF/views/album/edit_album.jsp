@@ -260,10 +260,6 @@ html, body, main, .container-fluid {
 
 				ready_album('edit');
 
-				$('html').click(function(e) {
-					$('#home_button').text(e.target.nodeName);
-				})
-
 				// 앨범 로딩 시 카테고리 설정
 				var album_openrange = '${album.album_openrange}';
 				var album_category = '${album.album_category}';
