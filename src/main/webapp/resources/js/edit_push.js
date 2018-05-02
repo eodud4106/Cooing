@@ -4,7 +4,7 @@
 
  // 채팅에 쓸 웹소켓과 위치
 var websocket_edit;
-var wsUri_edit = "ws://localhost:8888/www/edit/echo.do";
+var wsUri_edit = "ws://cooing.site/www/edit/echo.do";
 
 var member_id;
 var party_name;
