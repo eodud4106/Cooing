@@ -134,12 +134,28 @@ public class HomeController {
 			
 			PageNavigator pageNav = new PageNavigator(3, 3, 1, replyDAO.getReplyTotal(album_num));
 			
+			ArrayList<PartyMember> arr_pm = new ArrayList<>();
+			
+			if(album.getIsPersonal().equals("0")) {
+				// 파티 앨범일 경우 파티원도 모델에 담아 보내기
+				
+				arr_pm = relationDAO.searchPartyMember_by_party_name(album.getAlbum_writer());
+				model.addAttribute("isPartymember", "0");
+				for (PartyMember partyMember : arr_pm) {
+					if (partyMember.getMember_id().equals(member.getMember_id())) {
+						model.addAttribute("isPartymember", "1");
+						break;
+					}
+				}
+			}
+			
 			model.addAttribute("albumwrite", memberDAO.selectMember(album.getAlbum_writer()));
 			model.addAttribute("album", album);
 			model.addAttribute("arr_page", arr_page);
 			model.addAttribute("like", result_like);
 			model.addAttribute("arr_reply", arr_reply);
 			model.addAttribute("pageNav", pageNav);
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
