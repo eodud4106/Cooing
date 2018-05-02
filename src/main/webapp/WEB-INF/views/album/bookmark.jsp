@@ -328,7 +328,7 @@ function bookmark_list() {
 				var bookmark_info_div_html = '';
 					bookmark_info_div_html += '<p class="bookmark_p"> 앨범 이름 : ' + vo.album_name + '</p>';
 					bookmark_info_div_html += '<p class="bookmark_p"> 작성자 : ' + vo.album_writer + '</p>';
-					bookmark_info_div_html += '<p class="bookmark_p"> 앨범내용 : ' + temp_contents + '</p>';
+					bookmark_info_div_html += '<p class="bookmark_p"> 앨범내용 : ' + vo.album_contents + '</p>';
 					var temp_category = category_change(vo.album_category);
 					bookmark_info_div_html += '<p class="bookmark_p"> 앨범카테고리 : ' + temp_category + '</p>';
 					bookmark_info_div_html += '<p class="bookmark_p"> 북마크된 페이지 : ' + vo.bookmark_page + '</p>';
