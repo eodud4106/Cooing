@@ -1877,10 +1877,12 @@ function editable_switch (mode) {
 		editable = true;
 		$('.page').droppable("disable");
         $('#page' + curr_page + '').droppable("enable");
+        apply_event_to_box($('.div_box'));
 		$('.div_box').draggable('enable').resizable('enable');
 	} else if (mode == 'disable') {
 		editable = false;
 		$('.page').droppable("disable");
-		//$('.div_box').draggable('disable').resizable('disable');
+		apply_event_to_box($('.div_box'));
+		$('.div_box').draggable('disable').resizable('disable');
 	}
 } 
