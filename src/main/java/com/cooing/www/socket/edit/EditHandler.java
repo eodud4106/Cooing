@@ -75,8 +75,6 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 			msg = mapper.readValue(message.getPayload().toString(), 
 					new TypeReference<HashMap<String, String>>(){});
 			
-			System.out.println("msg 받음 -> " + msg.toString());
-			
 			// 메세지의 타입
 			String type = msg.get("type");
 			// 메세지의 타입
@@ -173,28 +171,52 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 	// 대화 푸시
 	public void sendMessage(HashMap<String, String> msg) {
 		
-		try {
-			
-			for (WebSocketSession session : this.sessionSet) {
-				if (session.isOpen()) {
-					// 발신인이 웹소켓 세션에 있을 경우 메시지 푸시
-					
-					String party_name = msg.get("party_name");
-					ArrayList<String> mid_arr = pname_map.get(party_name);
-					for (String m_id : mid_arr) {
-
+		String party_name = msg.get("party_name");
+		ArrayList<String> mid_arr = pname_map.get(party_name);
+		for (String m_id : mid_arr) {
+		
+			try {
+				
+				for (WebSocketSession session : this.sessionSet) {
+					if (session.isOpen()) {
 						if (session.getId().equals(mid_map.get(m_id))) {
 							session.sendMessage(new TextMessage(gson.toJson(msg)));
 						}
+						
 					}
-					
 				}
+		
+			}catch (Exception e) {
+				e.printStackTrace();
 			}
-	
-		}catch (Exception e) {
-			e.printStackTrace();
 		}
-	
+		
+		
+//		
+//		
+//		///////
+//		try {
+//			
+//			for (WebSocketSession session : this.sessionSet) {
+//				if (session.isOpen()) {
+//					// 발신인이 웹소켓 세션에 있을 경우 메시지 푸시
+//					
+//					String party_name = msg.get("party_name");
+//					ArrayList<String> mid_arr = pname_map.get(party_name);
+//					for (String m_id : mid_arr) {
+//
+//						if (session.getId().equals(mid_map.get(m_id))) {
+//							session.sendMessage(new TextMessage(gson.toJson(msg)));
+//						}
+//					}
+//					
+//				}
+//			}
+//	
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	
 	}
 
 
