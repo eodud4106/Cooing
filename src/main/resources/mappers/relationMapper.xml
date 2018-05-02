@@ -11,7 +11,7 @@
 	</insert>	
 	
 	<select id="selectFriend" resultType="String" parameterType="String">
-	select friend_id2
+	select friend_id2 as friend_id1
 		 from friend
 		 where friend_id1 = #{id}
 	union 
