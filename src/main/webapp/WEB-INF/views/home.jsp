@@ -61,20 +61,22 @@
 var pagenum = 0;
 var pagingcheck = false;
 var total = true;
+var likecheck = 0;
 //이게 0번이면 검색어 1번이면 카테고리  나눠서 페이징 가지고 오게 된다.
 var searchcheck = 99;
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
     	console.log('test , ' + searchcheck + '_search , ' + pagenum + '_pagenum , ' + total + '_total');
-    	//메인으로 그냥 들어왔을 때 와 검색해서 들어왔을 때 = 0 / 카테고리 눌러서 들어왔을 때  = 1 
+    	//메인으로 그냥 들어왔을 때 와 검색해서 들어왔을 때 = 0 / 카테고리 눌러서 들어왔을 때  = 1 / 내가 좋아하는 카테고리 만 보기 = 2
+    	//likecheck 가 0번 이면 date 순으로 정렬 1번이면 like 순으로 정렬
     	if(searchcheck == 0){
     		if(total){	
-    			get_album_list('writer' , 'total', 'date', pagenum++ , 0);
+    			get_album_list('writer' , 'total', (likecheck == 0 ? 'date' : 'like'), pagenum++ , 0);
         		pagingcheck = true;
         	}
     	}else if(searchcheck == 1){
     		if(total){	
-    			get_album_list('category','total','date', pagenum++ , 1);
+    			get_album_list('category','total',(likecheck == 0 ? 'date' : 'like'), pagenum++ , 1);
         		pagingcheck = true;
         	}
     	}else if(searchcheck == 2){

@@ -73,6 +73,8 @@ function checkRadioPaging(){
 		   //value값
 		   switch (temp) {
 		      case '1':
+		    	  //data로 검색
+		    	  likecheck = 0;
 		    	  if(searchcheck == 2){
 			    	searchcheck = 0;  
 		    	  }
@@ -85,6 +87,8 @@ function checkRadioPaging(){
 		    	  }
 		         break;
 		      case '2':
+		    	  //like로 검색 
+		    	  likecheck = 1;
 		    	  if(searchcheck == 2){
 		    		searchcheck = 0;  
 		    	  }
