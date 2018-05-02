@@ -64,7 +64,6 @@ var total = true;
 //이게 0번이면 검색어 1번이면 카테고리  나눠서 페이징 가지고 오게 된다.
 var searchcheck = 99;
 $(window).scroll(function() {
-	console.log(($(window).scrollTop() + 100) + '_window' + ($(document).height() - $(window).height()) + '_document');
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
     	console.log('test , ' + searchcheck + '_search , ' + pagenum + '_pagenum , ' + total + '_total');
     	//메인으로 그냥 들어왔을 때 와 검색해서 들어왔을 때 = 0 / 카테고리 눌러서 들어왔을 때  = 1 

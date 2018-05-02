@@ -218,10 +218,6 @@ function print_search_result(result, $destination, type) {
 
 //검색 타입, 검색 키워드, 정렬 순서, 페이지를 받아 albumlist 조회
 function get_album_list(type , writer_type , order, page , checknum) {
-	
-	console.log('test , ' + searchcheck + '_search , ' + pagenum + '_pagenum , ' + total + '_total');
-	console.log('test , ' + type + '_type, ' + writer_type + '_writer_type , ' + page + '_page , ' + checknum + '_checknum');
-	
 	var check  = false;
 	
 	if(searchcheck != checknum){ 
