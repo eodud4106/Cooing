@@ -74,7 +74,7 @@ function checkRadioPaging(){
 		   switch (temp) {
 		      case '1':
 		    	  if(searchcheck == 2){
-			    	searchcheck == 0;  
+			    	searchcheck = 0;  
 		    	  }
 		    	  if(searchcheck == 0){
 			    	  searchcheck = 99;
@@ -86,7 +86,7 @@ function checkRadioPaging(){
 		         break;
 		      case '2':
 		    	  if(searchcheck == 2){
-		    		searchcheck == 0;  
+		    		searchcheck = 0;  
 		    	  }
 		    	  if(searchcheck == 0){
 		    		  searchcheck = 99;
