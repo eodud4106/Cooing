@@ -99,7 +99,9 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 				} else {
 					mid_arr = pname_map.get(party_name);
 				}
-				mid_arr.add(member_id);
+				if (!mid_arr.contains(member_id)) {
+					mid_arr.add(member_id);
+				}
 				pname_map.put(party_name, mid_arr);
 				
 				// 누가 편집중인지 확인
@@ -107,6 +109,7 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 					// 누가 편집 중인 파티
 					
 					msg.put("editable", "false");
+					msg.put("curr_edit", edit_map.get(party_name));
 					sendMessage(msg);
 				} else {
 					// 편집 중이 아님
@@ -126,6 +129,7 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 					
 					//TODO 편집 중임을 유저에게 알리기
 					msg.put("editable", "false");
+					msg.put("curr_edit", edit_map.get(party_name));
 					sendMessage(msg);
 				} else {
 					// 편집 중이 아님
@@ -142,6 +146,7 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 					
 					edit_map.remove(party_name);
 				}
+				System.out.println("end 들어옴");
 				
 				msg.put("editable", "true");
 				sendMessage(msg);
@@ -173,13 +178,17 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 		
 		String party_name = msg.get("party_name");
 		ArrayList<String> mid_arr = pname_map.get(party_name);
-		for (String m_id : mid_arr) {
 		
+		System.out.println("대상 파티의 멤버는 ->" + mid_arr.toString());
+		
+		for (String m_id : mid_arr) {
+			
 			try {
 				
 				for (WebSocketSession session : this.sessionSet) {
 					if (session.isOpen()) {
 						if (session.getId().equals(mid_map.get(m_id))) {
+							System.out.println("< 일치! 메세지 전송합니다. >" + m_id);
 							session.sendMessage(new TextMessage(gson.toJson(msg)));
 						}
 						
@@ -190,33 +199,7 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 				e.printStackTrace();
 			}
 		}
-		
-		
-//		
-//		
-//		///////
-//		try {
-//			
-//			for (WebSocketSession session : this.sessionSet) {
-//				if (session.isOpen()) {
-//					// 발신인이 웹소켓 세션에 있을 경우 메시지 푸시
-//					
-//					String party_name = msg.get("party_name");
-//					ArrayList<String> mid_arr = pname_map.get(party_name);
-//					for (String m_id : mid_arr) {
-//
-//						if (session.getId().equals(mid_map.get(m_id))) {
-//							session.sendMessage(new TextMessage(gson.toJson(msg)));
-//						}
-//					}
-//					
-//				}
-//			}
-//	
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	
+
 	}
 
 

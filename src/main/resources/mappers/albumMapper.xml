@@ -256,5 +256,10 @@
 		WHERE
 			MEMBER_ID = #{member_id}
 	</select>
+	
+		<!-- 앨범 넘버로 앨범 내 페이지 검색 -->
+	<select id="select_pages_by_album" parameterType="album" resultType="page">
+		SELECT * FROM page WHERE album_num = #{album_num} ORDER BY page_num asc
+	</select>
 
 </mapper>

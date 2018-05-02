@@ -44,7 +44,7 @@ public class AlbumDAO{
 	 */
 	public ArrayList<PageVO> select_pages_by_album_num(int album_num) {
 		
-		ArrayList<PageVO> arr_page = null; 
+		ArrayList<PageVO> arr_page = new ArrayList<>(); 
 		
 		try {
 			arr_page = sqlSession.getMapper(AlbumMapper.class).select_pages_by_album_num(album_num);
@@ -221,5 +221,17 @@ public class AlbumDAO{
 	
 	public String select_album_writer(String member_id) {
 		return sqlSession.getMapper(AlbumMapper.class).select_album_writer(member_id);
+	}
+	
+	public ArrayList<PageVO> select_pages_by_album(AlbumVO album) {
+		ArrayList<PageVO> arr_page = new ArrayList<>(); 
+		
+		try {
+			arr_page = sqlSession.getMapper(AlbumMapper.class).select_pages_by_album(album);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return arr_page;
 	}
 }
