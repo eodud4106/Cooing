@@ -185,13 +185,13 @@ function ready_album(mode) {
 	    	createNewAlbum();
 	    } else {
 	    	// 로딩된 앨범 있음
-	    	console.log('이미 로딩된 앨범이 있습니다...');
 	    	
 	    	// 페이지 별 div_box에 편집 기능 적용
 	    	$('#album').children('.page').each(function(i, page) {	
 	    		$(page).children('.div_box').each(function(j, div_box) {
-	    			console.log('ㅇdiv_box에 효과 적용 중.....');
-	    	    	
+	    			
+	    		    
+	    		    
 	    			apply_event_to_box($(div_box));
 	    		})
 	    	})
@@ -425,7 +425,7 @@ function renderbox(event, ui, page) {
 
     $div_box.appendTo($('#page' + page + ''));
 
-    apply_event_to_box($div_box, curr_page_top, curr_page_left);
+    apply_event_to_box($div_box);
 
 
 }
@@ -435,7 +435,10 @@ function renderbox(event, ui, page) {
  * [start] 박스에 이벤트 추가
  * @param $div_box
  */ 
-function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
+function apply_event_to_box($div_box) {
+	
+	
+    
 	
 	if(!editable) return;
 	
@@ -450,6 +453,17 @@ function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
             });
         },
         stop: function(event, ui) {
+        	
+        	// 클릭한 페이지의 위치 확인
+            var curr_page_top = Number($('#album').position().top) + Number($('#album').css('margin-top').replace('px',''));
+            var curr_page_left = Number($('#album').position().left) + Number($('#album').css('margin-left').replace('px',''));
+            var page = $div_box.parent().attr('id').replace('page', '');
+            if(page % 2 == 1) {
+                // 드랍한 페이지가 홀수 페이지일 경우 우측에 위치하므로 왼쪽 페이지의 너비만큼 더해준다.
+                curr_page_left += PAGE_WIDTH;
+            }
+
+        	
             $('.div_whole_editor').css({
                 "display": "block",
                 "top": $('.onSelect').position().top + curr_page_top - 50,
@@ -457,8 +471,13 @@ function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
             });
             var over_left = $(window).width() - Number($('.div_whole_editor').css('left').replace('px', '')) - 350;
             if(over_left < 0) {
+            	console.log('벗어났으므로 조정합니다.')
             	$('.div_whole_editor').css('left', $('.onSelect').position().left + curr_page_left + over_left)
+            } else {
+            	console.log('벗어남 없음 조정 안 함')
             }
+            
+            console.log('박스 left: ' + $('.div_whole_editor').position().left + ' /박스 top: ' + $('.div_whole_editor').position().top);
         },
         containment: $div_box.parent()  // 캔버스 영역 밖으로 나가지 못하게 제한
 
