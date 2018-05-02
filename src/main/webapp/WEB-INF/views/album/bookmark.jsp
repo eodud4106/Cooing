@@ -377,13 +377,13 @@ function bookmark_list() {
 				}
 
 				var bookmark_info_div_html = '';
-					bookmark_info_div_html += '<p class="bookmark_p"> 앨범 이름 : ' + vo.album_name + '</p>';
-					bookmark_info_div_html += '<p class="bookmark_p"> 작성자 : ' + vo.album_writer + '</p>';
-					bookmark_info_div_html += '<p class="bookmark_p"> 앨범 내용 : ' + vo.album_contents + '</p>';
+					bookmark_info_div_html += '<p class="bookmark_name"> " ' + vo.album_name + '"'+'</p>';
+					bookmark_info_div_html += '<p class="bookmark_id">' + vo.album_writer + '</p>';
+					bookmark_info_div_html += '<p class="bookmark_content"> ' + vo.album_contents + '</p>';
 					var temp_category = category_change(vo.album_category);
-					bookmark_info_div_html += '<p class="bookmark_p"> 앨범 카테고리 : ' + temp_category + '</p>';
-					bookmark_info_div_html += '<p class="bookmark_p"> 책갈피 페이지 : ' + vo.bookmark_page + '</p>';
-				
+					bookmark_info_div_html += '<p class="bookmark_category">CATEGORY :' + temp_category +'</p>';
+					bookmark_info_div_html += '<p class="bookmark_bookmark">BOOKMARK : ' + vo.bookmark_page + '</p>';
+									
 				$(bookmark_page_div).addClass('bookmark_page_div').append(bookmark_img_thumbnail);
 				$(bookmark_info_div).addClass('bookmark_info_div').append(bookmark_info_div_html);
 				$(bookmark_link_div).addClass('bookmark_link_div').append(button_bookmark);
@@ -438,12 +438,18 @@ function category_change(category) {
 	cursor: pointer;
 }
 	.bookmark_page_div {float: left; width: 200px; height: 200px; margin-bottom: 70px;}
-	.bookmark_info_div {padding-top:40px; margin-left:120px; float: left; width: 200px; height: 200px; margin-bottom: 70px;}
+	.bookmark_info_div {padding-top:40px; margin-left:120px; float: left; width: 200px; height: 200px; margin-bottom: 70px; }
 	.bookmark_link_div {float: right; width: 200px; height: 200px; margin-bottom: 70px;}
 	.bookmark{width:750px; margin-left: 150px;}
 	.bookmark_page_div img {width: 100%;}
 	.bookmark_link_div button {width: 50%; height: 50%;}
-	.bookmark_p{font-size: small;}
+	.bookmark_name{font-size: 20px; text-align: center;}
+	.bookmark_id{font-size: 15px; text-align: right;}
+	.bookmark_content{}
+	.bookmark_category{}
+	.bookmark_bookmark{}
+	
+	
 </style>
 
 </head >
