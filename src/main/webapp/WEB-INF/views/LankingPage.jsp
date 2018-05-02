@@ -428,7 +428,7 @@ li{
     	<!-- 페이지 저장 -->		
 			<form class="contact100-form validate-form" id="entry">
 				<span class="contact100-form-title">
-					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
+					&nbsp<input type="text" placeholder="친구 찾기" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
 				</span>
 			</form>						
 				<div class = "friendList" style = "width: 200px;">
