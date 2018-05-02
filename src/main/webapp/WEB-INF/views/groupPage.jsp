@@ -232,7 +232,7 @@ select::-ms-expand { /* for IE 11 */
 			<div>
 			<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id()}">
 								<div>
-					<p>	<input type="text" id="findid" placeholder="Member 추가" size="19" style= "width: 150px; margin-top: 7px;">						
+					<p>	<input type="text" id="findid" placeholder="Member 초대" size="19" style= "width: 150px; margin-top: 7px;">						
 					<div style= "z-index:99; float:right; margin-top: -35px; margin-right: -1px; cursor: pointer;" id="gmemberplus">
 					<i class="fas fa-user-plus"></i>
 					</div>
