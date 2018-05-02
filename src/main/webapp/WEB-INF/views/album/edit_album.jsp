@@ -311,7 +311,7 @@ html, body, main, .container-fluid {
 								success : function(b) {
 								},
 								error : function(e) {
-									alert(JSON.stringify(e));
+									/* alert(JSON.stringify(e)); */
 								}
 							});
 						} else {

@@ -248,7 +248,7 @@ height: 30px;
 						alert(a);
 					}
 				},
-				error:function(e){alert(JSON.stringify(e));}		
+				error:function(e){/* alert(JSON.stringify(e)); */}		
 			});
 		}	
 	}
@@ -288,7 +288,7 @@ height: 30px;
 					}
 				},
 				error : function(e) {
-					alert(JSON.stringify(e));
+					/* alert(JSON.stringify(e)); */
 				}
 			});
 		}
@@ -330,7 +330,7 @@ height: 30px;
 					}
 				},
 				error : function(e) {
-					alert(JSON.stringify(e));
+					/* alert(JSON.stringify(e)); */
 				}
 			});
 		}
@@ -355,7 +355,7 @@ height: 30px;
 				}
 			},
 			error : function(e) {
-				alert(JSON.stringify(e));
+				/* alert(JSON.stringify(e)); */
 			}
 		});
 	}
@@ -393,7 +393,7 @@ height: 30px;
 				}
 			},
 			error : function(e) {
-				alert(JSON.stringify(e));
+				/* alert(JSON.stringify(e)); */
 			}
 		});
 	}
@@ -416,7 +416,7 @@ height: 30px;
 					}
 				},
 				error : function(e) {
-					alert(JSON.stringify(e));
+					/* alert(JSON.stringify(e)); */
 				}
 			});
 		}
@@ -500,7 +500,7 @@ height: 30px;
 		        pageReply(p);//리스트 뿌려질 때 페이징도 같이 뿌려주기 
 			}, 
 			error : function(e) { 
-				alert(JSON.stringify(e)); 
+				/* alert(JSON.stringify(e)); */ 
 			} 
 		}); 
 	}
@@ -567,7 +567,7 @@ height: 30px;
 
 			},
 			error : function(e) {
-				alert(JSON.stringify(e));
+				/* alert(JSON.stringify(e)); */
 			}
 		});
 	}

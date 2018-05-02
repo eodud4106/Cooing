@@ -22,7 +22,7 @@ function loginmember(toRoot){
 				alert('ID 혹은 비밀번호가 틀렸습니다.');
 			}		
 		},
-		error:function(e){alert(JSON.stringify(e));}		
+		error:function(e){/*alert(JSON.stringify(e));*/}		
 	});	
 }
 

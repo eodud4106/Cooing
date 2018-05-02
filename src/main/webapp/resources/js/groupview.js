@@ -45,7 +45,7 @@ function deleteparty(){
 				alert(list);
 			}
 		},
-		error:function(e){alert(JSON.stringify(e));}		
+		error:function(e){/*alert(JSON.stringify(e));*/}		
 	});
 }
 
@@ -101,13 +101,13 @@ function memberdelete(){
 						$('#findid').val('');
 						$('.img_3').on('click',memberdelete);
 					},
-					error:function(e){alert(JSON.stringify(e));}		
+					error:function(e){/*alert(JSON.stringify(e));*/}		
 				});
 			}else{
 				alert(a);
 			}
 		},
-		error:function(e){alert(JSON.stringify(e));}		
+		error:function(e){/*alert(JSON.stringify(e));*/}		
 	});
 }
 function memberplus(){	
@@ -137,7 +137,7 @@ function memberplus(){
 				alert(a);
 			}
 		},
-		error:function(e){alert(JSON.stringify(e));}		
+		error:function(e){/*alert(JSON.stringify(e));*/}		
 	});
 }
 function searchgroupmember(){
@@ -153,7 +153,7 @@ function searchgroupmember(){
 					source:array 
 				});
 			},
-			error:function(e){alert(JSON.stringify(e));}		
+			error:function(e){/*alert(JSON.stringify(e));*/}		
 		});
 	}
 }
@@ -198,7 +198,7 @@ function print_party_member(party_num) {
 			$('#findid').val('');
 			$('.img_3').on('click',memberdelete);	
 		},
-		error:function(e){alert(JSON.stringify(e));}		
+		error:function(e){/*alert(JSON.stringify(e));*/}		
 	});		
 }
 
@@ -243,7 +243,7 @@ function get_group_album_list(type , writer_type , groupid , order, page , check
 			AlbumListPaging_hindoong(check , result);			
 		},
 		error: function(e) {
-			alert(JSON.stringify(e));	
+			/*alert(JSON.stringify(e));*/	
 		}
 	});
 }

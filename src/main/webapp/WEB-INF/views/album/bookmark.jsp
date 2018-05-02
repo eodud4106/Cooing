@@ -346,7 +346,7 @@ function create_personal_album() {
 			}
 		},
 		error: function(e) {
-			alert(JSON.stringify(e));	
+			/* alert(JSON.stringify(e)); */	
 		}
 	});
 }
@@ -396,7 +396,7 @@ function bookmark_list() {
 			});
 		},
 		error: function(e) {
-			alert(JSON.stringify(e));	
+			/* alert(JSON.stringify(e)); */	
 		}
 	});
 }

@@ -78,7 +78,7 @@ function likesearch(){
 				});
 				graphcreate(array , num);
 			},
-			error:function(e){alert(JSON.stringify(e));}		
+			error:function(e){/*alert(JSON.stringify(e));*/}		
 		});
 	}
 }
@@ -114,7 +114,7 @@ function searchsearch(){
 				});
 				graphcreate(array,num);				
 			},
-			error:function(e){alert(JSON.stringify(e));}		
+			error:function(e){/*alert(JSON.stringify(e));*/}		
 		});
 	}
 }
@@ -148,7 +148,7 @@ function categorysearch(){
 				});
 				graphcreate(array , num);
 			},
-			error:function(e){alert(JSON.stringify(e));}		
+			error:function(e){/*alert(JSON.stringify(e));*/}		
 		});
 	}
 }
