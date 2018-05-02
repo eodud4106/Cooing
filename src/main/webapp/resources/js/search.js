@@ -218,6 +218,10 @@ function print_search_result(result, $destination, type) {
 
 //검색 타입, 검색 키워드, 정렬 순서, 페이지를 받아 albumlist 조회
 function get_album_list(type , writer_type , order, page , checknum) {
+	
+	console.log('test , ' + searchcheck + '_search , ' + pagenum + '_pagenum , ' + total + '_total');
+	console.log('test , ' + type + '_type, ' + writer_type + '_writer_type , ' + page + '_page , ' + checknum + '_checknum');
+	
 	var check  = false;
 	
 	if(searchcheck != checknum){ 
@@ -267,7 +271,6 @@ function get_album_list(type , writer_type , order, page , checknum) {
 
 //앨범 리스트 출력
 function AlbumListPaging_hindoong(check, result) {
-	console.log('test , ' + searchcheck + '_search , ' + pagenum + '_pagenum , ' + total + '_total');
 	if (check)
 		$('.card-columns').html('');
 	var category = ['여행' , '스포츠 및 레저' , '동물' , '음악' , '음식 및 요리' , '패션 및 뷰티' , '연예 및 TV' , '게임' , '영화' , '도서' , '공연 및 전시' , '외국어' , '전문지식' , '수집 및 제작' , '자기계발' , '육아' , '일상생활' , '자동차' , '낚시' , '건강' , '기타'];
