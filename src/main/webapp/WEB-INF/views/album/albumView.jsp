@@ -766,10 +766,6 @@ height: 30px;
 		</div>
 
 	</div>
-	
-	<div id="slider-bar" class="turnjs-slider">
-		<div id="slider"></div>
-	</div>
 
 	</main>
 
