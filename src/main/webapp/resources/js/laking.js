@@ -65,6 +65,10 @@ function likesearch(){
 					$.each(data,function(key,value){
 						if(key == 'LIKEIT_ALBUMNUM'){
 							word = value;
+							if(word.length >= 3){
+								word = word.substring(0, 3);
+								word += '..';
+							}
 						}else if(key == 'COUNT'){
 							count = value;
 						}
@@ -97,6 +101,10 @@ function searchsearch(){
 					$.each(data,function(key,value){
 						if(key == 'SEARCH_WORD'){
 							word = value;
+							if(word.length >= 3){
+								word = word.substring(0, 3);
+								word += '..';
+							}
 						}else if(key == 'COUNT'){
 							count = value;
 						}
@@ -117,7 +125,7 @@ function categorysearch(){
 	//밑에 부분은 카테고리 검색에 관한 부분
 	if($('#datepicker').val() != null){
 		var vector = ['여행' , '스포츠' , '동물' , '음악' , '음식' , '패션' , '연예' , '게임' , '영화' , '도서'
-			, '공연' , '외국어' , '전문지식' , '수집' , '자기계발' , '육아' , '일상생활' , '자동차' , '낚시' , '건강'];
+			, '공연' , '외국어' , '전문지식' , '수집' , '자기계발' , '육아' , '일상생활' , '자동차' , '낚시' , '건강' , '기타'];
 		$.ajax({
 			url:'searchCategorypop',
 			type:'POST',		
@@ -162,8 +170,7 @@ function graphcreate(array , num){
 		height:550,
 		sort:'desc',
 		barSpace : 10,
-		colors:color,
-		legend:true
+		colors:color
 	});
 }
 
