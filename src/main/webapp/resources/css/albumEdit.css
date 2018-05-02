@@ -125,6 +125,7 @@ svg, path {
 
 .div_whole_editor div div button {
     color: white;
+    background-color: black;
 }
 
 .input_album_info,.sel_album_info, .bt_album_info {
