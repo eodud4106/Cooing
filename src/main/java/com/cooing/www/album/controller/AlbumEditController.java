@@ -226,8 +226,8 @@ public class AlbumEditController {
             
         }catch(Exception e){
         	logger.info("파일이 정상적으로 넘어오지 않았습니다.");
-        	e.printStackTrace();
-            return "fail";
+        	//e.printStackTrace();
+            //return "fail";
         }finally{
         	if(stream != null) stream.close();
         }
@@ -563,5 +563,24 @@ public class AlbumEditController {
 		}else{
 			return "false";
 		}	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/get_pages", method = RequestMethod.POST)
+	public ArrayList<PageVO> get_pages(int album_num){
+		
+		System.out.println("페이지 요청, album_num -> " + album_num);
+		
+		ArrayList<PageVO> pages = new ArrayList<>();
+		try {
+			AlbumVO album = new AlbumVO();
+			album.setAlbum_num(album_num);
+			pages = albumDAO.select_pages_by_album(album);
+			System.out.println("dao, pages-> " + pages.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return pages;
 	}
 }

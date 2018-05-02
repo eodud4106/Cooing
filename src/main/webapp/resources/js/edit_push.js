@@ -52,9 +52,8 @@ function readyEdit (member_id, party_name) {
    	};
    	
 	$(window).bind("beforeunload", function (e){
-		if($('#i_edit').attr('role') == '편집 그만하기') {
-			end_edit();
-		}
+		console.log('윈도우 언로드 -> 편집을 종료합니다.')
+		//end_edit()
 	});
 
    	
@@ -98,21 +97,44 @@ function onMessage_edit(evt) {
     
     if(pushData.type == 'open') {
     	
-    	editable_switch('disable');
+    	
     	// 편집 가능
     	if (pushData.editable == 'true') {
-    		$('#i_edit').attr('role', '편집하기').click(function(e) {
+    		
+    		editable_switch('disable');
+    		
+    		$('#i_edit').attr('role', '편집하기').off('click').on('click', function(e) {
+    			e.stopPropagation();
     			isEditable();
         	}).css({
     			"color": "blue"
     		});
     		
 		} else if(pushData.editable == 'false') {
-			$('#i_edit').attr('role', '편집 중').click(function(e) {
-				return;
-        	}).css({
-    			"color": "red"
-    		});
+			if(pushData.curr_edit == this.member_id) {
+				// 현재 편집 중인 유저이므로.. 아무 말 않는다..
+//    			editable_switch('enable');
+//    			
+//    			$('#i_edit').attr('role', '편집 그만하기').off('click').on('click', function(e) {
+//    				e.stopPropagation();
+//    				console.log('누가 들어왔지만 나는 편집중인데..')
+//            		end_edit();
+//            	}).css({
+//        			"color": "black"
+//        		});
+			} else {
+				
+				editable_switch('disable');
+				
+				// 현재 편집 중인 유저가 아니므로... 편집 중이라고 알려준다...
+				$('#i_edit').attr('role', '편집 중').off('click').on('click', function(e) {
+					e.stopPropagation();
+					return;
+	        	}).css({
+	    			"color": "red"
+	    		});
+			}
+			
 		}
     	
     } else if(pushData.type == 'start') {
@@ -124,7 +146,8 @@ function onMessage_edit(evt) {
     			
     			editable_switch('enable');
     			
-    			$('#i_edit').attr('role', '편집 그만하기').click(function(e) {
+    			$('#i_edit').attr('role', '편집 그만하기').off('click').on('click', function(e) {
+    				e.stopPropagation();
             		end_edit();
             	}).css({
         			"color": "black"
@@ -134,7 +157,8 @@ function onMessage_edit(evt) {
 				
 				editable_switch('disable');
 				
-				$('#i_edit').attr('role', '편집 중').click(function(e) {
+				$('#i_edit').attr('role', '편집 중').off('click').on('click', function(e) {
+					e.stopPropagation();
 					return;
 	        	}).css({
 	    			"color": "red"
@@ -151,10 +175,36 @@ function onMessage_edit(evt) {
     	editable_switch('disable');
     	
     	//reload 말고 더 좋은 방법은...?
-    	$('#album').turn('destroy');
-    	ready_album('edit');
+    	if(pushData.member_id != this.member_id) {
+    		$.ajax({
+    			url : 'get_pages',
+    			type : 'POST',
+    			data : {
+    				album_num: $('#hidden_album_num').val()
+    			},
+    			success : function(result) {
+    				$('#album').turn('destroy');
+    				console.log('답변 옴. 길이는 ->' + result.length);
+    				$(result).each(function(i, page){
+    					console.log(JSON.stringify(page));
+    					var $page = $('<div />', {
+    						"id": "page"+page.page_num,
+    						"class": "page hard"
+    					}).html(page.page_html).css({
+    						"background-color": page.page_color,
+    						"background-image": page.page_background
+    					}).appendTo('#album');
+    				});
+    				ready_album('edit');
+    			},
+    			error : function(e) {
+    				console.log('에러 -> ' + JSON.stringify(e));
+    			}
+    		});
+    	}
     	
-    	$('#i_edit').attr('role', '편집하기').click(function(e) {
+		$('#i_edit').attr('role', '편집하기').off('click').on('click', function(e) {
+			e.stopPropagation();
     		isEditable();
     	}).css({
 			"color": "blue"
