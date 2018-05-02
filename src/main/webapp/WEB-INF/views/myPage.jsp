@@ -170,7 +170,7 @@ $(document).ready(function () {
 					<li><a href="<c:url value ="/bookmark"/>">BOOKMARK</a></li>					
 				</ul>
 				<div class = "dropdown">
-						<p class ="c" class = "dropbtn">CATEGORY</p>
+						<p class ="c" class = "dropbtn" style="cursor: pointer;">CATEGORY</p>
 						 <div class="dropdown-content" style = "font-family: Poppins-Regular; font-size: 15px; padding-left: 10px;">
 						 <ul>
 						  	<li class="category" data="0">여행</li>
