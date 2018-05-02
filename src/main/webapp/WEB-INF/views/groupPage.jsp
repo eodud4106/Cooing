@@ -228,7 +228,7 @@ select::-ms-expand { /* for IE 11 */
 			
 			<input type="hidden" id="sessionid" data="${Member.getMember_id()}">
 				<c:if test="${partyleader ne null}">
-				<p style ="font-family:  Poppins-Regular;"><img	style = "width: 40px; height: 40px;"src = "<c:url value="/memberimg?strurl=${partyleader.getMember_picture()}"/>">&nbsp
+				<p style ="font-family:  Poppins-Regular;"><img	style = "width: 40px; height: 40px;"src = "${partyleader.getMember_picture()}">&nbsp
 				<c:if test="${partyleader ne null}">${partyleader.getMember_id()}(Leader)</c:if></p>
 			</c:if>	
 			<div>
@@ -245,7 +245,7 @@ select::-ms-expand { /* for IE 11 */
 		<div id="memberdiv" style ="height: 300px; font-family:  Poppins-Regular;">
 		<c:if test="${fn:length(memberinfo) ne 0}">
 			<c:forEach var="arrmi" items="${memberinfo}">
-				<p class ="p1"><img  style ="width: 40px; height: 40px;"src = "<c:url value="/memberimg?strurl=${arrmi.getMember_picture()}"/>">&nbsp${arrmi.getMember_id()}
+				<p class ="p1"><img  style ="width: 40px; height: 40px;"src = "${arrmi.getMember_picture()}">&nbsp${arrmi.getMember_id()}
 				<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id() and partyinfo.getParty_leader() ne arrmi.getMember_id()}">					
 					<div style= "z-index:99; float:right;margin-top: -29px; cursor: pointer;" class="img_3" data="${arrmi.getMember_id()}" data2="${partyinfo.getParty_num()}">
 					<i class="fas fa-user-times" ></i></div>
