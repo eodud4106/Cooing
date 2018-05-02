@@ -178,15 +178,17 @@ public class HomeController {
 			ArrayList<ReplyVO> arr_reply = replyDAO.listReply(album_num, 1, 3);
 			
 			PageNavigator pageNav = new PageNavigator(3, 3, 1, replyDAO.getReplyTotal(album_num));
-			
-			//앨범 뷰에서 친구 확인...
-			Member friend = memberDAO.selectMember(album.getAlbum_writer());
-			model.addAttribute("friend_id", friend);
-			ArrayList<String> arrfriend = relationDAO.selectFriend(member.getMember_id());
-			for(String s:arrfriend){
-				if(s.equals(friend.getMember_id())){
-					model.addAttribute("checks" , true);
-					break;
+			//파티 앨범일 경우 친구 확인 안함 
+			if(album.getIsPersonal().equals("1")) { 
+				//앨범 뷰에서 친구 확인...
+				Member friend = memberDAO.selectMember(album.getAlbum_writer());
+				model.addAttribute("friend_id", friend);
+				ArrayList<String> arrfriend = relationDAO.selectFriend(member.getMember_id());
+				for(String s:arrfriend){
+					if(s.equals(friend.getMember_id())){
+						model.addAttribute("checks" , true);
+						break;
+					}
 				}
 			}
 			model.addAttribute("profile_url", profile_url);
