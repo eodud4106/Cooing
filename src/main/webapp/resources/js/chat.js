@@ -313,9 +313,9 @@ function onMessage(evt) {
     		
 	} else {
 		// 대화 중인 상대가 아님 -> 수신 알림
-		
-		var sender = chatData.is1to1 == 1? chatData.sender : chatData.addressee;
-		var $target = $('.msg_list').find('.news_card[who=' + sender + ']');
+		console.log('대화 중인 상대가 아닙니다. is1to1 = ' + chatData.is1to1 + ' // 발신자: ' + chatData.sender + ' //수신자' + chatData.addressee);
+		chatData.sender = chatData.is1to1 == 1? chatData.sender : chatData.addressee;
+		var $target = $('.msg_list').find('.news_card[who=' + chatData.sender + ']');
 		
 		if($target.length > 0) {
 			// 메세지 함에 이미 있는 카드
@@ -462,7 +462,11 @@ function show_unread_msg_count(result) {
 	
 	var $target = $('#msg_list');
 	
+	
 	$(result).each(function(i, unread) {
+		
+		console.log('보낸이-> ' + unread.sender);
+		console.log('is1to1-> ' + unread.is1to1);
 
 		var $card = $('<div />', {
 			"class": "news_card",
