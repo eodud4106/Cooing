@@ -12,7 +12,7 @@ $( function() {
   	 dayNames: [ "일", "월", "화", "수", "목", "금", "토" ],
   	/*  changeYear: true,
   	 changeMonth: true,  // 편하기는 하겠으나 제공해줄 생각 없음*/
-  	 maxDate: "-1",
+  	 maxDate: "0",
   	 minDate: new Date(2010, 1 - 1, 1),
   	 showOtherMonths: true,
   	 selectOtherMonths:true,
