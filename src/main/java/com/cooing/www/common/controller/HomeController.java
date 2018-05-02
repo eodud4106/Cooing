@@ -155,6 +155,21 @@ public class HomeController {
 				model.addAttribute("check", 2);
 			}
 			
+			ArrayList<PartyMember> arr_pm = new ArrayList<>(); 
+		       
+			if(album.getIsPersonal().equals("0")) { 
+	        // 파티 앨범일 경우 파티원도 모델에 담아 보내기 
+		         
+				arr_pm = relationDAO.searchPartyMember_by_party_name(album.getAlbum_writer()); 
+				model.addAttribute("isPartymember", "0"); 
+				for (PartyMember partyMember : arr_pm) { 
+					if (partyMember.getMember_id().equals(member.getMember_id())) { 
+						model.addAttribute("isPartymember", "1"); 
+						break; 
+					}
+				}
+			}
+			
 			// 조회할 like vo
 			LikesVO like = new LikesVO(album_num, member.getMember_id());
 			LikesVO result_like = albumlikesDAO.selelct_like(like);
