@@ -14,7 +14,6 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans">
 
 <link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
 <link rel="stylesheet" href="resources/aside_css/open-iconic-bootstrap.min.css">
