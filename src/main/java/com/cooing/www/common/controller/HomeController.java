@@ -49,6 +49,7 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	private final String strThumbnailPath = "/FileSave/thumbnail/";				// windows
 	//private static String strThumbnailPath = "/Users/insect/hindoong_upload/";	// mac
+	private final String strFilePath = "/FileSave/Member/";						// windows
 	
 	@Autowired
 	RelationDAO relationDAO;
@@ -98,6 +99,28 @@ public class HomeController {
 		return "home";
 	}
 	
+	
+	@RequestMapping(value = "img_profile", method = RequestMethod.GET)
+	public String img(HttpServletResponse response , HttpSession session , String filePath) {
+		//logger.info("img__jinsu");
+		
+		String fullpath = strFilePath + filePath;
+		if( filePath.length() != 0){
+			FileInputStream filein = null;
+			ServletOutputStream fileout = null;
+			try {
+				filein = new FileInputStream(fullpath);
+				fileout = response.getOutputStream();
+				FileCopyUtils.copy(filein, fileout);			
+				filein.close();
+				fileout.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * 앨범뷰... 앨범과 페이지 리스트를 갖고 albumView로 이동....
 	 */
@@ -112,6 +135,11 @@ public class HomeController {
 		try {
 			AlbumVO album = albumDAO.searchAlbumNum(album_num);
 			if(album == null) return "redirect:/";
+			
+			//앨범 작성자 프로필 사진 출력
+			String album_writer_profile = albumDAO.select_album_writer(album.getAlbum_writer());
+			String profile_url = "img_profile?filePath="+album_writer_profile;
+					
 			ArrayList<PageVO> arr_page = albumDAO.select_pages_by_album_num(album_num);
 			//페이지 사이즈가 없으면 2로 책갈피를 없애주고
 			if(arr_page.size() > 0){
@@ -134,6 +162,7 @@ public class HomeController {
 			
 			PageNavigator pageNav = new PageNavigator(3, 3, 1, replyDAO.getReplyTotal(album_num));
 			
+			model.addAttribute("profile_url", profile_url);
 			model.addAttribute("albumwrite", memberDAO.selectMember(album.getAlbum_writer()));
 			model.addAttribute("album", album);
 			model.addAttribute("arr_page", arr_page);
