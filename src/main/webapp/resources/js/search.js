@@ -295,6 +295,7 @@ function AlbumListPaging_hindoong(check, result) {
 			"float":"right",
 			"font-weight":"bold"
  		}).appendTo($info_div);
+		
 		/*var $p_contents = $('<div />', {
 			"html": album.album_contents + "<br>",
 			"class": "card_album_contents"
@@ -302,17 +303,18 @@ function AlbumListPaging_hindoong(check, result) {
 			"text-align": "center",
 			"width" : "100%",
 			"height" : "100px"	
-		}).appendTo($info_div);*/
+		}).appendTo($info_div);
+		
 		if(album.album_contents == null) {
 			$p_contents.html("<CONTENT><br><br>")
-		}		
+		}	*/	
 		var $span_like = $('<sapn />', {
 			"html": "<br>" +"<br>" +"<br>" + "<br>" +"❤" ,
 			"class": "card_album_likes"
 		}).css({
 			"color":"#FF0000",
 			"float":"left",
-			"margin-top":"85px",
+			"margin-top":"65px",
 			"font-weight":"bold"	
 		}).appendTo($info_div);
 		
@@ -335,7 +337,7 @@ function AlbumListPaging_hindoong(check, result) {
 			"class": "card_album_category"
 		}).css({
 			"float":"right",
-			"margin-top":"110px",
+			"margin-top":"90px",
 			"font-weight":"bold"
 		}).appendTo($info_div);
 		
