@@ -153,7 +153,7 @@ html, body, main, .container-fluid {
 
 .view_wrapper {
 	margin: 0;
-	margin-left: 250px;
+	/* margin-left: 250px; */
 	display: flex;
 	flex-wrap: wrap;
 }
