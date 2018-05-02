@@ -72,7 +72,7 @@ function fiendplus(){
 					alert(a);
 				}
 			},
-			error:function(e){alert(JSON.stringify(e));}		
+			error:function(e){/*alert(JSON.stringify(e));*/}		
 		});
 	}	
 }
@@ -117,7 +117,7 @@ function get_friend_album_list(type , writer_type , order, page , checknum) {
 			AlbumListPaging_hindoong(check , result);			
 		},
 		error: function(e) {
-			alert(JSON.stringify(e));	
+			//alert(JSON.stringify(e));	
 		}
 	});
 }

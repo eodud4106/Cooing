@@ -33,7 +33,7 @@ function searchgroupname(){
 				}
 			},
 			error:function(e){
-				alert(JSON.stringify(e));
+				//alert(JSON.stringify(e));
 			}		
 		});
 	}	
@@ -85,7 +85,7 @@ function creategroup(){
 					alert('그룹 생성을 실패했습니다. 잠시 후 다시 시도해 주십시오.');
 				}
 			},
-			error:function(e){alert(JSON.stringify(e));}		
+			error:function(e){/*alert(JSON.stringify(e));*/}		
 		});
 	}	
 }
@@ -120,7 +120,7 @@ function searchgroupfriend(){
 				alert("찾으시는 ID의 회원이 없습니다.");
 			}
 		},
-		error:function(e){alert(JSON.stringify(e));}		
+		error:function(e){/*alert(JSON.stringify(e));*/}		
 	});
 	$('#groupid').val('');
 }
@@ -137,7 +137,7 @@ function searchgroupid(){
 					source:array 
 				});
 			},
-			error:function(e){alert(JSON.stringify(e));}		
+			error:function(e){/*alert(JSON.stringify(e));*/}		
 		});
 	}
 }

@@ -59,7 +59,7 @@ function searchfriend() {
 			}
 		},
 		error : function(e) {
-			//alert(JSON.stringify(e));
+			/*alert(JSON.stringify(e));*/
 		}
 	});
 }
@@ -79,7 +79,7 @@ function searchgroup(){
 			$('#group').html(str);
 		},
 		error : function(e) {
-			alert(JSON.stringify(e));
+			/*alert(JSON.stringify(e));*/
 		}
 	});	
 }
@@ -101,7 +101,7 @@ function searchword() {
 				print_search_result(array, $('#friend'), 'friend');
 			},
 			error : function(e) {
-				alert(JSON.stringify(e));
+				/*alert(JSON.stringify(e));*/
 			}
 		});
 		$.ajax({
@@ -117,7 +117,7 @@ function searchword() {
 				print_search_result(array, $('#user'), 'user');
 			},
 			error : function(e) {
-				alert(JSON.stringify(e));
+				/*alert(JSON.stringify(e));*/
 			}
 		});
 	} else {
@@ -131,7 +131,7 @@ function searchword() {
 				print_search_result(array, $('#friend'), 'friend');
 			},
 			error : function(e) {
-				alert(JSON.stringify(e));
+				/*alert(JSON.stringify(e));*/
 			}
 		});
 	}
@@ -245,7 +245,7 @@ function get_album_list(type , writer_type , order, page , checknum) {
 			AlbumListPaging_hindoong(check , result);
 		},
 		error: function(e) {
-			alert(JSON.stringify(e));	
+			/*alert(JSON.stringify(e));*/	
 		}
 	});
 }
@@ -368,7 +368,7 @@ function category_save(categorynum){
 		success: function(result) {
 		},
 		error: function(e) {
-			alert(JSON.stringify(e));	
+			/*alert(JSON.stringify(e));*/	
 		}
 	});
 }
@@ -384,7 +384,7 @@ function search_save(search){
 		success: function(result) {
 		},
 		error: function(e) {
-			alert(JSON.stringify(e));	
+			/*alert(JSON.stringify(e));*/	
 		}
 	});
 }

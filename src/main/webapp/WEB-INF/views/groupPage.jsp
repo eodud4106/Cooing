@@ -168,7 +168,7 @@ function create_group_album() {
 			}
 		},
 		error: function(e) {
-			alert(JSON.stringify(e));	
+			/* alert(JSON.stringify(e)); */	
 		}
 	});
 }

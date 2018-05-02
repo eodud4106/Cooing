@@ -60,7 +60,7 @@ function idcheck(){
 				
 			}		
 		},
-		error:function(e){alert(JSON.stringify(e));}		
+		error:function(e){/*alert(JSON.stringify(e));*/}		
 	});	
 }
 
@@ -85,7 +85,7 @@ function joinmember(){
 				alert('회원가입 형식을 위배하였습니다. 다시 확인해주세요.');
 			}		
 		},
-		error:function(e){alert(JSON.stringify(e));}		
+		error:function(e){/*alert(JSON.stringify(e));*/}		
 	});
 	
 }
