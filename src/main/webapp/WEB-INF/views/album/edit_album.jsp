@@ -544,7 +544,7 @@ html, body, main, .container-fluid {
 					<div class="invite_list" id="invite_list"></div>
 				</div>
 			</div>
-		</section> 
+		</section>
 			
 	</aside>
 
@@ -615,10 +615,12 @@ html, body, main, .container-fluid {
 				<i style="width: 30px; height: 30px; margin: 10px; margin-right: 400px;"
 					class="far fa-minus-square"></i>
 			</div>
-			<div id="i_edit" class="under_tool" role="편집하기">
-				<i style="width: 30px; height: 30px; margin: 10px;"
+			<c:if test="${album.isPersonal == 0 }">
+				<div id="i_edit" class="under_tool" role="편집하기">
+					<i style="width: 30px; height: 30px; margin: 10px;"
 					class="fas fa-pencil-alt"></i>
-			</div>		
+				</div>
+			</c:if>	
 			<div id="i_exit" class="under_tool"
 				onclick="really_end_albumEdit()" role="편집 종료">
 				<i style="width: 30px; height: 30px; margin: 10px;"

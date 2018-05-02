@@ -178,15 +178,20 @@ function ready_album(mode) {
 		
 	} else if (mode == 'edit') {
 		
+		console.log('ALBUM을 edit합니다..');
+		
 		if($('#album').children('.page').length == 0) {
 	    	// 앨범 로딩 결과 없음
 	    	createNewAlbum();
 	    } else {
 	    	// 로딩된 앨범 있음
+	    	console.log('이미 로딩된 앨범이 있습니다...');
 	    	
 	    	// 페이지 별 div_box에 편집 기능 적용
 	    	$('#album').children('.page').each(function(i, page) {	
 	    		$(page).children('.div_box').each(function(j, div_box) {
+	    			console.log('ㅇdiv_box에 효과 적용 중.....');
+	    	    	
 	    			apply_event_to_box($(div_box));
 	    		})
 	    	})
@@ -1825,6 +1830,6 @@ function editable_switch (mode) {
 	} else if (mode == 'disable') {
 		editable = false;
 		$('.page').droppable("disable");
-		$('.div_box').draggable('disable').resizable('disable');
+		//$('.div_box').draggable('disable').resizable('disable');
 	}
 } 

@@ -123,7 +123,9 @@ public class AlbumEditController {
 			if(album == null) return "redirect:./";
 			//TODO 앨범 넘버로 페이지 배열로 받아와 모델에 담기
 			ArrayList<PageVO> arr_page = albumDAO.select_pages_by_album_num(int_album_num);
-			album.setAlbum_contents(album.getAlbum_contents().replaceAll("<br>", "\n"));
+			if (album.getAlbum_contents() != null) {
+				album.setAlbum_contents(album.getAlbum_contents().replaceAll("<br>", "\n"));
+			}
 			model.addAttribute("album", album);
 			model.addAttribute("arr_page", arr_page);
 			

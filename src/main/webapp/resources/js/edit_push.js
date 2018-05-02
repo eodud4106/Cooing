@@ -53,7 +53,7 @@ function readyEdit (member_id, party_name) {
    	
 	$(window).bind("beforeunload", function (e){
 		console.log('윈도우 언로드 -> 편집을 종료합니다.')
-		//end_edit()
+		end_edit()
 	});
 
    	
@@ -75,8 +75,6 @@ function onOpen_edit(evt) {
 
 //편집 종료
 function end_edit() {
-	
-	savePage('all');
 	
 	var msg = {
 		type: "end",
@@ -113,15 +111,7 @@ function onMessage_edit(evt) {
 		} else if(pushData.editable == 'false') {
 			if(pushData.curr_edit == this.member_id) {
 				// 현재 편집 중인 유저이므로.. 아무 말 않는다..
-//    			editable_switch('enable');
-//    			
-//    			$('#i_edit').attr('role', '편집 그만하기').off('click').on('click', function(e) {
-//    				e.stopPropagation();
-//    				console.log('누가 들어왔지만 나는 편집중인데..')
-//            		end_edit();
-//            	}).css({
-//        			"color": "black"
-//        		});
+
 			} else {
 				
 				editable_switch('disable');
