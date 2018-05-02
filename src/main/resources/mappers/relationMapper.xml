@@ -21,7 +21,19 @@
 	</select>
 	
 	<delete id="deleteFriend" parameterType="map">
-	delete from friend where friend_id1 = #{person} and friend_id2 = #{friend}
+	delete from friend where
+			friend_num in
+			(
+			select friend_num
+		 	from friend
+		 	where friend_id1 = #{person}
+		 		and friend_id2 = #{friend}
+			union 
+			select friend_num
+			from friend
+			where friend_id2 = #{person}
+				and friend_id1 = #{friend}
+			)
 	</delete>
 	
 	<insert id="insertParty" parameterType="party">

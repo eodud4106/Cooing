@@ -252,7 +252,8 @@ html, body, main, .container-fluid {
 	height: 700px;		
 	overflow-y : scroll;
 	padding-left: 30px;	
-    font-size: 18px;
+    font-size: 14px;
+    font-family: Poppins-Regular;
     cursor: pointer;
     margin-top: -15px;
 }
@@ -260,9 +261,9 @@ html, body, main, .container-fluid {
 	height: 700px;	
 	/* overflow-y : scroll; */
 	padding-left: 30px;
+	font-family: Poppins-Regular;
 	/* overflow-y:hidden; */
-	/* background-color : aliceblue; */
-    font-size: 18px;
+    font-size: 14px;
     cursor: pointer;
     margin-top: 100px;
     
@@ -320,7 +321,7 @@ li{
 			<nav class="probootstrap-nav">
 				<ul>					
 					<li><a href="<c:url value ="/"/>">HOME</a></li>
-					<li><a href="<c:url value ="/myPage"/>">MYPAGE</a></li>
+					<li><a href="<c:url value ="/myPage"/>">MY PAGE</a></li>
 					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>														
 					<li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>
 				</ul>									
@@ -427,7 +428,7 @@ li{
     	<!-- 페이지 저장 -->		
 			<form class="contact100-form validate-form" id="entry">
 				<span class="contact100-form-title">
-					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
+					&nbsp<input type="text" placeholder="친구 찾기" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
 				</span>
 			</form>						
 				<div class = "friendList" style = "width: 200px;">

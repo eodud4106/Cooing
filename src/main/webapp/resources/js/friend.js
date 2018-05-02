@@ -13,6 +13,7 @@ function initialize(){
 	$('#searchtx').keydown(function(event){
 		if(event.keyCode == 13){
 			searchcheck = 99;
+			search_save($('#searchtx').val());
 			get_friend_album_list('writer','friend','date', ++pagenum , 0);
 		}
 	});	
@@ -20,6 +21,7 @@ function initialize(){
 	$('.category').on('click' , function(){
 		searchcheck = 99;
 		$('#searchtx').val('');
+		category_save($(this).attr('data'));
 		$('#categorynum').val($(this).attr('data'));
 		get_friend_album_list('category','friend','date', ++pagenum , 1);
 	});

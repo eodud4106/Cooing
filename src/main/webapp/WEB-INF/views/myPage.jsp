@@ -31,6 +31,9 @@
 <link rel="stylesheet" href="resources/css/chat.css">
 <link rel="stylesheet" href="resources/css/push.css">
 
+<!-- 앨범 정보 띄우는 부분  -->
+<link rel="stylesheet" href="resources/css/search.css">
+
 <script src="<c:url value="/resources/aside_js/popper.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/owl.carousel.min.js"/>"></script>
@@ -165,7 +168,7 @@ $(document).ready(function () {
 			<nav class="probootstrap-nav">						
 				<ul>
 					<li><a href="<c:url value ="/"/>">HOME</a></li>
-					<li><a href="<c:url value ="/myPage"/>">MYPAGE</a></li>
+					<li><a href="<c:url value ="/myPage"/>">MY PAGE</a></li>
 					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>						
 					<li><a href="<c:url value ="/bookmark"/>">BOOKMARK</a></li>					
 				</ul>
@@ -308,7 +311,7 @@ $(document).ready(function () {
     	<!-- 페이지 저장 -->		
 			<form class="contact100-form validate-form" id="entry">
 				<span class="contact100-form-title">
-					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
+					&nbsp<input type="text" placeholder="친구 찾기" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
 				</span>
 			</form>						
 				<div class = "friendList" style = "width: 200px;">

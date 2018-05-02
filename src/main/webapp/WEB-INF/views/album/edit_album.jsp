@@ -416,7 +416,7 @@ html, body, main, .container-fluid {
 						<textarea style = "height: 200px;"class="input100" name="album_contents"
 							id="album_contents"
 							class="input_album_info input_album_info_contents"
-							value="${album.album_contents }"
+							<%-- value="${album.album_contents }" --%>
 							placeholder="your message here...">${album.album_contents}</textarea>
 						<span class="focus-input100"></span>
 					</div>
@@ -426,7 +426,7 @@ html, body, main, .container-fluid {
 						<div>
 							<select id="album_category" class="selection-2"name="album_category">
 								<option value="0">여행</option>
-								<option value="1">스포츠/래저</option>
+								<option value="1">스포츠/레저</option>
 								<option value="2">동물</option>
 								<option value="3">음악</option>
 								<option value="4">요리/음식</option>

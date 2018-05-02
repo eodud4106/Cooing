@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.album.dao.AlbumDAO;
-import com.cooing.www.album.vo.AlbumVO;
 import com.cooing.www.album.vo.CategoryPop;
 import com.cooing.www.common.dao.SearchDAO;
-import com.cooing.www.common.vo.PageLimit;
 import com.cooing.www.common.vo.Search;
 import com.cooing.www.member.dao.MemberDAO;
 import com.cooing.www.member.dao.RelationDAO;
@@ -92,16 +90,30 @@ public class SearchController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/insert_categorypop" , method = RequestMethod.POST)
+	public String insert_categorypop(HttpSession session , int categorynum){
+		logger.info("insert_categorypop__jinsu");		
+		if(searchDAO.insertCategoryPop(new CategoryPop(0 , categorynum , "0")))
+			return  "success";
+		else
+			return "false";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/insert_search" , method = RequestMethod.POST)
+	public String insert_search(HttpSession session , String search){
+		logger.info("insert_search__jinsu");		
+		if(searchDAO.insertSearch(new Search(0 , search , "0")))
+			return  "success";
+		else
+			return "false";
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/search_group" , method = RequestMethod.POST)
 	public ArrayList<Party> search_group(HttpSession session){
 		logger.info("search_group__jinsu");		
 		Member personal = (Member)session.getAttribute("Member");
 		return  relationDAO.searchPartyByMemberid(personal.getMember_id());
-	}
-	
-	@RequestMapping(value = "/information", method = RequestMethod.GET)
-	public String infomation() {
-		logger.info("information__jinsu");
-		return "information";
 	}
 }

@@ -25,7 +25,8 @@
 <link rel="stylesheet" href="resources/css/chat.css">
 <link rel="stylesheet" href="resources/css/push.css">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+<!-- 앨범 정보 띄우는 부분  -->
+<link rel="stylesheet" href="resources/css/search.css">
 
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
@@ -190,7 +191,7 @@ select::-ms-expand { /* for IE 11 */
 				<nav class="probootstrap-nav">
 					<ul>
 						<li><a href="<c:url value ="/"/>">HOME</a></li>
-						<li><a href="<c:url value ="/myPage"/>">MYPAGE</a></li>
+						<li><a href="<c:url value ="/myPage"/>">MY PAGE</a></li>
 						<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>						
 					</ul>
 					<div class = "dropdown">
@@ -326,7 +327,7 @@ select::-ms-expand { /* for IE 11 */
     	<!-- 페이지 저장 -->		
 			<form class="contact100-form validate-form" id="entry">
 				<span class="contact100-form-title">
-					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
+					&nbsp<input type="text" placeholder="친구 찾기" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
 				</span>
 			</form>						
 				<div class = "friendList" style = "width: 200px; margin-top: 20px;">

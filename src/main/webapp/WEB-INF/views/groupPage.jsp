@@ -32,6 +32,9 @@
 <link rel="stylesheet" href="resources/css/chat.css">
 <link rel="stylesheet" href="resources/css/push.css">
 
+<!-- 앨범 정보 띄우는 부분  -->
+<link rel="stylesheet" href="resources/css/search.css">
+
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/chat.js"></script>
@@ -120,6 +123,7 @@ $(document).ready(function () {
 	
 	$('.category').on('click' , function(){
 		searchcheck = 99;
+		category_save($(this).attr('data'));
 		$('#categorynum').val($(this).attr('data'));
 		get_group_album_list('category' , 'party' , '${partyinfo.getParty_name()}'  , 'date', pagenum++ , 1);
 	});
@@ -127,6 +131,7 @@ $(document).ready(function () {
 	$('#searchtx').keydown(function(event){
 		if(event.keyCode == 13){
 			searchcheck = 99;
+			search_save($('#searchtx').val());
 			get_group_album_list('writer' , 'party' , '${partyinfo.getParty_name()}' , 'data', pagenum++ , 0);
 		}
 	});
@@ -226,7 +231,7 @@ select::-ms-expand { /* for IE 11 */
 			
 			<input type="hidden" id="sessionid" data="${Member.getMember_id()}">
 				<c:if test="${partyleader ne null}">
-				<p style ="font-family:  Poppins-Regular;"><img	style = "width: 40px; height: 40px;"src = "<c:url value="/memberimg?strurl=${partyleader.getMember_picture()}"/>">&nbsp
+				<p style ="font-family:  Poppins-Regular;"><img	style = "width: 40px; height: 40px;"src = "${partyleader.getMember_picture()}">&nbsp
 				<c:if test="${partyleader ne null}">${partyleader.getMember_id()}(Leader)</c:if></p>
 			</c:if>	
 			<div>
@@ -243,7 +248,7 @@ select::-ms-expand { /* for IE 11 */
 		<div id="memberdiv" style ="height: 300px; font-family:  Poppins-Regular;">
 		<c:if test="${fn:length(memberinfo) ne 0}">
 			<c:forEach var="arrmi" items="${memberinfo}">
-				<p class ="p1"><img  style ="width: 40px; height: 40px;"src = "<c:url value="/memberimg?strurl=${arrmi.getMember_picture()}"/>">&nbsp${arrmi.getMember_id()}
+				<p class ="p1"><img  style ="width: 40px; height: 40px;"src = "${arrmi.getMember_picture()}">&nbsp${arrmi.getMember_id()}
 				<c:if test="${partyinfo.getParty_leader() eq Member.getMember_id() and partyinfo.getParty_leader() ne arrmi.getMember_id()}">					
 					<div style= "z-index:99; float:right;margin-top: -29px; cursor: pointer;" class="img_3" data="${arrmi.getMember_id()}" data2="${partyinfo.getParty_num()}">
 					<i class="fas fa-user-times" ></i></div>
@@ -255,7 +260,7 @@ select::-ms-expand { /* for IE 11 */
 		<nav class="probootstrap-nav" style = "padding-left: 0px;">
 		<ul>
 			<%-- <li><a href="<c:url value ="/"/>">HOME</a></li> --%>
-			<li><a href="<c:url value ="/myPage"/>">MYPAGE</a></li>
+			<li><a href="<c:url value ="/myPage"/>">MY PAGE</a></li>
 			<%-- <li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>		 --%>				
 		</ul>
 			<div class = "dropdown">
@@ -377,7 +382,7 @@ select::-ms-expand { /* for IE 11 */
     	<!-- 페이지 저장 -->		
 			<form class="contact100-form validate-form" id="entry">
 				<span class="contact100-form-title">
-					&nbsp<input type="text" placeholder="친구검색" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
+					&nbsp<input type="text" placeholder="친구 찾기" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
 				</span>
 			</form>						
 				<div class = "friendList" style = "width: 200px; margin-top: 20px;">

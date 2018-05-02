@@ -1,8 +1,6 @@
 /**
  * 
  */
-
-alert('test');
 //달력 부분
 $( function() {
   $('#datepicker').datepicker({
@@ -164,7 +162,8 @@ function graphcreate(array , num){
 		height:550,
 		sort:'desc',
 		barSpace : 10,
-		colors:color
+		colors:color,
+		legend:true
 	});
 }
 

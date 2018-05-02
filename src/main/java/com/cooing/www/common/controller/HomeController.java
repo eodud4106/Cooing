@@ -3,6 +3,8 @@ package com.cooing.www.common.controller;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -162,21 +164,16 @@ public class HomeController {
 			
 			PageNavigator pageNav = new PageNavigator(3, 3, 1, replyDAO.getReplyTotal(album_num));
 			
-			ArrayList<PartyMember> arr_pm = new ArrayList<>();
-			
-			if(album.getIsPersonal().equals("0")) {
-				// 파티 앨범일 경우 파티원도 모델에 담아 보내기
-				
-				arr_pm = relationDAO.searchPartyMember_by_party_name(album.getAlbum_writer());
-				model.addAttribute("isPartymember", "0");
-				for (PartyMember partyMember : arr_pm) {
-					if (partyMember.getMember_id().equals(member.getMember_id())) {
-						model.addAttribute("isPartymember", "1");
-						break;
-					}
+			//앨범 뷰에서 친구 확인...
+			Member friend = memberDAO.selectMember(album.getAlbum_writer());
+			model.addAttribute("friend_id", friend);
+			ArrayList<String> arrfriend = relationDAO.selectFriend(member.getMember_id());
+			for(String s:arrfriend){
+				if(s.equals(friend.getMember_id())){
+					model.addAttribute("checks" , true);
+					break;
 				}
 			}
-			
 			model.addAttribute("profile_url", profile_url);
 			model.addAttribute("albumwrite", memberDAO.selectMember(album.getAlbum_writer()));
 			model.addAttribute("album", album);
@@ -185,12 +182,35 @@ public class HomeController {
 			model.addAttribute("arr_reply", arr_reply);
 			model.addAttribute("pageNav", pageNav);
 			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return "album/albumView";
+	}
+	@ResponseBody
+	@RequestMapping(value="/albumView_friend_plus" , method = RequestMethod.POST,produces = "application/text; charset=utf8")
+	public String friend_plus(String friendid , HttpSession session){
+		Member member = (Member)session.getAttribute("Member");
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("person", member.getMember_id());
+		map.put("friend", friendid);				
+		if(relationDAO.insertFriend(map) == true){
+			return "success";
+		}
+		return "친구 추가를 실패 했습니다. 잠시 후 다시 시도해 주십시오.";
+	}
+	@ResponseBody
+	@RequestMapping(value="/albumView_friend_delete" , method = RequestMethod.POST ,produces = "application/text; charset=utf8")
+	public String friend_delete(String friendid , HttpSession session){
+		Member member = (Member)session.getAttribute("Member");
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("person", member.getMember_id());
+		map.put("friend", friendid);				
+		if(relationDAO.deleteFriend(map) == true){
+			return "success";
+		}
+		return "친구 삭제를 실패 했습니다. 잠시 후 다시 시도해 주십시오.";
 	}
 	
 	@ResponseBody
@@ -328,15 +348,23 @@ public class HomeController {
 	
 	@RequestMapping(value="/groupPage" , method = RequestMethod.GET)
 	public String groupPage_get(String group_name , Model model){
-		logger.info("groupPage__jinsu");
 		Party party = relationDAO.searchParty(group_name);
 		if(party != null){
 			ArrayList<PartyMember> arr_party_member = relationDAO.searchPartyMember(party.getParty_num());
 			ArrayList<Member> arr_member = new ArrayList<Member>();
 			for(PartyMember pm: arr_party_member){
-				arr_member.add(memberDAO.selectMember(pm.getMember_id()));
+				Member nomal_member = memberDAO.selectMember(pm.getMember_id());
+				String partymemeber_url = "img_profile?filePath="+nomal_member.getMember_picture();
+				nomal_member.setMember_picture(partymemeber_url);
+				arr_member.add(nomal_member);
 			}
-			model.addAttribute("partyleader" , memberDAO.selectMember(party.getParty_leader()));
+			
+			//파티장
+			Member member = memberDAO.selectMember(party.getParty_leader());
+			String partyleader_url = "img_profile?filePath="+member.getMember_picture();
+			member.setMember_picture(partyleader_url);
+
+			model.addAttribute("partyleader" , member);
 			model.addAttribute("partyinfo", party);
 			model.addAttribute("memberlist", arr_party_member);
 			model.addAttribute("memberinfo", arr_member);

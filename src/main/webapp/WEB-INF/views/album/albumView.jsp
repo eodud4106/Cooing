@@ -223,6 +223,36 @@ height: 30px;
 		nowpage();
 	});
 	
+	//앨범 뷰 친구 추가
+	function fiendplus(){
+		var friendid = $('#friendidval').val();
+		var data = $('#friendbt').attr('data');
+		if(data == 0){
+			//TODO 친구 요청..
+			sendPush($('#user_id').val(), friendid, 1, '우리 친구해요');
+			alert('친구 요청을 보냈습니다!');
+			
+		}else if(data == 1){
+			$.ajax({
+				url:'albumView_friend_delete',
+				type:'POST',		
+				data:{friendid:friendid},
+				dataType:'text',
+				success: function(a){
+					if(a=='success'){
+						$('#friendbt').html('<i class="fas fa-user-plus"></i>');
+						$('#friendbt').attr('data' , '0');
+						searchword();
+					}
+					else{
+						alert(a);
+					}
+				},
+				error:function(e){alert(JSON.stringify(e));}		
+			});
+		}	
+	}
+	
 	//현재 페이지의 북마크가 있는지 검색 
 	function bookmark_check() {
 
@@ -580,15 +610,31 @@ height: 30px;
 						<span class="label-input100"><img src="${profile_url}" style="width: 30px; height: 40px;"></span>
 						<span class="label-input100">${album.album_writer }</span>
 						
-						<!-- 여기 수정해야함 친구 팔로잉버튼  -->
-						 <button style="z-index: 99; float: right; margin-top: 0px;"
-						id="friendbt" data="0">
-						<i class="fas fa-user-plus"></i>
-						</button>					
-						<button style="z-index: 99; float: right; margin-top: 0px;"
-						id="friendbt" data="1">
-						<i class="fas fa-user-times"></i>
-						</button>
+
+					<!-- 앨범 작성자와 보는 사람이 나였을 때 -->
+					<c:if test="${friend_id.getMember_id() eq sessionScope.Member.member_id}">
+					</c:if>
+					<!-- 앨범 작성자와 보는 사람이 내가 아닐 때 -->
+					<c:if test="${friend_id.getMember_id() ne sessionScope.Member.member_id}">
+						<c:if test="${checks ne true }">
+							<button style="z-index: 99; float: right; margin-top:10px; cursor: pointer;"
+								id="friendbt" data="0" onclick="fiendplus()">
+								<i class="fas fa-user-plus"></i>
+							</button>					
+						</c:if>
+						<c:if test="${checks eq true }">					
+							<button style="z-index: 99; float: right; margin-top:10px; cursor: pointer;"
+								id="friendbt" data="1" onclick="fiendplus()">
+								<i class="fas fa-user-times"></i>
+							</button>
+						</c:if>
+					</c:if>				
+
+					<input type="hidden" value="${friend_id.getMember_id()}"
+					id="friendidval">
+					<input style="display: none" id="user_id" value="${sessionScope.Member.member_id }">
+					
+					
 
 					<div class="wrap-input100 validate-input">					
 						<div class="input100" name="album_contents"

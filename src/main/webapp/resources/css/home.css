@@ -1,53 +1,8 @@
-.img_thumbnail {
-	width: 100%;
-	height: 100%;
-	opacity: 1;
-}
 
-.div_card:hover {
-	cursor: pointer;
-}
 
-.go_front {
-    -webkit-transition-duration: .2s;
-    transition-duration: .2s;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 96%;
-    height: 96%;
-   	margin: 2%;
-    padding: 10px;
-    position: absolute;
-    display: block;
-   	background-color: rgba(255,255,255, 0.5);
-   	text-align: center;  	
-   	overflow : hidden;
-}
-
-.hidden_info{
-	display: none;
-	color :  black;
-}
-
-.card_album_name{
-	font-size: 30px;
-	font-family: font-family: 'Black Han Sans', sans-seri.f;
+sapn{
+	float : left;
 	
-}
-
-.card_album_writer{
-	float : right;
-}
-
-.card_album_contents{
-	
-}
-.card_album_likes{
-	float: right;	
-}
-.card_album_contents{
-	float : right;s
 }
 
 
