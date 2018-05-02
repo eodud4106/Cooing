@@ -195,7 +195,7 @@
 		<if test="type == 'mylike'">
 			and(
 				album_category in(
-					select category_kind 
+					select category_kind as album_category
 					from category
 					where category_memberid = #{userId}
 				)
