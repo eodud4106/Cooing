@@ -165,7 +165,7 @@ $(document).ready(function () {
 			<nav class="probootstrap-nav">						
 				<ul>
 					<li><a href="<c:url value ="/"/>">HOME</a></li>
-					<li><a href="<c:url value ="/myPage"/>">MYPAGE</a></li>
+					<li><a href="<c:url value ="/myPage"/>">MY PAGE</a></li>
 					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>						
 					<li><a href="<c:url value ="/bookmark"/>">BOOKMARK</a></li>					
 				</ul>
