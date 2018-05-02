@@ -153,7 +153,7 @@ public class AlbumController {
 		
 		int album_per_page = 10;
 		
-		RowBounds rb = new RowBounds(page *10, album_per_page);
+		RowBounds rb = new RowBounds(page*album_per_page, album_per_page);
 		
 		HashMap<String, String> map = new HashMap<>();
 		
