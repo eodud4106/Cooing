@@ -66,7 +66,6 @@ var likecheck = 0;
 var searchcheck = 99;
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
-    	console.log('test , ' + searchcheck + '_search , ' + pagenum + '_pagenum , ' + total + '_total');
     	//메인으로 그냥 들어왔을 때 와 검색해서 들어왔을 때 = 0 / 카테고리 눌러서 들어왔을 때  = 1 / 내가 좋아하는 카테고리 만 보기 = 2
     	//likecheck 가 0번 이면 date 순으로 정렬 1번이면 like 순으로 정렬
     	if(searchcheck == 0){

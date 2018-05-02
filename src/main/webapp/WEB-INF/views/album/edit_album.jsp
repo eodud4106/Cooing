@@ -416,7 +416,7 @@ html, body, main, .container-fluid {
 						<textarea style = "height: 200px;"class="input100" name="album_contents"
 							id="album_contents"
 							class="input_album_info input_album_info_contents"
-							value="${album.album_contents }"
+							<%-- value="${album.album_contents }" --%>
 							placeholder="your message here...">${album.album_contents}</textarea>
 						<span class="focus-input100"></span>
 					</div>
