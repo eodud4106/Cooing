@@ -51,9 +51,7 @@
 
 <script type="text/javascript" src="resources/js_js/html2canvas.min.js"></script>
 <!-- 폰트 -->
-<!-- <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Black+Han+Sans" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">-->
+
 <link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
 
 <!-- 채팅목록 -->

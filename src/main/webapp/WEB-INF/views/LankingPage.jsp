@@ -11,7 +11,6 @@
 <link rel="icon" type="image/png" href="resources/assets/images/cooing_logo.png"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans">
 <link rel="stylesheet" href="resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
 <link rel="stylesheet" href="resources/css/owl.carousel.min.css">

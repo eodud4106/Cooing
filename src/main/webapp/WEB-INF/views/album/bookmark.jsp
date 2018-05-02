@@ -257,8 +257,6 @@ p{
 <!-- 폰트 -->
 <!-- 폰트 -->
 <link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
-<!-- <link href="https://fonts.googleapis.com/css?family=McLaren" rel="stylesheet"> -->
 
 <link rel="icon" type="image/png" href="resources/assets/images/cooing_logo.png"/>
  <link rel="stylesheet" href="<c:url value="/resources/css/myPage.css"/>">
@@ -373,13 +371,15 @@ function bookmark_list() {
 				
 				var temp_contents;
 				if(vo.album_contents == null){
-					temp_contents = '(내용 없음)';
+					temp_contents = 'CONTENT : ';
+				} else {
+					temp_contents = vo.album_contents;
 				}
 
 				var bookmark_info_div_html = '';
 					bookmark_info_div_html += '<p class="bookmark_name"> " ' + vo.album_name + '"'+'</p>';
 					bookmark_info_div_html += '<p class="bookmark_id">' + vo.album_writer + '</p>';
-					bookmark_info_div_html += '<p class="bookmark_content"> ' + vo.album_contents + '</p>';
+					bookmark_info_div_html += '<p class="bookmark_content"> ' + temp_contents + '</p>';
 					var temp_category = category_change(vo.album_category);
 					bookmark_info_div_html += '<p class="bookmark_category">CATEGORY :' + temp_category +'</p>';
 					bookmark_info_div_html += '<p class="bookmark_bookmark">BOOKMARK : ' + vo.bookmark_page + '</p>';

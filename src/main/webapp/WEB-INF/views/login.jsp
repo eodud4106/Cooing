@@ -30,7 +30,6 @@
 <link rel="stylesheet" href="resources/assets/css/responsive.css"> 
  
 <!-- font -->
-<link href="https://fonts.googleapis.com/css?family=Titan+One" rel="stylesheet"> 
 <script src="resources/js_js/jquery-3.2.1.min.js"></script> 
 <script src="resources/js/member.js"></script> 
 <script>
