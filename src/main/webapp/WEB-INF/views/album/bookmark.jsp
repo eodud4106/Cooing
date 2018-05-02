@@ -9,8 +9,14 @@
 <title>BookMark</title>
 <meta charset="utf-8" />
 <style>
+
 .bookmark_img {
-cursor:pointer;
+	cursor:pointer;
+	width: 100px;
+	height: 100px;
+	margin-top: 80px;
+	margin-left: 50px;
+	
 }
 .friendList{
 	height: 600px;		
@@ -200,6 +206,51 @@ li{
 }
 p{
 	font-size: 14px;
+}
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;    
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;    
+    background-color: #f9f9f9;
+    min-width: 160px;
+    height : 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    overflow-y: scroll;
+    padding-bottom: 1px;
+}
+
+.dropdown-content li {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content li:hover {
+	background: -webkit-linear-gradient(right, #00dbde, #499ce8);
+	color : white;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
 }
 </style>
 <script src="<c:url value="/resources/js/jquery-3.3.1.min.js"/>"></script>
@@ -428,7 +479,34 @@ function category_change(category) {
 					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>						
 					<li><a href="<c:url value ="/bookmark"/>">BOOKMARK</a></li>	
 				</ul>
-					<p class = "c">CATEGORY</p>
+					<div class = "dropdown">
+						<p class ="c" class = "dropbtn" style="cursor: pointer;">CATEGORY</p>
+						 <div class="dropdown-content" style = "font-family: Poppins-Regular; font-size: 15px; padding-left: 10px;">
+						 <ul>
+						  	<li class="category" data="0">여행</li>
+						    <li class="category" data="1">스포츠/레저</li>
+						    <li class="category" data="2">동물</li>
+						    <li class="category" data="3">음악</li>
+						    <li class="category" data="4">요리/음식</li>
+						    <li class="category" data="5">패션/뷰티</li>
+						    <li class="category" data="6">연예/TV</li>
+						    <li class="category" data="7">게임</li>
+						    <li class="category" data="8">영화</li>
+						    <li class="category" data="9">도서</li>
+						    <li class="category" data="10">공연/전시</li>
+						    <li class="category" data="11">외국어</li>
+						    <li class="category" data="12">전문지식</li>
+						    <li class="category" data="13">수집/제작</li>
+						    <li class="category" data="14">자기계발</li>
+						    <li class="category" data="15">육아</li>
+						    <li class="category" data="16">일상생활</li>
+						    <li class="category" data="17">자동차</li>
+						    <li class="category" data="18">낚시</li>
+						    <li class="category" data="19">건강</li>
+						    <li class="category" data="20">기타</li>
+						    </ul>
+					    </div>
+					</div>
 				<ul>
 					<li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>						
 				</ul>		
