@@ -354,9 +354,21 @@ public class HomeController {
 			ArrayList<PartyMember> arr_party_member = relationDAO.searchPartyMember(party.getParty_num());
 			ArrayList<Member> arr_member = new ArrayList<Member>();
 			for(PartyMember pm: arr_party_member){
-				arr_member.add(memberDAO.selectMember(pm.getMember_id()));
+				Member nomal_member = memberDAO.selectMember(pm.getMember_id());
+				String partymemeber_url = "img_profile?filePath="+nomal_member.getMember_picture();
+				nomal_member.setMember_picture(partymemeber_url);
+				arr_member.add(nomal_member);
 			}
-			model.addAttribute("partyleader" , memberDAO.selectMember(party.getParty_leader()));
+			
+			//파티장
+			Member member = memberDAO.selectMember(party.getParty_leader());
+			String partyleader_url = "img_profile?filePath="+member.getMember_picture();
+			member.setMember_picture(partyleader_url);
+			
+			
+			
+			//model.addAttribute("partyleader_url" , partyleader_url);
+			model.addAttribute("partyleader" , member);
 			model.addAttribute("partyinfo", party);
 			model.addAttribute("memberlist", arr_party_member);
 			model.addAttribute("memberinfo", arr_member);
