@@ -19,7 +19,7 @@ var $div_push;
  */ 
 function readyPush(userId, goRoot) {
 
-	console.log('push 준비!, userId-> ' + userId);
+	/*console.log('push 준비!, userId-> ' + userId);*/
 
 	// 로그인 정보 확인 후 전역변수에 저장
 	if(userId == '') {
@@ -81,14 +81,14 @@ function onOpen_push(evt) {
 		sender: userId
 	}
 	ws_push.send(JSON.stringify(sendPush));
-	console.log('push 웹소켓 연결됨..');
+	/*console.log('push 웹소켓 연결됨..');*/
 	
 	// 안 읽은 push를 조회함.
 	$.ajax({
 		type: "POST",
 		url: "push/get_unread_push",
 		success : function(result) {
-			console.log("안 읽은 초대 -> " + JSON.stringify(result));
+			/*console.log("안 읽은 초대 -> " + JSON.stringify(result));*/
 			// 카드 형태로 news 탭에 뿌리기 위해 호출
 			show_unread_push(result);
         }, 
@@ -118,7 +118,7 @@ function sendPush(sender, addressee, type, msg) {
 		msg: msg
 	}
     
-    console.log('push를 서버로 보냅니다! -> ' + JSON.stringify(sendPush))
+    /*console.log('push를 서버로 보냅니다! -> ' + JSON.stringify(sendPush))*/
 
     ws_push.send(JSON.stringify(sendPush));
 
@@ -150,7 +150,7 @@ function onMessage_push(evt) {
     
     var pushData = JSON.parse(evt.data);
     
-    console.log('push서버에서 메세지옴 -> ' + JSON.stringify(evt.data));
+    /*console.log('push서버에서 메세지옴 -> ' + JSON.stringify(evt.data));*/
     
     if(pushData.type == 1 || pushData.type == 2) {
     	// 내가 푸쉬를 보내는 것!!

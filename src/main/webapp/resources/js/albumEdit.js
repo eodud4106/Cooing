@@ -195,7 +195,7 @@ function ready_album(mode) {
 		
 	} else if (mode == 'edit') {
 		
-		console.log('ALBUM을 edit합니다..');
+		/*console.log('ALBUM을 edit합니다..');*/
 		
 		if($('#album').children('.page').length == 0) {
 	    	// 앨범 로딩 결과 없음
@@ -240,7 +240,7 @@ function ready_album(mode) {
 	            	//페이지 알려주는 부분 
 	            	nowpage();
 
-	                console.log('현재 페이지 -> ' + $('#album').turn('page'));
+	                /*console.log('현재 페이지 -> ' + $('#album').turn('page'));*/
 
 	                var total_page = $('#album').turn('pages');
 
@@ -501,13 +501,13 @@ function apply_event_to_box($div_box) {
             });
             var over_left = $(window).width() - Number($('.div_whole_editor').css('left').replace('px', '')) - 350;
             if(over_left < 0) {
-            	console.log('벗어났으므로 조정합니다.')
+            	/*console.log('벗어났으므로 조정합니다.')*/
             	$('.div_whole_editor').css('left', $('.onSelect').position().left + curr_page_left + over_left)
             } else {
-            	console.log('벗어남 없음 조정 안 함')
+            	/*console.log('벗어남 없음 조정 안 함')*/
             }
             
-            console.log('박스 left: ' + $('.div_whole_editor').position().left + ' /박스 top: ' + $('.div_whole_editor').position().top);
+            /*console.log('박스 left: ' + $('.div_whole_editor').position().left + ' /박스 top: ' + $('.div_whole_editor').position().top);*/
         },
         containment: $div_box.parent()  // 캔버스 영역 밖으로 나가지 못하게 제한
 
@@ -1756,7 +1756,7 @@ function create_nav_bar(ui) {
 		
 	}
 	
-	console.log('슬라이더바... left -> ' + left + ' /top ->' + top);
+	/*console.log('슬라이더바... left -> ' + left + ' /top ->' + top);*/
 
 	if(ui.value == 1 || ui.value == $('#album').turn('pages')/2 +1) {
 		$slider_popup.text(((ui.value-1)*2) == 0? 1: (ui.value-1)*2);

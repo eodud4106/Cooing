@@ -294,7 +294,7 @@ html, body, main, .container-fluid {
 					data : $('#testimg').serialize(),
 					dataType : 'text',
 					success : function(a) {
-						console.log('표지 저장 -> ' + a);
+						/* console.log('표지 저장 -> ' + a); */
 						if (a != 'fail') {
 							$.ajax({
 								url : 'thumbnailPathSave',
@@ -346,7 +346,7 @@ html, body, main, .container-fluid {
 				savePage('all');
 			},
 			error : function(e) {
-				console.log('에러 발생.' + e);
+				/* console.log('에러 발생.' + e); */
 			}
 		});
 

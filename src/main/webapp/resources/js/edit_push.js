@@ -15,7 +15,7 @@ var party_name;
  */ 
 function readyEdit (member_id, party_name) {
 
-	console.log('edit 준비!, userId-> ' + userId);
+	/*console.log('edit 준비!, userId-> ' + userId);*/
 
 	// 로그인 정보 확인 후 전역변수에 저장
 	if(member_id == '') {
@@ -52,7 +52,7 @@ function readyEdit (member_id, party_name) {
    	};
    	
 	$(window).bind("beforeunload", function (e){
-		console.log('윈도우 언로드 -> 편집을 종료합니다.')
+		/*console.log('윈도우 언로드 -> 편집을 종료합니다.')*/
 		end_edit()
 	});
 
@@ -90,7 +90,7 @@ function onMessage_edit(evt) {
     
     var pushData = JSON.parse(evt.data);
     
-    console.log('push서버에서 메세지옴 -> ' + JSON.stringify(evt.data));
+    /*console.log('push서버에서 메세지옴 -> ' + JSON.stringify(evt.data));*/
     
     
     if(pushData.type == 'open') {
@@ -174,9 +174,9 @@ function onMessage_edit(evt) {
     			},
     			success : function(result) {
     				$('#album').turn('destroy');
-    				console.log('답변 옴. 길이는 ->' + result.length);
+    				/*console.log('답변 옴. 길이는 ->' + result.length);*/
     				$(result).each(function(i, page){
-    					console.log(JSON.stringify(page));
+    					/*console.log(JSON.stringify(page));*/
     					var $page = $('<div />', {
     						"id": "page"+page.page_num,
     						"class": "page hard"
@@ -188,7 +188,7 @@ function onMessage_edit(evt) {
     				ready_album('edit');
     			},
     			error : function(e) {
-    				console.log('에러 -> ' + JSON.stringify(e));
+    				/*console.log('에러 -> ' + JSON.stringify(e));*/
     			}
     		});
     	}

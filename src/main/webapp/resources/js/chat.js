@@ -23,7 +23,7 @@ var $message;
  */ 
 function readyChat (userId, goRoot) {
 
-	console.log('채팅 준비!, userId-> ' + userId);
+	/*console.log('채팅 준비!, userId-> ' + userId);*/
 
 	// 로그인 정보 확인 후 전역변수에 저장
 	if(userId == '') {
@@ -179,7 +179,7 @@ function onOpen(evt) {
 		sender: userId
 	}
 	websocket_chat.send(JSON.stringify(sendMessage));
-	console.log('웹소켓 연결됨..')
+	/*console.log('웹소켓 연결됨..')*/
 	
 	// 대화 상대 별 안 읽은 메세지 개수를 조회함.
 	$.ajax({
@@ -313,7 +313,7 @@ function onMessage(evt) {
     		
 	} else {
 		// 대화 중인 상대가 아님 -> 수신 알림
-		console.log('대화 중인 상대가 아닙니다. is1to1 = ' + chatData.is1to1 + ' // 발신자: ' + chatData.sender + ' //수신자' + chatData.addressee);
+		/*console.log('대화 중인 상대가 아닙니다. is1to1 = ' + chatData.is1to1 + ' // 발신자: ' + chatData.sender + ' //수신자' + chatData.addressee);*/
 		chatData.sender = chatData.is1to1 == 1? chatData.sender : chatData.addressee;
 		var $target = $('.msg_list').find('.news_card[who=' + chatData.sender + ']');
 		
@@ -465,8 +465,8 @@ function show_unread_msg_count(result) {
 	
 	$(result).each(function(i, unread) {
 		
-		console.log('보낸이-> ' + unread.sender);
-		console.log('is1to1-> ' + unread.is1to1);
+		/*console.log('보낸이-> ' + unread.sender);
+		console.log('is1to1-> ' + unread.is1to1);*/
 
 		var $card = $('<div />', {
 			"class": "news_card",
