@@ -348,7 +348,6 @@ public class HomeController {
 	
 	@RequestMapping(value="/groupPage" , method = RequestMethod.GET)
 	public String groupPage_get(String group_name , Model model){
-		logger.info("groupPage__jinsu");
 		Party party = relationDAO.searchParty(group_name);
 		if(party != null){
 			ArrayList<PartyMember> arr_party_member = relationDAO.searchPartyMember(party.getParty_num());
@@ -364,10 +363,7 @@ public class HomeController {
 			Member member = memberDAO.selectMember(party.getParty_leader());
 			String partyleader_url = "img_profile?filePath="+member.getMember_picture();
 			member.setMember_picture(partyleader_url);
-			
-			
-			
-			//model.addAttribute("partyleader_url" , partyleader_url);
+
 			model.addAttribute("partyleader" , member);
 			model.addAttribute("partyinfo", party);
 			model.addAttribute("memberlist", arr_party_member);
