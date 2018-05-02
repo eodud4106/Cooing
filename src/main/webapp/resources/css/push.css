@@ -33,7 +33,7 @@
 .msg_list, .invite_list {
 	overflow-y: scroll;
 }
-
+/* 왜 적용안되냐고 */
 .news_card {
 	cursor: pointer;
 	background-color: white;

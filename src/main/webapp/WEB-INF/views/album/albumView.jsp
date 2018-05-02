@@ -95,6 +95,111 @@ section {
 	font-size: 14px;
 	border-top: 1px solid #ddd;
 }
+/*라디오버튼 숨김*/
+.input1 {
+	display: none;
+}
+
+label {
+	display: inline-block;
+	margin: 0 0 -1px;
+	padding: 5px 10px;
+	font-weight: 600;
+	text-align: center;
+	color: #bbb;
+	border: 1px solid transparent;
+	font-size: 15px;
+}
+
+label:hover {
+	color: #2e9cdf;
+	cursor: pointer;
+}
+
+/*input 클릭시, label 스타일*/
+.input1:checked+label {
+	color: #555;
+	border: 1px solid #ddd;
+	border-top: 2px solid #2e9cdf;
+	border-bottom: 1px solid #ffffff;
+}
+
+#tab1:checked ~ #content1, #tab2:checked ~ #content2, #tab3:checked ~ #content3 {
+	display: block;
+}
+
+.search {
+	width: 120px;
+	display: block;
+	position: absolute;
+}
+
+.bt {
+	position: absolute;
+	right: 40px;
+}
+
+.tb1 {
+	padding-top: 20px;
+}
+
+html, body, main, .container-fluid {
+	height: 100%;
+}
+
+.container-fluid {
+	padding: 0;
+}
+
+.view_wrapper {
+	margin: 0;
+	margin-left: 250px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.album_wrapper, .top_bar {
+	margin: auto !important;
+	display: block;
+}
+
+.checkbox {
+	font-size: 20px;
+}
+
+.page {
+	background-color: #A4A4A4;
+}
+
+.outer {
+	background-color: #aaa;
+}
+/* 앨범 에딧 들어왔을 때 배경화면 꽉 채우기 */
+.page{
+	background-repeat: no-repeat !important;
+	background-size:100% 100% !important;
+}
+.friendList{
+	height: 250px;		
+	overflow-y : scroll;
+	padding-left: 30px;
+	background-color : #eee6;
+	font-family: Poppins-Regular;
+    font-size: 14px;
+    cursor: pointer;
+     margin-top: -15px;
+}
+.groupList{
+	height: 250px;	
+	overflow-y : scroll;
+	padding-left: 30px;
+	/* overflow-y:hidden; */
+	background-color : #eee6;
+	font-family: Poppins-Regular;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 70px;
+}
 
 .div_reply, .div_reply form, .div_reply form input, #resultReply,
 	#resultReply table {
@@ -141,7 +246,10 @@ height: 30px;
 	background-repeat: no-repeat !important;
 	background-size:100% 100% !important;
 }
+ 
+}
 </style>
+
 
 
 <script>
@@ -736,7 +844,6 @@ height: 30px;
 				</div>
 			</div>
 		</section> 
-
 	</aside>
 
 	<!-- 메인 -->

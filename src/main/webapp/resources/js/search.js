@@ -322,7 +322,7 @@ function AlbumListPaging_hindoong(check, result) {
 			"class": "card_album_likes"
 		}).css({			
 			"float":"left",
-			"margin-top":"85px",
+			"margin-top":"65px",
 			"font-weight":"bold"
 		}).appendTo($info_div);
 		

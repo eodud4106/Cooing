@@ -290,7 +290,7 @@ function show_unread_push(push) {
 			var $no = $('<div />', {
 				"class": "news_card news_button",
 				"role": "no",
-				"text": "NO"
+				"text": "NO" /*왜 적용안되냐고*/
 			}).css({
 				"width": "25%",
 				"height": "14px",
