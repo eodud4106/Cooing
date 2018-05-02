@@ -572,14 +572,11 @@ public class AlbumEditController {
 	@RequestMapping(value = "/get_pages", method = RequestMethod.POST)
 	public ArrayList<PageVO> get_pages(int album_num){
 		
-		System.out.println("페이지 요청, album_num -> " + album_num);
-		
 		ArrayList<PageVO> pages = new ArrayList<>();
 		try {
 			AlbumVO album = new AlbumVO();
 			album.setAlbum_num(album_num);
 			pages = albumDAO.select_pages_by_album(album);
-			System.out.println("dao, pages-> " + pages.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

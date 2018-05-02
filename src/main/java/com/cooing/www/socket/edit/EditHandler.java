@@ -146,7 +146,6 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 					
 					edit_map.remove(party_name);
 				}
-				System.out.println("end 들어옴");
 				
 				msg.put("editable", "true");
 				sendMessage(msg);
@@ -179,8 +178,6 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 		String party_name = msg.get("party_name");
 		ArrayList<String> mid_arr = pname_map.get(party_name);
 		
-		System.out.println("대상 파티의 멤버는 ->" + mid_arr.toString());
-		
 		for (String m_id : mid_arr) {
 			
 			try {
@@ -188,7 +185,6 @@ public class EditHandler extends TextWebSocketHandler implements InitializingBea
 				for (WebSocketSession session : this.sessionSet) {
 					if (session.isOpen()) {
 						if (session.getId().equals(mid_map.get(m_id))) {
-							System.out.println("< 일치! 메세지 전송합니다. >" + m_id);
 							session.sendMessage(new TextMessage(gson.toJson(msg)));
 						}
 						

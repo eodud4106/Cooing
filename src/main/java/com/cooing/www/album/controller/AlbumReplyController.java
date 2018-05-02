@@ -99,7 +99,6 @@ public class AlbumReplyController {
 		PageNavigator navi = new PageNavigator(3, 3, i_rep_page, repTotal);
 
 		if(replyList.isEmpty() == false) {
-			System.out.println("뒷단 현재페이지 : "+ navi.getCurrentPage());
 			replyList.get(0).setCurrentPage(navi.getCurrentPage());
 		}
 		
@@ -123,7 +122,6 @@ public class AlbumReplyController {
 			i_rep_page = 1;
 		}
 		
-		System.out.println("페이징 컨트롤러에 page값 : "  + i_rep_page);
 		
 		int num = 0;
 		num = Integer.parseInt(reply_albumnum);
@@ -132,7 +130,6 @@ public class AlbumReplyController {
 		//가져 갈 요소들
 		PageNavigator navi = new PageNavigator(3, 3, i_rep_page, repTotal);
 		
-		System.out.println("나비 들어 갔다 나온 현재 페이지 : " + navi.getCurrentPage());
 		
 		
 		return navi;
