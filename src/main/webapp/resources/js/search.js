@@ -222,6 +222,7 @@ function get_album_list(type , writer_type , order, page , checknum) {
 	
 	if(searchcheck != check){ 
 		searchcheck = check;
+		pagenum = 0;
 		page = 0;
 	}
 

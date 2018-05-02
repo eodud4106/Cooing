@@ -58,7 +58,7 @@
 <script src="https://use.fontawesome.com/1c6f725ec5.js"></script>
 
 <script>
-var page = 0;
+var pagenum = 0;
 var pagingcheck = false;
 var total = true;
 //이게 0번이면 검색어 1번이면 카테고리 2번이면 그냥 메인 으로 나눠서 페이징 가지고 오게 된다.
