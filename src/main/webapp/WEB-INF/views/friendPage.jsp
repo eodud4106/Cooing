@@ -313,13 +313,13 @@ select::-ms-expand { /* for IE 11 */
 		<div class="probootstrap-overflow">
 		<div id="main">
 		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
-		<label for="tab1" style = "font-size: 13px;">FRIEND</label>
+		<label for="tab1" style = "font-size: 12px;">FRIEND</label>
 
   		<input class = "input1" id="tab2" type="radio" name="tabs">
-    	<label for="tab2" style = "font-size: 13px;">GROUP</label> 
+    	<label for="tab2" style = "font-size: 12px;">GROUP</label> 
     	 
     	<input class = "input1" id="tab3" type="radio" name="tabs">
-    	<label for="tab3" style = "font-size: 13px;">NEWS</label>  
+    	<label for="tab3" style = "font-size: 12px;">NEWS</label>  
 
     	<section id="content1"> 
     	<!-- 페이지 저장 -->		

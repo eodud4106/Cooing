@@ -186,7 +186,8 @@ html, body, main, .container-fluid {
 	padding-left: 30px;
 	/* overflow-y:hidden; */
 	/* background-color : aliceblue; */
-    font-size: 18px;
+    font-size: 14px;
+     font-family :  Poppins-Regular;
     cursor: pointer;
     margin-top: 100px;
     
