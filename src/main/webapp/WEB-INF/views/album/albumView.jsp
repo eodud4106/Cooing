@@ -232,7 +232,7 @@ height: 30px;
 			sendPush($('#user_id').val(), friendid, 1, '우리 친구해요');
 			alert('친구 요청을 보냈습니다!');
 			
-			$.ajax({
+/* 			$.ajax({
 				url:'albumView_friend_plus',
 				type:'POST',		
 				data:{friendid:friendid},
@@ -248,7 +248,7 @@ height: 30px;
 					}
 				},
 				error:function(e){alert(JSON.stringify(e));}		
-			});
+			}); */
 		}else if(data == 1){
 			$.ajax({
 				url:'albumView_friend_delete',
