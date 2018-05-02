@@ -363,3 +363,43 @@ function AlbumListPaging_hindoong(check, result) {
 	});
 	pagingcheck = false;
 }
+
+function category_save(categorynum){
+	$.ajax({
+		url: 'insert_categorypop',
+		type: 'post',
+		data:{
+			categorynum:categorynum
+		}, 
+		dataType: 'text',
+		success: function(result) {
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+} 
+
+function search_save(search){
+	$.ajax({
+		url: 'insert_search',
+		type: 'post',
+		data:{
+			search:search
+		}, 
+		dataType: 'text',
+		success: function(result) {
+		},
+		error: function(e) {
+			alert(JSON.stringify(e));	
+		}
+	});
+} 
+
+
+
+
+
+
+
+

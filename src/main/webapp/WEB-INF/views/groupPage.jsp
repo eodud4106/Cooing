@@ -120,6 +120,7 @@ $(document).ready(function () {
 	
 	$('.category').on('click' , function(){
 		searchcheck = 99;
+		category_save($(this).attr('data'));
 		$('#categorynum').val($(this).attr('data'));
 		get_group_album_list('category' , 'party' , '${partyinfo.getParty_name()}'  , 'date', pagenum++ , 1);
 	});
@@ -127,6 +128,7 @@ $(document).ready(function () {
 	$('#searchtx').keydown(function(event){
 		if(event.keyCode == 13){
 			searchcheck = 99;
+			search_save($('#searchtx').val());
 			get_group_album_list('writer' , 'party' , '${partyinfo.getParty_name()}' , 'data', pagenum++ , 0);
 		}
 	});

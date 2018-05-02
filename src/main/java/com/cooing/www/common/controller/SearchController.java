@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cooing.www.album.dao.AlbumDAO;
-import com.cooing.www.album.vo.AlbumVO;
 import com.cooing.www.album.vo.CategoryPop;
 import com.cooing.www.common.dao.SearchDAO;
-import com.cooing.www.common.vo.PageLimit;
 import com.cooing.www.common.vo.Search;
 import com.cooing.www.member.dao.MemberDAO;
 import com.cooing.www.member.dao.RelationDAO;
@@ -89,6 +87,26 @@ public class SearchController {
 	public ArrayList<String> search_id_check(String text){
 		logger.info("search_id_check_groupview__jinsu");		
 		return  searchDAO.search_id_check(text);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/insert_categorypop" , method = RequestMethod.POST)
+	public String insert_categorypop(HttpSession session , int categorynum){
+		logger.info("insert_categorypop__jinsu");		
+		if(searchDAO.insertCategoryPop(new CategoryPop(0 , categorynum , "0")))
+			return  "success";
+		else
+			return "false";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/insert_search" , method = RequestMethod.POST)
+	public String insert_search(HttpSession session , String search){
+		logger.info("insert_search__jinsu");		
+		if(searchDAO.insertSearch(new Search(0 , search , "0")))
+			return  "success";
+		else
+			return "false";
 	}
 	
 	@ResponseBody

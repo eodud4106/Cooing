@@ -14,12 +14,14 @@ function initialize(){
 	$('#searchtx').keydown(function(event){
 		if(event.keyCode == 13){
 			searchcheck = 99;
+			search_save($('#searchtx').val());
 			get_album_list('writer','total','date', pagenum++ , 0);
 			$('#newcheck').iCheck('check');
 		}
 	});
 	$('.category').on('click' , function(){
 		searchcheck = 1;
+		category_save($(this).attr('data'));
 		$('#categorynum').val($(this).attr('data'));
 		$('#newcheck').iCheck('check');
 		checkRadioPaging();		
