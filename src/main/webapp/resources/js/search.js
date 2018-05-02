@@ -292,41 +292,60 @@ function AlbumListPaging_hindoong(check, result) {
 			"album_num": album.album_num
 		}).appendTo($div_card);
 		
-		var $p_name = $('<p />', {
-			"text": album.album_name,
+		var $p_name = $('<div />', {
+			"html":"<br>" + album.album_name,
 			"class": "card_album_name"
+		}).css({
+			"width" : "100%",
+			"height": "100px"
 		}).appendTo($info_div);
-		var $p_writer = $('<p />', {
+		var $p_writer = $('<div />', {
 			"text": album.album_writer,
 			"class": "card_album_writer"
-		}).appendTo($info_div);
-		var $p_contents = $('<p />', {
+		}).css({
+			"font-size" : "20px",			
+			"height": "50px",
+			"float":"right"
+ 		}).appendTo($info_div);
+		var $p_contents = $('<div />', {
 			"html": album.album_contents + "<br>",
 			"class": "card_album_contents"
+		}).css({
+			"text-align": "center",
+			"width" : "100%",
+			"height" : "100px"	
 		}).appendTo($info_div);
 		if(album.album_contents == null) {
-			$p_contents.html("<CONTENT><br>없음<br>")
+			$p_contents.html("<CONTENT><br><br>")
 		}		
 		var $span_like = $('<sapn />', {
-			"html": "❤",
+			"html": "<br>" + "<br>" +"❤" ,
 			"class": "card_album_likes"
 		}).css({
-			"color":"#FF0000"			
+			"color":"#FF0000",
+			"float":"left"
+			
 		}).appendTo($info_div);
 		
 		var $span_likecount = $('<sapn />', {
-			"html": album.like_count + "<br>",
+			"html": "<br>" +"<br>" +album.like_count,
 			"class": "card_album_likes"
+		}).css({			
+			"float":"left"
+			
 		}).appendTo($info_div);
 		
-		var $p_reply = $('<p />', {
-			"html": "댓글 :" + album.reply_count,
+		/*var $p_reply = $('<p />', {
+			"html": "<br>" +"<br>" +"<br>" +"<br>"+"<br>" +"댓글 :" + album.reply_count,
 			"class": "card_album_reply"
-		}).appendTo($info_div);
+		}).appendTo($info_div);*/
 		
 		var $p_category = $('<p />', {
-			"html": "Category :" + category[album.album_category],
+			"html": "<br>" +"Category :" + category[album.album_category],
 			"class": "card_album_category"
+		}).css({
+			"float":"right",
+			"margin-top":"25px"
 		}).appendTo($info_div);
 		
 		// 마우스 엔터

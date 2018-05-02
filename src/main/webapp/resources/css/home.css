@@ -38,16 +38,25 @@
 
 .card_album_writer{
 	float : right;
+	margin-left: 800px;
+	font-size: 25px;
 }
 
 .card_album_contents{
+	/* text-align: center; */
 	
 }
 .card_album_likes{
-	float: right;	
+	float: left;
+		
 }
-.card_album_contents{
-	float : right;s
+.card_album_reply{
+	text-align: center;	
+	
+}
+sapn{
+	float : left;
+	
 }
 
 
