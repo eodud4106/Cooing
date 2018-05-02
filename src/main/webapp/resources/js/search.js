@@ -112,7 +112,7 @@ function searchword() {
 			dataType : 'json',
 			success : function(array) {
 				$('#friend').html('');
-				$('#friend').text('<친구들>');
+				$('#friend').text('<FRIEND>');
 				print_search_result(array, $('#friend'), 'friend');
 			},
 			error : function(e) {
@@ -128,7 +128,7 @@ function searchword() {
 			dataType : 'json',
 			success : function(array) {
 				$('#user').html('');
-				$('#user').text('<유저>');
+				$('#user').text('<USER>');
 				print_search_result(array, $('#user'), 'user');
 			},
 			error : function(e) {
@@ -143,7 +143,6 @@ function searchword() {
 			success : function(array) {
 				$('#friend').html('')
 				$('#user').html('')
-				$('#friend').text('친구들')
 				print_search_result(array, $('#friend'), 'friend');
 			},
 			error : function(e) {

@@ -273,6 +273,14 @@ html, body, main, .container-fluid {
 					searchword();
 				});
 				nowpage();
+				
+				
+				$(window).bind("beforeunload", function (e){
+					//TODO 웹소켓 닫기
+					console.log('편집을 종료합니다.');
+				});
+				
+				
 			});
 
 	function page1ImageSave() {

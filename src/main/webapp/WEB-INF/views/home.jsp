@@ -66,7 +66,7 @@ var searchcheck = 99;
 $(window).scroll(function() {
 	console.log(($(window).scrollTop() + 100) + '_window' + ($(document).height() - $(window).height()) + '_document');
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
-    	alert('test _ ' + searchcheck + '_search' + pagenum + '_pagenum');
+    	console.log('test _ ' + searchcheck + '_search' + pagenum + '_pagenum');
     	//메인으로 그냥 들어왔을 때 와 검색해서 들어왔을 때 = 0 / 카테고리 눌러서 들어왔을 때  = 1 
     	if(searchcheck == 0){
     		if(total){	
@@ -383,7 +383,7 @@ $(document).ready(function(){
 				<div class="invite_list" id="invite_list"></div>
 			</div>
 		</div>
-	</section>   
+	</section>
   
 	</aside>
 	

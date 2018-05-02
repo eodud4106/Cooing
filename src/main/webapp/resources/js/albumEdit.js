@@ -1640,8 +1640,6 @@ function savePage(mode) {
  */
 function slider(nowpage) {
 	
-	alert(nowpage);
-	
 	$('#slider').slider({
 		min: 1,
 		max: $('#album').turn('pages')/2 +1,
