@@ -232,23 +232,6 @@ height: 30px;
 			sendPush($('#user_id').val(), friendid, 1, '우리 친구해요');
 			alert('친구 요청을 보냈습니다!');
 			
-/* 			$.ajax({
-				url:'albumView_friend_plus',
-				type:'POST',		
-				data:{friendid:friendid},
-			dataType:'text',
-				success: function(a){
-				if(a=='success'){
-						$('#friendbt').html('<i class="fas fa-user-times"></i>');
-						$('#friendbt').attr('data' , '1');
-						searchword();
-					}
-					else{
-						alert(a);
-					}
-				},
-				error:function(e){alert(JSON.stringify(e));}		
-			}); */
 		}else if(data == 1){
 			$.ajax({
 				url:'albumView_friend_delete',

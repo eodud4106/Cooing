@@ -188,32 +188,4 @@ select::-ms-expand { /* for IE 11 */
     display: none;
 }
 
-.img_thumbnail {
-	width: 100%;
-	height: 100%;
-	opacity: 1;
-}
 
-.div_card:hover {
-	cursor: pointer;
-}
-
-.card_album_name{
-	font-size: 30px;
-	font-family: font-family: 'Black Han Sans', sans-seri.f;
-	
-}
-
-.card_album_writer{
-	float : right;
-}
-
-.card_album_contents{
-	
-}
-.card_album_likes{
-	float: right;	
-}
-.card_album_contents{
-	float : right;s
-}
