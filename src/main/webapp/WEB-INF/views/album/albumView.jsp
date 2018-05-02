@@ -726,9 +726,11 @@ height: 30px;
 		</div>
 		<!-- END row -->
 		<!-- 하단 바 영역 -->
-		<div style="margin-right: 150px; float:right">
-			<div class="under_bar " align="right">
+		<div style="margin-right: 20px; float:right">
+			<div class="under_bar">
+				 			
 				<!-- 각종 버튼 -->
+				<!--
 				<div id="i_before" class="under_tool" onclick="go_page('first')" role="첫 페이지">
 					<i style="width: 30px; height: 30px; margin: 10px;"
 						class="fas fa-angle-double-left"></i>
@@ -745,6 +747,7 @@ height: 30px;
 					<i style="width: 30px; height: 30px; margin: 10px;"
 						class="fas fa-angle-double-right"></i>
 				</div>
+				-->
 				<c:if test="${sessionScope.Member.member_id == album.album_writer}">
 					<div id="i_edit" class="under_tool"
 						onclick="location.href='edit_album?album_num=${album.album_num}'" role="편집">
@@ -755,6 +758,9 @@ height: 30px;
 				<div id="i_bookmark" class="under_tool" onclick="bookmark_toggle()" role="책갈피 추가">
 					<i style="width: 30px; height: 30px; margin: 10px;"
 						class="fas fa-plus"></i>
+				</div>
+				<div id="slider-bar" class="turnjs-slider" style="margin-top: 15px; margin-right:150px; width: 300px;">
+					<div id="slider"></div>
 				</div>
 			</div>
 		</div>
