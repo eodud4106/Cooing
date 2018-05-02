@@ -1,8 +1,6 @@
 /**
  * 
  */
-
-alert('test');
 //달력 부분
 $( function() {
   $('#datepicker').datepicker({
