@@ -97,6 +97,8 @@ function onMessage_edit(evt) {
     
     
     if(pushData.type == 'open') {
+    	
+    	editable_switch('disable');
     	// 편집 가능
     	if (pushData.editable == 'true') {
     		$('#i_edit').attr('role', '편집하기').click(function(e) {
@@ -119,6 +121,9 @@ function onMessage_edit(evt) {
     		
     		if (pushData.member_id == this.member_id) {
 				// 편집 요청한 사람
+    			
+    			editable_switch('enable');
+    			
     			$('#i_edit').attr('role', '편집 그만하기').click(function(e) {
             		end_edit();
             	}).css({
@@ -126,6 +131,9 @@ function onMessage_edit(evt) {
         		});
     			
 			} else {
+				
+				editable_switch('disable');
+				
 				$('#i_edit').attr('role', '편집 중').click(function(e) {
 					return;
 	        	}).css({
@@ -140,8 +148,12 @@ function onMessage_edit(evt) {
     	
     } else if(pushData.type == 'end') {
     	// 편집 끝남
+    	editable_switch('disable');
+    	
     	//reload 말고 더 좋은 방법은...?
-    	location.reload();
+    	$('#album').turn('destroy');
+    	ready_album('edit');
+    	
     	$('#i_edit').attr('role', '편집하기').click(function(e) {
     		isEditable();
     	}).css({

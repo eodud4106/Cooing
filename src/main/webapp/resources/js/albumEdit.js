@@ -66,6 +66,8 @@ var album_left = 0;         //앨범의 left
 var PAGE_WIDTH = 600;       // 페이지 당 너비
 var PAGE_HEIGHT = 700;      // 페이지 당 높이
 
+var editable = true;		// 그룹 편집 시 편집 가능 불가능 토글용
+
 var curr_page = 1;
 
 var arr_color = ["#FF0000", "#FF5E00", "#FFBB00", "#FFE400", "#ABF200",
@@ -353,6 +355,8 @@ function initpage($page) {
 //배경 지울 때 드랍된 페이지 저장변수(대영)
 var droppable_page;
 function renderbox(event, ui, page) {
+	
+	if(!editable) return;
 
     // 클릭한 페이지의 위치 확인
     var curr_page_top = album_top;
@@ -381,6 +385,7 @@ function renderbox(event, ui, page) {
     }    
     //배경 지우기
     else if(ui.helper.hasClass("remove")) {
+    	if(!editable) return;
     	$('#page' + droppable_page).css('background-image', '');
     }
     //이미지인 경우
@@ -427,6 +432,8 @@ function renderbox(event, ui, page) {
  */ 
 function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
 	
+	if(!editable) return;
+	
     $arr_div_box.push($div_box);
 
 
@@ -469,6 +476,7 @@ function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
 
     // textbox 마우스 다운 시 크기 조절 모드 + 전역 편집 모드
     $div_box.mousedown(function(e) {
+    	if(!editable) return;
         //이벤트 bubble 제거
         e.stopPropagation();
 
@@ -489,6 +497,7 @@ function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
         }
 
     }).dblclick(function(e){
+    	if(!editable) return;
         //textbox 더블클릭 시 텍스트 입력 + 선택 편집 모드로 전환(TODO 텍스트 입력에 따라 높이 자동 조절되도록, 너비는 직접 수정)
 
         //이벤트 bubble 제거
@@ -530,6 +539,8 @@ function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
 
 // 텍스트 선택 시 텍스트 상단에 편집창 팝업
 function isTextboxHighlighted(e) {
+	
+	if(!editable) return;
 
     var sel = window.getSelection();
 
@@ -545,6 +556,8 @@ function isTextboxHighlighted(e) {
 
 // [start] 1단계 편집창 생성
 function createWholeEditor($div_box) {
+	
+	if(!editable) return;
 
     var $arr_bt = [];
 
@@ -1249,6 +1262,8 @@ function createWholeEditor($div_box) {
 
 // [start] 2단계 편집창(텍스트 전용) 생성
 function createTextEditor(top, left) {
+	
+	if(!editable) return;
 
     var $arr_bt = [];
     
@@ -1476,6 +1491,8 @@ function createTooltip($elem, text) {
  *  [start] 페이지 저장(페이지 div의 css:backgroud-image 속성도 저장한다.)
  **/
 function savePage(mode) {
+	
+	if(!editable) return;
 
     // 몇 페이지 저장할 것인지
     var count = 1;
@@ -1553,6 +1570,8 @@ function savePage(mode) {
  *  현재 보고 있는 페이지를 기준으로 2페이지 추가
  **/
  function addPage() {
+	 
+	if(!editable) return;
 
     // 페이지 추가는 커버 바로 앞에 두 페이지 씩 추가하는 형태
     var total_page = $('#album').turn('pages');
@@ -1599,6 +1618,8 @@ function savePage(mode) {
   *  현재 보고 있는 페이지를 기준으로 2페이지 삭제
   **/
  function removePage() {
+	 
+	if(!editable) return;
 
     var total_page = $('#album').turn('pages');
 
@@ -1692,6 +1713,9 @@ function create_nav_bar(ui) {
 }
 
 function remove_box() {
+	
+	if(!editable) return;
+	
     var id_index = arr_box_id.indexOf($('.onSelect').attr('id'));
 
     // onSelect인 박스일 경우만 삭제
@@ -1762,6 +1786,7 @@ function open_background() {
 		}).css({
 			"background-color": arr_color[i] 
 		}).click(function(e) {
+			if(!editable) return;
 			$('.page').css({
 				"background-color": $(this).css("background-color") 
 			});
@@ -1789,3 +1814,17 @@ function go_page(index) {
 		$('#album').turn('page', $('#album').turn('pages'));
 	}
 }
+
+//그룹 편집 시 퍈집 가능/불가능 스위치
+function editable_switch (mode) {
+	if (mode == 'enable') {
+		editable = true;
+		$('.page').droppable("disable");
+        $('#page' + curr_page + '').droppable("enable");
+		$('.div_box').draggable('enable').resizable('enable');
+	} else if (mode == 'disable') {
+		editable = false;
+		$('.page').droppable("disable");
+		$('.div_box').draggable('disable').resizable('disable');
+	}
+} 
