@@ -369,7 +369,7 @@ html, body, main, .container-fluid {
 <body style ="font-family: 'Nanum Gothic Coding', monospace;">
 
 	<!-- 사이드 바 -->
-	<aside class="probootstrap-aside js-probootstrap-aside">
+	<aside class="probootstrap-aside js-probootstrap-aside" style = "background-color: aliceblue;">
 		<a href="#"
 			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-left"></span> Close
@@ -490,7 +490,7 @@ html, body, main, .container-fluid {
 
 
 					<div id="dropDownSelect1"></div>
-
+				
 
 				</section>
 

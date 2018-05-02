@@ -398,7 +398,7 @@ function category_change(category) {
 </head >
 <body style ="font-family: 'Nanum Gothic Coding', monospace; ">
 
-	<aside class="probootstrap-aside js-probootstrap-aside">
+	<aside class="probootstrap-aside js-probootstrap-aside" style = "background-color: aliceblue;">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
@@ -435,7 +435,10 @@ function category_change(category) {
 			
 			</nav>
 			<br><br><br>
-
+	<footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft" 
+				style = "font-family: Poppins-Regular;">          
+         		 <p>&copy; 2018 <a href="cooing.site/www" target="_blank">COOING</a>. <br> All Rights Reserved.</p>
+       			 </footer>	
 		</div>
 	</aside>
 
