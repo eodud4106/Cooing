@@ -281,42 +281,48 @@ function AlbumListPaging_hindoong(check, result) {
 			"html":"<br>" + album.album_name,
 			"class": "card_album_name"
 		}).css({
+			"font-size" : "36px",
 			"width" : "100%",
-			"height": "100px"
+			"height": "100px",
+			"font-weight":"bold"
 		}).appendTo($info_div);
 		var $p_writer = $('<div />', {
 			"text": album.album_writer,
 			"class": "card_album_writer"
 		}).css({
-			"font-size" : "20px",			
+			"font-size" : "25px",			
 			"height": "50px",
-			"float":"right"
+			"float":"right",
+			"font-weight":"bold"
  		}).appendTo($info_div);
-		var $p_contents = $('<div />', {
+		/*var $p_contents = $('<div />', {
 			"html": album.album_contents + "<br>",
 			"class": "card_album_contents"
 		}).css({
 			"text-align": "center",
 			"width" : "100%",
 			"height" : "100px"	
-		}).appendTo($info_div);
+		}).appendTo($info_div);*/
 		if(album.album_contents == null) {
 			$p_contents.html("<CONTENT><br><br>")
 		}		
 		var $span_like = $('<sapn />', {
-			"html": "<br>" + "<br>" +"❤" ,
+			"html": "<br>" +"<br>" +"<br>" + "<br>" +"❤" ,
 			"class": "card_album_likes"
 		}).css({
 			"color":"#FF0000",
-			"float":"left"
-			
+			"float":"left",
+			"margin-top":"85px",
+			"font-weight":"bold"	
 		}).appendTo($info_div);
 		
 		var $span_likecount = $('<sapn />', {
-			"html": "<br>" +"<br>" +album.like_count,
+			"html": "<br>" +"<br>" +"<br>" +"<br>" +album.like_count,
 			"class": "card_album_likes"
 		}).css({			
-			"float":"left"			
+			"float":"left",
+			"margin-top":"85px",
+			"font-weight":"bold"
 		}).appendTo($info_div);
 		
 		/*var $p_reply = $('<p />', {
@@ -325,11 +331,12 @@ function AlbumListPaging_hindoong(check, result) {
 		}).appendTo($info_div);*/
 		
 		var $p_category = $('<p />', {
-			"html": "<br>" +"Category :" + category[album.album_category],
+			"html":  "<br>" +"<br>" +"<br>" +"Category :" + category[album.album_category],
 			"class": "card_album_category"
 		}).css({
 			"float":"right",
-			"margin-top":"25px"
+			"margin-top":"110px",
+			"font-weight":"bold"
 		}).appendTo($info_div);
 		
 		// 마우스 엔터
