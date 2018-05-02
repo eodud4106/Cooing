@@ -180,7 +180,8 @@ function show_unread_push(push) {
 			
 			if (unread.agree == 1) {
 				head_text = "요청  승낙";
-				unread.msg = "친구가 되었습니다."
+				unread.msg = "친구가 되었습니다.";
+				searchword();
 			} else {
 				head_text = "요청  거절";
 				unread.msg = "친구 요청을 거절했습니다."
@@ -193,6 +194,7 @@ function show_unread_push(push) {
 				head_text = "가입 승낙";
 				unread.msg = "파티원이 되었습니다."
 				print_party_member($('#desolve').attr('data'));
+				searchgroup();
 			} else {
 				head_text = "가입 거절";
 				unread.msg = "파티 가입을 거절했습니다."
@@ -281,9 +283,11 @@ function show_unread_push(push) {
 				"display": "inline-block",
 				"margin": "3px"
 			}).appendTo($container).click(function(e){
-				sendResponse($(this).parent().parent().attr('push_id'), (Number($(this).parent().parent().attr('type'))+2), "좋아", 1);
+				sendResponse($(this).parent().parent().attr('push_id'), (Number($(this).parent().parent().attr('type'))+2), "좋아요", 1);
 				$(this).parent().parent().remove();
-				alert("가입되었습니다.");
+				alert("승낙했습니다.");
+				searchword();
+				searchgroup();
 				print_party_member($('#desolve').attr('data'));
 			});
 			
@@ -298,7 +302,7 @@ function show_unread_push(push) {
 				"display": "inline-block",
 				"margin": "3px"
 			}).appendTo($container).click(function(e){
-				sendResponse($(this).parent().parent().attr('push_id'), (Number($(this).parent().parent().attr('type'))+2), "싫어!", 0);
+				sendResponse($(this).parent().parent().attr('push_id'), (Number($(this).parent().parent().attr('type'))+2), "싫어요!", 0);
 				$(this).parent().parent().remove();
 				alert("거절했습니다.");
 				
