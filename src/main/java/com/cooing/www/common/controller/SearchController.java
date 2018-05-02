@@ -116,10 +116,4 @@ public class SearchController {
 		Member personal = (Member)session.getAttribute("Member");
 		return  relationDAO.searchPartyByMemberid(personal.getMember_id());
 	}
-	
-	@RequestMapping(value = "/information", method = RequestMethod.GET)
-	public String infomation() {
-		logger.info("information__jinsu");
-		return "information";
-	}
 }
