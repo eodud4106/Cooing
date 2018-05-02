@@ -28,7 +28,9 @@ function nowpage(){
 	var totalpage = $('#album').turn('pages');
 	nowpage = (nowpage==1?1:(nowpage%2 == 0?nowpage:nowpage-1));
 	
-	if(nowpage != 1){
+	slider(nowpage);
+	
+/*	if(nowpage != 1){
 		$('#left_page').show();
 		$('#right_page').show();
 		$('#left_page').val(nowpage + '_left');
@@ -41,7 +43,7 @@ function nowpage(){
 		$('#right_page').val(nowpage + '_right');
 	}
 	
-	$('#total_page').val(totalpage + '_total');
+	$('#total_page').val(totalpage + '_total');*/
 }
 
 //home이 아닌곳에서 search를 할경우 메인으로 보내서 검색을 해야한다.
