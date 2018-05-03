@@ -25,6 +25,8 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- 앨범 정보 띄우는 부분  -->
 <link rel="stylesheet" href="resources/css/search.css">
+<!-- 폰트 -->
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
 
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>

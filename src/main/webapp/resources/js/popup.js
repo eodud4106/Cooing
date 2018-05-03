@@ -28,6 +28,7 @@ function createPartyPopup(e, elem) {
 		"left": e.clientX,
 		"top": e.clientY,
 		"width": "100px",
+		"font-size":"13px",
 		"height": "60px",
 		"margin-left" : "10px",
 		"background-color": "#464a4e",
@@ -48,6 +49,7 @@ function createPartyPopup(e, elem) {
 	}).css({
 		"width": "100%",
 		"height": "50%",
+		"font-size":"13px",
 		"margin-left" : "10px",
 		"display": "block",
 		"float": "left"
@@ -62,6 +64,7 @@ function createPartyPopup(e, elem) {
 	}).css({
 		"width": "100%",
 		"height": "50%",
+		"font-size":"13px",
 		"margin-left" : "10px",
 		"display": "block",
 		"float": "left"
@@ -82,6 +85,7 @@ function createFriendPopup(e, elem, type) {
 		"top": e.clientY,
 		"width": "100px",
 		"height": "60px",
+		"font-size":"13px",
 		"background-color": "#464a4e",
 		"z-index": "1000",
 		"margin-left" : "10px",
@@ -98,7 +102,9 @@ function createFriendPopup(e, elem, type) {
 	}).css({
 		"width": "100%",
 		"height": "50%",
+		"font-size":"13px",
 		"display": "block",
+		"margin-left" : "10px",
 		"float": "left",
 		"color": "white",
 		"cursor": "pointer"
@@ -127,6 +133,8 @@ function createFriendPopup(e, elem, type) {
 		"width": "100%",
 		"height": "50%",
 		"display": "block",
+		"font-size":"13px",
+		"margin-left" : "10px",
 		"float": "left",
 		"color": "white",
 		"cursor": "pointer"
