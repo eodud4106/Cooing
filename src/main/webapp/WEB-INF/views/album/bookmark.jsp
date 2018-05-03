@@ -278,7 +278,7 @@ p{
 <script src="<c:url value="/resources/aside_js/owl.carousel.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/jquery.waypoints.min.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/imagesloaded.pkgd.min.js"/>"></script>
-<script src="<c:url value="/resources/aside_js/search.js"/>"></script>
+<script src="<c:url value="/resources/js/search.js"/>"></script>
 <script src="<c:url value="/resources/aside_js/main.js"/>"></script>
 <script src="resources/js/popup.js"></script>
 <script src="resources/js/chat.js"></script>
