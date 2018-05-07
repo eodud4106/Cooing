@@ -6,7 +6,7 @@ function loginmember(toRoot){
 	if(!member_check()) return false;
 	
 	$.ajax({
-		url: toRoot + 'jinsu/login_post',
+		url: toRoot + 'login_post',
 		type:'POST',		
 		data:{
 			member_id: $('#id').val(),
@@ -19,10 +19,10 @@ function loginmember(toRoot){
 				location.href=toRoot;
 			}
 			else{
-				alert('ID 혹은 비밀버호가 틀렸습니다.');
+				alert('ID 혹은 비밀번호가 틀렸습니다.');
 			}		
 		},
-		error:function(e){alert(JSON.stringify(e));}		
+		error:function(e){/*alert(JSON.stringify(e));*/}		
 	});	
 }
 

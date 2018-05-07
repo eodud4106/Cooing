@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cooing.www.jinsu.dao.MemberMapper">
+<mapper namespace="com.cooing.www.member.dao.MemberMapper">
 
 	<insert id="insertMember" parameterType="member">
 	insert into member (
@@ -15,8 +15,62 @@
 	select * from member where member_id = #{id}
 	</select>
 	
-	<select id="searchId" resultType="String" parameterType="String">
-	select member_id from member where member_id like '%'||#{id}||'%' 
+	<select id="selectfriend" resultType="member" parameterType="String">
+	select *
+	from member 
+	where 
+	member_id in(
+		 select friend_id2 as member_id
+		 from friend
+		 where friend_id1 = #{myid}
+		 union 
+		 select friend_id1 as member_id
+		 from friend
+		 where friend_id2 = #{myid} 
+	) 
+	and member_id != #{myid}
+	</select>
+	
+	<select id="searchallId" parameterType="String" resultType="String">
+		select member_id 
+		from member
+		where member_id like '%'||#{search}||'%'
+	</select>
+	
+	<select id="searchId" resultType="member" parameterType="map">
+	select *
+	from member 
+	where member_id like '%'||#{friendid}||'%'
+	and member_id in(
+		 select friend_id2 as member_id
+		 from friend
+		 where friend_id1 = #{myid}
+		 		and friend_id2 like '%'||#{friendid}||'%'
+		 union 
+		 select friend_id1 as member_id
+		 from friend
+		 where friend_id2 = #{myid} 
+		  		and friend_id1 like '%'||#{friendid}||'%' 
+	)
+	and member_id != #{myid}
+	</select>
+	
+	<select id="searchUser" resultType="member" parameterType="map">
+	select *
+	from member 
+	where member_id like '%'||#{friendid}||'%'
+	and member_id not in(
+		select friend_id2 as member_id
+		 from friend
+		 where friend_id1 = #{myid}
+		 		and friend_id2 like '%'||#{friendid}||'%'
+		 union 
+		 select friend_id1 as member_id
+		 from friend
+		 where friend_id2 = #{myid} 
+		  		and friend_id1 like '%'||#{friendid}||'%' 
+	) 
+	and member_id != #{myid}
 	</select>
 	
 	<update id="updateTimeMember" parameterType="String">

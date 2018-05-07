@@ -6,118 +6,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>LankingPage</title>
+<title>RankingPage</title>
 <meta charset="UTF-8" />
+<link rel="icon" type="image/png" href="resources/assets/images/cooing_logo.png"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans">
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
+<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="resources/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="resources/css/graph.css">
+<link rel="stylesheet" href="resources/css/green.css">
+<link rel="stylesheet" href="resources/css/icomoon.css">
+<link rel="stylesheet" href="resources/css/animate.css">
+<link rel="stylesheet" href="resources/css/style.css">
+<link rel="stylesheet" href="resources/css/jquery-ui.css">
+<link rel="stylesheet" href="resources/css/chat.css">
+<link rel="stylesheet" href="resources/css/push.css">
 
-<link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
-<link rel="stylesheet" href="resources/aside_css/open-iconic-bootstrap.min.css">
-
-<link rel="stylesheet" href="resources/aside_css/owl.carousel.min.css">
-<link rel="stylesheet" href="resources/aside_css/owl.theme.default.min.css">
+<script src="resources/js/jquery-3.3.1.min.js"></script>
+<script src="resources/js/jquery-ui.min.js"></script>
+<script src="resources/js/popper.min.js"></script>
+<script src="resources/js/bootstrap.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
-
-<link rel="stylesheet" href="resources/aside_css/icomoon.css">
-<link rel="stylesheet" href="resources/aside_css/animate.css">
-<link rel="stylesheet" href="resources/aside_css/style.css">
-
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<link rel="stylesheet" href="http://www.workshop.rs/jqbargraph/styles.css" type="text/css" />
 <script type="text/javascript" src="http://www.workshop.rs/jqbargraph/jqBarGraph.js"></script>
+ <script src="resources/js/icheck.js"></script>
+<script src="resources/js/owl.carousel.min.js"></script>
+<script src="resources/js/jquery.waypoints.min.js"></script>
+<script src="resources/js/imagesloaded.pkgd.min.js"></script>
+<script src="resources/js/laking.js"></script>
+<script src="resources/js/search.js"></script>
+<script src="resources/js/popup.js"></script>
+<script src="resources/js/main.js"></script>
+<script src="resources/js/chat.js"></script>
+<script src="resources/js/push.js"></script>
+
+<!-- 탭나누는 사이드바 -->
+<link rel="stylesheet" type="text/css" href="resources/album_create/css/util.css">
+<link rel="stylesheet" type="text/css" href="resources/album_create/css/main.css">
+
 
 <script>
-$( function() {
-    $( "#datepicker" ).datepicker({
-    	 dateFormat: "yy-mm-dd",
-    	 dayNamesShort: [ "일", "월", "화", "수", "목", "금", "토" ],
-    	 dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
-    	 dayNames: [ "일", "월", "화", "수", "목", "금", "토" ],
-    	/*  changeYear: true,
-    	 changeMonth: true,  // 편하기는 하겠으나 제공해줄 생각 없음*/
-    	 maxDate: "-1",
-    	 minDate: new Date(2010, 1 - 1, 1),
-    	 showOtherMonths: true,
-    	 selectOtherMonths:true,
-    	 showAnim: "fadeIn",
-    	 showMonthAfterYear: true
-    	 /* monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec" ] //바꿔봤지만 안이쁨*/
-  	 });
-});
 $(document).ready(function() {
 	initialize();
+	/* readyChat('${sessionScope.Member.member_id}', ''); */
 });
-function initialize(){
-	//밑 에 부분은 검색어에 관련된 부분 
-	/* $('#datepicker').on('change' , function(){
-		$.ajax({
-			url:'searchInfomation',
-			type:'POST',		
-			data:{searchdate:$('#datepicker').val()},
-			dataType:"json",
-			success: function(list){
-				array = new Array();
-				$.each(list,function(i,data){
-					var count = 0;
-					var word = '';
-					$.each(data,function(key,value){
-						if(key == 'SEARCH_WORD'){
-							word = value;
-						}else if(key == 'COUNT'){
-							count = value;
-						}
-					});	
-					array[i] = [count , word , '#f3f3f3'];		
-				});
-				$('#graphdiv').html('');
-				$('#graphdiv').jqBarGraph({ 
-					data: array,		
-					animate: false
-				});
-			},
-			error:function(e){alert(JSON.stringify(e));}		
-		});
-	}); */
-	
-	//밑에 부분은 카테고리 검색에 관한 부분
-	var vector = ['여행' , '음식'];
-	$('#datepicker').on('change' , function(){
-		$.ajax({
-			url:'searchCategorypop',
-			type:'POST',		
-			data:{searchdate:$('#datepicker').val()},
-			dataType:"json",
-			success: function(list){
-				array = new Array();
-				$.each(list,function(i,data){
-					var count = 0;
-					var kind = 0;
-					$.each(data,function(key,value){
-						if(key == 'KIND'){
-							kind = value;
-						}else if(key == 'COUNT'){
-							count = value;
-						}
-					});	
-					
-					array[i] = [count ,vector[kind], '#f3f3f3'];		
-				});
-				$('#graphdiv').html('');
-				$('#graphdiv').jqBarGraph({ 
-					data: array,		
-					animate: false
-				});
-			},
-			error:function(e){alert(JSON.stringify(e));}		
-		});
-	});
-}
-</script>
 
+</script>
+<!-- 정렬순 라디오 버튼 -->
+<script>
+$(document).ready(function(){
+  $('.input').iCheck({
+    checkboxClass: 'icheckbox_square-green',
+    radioClass: 'iradio_square-green',
+    increaseArea: '20%' // optional
+  });
+	//경고!! 아래 코드를 절대 별도의 js파일로  마시오!!
+	if ('${sessionScope.Member}' != null) {
+		readyChat('${sessionScope.Member.member_id}', '');
+		readyPush('${sessionScope.Member.member_id}', '');
+	}
+});
+</script>
 <style>
+#image_search {
+	cursor: pointer;
+}
 .img1 {
 	width: 50px;
 	height: 50px;
@@ -146,24 +100,212 @@ select {
 select::-ms-expand { /* for IE 11 */
     display: none;
 }
+</style>
+<style type="text/css">
+#main {
+    min-width: 200px;
+    max-width: 200px;
+    margin-top : 30px;
+    padding: 10px;
+    margin: 0 auto;
+    background: #ffffff;}
+section {
+    display: none;
+    padding: 20px 0 0;    
+    font-size : 14px;        
+    border-top: 1px solid #ddd;}
+/*라디오버튼 숨김*/
+#tab1,#tab2,#tab3 {
+      display: none;}
 
+label {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 5px 10px;
+    font-weight: 600;
+    text-align: center;
+    color: #bbb;
+    border: 1px solid transparent;
+    font-size: 15px;}
+
+label:hover {
+    color: #2e9cdf;
+    cursor: pointer;}
+
+/*input 클릭시, label 스타일*/
+#tab1:checked + label,#tab2:checked + label,#tab3:checked + label {
+      color: #555;
+      border: 1px solid #ddd;
+      border-top: 2px solid #2e9cdf;
+      border-bottom: 1px solid #ffffff;}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3{
+    display: block;}
+
+.search{	
+	width: 120px;
+	display:block;
+	position: absolute;	
+}
+.bt{
+	position: absolute;
+	right: 40px;
+}
+.tb1{
+	padding-top: 20px;
+}	    
+
+html, body, main, .container-fluid {
+	height: 100%;
+}
+.container-fluid {
+	padding: 0;
+}
+
+.view_wrapper {
+	margin: 0;
+	margin-left: 250px;
+	display: flex;
+	flex-wrap: wrap;
+}
+.album_wrapper, .top_bar {
+	margin: auto !important;
+	display: block;
+}
+.checkbox {
+	font-size: 20px;
+}
+.page {
+	background-color: #A4A4A4;
+	
+}
+.outer {
+	background-color: #aaa;
+}
+.button_container {
+  position: absolute;
+ /*  left: 0; */
+  /* right: 0; */
+ /* top: 50%;  */
+}
+
+.btn {
+  border: none;
+  display: block; 
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: #bae5e1;
+  /* padding: 17px 60px; */
+  margin: 0 auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+}
+
+.btn span {
+  position: relative; 
+  z-index: 1;
+}
+
+.btn:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 490%;
+  width: 140%;
+  background: #78c7d2;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  transform: translateX(-98%) translateY(-25%) rotate(45deg);
+}
+
+.btn:hover:after {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+
+.link {
+  font-size: 20px;
+  margin-top: 30px;
+}
+
+.link a {
+  color: #000;
+  font-size: 25px; 
+}
+.img1 {
+	width: 50px;
+	height: 50px;
+}
+
+.friendList{
+	height: 700px;		
+	overflow-y : scroll;
+	padding-left: 30px;	
+    font-size: 14px;
+    font-family: Poppins-Regular;
+    cursor: pointer;
+    margin-top: -15px;
+}
+.groupList{
+	height: 700px;	
+	/* overflow-y : scroll; */
+	padding-left: 30px;
+	font-family: Poppins-Regular;
+	/* overflow-y:hidden; */
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 100px;
+    
+}
+.newsList{
+	height: 700px;	
+	/* overflow-y : scroll; */
+	padding-left: 30px;
+	/* overflow-y:hidden; */
+	/* background-color : aliceblue; */
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 100px;
+    
+}
+
+a{
+	font-size: 20px;
+}
+.c{
+	font-size: 20px;
+	font-family: 'Nanum Gothic Coding', monospace;
+}
+li{
+	cursor: pointer;
+}
 
 </style>
 </head>
-<body>
+<body style ="font-family: 'Nanum Gothic Coding', monospace;">
 
-	<aside class="probootstrap-aside js-probootstrap-aside">
+	<aside class="probootstrap-aside js-probootstrap-aside" style = "background-color: aliceblue;">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
-			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
+			<a href="/www" class="mb-2 d-block probootstrap-logo" style= "font-size: 30px;">COOING</a>
 
 			<!-- 로그인되어있을 때 -->
 			<c:if test="${Member ne null}">
 				<p>
-					<img src="<c:url value="/jinsu/img" />" class="img1">${Member.getMember_id()}
+					<img src="<c:url value="/img_member" />" class="img1">${Member.getMember_id()}
 				</p>
 			</c:if>
 			<!-- 로그인 안되어있을 때 -->
@@ -176,26 +318,17 @@ select::-ms-expand { /* for IE 11 */
 		</div>
 		<div class="probootstrap-overflow">
 			<nav class="probootstrap-nav">
-				<p>LANKINGPAGE</p>
-				<p>오늘의 랭킹</p>
-				<p></p>
-				<p>CATEGORY</p>
-				<ul>
-
-					<li class="category" data="0">여행</li>
-					<li class="category" data="1">음식</li>
-					<li><a href="<c:url value ="/"/>">MainPage</a></li>
-					<li><a href="<c:url value ="/albumTestView"/>">albumView</a></li>
-					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
-					<li><a href="<c:url value ="/friendPage"/>">friendPage</a></li>
-					<li><a href="<c:url value ="/albumEdit/edit"/>">albumEdit</a></li>
-					<li><a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a></li>
-					<li><a href="<c:url value ="/jinsu/login_get"/>">로그인...</a></li>
-					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
-					
-				</ul>				
-				
+				<ul>					
+					<li><a href="<c:url value ="/"/>">HOME</a></li>
+					<li><a href="<c:url value ="/myPage"/>">MY PAGE</a></li>
+					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>														
+					<li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>
+				</ul>									
 			</nav>
+			<footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft" 
+				style = "font-family: Poppins-Regular;">          
+         		 <p>&copy; 2018 <a href="cooing.site/www" target="_blank">COOING</a>. <br> All Rights Reserved.</p>
+       			 </footer>	
 		</div>		
 	</aside>
 
@@ -211,45 +344,59 @@ select::-ms-expand { /* for IE 11 */
 		<a href="#" class="probootstrap-toggle2 js-probootstrap-toggle2">
 			<span class="oi oi-menu"></span>
 		</a>	
-	
-	</div>	
-	
-		<div class ="search-bar">
-		<br>
-		<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}" style = "float : left; margin-left: 200px;">
-		<input type="button" value="검색" id="searchbt">
-		<div class = "search" style= "z-index:99; float:left; padding-left : 10px;" id="searchbt" onclick=""><i class="fas fa-search"></i></div>
-			
-		<!-- 정렬순서 -->		
-		<select style = "float:right; padding-left : 10px;">
-		  <option selected >정렬순</option>
-		  <option>최신순</option>
-		  <option>인기순</option>
-		</select>	
-	</div>
-		<br>
-	
-	
-	
-	
-	<!-- 진수가 필요하다고 한 공간 -->
-	<div class="card-columns" id="card-columns">
-		날 짜 선 택 : <input type="text" id="datepicker">
+	</div>		
 		
-		<div id="graphdiv" style="width:100%;height:100%">
+	<div class ="search-bar">
+		<br><br>
+		<div style = "margin-left: 20px; font-size: 20px;">
+       			 SEARCH &nbsp<img id='image_search' src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
+       			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">
+     			 <input id='searchtx' type="text" onblur="search_bar(this)" style="  border: none;
+              	 background-color: rgba(0,0,0,0);
+              	 color: #666666;
+               	 border-bottom: solid 2px #333;
+               	 outline: none;
+              	  width: 0px;
+               	 transition: all 0.5s;
+               	 padding-left:0px;
+               	 padding-right:0px;">		
+		
+	</div>
+		<br>	
+	
+	
+	<div class="card-columns" id="card-columns">
+	
+	<div align="center">
+		DATE : <input type="text" id="datepicker">
+		<!-- 정렬순서 -->		
+		<form style = "float:right; padding-left : 10px; font-size: 20px;" id="radiobutton">
+			<input type="radio" name="iCheck" class="input"value="1" checked>Category 
+			<input type="radio" name="iCheck" class="input"value="2">Keyword
+			<input type="radio" name="iCheck" class="input"value="3">Like
+		</form>
+	</div>	
+		<!-- 그래프 출력될 곳 -->
+		
+		<!-- <div id="graphdiv" style="width:100%;height:100%"></div>	 -->	
+	
 	</div>
 	
 	
 	
+	<div id="graphdiv" style="width:100%;height:100%;margin:0 auto;"></div>
 	
 
 	<div class="container-fluid d-md-none">
+	
 		<div class="row">
+		
 			<div class="col-md-12">				
 				<p>
-					&copy; 2018<a href="https://uicookies.com/" target="_blank">COOING</a>.
+					<!-- &copy; 2018<a href="https://uicookies.com/" target="_blank">COOING</a>.
 					<br> All Rights Reserved. Designed by <a
-						href="https://uicookies.com/" target="_blank">COOING</a>
+						href="https://uicookies.com/" target="_blank">COOING</a> -->
+							
 				</p>
 			</div>
 		</div>
@@ -257,81 +404,66 @@ select::-ms-expand { /* for IE 11 */
 
 	</main>
 
+
+	
 	<aside class="probootstrap-aside2 js-probootstrap-aside2">
-		<a href="#"
-			class="probootstrap-close-menu js-probootstrap-close-menu2 d-md-none">
+		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
+		
 			<span class="oi oi-arrow-right"></span> Close
 		</a>
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING2</a>
-			<p class="mb-0">
-				Another free html5 bootstrap 4 template by
-				<a href="https://uicookies.com/" target="_blank">uiCookies</a>
-			</p>
-		</div>
+		
 		<div class="probootstrap-overflow">
-			<div>
-				<form>
-					<input type="text" placeholder="친구검색" id="friendsearch" class="search1">
-					<input type="button" id="friendsearchbt" value="s">
-				</form>
+		<div id="main">
+		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
+		<label for="tab1"style = "font-size: 13px;" >FRIEND</label>
 
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(friend) ne 0}">
-						<c:forEach var="arrf" items="${friend }">
-							<div name="friend">
-								<p onclick="openChat('1', '${arrf}', '')">${arrf}</p>
-							</div>
-						</c:forEach>
-					</c:if>
-				</c:if>
+  		<input class = "input1" id="tab2" type="radio" name="tabs">
+    	<label for="tab2"style = "font-size: 13px;">GROUP</label>   
+
+    	<input class = "input1" id="tab3" type="radio" name="tabs">
+    	<label for="tab3" style = "font-size: 13px;">NEWS</label>  
+    	
+    	<section id="content1"> 
+    	<!-- 페이지 저장 -->		
+			<form class="contact100-form validate-form" id="entry">
+				<span class="contact100-form-title">
+					&nbsp<input type="text" placeholder="친구 찾기" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
+				</span>
+			</form>						
+				<div class = "friendList" style = "width: 200px;">
+					<div name="friend" id="friend"></div>
+					<div name="user" id="user"></div>
+				</div>			
+
+	<div id="dropDownSelect1"></div>    	    
+       
+    	</section>
+	<form id="testimg">
+		<input type="hidden" name="imgSrc" id="imgSrc" />
+	</form>	
+   	
+   	<section id ="content2">       					
+		<div class="button_container">		
+			<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=600 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
+			
+		<div class = "groupList" id="group" style= "margin-top: 70px; width: 200px;">
+		</div>
+	</section>   
+	<!-- 영준이 알림공간 -->
+	<section id ="content3" class="content3">       					
+		<div class = "div_news" id="div_news" style = "text-align :center;  font-size: 14px;">
+			<div class="msg_box" id="msg_box">
+				<div class="msg_title">MESSAGE</div>
+				<div class="msg_list" id="msg_list"></div>
 			</div>
-			<div>
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(group) ne 0}">
-						<c:forEach var="party" items="${group}">
-							<div name="group">
-								<p onclick="openGUpdate('${party.party_name}')"
-									partynum="${party.party_num}">${party.party_name}</p>
-								<input type="button" value="채팅"
-									onclick="openChat('0', '${party.party_num}', '')" />
-							</div>
-						</c:forEach>
-					</c:if>
-				</c:if>
-				<input type="button" value="그룹생성"
-					onclick="window.open('./groupcreate_get?','','width=300 height=400 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
+			<div class="invite_box" id="invite_box">
+				<div class="invite_title">INVITE</div>
+				<div class="invite_list" id="invite_list"></div>
 			</div>
 		</div>
+	</section> 
+</aside>
 
-	</aside>
 
-	<div id="div_chat" 
-		style="width: 500px; height: 500px; position: absolute; padding: 0px; opacity: 1; background-color: rgb(240, 240, 240); display: none;">
-		<p>
-			<button id="button_close" onclick="closePChat()">닫기</button>
-		</p>
-		<div id="data" 
-			style="height: 350px; width: 100%; overflow-y: scroll; margin: auto; display: block; padding: 0px"></div>
-
-		<div id="div_send">
-			<input type="text" id="message" autocomplete="off" />
-			<input type="button" id="sendBtn" value="전송" />
-		</div>
-	</div>
-	
-	<div id="album_create_modal" class="modal">
-		<span id="createBtn_close" class="close">&times;</span>
-		<iframe id="album_create_frame" src="albumEdit/AlbumNameCreate"
-			allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
-	</div>
-
-	<script src="resources/aside_js/popper.min.js"></script>
-	<script src="resources/aside_js/bootstrap.min.js"></script>
-	<script src="resources/aside_js/owl.carousel.min.js"></script>
-	<script src="resources/aside_js/jquery.waypoints.min.js"></script>
-	<script src="resources/aside_js/imagesloaded.pkgd.min.js"></script>
-
-	<script src="resources/aside_js/main.js"></script>
 </body>
 </html>

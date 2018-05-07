@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- push 처리 SQL -->
+<mapper namespace="com.cooing.www.socket.push.dao.PushMapper">
+
+	<insert id="insertPush" parameterType="push">
+	INSERT INTO push (
+		push_id,
+		sender,
+		addressee,
+		type,
+		msg
+	)
+	VALUES (
+		push_seq.nextval,
+		#{sender},
+		#{addressee},
+		#{type},
+		#{msg}
+	)
+	<selectKey keyProperty="push_id,push_date" resultType="push" order="AFTER"> 
+		SELECT
+			push_seq.currval as push_id,
+			sysdate as push_date
+		FROM dual
+	</selectKey>
+	</insert>
+	
+	<update id="updatePush" parameterType="push">
+	UPDATE push
+	SET
+		agree = #{agree},
+		agree_date = sysdate
+	WHERE
+		push_id = #{push_id}
+	</update>
+	
+	<!-- 메시지 조회(하나만) -->
+	<select id="selectPushOne" resultType="push">
+	SELECT
+		*
+	FROM push
+	WHERE
+		push_id = #{push_id}
+	</select>
+	
+	<!-- 메시지 조회 -->
+	<select id="selectPushList" resultType="push">
+	SELECT
+		*
+	FROM push
+	WHERE
+		1 = 1
+		<if test="search == 'unread'">
+		AND
+		addressee = #{user_id}
+		AND
+		agree is null
+		</if>
+	</select>
+
+</mapper>

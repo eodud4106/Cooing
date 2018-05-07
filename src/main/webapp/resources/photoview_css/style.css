@@ -1,0 +1,29 @@
+﻿/* body {height:100%;background:#fff}
+#wrap {height:100%;width:1516px;margin:20px auto;} */
+
+/* lnb */
+
+.lnb {float:left;background:#fff;width:198px;height:100%;color:#333;font-size:16px;font-weight:600;border:1px solid #ececec;border-bottom:none;}
+.lnb a {text-decoration:none;color:#333;}
+.lnb h1{border-bottom:1px solid rgba(255,255,255,.1);color:#fff;padding:24px;font-size:16px;font-family:"Nanum Gothic";font-weight:600;background:#10314f;text-align:center;}
+
+.subtitle {background:#d6e5f2 url(./image/on_off.png) no-repeat 166px -23px;}
+.subtitle a {display:table-cell;background:url(./image/on_off.png) no-repeat 166px 13px;padding:2px 78px 4px 23px;width:118px;vertical-align:middle;height:40px;}
+.sub_on a {display:table-cell;background: url(./image/on_off.png) no-repeat 166px -24px;}
+.sub_on {background:none;border-bottom:1px solid rgba(0,0,0,.1);}
+
+
+/* 실질적으로 사용되는 css 입니다. */
+.text_img_c {text-align:center;margin:26px 0;}
+.card-columns {}
+.card-columns .card ul {overflow:hidden; }
+.card-columns .card ul li {float:left;}
+.card-columns .card ul li .inner{margin:10px;position:relative;text-align:center;}
+.card-columns .card ul li .inner .card-img-top probootstrap-animate{display:inline-block;}
+.card-columns .card ul li .inner a{z-index: 1;display:block;background:#868e9666;position:absolute;left:0;top:0;opacity:0.8;display:none; visibility: visible; width: 100%; height: 100%;}
+.card-columns .card ul li .inner a p{display:inline-block;margin-top:13%;height:100px;font-size:16px;font-weight:600;color:#fff;border-top:1px solid #fff;border-bottom:1px solid #fff;}
+.card-columns .card ul li .inner a p strong{font-size:16px;font-weight:600;color:#fff;display:block;padding:20px 0;}
+/* 실질적으로 사용되는 css 입니다. */
+
+
+

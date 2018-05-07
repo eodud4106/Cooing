@@ -21,6 +21,7 @@ svg, path {
     line-height: 0;
     padding: 5px;
     z-index: 1;
+    float: left;
 }
 .tools {
     float: left;
@@ -74,7 +75,7 @@ svg, path {
     animation: hindoong-tongtong .75s infinite;
 }
 
-.tooltip, .slider_popup {
+.tooltip, .slider_popup, .tooltip_under_bar {
     position: absolute;
     background-color: rgba(20, 20, 20, .7);
     border: none;
@@ -100,8 +101,8 @@ svg, path {
     display: inline-block;
 }
 .div_selection_editor div button {
-    width: 100%;
-    height: 100%;
+    width: 50px;
+    height: 40px;
     margin: 0;
     padding: 0;
     float: left;
@@ -111,8 +112,8 @@ svg, path {
     color: white;
 }
 .div_whole_editor div button {
-    width: 100%;
-    height: 100%;
+    width: 50px;
+    height: 40px;
     margin: 0;
     padding: 0;
     float: left;
@@ -121,7 +122,114 @@ svg, path {
     background-color: rgba(255, 255, 255, 0);
     color: black;
 }
-.div_box:focus {
+
+.div_whole_editor div div button {
+    color: white;
+    background-color: black;
+}
+
+.input_album_info,.sel_album_info, .bt_album_info {
+	width: 180px;
+}
+.bt_hindoong {
+	margin-bottom: 10px !important;
+}
+.sel_album_info {
+	font-size: xx-large;
+}
+.bt_album_info {
+	font-size: large;
+} 
+.input_album_info_contents {
+	min-height: 100px;
+}
+
+.inner_div_font_size, .div_font, .inner_div_font_color, .inner_div_font_bcolor, .edit {
+	padding: 0 !important;
+}
+
+.inner_div_font_size, .div_font {
+    position: absolute;
+    bottom: 40px;
+    width: 150px !important;
+    height: 120px !important;
+    border-radius: 10px;
+    background-color: rgba(20, 20, 20, .8);
+}
+
+.inner_div_font_color, .inner_div_font_bcolor {
+    position: absolute;
+    bottom: 80px;
+    width: 250px !important;
+    height: 120px !important;
+    border-radius: 10px;
+}
+
+.inner_div_font_color {
+    left: 0px;
+}
+
+.inner_div_font_bcolor {
+    left: 50px;
+}
+
+.inner_div_font_size {
+    left: -50px;
+}
+
+.div_font {
+    left: 0px;
+}
+
+.inner_div_sel_font_color, .inner_div_sel_font_bcolor {
+    position: absolute;
+    bottom: 80px;
+    width: 250px !important;
+    height: 120px !important;
+    border-radius: 10px;
+}
+
+.inner_div_sel_font_color {
+    left: 50px;
+}
+
+.inner_div_sel_font_bcolor {
+    left: 100px;
+}
+
+.under_bar {
+	margin-top: 20px;
+	margin-left: 44%;
+	float:left;
+}
+
+.under_bar_left {
+	float: left;
+}
+
+.under_tool {
+	z-index:99;
+	float:left;
+	padding-left: 10px;
+}
+
+.div_select_bg {
+	position: absolute;
+	z-index: 1100;
+	background-color: rgba(20, 20, 20, .8);
+	width:170px;
+	padding: 10px;
+	border-radius: 5px;
+}
+.bt_select_bg {
+	width: 30px;
+	height: 30px;
+	float: left;
+}
+
+
+
+.div_box:focus, .input100:focus {
     outline: none;
 }
 .tool:hover, .div_box:hover {
@@ -130,19 +238,27 @@ svg, path {
 .onEdit:hover {
     cursor: auto;
 }
-.div_selection_editor div:hover {
+
+.div_whole_editor div .div_bt:hover {
     background-color: rgba(255, 200, 100, 0.5);
+    cursor: pointer;
 }
-.div_whole_editor div:hover {
+.div_whole_editor div div .div_div_button:hover {
     background-color: rgba(255, 200, 100, 0.5);
+    cursor: pointer;
 }
-.div_fontsize button {
-    line-height: normal;
-}
-.div_fontsize button:hover {
-    width: 100%;
-    height: 100%;
+
+.div_selection_editor div .div_bt:hover {
     background-color: rgba(255, 200, 100, 0.5);
+    cursor: pointer;
+}
+
+.div_selection_editor div div .div_div_button:hover {
+    background-color: rgba(255, 200, 100, 0.5);
+    cursor: pointer;
+}
+.under_tool:hover {
+	cursor: pointer;
 }
 
 

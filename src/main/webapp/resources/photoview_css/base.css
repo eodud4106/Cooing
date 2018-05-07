@@ -1,0 +1,34 @@
+@charset "utf-8";
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+/* Reset */
+body,h1,h2,h3,h4,h5,h6,div,p,blockquote,pre,address,ul,ol,li,dl,dt,dd,table,caption,th,td,form,fieldset,legend,hr {margin:0;padding:0;}
+/* h1, h2, h3, h4, h5, h6 {font-size:100%;} */
+ul, ol {list-style:none;}
+table {margin:0;padding:0;border-spacing:0;border:0;_border-collapse:collapse;}
+table, th, td {border: 0 none;border-collapse:collapse;margin: 0;}
+*+html table {border-collapse:collapse;}
+img, fieldset, abbr, acronym {border:0;}
+/* address, caption, cite, code, dfn, em, var {font-style:normal;font-weight:normal;} */
+q:before, q:after {content: '';}
+/* input, select, button, textarea {color:#757575;font-size:100%;font-family:'dotum';} */
+/* Base */
+/* html {height:100%;} 
+body {font:12px/18px "나눔고딕","Nanum Gothic","맑은 고딕","Malgun Gothic","돋움",Dotum,"굴림",Gulim,Helvetica,sans-serif,Arial;}*/
+hr {display:none}
+caption, legend,
+#skipNavi{width:0;height:0;line-height:0;overflow:hidden;visibility:hidden;font-size:0;}
+a {color:#6e6e6e;text-decoration:none;}
+a:focus, a:hover, a:active {text-decoration:underline;}
+input.text,textarea.textarea {padding:2px 0;border:1px solid #c7c7c7;}
+label, input.button, input.submit, input.image, button {cursor:pointer;}
+label {display:none}
+textarea, pre {overflow:auto;}
+label.on {display:inline-block;}
+.clearfix:after  {content:".";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix {display: inline-block;}
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+.clearfix   {display: block;}
+/* End hide from IE-mac */
+.cboth {clear:both;}
+.invisible {overflow:hidden;visibility:hidden;position:absolute;width:0;height:0;font-size:0;line-height:0;}

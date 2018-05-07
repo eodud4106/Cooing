@@ -9,150 +9,202 @@
 <title>COOING</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans">
+<link rel="icon" type="image/png" href="resources/assets/images/cooing_logo.png"/>
+<link rel="stylesheet" href="resources/css/jquery-ui.min.css">
+<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="resources/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="resources/css/icomoon.css">
+<link rel="stylesheet" href="resources/css/animate.css">
+<link rel="stylesheet" href="resources/css/style.css">
+<link rel="stylesheet" href="resources/css/chat.css">
+<link rel="stylesheet" href="resources/css/green.css">  
+<link rel="stylesheet" href="resources/css/home.css">
+<!-- 탭메뉴 -->
+<link rel="stylesheet" href="resources/css/tab.css">
+<link rel="stylesheet" href="resources/css/push.css">
+<!-- 앨범 정보 띄우는 부분  -->
+<link rel="stylesheet" href="resources/css/search.css">
 
-<link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
-<link rel="stylesheet" href="resources/aside_css/open-iconic-bootstrap.min.css">
-
-<link rel="stylesheet" href="resources/aside_css/owl.carousel.min.css">
-<link rel="stylesheet" href="resources/aside_css/owl.theme.default.min.css">
-
-<link rel="stylesheet" href="resources/aside_css/icomoon.css">
-<link rel="stylesheet" href="resources/aside_css/animate.css">
-<link rel="stylesheet" href="resources/aside_css/style.css">
-
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
-<script src="<c:url value="/resources/js/home.js"/>"></script>
-<script src="<c:url value="/resources/js/search.js"/>"></script>
+<script src="resources/js/home.js"></script>
+<script src="resources/js/search.js"></script>
 <script src="resources/js/chat.js"></script>
+<script src="resources/js/push.js"></script>
+<script src="resources/js/icheck.js"></script> 
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
+<script src="resources/js/popper.min.js"></script>
+<script src="resources/js/bootstrap.min.js"></script>
+<script src="resources/js/owl.carousel.min.js"></script>
+<script src="resources/js/jquery.waypoints.min.js"></script>
+<script src="resources/js/imagesloaded.pkgd.min.js"></script>
+<script src="resources/js/main.js"></script>
+<script src="resources/js/popup.js"></script>
+
+<!-- 탭나누는 사이드바 -->
+<link rel="stylesheet" type="text/css" href="resources/album_create/css/util.css">
+<link rel="stylesheet" type="text/css" href="resources/album_create/css/main.css">
+<link rel="stylesheet" href="resources/css/albumEdit.css">
+<script type="text/javascript" src="resources/js/albumEdit.js"></script>
+
+<script type="text/javascript" src="resources/js_js/html2canvas.min.js"></script>
+<!-- 폰트 -->
+
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
+
+<!-- 채팅목록 -->
+<script src="https://use.fontawesome.com/1c6f725ec5.js"></script>
 
 <script>
 var pagenum = 0;
 var pagingcheck = false;
-//이게 0번이면 검색어 1번이면 카테고리 2번이면 그냥 메인 으로 나눠서 페이징 가지고 오게 된다.
-var searchcheck = 0;
+var total = true;
+var likecheck = 0;
+//이게 0번이면 검색어 1번이면 카테고리  나눠서 페이징 가지고 오게 된다.
+var searchcheck = 99;
 $(window).scroll(function() {
     if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
-    	if(searchcheck == 2){
-    		if($('#totalpage').val() >= pagenum){	
-       			getTotalAlbumList(++pagenum);
+    	//메인으로 그냥 들어왔을 때 와 검색해서 들어왔을 때 = 0 / 카테고리 눌러서 들어왔을 때  = 1 / 내가 좋아하는 카테고리 만 보기 = 2
+    	//likecheck 가 0번 이면 date 순으로 정렬 1번이면 like 순으로 정렬
+    	if(searchcheck == 0){
+    		if(total){	
+    			get_album_list('writer' , 'total', (likecheck == 0 ? 'date' : 'like'), pagenum++ , 0);
         		pagingcheck = true;
         	}
     	}else if(searchcheck == 1){
-    		if($('#totalpage').val() >= pagenum){	
-       			getTotalAlbumList(++pagenum);
+    		if(total){	
+    			get_album_list('category','total',(likecheck == 0 ? 'date' : 'like'), pagenum++ , 1);
         		pagingcheck = true;
         	}
-    	}else if(searchcheck == 0){
-    		if($('#totalpage').val() >= pagenum){	
-       			getTotalAlbumList(++pagenum);
+    	}else if(searchcheck == 2){
+    		if(total){	
+    			get_album_list('mylike','total','like', pagenum++ , 2);
         		pagingcheck = true;
         	}
-    	}    	
+    	}   	
     }
 });
-
 
 $(document).ready(function () {
 	
 	initialize();	
 	
-	$('window').click(function(event) {
-		if (event.target == $('#myModal')) {
-			$('#myModal').css('display', 'none');
-	    }
-	});
-	
-	$('#myBtn').click(function() {
-		$('#myModal').css('display', 'block');
-	});
-	
-	$('#myBtn_close').click(function() {
-		$('#myModal').css('display', 'none');
-	});
-	
-	if (${sessionScope.Member != null}) {
-		readyChat();
-		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
-	}	
-	//0번이면 검색으로 넘어온 경우 ,  1번이면 카테고리 눌러서 넘어온 경우 , 엘스는 그냥 홈에 온 경우 
-	if(${search_other == 0}){
-		searchcheck = 0;
-		pagenum = 0;
-		pagecheck = false;
+	if(${search != null}){
 		$('#searchtx').val('${search}');
-		search();
-	}else if(${search_other == 1}){
-		searchcheck = 1;
-		pagenum = 0;
-		pagecheck = false;
-		searchCategory(${categorynum});
-		
+		$('#searchtx').css('width' , '200px');
+		$('#searchtx').css('paddingLeft' , '3px');
+		$('#searchtx').focus();
 	}
-	else{
-		searchcheck = 2;
+	
+	//1번이면 카테고리 눌러서 넘어온 경우 , 엘스는 그냥 홈에 온 경우 혹은 검색으로 온 경우 
+	if('${search_other}' == 1){
+		searchcheck = 99;
 		pagenum = 0;
-		pagecheck = false;
-		getTotalAlbumList(++pagenum);
-		
+		pagingcheck = false;
+		get_album_list('category','total','date', pagenum++ , 1);
+	}else{
+		searchcheck = 99;
+		pagenum = 0;
+		pagingcheck = false;
+		// 전체 앨범, 검색 키워드 없음, 최신 순
+		get_album_list('writer' ,'total', 'date', pagenum++ , 0);
+	}
+	
+	//경고!! 아래 코드를 절대 별도의 js파일로  마시오!!
+	if ('${sessionScope.Member}' != null) {
+		readyChat('${sessionScope.Member.member_id}', '');
+		readyPush('${sessionScope.Member.member_id}', '');
 	}
 });
 </script>
 
+<!-- 정렬순 라디오버튼 -->
+<script>
+$(document).ready(function(){
+  $('.input').iCheck({
+    checkboxClass: 'icheckbox_square-green',
+    radioClass: 'iradio_square-green',
+    increaseArea: '20%' // optional
+  });
+});
+</script>
+
+ <script>
+  window.console = window.console || function(t) {};
+</script>  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
 <style>
-.img1 {
-	width: 50px;
-	height: 50px;
-}
-
-.modal {
-	display: none;
-	position: absolute;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: none;
-	background-color: rgba(0, 0, 0, 0.7);
-}
-
-.close {
-	color: #aaa;
-	float: left;
-	font-size: 30px;
-	font-weight: bold;
-	position: fixed;
-	right: 16;
-	top: 0;
-	background-color: #f0f0f0;
-}
-
-.close:hover, .close:focus {
-	color: black;
-	text-decoration: none;
+#image_search {
 	cursor: pointer;
 }
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
 
+.dropdown {
+    position: relative;
+    display: inline-block;    
+}
 
+.dropdown-content {
+    display: none;
+    position: absolute;    
+    background-color: #f9f9f9;
+    min-width: 160px;
+    height : 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    overflow-y: scroll;
+    padding-bottom: 1px;
+}
+
+.dropdown-content li {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content li:hover {
+	background: -webkit-linear-gradient(right, #00dbde, #499ce8);
+	color : white;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
 </style>
 </head>
-<body>
+<body style ="font-family: 'Nanum Gothic Coding', monospace;">
 
-	<aside class="probootstrap-aside js-probootstrap-aside">
+	<aside class="probootstrap-aside js-probootstrap-aside" style = "background-color: aliceblue;">
 		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
 		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
 
-			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
+			<a href="/www" class="mb-2 d-block probootstrap-logo" style = "font-size: 30px;">COOING</a>
 
 			<!-- 로그인되어있을 때 -->
 			<c:if test="${Member ne null}">
 				<p>
-					<img src="<c:url value="/jinsu/img" />" class="img1">${Member.getMember_id()}
+					<img src="<c:url value="/img_member" />" class="img1">${Member.getMember_id()}
 				</p>
 			</c:if>
 			<!-- 로그인 안되어있을 때 -->
@@ -164,41 +216,48 @@ $(document).ready(function () {
 
 		</div>
 		<div class="probootstrap-overflow">
-			<nav class="probootstrap-nav">
-				<p>MYPAGE</p>
-				<p>오늘의 랭킹</p>
-				<p></p>
-				<p>CATEGORY</p>
-				<ul>
-
-					<li class="category" data="0">여행</li>
-					
-					<li><a href="<c:url value ="/"/>">MainPage</a></li>
-					<li><a href="<c:url value ="/albumTestView"/>">albumView</a></li>
-					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
-					<li><a href="<c:url value ="/friendPage"/>">friendPage</a></li>		
-					<li><a href="<c:url value ="/LankingPage"/>">LankingPage</a></li>				 		
-					<li><a href="<c:url value ="/albumEdit/edit"/>">albumEdit</a></li>
-					<li><a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a></li>
-					<li><a href="<c:url value ="/jinsu/login_get"/>">로그인...</a></li>
-					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
-
+			<nav class="probootstrap-nav">				
+				<ul>					
+					<li><a href="<c:url value ="/"/>">HOME</a></li>
+					<li><a href="<c:url value ="/myPage"/>">MY PAGE</a></li>	
+					<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>			
 				</ul>
-			</nav>
-
+				<div class = "dropdown">
+						<p class ="c" class = "dropbtn" style = "cursor: pointer;">CATEGORY</p>
+						 <div class="dropdown-content" style = "font-family: Poppins-Regular; font-size: 15px; padding-left: 10px;">
+						 <ul>
+						  	<li class="category" data="0">여행</li>
+						    <li class="category" data="1">스포츠/레저</li>
+						    <li class="category" data="2">동물</li>
+						    <li class="category" data="3">음악</li>
+						    <li class="category" data="4">요리/음식</li>
+						    <li class="category" data="5">패션/뷰티</li>
+						    <li class="category" data="6">연예/TV</li>
+						    <li class="category" data="7">게임</li>
+						    <li class="category" data="8">영화</li>
+						    <li class="category" data="9">도서</li>
+						    <li class="category" data="10">공연/전시</li>
+						    <li class="category" data="11">외국어</li>
+						    <li class="category" data="12">전문지식</li>
+						    <li class="category" data="13">수집/제작</li>
+						    <li class="category" data="14">자기계발</li>
+						    <li class="category" data="15">육아</li>
+						    <li class="category" data="16">일상생활</li>
+						    <li class="category" data="17">자동차</li>
+						    <li class="category" data="18">낚시</li>
+						    <li class="category" data="19">건강</li>
+						    <li class="category" data="20">기타</li>
+						    </ul>
+					    </div>
+					</div>
+				<ul>					
+					<li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>
+				</ul>
+			</nav>	
+		<footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft">          
+          <p>&copy; 2018 <a href="cooing.site/www" target="_blank">COOING</a>. <br> All Rights Reserved.</p>
+        </footer>				
 		</div>
-
-		<form>
-			<div class="search">
-				 테스트<br /> <input
-					type="button" id="myBtn" value="모달 열기">
-				<div id="myModal" class="modal">
-					<span id="myBtn_close" class="close">&times;</span>
-					<iframe src="albumView" allowTransparency='true' frameborder="0"
-						width=100% height="100%"></iframe>
-				</div>
-			</div>
-		</form>
 	</aside>
 
 
@@ -208,7 +267,7 @@ $(document).ready(function () {
 			<span class="oi oi-menu"></span>
 		</a>
 		<div class="probootstrap-main-site-logo">
-			<a href="index.html">COOING</a>
+			<a href="/www">COOING</a>
 		</div>
 		<a href="#" class="probootstrap-toggle2 js-probootstrap-toggle2">
 			<span class="oi oi-menu"></span>
@@ -216,28 +275,37 @@ $(document).ready(function () {
 	</div>
 	
 	<div class ="search-bar">
-		<br>
-		<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}" style = "float : left; margin-left: 200px;">
-		<input type="button" value="검색" id="searchbt">
-		<div class = "search" style= "z-index:99; float:left; padding-left : 10px;" id="searchbt" onclick=""><i class="fas fa-search"></i></div>
+		<br><br>
+		<div style = "margin-left: 20px; font-size: 20px;">
+				 <!-- src="resources/img/ico/seo-1970475_960_720.png" -->
+       			 SEARCH &nbsp<img id="image_search" src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png" style="width: 24px;
+       			 height: 24px;margin-right: 5px;" onclick="inputbox_focus()">
+     			 <input id="searchtx" type="text" onblur="search_bar(this)" style="  border: none;
+              	 background-color: rgba(0,0,0,0);
+              	 color: #666666;
+               	 border-bottom: solid 2px #333;
+               	 outline: none;
+              	  width: 0px;
+               	 transition: all 0.5s;
+               	 padding-right:0px;
+               	 padding-left:0px;"               	 
+               	 >  		
 			
-		<!-- 정렬순서 -->		
-		<select style = "float:right; padding-left : 10px;">
-		  <option selected >정렬순</option>
-		  <option>최신순</option>
-		  <option>인기순</option>
-		</select>	
+			<!-- 정렬순서 -->		
+			<form style = "float:right; padding-left : 10px; font-size: 20px;">
+				<input type="radio" id="newcheck" name="iCheck" class = "input" value="1" checked>NEW
+				<input type="radio" name="iCheck" class = "input" value="2" >POPULAR				
+				<input type="radio" name="iCheck" class = "input" value="3" >MYLIKE
+			</form>
+			<input type="hidden" id="categorynum" value="${categorynum}">
+		</div>
 	</div>
-		<br>	
-	
-	
-	
+	<br>
 	
 	<!-- 앨범 리스트 -->
 	<div class="card-columns" id="card-columns">
-	
-		<!--  -->
-		<div class="card">
+			
+<!-- 		<div class="card">
 			<a href="single.html" id="test1">
 				<img class="card-img-top probootstrap-animate" 
 				src="resources/aside_images/img_1.jpg" alt="Card image cap">
@@ -248,102 +316,81 @@ $(document).ready(function () {
 				<img class="card-img-top probootstrap-animate" 
 				src="resources/image_mj/a1.jpg" alt="Card image cap">
 			</a>
-		</div>
+		</div> -->
 	</div>
 	
-	
-	
-	
-
 	<div class="container-fluid d-md-none">
 		<div class="row">
 			<div class="col-md-12">
-				<ul class="list-unstyled d-flex probootstrap-aside-social">
-					<li><a href="#" class="p-2"><span class="icon-twitter"></span></a></li>
-					<li><a href="#" class="p-2"><span class="icon-instagram"></span></a></li>
-					<li><a href="#" class="p-2"><span class="icon-dribbble"></span></a></li>
-				</ul>
-				<p>
-					&copy; 2018 <a href="https://uicookies.com/" target="_blank">uiCookies:Aside</a>.
-					<br> All Rights Reserved. Designed by <a
-						href="https://uicookies.com/" target="_blank">uicookies.com</a>
+				<p>&copy; 2018 <a href="https://uicookies.com/" target="_blank">uiCookies:Aside</a>.
+					<br> All Rights Reserved. Designed by 
+					<a href="https://uicookies.com/" target="_blank">uicookies.com</a>
 				</p>
 			</div>
 		</div>
 	</div>
-
 	</main>
 
+	
 	<aside class="probootstrap-aside2 js-probootstrap-aside2">
-		<a href="#"
-			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
+		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
+		
 			<span class="oi oi-arrow-right"></span> Close
 		</a>
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING2</a>
-			<p class="mb-0">
-				Another free html5 bootstrap 4 template by
-				<a href="https://uicookies.com/" target="_blank">uiCookies</a>
-			</p>
-		</div>
+		
 		<div class="probootstrap-overflow">
-			<div>
-				<form>
-					<input type="text" placeholder="친구검색" id="friendsearch" class="search1">
-					<input type="button" id="friendsearchbt" value="s">
-				</form>
+		<div id="main">
+		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
+		<label for="tab1" style = "font-size: 13px;">FRIEND</label>
 
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(friend) ne 0}">
-						<c:forEach var="arrf" items="${friend }">
-							<div name="friend">
-								<p onclick="openChat('1', '${arrf}', '')">${arrf}</p>
-							</div>
-						</c:forEach>
-					</c:if>
-				</c:if>
+  		<input class = "input1" id="tab2" type="radio" name="tabs">
+    	<label for="tab2" style = "font-size: 13px;">GROUP</label>   
+    	
+    	<input class = "input1" id="tab3" type="radio" name="tabs">
+    	<label for="tab3" style = "font-size: 13px;">NEWS</label>   
+
+    	<section id="content1"> 
+    	<!-- 페이지 저장 -->		
+			<form class="contact100-form validate-form" id="entry">
+				<span class="contact100-form-title">
+					&nbsp<input type="text" placeholder="친구 찾기" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
+				</span>
+			</form>		
+				
+				<div class = "friendList" style = "width: 200px;">
+					<div name="friend" id="friend"></div>
+					<div name="user" id="user"></div>
+				</div>			
+
+	<div id="dropDownSelect1"></div>    	    
+    <form id="testimg">
+		<input type="hidden" name="imgSrc" id="imgSrc" />
+	</form>	   
+    </section>	
+   	
+   	<section id ="content2">       					
+		<div class="button_container">		
+			<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=600 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button>
+		</div>				
+		
+		<div class = "groupList" id="group" style= "margin-top: 70px; width: 200px;"></div>
+	</section>   	
+	
+	<!-- 영준이 알림공간 -->
+	<section id ="content3" class="content3">       					
+		<div class = "div_news" id="div_news" style = "text-align :center;  font-size: 14px;">
+			<div class="msg_box" id="msg_box">
+				<div class="msg_title">MESSAGE</div>
+				<div class="msg_list" id="msg_list"></div>
 			</div>
-			<div>
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(group) ne 0}">
-						<c:forEach var="party" items="${group}">
-							<div name="group">
-								<p onclick="openGUpdate('${party.party_name}')"
-									partynum="${party.party_num}">${party.party_name}</p>
-								<input type="button" value="채팅"
-									onclick="openChat('0', '${party.party_num}', '')" />
-							</div>
-						</c:forEach>
-					</c:if>
-				</c:if>
-				<input type="button" value="그룹생성"
-					onclick="window.open('./groupcreate_get?','','width=300 height=400 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
+			<div class="invite_box" id="invite_box">
+				<div class="invite_title">INVITE</div>
+				<div class="invite_list" id="invite_list"></div>
 			</div>
 		</div>
-
+	</section>
+  
 	</aside>
-
-	<div id="div_chat" 
-		style="width: 500px; height: 500px; position: absolute; padding: 0px; opacity: 1; background-color: rgb(240, 240, 240); display: none;">
-		<p>
-			<button id="button_close" onclick="closePChat()">닫기</button>
-		</p>
-		<div id="data" 
-			style="height: 350px; width: 100%; overflow-y: scroll; margin: auto; display: block; padding: 0px"></div>
-
-		<div id="div_send">
-			<input type="text" id="message" autocomplete="off" />
-			<input type="button" id="sendBtn" value="전송" />
-			<input type="hidden" id="totalpage" value="${totalpage}">
-		</div>
-	</div>
-
-	<script src="resources/aside_js/popper.min.js"></script>
-	<script src="resources/aside_js/bootstrap.min.js"></script>
-	<script src="resources/aside_js/owl.carousel.min.js"></script>
-	<script src="resources/aside_js/jquery.waypoints.min.js"></script>
-	<script src="resources/aside_js/imagesloaded.pkgd.min.js"></script>
-
-	<script src="resources/aside_js/main.js"></script>
+	
 </body>
 </html>

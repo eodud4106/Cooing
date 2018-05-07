@@ -3,16 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cooing.www.jinsu.dao.SearchMapper">
-
-	<insert id="insertHashTag" parameterType="tag">
-	insert into tag (tag_num,tag_albumnum,tag_content)
-		values (tag_seq.nextval,#{tag_albumnum},#{tag_content})
-	</insert>
-	
-	<select id="selectHashTag" resultType="tag" parameterType="String">
-		select * from tag where tag_content = #{search}
-	</select>
+<mapper namespace="com.cooing.www.common.dao.SearchMapper">	
 	
 	<insert id="insertSearch" parameterType="search">
 	insert into search (search_num,search_word,search_date)
@@ -23,6 +14,21 @@
 		select search_word,count(search_word) as count from search 
 			where to_char(search_date,'yyyy-mm-dd') = #{date}
 			group by search_word
+			order by count desc
+	</select>
+	
+	<select id="selectDayLike" resultType="Map" parameterType="String">
+		select likeit_albumnum,count(likeit_albumnum) as count from likeit 
+			where to_char(likeit_date,'yyyy-mm-dd') = #{date}
+			group by likeit_albumnum
+			order by count desc
+	</select>
+	
+	<select id="selectDayCategory" resultType="Map" parameterType="String">
+		select category_pop_kind as kind,count(category_pop_kind) as count from category_pop
+			where to_char(category_pop_date,'yyyy-mm-dd') = #{date}
+			group by category_pop_kind
+			order by count desc
 	</select>
 	
 	<insert id="insertCategoryPop" parameterType="categorypop">
@@ -30,10 +36,8 @@
 		values (category_pop_seq.nextval,#{category_pop_kind},sysdate)
 	</insert>
 	
-	<select id="selectDayCategory" resultType="Map" parameterType="String">
-		select category_pop_kind as kind,count(category_pop_kind) as count from category_pop
-			where to_char(category_pop_date,'yyyy-mm-dd') = #{date}
-			group by category_pop_kind
+	<select id="search_id_check" resultType="String" parameterType="String">
+		select member_id from member where member_id like '%'||#{search}||'%'
 	</select>
 	
 </mapper>

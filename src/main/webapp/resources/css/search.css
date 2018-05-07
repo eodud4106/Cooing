@@ -1,0 +1,59 @@
+@CHARSET "UTF-8";
+
+
+.go_front {
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 96%;
+    height: 96%;
+   	margin: 2%;
+    padding: 10px;
+    position: absolute;
+    display: block;
+   	background-color: rgba(255,255,255, 0.5);
+   	text-align: center;  	
+   	overflow : hidden;
+}
+
+.hidden_info{
+	display: none;
+	color :  black;
+}
+
+.div_card:hover {
+	cursor: pointer;
+}
+
+.card_album_name{
+	font-size: 30px;
+	font-family: font-family: 'Black Han Sans', sans-seri.f;
+	
+}
+
+.img_thumbnail {
+	width: 100%;
+	height: 100%;
+	opacity: 1;
+}
+
+.card_album_writer{
+	float : right;
+	margin-left: 800px;
+	font-size: 25px;
+}
+
+.card_album_contents{
+	/* text-align: center; */
+	
+}
+.card_album_likes{
+	float: left;
+		
+}
+.card_album_reply{
+	text-align: center;	
+	
+}

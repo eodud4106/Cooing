@@ -1,0 +1,142 @@
+/* 채팅 디자인.......... */
+
+.div_chat {
+	width: 400px;
+	height: 500px;
+	position: absolute;
+	left: 30%;
+	top: 30%;
+	z-index: 2000; /* 채팅창을 가장 위로!! */
+	padding: 0px;
+	opacity: 1;
+	background-color: rgb(250, 250, 250);
+	display: none;
+	box-shadow: 1px 1px 10px rgba(0,0,0,.5);
+}
+
+.div_chat_top, .div_chat_content, .div_chat_under {
+	width: 100%;
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+.div_chat_top {
+	height: 50px;
+	border-bottom: 1px solid black;
+}
+
+.div_chat_content {
+	height: 350px;
+	border-bottom: 1px solid black;
+	overflow-y: scroll;
+	background-color: #CEF6CE;
+}
+
+.div_chat_under {
+	height: 100px;	
+}
+
+.div_chat_top_title, .div_chat_top_close, .div_chat_under_input, .div_chat_under_send {
+	height: 100%;
+	display: inline-block;
+	float: left;
+}
+
+.div_chat_top_title {
+	width: 350px;
+	font-size: x-large;
+	text-align: center;
+	padding: 10px;
+	padding-left: 60px;
+	line-height: normal;
+}
+
+.div_chat_top_close {
+	width: 50px;
+	padding: 10px;
+}
+
+.div_chat_under_input {
+	width: 350px;
+	padding: 5px;
+	overflow-y: scroll;
+}
+
+.div_chat_under_send {
+	width: 50px;
+	padding: 10px;
+}
+
+.div_chat_under_input_box {
+	height: 100%;
+	background-color: white;
+	padding: 5px;
+	word-wrap: break-word;
+	-webkit-nbsp-mode: space;
+	line-break: after-white-space;
+	-webkit-user-modify: read-write;
+}
+
+.msg {
+	width: 100%;
+	display: block;
+	float: left;
+}
+
+.msg_user {
+	color: black;
+	width: 100%;
+	height: 30px;
+	padding-left: 10px;
+}
+
+.msg_text {
+	border-radius: 10px;
+	color: black;
+	padding: 10px;
+	max-width: 260px;
+	margin: 10px;
+	margin-top: 0px;
+	word-wrap: break-word;
+	display: inline-block;
+	height: 100%;
+	position: relative;
+}
+
+.date_unread_wrapper {
+	display: block;
+	float: right;
+	position: absolute;
+	bottom: 0;
+}
+
+.msg_date {
+	display: block;
+	max-width: 80px;
+	word-wrap: break-word;
+	color: grey;
+	font-size: small;
+	line-height: normal;
+}
+
+.msg_unread {
+	display: block;
+	color: orange;
+	font-size: small;
+	line-height: normal;
+	text-align: right;
+}
+
+
+
+
+
+
+
+
+/* 효과 적용 */ 
+
+.div_chat_top_close:hover, .div_chat_under_send:hover {
+	cursor: pointer;
+}

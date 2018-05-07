@@ -1,0 +1,43 @@
+/* ����ĭ �ٹ̱� */
+#div_news:hover {
+	cursor: default;
+}
+
+.content3 {
+	overflow: auto;
+}
+
+.div_news {
+	margin-top:0px;
+	padding:5px;
+	width: 100%;	
+}
+
+.msg_box {
+	height: 55%;
+	background-color: #c6e1f3;
+	margin-bottom: 5%;
+	color: white;
+	font-family: Poppins-Regular;
+	font-size: 14px;
+}
+
+.invite_box {
+	height: 40%;
+	background-color: #9cdbd4;
+	color: white;
+	font-family: Poppins-Regular;
+	font-size: 14px;
+}
+
+.msg_list, .invite_list {
+	overflow-y: scroll;
+}
+/* 왜 적용안되냐고 */
+.news_card {
+	cursor: pointer;
+	background-color: white;
+	color : #464a4e;
+	font-family: Poppins-Regular;
+	font-size: 14px;
+}

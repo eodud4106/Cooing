@@ -66,21 +66,105 @@ var album_left = 0;         //앨범의 left
 var PAGE_WIDTH = 600;       // 페이지 당 너비
 var PAGE_HEIGHT = 700;      // 페이지 당 높이
 
+var editable = true;		// 그룹 편집 시 편집 가능 불가능 토글용
+
+var slider_load = false;
+
 var curr_page = 1;
 
 var arr_color = ["#FF0000", "#FF5E00", "#FFBB00", "#FFE400", "#ABF200",
-     "#1DDB16", "#00D8FF", "#0054FF", "#0100FF", "#5F00FF", "#FF00DD", 
-    "#FF007F", "#FFD9FA", "#B2CCFF", "#FFC6FF", "#D9E5FF", "#FAECC5", 
-    "#FFC19E", "#D5D5D5", "#000000", "#FFFFFF"];
+     "#1DDB16", "#00D8FF", "#0100FF", "#5F00FF", "#FF00DD", 
+     "#FFD9FA", "#B2CCFF", "#FFC6FF", "#D9E5FF", "#FAECC5", 
+    "#FFC19E", "#D5D5D5", "#000000", "#FFFFFF", "rgba(0,0,0,0)"];
 
 var arr_size = ["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"];
 
+//자식창 닫혔을 때 감지
+var curTime;
+function child_close(){
 
+	var changedSrc = $('#'+curTime).attr('src');
+	var check_changedSrc = $('#'+curTime).attr('src').substring(0,5);
+	if(check_changedSrc == 'data:'){
+		$.ajax({
+			type: "POST",
+			url: "croped_picture_save",
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			data: { "imgUrl": changedSrc },
+			success : function(fath) {
+				$('.onSelect img').attr('src', 'img_album?filePath='+fath);
+	        }, 
+	        error : function(e) { 
+	            alert(JSON.stringify(e)); 
+	        } 
+		});
 
+	}
+}
+/*
+ * 슬라이더
+ */
+function slider() {
+	$('#slider').slider({
+		min: 1,
+		max: $('#album').turn('pages')/2 +1,
+		change: function(event, ui) {
+			//console.log(ui.value)
+		},
+		slide: function(event, ui) {
+			create_nav_bar(ui);
+		},
+		start: function(event, ui) {
+			create_nav_bar(ui);
+		},
+		stop: function() {
+			$('.slider_popup').remove();
+		}
+	});
+	slider_load = true;
+}
+
+function create_nav_bar(ui) {
+	var total_width = $('.ui-slider').width();
+	var scale = total_width / ($('#album').turn('pages')/2);
+	var curr_left = scale * (ui.value - 1);
+	var left = curr_left + $('#slider-bar').position().left;
+	
+	
+
+	var top = $('#slider-bar').position().top;
+	
+	$('.slider_popup').remove();
+	
+	var $slider_popup = $('<div />', {
+		"class": "slider_popup"
+	}).css({
+		"left": left,
+		"top": top - 50
+	});
+	
+	
+	
+	if(ui.value == 1) {
+		$('#album').turn('page', 1);
+	} else {
+		$('#album').turn('page', (ui.value-1)*2 );
+		
+	}
+
+	if(ui.value == 1 || ui.value == $('#album').turn('pages')/2 +1) {
+		$slider_popup.text(((ui.value-1)*2) == 0? 1: (ui.value-1)*2);
+		$slider_popup.css("left", left - 15);
+	} else {
+		$slider_popup.text((ui.value-1)*2 + " ~ " + ((ui.value-1)*2+1));
+		$slider_popup.css("left", left - 20);
+	}
+	$slider_popup.appendTo('body')
+}
 
 // [start] 페이지 로딩 후 앨범 준비
 function ready_album(mode) {
-    //TODO 앨범 로딩...
+    
 	
 	if(mode == 'view') {
 		
@@ -90,10 +174,28 @@ function ready_album(mode) {
 	        display: 'double',  // 한 번에 보여줄 페이지
 	        inclination: 50,    // 페이지 넘김 효과 시의 경사도
 	        width: PAGE_WIDTH * 2,
-	        height: PAGE_HEIGHT
+	        height: PAGE_HEIGHT,
+	        when:{
+	        	turned: function(event, page, view) {
+	        		nowpage();
+	        		bookmark_check();
+	        		curr_page = $('#album').turn('page');
+	                if(slider_load) {
+	                	if (curr_page == 1) {
+	                		 $('#slider').slider("value", curr_page);
+						} else {
+							$('#slider').slider("value", curr_page/2+1);
+						}
+	                	
+	                }
+	        	}
+	        }
 	    });
+	    
 		
 	} else if (mode == 'edit') {
+		
+		/*console.log('ALBUM을 edit합니다..');*/
 		
 		if($('#album').children('.page').length == 0) {
 	    	// 앨범 로딩 결과 없음
@@ -104,6 +206,9 @@ function ready_album(mode) {
 	    	// 페이지 별 div_box에 편집 기능 적용
 	    	$('#album').children('.page').each(function(i, page) {	
 	    		$(page).children('.div_box').each(function(j, div_box) {
+	    			
+	    		    
+	    		    
 	    			apply_event_to_box($(div_box));
 	    		})
 	    	})
@@ -129,10 +234,13 @@ function ready_album(mode) {
 	                // page 저장
 	                savePage('curr');
 
+
 	            },
 	            turned: function(event, page, view) {
+	            	//페이지 알려주는 부분 
+	            	nowpage();
 
-	                console.log('현재 페이지 -> ' + $('#album').turn('page'));
+	                /*console.log('현재 페이지 -> ' + $('#album').turn('page'));*/
 
 	                var total_page = $('#album').turn('pages');
 
@@ -148,11 +256,28 @@ function ready_album(mode) {
 	                // 모든 페이지의 droppable을 끄고 현재 보여지는 페이지만 droppable을 켠다.
 	                $('.page').droppable("disable");
 	                $('#page' + curr_page + '').droppable("enable");
-
+	               
+	                if(curr_page != 1){ 
+	            	   $('#page' + curr_page + '').css('border-right' , '1px solid black');
+	            	   $('#page' + curr_page + '').css('box-shadow' , 'rgb(134, 142, 150) 1px -1px 1px 1px inset');	            	   
+	            	   $('#page' + (curr_page + 1) + '').css('border-left' , '1px solid black');
+	            	   $('#page' + (curr_page + 1) + '').css('box-shadow' , 'rgb(134, 142, 150) -1px -1px 1px 1px inset');
+	                }
+	                
 	                // 현재 페이지가 싱글 페이지가 아닌 경우 오른쪽 페이지도 droppable을 켠다.
 	                if(arr_single_page.indexOf(curr_page) == -1) {
 	                    $('#page' + (curr_page + 1) + '').droppable("enable");
 	                }
+
+	                if(slider_load) {
+	                	if (curr_page == 1) {
+	                		 $('#slider').slider("value", curr_page);
+						} else {
+							$('#slider').slider("value", curr_page/2+1);
+						}
+	                	
+	                }
+	               
 	            }
 	        } 
 	    });
@@ -198,7 +323,12 @@ function ready_album(mode) {
 		alert('설정 오류!');
 	}
 	
-	slider();
+	
+    
+    slider();
+	create_tooltip_of_under_tool();
+	
+	
 
 }
 // [end] 페이지 로딩 후 앨범 준비
@@ -216,8 +346,7 @@ function createNewAlbum() {
     for(var i = 1; i <= init_page; i++) {
         var $page = $('<div />', {
             'id': 'page' + i,
-            'class': 'page hard',
-            'text': i
+            'class': 'page hard'
         });
 
         $page.appendTo('#album');
@@ -238,6 +367,8 @@ function apply_page_droppable($page) {
 
             // 드랍한 페이지
             var page = $(this).attr('id').replace(/\D/g,'');
+            // 드랍된 페이지 알기 위한 변수(대영)
+            droppable_page = page;
 
             // 드랍으로 만든 node를 page 위에 그림
             renderbox(event, ui, page);
@@ -255,9 +386,12 @@ function initpage($page) {
  *  [start] 텍스트 박스를 캔버스에 추가
  *  @param : (좌표가 포함된 이벤트, 드래그 드랍한 박스, 드랍한 페이지)
  **/
-function renderbox(event, ui, page) {
 
-    console.log('render 호출');
+//배경 지울 때 드랍된 페이지 저장변수(대영)
+var droppable_page;
+function renderbox(event, ui, page) {
+	
+	if(!editable) return;
 
     // 클릭한 페이지의 위치 확인
     var curr_page_top = album_top;
@@ -277,29 +411,22 @@ function renderbox(event, ui, page) {
     // node의 타입별 textfield 기본 폰트 크기 지정
     if(ui.helper.hasClass("text")) {
         // 텍스트 박스인 경우
-        $div_box.addClass('textbox').text('입력하세요.....!');
-
-    } else if(ui.helper.hasClass("image")) {
-        // 이미지인 경우
-
-        var $input_file = $('<input />', {
-            "type": "file",
-            "accept": "image/*",
-            "id": "hidden_input",
-            "name": "hidden_input"
-        }).css({
+        $div_box.addClass('textbox').text('입력하세요.....!').css({
             "position": "absolute",
-            "top": "110px",
-            "left": "135px",
-            "width": "30px",
-            "height": "30px",
-            "margin": "auto",
-            "opacity": "0",
-            "overflow": "hidden"
+            "top": event.pageY - curr_page_top - 30,
+            "left": event.pageX - curr_page_left - 50
         });
 
+    }    
+    //배경 지우기
+    else if(ui.helper.hasClass("remove")) {
+    	if(!editable) return;
+    	$('#page' + droppable_page).css('background-image', '');
+    }
+    //이미지인 경우
+    else if(ui.helper.hasClass("image")) {
         var $i_plus = $('<i />', {
-            "class": "fas fa-plus",
+            "class": "fas fa-image",
             "position": "absolute",
             "top": "140px",
             "left": "140px"
@@ -318,64 +445,17 @@ function renderbox(event, ui, page) {
             "font-size": "xx-large",
             "text-align": "center",
             "line-height": "8"
-        }).append($i_plus).append($input_file).append($image);
-
-        $input_file.change(function() {
-            //alert('파일 업로드')
-            var $img = $('.onSelect img');
-            var file = document.querySelector('.onSelect input[type=file]').files[0];
-            
-            if (file) {
-                $('.onSelect svg').remove();
-            }   
-            
-            // formData 선언
-            var formData = new FormData();
-            
-            formData.append('file', file);
-            
-            $.ajax({
-                url : 'albumImageSave',
-                processData : false,
-                contentType : false,
-                type : 'POST',
-                data : formData,
-                dataType : 'text',
-                success : function(saved_name) {
-                    
-                    //saved_name을 받으면 이미지 src에 연결한다.
-
-                    // fail이 아닐 경우 -> 이미지 저장됨
-                    if (saved_name != 'fail') {
-                        
-                        $img.attr('src', 'img?filePath=' + saved_name).css({
-                            "display": "block"
-                        });
-                        
-                        
-
-                    } else {
-                        alert('업로드 실패');
-                    }
-                },
-                error : function(e) {
-                    alert('파일 업로드 실패');
-                }
-            });
-
-            
-  
+        }).append($i_plus).append($image).css({
+            "position": "absolute",
+            "top": event.pageY - curr_page_top - 130,
+            "left": event.pageX - curr_page_left - 150
         });
 
     }
 
-    $div_box.css({
-        "position": "absolute",
-        "top": event.pageY - curr_page_top - 30,
-        "left": event.pageX - curr_page_left - 50
-    }).appendTo($('#page' + page + ''));
+    $div_box.appendTo($('#page' + page + ''));
 
-    apply_event_to_box($div_box, curr_page_top, curr_page_left);
+    apply_event_to_box($div_box);
 
 
 }
@@ -385,7 +465,12 @@ function renderbox(event, ui, page) {
  * [start] 박스에 이벤트 추가
  * @param $div_box
  */ 
-function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
+function apply_event_to_box($div_box) {
+	
+	
+    
+	
+	if(!editable) return;
 	
     $arr_div_box.push($div_box);
 
@@ -393,12 +478,36 @@ function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
     $div_box.draggable({
         // textbox 드래그 시 위치 이동 처리 (ui.helper는 이벤트의 대상)
         drag: function(event, ui) {
-
             $('.div_whole_editor').css({
-                "top": $('.onSelect').position().top + curr_page_top - 40,
+                "display": "none"
+            });
+        },
+        stop: function(event, ui) {
+        	
+        	// 클릭한 페이지의 위치 확인
+            var curr_page_top = Number($('#album').position().top) + Number($('#album').css('margin-top').replace('px',''));
+            var curr_page_left = Number($('#album').position().left) + Number($('#album').css('margin-left').replace('px',''));
+            var page = $div_box.parent().attr('id').replace('page', '');
+            if(page % 2 == 1) {
+                // 드랍한 페이지가 홀수 페이지일 경우 우측에 위치하므로 왼쪽 페이지의 너비만큼 더해준다.
+                curr_page_left += PAGE_WIDTH;
+            }
+
+        	
+            $('.div_whole_editor').css({
+                "display": "block",
+                "top": $('.onSelect').position().top + curr_page_top - 50,
                 "left": $('.onSelect').position().left + curr_page_left
             });
+            var over_left = $(window).width() - Number($('.div_whole_editor').css('left').replace('px', '')) - 350;
+            if(over_left < 0) {
+            	/*console.log('벗어났으므로 조정합니다.')*/
+            	$('.div_whole_editor').css('left', $('.onSelect').position().left + curr_page_left + over_left)
+            } else {
+            	/*console.log('벗어남 없음 조정 안 함')*/
+            }
             
+            /*console.log('박스 left: ' + $('.div_whole_editor').position().left + ' /박스 top: ' + $('.div_whole_editor').position().top);*/
         },
         containment: $div_box.parent()  // 캔버스 영역 밖으로 나가지 못하게 제한
 
@@ -421,6 +530,7 @@ function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
 
     // textbox 마우스 다운 시 크기 조절 모드 + 전역 편집 모드
     $div_box.mousedown(function(e) {
+    	if(!editable) return;
         //이벤트 bubble 제거
         e.stopPropagation();
 
@@ -441,6 +551,7 @@ function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
         }
 
     }).dblclick(function(e){
+    	if(!editable) return;
         //textbox 더블클릭 시 텍스트 입력 + 선택 편집 모드로 전환(TODO 텍스트 입력에 따라 높이 자동 조절되도록, 너비는 직접 수정)
 
         //이벤트 bubble 제거
@@ -482,6 +593,8 @@ function apply_event_to_box($div_box, curr_page_top, curr_page_left) {
 
 // 텍스트 선택 시 텍스트 상단에 편집창 팝업
 function isTextboxHighlighted(e) {
+	
+	if(!editable) return;
 
     var sel = window.getSelection();
 
@@ -494,8 +607,11 @@ function isTextboxHighlighted(e) {
     }
 }
 
+
 // [start] 1단계 편집창 생성
 function createWholeEditor($div_box) {
+	
+	if(!editable) return;
 
     var $arr_bt = [];
 
@@ -506,11 +622,6 @@ function createWholeEditor($div_box) {
             "id": "bt_size",
             "text": "글자크기"
         }));
-        $arr_bt[$arr_bt.length - 1].mouseenter(function() {
-            if($('.div_fontsize').css('display') == 'none') {
-                $('.div_fontsize').css('display', 'block');
-            }   
-        });
         
         // 글꼴
         $arr_bt.push($('<button />', {
@@ -534,6 +645,31 @@ function createWholeEditor($div_box) {
             "id": "bt_bcolor",
             "text": "배경색"
         }));
+
+        // 내부 효과 제거
+        $arr_bt.push($('<button />'));
+        var $i_ban = $('<i class="fas fa-ban"></i>');
+        $arr_bt[$arr_bt.length-1].append($i_ban).click(function() {
+            $('.onSelect').prop("contenteditable", true).css({
+                "-webkit-user-select": "text",
+                "user-select": "text"
+            }).focus();
+            document.execCommand('selectAll', false, null);
+            document.execCommand('removeFormat', false, null);
+            $('.onSelect').prop("contenteditable", false).css({
+                "-webkit-user-select": "",
+                "user-select": ""
+            })
+            $('.onSelect').css({
+                "font-size": "medium",
+                "color": "#859196",
+                "background-color": "rgba(255,255,255,0)"
+            })
+        }).mouseenter(function(e) {
+            createTooltip($(this), '효과제거');
+        }).mouseleave(function(e) {
+            $('.tooltip').remove();
+        });
     }
 
     // 이미지 박스 전용 버튼
@@ -541,35 +677,115 @@ function createWholeEditor($div_box) {
         // 사진 추가
         $arr_bt.push($('<button />'));
         var $i_plus = $('<i class="fas fa-plus"></i>');
-        $arr_bt[$arr_bt.length-1].append($i_plus).click(function() {
-            //TODO 이미지 추가, 편집
-        }).mouseenter(function(e) {
+        var $input_file = $('<input />', {
+            "type": "file",
+            "accept": "image/*",
+            "id": "hidden_input",
+            "name": "hidden_input"
+        }).css({
+            "position": "absolute",
+            "top": "0px",
+            "left": "0px",
+            "width": "50px",
+            "height": "40px",
+            "margin": "auto",
+            "opacity": "0",
+            "overflow": "hidden"
+        }).change(function() {
+            //alert('파일 업로드')
+            var $img = $('.onSelect img');
+            var file = this.files[0];
+            
+            if (file) {
+                $('.onSelect svg').remove();
+            }   
+            
+            // formData 선언
+            var formData = new FormData();
+            
+            formData.append('file', file);
+            
+            $.ajax({
+                url : 'albumImageSave',
+                processData : false,
+                contentType : false,
+                type : 'POST',
+                data : formData,
+                dataType : 'text',
+                success : function(saved_name) {
+                    
+                    //saved_name을 받으면 이미지 src에 연결한다.
+                    // fail이 아닐 경우 -> 이미지 저장됨
+                    if (saved_name != 'fail') {
+                        
+                        $img.attr('src', 'img_album?filePath=' + saved_name).css({
+                            "display": "block"
+                        });
+                        
+                    } else {
+                        alert('업로드 실패');
+                    }
+                },
+                error : function(e) {
+                    alert('파일 업로드 실패');
+                }
+            });
+
+        });
+        $arr_bt[$arr_bt.length-1].append($i_plus).append($input_file).mouseenter(function(e) {
             createTooltip($(this), '추가');
         }).mouseleave(function(e) {
             $('.tooltip').remove();
         });
+            
+        // 사진 자르기 (대영)
+        $arr_bt.push($('<button />', {
+            "id": "bt_crop",
+            "text": "자르기"
+        }));
+        $arr_bt[$arr_bt.length-1].click(function() {
+        	
+        	var check_crop = $('.onSelect img').css('display');
+        	if(check_crop != 'none'){
+            		curTime = new Date().getTime();
+            		//편집창 열면서 사진url 넓이 높이 보내기
+            		var settings ='height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes';
+                	$('.onSelect img').attr('id', curTime); //임시 id값은 자식창에서 종료키 누르면 삭제됨
+                	var windowObj = window.open("crop_picture?url_picture=" + $('.onSelect img').attr('src') + "&picture_id="+ curTime +"", "window_crop", settings);
+        	}else {
+        		alert('사진을 올리고 자르기를 클릭해주세요.');
+        	}         	
+		});/*주석처리*/
         
         // 사진 회전 (대영)
         $arr_bt.push($('<button />', {
             "id": "bt_rotate",
             "text": "회전"
         }));
-        $arr_bt[$arr_bt.length - 1].mouseenter(function() {
-            if($('.div_picturerotate').css('display') == 'none') {
-                $('.div_picturerotate').css('display', 'block');
-            }   
-        });
         
         // 사진 필터 (대영)
         $arr_bt.push($('<button />', {
             "id": "bt_filter",
             "text": "필터"
         }));
-        $arr_bt[$arr_bt.length - 1].mouseenter(function() {
-            if($('.div_picturefilter').css('display') == 'none') {
-                $('.div_picturefilter').css('display', 'block');
-            }   
-        });
+
+        // 현재 페이지 배경으로
+        $arr_bt.push($('<button />'));
+        $i_set_background = $('<i class="far fa-images"></i>');
+        $arr_bt[$arr_bt.length-1].append($i_set_background).click(function(e) {
+            var src = $('.onSelect img').attr('src');
+            $('.onSelect').parent('.page').css({
+                "background-image": "url(" + src + ")",
+                "background-repeat": "no-repeat",
+                "background-size":"100% 100%"
+            });
+            $('.onSelect').remove();
+            removeEdit();
+        }).mouseenter(function(e) {
+            createTooltip($(this), '배경으로');
+        }).mouseleave(function(e) {
+            $('.tooltip').remove();
+        })
     }
         
     
@@ -578,12 +794,12 @@ function createWholeEditor($div_box) {
     var $i_delete = $('<i class="fas fa-times"></i>');
     $arr_bt[$arr_bt.length-1].append($i_delete).click(function() {
         remove_box();
-
     }).mouseenter(function(e) {
         createTooltip($(this), '삭제');
     }).mouseleave(function(e) {
         $('.tooltip').remove();
     });
+
 
     // 제일 위로
     $arr_bt.push($('<button />'));
@@ -627,32 +843,32 @@ function createWholeEditor($div_box) {
         curr_page_left += PAGE_WIDTH; 
     }
 
-    console.log('onSelect top -> ' + $('.onSelect').position().top);
-    console.log('onSelect left -> ' + $('.onSelect').position().left);
-
 
     // 1단계 편집창 div 생성
     var $div_whole_editor = $('<div />');
     $div_whole_editor.addClass('edit').addClass('div_whole_editor').css({
         "position": "absolute",
-        "top": $('.onSelect').position().top + curr_page_top - 40,
+        "top": $('.onSelect').position().top + curr_page_top - 50,
         "left": $('.onSelect').position().left + curr_page_left
-    }).prop("contenteditable", false);
-
+    }).prop("contenteditable", false).appendTo('body');
+   
+    var over_left = $(window).width() - Number($('.div_whole_editor').css('left').replace('px', '')) - 350;
+    if(over_left < 0) {
+    	$('.div_whole_editor').css('left', $('.onSelect').position().left + curr_page_left + over_left)
+    }
+    
     // div append
     for(var i = 0; i < $arr_bt.length; i++) {
         var $tmp_div = $('<div />');
         $tmp_div.append($arr_bt[i]);
 
+        $arr_bt[i].addClass('div_bt');
+
 
         // 항목에서 마우스 떼면 감추기
         $tmp_div.mouseleave(function() {
             //텍스트 부분
-        	$('.div_fontsize').css('display', 'none'); 
             $('.div_font').css('display', 'none');
-            //사진 부분(대영)
-            $('.div_picturefilter').css('display', 'none');
-            $('.div_picturerotate').css('display', 'none');
         });
 
 
@@ -662,15 +878,19 @@ function createWholeEditor($div_box) {
         
         // 사진 회전 (대영)
         if(($arr_bt[i].attr('id') == "bt_rotate")){
-        	 var $innerDiv = $('<div />', {
+
+            $tmp_div.mouseenter(function(e) {
+                $('.div_picturerotate').css("display", "block");
+            }).mouseleave(function(e) {
+                $('.div_picturerotate').css("display", "none");
+            })
+
+
+        	var $innerDiv = $('<div />', {
                  "class": "div_picturerotate"
-             });
-             $innerDiv.css({
-                 "display": "none", 
-                 "z-index": "1000",
-                 "width": "100px",
-                 "margin-left": "-20px",
-                 "text-align": "left"
+             }).css({
+                 "text-align": "left",
+                 "display": "none"
              });
              
              var $arr_bt_rotate = [];
@@ -771,15 +991,18 @@ function createWholeEditor($div_box) {
 
         // 사진 필터 (대영)
         else if($arr_bt[i].attr('id') == "bt_filter") {
+
+            $tmp_div.mouseenter(function(e) {
+                $('.div_picturefilter').css("display", "block");
+            }).mouseleave(function(e) {
+                $('.div_picturefilter').css("display", "none");
+            })
+
             var $innerDiv = $('<div />', {
                 "class": "div_picturefilter"
-            });
-            $innerDiv.css({
-                "display": "none", 
-                "z-index": "1000",
-                "width": "100px",
-                "margin-left": "-20px",
-                "text-align": "left"
+            }).css({
+                "text-align": "left",
+                "display": "none"
             });
             
             var $arr_bt_filter = [];
@@ -896,10 +1119,10 @@ function createWholeEditor($div_box) {
 
             for(var j = 0; j < arr_size.length; j++) {
                 var $bt = $('<button />', {
-                    "text": (j+1)
+                    "text": (j+1),
+                    "class": "div_div_button"
                 }).css({
                     "font-size": arr_size[j],
-                    "background-color": "rgba(20, 20, 20, .7)",
                     "color": "white"
                 }).click(function(e) {
                     $('.onSelect').css({
@@ -908,6 +1131,8 @@ function createWholeEditor($div_box) {
                 })
                 $bt.appendTo($inner_div);
             }
+            var $bt1 = $('<button />').appendTo($inner_div);
+            var $bt2 = $('<button />').appendTo($inner_div);
 
             $inner_div.appendTo($tmp_div);
 
@@ -997,7 +1222,7 @@ function createWholeEditor($div_box) {
                 $('.onSelect').css("font-family", "Hi Melody, cursive");
             });
             for (var j = 0; j < $arr_bt_font.length; j++) {
-                $innerDiv.append($arr_bt_font[j])
+                $innerDiv.append($arr_bt_font[j].addClass('div_div_button'))
             }
             $tmp_div.append($innerDiv);
         }
@@ -1019,7 +1244,9 @@ function createWholeEditor($div_box) {
             });
 
             for(var j = 0; j < arr_color.length; j++) {
-                var $bt = $('<button />').css({
+                var $bt = $('<button />', {
+                    "class": "div_div_button"
+                }).css({
                     "background-color": arr_color[j]
                 }).click(function(e) {
                     $('.onSelect').css({
@@ -1049,7 +1276,9 @@ function createWholeEditor($div_box) {
             });
 
             for(var j = 0; j < arr_color.length; j++) {
-                var $bt = $('<button />').css({
+                var $bt = $('<button />', {
+                    "class": "div_div_button"
+                }).css({
                     "background-color": arr_color[j]
                 }).click(function(e) {
                     $('.onSelect').css({
@@ -1070,7 +1299,7 @@ function createWholeEditor($div_box) {
 
 
 
-    $('body').append($div_whole_editor);
+    
 
     // $arr_bt[$arr_bt.length-1].parent().mouseenter(function(e) {
     //     createTooltip($(this), '가장 위로');
@@ -1087,6 +1316,8 @@ function createWholeEditor($div_box) {
 
 // [start] 2단계 편집창(텍스트 전용) 생성
 function createTextEditor(top, left) {
+	
+	if(!editable) return;
 
     var $arr_bt = [];
     
@@ -1110,6 +1341,21 @@ function createTextEditor(top, left) {
     $arr_bt[$arr_bt.length-1].append($i_align_right).click(function() {
         document.execCommand('justifyRight', false, null);
     });
+    
+    // 글자 색
+    $arr_bt.push($('<button />', {"class": "sel_font_color"}));
+    var $i_font_white = $('<i class="fas fa-font"></i>');
+    var $i_font_yellow = $('<i class="fas fa-font"></i>');
+    $i_font_yellow.css('color', 'yellow');
+    $arr_bt[$arr_bt.length-1].append($i_font_white).append($i_font_yellow);
+
+    // 글자 배경 색
+    $arr_bt.push($('<button />', {"class": "sel_font_bcolor"}));
+    var $i_font_white = $('<i class="fas fa-font"></i>').css({
+        'color': 'white',
+        'background-color': 'yellow'
+    });
+    $arr_bt[$arr_bt.length-1].append($i_font_white);
 
     // 볼드
     $arr_bt.push($('<button />'));
@@ -1153,21 +1399,6 @@ function createTextEditor(top, left) {
         document.execCommand('fontSize', false, Number(curr_font_size) - 1);
     });
 
-    // 글자 색
-    $arr_bt.push($('<button />', {"class": "sel_font_color"}));
-    var $i_font_white = $('<i class="fas fa-font"></i>');
-    var $i_font_yellow = $('<i class="fas fa-font"></i>');
-    $i_font_yellow.css('color', 'yellow');
-    $arr_bt[$arr_bt.length-1].append($i_font_white).append($i_font_yellow);
-
-    // 글자 배경 색
-    $arr_bt.push($('<button />', {"class": "sel_font_bcolor"}));
-    var $i_font_white = $('<i class="fas fa-font"></i>').css({
-        'color': 'white',
-        'background-color': 'yellow'
-    });
-    $arr_bt[$arr_bt.length-1].append($i_font_white);
-
 
     // 스크롤 보정을 위한 변수
     var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -1179,12 +1410,18 @@ function createTextEditor(top, left) {
         "position": "absolute",
         "top": top + scrollTop - 65,
         "left": left + scrollLeft - 225
-    }).prop("contenteditable", false);
+    }).prop("contenteditable", false).appendTo('body');
+    
+    var over_left = $(window).width() - Number($('.div_selection_editor').css('left').replace('px', '')) - 500;
+    if(over_left < 0) {
+    	$('.div_selection_editor').css('left', $('.div_selection_editor').position().left + over_left)
+    }
 
     // 효과 버튼 append
     for(var i = 0; i < $arr_bt.length; i++) {
         var $tmp_div = $('<div />');
         $tmp_div.append($arr_bt[i]);
+        $arr_bt[i].addClass('div_bt');
 
         // 글자색 처리
         if($arr_bt[i].hasClass('sel_font_color')) {
@@ -1202,7 +1439,9 @@ function createTextEditor(top, left) {
             });
 
             for(var j = 0; j < arr_color.length; j++) {
-                var $bt = $('<button />').css({
+                var $bt = $('<button />', {
+                    "class": "div_div_button"
+                }).css({
                     "background-color": arr_color[j]
                 }).click(function(e) {
                     document.execCommand('foreColor', false, $(this).css("background-color"));
@@ -1229,7 +1468,9 @@ function createTextEditor(top, left) {
             });
 
             for(var j = 0; j < arr_color.length; j++) {
-                var $bt = $('<button />').css({
+                var $bt = $('<button />', {
+                    "class": "div_div_button"
+                }).css({
                     "background-color": arr_color[j]
                 }).click(function(e) {
                     document.execCommand('backColor', false, $(this).css("background-color"));
@@ -1243,8 +1484,6 @@ function createTextEditor(top, left) {
 
         $div_selection_editor.append($tmp_div);
     }
-
-    $('body').append($div_selection_editor);
     
     // 공통 클래스 적용.....
     $div_selection_editor.contents().addClass('edit');
@@ -1256,6 +1495,7 @@ function createTextEditor(top, left) {
 function removeEdit() {
     $('.div_selection_editor').remove();
     $('.div_whole_editor').remove();
+    $('.tooltip').remove();
 }
 
 // onSelect, onEdit 상태 해제
@@ -1274,51 +1514,62 @@ function clearOn() {
 function createTooltip($elem, text) {
 
     // 스크롤 보정을 위한 변수
-    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+    var scrollTop = $(document).scrollTop();
+    var scrollLeft = $(document).scrollLeft();
 
     var $editor = $('.div_whole_editor') || $('.div_selection_editor');
 
     // 도움말
     var $div_tooltip = $('<div />');
-    $div_tooltip.addClass('tooltip').html(text);
+    $div_tooltip.html(text);
 
-    $('body').append($div_tooltip);
+    
 
-    $div_tooltip.css({
-        "top": $editor.position().top + scrollTop + 45,
-        "left": $editor.position().left + $elem.parent().position().left + 20 + scrollLeft 
-            - $div_tooltip.width()/2
-    })
+    if(!$elem.hasClass('under_tool')) {
+    	$div_tooltip.addClass('tooltip').appendTo('body').css({
+	        "top": $editor.position().top - 40,
+	        "left": $editor.position().left + $elem.parent().position().left + 20 - $div_tooltip.width()/2
+	    })
+	} else {
+		$div_tooltip.addClass('tooltip_under_bar').appendTo($elem.parent()).css({
+			"top": $elem.position().top - 40,
+	        "left": $elem.position().left + 40 - $div_tooltip.width()/2
+	    })
+	}
 
 }
 // [end] 도움말 생성
 
 
 /**
- *  [start] 현재 페이지 저장
+ *  [start] 페이지 저장(페이지 div의 css:backgroud-image 속성도 저장한다.)
  **/
 function savePage(mode) {
+	
+	if(!editable) return;
 
     // 몇 페이지 저장할 것인지
     var count = 1;
     // 몇 페이지부터 저장할 것인지
     var start = 1;
 
+    
+    if(curr_page == 1){
+	    // 표지 섬네일 저장
+	    page1ImageSave();
+    }
+
     if(mode == 'all') {
         // 앨범 전체 저장 모드
         count = $('#album').turn('pages');
+        alert('저장이 완료 되었습니다.');
+		isSave = true;
 
     } else if(mode == 'curr') {
 
         // 일반 저장일 경우 현재 페이지부터 저장
 
         start = curr_page;
-        
-        if(curr_page == 1){
-            //앨범 표지 섬네일 생성
-        	page1ImageSave();
-        }
 
         if(curr_page != 1 && curr_page != $('#album').turn('pages')) {
             // 현재 페이지가 싱글 페이지가 아니면 오른쪽 장도 저장해야 함.
@@ -1326,9 +1577,6 @@ function savePage(mode) {
         }
         
     }
-
-    console.log('세이브 시작할 페이지 -> ' + start)
-    console.log('세이브 할 페이지 수 -> ' + count)
 
     var arr_page = [];
 
@@ -1345,15 +1593,14 @@ function savePage(mode) {
 
         arr_page[i-start] = {
             "page_num": i,
-            "page_html": $page_clone.html()
+            "page_html": $page_clone.html(),
+            "page_background": $page_clone.css('background-image'),
+            "page_color": $page_clone.css('background-color')
         }
-        console.log('변환한 것 ' + i + ' : ' + JSON.stringify(arr_page[i-start]));
 
     }
-
-
     $.ajax({
-        url : '../albumEdit/save_page',
+        url : 'save_page',
         type : 'POST',
         data : {
             album_num: $('#hidden_album_num').val(),
@@ -1370,13 +1617,15 @@ function savePage(mode) {
     });
 
 }
-// [end] 현재 페이지 저장
+// [end] 페이지 저장
 
 /**
  *  페이지 추가
  *  현재 보고 있는 페이지를 기준으로 2페이지 추가
  **/
  function addPage() {
+	 
+	if(!editable) return;
 
     // 페이지 추가는 커버 바로 앞에 두 페이지 씩 추가하는 형태
     var total_page = $('#album').turn('pages');
@@ -1393,9 +1642,7 @@ function savePage(mode) {
 
         //뒷 커버를 추가
         $('#album').turn('addPage', $page, (total_page+1+i));
-        console.log('totla_page 1 -> ' + total_page);
         apply_page_droppable($('#page' + (total_page+1+i) + ''))
-        console.log('totla_page 2 -> ' + total_page);
     }
 
     //기존 페이지의 아이디와 innerHTML을 두 페이지 씩 뒤로 이동
@@ -1413,6 +1660,9 @@ function savePage(mode) {
     $('.page').droppable("disable");
     $('#page' + curr_page + '').droppable("enable");
 
+    //페이지 알려주는 부분 
+	nowpage();
+    
     alert('페이지가 추가되었습니다!');
 
  }
@@ -1422,6 +1672,8 @@ function savePage(mode) {
   *  현재 보고 있는 페이지를 기준으로 2페이지 삭제
   **/
  function removePage() {
+	 
+	if(!editable) return;
 
     var total_page = $('#album').turn('pages');
 
@@ -1450,41 +1702,43 @@ function savePage(mode) {
     if(curr_page > $('#album').turn('pages')) {
         curr_page = $('#album').turn('pages');
     }
+    
+    //페이지 알려주는 부분 
+	nowpage();
 
     alert('페이지가 삭제되었습니다!');
 
  }
- 
 
 /*
  * 슬라이더
  */
-function slider() {
-	$('#slider').slider({
-		min: 1,
-		max: $('#album').turn('pages')/2 +1,
-		change: function(event, ui) {
-			//console.log(ui.value)
-		},
-		slide: function(event, ui) {
-			create_nav_bar(ui);
-		},
-		start: function(event, ui) {
-			create_nav_bar(ui);
-		},
-		stop: function() {
-			$('.slider_popup').remove();
-		}
-	});
-}
-
+//function slider(nowpage) {
+//	
+//	$('#slider').slider({
+//		min: 1,
+//		max: $('#album').turn('pages')/2 +1,
+//		change: function(event, ui) {
+//			//alert(ui.value);
+//		},
+//		slide: function(event, ui) {
+//			create_nav_bar(ui);
+//		},
+//		start: function(event, ui) {
+//			create_nav_bar(ui);
+//		},
+//		stop: function() {
+//			$('.slider_popup').remove();
+//		}
+//	});
+//}
 function create_nav_bar(ui) {
 	var total_width = $('.ui-slider').width();
 	var scale = total_width / ($('#album').turn('pages')/2);
 	var curr_left = scale * (ui.value - 1);
-	var left = curr_left + $('#slider-bar').position().left;
+	var left = curr_left + $('#slider').position().left;
 
-	var top = $('#slider-bar').position().top;
+	var top = $('#slider').position().top + 70;
 	
 	$('.slider_popup').remove();
 	
@@ -1501,6 +1755,8 @@ function create_nav_bar(ui) {
 		$('#album').turn('page', (ui.value-1)*2 );
 		
 	}
+	
+	/*console.log('슬라이더바... left -> ' + left + ' /top ->' + top);*/
 
 	if(ui.value == 1 || ui.value == $('#album').turn('pages')/2 +1) {
 		$slider_popup.text(((ui.value-1)*2) == 0? 1: (ui.value-1)*2);
@@ -1513,6 +1769,9 @@ function create_nav_bar(ui) {
 }
 
 function remove_box() {
+	
+	if(!editable) return;
+	
     var id_index = arr_box_id.indexOf($('.onSelect').attr('id'));
 
     // onSelect인 박스일 경우만 삭제
@@ -1535,3 +1794,95 @@ function remove_box() {
         
     }
 }
+
+function create_tooltip_of_under_tool() {
+	$('.under_tool').mouseenter(function(e) {
+			
+		createTooltip($(this), $(this).attr('role'));
+		
+	}).mouseleave(function(e) {
+		$('.tooltip_under_bar').remove();
+	})
+}
+
+function nav_page(location) {
+	if(location == 'start') {
+		$('#album').turn('page', 1);
+	} else {
+		$('#album').turn('page', $('#album').turn('pages'));
+	}
+}
+
+// 속지 선택 div 팝업
+function open_background() {
+	
+	$('.tooltip_under_bar').remove();
+	$('#div_select_bg').remove();
+	
+	var $div = $('<div />', {
+		"id": "div_select_bg",
+		"class": "div_select_bg"
+		
+	}).css({
+		"left": $('#i_brush').position().left - 20,
+		"top": $('#i_brush').position().top - 160
+	}).appendTo('body');
+	
+	var $osirase = $('<p />', {
+		"text" : "속지 색 변경"
+	}).css({
+		"text-align": "center",
+		"text-size": "large",
+		"color": "white"
+	}).appendTo($div);
+	
+	for(var i = 0; i < arr_color.length; i++) {
+		var $bt = $('<button />', {
+			"class": "bt_select_bg"
+		}).css({
+			"background-color": arr_color[i] 
+		}).click(function(e) {
+			if(!editable) return;
+			$('.page').css({
+				"background-color": $(this).css("background-color") 
+			});
+		}).appendTo($div);
+	}
+	
+	
+	$(document).click(function(e) {
+		if(!$(e.target).parent().parent().hasClass('i_brush') && !$(e.target).parent().hasClass('i_brush')) {
+			$('#div_select_bg').remove();
+		}
+	});
+	
+}
+
+// 페이지 이동
+function go_page(index) {
+	if(index == 'first') {
+		$('#album').turn('page', 1);
+	} else if (index == 'before') {
+		$('#album').turn('previous');
+	} else if (index == 'next') {
+		$('#album').turn('next');
+	} else if (index == 'end') {
+		$('#album').turn('page', $('#album').turn('pages'));
+	}
+}
+
+//그룹 편집 시 퍈집 가능/불가능 스위치
+function editable_switch (mode) {
+	if (mode == 'enable') {
+		editable = true;
+		$('.page').droppable("disable");
+        $('#page' + curr_page + '').droppable("enable");
+        apply_event_to_box($('.div_box'));
+		$('.div_box').draggable('enable').resizable('enable');
+	} else if (mode == 'disable') {
+		editable = false;
+		$('.page').droppable("disable");
+		apply_event_to_box($('.div_box'));
+		$('.div_box').draggable('disable').resizable('disable');
+	}
+} 

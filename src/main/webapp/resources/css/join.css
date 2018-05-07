@@ -1,0 +1,29 @@
+.div_profile_image {
+	position: relative;
+	text-align: center;
+}
+
+.input_prifile_image {
+	position: absolute;
+	left: 45%;
+	width: 50px;
+	height: 50px;
+	opacity: 0;
+}
+
+.wrapper_icon {
+	position: relative;
+	left: 30%;
+	width: 175px;
+	height: 50px;
+	font-size:100%;
+}
+
+#preview {
+	width: 100%;
+	height: 100%;
+}
+
+.login100-form-avatar {
+	border: solid 1px;
+}

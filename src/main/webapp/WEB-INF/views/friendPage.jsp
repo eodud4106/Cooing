@@ -1,238 +1,3 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-<title>friend Page</title>
-<script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>" ></script>
-<script src="<c:url value="/resources/js/friend.js"/>" ></script>
-<script>
-$(document).ready(function () {
-	initialize();
-});
-</script>
-<meta charset="utf-8" />
-
-<style>
-body {
-width:900px;
-margin:0 auto;
-}
-div {
-padding:20px;
-border:1px solid #ccc;
-}
-/* header */
-#header {
-margin:0 0 10px 0;
-padding:10px;
-width:900px;
-position: fixed;
-background-color:#FFB2F5;
-color: #F6F6F6;
-text-align: center;
-}
-
-/* Content */
-#container {
-width:900px;
-}
-#content {
-float:left;
-padding:10px;
-width:520px;
-margin-left: 200px;
-margin-top:110px;	
-}
-/* Sidebar A */
-#sidebar_a {
-width: 150px;
-float: left;
-position: fixed; 				
-height: 100%; 
-margin-top:110px;		
-}
-/* Sidebar B */
-#sidebar_b {
-float:right;
-height : 100%;
-position: fixed; 	
-padding:10px;
-width:150px;
-margin-left: 750px;
-position: fixed;
-margin-top:110px;    			
-}
-
-/* Footer */
-#footer {
-clear:both;
-padding:10px;
-background-color:#CCC;
-width:778px;
-}
-
-img{
-	width : 50px;
-	height: 50px;
-}
-.img_1{
-	width : 150px;
-	height: 150px;
-}
-.img_2{
-	width : 30px;
-	height: 30px;
-}
-.search{
-	margin: auto;	
-}
-#albumList{
-	margin-top: 20px;
-}
-.search1 {
-	width: 110px;
-}
-.modal {
-    display: block;
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: none;
-	background-color: rgba(0, 0, 0, 0.7);
-}
-.close {
-    color: #aaa;
-    float: left;
-    font-size: 30px;
-    font-weight: bold;
-	position: fixed;
-	right: 16;
-	top: 0;
-	background-color: #f0f0f0;
- }
-.close:hover,
-.close:focus {
-   color: black;
-   text-decoration: none;
-   cursor: pointer;
-}
-</style>
-
-</head>
-<body>
-	<div id="header">
-	<h1>COOING</h1>
-	</div>
-
-	<!-- 왼쪽 사이드바 -->
-	<div id="sidebar_a">
-		<p><img src = "<c:url value="/jinsu/memberimg?strurl=${friend.getMember_picture()}" />">${friend.getMember_id()}</p>
-		<p>
-			<c:if test="${check ne true }">
-				<input type="button" id="friendbt" value="친구추가" data="0">
-			</c:if>
-			<c:if test="${check eq true }">
-				<input type="button" id="friendbt" value="친구삭제" data="1">
-			</c:if>
-			<input type="hidden" value="${friend.getMember_id()}" id="friendid">
-		</p>
-		<p>Profile</p>
-		<p></p>
-		<p></p>
-		<p>ALBUM</p>
-		<ul> 	
-		<li>앨범1</li>
-		<li>앨범2</li>				
-		</ul>
-	</div>	
-	
-	<!-- 앨범리스트 -->
-	<div id="content">
-					
-		<div id = "albumList">	
-		<!-- <button id="myBtn">모달 열기</button>
-
-		<div id="myModal" class="modal">
-                <span class="close">&times;</span>
-                <iframe src="albumView" allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
-        </div>
-				 -->	
-		<table>
-		<tr>	
-			<td><img src = "./resources/image_mj/yui.jpg"></td>	
-			<td>친구id</td>
-		</tr>				
-		</table>
-		<table id = "table1">
-		<tr>	
-			<td><img src = "./resources/image_mj/yui2.jpeg" class = "img_1"></td>
-			<td></td>
-			<td><p>앨범제목dkfadfadkfasdkfadklsfaklsdfaklsddaf 
-				<p>앨범설명dfadafadfadfadfadfadfadfadfadfads
-				<p>해쉬태그dafdafadfadfadfadfadfadfadfad</td>													
-		</tr>
-		<tr>
-			<td><img src = "./resources/image_mj/comment.jpg" class = "img_2">20
-						    <img src = "./resources/image_mj/heart.png" class = "img_2">10</td>						
-		</tr>
-		</table>											
-		</div>			
-	</div>
-	
-	<!-- 오른쪽 사이드바 -->
-	<div id="sidebar_b">
-		<form id ="" method="" action="">
-		<input type ="text" placeholder = "친구검색"  name="" value = "" class ="search1">
-		<button>s</button>
-		</form>		
-				
-		<div>				
-			<p>친구1</p>
-			<p>친구2</p>
-			<p>친구3</p>
-			<p>친구4</p>				
-		</div>
-		<div>
-		<p>그룹1</p>
-		<p>그룹2</p>
-		</div>
-	</div>
-			
-	</div>
-		
-	<script>
-          var modal = document.getElementById("myModal");
-
-          var btn = document.getElementById("myBtn");
-
-          var span = document.getElementsByClassName("close")[0];
-
-          btn.onclick = function() {
-              modal.style.display = "block";
-          }
-
-          span.onclick = function() {
-              modal.style.display = "none";
-          }
-
-          window.onclick = function(event) {
-              if (event.target == modal) {
-                  modal.style.display = "none";
-              }
-          }
-      </script>
-
-</body>
-</html> --%>
-
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -241,333 +6,293 @@ img{
 <!DOCTYPE html>
 <html>
 <head>
-<title>Mypage</title>
+<title>friendPage</title>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans">
-
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="icon" type="image/png" href="resources/assets/images/cooing_logo.png"/>
+<!-- 탭메뉴 -->
+<link rel="stylesheet" href="resources/css/tab.css">
 <link rel="stylesheet" href="resources/aside_css/bootstrap.min.css">
 <link rel="stylesheet" href="resources/aside_css/open-iconic-bootstrap.min.css">
-
 <link rel="stylesheet" href="resources/aside_css/owl.carousel.min.css">
 <link rel="stylesheet" href="resources/aside_css/owl.theme.default.min.css">
-<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
-
 <link rel="stylesheet" href="resources/aside_css/icomoon.css">
 <link rel="stylesheet" href="resources/aside_css/animate.css">
 <link rel="stylesheet" href="resources/aside_css/style.css">
-
+<link rel="stylesheet" href="resources/css/chat.css">
+<link rel="stylesheet" href="resources/css/push.css">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- 앨범 정보 띄우는 부분  -->
+<link rel="stylesheet" href="resources/css/search.css">
+<!-- 폰트 -->
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
+
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
-<script src="<c:url value="/resources/js/home.js"/>"></script>
+
+<script src="<c:url value="/resources/js/friend.js"/>"></script>
+<script src="<c:url value="/resources/js/search.js"/>"></script>
+<script src="resources/js/popup.js"></script>
 <script src="resources/js/chat.js"></script>
-
-<script src="<c:url value="/resources/js_js/jquery-3.2.1.min.js"/>" ></script>
-<script src="<c:url value="/resources/js/friend.js"/>" ></script>
+<script src="resources/js/push.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"></script>
 <script>
-$(document).ready(function () {
-	initialize();
-});
 
-//모달
-var modal = document.getElementById("myModal");
-
-var btn = document.getElementById("myBtn");
-
-var span = document.getElementsByClassName("close")[0];
-
-btn.onclick = function() {
-    modal.style.display = "block";
-}
-
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+var pagenum = 0;
+var pagingcheck = false;
+var total = true;
+//0번이면 검색 1번 이면 카테고리 
+var searchcheck = 99; 
+$(window).scroll(function() {
+    if (pagingcheck == false && ($(window).scrollTop() + 100) >= $(document).height() - $(window).height()) {
+    	if(searchcheck == 0){
+	    	if(total){
+	    		get_friend_album_list('writer','friend','date', pagenum++ , 0);
+	    		pagingcheck = true;
+	    	}
+    	}else if(searchcheck == 1){
+    		if(total){
+    			get_friend_album_list('category','friend','date', pagenum++ , 1);
+    			pagingcheck = true;
+    		}
+    	}
     }
-}
-
-
-$(document).ready(function () {
-	
-	initialize();
-	
-	
-	$('window').click(function(event) {
-		if (event.target == $('#myModal')) {
-			$('#myModal').css('display', 'none');
-	    }
-	});
-	
-	$('#myBtn').click(function() {
-		$('#myModal').css('display', 'block');
-	});
-	
-	$('#myBtn_close').click(function() {
-		$('#myModal').css('display', 'none');
-	});
-	
-	$('#createBtn').click(function() {
-		$('#album_create_modal').css({
-			'display': 'block',
-			'z-index': '10000'
-		});
-	});
-	
-	$('#createBtn_close').click(function() {
-		$('#album_create_frame').attr('src', 'albumEdit/AlbumNameCreate');
-		$('#album_create_modal').css({
-			'display': 'none',
-			'z-index': '0'
-		});
-	});
-	
-	if (${sessionScope.Member != null}) {
-		readyChat();
-		sessionStorage.setItem('id', '${sessionScope.Member.member_id}');
-	}
-	
-	getTotalAlbumList();
-	
 });
 
-//앨범 리스트 Ajax로 받는 코드
-function getTotalAlbumList() {
-	$.ajax({
-		url: 'getTotalAlbumList',
-		type: 'post',
-		dataType: 'json',
-		success: function(result) {
-			totalAlbumList(result);
-		},
-		error: function(e) {
-			alert(JSON.stringify(e));	
-		}
-	});
-}
-
-//앨범 리스트 출력
-function totalAlbumList(result) {
-	
-	var album_num;
-	var album_html;
-	var sw = 0;
-	
-$(result).each(function(i, album) {
-		
-		album_num = album.album_num;
-		
-		for(var i=0; i<album.page_html.length; i++) {
-			
-			if(album.page_html[i] == '<' && sw == 0){
-				sw = 1;
-				album_html = album.page_html.substring(i, album.page_html.length);
-				
-				var div_card = document.createElement('div'); //카드 클래스 div
-				var div_page = document.createElement('div'); //a태그에 들어갈 div
-				var a_read_album = document.createElement('a'); //a태그
-				
-				$(div_page).addClass('page1').html(album_html);
-				a_read_album.append(div_page);
-				$(div_card).addClass('card img-loaded').append(a_read_album);
-				
-				//a태그 링크 걸어주기
-				$('.card-columns').append(div_card);
-				
-			}
-			
-		}
-		
-		sw = 0;
-		
-	});
-	
-}
+$(document).ready(function () {
+	//경고!! 아래 코드를 절대 별도의 js파일로  마시오!!
+	if ('${sessionScope.Member}' != null) {
+		readyChat('${sessionScope.Member.member_id}', '');
+		readyPush('${sessionScope.Member.member_id}', '');
+	}
+	initialize();
+	get_friend_album_list('writer','friend','date', pagenum++ , 0);
+});
 </script>
 
 <style>
+#image_search {
+	cursor: pointer;
+}
 .img1 {
 	width: 50px;
 	height: 50px;
 }
 
-.modal {
-	display: none;
-	position: absolute;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: none;
-	background-color: rgba(0, 0, 0, 0.7);
+@media screen and (max-width: 768px) {
+	.probootstrap-main .search-bar {
+		width: 100%;
+		padding: 30px 15px;
+		padding-top: 30px;
+		padding-bottom: 30px;
+	}
 }
-
-.close {
-	color: #aaa;
-	float: left;
-	font-size: 30px;
-	font-weight: bold;
-	position: fixed;
-	right: 16;
-	top: 0;
-	background-color: #f0f0f0;
-}
-
-.close:hover, .close:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-
- @media screen and (max-width: 768px) {
-   .probootstrap-main .search-bar{
-      width: 100%;
-      padding: 30px 15px; 
-      padding-top: 30px;
-	  padding-bottom: 30px;
-      } }
-
 
 select {
-  width: 100px; 
-  font-family: inherit;
-  background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%;  
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: 1px solid #999;
-  border-radius: 0px;
+	width: 100px;
+	font-family: inherit;
+	background:
+		url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg)
+		no-repeat 95% 50%;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: 1px solid #999;
+	border-radius: 0px;
 }
 
 select::-ms-expand { /* for IE 11 */
-    display: none;
+	display: none;
+}
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;    
+}
 
+.dropdown-content {
+    display: none;
+    position: absolute;    
+    background-color: #f9f9f9;
+    min-width: 160px;
+    height : 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    overflow-y: scroll;
+    padding-bottom: 1px;
+}
+
+.dropdown-content li {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content li:hover {
+	background: -webkit-linear-gradient(right, #00dbde, #499ce8);
+	color : white;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
 </style>
-</head>
-<body>
 
-	<aside class="probootstrap-aside js-probootstrap-aside">
-		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
+</head>
+<body style ="font-family: 'Nanum Gothic Coding', monospace;">
+
+	<aside class="probootstrap-aside js-probootstrap-aside" style = "background-color: aliceblue;">
+		<a href="#"
+			class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
 			<span class="oi oi-arrow-left"></span> Close
 		</a>
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-
-			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING</a>
-
-			<p><img src = "<c:url value="/jinsu/memberimg?strurl=${friend.getMember_picture()}" />">${friend.getMember_id()}</p>
-		<p>
-			<c:if test="${check ne true }">
-				<input type="button" id="friendbt" value="친구추가" data="0">
-			</c:if>
-			<c:if test="${check eq true }">
-				<input type="button" id="friendbt" value="친구삭제" data="1">
-			</c:if>
-			<input type="hidden" value="${friend.getMember_id()}" id="friendid">
-		</p>
-
-		</div>
-		<div class="probootstrap-overflow">
-			<nav class="probootstrap-nav">
-				<p>FRIEND_PAGE</p>
-				
-				<p>CATEGORY</p>
-				<ul>
-
-					<li class="category" data="0">여행</li>
-					<li class="category" data="1">음식</li>
-					<li><a href="<c:url value ="/"/>">MainPage</a></li>
-					<li><a href="<c:url value ="/albumTestView"/>">albumView</a></li>
-					<li><a href="<c:url value ="/myPage"/>">myPage</a></li>
-					<li><a href="<c:url value ="/friendPage"/>">friendPage</a></li>
-					<li><a href="<c:url value ="/albumEdit/edit"/>">albumEdit</a></li>
-					<li><a href="<c:url value ="/jinsu/member_get"/>">회원가입...</a></li>
-					<li><a href="<c:url value ="/jinsu/login_get"/>">로그인...</a></li>
-					<li><a href="<c:url value ="/jinsu/logout_get"/>">로그아웃</a></li>
-					
-				</ul>
-			</nav>
-
+		<div class="probootstrap-site-logo probootstrap-animate"
+			data-animate-effect="fadeInLeft">
+			<a href="./" class="mb-2 d-block probootstrap-logo">COOING</a>
+			
+			<p id="friendid">
+				<img class ="img1"
+					src="<c:url value="/memberimg?strurl=${friend_id.getMember_picture()}"/>"> ${friend_id.getMember_id()}
+			</p>
+			
+			<p>
+				<c:if test="${check ne true }">
+					<div style="z-index: 99; float: right; margin-top: -40px; cursor: pointer;"
+						id="friendbt" data="0">
+						<i class="fas fa-user-plus"></i>
+					</div>					
+				</c:if>
+				<c:if test="${check eq true }">					
+					<div style="z-index: 99; float: right; margin-top: -40px; cursor: pointer;"
+						id="friendbt" data="1">
+						<i class="fas fa-user-times"></i>
+					</div>
+				</c:if>
+				<input type="hidden" value="${friend_id.getMember_id()}"
+					id="friendidval">
+			</p>
 		</div>
 
-		<form>			
-				 <input	type="button" id="myBtn" value="모달 열기">
-				<div id="myModal" class="modal">
-					<span id="myBtn_close" class="close">&times;</span>
-					<iframe src="albumView" allowTransparency='true' frameborder="0"
-						width=100% height="100%"></iframe>
-				</div>			
-		</form>
+			<div class="probootstrap-overflow">
+				<nav class="probootstrap-nav">
+					<ul>
+						<li><a href="<c:url value ="/"/>">HOME</a></li>
+						<li><a href="<c:url value ="/myPage"/>">MY PAGE</a></li>
+						<li><a href="<c:url value ="/LankingPage"/>">TODAY'S RANKING</a></li>						
+					</ul>
+					<div class = "dropdown">
+						<p class ="c" class = "dropbtn" style="cursor: pointer;">CATEGORY</p>
+						 <div class="dropdown-content" style = "font-family: Poppins-Regular; font-size: 15px; padding-left: 10px;">
+						 <ul>
+						  	<li class="category" data="0">여행</li>
+						    <li class="category" data="1">스포츠/레저</li>
+						    <li class="category" data="2">동물</li>
+						    <li class="category" data="3">음악</li>
+						    <li class="category" data="4">요리/음식</li>
+						    <li class="category" data="5">패션/뷰티</li>
+						    <li class="category" data="6">연예/TV</li>
+						    <li class="category" data="7">게임</li>
+						    <li class="category" data="8">영화</li>
+						    <li class="category" data="9">도서</li>
+						    <li class="category" data="10">공연/전시</li>
+						    <li class="category" data="11">외국어</li>
+						    <li class="category" data="12">전문지식</li>
+						    <li class="category" data="13">수집/제작</li>
+						    <li class="category" data="14">자기계발</li>
+						    <li class="category" data="15">육아</li>
+						    <li class="category" data="16">일상생활</li>
+						    <li class="category" data="17">자동차</li>
+						    <li class="category" data="18">낚시</li>
+						    <li class="category" data="19">건강</li>
+						    <li class="category" data="20">기타</li>
+						    </ul>
+					    </div>
+					</div>
+						
+					<ul>
+						<li><a href="<c:url value ="/logout_get"/>">LOGOUT</a></li>						
+					</ul>					
+				</nav>
+				<footer class="probootstrap-aside-footer probootstrap-animate" data-animate-effect="fadeInLeft" 
+				style = "font-family: Poppins-Regular;">          
+         		 <p>&copy; 2018 <a href="cooing.site/www" target="_blank">COOING</a>. <br> All Rights Reserved.</p>
+       			 </footer>	
+			</div>			
 	</aside>
 
 
 	<main role="main" class="probootstrap-main js-probootstrap-main">
 	<div class="probootstrap-bar">
-		<a href="#" class="probootstrap-toggle js-probootstrap-toggle">
-			<span class="oi oi-menu"></span>
+		<a href="#" class="probootstrap-toggle js-probootstrap-toggle"> <span
+			class="oi oi-menu"></span>
 		</a>
 		<div class="probootstrap-main-site-logo">
 			<a href="index.html">COOING</a>
 		</div>
 		<a href="#" class="probootstrap-toggle2 js-probootstrap-toggle2">
 			<span class="oi oi-menu"></span>
-		</a>	
-	
-	</div>	
-	
-	<div class ="search-bar">
-		<br>
-		<input type="text" id="searchtx" placeholder="검색어를 입력해주세요" value="${searchWord}" style = "float : left; margin-left: 200px;">
-		<input type="button" value="검색" id="searchbt">
-		<div class = "search" style= "z-index:99; float:left; padding-left : 10px;" id="searchbt" onclick=""><i class="fas fa-search"></i></div>
-			
-		<!-- 정렬순서 -->		
-		<select style = "float:right; padding-left : 10px;">
-		  <option selected >정렬순</option>
-		  <option>최신순</option>
-		  <option>인기순</option>
-		</select>	
+		</a>
+
 	</div>
-		<br>	
-	
-	
+
+	<div class="search-bar">
+		<br>
+		<br>
+		<div style = "margin-left: 20px; font-size: 20px;">
+			SEARCH &nbsp<img id='image_search'
+				src="https://3.bp.blogspot.com/-2CWX7kIpob4/WZgVXt3yTQI/AAAAAAAAACM/N1eGT1OD7rklb4GtsadoxYRyWZoR_aI0gCLcBGAs/s1600/seo-1970475_960_720.png"
+				style="width: 24px; height: 24px; margin-right: 5px;"
+				onclick="inputbox_focus()">
+			<input id='searchtx' type="text"
+				onblur="search_bar(this)"			
+                style="border: none; background-color: rgba(0, 0, 0, 0); color: #666666; border-bottom: solid 2px #333; outline: none; width: 0px; transition: all 0.5s;padding-right:0px;padding-left:0px;">
+
+		</div>
+		<input type="hidden" id="totalpage" value="${totalpage }"> <br>
+		<input type="hidden" id="categorynum">
+	</div>
+
+
+
 	<!-- 앨범 리스트 -->
-	<div class="card-columns" id="card-columns">
-	
+	<div class="card-columns" id="card-columns" style="cursor: pointer;">
+
 		<!--  -->
 		<div class="card">
-			<a href="single.html" >			
-				<img class="card-img-top probootstrap-animate" 
+			<a href="single.html"> <img
+				class="card-img-top probootstrap-animate"
 				src="resources/aside_images/img_1.jpg" alt="Card image cap">
 			</a>
-			
+
 		</div>
 		<div class="card">
-			<a href="single.html">
-				<img class="card-img-top probootstrap-animate" 
+			<a href="single.html"> <img
+				class="card-img-top probootstrap-animate"
 				src="resources/image_mj/a1.jpg" alt="Card image cap">
-				
+
 			</a>
 		</div>
 	</div>
-	
-	
+
 
 	<div class="container-fluid d-md-none">
 		<div class="row">
 			<div class="col-md-12">
-				<ul class="list-unstyled d-flex probootstrap-aside-social">
-					<li><a href="#" class="p-2"><span class="icon-twitter"></span></a></li>
-					<li><a href="#" class="p-2"><span class="icon-instagram"></span></a></li>
-					<li><a href="#" class="p-2"><span class="icon-dribbble"></span></a></li>
-				</ul>
+
 				<p>
 					&copy; 2018 <a href="https://uicookies.com/" target="_blank">COOING</a>.
 					<br> All Rights Reserved. Designed by <a
@@ -579,81 +304,72 @@ select::-ms-expand { /* for IE 11 */
 
 	</main>
 
+
+	
 	<aside class="probootstrap-aside2 js-probootstrap-aside2">
-		<a href="#"
-			class="probootstrap-close-menu js-probootstrap-close-menu2 d-md-none">
+		<a href="#" class="probootstrap-close-menu js-probootstrap-close-menu d-md-none">
+		
 			<span class="oi oi-arrow-right"></span> Close
 		</a>
-		<div class="probootstrap-site-logo probootstrap-animate" data-animate-effect="fadeInLeft">
-			<a href="index.html" class="mb-2 d-block probootstrap-logo">COOING2</a>
-			<p class="mb-0">
-				Another free html5 bootstrap 4 template by
-				<a href="https://uicookies.com/" target="_blank">uiCookies</a>
-			</p>
-		</div>
+		
 		<div class="probootstrap-overflow">
-			<div>
-				<form>
-					<input type="text" placeholder="친구검색" id="friendsearch" class="search1">
-					<input type="button" id="friendsearchbt" value="s">
-				</form>
+		<div id="main">
+		<input class = "input1" id="tab1" type="radio" name="tabs" checked> <!--디폴트 메뉴-->
+		<label for="tab1" style = "font-size: 12px;">FRIEND</label>
 
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(friend) ne 0}">
-						<c:forEach var="arrf" items="${friend }">
-							<div name="friend">
-								<p onclick="openChat('1', '${arrf}', '')">${arrf}</p>
-							</div>
-						</c:forEach>
-					</c:if>
-				</c:if>
+  		<input class = "input1" id="tab2" type="radio" name="tabs">
+    	<label for="tab2" style = "font-size: 12px;">GROUP</label> 
+    	 
+    	<input class = "input1" id="tab3" type="radio" name="tabs">
+    	<label for="tab3" style = "font-size: 12px;">NEWS</label>  
+
+    	<section id="content1"> 
+    	<!-- 페이지 저장 -->		
+			<form class="contact100-form validate-form" id="entry">
+				<span class="contact100-form-title">
+					&nbsp<input type="text" placeholder="친구 찾기" id="friendsearch" class = "search1" style ="font-size: 14px; width:100%;" >					
+				</span>
+			</form>						
+				<div class = "friendList" style = "width: 200px; margin-top: 20px;">
+					<div name="friend" id="friend"></div>
+					<div name="user" id="user"></div>
+				</div>			
+
+	<div id="dropDownSelect1"></div>    	    
+       
+    	</section>
+	<form id="testimg">
+		<input type="hidden" name="imgSrc" id="imgSrc" />
+	</form>	
+   	
+   	<section id ="content2">       					
+		<div class="button_container">		
+			<button class="btn"onclick="window.open('./groupcreate_get?','','width=500 height=600 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')"><span>GROUP CREATE</span></button></div>
+			
+		<div class = "groupList" id="group" style= "margin-top: 70px; width: 200px;">
+		</div>
+	</section>   
+	<!-- 영준이 알림공간 -->
+	<section id ="content3" class="content3">       					
+		<div class = "div_news" id="div_news" style = "text-align :center;  font-size: 14px;">
+			<div class="msg_box" id="msg_box">
+				<div class="msg_title">MESSAGE</div>
+				<div class="msg_list" id="msg_list"></div>
 			</div>
-			<div>
-				<c:if test="${Member ne null}">
-					<c:if test="${fn:length(group) ne 0}">
-						<c:forEach var="party" items="${group}">
-							<div name="group">
-								<p onclick="openGUpdate('${party.party_name}')"
-									partynum="${party.party_num}">${party.party_name}</p>
-								<input type="button" value="채팅"
-									onclick="openChat('0', '${party.party_num}', '')" />
-							</div>
-						</c:forEach>
-					</c:if>
-				</c:if>
-				<input type="button" value="그룹생성"
-					onclick="window.open('./groupcreate_get?','','width=300 height=400 left=50% top=50% fullscreen=no,scrollbars=no,location=no,resizeable=no,toolbar=no')">
+			<div class="invite_box" id="invite_box">
+				<div class="invite_title">INVITE</div>
+				<div class="invite_list" id="invite_list"></div>
 			</div>
 		</div>
-
-	</aside>
-
-	<div id="div_chat" 
-		style="width: 500px; height: 500px; position: absolute; padding: 0px; opacity: 1; background-color: rgb(240, 240, 240); display: none;">
-		<p>
-			<button id="button_close" onclick="closePChat()">닫기</button>
-		</p>
-		<div id="data" 
-			style="height: 350px; width: 100%; overflow-y: scroll; margin: auto; display: block; padding: 0px"></div>
-
-		<div id="div_send">
-			<input type="text" id="message" autocomplete="off" />
-			<input type="button" id="sendBtn" value="전송" />
-		</div>
-	</div>
-	
-	<div id="album_create_modal" class="modal">
-		<span id="createBtn_close" class="close">&times;</span>
-		<iframe id="album_create_frame" src="albumEdit/AlbumNameCreate"
-			allowTransparency='true' frameborder="0" width=100% height="100%"></iframe>
-	</div>
+	</section>  
+</aside>
+	<input style="display: none" id="user_id" value="${sessionScope.Member.member_id }">
 
 	<script src="resources/aside_js/popper.min.js"></script>
 	<script src="resources/aside_js/bootstrap.min.js"></script>
 	<script src="resources/aside_js/owl.carousel.min.js"></script>
 	<script src="resources/aside_js/jquery.waypoints.min.js"></script>
 	<script src="resources/aside_js/imagesloaded.pkgd.min.js"></script>
-
 	<script src="resources/aside_js/main.js"></script>
 </body>
 </html>

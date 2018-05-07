@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.cooing.www.jinsu.object.Member;
+import com.cooing.www.member.vo.Member;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(HandlerInterceptorAdapter.class);
@@ -21,7 +21,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		Member member = (Member)session.getAttribute("Member");
 		if(member == null){
-			response.sendRedirect(request.getContextPath() + "/jinsu/login_get");
+			response.sendRedirect(request.getContextPath() + "/login_get");
 			return false;
 		}
 				

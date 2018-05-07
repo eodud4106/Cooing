@@ -198,7 +198,7 @@
 		<dependency>
 		    <groupId>commons-codec</groupId>
 		    <artifactId>commons-codec</artifactId>
-		    <version>1.10</version>
+		    <version>1.9 </version>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.json/json -->

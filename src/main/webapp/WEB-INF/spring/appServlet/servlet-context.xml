@@ -36,23 +36,30 @@
 	
 	<websocket:handlers>
         <websocket:mapping path="chat/echo.do" handler="chatHandler"/>
+        <websocket:mapping path="push/echo.do" handler="pushHandler"/>
+        <websocket:mapping path="edit/echo.do" handler="editHandler"/>
     </websocket:handlers>
  
-    <beans:bean id="chatHandler" class="com.cooing.www.hindoong.controller.ChatHandler"/>
+    <beans:bean id="chatHandler" class="com.cooing.www.socket.chat.controller.ChatHandler"/>
+    <beans:bean id="pushHandler" class="com.cooing.www.socket.push.controller.PushHandler"/>
+    <beans:bean id="editHandler" class="com.cooing.www.socket.edit.EditHandler"/>
 
 	<context:component-scan base-package="com.cooing.www" />
 	<beans:bean id="loginInterceptor" class="com.cooing.www.interceptor.LoginInterceptor"></beans:bean>
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/jinsu/groupview_get" />
-			<mvc:mapping path="/jinsu/groupcreate_get" />
-			<mvc:mapping path="/jinsu/groupview_get" />
-			<mvc:mapping path="/jinsu/groupupdate_get" />
+			<mvc:mapping path="/groupview_get" />
+			<mvc:mapping path="/groupcreate_get" />
+			<mvc:mapping path="/groupview_get" />
+			<mvc:mapping path="/groupupdate_get" />
 			<mvc:mapping path="/albumList" />
 			<mvc:mapping path="/albumView" />
+			<mvc:mapping path="/edit_album" />
 			<mvc:mapping path="/myPage" />
 			<mvc:mapping path="/friendPage" />
 			<mvc:mapping path="/groupPage" />
+			<mvc:mapping path="/LankingPage" />
+			<mvc:mapping path="/friend_get" />
 			<mvc:mapping path="/" />		
 			<beans:ref bean="loginInterceptor" />
 		</mvc:interceptor>

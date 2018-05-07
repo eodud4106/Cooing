@@ -3,19 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cooing.www.dy.dao.AlbumMapper">
-	<insert id="personal_createAlbum" parameterType="albumwrite">
+<mapper namespace="com.cooing.www.album.dao.AlbumMapper">
+	<insert id="personal_createAlbum" parameterType="album">
 		insert into ALBUMLIST (
 			ALBUM_NUM,
 			ALBUM_WRITER,
 			album_name,
-			ALBUM_OPENRANGE
+			ALBUM_OPENRANGE,
+			album_category,
+			isPersonal
 		)
 		values (
 			ALBUMLIST_SEQ.nextval,
 			#{album_writer},
 			#{album_name},
-			#{album_openrange}
+			#{album_openrange},
+			#{album_category},
+			#{isPersonal}
 		)
 		<selectKey keyProperty="album_num" resultType="Integer" order="AFTER"> 
 			SELECT ALBUMLIST_SEQ.currval FROM dual
@@ -36,35 +40,29 @@
 		WHEN MATCHED THEN
 			UPDATE
 			SET
-				page_html = 
-				<if test="#{page_html} != null">
-				#{page_html}
-				</if>
-				<if test="#{page_html} == null">
-				''
-				</if>
+				page_html = #{page_html}
+				, page_background = #{page_background}
+				, page_color = #{page_color}
 		WHEN NOT MATCHED THEN
 			INSERT ( 
 				page_id
 				, album_num
 				, page_num
 				, page_html
+				, page_background
+				, page_color
 		     )
 			 VALUES (
 				page_seq.nextval
 				, #{album_num}
 				, #{page_num}
-				, 
-				<if test="#{page_html} != null">
-				#{page_html}
-				</if>
-				<if test="#{page_html} == null">
-				''
-				</if>
+				, #{page_html}
+				, #{page_background}
+				, #{page_color}
 			 )
 	</insert>
 	
-	<update id="personal_update_page1_Album" parameterType="albumwrite">
+	<update id="personal_update_page1_Album" parameterType="album">
 		update albumlist set 
 			album_name = #{album_name},
 			album_contents = #{album_contents},
@@ -79,23 +77,7 @@
 			where album_num = #{album_num}
 	</update>
 	
-	<select id="personal_selectAlbum_Num" parameterType="String" resultType="int">
-		select album_num from albumlist where ALBUM_IDENTIFIER = #{album_identifier}
-	</select>
-	
-	<select id="searchAlbum" parameterType="String" resultType="albumwrite">
-		select * from albumlist 
-			where album_writer like '%'||#{search}||'%'
-			or album_name like '%'||#{search}||'%'
-			or album_contents like '%'||#{search}||'%'
-	</select>
-	
-	<select id="searchCategory" parameterType="int" resultType="albumwrite">
-		select * from albumlist 
-			where album_category=#{album_category}
-	</select>
-	
-	<select id="searchAlbumNum" parameterType="int" resultType="albumwrite">
+	<select id="searchAlbumNum" parameterType="int" resultType="album">
 		select * from albumlist	where album_num=#{searchnum}
 	</select>
 	
@@ -104,39 +86,8 @@
 	</select>
 	
 	<delete id="deleteAlbum" parameterType="int">
-		delete	from albumlist where album_num=#{album_num}
-	</delete>	
-	
-	
-	<select id="TotalAlbumList" resultType="albumwrite">
-		select *  from ALBUMLIST order by Album_num desc
-	</select>
-	
-	<select id="TotalAlbumCount" resultType="int">
-		select count(*)  from albumlist
-	</select>
-	
-	<select id="SearchAlbumCount" parameterType="String" resultType="int">
-		select count(*) from albumlist 
-			where album_writer like '%'||#{search}||'%'
-			or album_name like '%'||#{search}||'%'
-			or album_contents like '%'||#{search}||'%'
-	</select>
-	
-	<select id="CategoryAlbumCount" parameterType="int">
-		select count(*)  from albumlist where album_category = #{album_category}
-	</select>
-	
-	<select id="MyAlbumList" parameterType="String" resultType="albumwrite">
-		select *
-	    from ALBUMLIST 
-	    where ALBUM_WRITER = #{ALBUM_WRITER} 
-	    order by Album_num desc
-	</select>
-	
-	<select id="IDAlbumCount" parameterType="String" resultType="int">
-		select count(*) from albumlist where album_writer = #{album_writer} order by album_num desc
-	</select>
+		delete from albumlist where album_num=#{album_num}
+	</delete>
 	
 	<!-- 앨범 넘버로 앨범 내 페이지 검색 -->
 	<select id="select_pages_by_album_num" parameterType="int" resultType="page">
@@ -158,4 +109,157 @@
 			album_num = #{album_num}
 	</delete>
 	
+	<!-- 앨범을 검색함... -->
+	<select id="select_album" resultType="album" parameterType="album">
+		SELECT *
+		FROM albumlist
+		WHERE
+			album_writer = #{album_writer}
+			AND
+			isPersonal = #{isPersonal}
+	</select>
+	
+	<select id="select_album_count" resultType="int" parameterType="album">
+		SELECT count(*)
+		FROM albumlist
+		WHERE
+			album_writer = #{album_writer}
+			AND
+			isPersonal = #{isPersonal}
+	</select>
+	
+	<select id="get_album_list" resultType="album" parameterType="hashmap">
+	SELECT *
+	FROM
+	(SELECT
+	    a.album_num,
+	    a.album_writer,
+	    a.album_name,
+	    a.album_contents,
+	    a.album_openrange,
+	    a.album_category,
+	    a.album_thumbnail,
+	    a.isPersonal,
+	    nvl(lr.like_count, 0) as like_count,
+	    nvl(lr.reply_count, 0) as reply_count
+	FROM
+	    albumlist a
+	LEFT OUTER JOIN
+	    (   
+	    SELECT
+	        l.album_num as album_num,
+	        l.like_count,
+	        r.reply_count
+	    FROM
+	        (SELECT
+	            likeit_albumnum as album_num,
+	            count(*) as like_count
+	        FROM
+	            likeit
+	        GROUP BY
+	           likeit_albumnum
+	        )l
+	    LEFT OUTER JOIN
+	        (SELECT
+	            reply_albumnum as album_num,
+	            count(*) as reply_count
+	        FROM
+	            reply
+	        GROUP BY
+	            reply_albumnum
+	        )r
+	    ON
+	        l.album_num = r.album_num
+	    ) lr
+	ON
+	    a.album_num = lr.album_num
+	)
+    WHERE
+		1 = 1
+		<if test="type == 'category'">
+			<if test="keyword != null">
+			and(
+				album_category=#{keyword}
+			)
+			</if>	
+		</if>
+		<if test="type == 'writer'">
+			<if test="keyword != null">
+			   	and ( 
+					lower(album_contents) like lower('%'||#{keyword}||'%')
+			        or lower(album_name) like lower('%'||#{keyword}||'%')
+			        or lower(album_writer) like lower('%'||#{keyword}||'%')
+			 	)
+			</if>
+		</if>
+		<if test="type == 'mylike'">
+			and(
+				album_category in(
+					select category_kind as album_category
+					from category
+					where category_memberid = #{userId}
+				)
+			)				
+		</if>
+		<if test="writer_type == 'total'">
+			and (
+				album_openrange = 4 		
+			)
+		</if>
+		<if test="writer_type == 'personal'">
+			AND isPersonal = 1
+			AND album_writer = #{userId}
+		</if>
+		<if test="writer_type == 'party'">
+			AND isPersonal = 0
+			AND album_writer = #{userId}
+		</if>
+		<if test="writer_type == 'friend' and friendId != null">
+			and album_writer = #{friendId} 
+			and(
+				album_num in(
+					select album_num
+					from albumlist
+					where album_openrange = 2
+					and( 
+						album_writer in(
+							select friend_id1 as album_writer
+							from friend
+							where friend_id2 = #{userId}
+						)
+						or album_writer in(
+							select friend_id2 as album_writer
+							from friend
+							where friend_id1 = #{userId}
+						)   
+					)     
+		        )
+		        or album_openrange = 4
+			)
+		</if>
+		<if test="order == 'date'">
+		ORDER BY
+		album_num desc
+		</if>
+		<if test="order == 'like'">
+		ORDER BY
+		like_count desc
+		</if>
+	</select>
+	
+	<!-- 앨범 작성자의 프로필 사진 -->
+	<select id="select_album_writer" parameterType="String" resultType="String">
+		SELECT
+			MEMBER_PICTURE
+		FROM
+			MEMBER
+		WHERE
+			MEMBER_ID = #{member_id}
+	</select>
+	
+		<!-- 앨범 넘버로 앨범 내 페이지 검색 -->
+	<select id="select_pages_by_album" parameterType="album" resultType="page">
+		SELECT * FROM page WHERE album_num = #{album_num} ORDER BY page_num asc
+	</select>
+
 </mapper>
